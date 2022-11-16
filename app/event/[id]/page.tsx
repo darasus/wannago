@@ -1,3 +1,4 @@
+import {add} from 'date-fns';
 import {DateCard} from '../../../components/DateCard/DateCard';
 import {InfoCard} from '../../../components/InfoCard/InfoCard';
 import {LocationCard} from '../../../components/LocationCard/LocationCard';
@@ -9,7 +10,7 @@ export default function EventPage() {
         <InfoCard />
       </div>
       <div className="mb-4">
-        <DateCard />
+        <DateCard date={add(new Date('2023/01/01'), {days: 100})} />
       </div>
       <div>
         <LocationCard />

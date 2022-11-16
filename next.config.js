@@ -4,6 +4,6 @@ module.exports = {
     appDir: true,
   },
   images: {
-    domains: ['maps.googleapis.com'],
+    domains: ['maps.googleapis.com', 'source.unsplash.com'],
   },
 };

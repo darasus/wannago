@@ -13,7 +13,7 @@ export function LocationCard() {
     <Card>
       <SectionTitle color="blue">Where</SectionTitle>
       <div className="mb-2" />
-      <Text>{address}</Text>
+      <Text className="font-bold">{address}</Text>
       <div className="mb-2" />
       <div>
         <GoogleLocationImage address={address} width={500} height={250} />
