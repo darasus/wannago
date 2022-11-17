@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import {Button} from '../Button/Button';
 import {Card} from '../Card/Card';
 import {SectionTitle} from '../Text/SectionTitle';
 import {Text} from '../Text/Text';
@@ -16,7 +17,10 @@ export function InfoCard() {
           />
         </div>
         <div className="p-4">
-          <SectionTitle color="green">What</SectionTitle>
+          <SectionTitle color="green" className="mr-2">
+            What
+          </SectionTitle>
+          <Button variant="link-neutral">Share</Button>
           <div className="mb-2" />
           <Text className="text-2xl font-bold">This is event name</Text>
           <div />
