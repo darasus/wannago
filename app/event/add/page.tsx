@@ -7,7 +7,7 @@ import {Button} from '../../../components/Button/Button';
 import {Card} from '../../../components/Card/Card';
 import {Input} from '../../../components/Input/Input';
 import {Text} from '../../../components/Text/Text';
-import {TextArea} from '../../../components/Textarea/TextArea';
+import {TextArea} from '../../../components/TextArea/TextArea';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {CreateEventInput} from '../../../model';
 
@@ -24,11 +24,7 @@ interface Form {
 export default function AddEventPage() {
   const {push} = useRouter();
   const {user} = useUser();
-  const {
-    register,
-    handleSubmit,
-    formState: {errors},
-  } = useForm<Form>({
+  const {register, handleSubmit} = useForm<Form>({
     resolver: zodResolver(CreateEventInput),
   });
 

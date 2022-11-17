@@ -6,7 +6,7 @@ import {Button} from '../../../../components/Button/Button';
 import {Card} from '../../../../components/Card/Card';
 import {Input} from '../../../../components/Input/Input';
 import {Text} from '../../../../components/Text/Text';
-import {TextArea} from '../../../../components/Textarea/TextArea';
+import {TextArea} from '../../../../components/TextArea/TextArea';
 
 interface Form {
   title: string;
