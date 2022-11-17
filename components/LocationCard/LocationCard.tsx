@@ -20,7 +20,7 @@ export function LocationCard() {
       <Text className="font-bold">{address}</Text>
       <div className="mb-2" />
       <div>
-        <GoogleLocationImage address={address} width={500} height={250} />
+        <GoogleLocationImage address={address} width={550} height={250} />
       </div>
     </Card>
   );

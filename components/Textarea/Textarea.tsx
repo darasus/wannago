@@ -1,10 +1,11 @@
 import clsx from 'clsx';
+import {forwardRef} from 'react';
 
 interface Props extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
 }
 
-export function Textarea(props: Props) {
+function TextAreaWithoutRef(props: Props) {
   return (
     <div>
       {props.label && (
@@ -25,3 +26,5 @@ export function Textarea(props: Props) {
     </div>
   );
 }
+
+export const TextArea = forwardRef(TextAreaWithoutRef);

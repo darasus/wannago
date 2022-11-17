@@ -26,7 +26,7 @@ const variantMap: Record<ButtonVariant, string> = {
     'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-indigo-500',
   link: 'text-indigo-600 hover:text-indigo-500 border-indigo-600 hover:border-indigo-500 text-sm font-medium leading-none',
   'link-neutral':
-    'text-gray-400 hover:text-gray-500 border-gray-400 hover:border-gray-500 text-sm font-medium leading-none',
+    'text-gray-400 hover:text-gray-500 border-gray-400 hover:border-gray-500 text-sm font-medium leading-none inline',
 };
 
 interface Props

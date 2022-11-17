@@ -1,10 +1,11 @@
 import clsx from 'clsx';
+import {forwardRef} from 'react';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
-export function Input(props: Props) {
+function InputWithoutRef(props: Props, ref: React.Ref<HTMLInputElement>) {
   return (
     <div>
       {props.label && (
@@ -20,8 +21,11 @@ export function Input(props: Props) {
           type="text"
           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           {...props}
+          ref={ref}
         />
       </div>
     </div>
   );
 }
+
+export const Input = forwardRef(InputWithoutRef);
