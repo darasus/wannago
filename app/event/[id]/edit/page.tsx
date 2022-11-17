@@ -17,6 +17,13 @@ export default function EventPage() {
           <Text className="text-2xl font-bold">Create event</Text>
         </div>
         <div className="mb-2">
+          <Input
+            type="file"
+            label="Event title"
+            {...register('featuredImage')}
+          />
+        </div>
+        <div className="mb-2">
           <Input label="Event title" {...register('title')} />
         </div>
         <div className="mb-2">
