@@ -17,11 +17,12 @@ export function InfoCard() {
           />
         </div>
         <div className="p-4">
-          <SectionTitle color="green" className="mr-2">
-            What
-          </SectionTitle>
-          <Button variant="link-neutral">Share</Button>
-          <div className="mb-2" />
+          <div className="mb-2">
+            <SectionTitle color="green" className="mr-2">
+              What
+            </SectionTitle>
+            <Button variant="link-neutral">Share</Button>
+          </div>
           <Text className="text-2xl font-bold">This is event name</Text>
           <div />
           <Text>

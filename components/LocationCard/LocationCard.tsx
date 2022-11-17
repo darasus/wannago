@@ -12,11 +12,12 @@ export function LocationCard() {
 
   return (
     <Card>
-      <SectionTitle color="blue" className="mr-2">
-        Where
-      </SectionTitle>
-      <Button variant="link-neutral">Get directions</Button>
-      <div className="mb-2" />
+      <div className="mb-2">
+        <SectionTitle color="blue" className="mr-2">
+          Where
+        </SectionTitle>
+        <Button variant="link-neutral">Get directions</Button>
+      </div>
       <Text className="font-bold">{address}</Text>
       <div className="mb-2" />
       <div>
