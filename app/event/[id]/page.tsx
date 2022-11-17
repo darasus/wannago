@@ -1,20 +1,27 @@
-import {add} from 'date-fns';
 import {DateCard} from '../../../components/DateCard/DateCard';
 import {InfoCard} from '../../../components/InfoCard/InfoCard';
 import {LocationCard} from '../../../components/LocationCard/LocationCard';
 import {ParticipantsCard} from '../../../components/ParticipantsCard/ParticipantsCard';
+import {prisma} from '../../../lib/prisma';
 
-export default function EventPage() {
+export default async function EventPage({params}: any) {
+  const event = await prisma.event.findFirst({where: {id: params.id}});
+
+  if (!event) return null;
+
   return (
     <>
       <div className="mb-4">
-        <InfoCard />
+        <InfoCard title={event.title} description={event.description} />
       </div>
       <div className="mb-4">
-        <DateCard date={add(new Date('2023/01/01'), {days: 100})} />
+        <DateCard
+          startDate={new Date(event.startDate)}
+          endDate={new Date(event.endDate)}
+        />
       </div>
       <div className="mb-4">
-        <LocationCard />
+        <LocationCard address={event.address} />
       </div>
       <div>
         <ParticipantsCard />

@@ -7,9 +7,11 @@ import * as React from 'react';
 import {GoogleLocationImage} from './GoogleLocationImage';
 import {Button} from '../Button/Button';
 
-export function LocationCard() {
-  const address = 'Nieuwendammerdijk 29, 1025LC, Amsterdam';
+interface Props {
+  address: string;
+}
 
+export function LocationCard({address}: Props) {
   return (
     <Card>
       <div className="mb-2">

@@ -1,0 +1,41 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model Event {
+  id          String   @id @default(uuid())
+  title       String   @db.VarChar(255)
+  description String   @db.LongText()
+  startDate   DateTime
+  endDate     DateTime
+  address     String
+  isPublished Boolean? @default(false)
+  // author      User     @relation("EventAuthor", fields: [authorId], references: [id])
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  // attendees   User[]   @relation("EventAttendees")
+}
+
+// model Organization {
+//   id          String  @id @default(uuid())
+//   description String?
+//   user        User[]  @relation("UserOrganization")
+// }
+
+// model User {
+//   id             String         @id @default(uuid())
+//   email          String         @unique
+//   firstName      String
+//   lastName       String
+//   organization   Organization[] @relation("UserOrganization")
+//   createdEvents  Event[]        @relation("EventAuthor")
+//   attendedEvents Event[]        @relation("EventAttendees")
+// }

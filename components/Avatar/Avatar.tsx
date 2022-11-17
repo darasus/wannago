@@ -1,12 +1,14 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 
 interface Props {
   images: string[];
+  className?: string;
 }
 
-export function Avatar({images}: Props) {
+export function Avatar({images, className}: Props) {
   return (
-    <div className="isolate flex -space-x-1 overflow-hidden">
+    <div className={clsx('isolate flex -space-x-1 overflow-hidden', className)}>
       {images.map(imageSrc => {
         return (
           <Image

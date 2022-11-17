@@ -5,7 +5,7 @@ interface Props extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
 }
 
-function TextAreaWithoutRef(props: Props) {
+function TextAreaWithoutRef(props: Props, ref: React.Ref<HTMLTextAreaElement>) {
   return (
     <div>
       {props.label && (
@@ -18,6 +18,7 @@ function TextAreaWithoutRef(props: Props) {
       )}
       <div className={clsx({'mt-1': props.id})}>
         <textarea
+          ref={ref}
           rows={4}
           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           {...props}

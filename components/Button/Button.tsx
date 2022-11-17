@@ -43,7 +43,7 @@ export function Button({
         'inline-flex items-center rounded border font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2':
           !(isLink || isLinkNeutral),
         // base link styles
-        'inline-flex items-center border-b-2': isLink || isLinkNeutral,
+        'inline-flex items-center border-b': isLink || isLinkNeutral,
         // sizes
         'px-2.5 py-1.5 text-xs': isXs && !(isLink || isLinkNeutral),
         'px-3 py-2 text-sm': isSm && !(isLink || isLinkNeutral),

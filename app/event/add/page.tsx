@@ -1,31 +1,47 @@
 'use client';
 
 import {useUser} from '@clerk/nextjs';
+import {useRouter} from 'next/navigation';
 import {useForm} from 'react-hook-form';
-import {Button} from '../../../../components/Button/Button';
-import {Card} from '../../../../components/Card/Card';
-import {Input} from '../../../../components/Input/Input';
-import {Text} from '../../../../components/Text/Text';
-import {TextArea} from '../../../../components/Textarea/TextArea';
+import {Button} from '../../../components/Button/Button';
+import {Card} from '../../../components/Card/Card';
+import {Input} from '../../../components/Input/Input';
+import {Text} from '../../../components/Text/Text';
+import {TextArea} from '../../../components/Textarea/TextArea';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {CreateEventInput} from '../../../model';
 
 interface Form {
   title: string;
   description: string;
-  date: Date;
-  location: string;
+  startDate: Date;
+  endDate: Date;
+  address: string;
   numberOfAttendees: number;
   featuredImage: string;
 }
 
-export default function EventPage() {
+export default function AddEventPage() {
+  const {push} = useRouter();
   const {user} = useUser();
-  const {register, handleSubmit} = useForm<Form>();
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<Form>({
+    resolver: zodResolver(CreateEventInput),
+  });
 
   const onSubmit = handleSubmit(async data => {
-    await fetch('/api/createEvent', {
+    const response = await fetch('/api/createEvent', {
       method: 'POST',
-      body: JSON.stringify({...data, email: user?.primaryEmailAddress}),
-    });
+      body: JSON.stringify({
+        ...data,
+        email: user?.primaryEmailAddress?.emailAddress,
+      }),
+    }).then(res => res.json());
+
+    push(`/event/${response.id}`);
   });
 
   return (
@@ -49,10 +65,11 @@ export default function EventPage() {
             <TextArea label="Event description" {...register('description')} />
           </div>
           <div className="mb-2">
-            <Input type="date" label="Event date" {...register('date')} />
+            <Input type="date" label="Event date" {...register('startDate')} />
+            <Input type="date" label="Event date" {...register('endDate')} />
           </div>
           <div className="mb-2">
-            <Input label="Event location" {...register('location')} />
+            <Input label="Event location" {...register('address')} />
           </div>
           <div className="mb-2">
             <Input
