@@ -10,17 +10,18 @@ datasource db {
 }
 
 model Event {
-  id          String   @id @default(uuid())
-  title       String   @db.VarChar(255)
-  description String   @db.LongText()
-  startDate   DateTime
-  endDate     DateTime
-  address     String
-  isPublished Boolean? @default(false)
+  id                   String   @id @default(uuid())
+  title                String   @db.VarChar(255)
+  description          String   @db.LongText()
+  startDate            DateTime
+  endDate              DateTime
+  address              String
+  isPublished          Boolean? @default(false)
   // author      User     @relation("EventAuthor", fields: [authorId], references: [id])
-  authorId    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  authorId             String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  maxNumberOfAttendees Int?
   // attendees   User[]   @relation("EventAttendees")
 }
 

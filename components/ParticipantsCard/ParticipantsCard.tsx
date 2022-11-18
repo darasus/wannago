@@ -29,14 +29,8 @@ export function ParticipantsCard() {
             <Avatar
               images={[
                 'https://source.unsplash.com/eyJhcHBfaWQiOjEyMDd9',
-                'https://source.unsplash.com/eyJhcHBfaWQiOjEyMDd9',
-                'https://source.unsplash.com/eyJhcHBfaWQiOjEyMDd9',
-                'https://source.unsplash.com/eyJhcHBfaWQiOjEyMDd9',
-                'https://source.unsplash.com/eyJhcHBfaWQiOjEyMDd9',
-                'https://source.unsplash.com/eyJhcHBfaWQiOjEyMDd9',
-                'https://source.unsplash.com/eyJhcHBfaWQiOjEyMDd9',
-                'https://source.unsplash.com/eyJhcHBfaWQiOjEyMDd9',
-                'https://source.unsplash.com/eyJhcHBfaWQiOjEyMDd9',
+                'https://source.unsplash.com/YzLMmxDTrvI',
+                'https://source.unsplash.com/6G6akT8biLg',
               ]}
             />
             <div className="grow" />

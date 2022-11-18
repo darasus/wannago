@@ -1,7 +1,7 @@
 import {getAuth} from '@clerk/nextjs/server';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {prisma} from '../../lib/prisma';
-import {CreateEventInput} from '../../model';
+import {CreateEventInput, EventOutput} from '../../model';
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,8 +13,16 @@ export default async function handler(
     return res.status(401).json({error: 'Unauthorized'});
   }
 
-  const {title, description, startDate, endDate, address} =
-    CreateEventInput.parse(JSON.parse(req.body));
+  const {
+    title,
+    description,
+    startDate,
+    endDate,
+    address,
+    maxNumberOfAttendees,
+  } = CreateEventInput.parse(JSON.parse(req.body));
+
+  console.log(title);
 
   const response = await prisma.event.create({
     data: {
@@ -24,8 +32,11 @@ export default async function handler(
       startDate: new Date(endDate).toISOString(),
       address: address,
       authorId: userId,
+      maxNumberOfAttendees: maxNumberOfAttendees,
     },
   });
 
-  res.status(200).json(response);
+  const event = EventOutput.parse(response);
+
+  res.status(200).json(event);
 }

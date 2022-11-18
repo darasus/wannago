@@ -1,0 +1,20 @@
+'use client';
+
+import {Event} from '@prisma/client';
+import {useRouter} from 'next/navigation';
+import {EventForm} from './EventForm';
+import {useEventForm} from './hooks/useEventForm';
+
+interface Props {
+  event: Event;
+}
+
+export function EditEventForm({event}: Props) {
+  const {push} = useRouter();
+  const {onSubmit, register} = useEventForm({
+    event,
+    onSuccess: () => push(`/event/${event.id}`),
+  });
+
+  return <EventForm onSubmit={onSubmit} register={register} />;
+}
