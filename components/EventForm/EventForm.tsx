@@ -6,7 +6,7 @@ import {Button} from '../Button/Button';
 import {Card} from '../Card/Card';
 import {Input} from '../Input/Input';
 import {Text} from '../Text/Text';
-import {TextArea} from '../TextArea/TextArea';
+import {TextInput} from '../TextInput/TextInput';
 import {Form} from './types';
 
 interface Props {
@@ -33,7 +33,7 @@ export function EventForm({onSubmit, register}: Props) {
             <Input label="Event title" {...register('title')} />
           </div>
           <div className="mb-2">
-            <TextArea label="Event description" {...register('description')} />
+            <TextInput label="Event description" {...register('description')} />
           </div>
           <div className="mb-2">
             <Input

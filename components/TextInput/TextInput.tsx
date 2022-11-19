@@ -5,7 +5,10 @@ interface Props extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
 }
 
-function TextAreaWithoutRef(props: Props, ref: React.Ref<HTMLTextAreaElement>) {
+function TextInputWithoutRef(
+  props: Props,
+  ref: React.Ref<HTMLTextAreaElement>
+) {
   return (
     <div>
       {props.label && (
@@ -28,4 +31,4 @@ function TextAreaWithoutRef(props: Props, ref: React.Ref<HTMLTextAreaElement>) {
   );
 }
 
-export const TextArea = forwardRef(TextAreaWithoutRef);
+export const TextInput = forwardRef(TextInputWithoutRef);
