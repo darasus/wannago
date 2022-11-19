@@ -6,6 +6,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (req.method !== 'GET') {
+    return res.status(405).json({error: 'Method Not Allowed'});
+  }
+
   const {id} = GetEventInput.parse(req.query);
 
   const response = await prisma.event.findFirst({

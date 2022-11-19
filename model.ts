@@ -37,6 +37,24 @@ export const EventOutput = z.object({
   updatedAt: dateType,
 });
 
+export const EditEventInput = z.object({
+  id: z.string().uuid(),
+  title: z.string(),
+  description: z.string(),
+  startDate: z.string(),
+  endDate: z.string(),
+  address: z.string(),
+  maxNumberOfAttendees: z
+    .number()
+    .or(z.string())
+    .transform((val): number => {
+      if (typeof val === 'number') {
+        return val;
+      }
+      return Number(val);
+    }),
+});
+
 export const CreateEventInput = z.object({
   title: z.string(),
   description: z.string(),

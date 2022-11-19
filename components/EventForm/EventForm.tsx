@@ -37,14 +37,14 @@ export function EventForm({onSubmit, register}: Props) {
           </div>
           <div className="mb-2">
             <Input
-              type="date"
+              type="datetime-local"
               label="Event start date"
               {...register('startDate')}
             />
           </div>
           <div className="mb-2">
             <Input
-              type="date"
+              type="datetime-local"
               label="Event end date"
               {...register('endDate')}
             />

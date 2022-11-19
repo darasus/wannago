@@ -1,8 +1,8 @@
 export interface Form {
   title: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   address: string;
   maxNumberOfAttendees: number;
   featuredImage: string;

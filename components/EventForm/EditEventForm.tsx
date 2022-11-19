@@ -11,10 +11,10 @@ interface Props {
 
 export function EditEventForm({event}: Props) {
   const {push} = useRouter();
-  const {onSubmit, register} = useEventForm({
+  const {onSubmitEdit, register} = useEventForm({
     event,
     onSuccess: () => push(`/event/${event.id}`),
   });
 
-  return <EventForm onSubmit={onSubmit} register={register} />;
+  return <EventForm onSubmit={onSubmitEdit} register={register} />;
 }

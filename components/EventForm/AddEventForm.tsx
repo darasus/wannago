@@ -6,9 +6,9 @@ import {useEventForm} from './hooks/useEventForm';
 
 export function AddEventForm() {
   const {push} = useRouter();
-  const {onSubmit, register} = useEventForm({
+  const {onSubmitCreate, register} = useEventForm({
     onSuccess: event => push(`/event/${event.id}`),
   });
 
-  return <EventForm onSubmit={onSubmit} register={register} />;
+  return <EventForm onSubmit={onSubmitCreate} register={register} />;
 }

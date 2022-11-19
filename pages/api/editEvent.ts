@@ -1,7 +1,7 @@
 import {getAuth} from '@clerk/nextjs/server';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {prisma} from '../../lib/prisma';
-import {CreateEventInput, EventOutput} from '../../model';
+import {EditEventInput, EventOutput} from '../../model';
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,17 +18,19 @@ export default async function handler(
   }
 
   const {
+    id,
     title,
     description,
     startDate,
     endDate,
     address,
     maxNumberOfAttendees,
-  } = CreateEventInput.parse(JSON.parse(req.body));
+  } = EditEventInput.parse(JSON.parse(req.body));
 
-  console.log(title);
-
-  const response = await prisma.event.create({
+  const response = await prisma.event.update({
+    where: {
+      id,
+    },
     data: {
       title: title,
       description: description,
