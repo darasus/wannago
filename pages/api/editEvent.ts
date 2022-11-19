@@ -34,8 +34,8 @@ export default async function handler(
     data: {
       title: title,
       description: description,
-      endDate: new Date(startDate).toISOString(),
-      startDate: new Date(endDate).toISOString(),
+      startDate: new Date(startDate).toISOString(),
+      endDate: new Date(endDate).toISOString(),
       address: address,
       authorId: userId,
       maxNumberOfAttendees: maxNumberOfAttendees,
