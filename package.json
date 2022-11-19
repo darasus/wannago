@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "vercel build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "prisma:generate": "dotenv -e ./.vercel/.env.development.local -- npx prisma generate dev",
