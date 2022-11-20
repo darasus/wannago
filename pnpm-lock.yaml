@@ -6,6 +6,7 @@ specifiers:
   '@hookform/resolvers': ^2.9.10
   '@prisma/client': ^4.6.1
   '@tailwindcss/forms': ^0.5.3
+  '@types/isomorphic-fetch': ^0.0.36
   '@types/lodash.debounce': ^4.0.7
   '@types/node': ^18.11.9
   '@types/react': 18.0.25
@@ -16,6 +17,7 @@ specifiers:
   dotenv-cli: ^6.0.0
   eslint: 8.27.0
   eslint-config-next: 13.0.3
+  isomorphic-fetch: ^3.0.0
   lodash.debounce: ^4.0.8
   next: 13.0.4
   next-superjson-plugin: ^0.4.9
@@ -24,6 +26,7 @@ specifiers:
   react: 18.2.0
   react-dom: 18.2.0
   react-hook-form: ^7.39.4
+  superjson: ^1.11.0
   tailwindcss: ^3.2.4
   timeago.js: ^4.0.2
   ts-node: ^10.9.1
@@ -38,16 +41,19 @@ dependencies:
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.4
   clsx: 1.2.1
   date-fns: 2.29.3
+  isomorphic-fetch: 3.0.0
   lodash.debounce: 4.0.8
   next: 13.0.4_biqbaboplfbrettd7655fr4n2y
-  next-superjson-plugin: 0.4.9_next@13.0.4
+  next-superjson-plugin: 0.4.9_nlu4fd3rb2vzqujmrrot54hrgi
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.39.4_react@18.2.0
+  superjson: 1.11.0
   timeago.js: 4.0.2
   zod: 3.19.1
 
 devDependencies:
+  '@types/isomorphic-fetch': 0.0.36
   '@types/lodash.debounce': 4.0.7
   '@types/node': 18.11.9
   '@types/react': 18.0.25
@@ -550,6 +556,10 @@ packages:
       '@types/serve-static': 1.15.0
     dev: false
 
+  /@types/isomorphic-fetch/0.0.36:
+    resolution: {integrity: sha512-ulw4d+vW1HKn4oErSmNN2HYEcHGq0N1C5exlrMM0CRqX1UUpFhGb5lwiom5j9KN3LBJJDLRmYIZz1ghm7FIzZw==}
+    dev: true
+
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
@@ -975,6 +985,13 @@ packages:
     dependencies:
       depd: 2.0.0
       keygrip: 1.1.0
+    dev: false
+
+  /copy-anything/3.0.2:
+    resolution: {integrity: sha512-CzATjGXzUQ0EvuvgOCI6A4BGOo2bcVx8B+eC2nF862iv9fopnPQwlrbACakNCHRIJbCSBj+J/9JeDf60k64MkA==}
+    engines: {node: '>=12.13'}
+    dependencies:
+      is-what: 4.1.7
     dev: false
 
   /core-js-pure/3.26.1:
@@ -1849,9 +1866,23 @@ packages:
       call-bind: 1.0.2
     dev: true
 
+  /is-what/4.1.7:
+    resolution: {integrity: sha512-DBVOQNiPKnGMxRMLIYSwERAS5MVY1B7xYiGnpgctsOFvVDz9f9PFXXxMcTOHuoqYp4NK9qFYQaIC1NRRxLMpBQ==}
+    engines: {node: '>=12.13'}
+    dev: false
+
   /isexe/2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
+
+  /isomorphic-fetch/3.0.0:
+    resolution: {integrity: sha512-qvUtwJ3j6qwsF3jLxkZ72qCgjMysPzDfeV240JHiGZsANBYd+EEuu35v7dfrJ9Up0Ak07D7GGSkGhCHTqg/5wA==}
+    dependencies:
+      node-fetch: 2.6.7
+      whatwg-fetch: 3.6.2
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /jose/2.0.6:
     resolution: {integrity: sha512-FVoPY7SflDodE4lknJmbAHSUjLCzE2H1F6MS0RYKMQ8SR+lNccpMf8R4eqkNYyyUjR5qZReOzZo5C5YiHOCjjg==}
@@ -2119,7 +2150,7 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next-superjson-plugin/0.4.9_next@13.0.4:
+  /next-superjson-plugin/0.4.9_nlu4fd3rb2vzqujmrrot54hrgi:
     resolution: {integrity: sha512-MSj40zj+ZRmFnZgZxOgQFD6efk3A5OQAPhU9e018JthWPjiE/Xx3HyxOsuOycoBDSxurBa6xH+m78SRr60JTXw==}
     peerDependencies:
       next: '>12.3.0'
@@ -2127,6 +2158,7 @@ packages:
     dependencies:
       hoist-non-react-statics: 3.3.2
       next: 13.0.4_biqbaboplfbrettd7655fr4n2y
+      superjson: 1.11.0
     dev: false
 
   /next/13.0.4_biqbaboplfbrettd7655fr4n2y:
@@ -2735,6 +2767,13 @@ packages:
       react: 18.2.0
     dev: false
 
+  /superjson/1.11.0:
+    resolution: {integrity: sha512-6PfAg1FKhqkwWvPb2uXhH4MkMttdc17eJ91+Aoz4s1XUEDZFmLfFx/xVA3wgkPxAGy5dpozgGdK6V/n20Wj9yg==}
+    engines: {node: '>=10'}
+    dependencies:
+      copy-anything: 3.0.2
+    dev: false
+
   /supports-color/7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
@@ -2957,6 +2996,10 @@ packages:
 
   /webidl-conversions/3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
+    dev: false
+
+  /whatwg-fetch/3.6.2:
+    resolution: {integrity: sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==}
     dev: false
 
   /whatwg-url/5.0.0:

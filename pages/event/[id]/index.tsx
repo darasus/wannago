@@ -1,5 +1,5 @@
-import {auth} from '@clerk/nextjs/app-beta';
-import {notFound} from 'next/navigation';
+import {getAuth} from '@clerk/nextjs/server';
+import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import {DateCard} from '../../../components/DateCard/DateCard';
 import {InfoCard} from '../../../components/InfoCard/InfoCard';
 import {LocationCard} from '../../../components/LocationCard/LocationCard';
@@ -7,17 +7,13 @@ import {ManageEventBar} from '../../../components/ManageEventBar/ManageEventBar'
 import {ParticipantsCard} from '../../../components/ParticipantsCard/ParticipantsCard';
 import {api} from '../../../lib/api';
 
-export default async function EventPage({params}: any) {
-  const {userId} = auth();
-  const event = await api.getEvent(params.id);
-
-  if (!event) {
-    notFound();
-  }
-
+export default function EventPage({
+  event,
+  myEvent,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      {event.authorId === userId && (
+      {myEvent && (
         <div className="mb-4">
           <ManageEventBar id={event.id} />
         </div>
@@ -39,4 +35,18 @@ export default async function EventPage({params}: any) {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps({
+  query,
+  req,
+}: GetServerSidePropsContext) {
+  const event = await api.getEvent(query.id as string);
+  const {userId} = getAuth(req);
+
+  if (!event) {
+    return {notFound: true};
+  }
+
+  return {props: {event, myEvent: event.authorId === userId}};
 }

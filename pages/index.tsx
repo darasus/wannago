@@ -1,15 +1,14 @@
-import {auth} from '@clerk/nextjs/app-beta';
+import {getAuth} from '@clerk/nextjs/server';
+import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import {Card} from '../components/Card/Card';
 import {Text} from '../components/Text/Text';
 import {api} from '../lib/api';
 
-export default async function HomePage() {
-  const {userId} = auth();
-
-  const events = userId ? await api.getMyEvents(userId) : [];
-
+export default function HomePage({
+  events,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div>
       {events?.map(event => {
@@ -22,6 +21,7 @@ export default async function HomePage() {
                   alt=""
                   fill
                   style={{objectFit: 'cover'}}
+                  priority
                 />
               </div>
               <div className="p-4">
@@ -33,4 +33,16 @@ export default async function HomePage() {
       })}
     </div>
   );
+}
+
+export async function getServerSideProps({req}: GetServerSidePropsContext) {
+  const {userId} = getAuth(req);
+
+  if (!userId) {
+    return {props: {}};
+  }
+
+  const events = await api.getMyEvents(userId);
+
+  return {props: {events}};
 }

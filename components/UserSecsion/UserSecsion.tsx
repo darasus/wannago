@@ -1,10 +1,14 @@
-import {User} from '@clerk/nextjs/dist/api';
+import {useUser} from '@clerk/nextjs';
 import {Avatar} from '../Avatar/Avatar';
 import {Text} from '../Text/Text';
 
-type Props = {user: User};
+export function UserSecsion() {
+  const {user, isSignedIn} = useUser();
 
-export function UserSecsion({user}: Props) {
+  if (!isSignedIn) {
+    return null;
+  }
+
   return (
     <div className="flex">
       <Avatar images={[user.profileImageUrl]} className="mr-2" />

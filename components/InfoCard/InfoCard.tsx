@@ -19,6 +19,7 @@ export function InfoCard({title, description}: Props) {
             alt=""
             fill
             style={{objectFit: 'cover'}}
+            priority
           />
         </div>
         <div className="p-4">

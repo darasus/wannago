@@ -24,10 +24,10 @@ export function ManageEventBar({id}: Props) {
   return (
     <Card>
       <div>
-        <Button variant="secondary" className="mr-4" onClick={handleEditClick}>
+        <Button variant="link" className="mr-4" onClick={handleEditClick}>
           Edit
         </Button>
-        <Button variant="danger" onClick={handleDeleteClick}>
+        <Button variant="link-neutral" onClick={handleDeleteClick}>
           Delete
         </Button>
       </div>

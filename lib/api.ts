@@ -1,13 +1,14 @@
 import {z} from 'zod';
 import {Form} from '../components/EventForm/types';
 import {EventOutput} from '../model';
+import fetch from 'isomorphic-fetch';
 
 export type EventOutputs = z.infer<typeof EventOutput>[];
 
 function getMyEvents(userId: string) {
   return fetch(`http://localhost:3000/api/getMyEvents/${userId}`)
     .then(res => res.json())
-    .then(res => {
+    .then((res: any) => {
       if (res) {
         return res.map((event: any) =>
           EventOutput.parse(event)
