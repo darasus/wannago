@@ -34,7 +34,7 @@ export function useEventForm({
     },
   });
 
-  console.error(errors);
+  console.log(errors);
 
   const onSubmitCreate = handleSubmit(async data => {
     const response = await fetch('/api/createEvent', {

@@ -26,8 +26,6 @@ export default async function handler(
     maxNumberOfAttendees,
   } = CreateEventInput.parse(JSON.parse(req.body));
 
-  console.log(title);
-
   const response = await prisma.event.create({
     data: {
       title: title,
