@@ -4,6 +4,7 @@ import {useUser} from '@clerk/nextjs';
 import {Event} from '@prisma/client';
 import {format} from 'date-fns';
 import {useForm} from 'react-hook-form';
+import {api} from '../../../lib/api';
 import {EventOutput} from '../../../model';
 import {Form} from '../types';
 
@@ -34,35 +35,23 @@ export function useEventForm({
     },
   });
 
-  console.log(errors);
-
   const onSubmitCreate = handleSubmit(async data => {
-    const response = await fetch('/api/createEvent', {
-      method: 'POST',
-      body: JSON.stringify({
-        ...data,
-        email: user?.primaryEmailAddress?.emailAddress,
-      }),
-    }).then(res => res.json());
+    const response = await api.createEvent({
+      ...data,
+      email: user?.primaryEmailAddress?.emailAddress!,
+    });
 
-    const parsedEvent = EventOutput.parse(response);
-
-    onSuccess?.(parsedEvent);
+    onSuccess?.(response);
   });
 
   const onSubmitEdit = handleSubmit(async data => {
-    const response = await fetch('/api/editEvent', {
-      method: 'POST',
-      body: JSON.stringify({
-        ...data,
-        id: event?.id,
-        email: user?.primaryEmailAddress?.emailAddress,
-      }),
-    }).then(res => res.json());
+    const response = await api.editEvent({
+      ...data,
+      id: event?.id!,
+      email: user?.primaryEmailAddress?.emailAddress!,
+    });
 
-    const parsedEvent = EventOutput.parse(response);
-
-    onSuccess?.(parsedEvent);
+    onSuccess?.(response);
   });
 
   return {register, onSubmitCreate, onSubmitEdit};

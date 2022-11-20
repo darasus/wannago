@@ -1,22 +1,18 @@
-import {currentUser} from '@clerk/nextjs/app-beta';
+import {auth} from '@clerk/nextjs/app-beta';
 import Image from 'next/image';
 import Link from 'next/link';
 import {Card} from '../components/Card/Card';
 import {Text} from '../components/Text/Text';
-import {prisma} from '../lib/prisma';
+import {api} from '../lib/api';
 
 export default async function HomePage() {
-  const user = await currentUser();
-  if (!user) return null;
-  const events = await prisma.event.findMany({
-    where: {
-      authorId: user.id,
-    },
-  });
+  const {userId} = auth();
+
+  const events = userId ? await api.getMyEvents(userId) : [];
 
   return (
     <div>
-      {events.map(event => {
+      {events?.map(event => {
         return (
           <Link href={`/event/${event.id}`} key={event.id}>
             <Card className="p-0">

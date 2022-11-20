@@ -6,4 +6,4 @@ export default withClerkMiddleware(() => {
 });
 
 // don't run middleware running on static files
-// export const config = {matcher: '/((?!.*\\.).*)'};
+export const config = {matcher: '/((?!.*\\.).*)'};

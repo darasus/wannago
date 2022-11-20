@@ -1,9 +1,9 @@
 import {notFound} from 'next/navigation';
 import {EditEventForm} from '../../../../components/EventForm/EditEventForm';
-import {prisma} from '../../../../lib/prisma';
+import {api} from '../../../../lib/api';
 
 export default async function EventPage({params}: any) {
-  const event = await prisma.event.findFirst({where: {id: params.id}});
+  const event = await api.getEvent(params.id);
 
   if (!event) {
     notFound();

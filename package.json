@@ -14,7 +14,7 @@
     "prisma:push": "dotenv -e ./.vercel/.env.development.local -- npx prisma db push"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.6.0",
+    "@clerk/nextjs": "^4.6.1",
     "@heroicons/react": "^2.0.13",
     "@hookform/resolvers": "^2.9.10",
     "@prisma/client": "^4.6.1",

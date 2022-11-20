@@ -1,7 +1,7 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
-import {useDeleteEvent} from '../../hooks/useDeleteEvent';
+import {api} from '../../lib/api';
 import {Button} from '../Button/Button';
 import {Card} from '../Card/Card';
 
@@ -11,14 +11,13 @@ interface Props {
 
 export function ManageEventBar({id}: Props) {
   const {push} = useRouter();
-  const {deleteEvent} = useDeleteEvent(id);
 
   const handleEditClick = () => {
     push(`/event/${id}/edit`);
   };
 
   const handleDeleteClick = async () => {
-    await deleteEvent();
+    await api.deleteEvent(id);
     push('/');
   };
 

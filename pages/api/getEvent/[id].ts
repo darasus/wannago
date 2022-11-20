@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {prisma} from '../../../lib/prisma';
-import {GetEventInput} from '../../../model';
+import {EventOutput, GetEventInput} from '../../../model';
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,7 +18,7 @@ export default async function handler(
     },
   });
 
-  const event = GetEventInput.parse(response);
+  const event = EventOutput.parse(response);
 
   res.status(200).json(event);
 }

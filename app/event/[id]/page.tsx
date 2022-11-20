@@ -5,11 +5,11 @@ import {InfoCard} from '../../../components/InfoCard/InfoCard';
 import {LocationCard} from '../../../components/LocationCard/LocationCard';
 import {ManageEventBar} from '../../../components/ManageEventBar/ManageEventBar';
 import {ParticipantsCard} from '../../../components/ParticipantsCard/ParticipantsCard';
-import {prisma} from '../../../lib/prisma';
+import {api} from '../../../lib/api';
 
 export default async function EventPage({params}: any) {
   const {userId} = auth();
-  const event = await prisma.event.findFirst({where: {id: params.id}});
+  const event = await api.getEvent(params.id);
 
   if (!event) {
     notFound();
