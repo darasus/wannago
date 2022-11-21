@@ -41,6 +41,7 @@ export async function getServerSideProps({
   query,
   req,
 }: GetServerSidePropsContext) {
+  req.headers.host;
   const event = await api.getEvent(query.id as string);
   const {userId} = getAuth(req);
 
