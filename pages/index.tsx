@@ -5,14 +5,24 @@ import {NextRequest} from 'next/server';
 import {Card} from '../components/Card/Card';
 import {Text} from '../components/Text/Text';
 import {api} from '../lib/api';
+import {PlusIcon} from '@heroicons/react/24/solid';
+import {useRouter} from 'next/router';
 
 interface Props {
   events: Event[];
 }
 
 export default function HomePage({events}: Props) {
+  const router = useRouter();
+
   return (
     <div>
+      <button
+        onClick={() => router.push('/event/add')}
+        className="flex justify-center w-full p-4 bg-green-100 border-green-700 border-dashed border-2 rounded-md mb-4"
+      >
+        <PlusIcon width={50} height={50} className="text-green-700" />
+      </button>
       {events?.map(event => {
         return (
           <Link href={`/event/${event.id}`} key={event.id}>

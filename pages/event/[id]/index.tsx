@@ -4,7 +4,6 @@ import {NextRequest} from 'next/server';
 import {DateCard} from '../../../components/DateCard/DateCard';
 import {InfoCard} from '../../../components/InfoCard/InfoCard';
 import {LocationCard} from '../../../components/LocationCard/LocationCard';
-import {ManageEventBar} from '../../../components/ManageEventBar/ManageEventBar';
 import {ParticipantsCard} from '../../../components/ParticipantsCard/ParticipantsCard';
 import {api} from '../../../lib/api';
 
@@ -14,13 +13,13 @@ export default function EventPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      {myEvent && (
-        <div className="mb-4">
-          <ManageEventBar id={event.id} />
-        </div>
-      )}
       <div className="mb-4">
-        <InfoCard title={event.title} description={event.description} />
+        <InfoCard
+          eventId={event.id}
+          showManageTools={myEvent}
+          title={event.title}
+          description={event.description}
+        />
       </div>
       <div className="mb-4">
         <DateCard

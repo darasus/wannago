@@ -1,20 +1,13 @@
 import clsx from 'clsx';
 import {ButtonHTMLAttributes, PropsWithChildren} from 'react';
-
-type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'neutral'
-  | 'danger'
-  | 'link'
-  | 'link-neutral';
+import {ButtonSize, ButtonVariant} from './types';
 
 interface Props
   extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
   size?: ButtonSize;
   variant?: ButtonVariant;
   className?: string;
+  iconLeft?: React.ReactNode;
 }
 
 export function Button({
@@ -22,6 +15,7 @@ export function Button({
   variant = 'primary',
   children,
   className,
+  iconLeft,
   ...props
 }: Props) {
   // variants
@@ -31,6 +25,9 @@ export function Button({
   const isSecondary = variant === 'secondary';
   const isNeutral = variant === 'neutral';
   const isDanger = variant === 'danger';
+  // icons
+  const isIconButton = iconLeft && !children;
+  const isIconAndTextButton = iconLeft && children;
   // sizes
   const isXs = size === 'xs';
   const isSm = size === 'sm';
@@ -50,11 +47,22 @@ export function Button({
           // base link styles
           'inline-flex items-center border-b': isLink || isLinkNeutral,
           // sizes
-          'px-2.5 py-1.5 text-xs': isXs && !(isLink || isLinkNeutral),
-          'px-3 py-2 text-sm': isSm && !(isLink || isLinkNeutral),
-          'px-4 py-2 text-sm': isMd && !(isLink || isLinkNeutral),
-          'px-4 py-2 text-base': isLg && !(isLink || isLinkNeutral),
-          'px-6 py-3 text-base': isXl && !(isLink || isLinkNeutral),
+          'px-2.5 py-1.5 text-xs':
+            !isIconButton && isXs && !(isLink || isLinkNeutral),
+          'px-3 py-2 text-sm':
+            !isIconButton && isSm && !(isLink || isLinkNeutral),
+          'px-4 py-2 text-sm':
+            !isIconButton && isMd && !(isLink || isLinkNeutral),
+          'px-4 py-2 text-base':
+            !isIconButton && isLg && !(isLink || isLinkNeutral),
+          'px-6 py-3 text-base':
+            !isIconButton && isXl && !(isLink || isLinkNeutral),
+          'p-1.5': isIconButton && isXs && !(isLink || isLinkNeutral),
+          'p-2':
+            isIconButton &&
+            (isSm || isMd || isLg) &&
+            !(isLink || isLinkNeutral),
+          'p-3': isIconButton && isXl && !(isLink || isLinkNeutral),
           // colors
           'border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500':
             isPrimary,
@@ -73,6 +81,7 @@ export function Button({
       )}
     >
       {children}
+      {iconLeft || ''}
     </button>
   );
 }

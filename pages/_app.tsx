@@ -22,7 +22,6 @@ export default function MyApp({Component, pageProps}: AppProps) {
             <Link href="/" className="mr-2">
               <Text>WannaGo</Text>
             </Link>
-            <a href="/event/add">add</a>
             <div className="grow" />
             <UserSecsion />
           </Card>
