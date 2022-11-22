@@ -16,7 +16,7 @@ export default function MyApp({Component, pageProps}: AppProps) {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ClerkProvider>
+      <ClerkProvider {...pageProps}>
         <div className=" p-4 max-w-xl m-auto">
           <Card className="flex mb-4">
             <Link href="/" className="mr-2">

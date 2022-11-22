@@ -1,6 +1,6 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
+import {useRouter} from 'next/router';
 import {api} from '../../lib/api';
 import {Button} from '../Button/Button';
 import {Card} from '../Card/Card';

@@ -1,6 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   experimental: {
+    runtime: 'experimental-edge',
     swcPlugins: [
       [
         'next-superjson-plugin',

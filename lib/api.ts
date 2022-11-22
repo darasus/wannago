@@ -1,7 +1,6 @@
 import {z} from 'zod';
 import {Form} from '../components/EventForm/types';
 import {EventOutput} from '../model';
-import axios from 'axios';
 
 const baseUrl = process.env.VERCEL_URL?.startsWith('localhost')
   ? `http://${process.env.VERCEL_URL}`
@@ -10,8 +9,12 @@ const baseUrl = process.env.VERCEL_URL?.startsWith('localhost')
 export type EventOutputs = z.infer<typeof EventOutput>[];
 
 function getMyEvents(userId: string) {
-  return axios(`${baseUrl}/api/getMyEvents/${userId}`)
-    .then(res => res.data)
+  return fetch(`${baseUrl}/api/getMyEvents`, {
+    headers: {
+      'x-user-id': userId,
+    },
+  })
+    .then(res => res.json())
     .then((res: any) => {
       if (res) {
         return res.map((event: any) =>
@@ -23,8 +26,8 @@ function getMyEvents(userId: string) {
 }
 
 function getEvent(eventId: string) {
-  return axios(`${baseUrl}/api/getEvent/${eventId}`)
-    .then(res => res.data)
+  return fetch(`${baseUrl}/api/getEvent/${eventId}`)
+    .then(res => res.json())
     .then(res => {
       if (res) {
         return EventOutput.parse(res);
@@ -34,29 +37,29 @@ function getEvent(eventId: string) {
 }
 
 function createEvent(data: Form & {email: string}) {
-  return axios(`${baseUrl}/api/createEvent`, {
+  return fetch(`${baseUrl}/api/createEvent`, {
     method: 'POST',
-    data,
+    body: JSON.stringify(data),
   })
-    .then(res => res.data)
+    .then(res => res.json())
     .then(res => EventOutput.parse(res));
 }
 
 function editEvent(data: Form & {email: string; id: string}) {
-  return axios(`${baseUrl}/api/editEvent`, {
+  return fetch(`${baseUrl}/api/editEvent`, {
     method: 'POST',
-    data,
+    body: JSON.stringify(data),
   })
-    .then(res => res.data)
+    .then(res => res.json())
     .then(res => EventOutput.parse(res));
 }
 
 function deleteEvent(eventId: string) {
-  return axios(`${baseUrl}/api/deleteEvent`, {
+  return fetch(`${baseUrl}/api/deleteEvent`, {
     method: 'POST',
-    data: {id: eventId},
+    body: JSON.stringify({id: eventId}),
   })
-    .then(res => res.data)
+    .then(res => res.json())
     .then(res => EventOutput.parse(res));
 }
 

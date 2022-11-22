@@ -1,4 +1,4 @@
-import {getAuth} from '@clerk/nextjs/server';
+import {buildClerkProps, getAuth} from '@clerk/nextjs/server';
 import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import {DateCard} from '../../../components/DateCard/DateCard';
 import {InfoCard} from '../../../components/InfoCard/InfoCard';
@@ -41,7 +41,6 @@ export async function getServerSideProps({
   query,
   req,
 }: GetServerSidePropsContext) {
-  req.headers.host;
   const event = await api.getEvent(query.id as string);
   const {userId} = getAuth(req);
 
@@ -49,5 +48,7 @@ export async function getServerSideProps({
     return {notFound: true};
   }
 
-  return {props: {event, myEvent: event.authorId === userId}};
+  return {
+    props: {...buildClerkProps(req), event, myEvent: event.authorId === userId},
+  };
 }

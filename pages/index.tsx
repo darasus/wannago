@@ -1,14 +1,17 @@
 import {getAuth} from '@clerk/nextjs/server';
-import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
+import {Event} from '@prisma/client';
+import {GetServerSidePropsContext} from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import {Card} from '../components/Card/Card';
 import {Text} from '../components/Text/Text';
 import {api} from '../lib/api';
 
-export default function HomePage({
-  events,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+interface Props {
+  events: Event[];
+}
+
+export default function HomePage({events}: Props) {
   return (
     <div>
       {events?.map(event => {
