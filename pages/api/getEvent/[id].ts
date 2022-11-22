@@ -1,24 +1,35 @@
-import {NextApiRequest, NextApiResponse} from 'next';
+import {NextRequest} from 'next/server';
+import {z} from 'zod';
 import {prisma} from '../../../lib/prisma';
-import {GetEventInput} from '../../../model';
+import {EventOutput} from '../../../model';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextRequest) {
   if (req.method !== 'GET') {
-    return res.status(405).json({error: 'Method Not Allowed'});
+    return new Response(JSON.stringify({error: 'Method Not Allowed'}), {
+      status: 405,
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
   }
 
-  const {id} = GetEventInput.parse(req.query);
+  const {searchParams} = new URL(req.url);
+  const id = searchParams.get('id');
+
+  z.string().min(1).parse(id);
 
   const response = await prisma.event.findFirst({
     where: {
-      id,
+      id: id!,
     },
   });
 
-  const event = GetEventInput.parse(response);
+  const event = EventOutput.parse(response);
 
-  res.status(200).json(event);
+  return new Response(JSON.stringify(event), {
+    status: 200,
+    headers: {
+      'content-type': 'application/json',
+    },
+  });
 }

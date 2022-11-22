@@ -1,4 +1,3 @@
-import {Event} from '@prisma/client';
 import {z} from 'zod';
 
 const dateType = z
@@ -74,4 +73,8 @@ export const CreateEventInput = z.object({
 
 export const DeleteEventInput = z.object({
   id: z.string(),
+});
+
+export const GetMyEventsInput = z.object({
+  userId: z.string(),
 });

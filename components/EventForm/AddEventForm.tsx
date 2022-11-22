@@ -1,6 +1,6 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
+import {useRouter} from 'next/router';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 
