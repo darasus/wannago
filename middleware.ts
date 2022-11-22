@@ -2,23 +2,19 @@ import {withClerkMiddleware, getAuth} from '@clerk/nextjs/server';
 import {NextRequest, NextResponse} from 'next/server';
 
 export default withClerkMiddleware((request: NextRequest) => {
-  try {
-    const auth = getAuth(request);
-    const requestHeaders = new Headers(request.headers);
-    const userId = auth?.userId || requestHeaders.get('x-user-id');
+  const auth = getAuth(request);
+  const requestHeaders = new Headers(request.headers);
+  const userId = auth?.userId || requestHeaders.get('x-user-id');
 
-    if (userId) {
-      requestHeaders.set('x-user-id', userId);
-    }
-
-    return NextResponse.next({
-      request: {
-        headers: requestHeaders,
-      },
-    });
-  } catch (error) {
-    console.log(error);
+  if (userId) {
+    requestHeaders.set('x-user-id', userId);
   }
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 });
 
 export const config = {
