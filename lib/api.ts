@@ -2,18 +2,29 @@ import {z} from 'zod';
 import {Form} from '../components/EventForm/types';
 import {EventOutput} from '../model';
 
-const vercelUrl = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
+    return 'https://www.wannago.app';
+  }
 
-const baseUrl = vercelUrl?.startsWith('localhost')
-  ? `http://${vercelUrl}`
-  : vercelUrl
-  ? `https://${vercelUrl}`
-  : 'http://localhost:3000';
+  const vercelUrl =
+    process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
+
+  if (vercelUrl?.startsWith('localhost')) {
+    return `http://${vercelUrl}`;
+  }
+
+  if (vercelUrl) {
+    return `https://${vercelUrl}`;
+  }
+
+  return 'http://localhost:3000';
+};
 
 export type EventOutputs = z.infer<typeof EventOutput>[];
 
 function getMyEvents(userId: string) {
-  return fetch(`${baseUrl}/api/getMyEvents`, {
+  return fetch(`${getBaseUrl()}/api/getMyEvents`, {
     headers: {
       'x-user-id': userId,
     },
@@ -30,7 +41,7 @@ function getMyEvents(userId: string) {
 }
 
 function getEvent(eventId: string) {
-  return fetch(`${baseUrl}/api/getEvent/${eventId}`)
+  return fetch(`${getBaseUrl()}/api/getEvent/${eventId}`)
     .then(res => res.json())
     .then(res => {
       if (res) {
@@ -41,7 +52,7 @@ function getEvent(eventId: string) {
 }
 
 function createEvent(data: Form & {email: string}) {
-  return fetch(`${baseUrl}/api/createEvent`, {
+  return fetch(`${getBaseUrl()}/api/createEvent`, {
     method: 'POST',
     body: JSON.stringify(data),
   })
@@ -50,7 +61,7 @@ function createEvent(data: Form & {email: string}) {
 }
 
 function editEvent(data: Form & {email: string; id: string}) {
-  return fetch(`${baseUrl}/api/editEvent`, {
+  return fetch(`${getBaseUrl()}/api/editEvent`, {
     method: 'POST',
     body: JSON.stringify(data),
   })
@@ -59,7 +70,7 @@ function editEvent(data: Form & {email: string; id: string}) {
 }
 
 function deleteEvent(eventId: string) {
-  return fetch(`${baseUrl}/api/deleteEvent`, {
+  return fetch(`${getBaseUrl()}/api/deleteEvent`, {
     method: 'POST',
     body: JSON.stringify({id: eventId}),
   })
