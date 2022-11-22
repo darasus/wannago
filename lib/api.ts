@@ -2,10 +2,12 @@ import {z} from 'zod';
 import {Form} from '../components/EventForm/types';
 import {EventOutput} from '../model';
 
-const baseUrl = process.env.VERCEL_URL?.startsWith('localhost')
-  ? `http://${process.env.VERCEL_URL}`
-  : process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
+const vercelUrl = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
+
+const baseUrl = vercelUrl?.startsWith('localhost')
+  ? `http://${vercelUrl}`
+  : vercelUrl
+  ? `https://${vercelUrl}`
   : 'http://localhost:3000';
 
 export type EventOutputs = z.infer<typeof EventOutput>[];
