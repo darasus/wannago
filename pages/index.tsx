@@ -1,8 +1,7 @@
-import {getAuth} from '@clerk/nextjs/server';
 import {Event} from '@prisma/client';
-import {GetServerSidePropsContext} from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import {NextRequest} from 'next/server';
 import {Card} from '../components/Card/Card';
 import {Text} from '../components/Text/Text';
 import {api} from '../lib/api';
@@ -38,8 +37,11 @@ export default function HomePage({events}: Props) {
   );
 }
 
-export async function getServerSideProps({req}: GetServerSidePropsContext) {
-  const {userId} = getAuth(req);
+export async function getServerSideProps({req}: {req: NextRequest}) {
+  const requestHeaders = new Headers(req.headers);
+  const userId = requestHeaders.get('x-user-id');
+
+  console.log({userId});
 
   if (!userId) {
     return {props: {}};
