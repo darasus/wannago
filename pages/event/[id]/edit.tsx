@@ -1,4 +1,3 @@
-import {buildClerkProps} from '@clerk/nextjs/server';
 import {InferGetServerSidePropsType} from 'next';
 import {NextParsedUrlQuery} from 'next/dist/server/request-meta';
 import {NextRequest} from 'next/server';
@@ -12,7 +11,6 @@ export default function EventEditPage({
 }
 
 export async function getServerSideProps({
-  req,
   query,
 }: {
   req: NextRequest;
@@ -24,5 +22,5 @@ export async function getServerSideProps({
     return {notFound: true};
   }
 
-  return {props: {...buildClerkProps(req), event}};
+  return {props: {event}};
 }

@@ -1,4 +1,3 @@
-import {buildClerkProps} from '@clerk/nextjs/server';
 import {InferGetServerSidePropsType} from 'next';
 import {NextParsedUrlQuery} from 'next/dist/server/request-meta';
 import {NextRequest} from 'next/server';
@@ -55,6 +54,6 @@ export async function getServerSideProps({
   }
 
   return {
-    props: {...buildClerkProps(req), event, myEvent: event.authorId === userId},
+    props: {event, myEvent: event.authorId === userId},
   };
 }

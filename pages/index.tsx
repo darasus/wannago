@@ -1,4 +1,3 @@
-import {buildClerkProps} from '@clerk/nextjs/server';
 import {Event} from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -48,5 +47,5 @@ export async function getServerSideProps({req}: {req: NextRequest}) {
 
   const events = await api.getMyEvents(userId);
 
-  return {props: {...buildClerkProps(req), events}};
+  return {props: {events}};
 }
