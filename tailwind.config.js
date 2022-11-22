@@ -1,4 +1,7 @@
 const forms = require('@tailwindcss/forms');
+// const typography = require('@tailwindcss/typography');
+const lineClamp = require('@tailwindcss/line-clamp');
+// const aspectRatio = require('@tailwindcss/aspect-ratio');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -10,5 +13,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [forms],
+  plugins: [lineClamp, forms],
 };

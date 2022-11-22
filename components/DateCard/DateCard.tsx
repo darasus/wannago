@@ -19,7 +19,19 @@ export function DateCard({startDate, endDate}: Props) {
         </SectionTitle>
         <Button variant="link-neutral">Add to calendar</Button>
       </div>
-      <div className="flex mb-2">
+      <div className="flex">
+        <div className="mr-2">
+          <div className="flex flex-col justify-center items-center border rounded-xl px-4 py-2  shadow-md">
+            <div className="h-0.5 bg-red-500 w-5 mb-1" />
+            <Text className="text-2xl leading-none">
+              {format(startDate, 'dd')}
+            </Text>
+            <div />
+            <Text className="uppercase text-xs leading-none text-gray-500">
+              {format(startDate, 'LLL')}
+            </Text>
+          </div>
+        </div>
         <div className="grow">
           <Text className="font-bold capitalize">
             {format(startDate, 'EEEE, MMMM dd')}
@@ -33,18 +45,6 @@ export function DateCard({startDate, endDate}: Props) {
             endDate,
             'k:mm'
           )}`}</Text>
-        </div>
-        <div>
-          <div className="flex flex-col justify-center items-center border rounded-xl px-4 py-2  shadow-md">
-            <div className="h-0.5 bg-red-500 w-5 mb-1" />
-            <Text className="text-2xl leading-none">
-              {format(startDate, 'dd')}
-            </Text>
-            <div />
-            <Text className="uppercase text-xs leading-none text-gray-500">
-              {format(startDate, 'LLL')}
-            </Text>
-          </div>
         </div>
       </div>
     </Card>

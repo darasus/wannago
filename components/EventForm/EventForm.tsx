@@ -19,15 +19,8 @@ export function EventForm({onSubmit, register}: Props) {
     <div>
       <Card>
         <form onSubmit={onSubmit}>
-          <div className="mb-2">
+          <div className="text-center mb-2">
             <Text className="text-2xl font-bold">Create event</Text>
-          </div>
-          <div className="mb-2">
-            <Input
-              type="file"
-              label="Event title"
-              {...register('featuredImage')}
-            />
           </div>
           <div className="mb-2">
             <Input label="Event title" {...register('title')} />
@@ -57,6 +50,13 @@ export function EventForm({onSubmit, register}: Props) {
               type="number"
               label="Max number of attendees"
               {...register('maxNumberOfAttendees')}
+            />
+          </div>
+          <div className="mb-2">
+            <Input
+              type="file"
+              label="Event title"
+              {...register('featuredImage')}
             />
           </div>
           <div>

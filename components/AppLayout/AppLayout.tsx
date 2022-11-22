@@ -6,7 +6,7 @@ import {UserSecsion} from '../UserSecsion/UserSecsion';
 
 export default function AppLayout({children}: PropsWithChildren) {
   return (
-    <div className=" p-4 max-w-xl m-auto">
+    <div className=" p-4 max-w-5xl m-auto">
       <Card className="flex mb-4">
         <Link href="/dashboard" className="mr-2">
           <Text>WannaGo</Text>
