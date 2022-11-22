@@ -1,4 +1,5 @@
 import {UserButton} from '@clerk/nextjs';
+import {clerkAppearance} from '../../clerkElements';
 
 export function UserSecsion() {
   return (
@@ -8,6 +9,7 @@ export function UserSecsion() {
       userProfileUrl="/me"
       userProfileMode="navigation"
       showName={true}
+      appearance={clerkAppearance}
     />
   );
 }
