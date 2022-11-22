@@ -2,7 +2,7 @@ import {z} from 'zod';
 import {Form} from '../components/EventForm/types';
 import {EventOutput} from '../model';
 
-const getBaseUrl = () => {
+export const getBaseUrl = () => {
   if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
     return 'https://www.wannago.app';
   }

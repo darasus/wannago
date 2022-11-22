@@ -1,6 +1,7 @@
 import {InferGetServerSidePropsType} from 'next';
 import {NextParsedUrlQuery} from 'next/dist/server/request-meta';
 import {NextRequest} from 'next/server';
+import AppLayout from '../../../components/AppLayout/AppLayout';
 import {DateCard} from '../../../components/DateCard/DateCard';
 import {InfoCard} from '../../../components/InfoCard/InfoCard';
 import {LocationCard} from '../../../components/LocationCard/LocationCard';
@@ -12,7 +13,7 @@ export default function EventPage({
   myEvent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <>
+    <AppLayout>
       <div className="mb-4">
         <InfoCard
           eventId={event.id}
@@ -33,7 +34,7 @@ export default function EventPage({
       <div>
         <ParticipantsCard />
       </div>
-    </>
+    </AppLayout>
   );
 }
 
