@@ -1,5 +1,7 @@
-import {buildClerkProps, getAuth} from '@clerk/nextjs/server';
-import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
+import {buildClerkProps} from '@clerk/nextjs/server';
+import {InferGetServerSidePropsType} from 'next';
+import {NextParsedUrlQuery} from 'next/dist/server/request-meta';
+import {NextRequest} from 'next/server';
 import {DateCard} from '../../../components/DateCard/DateCard';
 import {InfoCard} from '../../../components/InfoCard/InfoCard';
 import {LocationCard} from '../../../components/LocationCard/LocationCard';
@@ -38,11 +40,15 @@ export default function EventPage({
 }
 
 export async function getServerSideProps({
-  query,
   req,
-}: GetServerSidePropsContext) {
+  query,
+}: {
+  req: NextRequest;
+  query: NextParsedUrlQuery;
+}) {
   const event = await api.getEvent(query.id as string);
-  const {userId} = getAuth(req);
+  const requestHeaders = new Headers(req.headers);
+  const userId = requestHeaders.get('x-user-id');
 
   if (!event) {
     return {notFound: true};
