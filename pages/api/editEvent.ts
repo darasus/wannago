@@ -1,7 +1,11 @@
 import {getAuth} from '@clerk/nextjs/server';
 import {NextRequest} from 'next/server';
+import {CacheService} from '../../lib/cache';
+import {createEventCacheKey} from '../../lib/cacheKeys';
 import {prisma} from '../../lib/prisma';
 import {EditEventInput, EventOutput} from '../../model';
+
+const cache = new CacheService();
 
 export default async function handler(req: NextRequest) {
   if (req.method !== 'POST') {
@@ -50,6 +54,8 @@ export default async function handler(req: NextRequest) {
       maxNumberOfAttendees: maxNumberOfAttendees,
     },
   });
+
+  await cache.del(createEventCacheKey(id));
 
   const event = EventOutput.parse(response);
 
