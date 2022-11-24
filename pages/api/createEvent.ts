@@ -2,6 +2,7 @@ import {getAuth} from '@clerk/nextjs/server';
 import {NextRequest} from 'next/server';
 import {prisma} from '../../lib/prisma';
 import {CreateEventInput, EventOutput} from '../../model';
+import {nanoid} from 'nanoid';
 
 export default async function handler(req: NextRequest) {
   if (req.method !== 'POST') {
@@ -37,6 +38,7 @@ export default async function handler(req: NextRequest) {
 
   const response = await prisma.event.create({
     data: {
+      shortId: nanoid(),
       title: title,
       description: description,
       endDate: new Date(startDate).toISOString(),

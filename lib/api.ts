@@ -51,6 +51,17 @@ function getEvent(eventId: string) {
     });
 }
 
+function getEventByNanoId(eventId: string) {
+  return fetch(`${getBaseUrl()}/api/getEventByNanoId/${eventId}`)
+    .then(res => res.json())
+    .then(res => {
+      if (res) {
+        return EventOutput.parse(res);
+      }
+      return null;
+    });
+}
+
 function createEvent(data: Form & {email: string}) {
   return fetch(`${getBaseUrl()}/api/createEvent`, {
     method: 'POST',
@@ -78,4 +89,11 @@ function deleteEvent(eventId: string) {
     .then(res => EventOutput.parse(res));
 }
 
-export const api = {getMyEvents, getEvent, createEvent, editEvent, deleteEvent};
+export const api = {
+  getMyEvents,
+  getEvent,
+  getEventByNanoId,
+  createEvent,
+  editEvent,
+  deleteEvent,
+};

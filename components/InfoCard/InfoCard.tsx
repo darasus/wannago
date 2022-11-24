@@ -20,15 +20,15 @@ export function InfoCard({
   showManageTools,
   eventId,
 }: Props) {
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleEditClick = () => {
-    router.push(`/event/${eventId}/edit`);
+    // router.push(`/event/${eventId}/edit`);
   };
 
   const handleDeleteClick = async () => {
     await api.deleteEvent(eventId);
-    router.push('/');
+    // router.push('/');
   };
 
   return (

@@ -2,10 +2,7 @@ import {InferGetServerSidePropsType} from 'next';
 import {NextParsedUrlQuery} from 'next/dist/server/request-meta';
 import {NextRequest} from 'next/server';
 import AppLayout from '../../../components/AppLayout/AppLayout';
-import {DateCard} from '../../../components/DateCard/DateCard';
-import {InfoCard} from '../../../components/InfoCard/InfoCard';
-import {LocationCard} from '../../../components/LocationCard/LocationCard';
-import {ParticipantsCard} from '../../../components/ParticipantsCard/ParticipantsCard';
+import {EventView} from '../../../components/EventView/EventView';
 import {api} from '../../../lib/api';
 
 export default function EventPage({
@@ -14,32 +11,7 @@ export default function EventPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <AppLayout>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <div className="mb-4">
-            <InfoCard
-              eventId={event.id}
-              showManageTools={myEvent}
-              title={event.title}
-              description={event.description}
-            />
-          </div>
-        </div>
-        <div>
-          <div className="mb-4">
-            <DateCard
-              startDate={new Date(event.startDate)}
-              endDate={new Date(event.endDate)}
-            />
-          </div>
-          <div className="mb-4">
-            <LocationCard address={event.address} />
-          </div>
-          <div>
-            <ParticipantsCard />
-          </div>
-        </div>
-      </div>
+      <EventView event={event} myEvent={myEvent} />
     </AppLayout>
   );
 }

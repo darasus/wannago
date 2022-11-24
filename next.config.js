@@ -1,6 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   experimental: {
+    appDir: true,
     runtime: 'experimental-edge',
     swcPlugins: [
       [

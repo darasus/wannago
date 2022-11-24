@@ -11,7 +11,9 @@
     "start": "next start",
     "lint": "next lint",
     "prisma:generate": "dotenv -e ./.vercel/.env.development.local -- npx prisma generate --data-proxy",
-    "prisma:push": "dotenv -e ./.vercel/.env.development.local -- npx prisma db push"
+    "prisma:push": "dotenv -e ./.env.db -- npx prisma db push",
+    "prisma:migrate:deploy": "dotenv -e ./.env.db -- npx prisma migrate deploy",
+    "prisma:studio": "dotenv -e ./.env.db -- npx prisma studio"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.6.1",
@@ -27,6 +29,7 @@
     "date-fns": "^2.29.3",
     "isomorphic-fetch": "^3.0.0",
     "lodash.debounce": "^4.0.8",
+    "nanoid": "^4.0.0",
     "next": "13.0.4",
     "next-superjson-plugin": "^0.4.9",
     "react": "18.2.0",
