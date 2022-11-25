@@ -24,7 +24,7 @@ export const GetEventInput = z.object({
 
 export const EventOutput = z.object({
   id: z.string().uuid(),
-  shortId: z.string(),
+  shortId: z.string().nullable().default(''),
   title: z.string(),
   description: z.string(),
   address: z.string(),

@@ -11,7 +11,7 @@ datasource db {
 
 model Event {
   id                   String   @id @default(uuid())
-  shortId              String   @unique
+  shortId              String?  @unique
   title                String   @db.VarChar(255)
   description          String   @db.LongText()
   startDate            DateTime
