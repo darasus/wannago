@@ -14,7 +14,7 @@ export function EventUrlCard({url}: Props) {
   return (
     <div className=" flex items-center border-2 rounded-md p-4 border-green-800 bg-green-100 border-dashed">
       <Link className="text-green-800 hover:underline" href={url}>
-        {url.replace('https://', '').replace('http://', '')}
+        {url.replace('https://', '').replace('http://', '').replace('www.', '')}
       </Link>
       <Button variant="neutral" size="xs" onClick={copy} className="ml-2">
         {isCopied ? 'Copied!' : 'Copy'}

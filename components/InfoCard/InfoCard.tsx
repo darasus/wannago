@@ -36,7 +36,7 @@ export function InfoCard({
             <SectionTitle color="green" className="mr-2">
               What
             </SectionTitle>
-            <Button variant="link-neutral">Share</Button>
+            {/* <Button variant="link-neutral">Share</Button> */}
           </div>
           <Text className="text-2xl font-bold">{title}</Text>
           <div />
