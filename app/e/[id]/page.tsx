@@ -8,5 +8,5 @@ export default async function PublicEventPage({params}: any) {
     return null;
   }
 
-  return <EventView event={event} myEvent={false} />;
+  return <EventView event={event} myEvent={false} showManageTools={false} />;
 }

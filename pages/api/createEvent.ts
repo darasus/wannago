@@ -38,7 +38,7 @@ export default async function handler(req: NextRequest) {
 
   const response = await prisma.event.create({
     data: {
-      shortId: nanoid(),
+      shortId: nanoid(6),
       title: title,
       description: description,
       endDate: new Date(startDate).toISOString(),
@@ -58,3 +58,7 @@ export default async function handler(req: NextRequest) {
     },
   });
 }
+
+export const config = {
+  runtime: 'experimental-edge',
+};

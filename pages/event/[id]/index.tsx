@@ -11,7 +11,7 @@ export default function EventPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <AppLayout>
-      <EventView event={event} myEvent={myEvent} />
+      <EventView event={event} myEvent={myEvent} showManageTools={true} />
     </AppLayout>
   );
 }
