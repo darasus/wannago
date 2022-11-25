@@ -18,7 +18,7 @@ interface Props {
 export function EventForm({onSubmit, register, isLoading}: Props) {
   return (
     <div>
-      <Card>
+      <Card className="max-w-md m-auto">
         <form onSubmit={onSubmit}>
           <div className="text-center mb-2">
             <Text className="text-2xl font-bold">Create event</Text>
