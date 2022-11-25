@@ -25,7 +25,7 @@ export function useEditEvent({onSuccess}: Props) {
         setIsLoading(false);
       }
     },
-    []
+    [onSuccess]
   );
 
   return {isLoading, handleEdit, error};
