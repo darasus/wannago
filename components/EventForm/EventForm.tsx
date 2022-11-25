@@ -12,9 +12,10 @@ import {Form} from './types';
 interface Props {
   onSubmit: FormEventHandler;
   register: UseFormRegister<Form>;
+  isLoading?: boolean;
 }
 
-export function EventForm({onSubmit, register}: Props) {
+export function EventForm({onSubmit, register, isLoading}: Props) {
   return (
     <div>
       <Card>
@@ -60,7 +61,9 @@ export function EventForm({onSubmit, register}: Props) {
             />
           </div>
           <div>
-            <Button type="submit">Publish</Button>
+            <Button isLoading={isLoading} type="submit">
+              Publish
+            </Button>
           </div>
         </form>
       </Card>
