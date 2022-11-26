@@ -27,19 +27,16 @@ export function EventView({event, myEvent, showManageTools}: Props) {
       </div>
       <div>
         <div className="mb-4">
-          <DateCard
-            startDate={new Date(event.startDate)}
-            endDate={new Date(event.endDate)}
-          />
+          <DateCard event={event} />
         </div>
         <div className="mb-4">
           <LocationCard address={event.address} />
         </div>
         <div className="mb-4">
-          <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
+          <ParticipantsCard />
         </div>
         <div>
-          <ParticipantsCard />
+          <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
         </div>
       </div>
     </div>
