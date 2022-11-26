@@ -8,6 +8,8 @@ import {api} from '../lib/api';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import AppLayout from '../components/AppLayout/AppLayout';
+import {GetServerSidePropsContext} from 'next';
+import {getAuth} from '@clerk/nextjs/server';
 
 interface Props {
   events: Event[];
@@ -52,15 +54,19 @@ export default function HomePage({events}: Props) {
   );
 }
 
-export async function getServerSideProps({req}: {req: NextRequest}) {
-  const requestHeaders = new Headers(req.headers);
-  const userId = requestHeaders.get('x-user-id');
+export async function getServerSideProps({
+  req,
+  res,
+}: GetServerSidePropsContext) {
+  const {userId} = getAuth(req);
 
   if (!userId) {
     return {props: {}};
   }
 
   const events = await api.getMyEvents(userId);
+
+  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
 
   return {props: {events}};
 }
