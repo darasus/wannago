@@ -14,8 +14,8 @@
     "prisma:push": "dotenv -e ./.env.db -- npx prisma db push",
     "prisma:migrate:deploy": "dotenv -e ./.env.db -- npx prisma migrate deploy",
     "prisma:studio": "dotenv -e ./.env.db -- npx prisma studio",
-    "migrate-deploy": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" npx prisma migrate deploy",
-    "vercel-build": "npx prisma generate --data-proxy && next build"
+    "vercel-build": "npx prisma generate --data-proxy && next build",
+    "migrate-deploy": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" npx prisma migrate deploy"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.6.1",
