@@ -16,14 +16,15 @@ interface Props {
 
 const uploadFile = (file: File) => {
   const payload = new FormData();
+
   payload.append('requireSignedURLs', 'false');
   payload.append('file', file);
+
   return axios({
     url: `${getBaseUrl()}/api/uploadImage`,
     method: 'POST',
     data: payload,
     headers: {
-      Authorization: `Bearer ${process.env.CLOUDFLARE_IMAGES_KEY}`,
       'Content-Type': 'multipart/form-data',
     },
   })

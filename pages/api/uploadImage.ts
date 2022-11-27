@@ -35,7 +35,7 @@ export default async function handler(
         method: 'POST',
         body: payload as any,
         headers: {
-          Authorization: `Bearer ${process.env.CLOUDFLARE_IMAGES_API_KEY}`,
+          Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
           'Content-Type': `multipart/form-data; boundary=${payload.getBoundary()}`,
         },
       }
