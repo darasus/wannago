@@ -18,7 +18,7 @@
     "migrate-deploy": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" npx prisma migrate deploy"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.6.1",
+    "@clerk/nextjs": "^4.6.5",
     "@heroicons/react": "^2.0.13",
     "@hookform/resolvers": "^2.9.10",
     "@prisma/client": "^4.6.1",

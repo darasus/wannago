@@ -1,4 +1,5 @@
-import {InferGetServerSidePropsType} from 'next';
+import {getAuth} from '@clerk/nextjs/server';
+import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import {NextParsedUrlQuery} from 'next/dist/server/request-meta';
 import {NextRequest} from 'next/server';
 import AppLayout from '../../../components/AppLayout/AppLayout';
@@ -19,13 +20,9 @@ export default function EventPage({
 export async function getServerSideProps({
   req,
   query,
-}: {
-  req: NextRequest;
-  query: NextParsedUrlQuery;
-}) {
+}: GetServerSidePropsContext) {
+  const {userId} = getAuth(req);
   const event = await api.getEvent(query.id as string);
-  const requestHeaders = new Headers(req.headers);
-  const userId = requestHeaders.get('x-user-id');
 
   if (!event) {
     return {notFound: true};

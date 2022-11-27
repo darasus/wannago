@@ -1,6 +1,4 @@
-import {InferGetServerSidePropsType} from 'next';
-import {NextParsedUrlQuery} from 'next/dist/server/request-meta';
-import {NextRequest} from 'next/server';
+import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EditEventForm} from '../../../components/EventForm/EditEventForm';
 import {api} from '../../../lib/api';
@@ -15,12 +13,7 @@ export default function EventEditPage({
   );
 }
 
-export async function getServerSideProps({
-  query,
-}: {
-  req: NextRequest;
-  query: NextParsedUrlQuery;
-}) {
+export async function getServerSideProps({query}: GetServerSidePropsContext) {
   const event = await api.getEvent(query.id as string);
 
   if (!event) {
