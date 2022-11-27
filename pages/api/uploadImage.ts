@@ -2,9 +2,6 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import fs from 'fs';
 import FormData from 'form-data';
 import formidable from 'formidable';
-import fetch from 'node-fetch';
-import axios from 'axios';
-import zlib from 'zlib';
 import got from 'got';
 
 export const config = {
