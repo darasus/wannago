@@ -35,6 +35,7 @@ export const EventOutput = z.object({
   endDate: dateType,
   createdAt: dateType,
   updatedAt: dateType,
+  featuredImageSrc: z.string().nullable().default(''),
 });
 
 export const EditEventInput = z.object({
@@ -61,6 +62,7 @@ export const CreateEventInput = z.object({
   startDate: z.string(),
   endDate: z.string(),
   address: z.string(),
+  featuredImageSrc: z.string(),
   maxNumberOfAttendees: z
     .number()
     .or(z.string())

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import {Button} from '../Button/Button';
-import {Card} from '../Card/Card';
+import {Card} from '../DateCard/Card/Card';
 import {SectionTitle} from '../Text/SectionTitle';
 import {Text} from '../Text/Text';
 import {EditControls} from './EditControls';
@@ -10,6 +10,7 @@ interface Props {
   title: string;
   description: string;
   showManageTools?: boolean;
+  featuredImageSrc: string | null;
 }
 
 export function InfoCard({
@@ -17,19 +18,22 @@ export function InfoCard({
   description,
   showManageTools,
   eventId,
+  featuredImageSrc,
 }: Props) {
   return (
     <>
       <Card className="p-0">
         <div className="flex items-center overflow-hidden relative justify-center h-64 bg-black rounded-t-xl">
           {showManageTools && <EditControls eventId={eventId} />}
-          <Image
-            src="https://source.unsplash.com/GNwiKB34eGs"
-            alt=""
-            fill
-            style={{objectFit: 'cover'}}
-            priority
-          />
+          {featuredImageSrc && (
+            <Image
+              src={featuredImageSrc}
+              alt=""
+              fill
+              style={{objectFit: 'cover'}}
+              priority
+            />
+          )}
         </div>
         <div className="p-4">
           <div className="mb-2">

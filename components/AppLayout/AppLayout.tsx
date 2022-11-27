@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import {PropsWithChildren} from 'react';
-import {Card} from '../Card/Card';
+import {Card} from '../DateCard/Card/Card';
 import {Text} from '../Text/Text';
 import {UserSecsion} from '../UserSecsion/UserSecsion';
 
 export default function AppLayout({children}: PropsWithChildren) {
   return (
-    <div className=" p-4 max-w-5xl m-auto">
+    <div className=" p-4 max-w-xl m-auto">
       <Card className="flex mb-4">
         <Link href="/dashboard" className="mr-2">
           <Text>WannaGo</Text>

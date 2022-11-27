@@ -5,8 +5,9 @@ import {format} from 'date-fns';
 import {useForm} from 'react-hook-form';
 import {Form} from '../types';
 
-export function useEventForm({event}: {event?: Event}) {
-  const {register, handleSubmit} = useForm<Form>({
+export function useEventForm(props?: {event?: Event}) {
+  const {event} = props || {};
+  const form = useForm<Form>({
     defaultValues: {
       title: event?.title,
       startDate: event?.startDate
@@ -18,8 +19,9 @@ export function useEventForm({event}: {event?: Event}) {
       description: event?.description,
       address: event?.address,
       maxNumberOfAttendees: event?.maxNumberOfAttendees || undefined,
+      featuredImageSrc: event?.featuredImageSrc || undefined,
     },
   });
 
-  return {register, handleSubmit};
+  return form;
 }

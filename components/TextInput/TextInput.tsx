@@ -14,7 +14,7 @@ function TextInputWithoutRef(
       {props.label && (
         <label
           htmlFor={props.id}
-          className="block text-sm font-medium text-gray-700"
+          className="block text-md text-black mb-1 ml-2 font-bold"
         >
           {props.label}
         </label>

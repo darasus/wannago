@@ -6,6 +6,7 @@ import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 import {useEditEvent} from '../../hooks/useEditEvent';
 import {useUser} from '@clerk/nextjs';
+import {FormProvider} from 'react-hook-form';
 
 interface Props {
   event: Event;
@@ -14,12 +15,14 @@ interface Props {
 export function EditEventForm({event}: Props) {
   const {push} = useRouter();
   const {user} = useUser();
-  const {handleEdit, isLoading} = useEditEvent({
+  const {handleEdit} = useEditEvent({
     onSuccess: () => push(`/event/${event.id}`),
   });
-  const {handleSubmit, register} = useEventForm({
+  const form = useEventForm({
     event,
   });
+
+  const {handleSubmit, register, control, setValue} = form;
 
   const onSubmit = handleSubmit(async data => {
     await handleEdit({
@@ -30,6 +33,8 @@ export function EditEventForm({event}: Props) {
   });
 
   return (
-    <EventForm onSubmit={onSubmit} register={register} isLoading={isLoading} />
+    <FormProvider {...form}>
+      <EventForm onSubmit={onSubmit} />
+    </FormProvider>
   );
 }

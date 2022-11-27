@@ -34,18 +34,20 @@ export default async function handler(req: NextRequest) {
     endDate,
     address,
     maxNumberOfAttendees,
+    featuredImageSrc,
   } = CreateEventInput.parse(body);
 
   const response = await prisma.event.create({
     data: {
       shortId: nanoid(6),
-      title: title,
-      description: description,
+      title,
+      description,
       endDate: new Date(startDate).toISOString(),
       startDate: new Date(endDate).toISOString(),
       address: address,
       authorId: userId,
-      maxNumberOfAttendees: maxNumberOfAttendees,
+      maxNumberOfAttendees,
+      featuredImageSrc,
     },
   });
 

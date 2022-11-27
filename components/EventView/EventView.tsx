@@ -14,30 +14,27 @@ interface Props {
 
 export function EventView({event, myEvent, showManageTools}: Props) {
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 gap-4">
       <div>
-        <div className="mb-4">
-          <InfoCard
-            eventId={event.id}
-            showManageTools={showManageTools && myEvent}
-            title={event.title}
-            description={event.description}
-          />
-        </div>
+        <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
       </div>
       <div>
-        <div className="mb-4">
-          <DateCard event={event} />
-        </div>
-        <div className="mb-4">
-          <LocationCard address={event.address} />
-        </div>
-        <div className="mb-4">
-          <ParticipantsCard />
-        </div>
-        <div>
-          <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
-        </div>
+        <InfoCard
+          eventId={event.id}
+          showManageTools={showManageTools && myEvent}
+          title={event.title}
+          description={event.description}
+          featuredImageSrc={event.featuredImageSrc}
+        />
+      </div>
+      <div>
+        <DateCard event={event} />
+      </div>
+      <div>
+        <LocationCard address={event.address} />
+      </div>
+      <div>
+        <ParticipantsCard />
       </div>
     </div>
   );

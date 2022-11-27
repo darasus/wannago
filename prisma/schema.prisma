@@ -23,6 +23,7 @@ model Event {
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
   maxNumberOfAttendees Int?
+  featuredImageSrc     String?
   // attendees   User[]   @relation("EventAttendees")
 }
 

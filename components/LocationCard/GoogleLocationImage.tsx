@@ -22,6 +22,7 @@ export function GoogleLocationImage({
   url.searchParams.set('center', encodeURI(address));
   url.searchParams.set('scale', '2');
   url.searchParams.set('format', 'jpg');
+  url.searchParams.set('visible', 'Amsterdam');
 
   return (
     <div className="rounded-xl overflow-hidden">

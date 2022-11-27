@@ -1,6 +1,6 @@
 'use client';
 
-import {Card} from '../Card/Card';
+import {Card} from '../DateCard/Card/Card';
 import {SectionTitle} from '../Text/SectionTitle';
 import {Text} from '../Text/Text';
 import * as React from 'react';
@@ -12,13 +12,19 @@ interface Props {
 }
 
 export function LocationCard({address}: Props) {
+  const onDirectionsClick = () => {
+    window?.open(`https://www.google.com/maps/search/${address}`);
+  };
+
   return (
     <Card>
       <div className="mb-2">
         <SectionTitle color="blue" className="mr-2">
           Where
         </SectionTitle>
-        <Button variant="link-neutral">Get directions</Button>
+        <Button onClick={onDirectionsClick} variant="link-neutral">
+          Get directions
+        </Button>
       </div>
       <Text className="font-bold">{address}</Text>
       <div className="mb-2" />

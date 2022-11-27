@@ -5,5 +5,5 @@ export interface Form {
   endDate: string;
   address: string;
   maxNumberOfAttendees: number;
-  featuredImage: string;
+  featuredImageSrc: string;
 }

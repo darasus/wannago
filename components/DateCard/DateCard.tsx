@@ -3,7 +3,7 @@
 import {format} from 'date-fns';
 import {format as timeagoFormat} from 'timeago.js';
 import {Button} from '../Button/Button';
-import {Card} from '../Card/Card';
+import {Card} from './Card/Card';
 import {SectionTitle} from '../Text/SectionTitle';
 import {Text} from '../Text/Text';
 import {ics} from 'calendar-link';
@@ -26,8 +26,6 @@ export function DateCard({event}: Props) {
     location: event.address,
     url: `${getBaseUrl()}/e/${event.shortId}`,
   };
-
-  console.log(icsData);
 
   const handleCalendarClick = () => {
     router.push(ics(icsData));

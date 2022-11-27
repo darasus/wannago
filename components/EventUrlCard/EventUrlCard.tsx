@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import useCopyClipboard from '../../hooks/useCopyClipboard';
 import {Button} from '../Button/Button';
-import {Card} from '../Card/Card';
+import {Card} from '../DateCard/Card/Card';
 import {SectionTitle} from '../Text/SectionTitle';
 
 interface Props {

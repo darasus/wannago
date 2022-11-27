@@ -1,6 +1,6 @@
 import {Avatar} from '../Avatar/Avatar';
 import {Button} from '../Button/Button';
-import {Card} from '../Card/Card';
+import {Card} from '../DateCard/Card/Card';
 import {Input} from '../Input/Input';
 import {SectionTitle} from '../Text/SectionTitle';
 import {Text} from '../Text/Text';
