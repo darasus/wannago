@@ -3,6 +3,9 @@ import fs from 'fs';
 import FormData from 'form-data';
 import formidable from 'formidable';
 import fetch from 'node-fetch';
+import axios from 'axios';
+import zlib from 'zlib';
+import got from 'got';
 
 export const config = {
   api: {
@@ -29,20 +32,32 @@ export default async function handler(
     payload.append('requireSignedURLs', 'false');
     payload.append('file', buffer, fileName);
 
-    const image = await fetch(
-      'https://api.cloudflare.com/client/v4/accounts/520ed574991657981b4927dda46f2477/images/v1',
-      {
-        method: 'POST',
-        body: payload as any,
-        headers: {
-          Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
-          'Content-Type': `multipart/form-data; boundary=${payload.getBoundary()}`,
-        },
-      }
-    );
+    console.log(payload.getHeaders());
+    console.log(`Bearer ${process.env.CLOUDFLARE_API_KEY}`);
 
-    const response = await image.json();
+    try {
+      const response = await got
+        .post(
+          'https://api.cloudflare.com/client/v4/accounts/520ed574991657981b4927dda46f2477/images/v1',
+          {
+            body: payload,
+            headers: {
+              Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
+            },
+            // body: payload,
+            // headers: {
+            //   ...payload.getHeaders(),
+            //   Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
+            //   'Cache-Control': 'no-transform',
+            // },
+          }
+        )
+        .json();
 
-    res.status(200).json(response);
+      res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(error);
+    }
   });
 }
