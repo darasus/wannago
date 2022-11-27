@@ -8,5 +8,9 @@ export default async function PublicEventPage({params}: any) {
     return null;
   }
 
-  return <EventView event={event} myEvent={false} showManageTools={false} />;
+  return (
+    <div className="max-w-xl m-auto">
+      <EventView event={event} myEvent={false} showManageTools={false} />
+    </div>
+  );
 }

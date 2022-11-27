@@ -16,19 +16,20 @@ interface Props {
 }
 
 export function DateCard({event}: Props) {
-  const router = useRouter();
-
   const icsData = {
     title: event.title,
     description: event.description,
-    start: `${format(event.startDate, 'yyyy-MM-dd')} 18:00:00 +0100`,
-    end: `${format(event.endDate, 'yyyy-MM-dd')} 18:00:00 +0100`,
+    start: `${format(
+      new Date(new Date(event.startDate)),
+      'yyyy-MM-dd'
+    )} 18:00:00 +0100`,
+    end: `${format(new Date(event.endDate), 'yyyy-MM-dd')} 18:00:00 +0100`,
     location: event.address,
     url: `${getBaseUrl()}/e/${event.shortId}`,
   };
 
   const handleCalendarClick = () => {
-    router.push(ics(icsData));
+    window.open(ics(icsData));
   };
 
   return (
@@ -46,25 +47,25 @@ export function DateCard({event}: Props) {
           <div className="flex flex-col justify-center items-center border rounded-xl px-4 py-2  shadow-md">
             <div className="h-0.5 bg-red-500 w-5 mb-1" />
             <Text className="text-2xl leading-none">
-              {format(event.startDate, 'dd')}
+              {format(new Date(event.startDate), 'dd')}
             </Text>
             <div />
             <Text className="uppercase text-xs leading-none text-gray-500">
-              {format(event.startDate, 'LLL')}
+              {format(new Date(event.startDate), 'LLL')}
             </Text>
           </div>
         </div>
         <div className="grow">
           <Text className="font-bold capitalize">
-            {format(event.startDate, 'EEEE, MMMM dd')}
+            {format(new Date(event.startDate), 'EEEE, MMMM dd')}
           </Text>{' '}
           <Text className="text-gray-500">{`(${timeagoFormat(
-            event.startDate,
+            new Date(event.startDate),
             'en_US'
           )})`}</Text>
           <div />
-          <Text>{`${format(event.startDate, 'k:mm')} - ${format(
-            event.endDate,
+          <Text>{`${format(new Date(event.startDate), 'k:mm')} - ${format(
+            new Date(event.endDate),
             'k:mm'
           )}`}</Text>
         </div>
