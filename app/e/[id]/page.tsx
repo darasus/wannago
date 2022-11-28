@@ -2,7 +2,7 @@ import {EventView} from '../../../components/EventView/EventView';
 import {api} from '../../../lib/api';
 import {headers} from 'next/headers';
 
-export const revalidate = 60;
+export const runtime = 'experimental-edge';
 
 export default async function PublicEventPage({params}: any) {
   const headersList = headers();
