@@ -41,6 +41,8 @@ export async function getServerSideProps({
 }: GetServerSidePropsContext) {
   const timezone = req.headers['x-vercel-ip-timezone'] as string | undefined;
 
+  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
+
   return {
     props: {timezone: timezone || null},
   };
