@@ -10,9 +10,10 @@ interface Props {
   event: Event;
   myEvent: boolean;
   showManageTools?: boolean;
+  timezone?: string;
 }
 
-export function EventView({event, myEvent, showManageTools}: Props) {
+export function EventView({event, myEvent, showManageTools, timezone}: Props) {
   return (
     <div className="grid grid-cols-1 gap-4">
       <div>
@@ -28,7 +29,7 @@ export function EventView({event, myEvent, showManageTools}: Props) {
         />
       </div>
       <div>
-        <DateCard event={event} />
+        <DateCard event={event} timezone={timezone} />
       </div>
       <div>
         <LocationCard address={event.address} />

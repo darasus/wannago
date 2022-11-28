@@ -2,19 +2,23 @@ import {format} from 'date-fns';
 import {utcToZonedTime} from 'date-fns-tz';
 import {format as timeagoFormat} from 'timeago.js';
 
-export function formatDate(date: Date, formatString: string): string {
+export function formatDate(
+  date: Date,
+  formatString: string,
+  timezone?: string
+): string {
   const d = utcToZonedTime(
     date,
-    process.env.TZ || Intl.DateTimeFormat().resolvedOptions().timeZone
+    timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
   );
 
   return format(d, formatString);
 }
 
-export function formatTimeago(date: Date) {
+export function formatTimeago(date: Date, timezone?: string) {
   const d = utcToZonedTime(
     date,
-    process.env.TZ || Intl.DateTimeFormat().resolvedOptions().timeZone
+    timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
   );
 
   return timeagoFormat(d, 'en_US');

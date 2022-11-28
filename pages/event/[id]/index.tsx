@@ -9,10 +9,16 @@ import {api} from '../../../lib/api';
 export default function EventPage({
   event,
   myEvent,
+  timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <AppLayout>
-      <EventView event={event} myEvent={myEvent} showManageTools={true} />
+      <EventView
+        event={event}
+        myEvent={myEvent}
+        showManageTools={true}
+        timezone={timezone}
+      />
     </AppLayout>
   );
 }
@@ -21,6 +27,7 @@ export async function getServerSideProps({
   req,
   query,
 }: GetServerSidePropsContext) {
+  const timezone = req.headers['x-vercel-ip-timezone'] as string | undefined;
   const {userId} = getAuth(req);
   const event = await api.getEvent(query.id as string);
 
@@ -29,6 +36,6 @@ export async function getServerSideProps({
   }
 
   return {
-    props: {event, myEvent: event.authorId === userId},
+    props: {event, myEvent: event.authorId === userId, timezone},
   };
 }

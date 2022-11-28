@@ -12,9 +12,10 @@ import {formatDate, formatTimeago} from '../../utils/formatDate';
 
 interface Props {
   event: Event;
+  timezone?: string;
 }
 
-export function DateCard({event}: Props) {
+export function DateCard({event, timezone}: Props) {
   const handleCalendarClick = () => {
     createEvent(prepareIcsData(event), (error, value) => {
       const blob = new Blob([value], {type: 'text/plain;charset=utf-8'});
@@ -37,26 +38,28 @@ export function DateCard({event}: Props) {
           <div className="flex flex-col justify-center items-center border rounded-xl px-4 py-2  shadow-md">
             <div className="h-0.5 bg-red-500 w-5 mb-1" />
             <Text className="text-2xl leading-none">
-              {formatDate(new Date(event.startDate), 'dd')}
+              {formatDate(new Date(event.startDate), 'dd', timezone)}
             </Text>
             <div />
             <Text className="uppercase text-xs leading-none text-gray-500">
-              {formatDate(new Date(event.startDate), 'MMM')}
+              {formatDate(new Date(event.startDate), 'MMM', timezone)}
             </Text>
           </div>
         </div>
         <div className="grow">
           <Text className="font-bold capitalize">
-            {formatDate(new Date(event.startDate), 'EEEE, MMMM dd')}
+            {formatDate(new Date(event.startDate), 'EEEE, MMMM dd', timezone)}
           </Text>{' '}
           <Text className="text-gray-500">{`(${formatTimeago(
-            new Date(event.startDate)
+            new Date(event.startDate),
+            timezone
           )})`}</Text>
           <div />
           <Text>{`${formatDate(
             new Date(event.startDate),
-            'k:mm'
-          )} - ${formatDate(new Date(event.endDate), 'k:mm')}`}</Text>
+            'k:mm',
+            timezone
+          )} - ${formatDate(new Date(event.endDate), 'k:mm', timezone)}`}</Text>
         </div>
       </div>
     </Card>

@@ -17,8 +17,6 @@ export default withClerkMiddleware((request: NextRequest) => {
   const requestHeaders = new Headers(request.headers);
   const userId = auth?.userId || requestHeaders.get('x-user-id');
 
-  // console.log(`[URL]: ${request.nextUrl.pathname} [USER] ${userId}`);
-
   if (
     !userId &&
     !publicPaths.some(path => request.nextUrl.pathname.startsWith(path)) &&

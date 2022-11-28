@@ -29,9 +29,6 @@ export default async function handler(
     payload.append('requireSignedURLs', 'false');
     payload.append('file', buffer, fileName);
 
-    console.log(payload.getHeaders());
-    console.log(`Bearer ${process.env.CLOUDFLARE_API_KEY}`);
-
     try {
       const response = await got
         .post(
@@ -41,19 +38,12 @@ export default async function handler(
             headers: {
               Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
             },
-            // body: payload,
-            // headers: {
-            //   ...payload.getHeaders(),
-            //   Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
-            //   'Cache-Control': 'no-transform',
-            // },
           }
         )
         .json();
 
       res.status(200).json(response);
     } catch (error) {
-      console.log(error);
       res.status(400).json(error);
     }
   });
