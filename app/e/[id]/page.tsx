@@ -2,6 +2,8 @@ import {EventView} from '../../../components/EventView/EventView';
 import {api} from '../../../lib/api';
 import {headers} from 'next/headers';
 
+export const revalidate = 60;
+
 export default async function PublicEventPage({params}: any) {
   const headersList = headers();
   const timezone = headersList.get('x-vercel-ip-timezone') || undefined;

@@ -25,6 +25,7 @@ export default function EventPage({
 
 export async function getServerSideProps({
   req,
+  res,
   query,
 }: GetServerSidePropsContext) {
   const timezone = req.headers['x-vercel-ip-timezone'] as string | undefined;
@@ -34,6 +35,8 @@ export async function getServerSideProps({
   if (!event) {
     return {notFound: true};
   }
+
+  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
 
   return {
     props: {event, myEvent: event.authorId === userId, timezone},

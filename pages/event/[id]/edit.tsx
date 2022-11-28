@@ -13,12 +13,17 @@ export default function EventEditPage({
   );
 }
 
-export async function getServerSideProps({query}: GetServerSidePropsContext) {
+export async function getServerSideProps({
+  query,
+  res,
+}: GetServerSidePropsContext) {
   const event = await api.getEvent(query.id as string);
 
   if (!event) {
     return {notFound: true};
   }
+
+  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
 
   return {props: {event}};
 }
