@@ -11,10 +11,11 @@ import AppLayout from '../components/AppLayout/AppLayout';
 import {GetServerSidePropsContext} from 'next';
 import {getAuth} from '@clerk/nextjs/server';
 import {trpc} from '../utils/trpc';
+import {Spinner} from '../components/Spinner/Spinner';
 
 export default function HomePage() {
   const router = useRouter();
-  const {data} = trpc.event.getMyEvents.useQuery();
+  const {data, isLoading} = trpc.event.getMyEvents.useQuery();
 
   return (
     <AppLayout>
@@ -25,6 +26,11 @@ export default function HomePage() {
         >
           <PlusCircleIcon width={50} height={50} />
         </button>
+        {isLoading && (
+          <div className="flex justify-center">
+            <Spinner />
+          </div>
+        )}
         {data?.events?.map(event => {
           return (
             <Link href={`/event/${event.id}`} key={event.id}>
