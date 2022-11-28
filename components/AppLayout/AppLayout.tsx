@@ -13,7 +13,7 @@ const logoFong = Nerko_One({
 
 export default function AppLayout({children}: PropsWithChildren) {
   return (
-    <div className=" p-4 max-w-xl m-auto">
+    <div className="p-4 max-w-xl m-auto">
       <Card className="flex mb-4">
         <Link href="/dashboard" className="mr-2">
           <span className={clsx(logoFong.className, 'text-2xl leading-none')}>
