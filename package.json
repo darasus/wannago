@@ -32,9 +32,11 @@
     "clsx": "^1.2.1",
     "copy-to-clipboard": "^3.3.3",
     "date-fns": "^2.29.3",
+    "file-saver": "^2.0.5",
     "form-data": "^4.0.0",
     "formidable": "^2.0.1",
     "got": "^12.5.3",
+    "ics": "^2.41.0",
     "ky": "^0.32.2",
     "lodash.debounce": "^4.0.8",
     "nanoid": "^4.0.0",
@@ -48,6 +50,7 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/formidable": "^2.0.5",
     "@types/lodash.debounce": "^4.0.7",
     "@types/node": "^18.11.9",

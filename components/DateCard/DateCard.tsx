@@ -6,30 +6,21 @@ import {Button} from '../Button/Button';
 import {Card} from './Card/Card';
 import {SectionTitle} from '../Text/SectionTitle';
 import {Text} from '../Text/Text';
-import {ics} from 'calendar-link';
-import {useRouter} from 'next/router';
-import {Event} from '@prisma/client';
-import {getBaseUrl} from '../../lib/api';
+import {saveAs} from 'file-saver';
+import {createEvent} from 'ics';
+import {Event} from '../../model';
+import {prepareIcsData} from '../../utils/prepareIcsData';
 
 interface Props {
   event: Event;
 }
 
 export function DateCard({event}: Props) {
-  const icsData = {
-    title: event.title,
-    description: event.description,
-    start: `${format(
-      new Date(new Date(event.startDate)),
-      'yyyy-MM-dd'
-    )} 18:00:00 +0100`,
-    end: `${format(new Date(event.endDate), 'yyyy-MM-dd')} 18:00:00 +0100`,
-    location: event.address,
-    url: `${getBaseUrl()}/e/${event.shortId}`,
-  };
-
   const handleCalendarClick = () => {
-    window.open(ics(icsData));
+    createEvent(prepareIcsData(event), (error, value) => {
+      const blob = new Blob([value], {type: 'text/plain;charset=utf-8'});
+      saveAs(blob, 'event-schedule.ics');
+    });
   };
 
   return (

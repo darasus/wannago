@@ -21,7 +21,7 @@ export const getBaseUrl = () => {
   return 'http://localhost:3000';
 };
 
-export type EventOutputs = z.infer<typeof EventOutput>[];
+export type EventOutputs = Event[];
 
 function getMyEvents(userId: string) {
   return fetch(`${getBaseUrl()}/api/getMyEvents`, {

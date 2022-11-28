@@ -22,6 +22,8 @@ export const GetEventInput = z.object({
     }),
 });
 
+export type Event = z.infer<typeof EventOutput>;
+
 export const EventOutput = z.object({
   id: z.string().uuid(),
   shortId: z.string().nullable().default(''),
