@@ -1,7 +1,5 @@
 'use client';
 
-import {format} from 'date-fns';
-import {format as timeagoFormat} from 'timeago.js';
 import {Button} from '../Button/Button';
 import {Card} from './Card/Card';
 import {SectionTitle} from '../Text/SectionTitle';
@@ -10,6 +8,7 @@ import {saveAs} from 'file-saver';
 import {createEvent} from 'ics';
 import {Event} from '../../model';
 import {prepareIcsData} from '../../utils/prepareIcsData';
+import {formatDate, formatTimeago} from '../../utils/formatDate';
 
 interface Props {
   event: Event;
@@ -38,27 +37,26 @@ export function DateCard({event}: Props) {
           <div className="flex flex-col justify-center items-center border rounded-xl px-4 py-2  shadow-md">
             <div className="h-0.5 bg-red-500 w-5 mb-1" />
             <Text className="text-2xl leading-none">
-              {format(new Date(event.startDate), 'dd')}
+              {formatDate(new Date(event.startDate), 'dd')}
             </Text>
             <div />
             <Text className="uppercase text-xs leading-none text-gray-500">
-              {format(new Date(event.startDate), 'LLL')}
+              {formatDate(new Date(event.startDate), 'MMM')}
             </Text>
           </div>
         </div>
         <div className="grow">
           <Text className="font-bold capitalize">
-            {format(new Date(event.startDate), 'EEEE, MMMM dd')}
+            {formatDate(new Date(event.startDate), 'EEEE, MMMM dd')}
           </Text>{' '}
-          <Text className="text-gray-500">{`(${timeagoFormat(
-            new Date(event.startDate),
-            'en_US'
+          <Text className="text-gray-500">{`(${formatTimeago(
+            new Date(event.startDate)
           )})`}</Text>
           <div />
-          <Text>{`${format(new Date(event.startDate), 'k:mm')} - ${format(
-            new Date(event.endDate),
+          <Text>{`${formatDate(
+            new Date(event.startDate),
             'k:mm'
-          )}`}</Text>
+          )} - ${formatDate(new Date(event.endDate), 'k:mm')}`}</Text>
         </div>
       </div>
     </Card>
