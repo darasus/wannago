@@ -1,5 +1,3 @@
-'use client';
-
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {Button} from '../Button/Button';

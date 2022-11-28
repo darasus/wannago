@@ -10,13 +10,11 @@ import {useRouter} from 'next/router';
 import AppLayout from '../components/AppLayout/AppLayout';
 import {GetServerSidePropsContext} from 'next';
 import {getAuth} from '@clerk/nextjs/server';
+import {trpc} from '../utils/trpc';
 
-interface Props {
-  events: Event[];
-}
-
-export default function HomePage({events}: Props) {
+export default function HomePage() {
   const router = useRouter();
+  const {data} = trpc.event.getMyEvents.useQuery();
 
   return (
     <AppLayout>
@@ -27,7 +25,7 @@ export default function HomePage({events}: Props) {
         >
           <PlusCircleIcon width={50} height={50} />
         </button>
-        {events?.map(event => {
+        {data?.events?.map(event => {
           return (
             <Link href={`/event/${event.id}`} key={event.id}>
               <Card className="flex flex-col p-0">
@@ -56,19 +54,19 @@ export default function HomePage({events}: Props) {
   );
 }
 
-export async function getServerSideProps({
-  req,
-  res,
-}: GetServerSidePropsContext) {
-  const {userId} = getAuth(req);
+// export async function getServerSideProps({
+//   req,
+//   res,
+// }: GetServerSidePropsContext) {
+//   const {userId} = getAuth(req);
 
-  if (!userId) {
-    return {props: {}};
-  }
+//   if (!userId) {
+//     return {props: {}};
+//   }
 
-  const events = await api.getMyEvents(userId);
+//   const events = await api.getMyEvents(userId);
 
-  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
+//   res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
 
-  return {props: {events}};
-}
+//   return {props: {events}};
+// }

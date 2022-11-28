@@ -1,5 +1,3 @@
-'use client';
-
 import {Card} from '../DateCard/Card/Card';
 import {SectionTitle} from '../Text/SectionTitle';
 import {Text} from '../Text/Text';

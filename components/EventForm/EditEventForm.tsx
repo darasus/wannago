@@ -1,12 +1,9 @@
-'use client';
-
 import {Event} from '@prisma/client';
 import {useRouter} from 'next/router';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
-import {useEditEvent} from '../../hooks/useEditEvent';
-import {useUser} from '@clerk/nextjs';
 import {FormProvider} from 'react-hook-form';
+import {trpc} from '../../utils/trpc';
 
 interface Props {
   event: Event;
@@ -14,20 +11,20 @@ interface Props {
 
 export function EditEventForm({event}: Props) {
   const {push} = useRouter();
-  const {user} = useUser();
-  const {handleEdit} = useEditEvent({
-    onSuccess: () => push(`/event/${event.id}`),
+  const {mutateAsync} = trpc.event.edit.useMutation({
+    onSuccess: data => {
+      push(`/event/${data.id}`);
+    },
   });
   const form = useEventForm({
     event,
   });
 
-  const {handleSubmit, register, control, setValue} = form;
+  const {handleSubmit} = form;
 
   const onSubmit = handleSubmit(async data => {
-    await handleEdit({
+    await mutateAsync({
       ...data,
-      email: user?.primaryEmailAddress?.emailAddress!,
       id: event.id,
     });
   });

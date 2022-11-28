@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import useCopyClipboard from '../../hooks/useCopyClipboard';
 import {Button} from '../Button/Button';

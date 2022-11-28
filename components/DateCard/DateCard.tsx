@@ -1,14 +1,12 @@
-'use client';
-
 import {Button} from '../Button/Button';
 import {Card} from './Card/Card';
 import {SectionTitle} from '../Text/SectionTitle';
 import {Text} from '../Text/Text';
 import {saveAs} from 'file-saver';
 import {createEvent} from 'ics';
-import {Event} from '../../model';
 import {prepareIcsData} from '../../utils/prepareIcsData';
 import {formatDate, formatTimeago} from '../../utils/formatDate';
+import {Event} from '@prisma/client';
 
 interface Props {
   event: Event;

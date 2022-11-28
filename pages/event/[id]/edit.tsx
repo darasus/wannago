@@ -1,29 +1,21 @@
-import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
+import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EditEventForm} from '../../../components/EventForm/EditEventForm';
-import {api} from '../../../lib/api';
+import {trpc} from '../../../utils/trpc';
 
-export default function EventEditPage({
-  event,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  return (
-    <AppLayout>
-      <EditEventForm event={event} />
-    </AppLayout>
-  );
-}
+export default function EventEditPage() {
+  const router = useRouter();
+  const {data} = trpc.event.getEventById.useQuery({
+    id: router.query.id as string,
+  });
 
-export async function getServerSideProps({
-  query,
-  res,
-}: GetServerSidePropsContext) {
-  const event = await api.getEvent(query.id as string);
-
-  if (!event) {
-    return {notFound: true};
+  if (!data) {
+    return null;
   }
 
-  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
-
-  return {props: {event}};
+  return (
+    <AppLayout>
+      <EditEventForm event={data} />
+    </AppLayout>
+  );
 }

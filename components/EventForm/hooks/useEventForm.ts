@@ -1,5 +1,3 @@
-'use client';
-
 import {Event} from '@prisma/client';
 import {format} from 'date-fns';
 import {useForm} from 'react-hook-form';

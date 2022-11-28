@@ -4,8 +4,9 @@ import {AppProps} from 'next/app';
 import {ClerkProvider} from '@clerk/nextjs';
 import Head from 'next/head';
 import {clerkAppearance} from '../clerkElements';
+import {trpc} from '../utils/trpc';
 
-export default function MyApp({Component, pageProps}: AppProps) {
+function MyApp({Component, pageProps}: AppProps) {
   return (
     <>
       <Head>
@@ -18,3 +19,5 @@ export default function MyApp({Component, pageProps}: AppProps) {
     </>
   );
 }
+
+export default trpc.withTRPC(MyApp);
