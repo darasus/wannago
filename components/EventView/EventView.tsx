@@ -9,11 +9,11 @@ import {ParticipantsCard} from '../ParticipantsCard/ParticipantsCard';
 interface Props {
   event: Event;
   myEvent: boolean;
-  showManageTools?: boolean;
   timezone?: string;
+  isPublicView?: boolean;
 }
 
-export function EventView({event, myEvent, showManageTools, timezone}: Props) {
+export function EventView({event, myEvent, isPublicView, timezone}: Props) {
   return (
     <div className="grid grid-cols-1 gap-4">
       <div>
@@ -22,7 +22,7 @@ export function EventView({event, myEvent, showManageTools, timezone}: Props) {
       <div>
         <InfoCard
           eventId={event.id}
-          showManageTools={showManageTools && myEvent}
+          showManageTools={!isPublicView && myEvent}
           title={event.title}
           description={event.description}
           featuredImageSrc={event.featuredImageSrc}

@@ -9,7 +9,6 @@ export default function EventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  const user = useUser();
   const {data} = trpc.event.getEventByNanoId.useQuery({
     id: router.query.id as string,
   });
@@ -26,8 +25,8 @@ export default function EventPage({
     <div className="max-w-xl m-auto p-4">
       <EventView
         event={data}
-        myEvent={user.user?.id === data.authorId}
-        showManageTools={true}
+        myEvent={false}
+        isPublicView={true}
         timezone={clientTimezone}
       />
     </div>
