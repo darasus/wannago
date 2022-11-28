@@ -2,6 +2,7 @@ import {withClerkMiddleware, getAuth} from '@clerk/nextjs/server';
 import {NextResponse} from 'next/server';
 import type {NextRequest} from 'next/server';
 import {getBaseUrl} from './lib/api';
+import {NextURL} from 'next/dist/server/web/next-url';
 
 type VercelEnv = 'development' | 'preview' | 'production';
 
@@ -11,21 +12,38 @@ const loginRedirectUrl: Record<VercelEnv, string> = {
   development: `${getBaseUrl()}/login`,
 };
 
-const publicPaths = ['/', '_next'];
+const isProtectedRoute = (nextUrl: NextURL): boolean => {
+  const isHomePage = nextUrl.pathname === '/';
+  const isPublicEventPage = nextUrl.pathname.startsWith('/e/');
+  const isgetEventByNanoId = nextUrl.pathname.startsWith(
+    '/api/trpc/event.getEventByNanoId'
+  );
+
+  if (isHomePage) {
+    return false;
+  }
+
+  if (isPublicEventPage) {
+    return false;
+  }
+
+  if (isgetEventByNanoId) {
+    return false;
+  }
+
+  return true;
+};
 
 export default withClerkMiddleware((request: NextRequest) => {
-  // const auth = getAuth(request);
-  // const requestHeaders = new Headers(request.headers);
+  const auth = getAuth(request);
+  const requestHeaders = new Headers(request.headers);
   // const userId = auth?.userId || requestHeaders.get('x-user-id');
+  const isLoginPage = request.nextUrl.pathname === '/login';
 
-  // if (
-  //   !userId &&
-  //   !publicPaths.some(path => request.nextUrl.pathname.startsWith(path)) &&
-  //   !request.nextUrl.pathname.startsWith('/login')
-  // ) {
-  //   const redirectUrl = loginRedirectUrl[process.env.VERCEL_ENV as VercelEnv];
-  //   return NextResponse.redirect(redirectUrl);
-  // }
+  if (!auth.userId && !isLoginPage && isProtectedRoute(request.nextUrl)) {
+    const redirectUrl = loginRedirectUrl[process.env.VERCEL_ENV as VercelEnv];
+    return NextResponse.redirect(redirectUrl);
+  }
 
   // if (userId) {
   //   requestHeaders.set('x-user-id', userId);
