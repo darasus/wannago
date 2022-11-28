@@ -23,7 +23,7 @@ export default function EventPage({
   }
 
   return (
-    <div className="max-w-xl m-auto py-4">
+    <div className="max-w-xl m-auto p-4">
       <EventView
         event={data}
         myEvent={user.user?.id === data.authorId}

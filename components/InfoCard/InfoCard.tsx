@@ -23,7 +23,7 @@ export function InfoCard({
   return (
     <>
       <Card className="p-0">
-        <div className="flex items-center overflow-hidden relative justify-center h-64 bg-black rounded-t-xl">
+        <div className="flex items-center overflow-hidden relative justify-center h-64 bg-black rounded-t-xl safari-rounded-border-fix">
           {showManageTools && <EditControls eventId={eventId} />}
           {featuredImageSrc && (
             <Image

@@ -6,3 +6,9 @@ html,
 body {
   @apply bg-gray-100;
 }
+
+@layer utilities {
+  .safari-rounded-border-fix {
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+  }
+}
