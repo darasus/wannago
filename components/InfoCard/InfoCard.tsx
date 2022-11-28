@@ -37,7 +37,7 @@ export function InfoCard({
         </div>
         <div className="p-4">
           <div className="mb-2">
-            <SectionTitle color="green" className="mr-2">
+            <SectionTitle color="pink" className="mr-2">
               What
             </SectionTitle>
             {/* <Button variant="link-neutral">Share</Button> */}

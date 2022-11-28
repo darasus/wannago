@@ -11,7 +11,7 @@ export function ParticipantsCard() {
       <Card>
         <div>
           <div className="mb-2">
-            <SectionTitle color="green" className="mr-2">
+            <SectionTitle color="purple" className="mr-2">
               Attend
             </SectionTitle>
             {/* <Button variant="link-neutral">Invite</Button> */}
