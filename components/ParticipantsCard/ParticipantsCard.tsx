@@ -34,6 +34,11 @@ export function ParticipantsCard({event}: Props) {
         toast.error(validationErrors?.[key]);
       });
     },
+    onSuccess: () => {
+      toast.success('Successfully RSVPd, check your email for more details!', {
+        duration: 5000,
+      });
+    },
   });
 
   const onSubmit = handleSubmit(async data => {
