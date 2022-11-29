@@ -2,7 +2,7 @@ import Link from 'next/link';
 import {PropsWithChildren} from 'react';
 import {Card} from '../DateCard/Card/Card';
 import {UserSecsion} from '../UserSecsion/UserSecsion';
-import {Pacifico as LogoFont} from '@next/font/google';
+import {Paytone_One as LogoFont} from '@next/font/google';
 import clsx from 'clsx';
 
 const logoFong = LogoFont({
@@ -21,7 +21,7 @@ export default function AppLayout({children}: PropsWithChildren) {
               'text-xl leading-none text-brand-500'
             )}
           >
-            WG
+            WannaGo
           </span>
         </Link>
         <div className="grow" />
