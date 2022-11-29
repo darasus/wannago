@@ -3,6 +3,7 @@ import {z} from 'zod';
 import {prisma} from '../../lib/prisma';
 import {nanoid} from 'nanoid';
 import {Client} from '@googlemaps/google-maps-services-js';
+import {User} from '@prisma/client';
 
 export const eventRouter = router({
   getEventById: publicProcedure
@@ -176,4 +177,50 @@ export const eventRouter = router({
 
     return {events};
   }),
+  rsvp: publicProcedure
+    .input(z.object({eventId: z.string(), email: z.string().email()}))
+    .mutation(async ({input}) => {
+      let user: User | null = null;
+      user = await prisma.user.findUnique({
+        where: {
+          email: input.email,
+        },
+      });
+
+      if (!user) {
+        user = await prisma.user.create({
+          data: {
+            email: input.email,
+          },
+        });
+      }
+
+      return prisma.event.update({
+        where: {
+          id: input.eventId,
+        },
+        data: {
+          attendees: {
+            connect: {
+              id: user.id,
+            },
+          },
+        },
+      });
+    }),
+  getNumberOfAttendees: publicProcedure
+    .input(z.object({eventId: z.string()}))
+    .query(async ({input}) => {
+      const count = await prisma.user.count({
+        where: {
+          attendingEvents: {
+            some: {
+              id: input.eventId,
+            },
+          },
+        },
+      });
+
+      return {count};
+    }),
 });

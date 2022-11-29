@@ -39,7 +39,7 @@ export function EventView({event, myEvent, isPublicView, timezone}: Props) {
         />
       </div>
       <div>
-        <ParticipantsCard />
+        <ParticipantsCard event={event} />
       </div>
     </div>
   );
