@@ -1,9 +1,7 @@
 import {router, publicProcedure, protectedProcedure} from '../trpc';
-
 import {z} from 'zod';
 import {prisma} from '../../lib/prisma';
 import {nanoid} from 'nanoid';
-import {TRPCError} from '@trpc/server';
 import {Client} from '@googlemaps/google-maps-services-js';
 
 export const eventRouter = router({
@@ -115,6 +113,7 @@ export const eventRouter = router({
         startDate: z.string(),
         endDate: z.string(),
         address: z.string(),
+        featuredImageSrc: z.string(),
         maxNumberOfAttendees: z
           .number()
           .or(z.string())
@@ -134,6 +133,7 @@ export const eventRouter = router({
           description,
           endDate,
           maxNumberOfAttendees,
+          featuredImageSrc,
           startDate,
           title,
         },
@@ -160,6 +160,7 @@ export const eventRouter = router({
             address: address,
             authorId: ctx.user?.id,
             maxNumberOfAttendees: maxNumberOfAttendees,
+            featuredImageSrc,
             longitude: response.data.results[0].geometry.location.lng,
             latitude: response.data.results[0].geometry.location.lat,
           },

@@ -1,5 +1,5 @@
+import clsx from 'clsx';
 import Image from 'next/image';
-import {Button} from '../Button/Button';
 import {Card} from '../DateCard/Card/Card';
 import {SectionTitle} from '../Text/SectionTitle';
 import {Text} from '../Text/Text';
@@ -44,7 +44,19 @@ export function InfoCard({
           </div>
           <Text className="text-2xl font-bold">{title}</Text>
           <div />
-          <Text>{description}</Text>
+          <div
+            className={clsx(
+              'prose',
+              'prose-h1:text-black prose-h2:text-black prose-h3:text-black prose-h4:text-black prose-h5:text-black prose-h6:text-black',
+              'prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-pre:rounded-md prose-pre:text-gray-900',
+              'prose-a:text-brand-700'
+            )}
+          >
+            <div
+              className="text-boty"
+              dangerouslySetInnerHTML={{__html: description}}
+            />
+          </div>
         </div>
       </Card>
     </>

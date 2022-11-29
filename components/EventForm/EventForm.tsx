@@ -5,8 +5,8 @@ import {Card} from '../DateCard/Card/Card';
 import {FileInput} from '../FileInput/FileInput';
 import {Input} from '../Input/Input';
 import {LocationInput} from '../LocationInput/LocationInput';
+import {RichTextarea} from '../RichTextarea/RichTextarea';
 import {Text} from '../Text/Text';
-import {TextInput} from '../TextInput/TextInput';
 import {Form} from './types';
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
 export function EventForm({onSubmit}: Props) {
   const {
     register,
-    formState: {isSubmitting},
+    formState: {isSubmitting, defaultValues},
   } = useFormContext<Form>();
 
   return (
@@ -32,10 +32,7 @@ export function EventForm({onSubmit}: Props) {
               <Input label="Event title" {...register('title')} />
             </div>
             <div>
-              <TextInput
-                label="Event description"
-                {...register('description')}
-              />
+              <RichTextarea label="Event description" />
             </div>
             <div>
               <Input
