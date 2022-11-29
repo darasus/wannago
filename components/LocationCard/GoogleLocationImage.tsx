@@ -25,7 +25,7 @@ export function GoogleLocationImage({
   url.searchParams.set('scale', '2');
   url.searchParams.set('format', 'jpg');
   url.searchParams.set('visible', 'Amsterdam');
-  url.searchParams.set('markers', `color:red|label:S|${latitude},${longitude}`);
+  url.searchParams.set('markers', `color:red|${latitude},${longitude}`);
 
   return (
     <div className="rounded-xl overflow-hidden">
