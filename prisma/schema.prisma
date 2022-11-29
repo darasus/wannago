@@ -24,6 +24,8 @@ model Event {
   updatedAt            DateTime @updatedAt
   maxNumberOfAttendees Int?
   featuredImageSrc     String?
+  longitude            Float
+  latitude             Float
   // attendees   User[]   @relation("EventAttendees")
 }
 

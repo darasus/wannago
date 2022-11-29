@@ -7,9 +7,11 @@ import {Button} from '../Button/Button';
 
 interface Props {
   address: string;
+  latitude: number;
+  longitude: number;
 }
 
-export function LocationCard({address}: Props) {
+export function LocationCard({address, longitude, latitude}: Props) {
   const onDirectionsClick = () => {
     window?.open(`https://www.google.com/maps/search/${address}`);
   };
@@ -27,7 +29,13 @@ export function LocationCard({address}: Props) {
       <Text className="font-bold">{address}</Text>
       <div className="mb-2" />
       <div>
-        <GoogleLocationImage address={address} width={550} height={250} />
+        <GoogleLocationImage
+          address={address}
+          longitude={longitude}
+          latitude={latitude}
+          width={550}
+          height={250}
+        />
       </div>
     </Card>
   );

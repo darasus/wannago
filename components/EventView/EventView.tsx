@@ -32,7 +32,11 @@ export function EventView({event, myEvent, isPublicView, timezone}: Props) {
         <DateCard event={event} timezone={timezone} />
       </div>
       <div>
-        <LocationCard address={event.address} />
+        <LocationCard
+          address={event.address}
+          longitude={event.longitude}
+          latitude={event.latitude}
+        />
       </div>
       <div>
         <ParticipantsCard />

@@ -4,6 +4,7 @@ import {z} from 'zod';
 import {prisma} from '../../lib/prisma';
 import {nanoid} from 'nanoid';
 import {TRPCError} from '@trpc/server';
+import {Client} from '@googlemaps/google-maps-services-js';
 
 export const eventRouter = router({
   getEventById: publicProcedure
@@ -65,6 +66,15 @@ export const eventRouter = router({
         },
         ctx,
       }) => {
+        const client = new Client();
+
+        const response = await client.geocode({
+          params: {
+            key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+            address,
+          },
+        });
+
         return prisma.event.create({
           data: {
             shortId: nanoid(6),
@@ -76,6 +86,8 @@ export const eventRouter = router({
             authorId: ctx.user?.id,
             maxNumberOfAttendees,
             featuredImageSrc,
+            longitude: response.data.results[0].geometry.location.lng,
+            latitude: response.data.results[0].geometry.location.lat,
           },
         });
       }
@@ -127,6 +139,15 @@ export const eventRouter = router({
         },
         ctx,
       }) => {
+        const client = new Client();
+
+        const response = await client.geocode({
+          params: {
+            key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+            address,
+          },
+        });
+
         return prisma.event.update({
           where: {
             id,
@@ -139,6 +160,8 @@ export const eventRouter = router({
             address: address,
             authorId: ctx.user?.id,
             maxNumberOfAttendees: maxNumberOfAttendees,
+            longitude: response.data.results[0].geometry.location.lng,
+            latitude: response.data.results[0].geometry.location.lat,
           },
         });
       }
