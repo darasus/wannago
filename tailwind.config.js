@@ -1,5 +1,5 @@
 const forms = require('@tailwindcss/forms');
-// const typography = require('@tailwindcss/typography');
+const typography = require('@tailwindcss/typography');
 const lineClamp = require('@tailwindcss/line-clamp');
 // const aspectRatio = require('@tailwindcss/aspect-ratio');
 
@@ -27,5 +27,8 @@ module.exports = {
       },
     },
   },
-  plugins: [lineClamp, forms],
+  plugins: [lineClamp, forms, typography],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 };
