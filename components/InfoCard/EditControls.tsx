@@ -1,7 +1,7 @@
 import {useRouter} from 'next/router';
 import {Button} from '../Button/Button';
 import {PencilIcon, TrashIcon} from '@heroicons/react/24/solid';
-import {useDeleteEvent} from '../../hooks/useDeleteEvent';
+import {trpc} from '../../utils/trpc';
 
 interface Props {
   eventId: string;
@@ -9,7 +9,7 @@ interface Props {
 
 export function EditControls({eventId}: Props) {
   const router = useRouter();
-  const {handleDelete, isLoading: isDeleting} = useDeleteEvent({
+  const {mutate, isLoading} = trpc.event.remove.useMutation({
     onSuccess: () => router.push('/dashboard'),
   });
 
@@ -23,12 +23,12 @@ export function EditControls({eventId}: Props) {
         onClick={() => router.push(`/event/${eventId}/edit`)}
       />
       <Button
-        isLoading={isDeleting}
+        isLoading={isLoading}
         className="px-2 py-2"
         variant="danger"
         size="xs"
         iconLeft={<TrashIcon className="h-5 w-5" aria-hidden="true" />}
-        onClick={() => handleDelete(eventId)}
+        onClick={() => mutate({id: eventId})}
       />
     </div>
   );

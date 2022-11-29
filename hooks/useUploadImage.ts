@@ -1,6 +1,6 @@
 import ky from 'ky';
 import {useCallback, useState} from 'react';
-import {getBaseUrl} from '../lib/api';
+import {getBaseUrl} from '../utils/getBaseUrl';
 
 interface FileUploadResponse {
   id: string;

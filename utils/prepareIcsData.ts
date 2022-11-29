@@ -1,7 +1,7 @@
 import {EventAttributes} from 'ics';
 import {format} from 'date-fns';
-import {getBaseUrl} from '../lib/api';
 import {Event} from '@prisma/client';
+import {getBaseUrl} from './getBaseUrl';
 
 export function prepareIcsData(event: Event): EventAttributes {
   const icsData: EventAttributes = {
