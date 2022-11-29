@@ -10,10 +10,14 @@ export default function EventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
+  const id = router.query.id as string;
   const user = useUser();
-  const {data} = trpc.event.getEventById.useQuery({
-    id: router.query.id as string,
-  });
+  const {data} = trpc.event.getEventById.useQuery(
+    {
+      id,
+    },
+    {enabled: !!id}
+  );
   const clientTimezone = useMemo(
     () => timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
     [timezone]
@@ -28,7 +32,7 @@ export default function EventPage({
       <EventView
         event={data}
         myEvent={user.user?.id === data.authorId}
-        showManageTools={true}
+        isPublicView={false}
         timezone={clientTimezone}
       />
     </AppLayout>

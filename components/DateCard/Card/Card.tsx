@@ -1,11 +1,15 @@
 import clsx from 'clsx';
-import {PropsWithChildren} from 'react';
+import {forwardRef, PropsWithChildren} from 'react';
 
 type Props = PropsWithChildren & {className?: string};
 
-export function Card({children, className}: Props) {
+export const Card = forwardRef<HTMLDivElement, Props>(function Card(
+  {children, className},
+  ref
+) {
   return (
     <div
+      ref={ref}
       className={clsx(
         'border-b drop-shadow-sm shadow-gray-300 border-gray-200 bg-white p-4 rounded-xl',
         className
@@ -14,4 +18,4 @@ export function Card({children, className}: Props) {
       {children}
     </div>
   );
-}
+});

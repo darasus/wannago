@@ -4,6 +4,7 @@ import {Button} from '../Button/Button';
 import {Card} from '../DateCard/Card/Card';
 import {FileInput} from '../FileInput/FileInput';
 import {Input} from '../Input/Input';
+import {LocationInput} from '../LocationInput/LocationInput';
 import {Text} from '../Text/Text';
 import {TextInput} from '../TextInput/TextInput';
 import {Form} from './types';
@@ -51,7 +52,7 @@ export function EventForm({onSubmit}: Props) {
               />
             </div>
             <div>
-              <Input label="Event address" {...register('address')} />
+              <LocationInput label="Event address" {...register('address')} />
             </div>
             <div>
               <Input

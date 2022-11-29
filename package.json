@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.6.5",
+    "@googlemaps/google-maps-services-js": "^3.3.16",
+    "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.13",
     "@hookform/resolvers": "^2.9.10",
     "@next/font": "^13.0.5",

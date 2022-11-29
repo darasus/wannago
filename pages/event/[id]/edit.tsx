@@ -5,9 +5,15 @@ import {trpc} from '../../../utils/trpc';
 
 export default function EventEditPage() {
   const router = useRouter();
-  const {data} = trpc.event.getEventById.useQuery({
-    id: router.query.id as string,
-  });
+  const id = router.query.id as string;
+  const {data} = trpc.event.getEventById.useQuery(
+    {
+      id,
+    },
+    {
+      enabled: !!id,
+    }
+  );
 
   if (!data) {
     return null;
