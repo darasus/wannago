@@ -1,5 +1,6 @@
 import {Event} from '@prisma/client';
 import {useForm} from 'react-hook-form';
+import {toast} from 'react-hot-toast';
 import {trpc} from '../../utils/trpc';
 import {Avatar} from '../Avatar/Avatar';
 import {Button} from '../Button/Button';
@@ -26,13 +27,25 @@ export function ParticipantsCard({event}: Props) {
     formState: {isSubmitting},
     reset,
   } = useForm<Form>();
-  const {mutateAsync} = trpc.event.rsvp.useMutation();
+  const {mutateAsync, error} = trpc.event.rsvp.useMutation({
+    onError: error => {
+      const validationErrors = (error.data?.zodError?.fieldErrors || {}) as any;
+      Object.keys(validationErrors).forEach(key => {
+        toast.error(validationErrors?.[key]);
+      });
+    },
+  });
 
   const onSubmit = handleSubmit(async data => {
     await mutateAsync({eventId: event.id, email: data.email});
     await refetch();
     reset();
   });
+
+  const errors = Object.values(error?.data?.zodError?.fieldErrors || {})
+    .map(v => v)
+    .flat()
+    .filter(Boolean) as string[];
 
   return (
     <>
