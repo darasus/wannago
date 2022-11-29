@@ -43,8 +43,6 @@ export default function HomePage() {
                 )}
                 <div className="p-4">
                   <Text className="text-lg font-bold">{event.title}</Text>
-                  <div />
-                  <p className="truncate text-md">{event.description}</p>
                 </div>
               </Card>
             </Link>
@@ -54,20 +52,3 @@ export default function HomePage() {
     </AppLayout>
   );
 }
-
-// export async function getServerSideProps({
-//   req,
-//   res,
-// }: GetServerSidePropsContext) {
-//   const {userId} = getAuth(req);
-
-//   if (!userId) {
-//     return {props: {}};
-//   }
-
-//   const events = await api.getMyEvents(userId);
-
-//   res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
-
-//   return {props: {events}};
-// }
