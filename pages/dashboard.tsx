@@ -1,15 +1,10 @@
-import {Event} from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
-import {NextRequest} from 'next/server';
 import {Card} from '../components/DateCard/Card/Card';
 import {Text} from '../components/Text/Text';
-import {api} from '../lib/api';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import AppLayout from '../components/AppLayout/AppLayout';
-import {GetServerSidePropsContext} from 'next';
-import {getAuth} from '@clerk/nextjs/server';
 import {trpc} from '../utils/trpc';
 import {Spinner} from '../components/Spinner/Spinner';
 
