@@ -76,15 +76,15 @@ export const Button = forwardRef(function Button(
             !(isLink || isLinkNeutral),
           'p-3': isIconButton && isXl && !(isLink || isLinkNeutral),
           // colors
-          'border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500':
+          'border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:ring-brand-500':
             isPrimary,
-          'border-transparent bg-indigo-100 text-indigo-700 hover:bg-indigo-200 focus:ring-indigo-500':
+          'border-transparent bg-brand-100 text-brand-700 hover:bg-brand-200 focus:ring-brand-500':
             isSecondary,
           'border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-500':
             isDanger,
-          'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-indigo-500':
+          'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-brand-500':
             isNeutral,
-          'text-indigo-600 hover:text-indigo-500 border-indigo-600 hover:border-indigo-500 text-sm font-medium leading-none':
+          'text-brand-600 hover:text-brand-500 border-brand-600 hover:border-brand-500 text-sm font-medium leading-none':
             isLink,
           'text-gray-400 hover:text-gray-500 border-gray-400 hover:border-gray-500 text-sm font-medium leading-none inline':
             isLinkNeutral,

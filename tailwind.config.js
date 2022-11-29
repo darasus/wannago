@@ -11,7 +11,21 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brand: {
+          100: '#caf0f8ff',
+          200: '#ade8f4ff',
+          300: '#90e0efff ',
+          400: '#48cae4ff',
+          500: '#00b4d8ff',
+          600: '#0096c7ff',
+          700: '#0077b6ff',
+          800: '#023e8aff',
+          900: '#03045eff',
+        },
+      },
+    },
   },
   plugins: [lineClamp, forms],
 };
