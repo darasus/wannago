@@ -228,4 +228,19 @@ export const eventRouter = router({
 
       return {count};
     }),
+  attendees: protectedProcedure
+    .input(z.object({eventId: z.string()}))
+    .query(async ({input, ctx}) => {
+      const event = await prisma.event.findFirst({
+        where: {
+          id: input.eventId,
+          authorId: ctx.user?.id,
+        },
+        include: {
+          attendees: true,
+        },
+      });
+
+      return event?.attendees || [];
+    }),
 });
