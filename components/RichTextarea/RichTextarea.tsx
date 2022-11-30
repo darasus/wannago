@@ -6,69 +6,71 @@ import {
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import clsx from 'clsx';
-import {useFormContext} from 'react-hook-form';
+import {forwardRef, HTMLAttributes, useEffect} from 'react';
+import {FieldError, useFormContext} from 'react-hook-form';
 import {Form} from '../EventForm/types';
-import {BubbleMenuButton} from './BubbleMenuButton';
+import {InputWrapper} from '../Input/InputWrapper';
 import {BubbleMenuButtonGroup} from './BubbleMenuButtonGroup';
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLInputElement> {
   label?: string;
+  error?: FieldError;
 }
 
-export function RichTextarea({label}: Props) {
-  const {
-    formState: {defaultValues},
-    setValue,
-  } = useFormContext<Form>();
+export const RichTextarea = forwardRef<HTMLInputElement, Props>(
+  function RichTextarea({label, error, ...props}, ref) {
+    const {
+      formState: {defaultValues},
+      setValue,
+      watch,
+    } = useFormContext<Form>();
 
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: defaultValues?.description || '',
-    onUpdate: ({editor}) => {
-      setValue('description', editor?.getHTML());
-    },
-  });
+    const editor = useEditor({
+      extensions: [StarterKit],
+      content: defaultValues?.description || '',
+      onUpdate: ({editor}) => {
+        setValue('description', editor?.getHTML());
+      },
+    });
 
-  return (
-    <>
-      {editor && (
-        <BubbleMenu
-          className="isolate inline-flex rounded-md shadow-sm"
-          tippyOptions={{duration: 100}}
-          editor={editor}
-        >
-          <BubbleMenuButtonGroup editor={editor} />
-        </BubbleMenu>
-      )}
-
-      {editor && (
-        <FloatingMenu
-          className=""
-          tippyOptions={{duration: 100}}
-          editor={editor}
-        >
-          <BubbleMenuButtonGroup editor={editor} />
-        </FloatingMenu>
-      )}
-      <div>
-        {label && (
-          <label
-            className={clsx('block text-md text-black mb-1 ml-2 font-bold')}
+    return (
+      <>
+        {editor && (
+          <BubbleMenu
+            className="isolate inline-flex rounded-md shadow-sm"
+            tippyOptions={{duration: 100}}
+            editor={editor}
           >
-            {label}
-          </label>
+            <BubbleMenuButtonGroup editor={editor} />
+          </BubbleMenu>
         )}
-        <div className="border border-gray-300 rounded-md">
-          <div className="text-boty">
-            <EditorContent
-              editor={editor}
-              onSubmit={e => {
-                e.preventDefault();
-              }}
-            />
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
+
+        {editor && (
+          <FloatingMenu
+            className=""
+            tippyOptions={{duration: 100}}
+            editor={editor}
+          >
+            <BubbleMenuButtonGroup editor={editor} />
+          </FloatingMenu>
+        )}
+        <InputWrapper label={label} error={error}>
+          <input ref={ref} {...props} className="hidden" />
+          <EditorContent
+            className={clsx('border  rounded-md p-2', {
+              'input-focus': editor?.isFocused,
+              'border-gray-300': !error,
+              'border-red-300': error,
+              'border-brand-500 ring-brand-500': editor?.isFocused && !!error,
+              'border-red-500 ring-red-500': editor?.isFocused && error,
+            })}
+            editor={editor}
+            onSubmit={e => {
+              e.preventDefault();
+            }}
+          />
+        </InputWrapper>
+      </>
+    );
+  }
+);

@@ -1,39 +1,43 @@
+import {InputWrapper} from './InputWrapper';
 import clsx from 'clsx';
 import {forwardRef} from 'react';
+import {FieldError} from 'react-hook-form';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   inputClassName?: string;
   containerClassName?: string;
+  error?: FieldError;
 }
 
-function InputWithoutRef(
-  {containerClassName, inputClassName, ...props}: Props,
+export const Input = forwardRef(function Input(
+  {containerClassName, inputClassName, error, ...props}: Props,
   ref: React.Ref<HTMLInputElement>
 ) {
-  return (
-    <div className={clsx(containerClassName)}>
-      {props.label && (
-        <label
-          htmlFor={props.id}
-          className={clsx('block text-md text-black mb-1 ml-2 font-bold')}
-        >
-          {props.label}
-        </label>
-      )}
-      <div className={clsx({'mt-1': props.id})}>
-        <input
-          type="text"
-          className={clsx(
-            'block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm',
-            inputClassName
-          )}
-          {...props}
-          ref={ref}
-        />
-      </div>
-    </div>
-  );
-}
+  const hasError = Boolean(error);
 
-export const Input = forwardRef(InputWithoutRef);
+  return (
+    <InputWrapper
+      containerClassName={containerClassName}
+      error={error}
+      id={props.id}
+      label={props.label}
+    >
+      <input
+        data-tooltip-target="tooltip-default"
+        type="text"
+        className={clsx(
+          'block w-full rounded-md border-gray-300 shadow-sm sm:text-sm',
+          {'focus:border-brand-500 focus:ring-brand-500': !hasError},
+          inputClassName,
+          {
+            ['border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500 pr-10']:
+              hasError,
+          }
+        )}
+        {...props}
+        ref={ref}
+      />
+    </InputWrapper>
+  );
+});
