@@ -1,5 +1,5 @@
 import {Button} from '../../Button/Button';
-import {Card} from '../Card/Card';
+import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../../Badge/Badge';
 import {Text} from '../../Text/Text';
 import {saveAs} from 'file-saver';
@@ -22,7 +22,7 @@ export function DateCard({event, timezone}: Props) {
   };
 
   return (
-    <Card>
+    <CardBase>
       <div className="mb-2">
         <Badge color="yellow" className="mr-2">
           When
@@ -60,6 +60,6 @@ export function DateCard({event, timezone}: Props) {
           )} - ${formatDate(new Date(event.endDate), 'k:mm', timezone)}`}</Text>
         </div>
       </div>
-    </Card>
+    </CardBase>
   );
 }

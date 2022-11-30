@@ -3,7 +3,7 @@ import {isFuture} from 'date-fns';
 import Image from 'next/image';
 import {formatDate} from '../../../utils/formatDate';
 import {Badge} from '../../Badge/Badge';
-import {Card} from '../Card/Card';
+import {CardBase} from '../CardBase/CardBase';
 import {Text} from '../../Text/Text';
 
 interface Props {
@@ -14,7 +14,7 @@ export function EventCard({event}: Props) {
   const isUpdcoming = isFuture(event.startDate);
 
   return (
-    <Card className="flex flex-col p-0">
+    <CardBase className="flex flex-col p-0">
       {event.featuredImageSrc && (
         <div className="grow overflow-hidden relative justify-center bg-black rounded-t-xl aspect-video">
           <Image
@@ -38,6 +38,6 @@ export function EventCard({event}: Props) {
         <div />
         <Text className="text-lg font-bold">{event.title}</Text>
       </div>
-    </Card>
+    </CardBase>
   );
 }

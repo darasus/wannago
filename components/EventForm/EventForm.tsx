@@ -1,11 +1,11 @@
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {Button} from '../Button/Button';
-import {Card} from '../cards/Card/Card';
-import {FileInput} from '../inputs/FileInput/FileInput';
-import {Input} from '../inputs/Input/Input';
+import {CardBase} from '../Card/CardBase/CardBase';
+import {FileInput} from '../Input/FileInput/FileInput';
+import {Input} from '../Input/Input/Input';
 import {LocationInput} from '../LocationInput/LocationInput';
-import {RichTextarea} from '../inputs/RichTextarea/RichTextarea';
+import {RichTextarea} from '../Input/RichTextarea/RichTextarea';
 import {Text} from '../Text/Text';
 import {Form} from './types';
 
@@ -22,7 +22,7 @@ export function EventForm({onSubmit}: Props) {
 
   return (
     <div>
-      <Card>
+      <CardBase>
         <form onSubmit={onSubmit}>
           <div className="grid grid-cols-1 gap-4">
             <div className="text-center">
@@ -119,7 +119,7 @@ export function EventForm({onSubmit}: Props) {
             </div>
           </div>
         </form>
-      </Card>
+      </CardBase>
     </div>
   );
 }

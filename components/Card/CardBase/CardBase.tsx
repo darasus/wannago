@@ -3,7 +3,7 @@ import {forwardRef, PropsWithChildren} from 'react';
 
 type Props = PropsWithChildren & {className?: string};
 
-export const Card = forwardRef<HTMLDivElement, Props>(function Card(
+export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
   {children, className},
   ref
 ) {

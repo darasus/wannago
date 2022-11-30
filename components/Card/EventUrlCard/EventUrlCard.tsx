@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import useCopyClipboard from '../../../hooks/useCopyClipboard';
 import {Button} from '../../Button/Button';
-import {Card} from '../Card/Card';
+import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../../Badge/Badge';
 import clsx from 'clsx';
 
@@ -13,7 +13,7 @@ export function EventUrlCard({url}: Props) {
   const [isCopied, copy] = useCopyClipboard(url);
 
   return (
-    <Card className="border-2 border-b-2 border-green-500 bg-green-50 border-dashed">
+    <CardBase className="border-2 border-b-2 border-green-500 bg-green-50 border-dashed">
       <div className="mb-2">
         <Badge color="green" className="mr-2">
           Invite
@@ -30,6 +30,6 @@ export function EventUrlCard({url}: Props) {
             .replace('www.', '')}
         </Link>
       </div>
-    </Card>
+    </CardBase>
   );
 }

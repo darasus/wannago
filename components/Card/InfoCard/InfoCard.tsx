@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
-import {Card} from '../Card/Card';
+import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../../Badge/Badge';
 import {Text} from '../../Text/Text';
 import {EditControls} from './EditControls';
@@ -22,7 +22,7 @@ export function InfoCard({
 }: Props) {
   return (
     <>
-      <Card className="p-0">
+      <CardBase className="p-0">
         <div className="flex items-center overflow-hidden relative justify-center aspect-video bg-black rounded-t-xl safari-rounded-border-fix">
           {showManageTools && <EditControls eventId={eventId} />}
           {featuredImageSrc && (
@@ -58,7 +58,7 @@ export function InfoCard({
             />
           </div>
         </div>
-      </Card>
+      </CardBase>
     </>
   );
 }

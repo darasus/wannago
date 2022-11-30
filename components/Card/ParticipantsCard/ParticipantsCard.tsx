@@ -4,8 +4,8 @@ import {toast} from 'react-hot-toast';
 import {trpc} from '../../../utils/trpc';
 import {Avatar} from '../../Avatar/Avatar';
 import {Button} from '../../Button/Button';
-import {Card} from '../Card/Card';
-import {Input} from '../../inputs/Input/Input';
+import {CardBase} from '../CardBase/CardBase';
+import {Input} from '../../Input/Input/Input';
 import {Badge} from '../../Badge/Badge';
 import {Text} from '../../Text/Text';
 
@@ -55,7 +55,7 @@ export function ParticipantsCard({event}: Props) {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <Card>
+        <CardBase>
           <div>
             <div className="mb-2">
               <Badge color="purple" className="mr-2">
@@ -89,7 +89,7 @@ export function ParticipantsCard({event}: Props) {
               <Text className="text-gray-400">{`${data?.count} people attending`}</Text>
             </div>
           </div>
-        </Card>
+        </CardBase>
       </form>
     </>
   );

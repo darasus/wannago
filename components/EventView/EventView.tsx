@@ -1,10 +1,10 @@
 import {Event} from '@prisma/client';
 import {getBaseUrl} from '../../utils/getBaseUrl';
-import {DateCard} from '../cards/DateCard/DateCard';
-import {EventUrlCard} from '../cards/EventUrlCard/EventUrlCard';
-import {InfoCard} from '../cards/InfoCard/InfoCard';
-import {LocationCard} from '../cards/LocationCard/LocationCard';
-import {ParticipantsCard} from '../cards/ParticipantsCard/ParticipantsCard';
+import {DateCard} from '../Card/DateCard/DateCard';
+import {EventUrlCard} from '../Card/EventUrlCard/EventUrlCard';
+import {InfoCard} from '../Card/InfoCard/InfoCard';
+import {LocationCard} from '../Card/LocationCard/LocationCard';
+import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
 
 interface Props {
   event: Event;

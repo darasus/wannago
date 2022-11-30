@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {PropsWithChildren} from 'react';
-import {Card} from '../cards/Card/Card';
+import {CardBase} from '../Card/CardBase/CardBase';
 import {UserSecsion} from '../UserSecsion/UserSecsion';
 import {Paytone_One as LogoFont} from '@next/font/google';
 import clsx from 'clsx';
@@ -13,7 +13,7 @@ const logoFong = LogoFont({
 export default function AppLayout({children}: PropsWithChildren) {
   return (
     <div className="p-4 max-w-xl m-auto">
-      <Card className="flex mb-4">
+      <CardBase className="flex mb-4">
         <Link href="/dashboard" className="mr-2">
           <span
             className={clsx(
@@ -26,7 +26,7 @@ export default function AppLayout({children}: PropsWithChildren) {
         </Link>
         <div className="grow" />
         <UserSecsion />
-      </Card>
+      </CardBase>
       <div>{children}</div>
     </div>
   );
