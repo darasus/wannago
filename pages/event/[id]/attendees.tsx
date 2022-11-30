@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {CardBase} from '../../../components/Card/CardBase/CardBase';
@@ -21,14 +22,19 @@ export default function EventEditPage() {
   }
 
   return (
-    <AppLayout>
-      {data?.map(v => {
-        return (
-          <CardBase key={v.id} className="mb-2">
-            <Text>{v.email}</Text>
-          </CardBase>
-        );
-      })}
-    </AppLayout>
+    <>
+      <Head>
+        <title>{`Attendees | WannaGo`}</title>
+      </Head>
+      <AppLayout>
+        {data?.map(v => {
+          return (
+            <CardBase key={v.id} className="mb-2">
+              <Text>{v.email}</Text>
+            </CardBase>
+          );
+        })}
+      </AppLayout>
+    </>
   );
 }

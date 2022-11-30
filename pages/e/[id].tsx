@@ -1,4 +1,5 @@
 import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
+import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
 import {EventView} from '../../components/EventView/EventView';
@@ -23,6 +24,9 @@ export default function EventPage({
 
   return (
     <>
+      <Head>
+        <title>{`${data.title} | WannaGo`}</title>
+      </Head>
       <div className="max-w-xl m-auto p-4">
         <EventView
           event={data}

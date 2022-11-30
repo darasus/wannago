@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EditEventForm} from '../../../components/EventForm/EditEventForm';
@@ -20,8 +21,13 @@ export default function EventEditPage() {
   }
 
   return (
-    <AppLayout>
-      <EditEventForm event={data} />
-    </AppLayout>
+    <>
+      <Head>
+        <title>{`Edit event | WannaGo`}</title>
+      </Head>
+      <AppLayout>
+        <EditEventForm event={data} />
+      </AppLayout>
+    </>
   );
 }

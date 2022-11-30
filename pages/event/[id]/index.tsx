@@ -1,5 +1,6 @@
 import {useUser} from '@clerk/nextjs';
 import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
+import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
@@ -28,14 +29,19 @@ export default function EventPage({
   }
 
   return (
-    <AppLayout>
-      <EventView
-        event={data}
-        myEvent={user.user?.id === data.authorId}
-        isPublicView={false}
-        timezone={clientTimezone}
-      />
-    </AppLayout>
+    <>
+      <Head>
+        <title>{`${data.title} | WannaGo`}</title>
+      </Head>
+      <AppLayout>
+        <EventView
+          event={data}
+          myEvent={user.user?.id === data.authorId}
+          isPublicView={false}
+          timezone={clientTimezone}
+        />
+      </AppLayout>
+    </>
   );
 }
 
