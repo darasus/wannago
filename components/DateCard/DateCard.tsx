@@ -1,6 +1,6 @@
 import {Button} from '../Button/Button';
-import {Card} from './Card/Card';
-import {SectionTitle} from '../Text/SectionTitle';
+import {Card} from '../Card/Card';
+import {Badge} from '../Badge/Badge';
 import {Text} from '../Text/Text';
 import {saveAs} from 'file-saver';
 import {createEvent} from 'ics';
@@ -24,9 +24,9 @@ export function DateCard({event, timezone}: Props) {
   return (
     <Card>
       <div className="mb-2">
-        <SectionTitle color="yellow" className="mr-2">
+        <Badge color="yellow" className="mr-2">
           When
-        </SectionTitle>
+        </Badge>
         <Button onClick={handleCalendarClick} variant="link-neutral">
           Add to calendar
         </Button>

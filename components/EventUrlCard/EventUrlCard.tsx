@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import useCopyClipboard from '../../hooks/useCopyClipboard';
 import {Button} from '../Button/Button';
-import {Card} from '../DateCard/Card/Card';
-import {SectionTitle} from '../Text/SectionTitle';
+import {Card} from '../Card/Card';
+import {Badge} from '../Badge/Badge';
+import clsx from 'clsx';
 
 interface Props {
   url: string;
@@ -13,19 +14,21 @@ export function EventUrlCard({url}: Props) {
 
   return (
     <Card className="border-2 border-b-2 border-green-500 bg-green-50 border-dashed">
-      <SectionTitle color="green" className="mr-2">
-        Invite
-      </SectionTitle>
-      <div className="flex items-center">
+      <div className="mb-2">
+        <Badge color="green" className="mr-2">
+          Invite
+        </Badge>
+        <Button onClick={copy} variant="link-neutral" disabled={isCopied}>
+          {isCopied ? 'Copied!' : 'Copy url'}
+        </Button>
+      </div>
+      <div>
         <Link className="text-green-800 hover:underline" href={url}>
           {url
             .replace('https://', '')
             .replace('http://', '')
             .replace('www.', '')}
         </Link>
-        <Button variant="neutral" size="xs" onClick={copy} className="ml-2">
-          {isCopied ? 'Copied!' : 'Copy'}
-        </Button>
       </div>
     </Card>
   );

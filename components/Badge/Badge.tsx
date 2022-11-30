@@ -6,7 +6,7 @@ type Props = React.PropsWithChildren & {
   color?: 'gray' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
 };
 
-export function SectionTitle({children, className, color = 'gray'}: Props) {
+export function Badge({children, className, color = 'gray'}: Props) {
   return (
     <span
       className={clsx(

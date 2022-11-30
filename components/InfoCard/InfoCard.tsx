@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
-import {Card} from '../DateCard/Card/Card';
-import {SectionTitle} from '../Text/SectionTitle';
+import {Card} from '../Card/Card';
+import {Badge} from '../Badge/Badge';
 import {Text} from '../Text/Text';
 import {EditControls} from './EditControls';
 
@@ -23,7 +23,7 @@ export function InfoCard({
   return (
     <>
       <Card className="p-0">
-        <div className="flex items-center overflow-hidden relative justify-center h-64 bg-black rounded-t-xl safari-rounded-border-fix">
+        <div className="flex items-center overflow-hidden relative justify-center aspect-video bg-black rounded-t-xl safari-rounded-border-fix">
           {showManageTools && <EditControls eventId={eventId} />}
           {featuredImageSrc && (
             <Image
@@ -37,9 +37,9 @@ export function InfoCard({
         </div>
         <div className="p-4">
           <div className="mb-2">
-            <SectionTitle color="pink" className="mr-2">
+            <Badge color="pink" className="mr-2">
               What
-            </SectionTitle>
+            </Badge>
             {/* <Button variant="link-neutral">Share</Button> */}
           </div>
           <Text className="text-2xl font-bold">{title}</Text>

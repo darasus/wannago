@@ -1,5 +1,5 @@
-import {Card} from '../DateCard/Card/Card';
-import {SectionTitle} from '../Text/SectionTitle';
+import {Card} from '../Card/Card';
+import {Badge} from '../Badge/Badge';
 import {Text} from '../Text/Text';
 import * as React from 'react';
 import {GoogleLocationImage} from './GoogleLocationImage';
@@ -19,9 +19,9 @@ export function LocationCard({address, longitude, latitude}: Props) {
   return (
     <Card>
       <div className="mb-2">
-        <SectionTitle color="blue" className="mr-2">
+        <Badge color="blue" className="mr-2">
           Where
-        </SectionTitle>
+        </Badge>
         <Button onClick={onDirectionsClick} variant="link-neutral">
           Get directions
         </Button>

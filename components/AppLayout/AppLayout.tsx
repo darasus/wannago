@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {PropsWithChildren} from 'react';
-import {Card} from '../DateCard/Card/Card';
+import {Card} from '../Card/Card';
 import {UserSecsion} from '../UserSecsion/UserSecsion';
 import {Paytone_One as LogoFont} from '@next/font/google';
 import clsx from 'clsx';

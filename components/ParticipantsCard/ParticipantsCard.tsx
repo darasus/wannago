@@ -4,9 +4,9 @@ import {toast} from 'react-hot-toast';
 import {trpc} from '../../utils/trpc';
 import {Avatar} from '../Avatar/Avatar';
 import {Button} from '../Button/Button';
-import {Card} from '../DateCard/Card/Card';
+import {Card} from '../Card/Card';
 import {Input} from '../Input/Input';
-import {SectionTitle} from '../Text/SectionTitle';
+import {Badge} from '../Badge/Badge';
 import {Text} from '../Text/Text';
 
 interface Form {
@@ -58,9 +58,9 @@ export function ParticipantsCard({event}: Props) {
         <Card>
           <div>
             <div className="mb-2">
-              <SectionTitle color="purple" className="mr-2">
+              <Badge color="purple" className="mr-2">
                 Attend
-              </SectionTitle>
+              </Badge>
               {/* <Button variant="link-neutral">Invite</Button> */}
             </div>
             <Text className="font-bold">Wanna go?</Text>

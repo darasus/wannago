@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import {Card} from '../components/DateCard/Card/Card';
+import {Card} from '../components/Card/Card';
 import {Text} from '../components/Text/Text';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import AppLayout from '../components/AppLayout/AppLayout';
 import {trpc} from '../utils/trpc';
 import {Spinner} from '../components/Spinner/Spinner';
+import {EventCard} from '../components/EventCard/EventCard';
 
 export default function HomePage() {
   const router = useRouter();
@@ -29,22 +30,7 @@ export default function HomePage() {
         {data?.events?.map(event => {
           return (
             <Link href={`/event/${event.id}`} key={event.id}>
-              <Card className="flex flex-col p-0">
-                {event.featuredImageSrc && (
-                  <div className="grow overflow-hidden relative justify-center bg-black rounded-t-xl aspect-video">
-                    <Image
-                      src={event.featuredImageSrc}
-                      alt=""
-                      fill
-                      style={{objectFit: 'cover'}}
-                      priority
-                    />
-                  </div>
-                )}
-                <div className="p-4">
-                  <Text className="text-lg font-bold">{event.title}</Text>
-                </div>
-              </Card>
+              <EventCard event={event} />
             </Link>
           );
         })}
