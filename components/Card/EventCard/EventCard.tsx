@@ -36,7 +36,7 @@ export function EventCard({event}: Props) {
           </Text>
         </div>
         <div />
-        <Text className="text-lg font-bold">{event.title}</Text>
+        <Text className="text-2xl font-bold">{event.title}</Text>
       </div>
     </CardBase>
   );
