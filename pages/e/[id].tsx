@@ -3,6 +3,7 @@ import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
 import {EventView} from '../../components/EventView/EventView';
+import {StickyBranding} from '../../components/StickyBranding/StickyBranding';
 import {trpc} from '../../utils/trpc';
 
 export default function EventPage({
@@ -22,14 +23,17 @@ export default function EventPage({
   }
 
   return (
-    <div className="max-w-xl m-auto p-4">
-      <EventView
-        event={data}
-        myEvent={false}
-        isPublicView={true}
-        timezone={clientTimezone}
-      />
-    </div>
+    <>
+      <div className="max-w-xl m-auto p-4">
+        <EventView
+          event={data}
+          myEvent={false}
+          isPublicView={true}
+          timezone={clientTimezone}
+        />
+      </div>
+      <StickyBranding />
+    </>
   );
 }
 

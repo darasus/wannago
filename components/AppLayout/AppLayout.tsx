@@ -2,13 +2,8 @@ import Link from 'next/link';
 import {PropsWithChildren} from 'react';
 import {CardBase} from '../Card/CardBase/CardBase';
 import {UserSecsion} from '../UserSecsion/UserSecsion';
-import {Paytone_One as LogoFont} from '@next/font/google';
 import clsx from 'clsx';
-
-const logoFong = LogoFont({
-  weight: '400',
-  display: 'swap',
-});
+import {logoFont} from '../../fonts';
 
 export default function AppLayout({children}: PropsWithChildren) {
   return (
@@ -17,7 +12,7 @@ export default function AppLayout({children}: PropsWithChildren) {
         <Link href="/dashboard" className="mr-2">
           <span
             className={clsx(
-              logoFong.className,
+              logoFont.className,
               'text-xl leading-none text-brand-500'
             )}
           >
