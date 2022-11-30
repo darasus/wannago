@@ -4,7 +4,7 @@ import {Button} from '../Button/Button';
 import {CardBase} from '../Card/CardBase/CardBase';
 import {FileInput} from '../Input/FileInput/FileInput';
 import {Input} from '../Input/Input/Input';
-import {LocationInput} from '../LocationInput/LocationInput';
+import {LocationInput} from '../Input/LocationInput/LocationInput';
 import {RichTextarea} from '../Input/RichTextarea/RichTextarea';
 import {Text} from '../Text/Text';
 import {Form} from './types';

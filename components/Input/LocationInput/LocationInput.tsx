@@ -5,15 +5,15 @@ import {
   Fragment,
   useState,
 } from 'react';
-import {Input} from '../Input/Input/Input';
+import {Input} from '../Input/Input';
 import {useFormContext, useWatch} from 'react-hook-form';
-import {Form} from '../EventForm/types';
-import {trpc} from '../../utils/trpc';
+import {Form} from '../../EventForm/types';
+import {trpc} from '../../../utils/trpc';
 import {Combobox, Transition} from '@headlessui/react';
 import {CheckIcon} from '@heroicons/react/24/outline';
-import {useDebounce} from '../../hooks/useDebounce';
+import {useDebounce} from '../../../hooks/useDebounce';
 import clsx from 'clsx';
-import {Card} from '../Card/CardBase/CardBase';
+import {CardBase} from '../../Card/CardBase/CardBase';
 
 type ExtractProps<T> = T extends ComponentType<infer P> ? P : T;
 
@@ -61,7 +61,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
               // afterLeave={() => setQuery('')}
             >
               <Combobox.Options
-                as={Card}
+                as={CardBase}
                 className={clsx(
                   'absolute z-50 mt-1 py-1 px-0 max-h-60 w-full overflow-auto ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm',
                   {

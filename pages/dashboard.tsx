@@ -1,7 +1,4 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import {Card} from '../components/Card/CardBase/CardBase';
-import {Text} from '../components/Text/Text';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import AppLayout from '../components/AppLayout/AppLayout';
