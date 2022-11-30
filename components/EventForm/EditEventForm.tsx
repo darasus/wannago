@@ -31,7 +31,7 @@ export function EditEventForm({event}: Props) {
 
   return (
     <FormProvider {...form}>
-      <EventForm onSubmit={onSubmit} />
+      <EventForm onSubmit={onSubmit} isEdit />
     </FormProvider>
   );
 }

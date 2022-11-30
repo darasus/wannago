@@ -12,9 +12,10 @@ import {Form} from './types';
 interface Props {
   onSubmit: FormEventHandler;
   isLoading?: boolean;
+  isEdit?: boolean;
 }
 
-export function EventForm({onSubmit}: Props) {
+export function EventForm({onSubmit, isEdit}: Props) {
   const {
     register,
     formState: {isSubmitting, errors},
@@ -26,7 +27,9 @@ export function EventForm({onSubmit}: Props) {
         <form onSubmit={onSubmit}>
           <div className="grid grid-cols-1 gap-4">
             <div className="text-center">
-              <Text className="text-2xl font-bold uppercase">Create event</Text>
+              <Text className="text-2xl font-bold uppercase">
+                {isEdit ? 'Edit event' : 'Create event'}
+              </Text>
             </div>
             <div>
               <Input

@@ -17,9 +17,6 @@ export function EventView({event, myEvent, isPublicView, timezone}: Props) {
   return (
     <div className="grid grid-cols-1 gap-4">
       <div>
-        <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
-      </div>
-      <div>
         <InfoCard
           eventId={event.id}
           showManageTools={!isPublicView && myEvent}
@@ -40,6 +37,9 @@ export function EventView({event, myEvent, isPublicView, timezone}: Props) {
       </div>
       <div>
         <ParticipantsCard event={event} />
+      </div>
+      <div>
+        <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
       </div>
     </div>
   );
