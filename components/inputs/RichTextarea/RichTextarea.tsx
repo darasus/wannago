@@ -8,7 +8,7 @@ import StarterKit from '@tiptap/starter-kit';
 import clsx from 'clsx';
 import {forwardRef, HTMLAttributes, useEffect} from 'react';
 import {FieldError, useFormContext} from 'react-hook-form';
-import {Form} from '../EventForm/types';
+import {Form} from '../../EventForm/types';
 import {InputWrapper} from '../Input/InputWrapper';
 import {BubbleMenuButtonGroup} from './BubbleMenuButtonGroup';
 

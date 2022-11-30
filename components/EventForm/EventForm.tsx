@@ -1,11 +1,11 @@
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {Button} from '../Button/Button';
-import {Card} from '../Card/Card';
-import {FileInput} from '../FileInput/FileInput';
-import {Input} from '../Input/Input';
+import {Card} from '../cards/Card/Card';
+import {FileInput} from '../inputs/FileInput/FileInput';
+import {Input} from '../inputs/Input/Input';
 import {LocationInput} from '../LocationInput/LocationInput';
-import {RichTextarea} from '../RichTextarea/RichTextarea';
+import {RichTextarea} from '../inputs/RichTextarea/RichTextarea';
 import {Text} from '../Text/Text';
 import {Form} from './types';
 

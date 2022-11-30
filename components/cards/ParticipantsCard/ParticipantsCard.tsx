@@ -1,13 +1,13 @@
 import {Event} from '@prisma/client';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
-import {trpc} from '../../utils/trpc';
-import {Avatar} from '../Avatar/Avatar';
-import {Button} from '../Button/Button';
+import {trpc} from '../../../utils/trpc';
+import {Avatar} from '../../Avatar/Avatar';
+import {Button} from '../../Button/Button';
 import {Card} from '../Card/Card';
-import {Input} from '../Input/Input';
-import {Badge} from '../Badge/Badge';
-import {Text} from '../Text/Text';
+import {Input} from '../../inputs/Input/Input';
+import {Badge} from '../../Badge/Badge';
+import {Text} from '../../Text/Text';
 
 interface Form {
   email: string;

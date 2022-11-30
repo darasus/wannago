@@ -1,10 +1,10 @@
 import {Event} from '@prisma/client';
 import {isFuture} from 'date-fns';
 import Image from 'next/image';
-import {formatDate} from '../../utils/formatDate';
-import {Badge} from '../Badge/Badge';
+import {formatDate} from '../../../utils/formatDate';
+import {Badge} from '../../Badge/Badge';
 import {Card} from '../Card/Card';
-import {Text} from '../Text/Text';
+import {Text} from '../../Text/Text';
 
 interface Props {
   event: Event;

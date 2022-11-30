@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import {Card} from '../Card/Card';
-import {Badge} from '../Badge/Badge';
-import {Text} from '../Text/Text';
+import {Badge} from '../../Badge/Badge';
+import {Text} from '../../Text/Text';
 import {EditControls} from './EditControls';
 
 interface Props {

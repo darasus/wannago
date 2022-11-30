@@ -5,7 +5,7 @@ import {
   Fragment,
   useState,
 } from 'react';
-import {Input} from '../Input/Input';
+import {Input} from '../inputs/Input/Input';
 import {useFormContext, useWatch} from 'react-hook-form';
 import {Form} from '../EventForm/types';
 import {trpc} from '../../utils/trpc';
@@ -13,7 +13,7 @@ import {Combobox, Transition} from '@headlessui/react';
 import {CheckIcon} from '@heroicons/react/24/outline';
 import {useDebounce} from '../../hooks/useDebounce';
 import clsx from 'clsx';
-import {Card} from '../Card/Card';
+import {Card} from '../cards/Card/Card';
 
 type ExtractProps<T> = T extends ComponentType<infer P> ? P : T;
 

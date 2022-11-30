@@ -1,9 +1,9 @@
 import {Card} from '../Card/Card';
-import {Badge} from '../Badge/Badge';
-import {Text} from '../Text/Text';
+import {Badge} from '../../Badge/Badge';
+import {Text} from '../../Text/Text';
 import * as React from 'react';
 import {GoogleLocationImage} from './GoogleLocationImage';
-import {Button} from '../Button/Button';
+import {Button} from '../../Button/Button';
 
 interface Props {
   address: string;

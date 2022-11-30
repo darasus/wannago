@@ -1,11 +1,11 @@
-import {Button} from '../Button/Button';
+import {Button} from '../../Button/Button';
 import {Card} from '../Card/Card';
-import {Badge} from '../Badge/Badge';
-import {Text} from '../Text/Text';
+import {Badge} from '../../Badge/Badge';
+import {Text} from '../../Text/Text';
 import {saveAs} from 'file-saver';
 import {createEvent} from 'ics';
-import {prepareIcsData} from '../../utils/prepareIcsData';
-import {formatDate, formatTimeago} from '../../utils/formatDate';
+import {prepareIcsData} from '../../../utils/prepareIcsData';
+import {formatDate, formatTimeago} from '../../../utils/formatDate';
 import {Event} from '@prisma/client';
 
 interface Props {

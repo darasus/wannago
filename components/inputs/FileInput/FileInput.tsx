@@ -6,14 +6,14 @@ import {
   useRef,
   useState,
 } from 'react';
-import {useUploadImage} from '../../hooks/useUploadImage';
-import {Button} from '../Button/Button';
+import {useUploadImage} from '../../../hooks/useUploadImage';
+import {Button} from '../../Button/Button';
 import {Input} from '../Input/Input';
 import {PhotoIcon} from '@heroicons/react/24/outline';
 import Image from 'next/image';
-import {Spinner} from '../Spinner/Spinner';
+import {Spinner} from '../../Spinner/Spinner';
 import {useFormContext, UseFormSetValue} from 'react-hook-form';
-import {Form} from '../EventForm/types';
+import {Form} from '../../EventForm/types';
 
 interface Props extends ComponentProps<typeof Input> {}
 

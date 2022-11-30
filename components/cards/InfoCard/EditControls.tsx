@@ -1,7 +1,7 @@
 import {useRouter} from 'next/router';
-import {Button} from '../Button/Button';
+import {Button} from '../../Button/Button';
 import {PencilIcon, TrashIcon} from '@heroicons/react/24/solid';
-import {trpc} from '../../utils/trpc';
+import {trpc} from '../../../utils/trpc';
 
 interface Props {
   eventId: string;

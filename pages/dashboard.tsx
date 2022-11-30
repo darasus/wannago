@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import {Card} from '../components/Card/Card';
+import {Card} from '../components/cards/Card/Card';
 import {Text} from '../components/Text/Text';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import AppLayout from '../components/AppLayout/AppLayout';
 import {trpc} from '../utils/trpc';
 import {Spinner} from '../components/Spinner/Spinner';
-import {EventCard} from '../components/EventCard/EventCard';
+import {EventCard} from '../components/cards/EventCard/EventCard';
 
 export default function HomePage() {
   const router = useRouter();

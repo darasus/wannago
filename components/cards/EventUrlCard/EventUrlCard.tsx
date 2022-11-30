@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import useCopyClipboard from '../../hooks/useCopyClipboard';
-import {Button} from '../Button/Button';
+import useCopyClipboard from '../../../hooks/useCopyClipboard';
+import {Button} from '../../Button/Button';
 import {Card} from '../Card/Card';
-import {Badge} from '../Badge/Badge';
+import {Badge} from '../../Badge/Badge';
 import clsx from 'clsx';
 
 interface Props {
