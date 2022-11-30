@@ -8,7 +8,7 @@ export function StickyBranding() {
     <Link
       href={getBaseUrl()}
       className={clsx(
-        'fixed bottom-1 right-1 bg-brand-700 border border-brand-800 text-gray-100 px-2 py-1 rounded-md text-sm'
+        'fixed bottom-1 right-1 bg-brand-700 border border-brand-800 text-gray-100 px-3 py-1 rounded-full text-sm'
       )}
     >
       Built with{' '}

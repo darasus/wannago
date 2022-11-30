@@ -1,4 +1,3 @@
-import {useUser} from '@clerk/nextjs';
 import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
