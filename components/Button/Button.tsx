@@ -54,7 +54,7 @@ export const Button = forwardRef(function Button(
         'cursor-pointer',
         {
           // base button styles
-          'inline-flex items-center rounded border font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2':
+          'inline-flex items-center rounded-xl border shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2':
             !(isLink || isLinkNeutral),
           // base link styles
           'inline-flex items-center border-b': isLink || isLinkNeutral,
@@ -76,13 +76,13 @@ export const Button = forwardRef(function Button(
             !(isLink || isLinkNeutral),
           'p-3': isIconButton && isXl && !(isLink || isLinkNeutral),
           // colors
-          'border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:ring-brand-500':
+          'border-transparent bg-brand-900 text-white hover:bg-brand-1000 focus:ring-brand-1000 font-bold':
             isPrimary,
-          'border-transparent bg-brand-100 text-brand-700 hover:bg-brand-200 focus:ring-brand-500':
+          'border-transparent bg-brand-100 text-brand-800 hover:bg-brand-200 focus:ring-brand-500 font-bold':
             isSecondary,
-          'border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-500':
+          'border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 font-bold':
             isDanger,
-          'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-brand-500':
+          'border-gray-100 bg-white text-gray-700 hover:bg-gray-50 focus:ring-brand-500':
             isNeutral,
           'text-brand-600 hover:text-brand-500 border-brand-600 hover:border-brand-500 text-sm font-medium leading-none':
             isLink,

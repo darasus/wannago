@@ -1,21 +1,31 @@
 import Head from 'next/head';
-import {useRouter} from 'next/router';
-import {Button} from '../components/Button/Button';
+import {Header} from '../components/Marketing/Header';
+import {Hero} from '../components/Marketing/Hero';
+import {PrimaryFeatures} from '../components/Marketing/PrimaryFeatures';
+import {SecondaryFeatures} from '../components/Marketing/SecondaryFeatures';
+import {CallToAction} from '../components/Marketing/CallToAction';
+import {Testimonials} from '../components/Marketing/Testimonials';
+import {Pricing} from '../components/Marketing/Pricing';
+import {Faqs} from '../components/Marketing/Faqs';
+import {Footer} from '../components/Marketing/Footer';
 
 export default function HomePage() {
-  const router = useRouter();
-
   return (
     <>
       <Head>
         <title>WannaGo</title>
       </Head>
-      <div>
-        <div>Home page</div>
-        <Button onClick={() => router.push('/dashboard')}>
-          Go to dashboard
-        </Button>
-      </div>
+      <Header />
+      <main>
+        <Hero />
+        <PrimaryFeatures />
+        {/* <SecondaryFeatures /> */}
+        <CallToAction />
+        {/* <Testimonials /> */}
+        {/* <Pricing /> */}
+        <Faqs />
+      </main>
+      <Footer />
     </>
   );
 }
