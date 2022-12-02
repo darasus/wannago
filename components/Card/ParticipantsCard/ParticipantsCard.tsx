@@ -86,7 +86,9 @@ export function ParticipantsCard({event}: Props) {
                 ]}
               />
               <div className="grow" />
-              <Text className="text-gray-400">{`${data?.count} people attending`}</Text>
+              {data && (
+                <Text className="text-gray-400">{`${data?.count} people attending`}</Text>
+              )}
             </div>
           </div>
         </CardBase>
