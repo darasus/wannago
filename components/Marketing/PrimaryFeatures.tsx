@@ -52,7 +52,7 @@ export function PrimaryFeatures() {
     <section
       id="features"
       aria-label="Features for running your books"
-      className="relative overflow-hidden bg-gradient-to-br from-brand-300 to-brand-800 pt-20 pb-28 sm:py-32"
+      className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-700 pt-20 pb-28 sm:py-32"
     >
       <Container className="relative">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">

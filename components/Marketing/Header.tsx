@@ -3,10 +3,11 @@ import Link from 'next/link';
 import {Popover, Transition} from '@headlessui/react';
 import clsx from 'clsx';
 import {Container} from './Container';
-import {Logo} from './Logo';
-import {NavLink} from '../NavLink/NavLink';
+import {Logo} from '../Logo/Logo';
 import {CardBase} from '../Card/CardBase/CardBase';
 import {Button} from '../Button/Button';
+import {useRouter} from 'next/router';
+import {useUser} from '@clerk/nextjs';
 
 function MobileNavLink({href, children}: any) {
   return (
@@ -90,36 +91,54 @@ function MobileNavigation() {
 }
 
 export function Header() {
+  const router = useRouter();
+  const {isSignedIn} = useUser();
+
   return (
     <header className="py-10">
       <Container>
         <CardBase>
           <nav className="relative z-50 flex justify-between">
-            <div className="flex items-center md:gap-x-4">
-              <Link href="#" aria-label="Home">
-                <Logo />
-              </Link>
-              <div className="hidden md:flex md:gap-x-2">
-                <Button variant="neutral" size="xs">
-                  Features
-                </Button>
-                <Button variant="neutral" size="xs">
-                  Testimonials
-                </Button>
-                <Button variant="neutral" size="xs">
-                  Pricing
-                </Button>
-              </div>
+            <div className="hidden md:flex items-center gap-x-5 md:gap-x-4">
+              <Logo href="/" className="mr-4" />
+              <Button variant="neutral" size="xs">
+                Features
+              </Button>
+              <Button variant="neutral" size="xs">
+                Testimonials
+              </Button>
+              <Button variant="neutral" size="xs">
+                Pricing
+              </Button>
             </div>
             <div className="flex items-center gap-x-5 md:gap-x-4">
-              <Button className="hidden md:block" variant="secondary" size="xs">
-                <span>Sign in</span>
-              </Button>
-              <Button size="xs">
-                <span>
-                  Get started <span className="hidden lg:inline">today</span>
-                </span>
-              </Button>
+              {isSignedIn ? (
+                <Button
+                  onClick={() => router.push('/dashboard')}
+                  className="hidden md:block"
+                  variant="secondary"
+                  size="xs"
+                >
+                  <span>Dashboard</span>
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    onClick={() => router.push('/login')}
+                    className="hidden md:block"
+                    variant="secondary"
+                    size="xs"
+                  >
+                    <span>Sign in</span>
+                  </Button>
+                  <Button onClick={() => router.push('/register')} size="xs">
+                    <span>
+                      Get started{' '}
+                      <span className="hidden lg:inline">today</span>
+                    </span>
+                  </Button>
+                </>
+              )}
               <div className="-mr-1 md:hidden">
                 <MobileNavigation />
               </div>

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import {Container} from './Container';
-import {Logo} from './Logo';
+import {Logo} from '../Logo/Logo';
 import {NavLink} from '../NavLink/NavLink';
 
 export function Footer() {
@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="bg-slate-50">
       <Container>
         <div className="flex items-center py-4">
-          <Logo className="mx-auto w-auto" />
+          <Logo href="/" />
           <div className="grow" />
           <div className="-my-1 flex justify-center gap-x-4">
             <NavLink href="#features">Features</NavLink>
