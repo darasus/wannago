@@ -3,6 +3,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
 import {EventView} from '../../components/EventView/EventView';
+import {Container} from '../../components/Marketing/Container';
 import {StickyBranding} from '../../components/StickyBranding/StickyBranding';
 import {trpc} from '../../utils/trpc';
 
@@ -23,20 +24,20 @@ export default function EventPage({
   }
 
   return (
-    <>
+    <div>
       <Head>
         <title>{`${data.title} | WannaGo`}</title>
       </Head>
-      <div className="max-w-xl m-auto p-4">
+      <Container>
         <EventView
           event={data}
           myEvent={false}
           isPublicView={true}
           timezone={clientTimezone}
         />
-      </div>
+      </Container>
       <StickyBranding />
-    </>
+    </div>
   );
 }
 

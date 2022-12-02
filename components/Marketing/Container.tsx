@@ -6,9 +6,6 @@ export function Container({
   ...props
 }: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
   return (
-    <div
-      className={clsx('mx-auto max-w-7xl px-4 sm:px-6 lg:px-8', className)}
-      {...props}
-    />
+    <div className={clsx('mx-auto max-w-5xl m-4', className)} {...props} />
   );
 }

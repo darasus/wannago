@@ -97,7 +97,7 @@ export function Header() {
   const {isSignedIn} = useUser();
 
   return (
-    <header className="py-4">
+    <header>
       <Container>
         <CardBase>
           <nav className="relative z-50 flex justify-between">
