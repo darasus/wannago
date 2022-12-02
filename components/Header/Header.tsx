@@ -2,12 +2,13 @@ import {Fragment} from 'react';
 import Link from 'next/link';
 import {Popover, Transition} from '@headlessui/react';
 import clsx from 'clsx';
-import {Container} from './Container';
+import {Container} from '../Marketing/Container';
 import {Logo} from '../Logo/Logo';
 import {CardBase} from '../Card/CardBase/CardBase';
 import {Button} from '../Button/Button';
 import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';
+import {UserSecsion} from '../UserSecsion/UserSecsion';
 
 function MobileNavLink({href, children}: any) {
   return (
@@ -92,27 +93,33 @@ function MobileNavigation() {
 
 export function Header() {
   const router = useRouter();
+  const isHome = router.pathname === '/';
   const {isSignedIn} = useUser();
 
   return (
-    <header className="py-10">
+    <header className="py-4">
       <Container>
         <CardBase>
           <nav className="relative z-50 flex justify-between">
             <div className="hidden md:flex items-center gap-x-5 md:gap-x-4">
-              <Logo href="/" className="mr-4" />
-              <Button variant="neutral" size="xs">
-                Features
-              </Button>
-              <Button variant="neutral" size="xs">
-                Testimonials
-              </Button>
-              <Button variant="neutral" size="xs">
-                Pricing
-              </Button>
+              <Logo href={isHome ? '/' : '/dashboard'} className="mr-4" />
+              {isHome && (
+                <>
+                  <Button variant="neutral" size="xs">
+                    Features
+                  </Button>
+                  <Button variant="neutral" size="xs">
+                    Testimonials
+                  </Button>
+                  <Button variant="neutral" size="xs">
+                    Pricing
+                  </Button>
+                </>
+              )}
             </div>
             <div className="flex items-center gap-x-5 md:gap-x-4">
-              {isSignedIn ? (
+              {!isHome && isSignedIn && <UserSecsion />}
+              {isSignedIn && isHome && (
                 <Button
                   onClick={() => router.push('/dashboard')}
                   className="hidden md:block"
@@ -121,7 +128,8 @@ export function Header() {
                 >
                   <span>Dashboard</span>
                 </Button>
-              ) : (
+              )}
+              {isHome && !isSignedIn && (
                 <>
                   <Button
                     onClick={() => router.push('/login')}

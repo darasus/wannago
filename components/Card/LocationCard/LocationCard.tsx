@@ -33,8 +33,8 @@ export function LocationCard({address, longitude, latitude}: Props) {
           address={address}
           longitude={longitude}
           latitude={latitude}
-          width={550}
-          height={250}
+          width={1200}
+          height={200}
         />
       </div>
     </CardBase>

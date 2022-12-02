@@ -15,31 +15,35 @@ interface Props {
 
 export function EventView({event, myEvent, isPublicView, timezone}: Props) {
   return (
-    <div className="grid grid-cols-1 gap-4">
-      <div>
-        <InfoCard
-          eventId={event.id}
-          showManageTools={!isPublicView && myEvent}
-          title={event.title}
-          description={event.description}
-          featuredImageSrc={event.featuredImageSrc}
-        />
+    <div className="grid md:grid-cols-12 gap-4">
+      <div className="md:col-span-8">
+        <div className="mb-4">
+          <InfoCard
+            eventId={event.id}
+            showManageTools={!isPublicView && myEvent}
+            title={event.title}
+            description={event.description}
+            featuredImageSrc={event.featuredImageSrc}
+          />
+        </div>
+        <div>
+          <LocationCard
+            address={event.address}
+            longitude={event.longitude!}
+            latitude={event.latitude!}
+          />
+        </div>
       </div>
-      <div>
-        <DateCard event={event} timezone={timezone} />
-      </div>
-      <div>
-        <LocationCard
-          address={event.address}
-          longitude={event.longitude!}
-          latitude={event.latitude!}
-        />
-      </div>
-      <div>
-        <ParticipantsCard event={event} />
-      </div>
-      <div>
-        <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
+      <div className="md:col-span-4">
+        <div className="mb-4">
+          <DateCard event={event} timezone={timezone} />
+        </div>
+        <div className="mb-4">
+          <ParticipantsCard event={event} />
+        </div>
+        <div>
+          <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
+        </div>
       </div>
     </div>
   );

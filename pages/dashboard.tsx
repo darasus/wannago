@@ -17,10 +17,10 @@ export default function HomePage() {
         <title>Dashboard | WannaGo</title>
       </Head>
       <AppLayout>
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <button
             onClick={() => router.push('/event/add')}
-            className="flex justify-center items-center w-full h-24 p-4 bg-gray-200 hover:bg-gray-300 border-gray-400 hover:border-gray-600 border-dashed border-2 rounded-xl text-gray-400 hover:text-gray-600"
+            className="flex justify-center items-center w-full h-full p-4 bg-gray-200 hover:bg-gray-300 border-gray-400 hover:border-gray-600 border-dashed border-2 rounded-xl text-gray-400 hover:text-gray-600"
           >
             <PlusCircleIcon width={50} height={50} />
           </button>

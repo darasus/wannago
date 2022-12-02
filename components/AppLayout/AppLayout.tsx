@@ -1,17 +1,13 @@
 import {PropsWithChildren} from 'react';
-import {CardBase} from '../Card/CardBase/CardBase';
-import {UserSecsion} from '../UserSecsion/UserSecsion';
-import {Logo} from '../Logo/Logo';
+import {Header} from '../Header/Header';
 
 export default function AppLayout({children}: PropsWithChildren) {
   return (
-    <div className="p-4 max-w-xl m-auto">
-      <CardBase className="flex items-center mb-4">
-        <Logo href="/dashboard" />
-        <div className="grow" />
-        <UserSecsion />
-      </CardBase>
-      <div>{children}</div>
+    <div>
+      <Header />
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-6">
+        {children}
+      </div>
     </div>
   );
 }

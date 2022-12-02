@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import {Header} from '../components/Marketing/Header';
+import {Header} from '../components/Header/Header';
 import {Hero} from '../components/Marketing/Hero';
 import {PrimaryFeatures} from '../components/Marketing/PrimaryFeatures';
 import {SecondaryFeatures} from '../components/Marketing/SecondaryFeatures';

@@ -14,17 +14,17 @@ export function EditControls({eventId}: Props) {
   });
 
   return (
-    <div className="p-2 rounded-md absolute top-2 right-2 z-10 bg-gray-100">
+    <div className="p-2 rounded-md absolute top-2 right-2 z-10 bg-white">
       <Button
         className="px-2 py-2 mr-2"
-        variant="secondary"
+        variant="neutral"
         size="xl"
         iconLeft={<UsersIcon className="h-5 w-5" aria-hidden="true" />}
         onClick={() => router.push(`/event/${eventId}/attendees`)}
       />
       <Button
         className="px-2 py-2 mr-2"
-        variant="secondary"
+        variant="neutral"
         size="xl"
         iconLeft={<PencilIcon className="h-5 w-5" aria-hidden="true" />}
         onClick={() => router.push(`/event/${eventId}/edit`)}
