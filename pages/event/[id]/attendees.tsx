@@ -2,6 +2,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {CardBase} from '../../../components/Card/CardBase/CardBase';
+import {Container} from '../../../components/Marketing/Container';
 import {Text} from '../../../components/Text/Text';
 import {trpc} from '../../../utils/trpc';
 
@@ -27,13 +28,15 @@ export default function EventEditPage() {
         <title>{`Attendees | WannaGo`}</title>
       </Head>
       <AppLayout>
-        {data?.map(v => {
-          return (
-            <CardBase key={v.id} className="mb-2">
-              <Text>{v.email}</Text>
-            </CardBase>
-          );
-        })}
+        <Container className="md:px-4">
+          {data?.map(v => {
+            return (
+              <CardBase key={v.id} className="mb-2">
+                <Text>{v.email}</Text>
+              </CardBase>
+            );
+          })}
+        </Container>
       </AppLayout>
     </>
   );

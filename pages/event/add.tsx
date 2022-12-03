@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import AppLayout from '../../components/AppLayout/AppLayout';
 import {AddEventForm} from '../../components/EventForm/AddEventForm';
+import {Container} from '../../components/Marketing/Container';
 
 export default function EventAddPage() {
   return (
@@ -9,7 +10,9 @@ export default function EventAddPage() {
         <title>Add event | WannaGo</title>
       </Head>
       <AppLayout>
-        <AddEventForm />
+        <Container className="md:px-4">
+          <AddEventForm />
+        </Container>
       </AppLayout>
     </>
   );

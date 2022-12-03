@@ -2,6 +2,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EditEventForm} from '../../../components/EventForm/EditEventForm';
+import {Container} from '../../../components/Marketing/Container';
 import {trpc} from '../../../utils/trpc';
 
 export default function EventEditPage() {
@@ -26,7 +27,9 @@ export default function EventEditPage() {
         <title>{`Edit event | WannaGo`}</title>
       </Head>
       <AppLayout>
-        <EditEventForm event={data} />
+        <Container className="md:px-4">
+          <EditEventForm event={data} />
+        </Container>
       </AppLayout>
     </>
   );

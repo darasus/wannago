@@ -5,6 +5,7 @@ import {useRouter} from 'next/router';
 import {useMemo} from 'react';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EventView} from '../../../components/EventView/EventView';
+import {Container} from '../../../components/Marketing/Container';
 import {trpc} from '../../../utils/trpc';
 
 export default function EventPage({
@@ -34,12 +35,14 @@ export default function EventPage({
         <title>{`${data.title} | WannaGo`}</title>
       </Head>
       <AppLayout>
-        <EventView
-          event={data}
-          myEvent={user.user?.id === data.authorId}
-          isPublicView={false}
-          timezone={clientTimezone}
-        />
+        <Container className="md:px-4">
+          <EventView
+            event={data}
+            myEvent={user.user?.id === data.authorId}
+            isPublicView={false}
+            timezone={clientTimezone}
+          />
+        </Container>
       </AppLayout>
     </>
   );
