@@ -8,7 +8,7 @@ export const Container = forwardRef(function Container(
   return (
     <div
       ref={ref}
-      className={clsx('mx-auto max-w-5xl my-4 px-4', className)}
+      className={clsx('mx-auto max-w-5xl my-4', className)}
       {...props}
     />
   );

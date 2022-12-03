@@ -60,7 +60,7 @@ export function Faqs() {
     <section
       id="faq"
       aria-labelledby="faq-title"
-      className="relative overflow-hidden bg-gradient-to-tl from-gray-800 to-gray-700 py-20 sm:py-32"
+      className="relative overflow-hidden bg-gradient-to-tl from-gray-800 to-gray-700 py-20 sm:py-32 px-4"
     >
       {/* <Image
         className="absolute top-0 left-1/2 max-w-none translate-x-[-30%] -translate-y-1/4"

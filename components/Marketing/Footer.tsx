@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <footer className="bg-slate-50">
       <Container className="m-0">
-        <div className="flex items-center py-4">
+        <div className="flex items-center p-4">
           <Logo href="/" />
           <div className="grow" />
           <div className="-my-1 flex justify-center gap-x-4">
