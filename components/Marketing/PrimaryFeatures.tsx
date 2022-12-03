@@ -6,27 +6,27 @@ import {Container} from './Container';
 
 const features = [
   {
-    title: 'Create event',
-    description:
-      "It couldn't be more easy to create events with WannaGo. Just fill out the form and you're done!",
-    image: '/images/screenshots/payroll.png',
-  },
-  {
     title: 'Share event',
     description:
       'Share beautiful event pages with you network with short links.',
-    image: '/images/screenshots/expenses.png',
+    image: '/images/screenshots/event-page.png',
+  },
+  {
+    title: 'Create event',
+    description:
+      "It couldn't be more easy to create events with WannaGo. Just fill out the form and you're done!",
+    image: '/images/screenshots/event-page.png',
   },
   {
     title: 'Accept RSVP',
     description:
       'No sign-up required RSVPs, with simple and easy to use interface.',
-    image: '/images/screenshots/vat-returns.png',
+    image: '/images/screenshots/event-page.png',
   },
   {
     title: 'Send reminder',
     description: 'Send reminders to your guests to make sure they show up.',
-    image: '/images/screenshots/reporting.png',
+    image: '/images/screenshots/event-page.png',
   },
 ];
 
@@ -120,15 +120,34 @@ export function PrimaryFeatures() {
                       </p>
                     </div>
                     <div className="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
-                      <Image
-                        className="w-full"
-                        src={feature.image}
-                        alt=""
-                        priority
-                        width={1920}
-                        height={1080}
-                        sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
-                      />
+                      <div className="flex items-center px-3 py-2 border-b">
+                        <div className="flex gap-x-1">
+                          <div className="h-2 w-2 bg-red-400 rounded-full" />
+                          <div className="h-2 w-2 bg-yellow-400 rounded-full" />
+                          <div className="h-2 w-2 bg-green-400 rounded-full" />
+                        </div>
+                        <div className="flex grow justify-center">
+                          <div className="flex items-center border border-gray-200 px-3 h-5 rounded-md bg-gray-100">
+                            <span className="text-xs text-gray-400 leading-none">
+                              wannago.app
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="relative overflow-hidden aspect-video">
+                        <Image
+                          style={{
+                            objectFit: 'cover',
+                            objectPosition: 'top',
+                          }}
+                          className="w-full"
+                          src={feature.image}
+                          alt=""
+                          priority
+                          fill
+                          sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
+                        />
+                      </div>
                     </div>
                   </Tab.Panel>
                 ))}
