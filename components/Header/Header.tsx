@@ -53,7 +53,7 @@ export function Header() {
 
   return (
     <header>
-      <Container className="px-4">
+      <Container className="md:px-4">
         <CardBase>
           <nav className="relative flex justify-between">
             <div className="flex items-center">
