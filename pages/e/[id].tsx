@@ -28,7 +28,7 @@ export default function EventPage({
       <Head>
         <title>{`${data.title} | WannaGo`}</title>
       </Head>
-      <Container>
+      <Container className="px-4">
         <EventView
           event={data}
           myEvent={false}

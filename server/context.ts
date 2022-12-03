@@ -1,10 +1,13 @@
 import {User} from '@clerk/nextjs/dist/api';
 import {clerkClient, getAuth} from '@clerk/nextjs/server';
+import {PrismaClient} from '@prisma/client';
 import * as trpc from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
+import {prisma} from '../lib/prisma';
 
 interface CreateContextOptions {
   user: User | null;
+  prisma: PrismaClient;
 }
 
 /**
@@ -14,6 +17,7 @@ interface CreateContextOptions {
 export async function createContextInner(_opts: CreateContextOptions) {
   return {
     user: _opts.user,
+    prisma: _opts.prisma,
   };
 }
 
@@ -35,5 +39,5 @@ export async function createContext(
 
   const user = await getUser();
 
-  return await createContextInner({user});
+  return await createContextInner({user, prisma});
 }

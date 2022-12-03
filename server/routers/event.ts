@@ -1,6 +1,5 @@
 import {router, publicProcedure, protectedProcedure} from '../trpc';
 import {z} from 'zod';
-import {prisma} from '../../lib/prisma';
 import {nanoid} from 'nanoid';
 import {Client} from '@googlemaps/google-maps-services-js';
 import {User} from '@prisma/client';
@@ -12,8 +11,8 @@ export const eventRouter = router({
         id: z.string().min(1),
       })
     )
-    .query(async ({input}) => {
-      return prisma.event.findFirst({
+    .query(async ({input, ctx}) => {
+      return ctx.prisma.event.findFirst({
         where: {
           id: input.id,
         },
@@ -25,8 +24,8 @@ export const eventRouter = router({
         id: z.string().min(1),
       })
     )
-    .query(async ({input}) => {
-      return prisma.event.findFirst({
+    .query(async ({input, ctx}) => {
+      return ctx.prisma.event.findFirst({
         where: {
           shortId: input.id,
         },
@@ -74,7 +73,7 @@ export const eventRouter = router({
           },
         });
 
-        return prisma.event.create({
+        return ctx.prisma.event.create({
           data: {
             shortId: nanoid(6),
             title,
@@ -98,7 +97,7 @@ export const eventRouter = router({
       })
     )
     .mutation(async ({input, ctx}) => {
-      return prisma.event.delete({
+      return ctx.prisma.event.delete({
         where: {
           id: input.id,
         },
@@ -149,7 +148,7 @@ export const eventRouter = router({
           },
         });
 
-        return prisma.event.update({
+        return ctx.prisma.event.update({
           where: {
             id,
           },
@@ -169,7 +168,7 @@ export const eventRouter = router({
       }
     ),
   getMyEvents: protectedProcedure.query(async ({ctx}) => {
-    const events = await prisma.event.findMany({
+    const events = await ctx.prisma.event.findMany({
       where: {
         authorId: ctx.user?.id,
       },
@@ -184,23 +183,23 @@ export const eventRouter = router({
         email: z.string().email('Is not valid email'),
       })
     )
-    .mutation(async ({input}) => {
+    .mutation(async ({input, ctx}) => {
       let user: User | null = null;
-      user = await prisma.user.findUnique({
+      user = await ctx.prisma.user.findUnique({
         where: {
           email: input.email,
         },
       });
 
       if (!user) {
-        user = await prisma.user.create({
+        user = await ctx.prisma.user.create({
           data: {
             email: input.email,
           },
         });
       }
 
-      return prisma.event.update({
+      return ctx.prisma.event.update({
         where: {
           id: input.eventId,
         },
@@ -215,8 +214,8 @@ export const eventRouter = router({
     }),
   getNumberOfAttendees: publicProcedure
     .input(z.object({eventId: z.string()}))
-    .query(async ({input}) => {
-      const count = await prisma.user.count({
+    .query(async ({input, ctx}) => {
+      const count = await ctx.prisma.user.count({
         where: {
           attendingEvents: {
             some: {
@@ -231,7 +230,7 @@ export const eventRouter = router({
   attendees: protectedProcedure
     .input(z.object({eventId: z.string()}))
     .query(async ({input, ctx}) => {
-      const event = await prisma.event.findFirst({
+      const event = await ctx.prisma.event.findFirst({
         where: {
           id: input.eventId,
           authorId: ctx.user?.id,
