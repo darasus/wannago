@@ -19,7 +19,7 @@ export default function HomePage() {
       </Head>
       <AppLayout>
         <Container className="md:px-4">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <button
               onClick={() => router.push('/event/add')}
               className="flex justify-center items-center w-full h-full p-4 bg-gray-200 hover:bg-gray-300 border-gray-400 hover:border-gray-600 border-dashed border-2 rounded-xl text-gray-400 hover:text-gray-600"

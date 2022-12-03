@@ -15,7 +15,7 @@ interface Props {
 
 export function EventView({event, myEvent, isPublicView, timezone}: Props) {
   return (
-    <div className="grid md:grid-cols-12 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
       <div className="md:col-span-8">
         <div className="mb-4">
           <InfoCard

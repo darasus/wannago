@@ -31,12 +31,12 @@ export function EventCard({event}: Props) {
           <Badge color={isUpdcoming ? 'green' : 'gray'} className="mr-2 mb-1">
             {isUpdcoming ? 'Upcoming' : 'Past'}
           </Badge>
-          <Text className="text-sm text-gray-600">
+          <Text className="text-sm text-gray-600 truncate">
             {formatDate(event.startDate, 'yyyy/MM/dd hh:m')}
           </Text>
         </div>
         <div />
-        <Text className="text-2xl font-bold">{event.title}</Text>
+        <Text className="text-2xl font-bold truncate">{event.title}</Text>
       </div>
     </CardBase>
   );
