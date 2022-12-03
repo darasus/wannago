@@ -7,6 +7,7 @@ import {clerkAppearance} from '../clerkElements';
 import {trpc} from '../utils/trpc';
 import {Toaster} from 'react-hot-toast';
 import {bodyFont} from '../fonts';
+import clsx from 'clsx';
 
 function MyApp({Component, pageProps}: AppProps) {
   return (
@@ -15,7 +16,7 @@ function MyApp({Component, pageProps}: AppProps) {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={bodyFont.className}>
+      <div className={clsx(bodyFont.className, 'text-gray-800')}>
         <ClerkProvider {...pageProps} appearance={clerkAppearance}>
           <Toaster />
           <Component {...pageProps} />

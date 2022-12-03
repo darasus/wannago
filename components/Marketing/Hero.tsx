@@ -4,7 +4,7 @@ import {Container} from './Container';
 export function Hero() {
   return (
     <Container className="py-20 text-center lg:py-32 ">
-      <h1 className="mx-auto max-w-4xl text-3xl md:text-5xl font-bold tracking-tight text-slate-900 sm:text-7xl">
+      <h1 className="mx-auto max-w-4xl text-3xl md:text-5xl font-bold tracking-tight text-slate-800 sm:text-7xl">
         <div>Easiest way to create </div>
         <span className="relative whitespace-nowrap text-brand-200">
           <svg
@@ -27,7 +27,7 @@ export function Hero() {
         <Button>Create your first event</Button>
       </div>
       {/* <div className="mt-36 lg:mt-44">
-        <p className="font-display text-base text-slate-900">
+        <p className="font-display text-base text-slate-980000">
           Trusted by these six companies so far
         </p>
         <ul

@@ -131,7 +131,7 @@ export function Header() {
                       >
                         <CardBase>
                           {navItems.map((item, i) => (
-                            <>
+                            <Fragment key={i}>
                               <Popover.Button
                                 as={(props: any) => (
                                   <Button {...props} as="a" variant="neutral" />
@@ -145,7 +145,7 @@ export function Header() {
                                   'mb-4': navItems.length - 1 !== i,
                                 })}
                               />
-                            </>
+                            </Fragment>
                           ))}
                           <hr className="my-4 border-slate-300/40" />
                           <div className="flex gap-4">

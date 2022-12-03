@@ -52,11 +52,11 @@ export function PrimaryFeatures() {
     <section
       id="features"
       aria-label="Features for running your books"
-      className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-700 pt-20 pb-28 sm:py-32"
+      className="relative overflow-hidden bg-gray-800 pt-20 pb-28 sm:py-32"
     >
       <Container className="relative">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
-          <h2 className="font-bold text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">
+          <h2 className="font-bold text-3xl tracking-tight text-brand-200 sm:text-4xl md:text-5xl">
             Easiest way to invite your network to your place
           </h2>
           <p className="mt-6 text-lg tracking-tight text-gray-100">

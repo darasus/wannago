@@ -83,7 +83,7 @@ export const Button = forwardRef(function Button(
             isSecondary,
           'border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 font-bold':
             isDanger,
-          'border-gray-100 bg-white text-gray-700 hover:bg-gray-50 focus:ring-brand-500':
+          'border-gray-100 bg-white text-gray-800 hover:bg-gray-50 focus:ring-brand-500':
             isNeutral,
           'text-brand-600 hover:text-brand-500 border-brand-600 hover:border-brand-500 text-sm font-medium leading-none':
             isLink,
