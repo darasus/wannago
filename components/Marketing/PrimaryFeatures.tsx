@@ -55,7 +55,7 @@ export function PrimaryFeatures() {
       className="relative overflow-hidden bg-gray-800 pt-20 pb-28 sm:py-32"
     >
       <Container className="relative">
-        <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
+        <div className="max-w-2xl md:mx-auto text-center xl:max-w-none">
           <h2 className="font-bold text-3xl tracking-tight text-brand-200 sm:text-4xl md:text-5xl">
             Easiest way to invite your network to your place
           </h2>
