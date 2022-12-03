@@ -8,6 +8,8 @@ import {Testimonials} from '../components/Marketing/Testimonials';
 import {Pricing} from '../components/Marketing/Pricing';
 import {Faqs} from '../components/Marketing/Faqs';
 import {Footer} from '../components/Marketing/Footer';
+import {GetServerSidePropsContext} from 'next';
+import {buildClerkProps, clerkClient, getAuth} from '@clerk/nextjs/server';
 
 export default function HomePage() {
   return (
@@ -28,4 +30,16 @@ export default function HomePage() {
       <Footer />
     </>
   );
+}
+
+export async function getServerSideProps({
+  req,
+  res,
+}: GetServerSidePropsContext) {
+  const {userId} = getAuth(req);
+  const user = userId ? await clerkClient.users.getUser(userId) : null;
+
+  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=600');
+
+  return {props: {...buildClerkProps(req, {user})}};
 }
