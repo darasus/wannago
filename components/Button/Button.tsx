@@ -1,18 +1,19 @@
 import clsx from 'clsx';
+import Link, {LinkProps} from 'next/link';
 import {ButtonHTMLAttributes, forwardRef, PropsWithChildren} from 'react';
 import {Spinner} from '../Spinner/Spinner';
 import {ButtonSize, ButtonVariant} from './types';
 
-interface Props
-  extends PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> {
+type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> & {
   size?: ButtonSize;
   variant?: ButtonVariant;
   className?: string;
   iconLeft?: React.ReactNode;
   isLoading?: boolean;
-  as?: 'button' | 'label';
+  as?: 'button' | 'label' | 'a';
   htmlFor?: string;
-}
+  href?: LinkProps['href'];
+};
 
 export const Button = forwardRef(function Button(
   {
@@ -113,6 +114,14 @@ const Component = forwardRef(function Component(
       <label ref={ref} {...props}>
         {children}
       </label>
+    );
+  }
+
+  if (as === 'a') {
+    return (
+      <Link ref={ref} {...props}>
+        {children}
+      </Link>
     );
   }
 

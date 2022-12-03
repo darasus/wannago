@@ -5,8 +5,12 @@ import {Container} from '../Marketing/Container';
 export default function AppLayout({children}: PropsWithChildren) {
   return (
     <div>
-      <Header />
-      <Container>{children}</Container>
+      <div className="relative z-10">
+        <Header />
+      </div>
+      <div className="relative">
+        <Container>{children}</Container>
+      </div>
     </div>
   );
 }

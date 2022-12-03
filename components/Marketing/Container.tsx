@@ -1,11 +1,15 @@
 import clsx from 'clsx';
-import {HTMLAttributes, PropsWithChildren} from 'react';
+import {forwardRef, HTMLAttributes, PropsWithChildren} from 'react';
 
-export function Container({
-  className,
-  ...props
-}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
+export const Container = forwardRef(function Container(
+  {className, ...props}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>,
+  ref: React.Ref<HTMLDivElement>
+) {
   return (
-    <div className={clsx('mx-auto max-w-5xl m-4', className)} {...props} />
+    <div
+      ref={ref}
+      className={clsx('mx-auto max-w-5xl my-4 px-4', className)}
+      {...props}
+    />
   );
-}
+});

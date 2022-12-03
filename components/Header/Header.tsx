@@ -10,13 +10,11 @@ import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';
 import {UserSecsion} from '../UserSecsion/UserSecsion';
 
-function MobileNavLink({href, children}: any) {
-  return (
-    <Popover.Button as={Link} href={href} className="block w-full p-2">
-      {children}
-    </Popover.Button>
-  );
-}
+const navItems = [
+  {label: 'Features', href: '#features'},
+  {label: 'Pricing', href: '#pricing'},
+  {label: 'FAQ', href: '#faq'},
+];
 
 function MobileNavIcon({open}: any) {
   return (
@@ -45,94 +43,56 @@ function MobileNavIcon({open}: any) {
   );
 }
 
-function MobileNavigation() {
-  return (
-    <Popover>
-      <Popover.Button
-        className="relative z-10 flex h-8 w-8 items-center justify-center [&:not(:focus-visible)]:focus:outline-none"
-        aria-label="Toggle Navigation"
-      >
-        {({open}) => <MobileNavIcon open={open} />}
-      </Popover.Button>
-      <Transition.Root>
-        <Transition.Child
-          as={Fragment}
-          enter="duration-150 ease-out"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="duration-150 ease-in"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <Popover.Overlay className="fixed inset-0 bg-slate-300/50" />
-        </Transition.Child>
-        <Transition.Child
-          as={Fragment}
-          enter="duration-150 ease-out"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="duration-100 ease-in"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-        >
-          <Popover.Panel
-            as="div"
-            className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
-          >
-            <MobileNavLink href="#features">Features</MobileNavLink>
-            <MobileNavLink href="#testimonials">Testimonials</MobileNavLink>
-            <MobileNavLink href="#pricing">Pricing</MobileNavLink>
-            <hr className="m-2 border-slate-300/40" />
-            <MobileNavLink href="/login">Sign in</MobileNavLink>
-          </Popover.Panel>
-        </Transition.Child>
-      </Transition.Root>
-    </Popover>
-  );
-}
-
 export function Header() {
   const router = useRouter();
   const isHome = router.pathname === '/';
   const {isSignedIn} = useUser();
+  const showUserProfile = !isHome && isSignedIn;
+  const showDashboardLink = isSignedIn && isHome;
+  const showAuthButtons = isHome && !isSignedIn;
 
   return (
     <header>
       <Container>
         <CardBase>
-          <nav className="relative z-50 flex justify-between">
-            <div className="hidden md:flex items-center gap-x-5 md:gap-x-4">
-              <Logo href={isHome ? '/' : '/dashboard'} className="mr-4" />
+          <nav className="relative flex justify-between">
+            <div className="flex items-center">
+              <Logo href={isHome ? '/' : '/dashboard'} className="mr-8" />
               {isHome && (
-                <>
-                  <Button variant="neutral" size="xs">
-                    Features
-                  </Button>
-                  <Button variant="neutral" size="xs">
-                    Testimonials
-                  </Button>
-                  <Button variant="neutral" size="xs">
-                    Pricing
-                  </Button>
-                </>
+                <div className="hidden md:flex gap-x-5 md:gap-x-4">
+                  {navItems.map((item, i) => (
+                    <Button
+                      as="a"
+                      href={item.href}
+                      key={i}
+                      variant="neutral"
+                      size="xs"
+                    >
+                      {item.label}
+                    </Button>
+                  ))}
+                </div>
               )}
             </div>
             <div className="flex items-center gap-x-5 md:gap-x-4">
-              {!isHome && isSignedIn && <UserSecsion />}
-              {isSignedIn && isHome && (
-                <Button
-                  onClick={() => router.push('/dashboard')}
-                  className="hidden md:block"
-                  variant="secondary"
-                  size="xs"
-                >
-                  <span>Dashboard</span>
-                </Button>
-              )}
-              {isHome && !isSignedIn && (
+              {showUserProfile && <UserSecsion />}
+              {showDashboardLink && (
                 <>
                   <Button
-                    onClick={() => router.push('/login')}
+                    onClick={() => router.push('/dashboard')}
+                    className="hidden md:block"
+                    variant="secondary"
+                    size="xs"
+                  >
+                    <span>Dashboard</span>
+                  </Button>
+                </>
+              )}
+              {showAuthButtons && (
+                <>
+                  <Button
+                    as="a"
+                    href="/login"
                     className="hidden md:block"
                     variant="secondary"
                     size="xs"
@@ -148,7 +108,91 @@ export function Header() {
                 </>
               )}
               <div className="-mr-1 md:hidden">
-                <MobileNavigation />
+                <Popover>
+                  <Popover.Button
+                    className="relative z-10 flex h-8 w-8 items-center justify-center [&:not(:focus-visible)]:focus:outline-none"
+                    aria-label="Toggle Navigation"
+                  >
+                    {({open}) => <MobileNavIcon open={open} />}
+                  </Popover.Button>
+                  <Transition.Root className="z-10">
+                    <Transition.Child
+                      as={Fragment}
+                      enter="duration-150 ease-out"
+                      enterFrom="opacity-0 scale-95"
+                      enterTo="opacity-100 scale-100"
+                      leave="duration-100 ease-in"
+                      leaveFrom="opacity-100 scale-100"
+                      leaveTo="opacity-0 scale-95"
+                    >
+                      <Popover.Panel
+                        as="div"
+                        className="absolute z-50 inset-x-0 top-20 flex origin-top flex-col tracking-tight -mx-4"
+                      >
+                        <CardBase>
+                          {navItems.map((item, i) => (
+                            <>
+                              <Popover.Button
+                                as={(props: any) => (
+                                  <Button {...props} as="a" variant="neutral" />
+                                )}
+                                href={item.href}
+                              >
+                                {item.label}
+                              </Popover.Button>
+                              <div
+                                className={clsx({
+                                  'mb-4': navItems.length - 1 !== i,
+                                })}
+                              />
+                            </>
+                          ))}
+                          <hr className="my-4 border-slate-300/40" />
+                          <div className="flex gap-4">
+                            {showAuthButtons && (
+                              <>
+                                <Popover.Button
+                                  as={(props: any) => (
+                                    <Button
+                                      {...props}
+                                      as="a"
+                                      variant="secondary"
+                                    />
+                                  )}
+                                  href={'/login'}
+                                >
+                                  Login
+                                </Popover.Button>
+                                <Popover.Button
+                                  as={(props: any) => (
+                                    <Button
+                                      {...props}
+                                      as="a"
+                                      variant="primary"
+                                    />
+                                  )}
+                                  href={'/login'}
+                                >
+                                  Register
+                                </Popover.Button>
+                              </>
+                            )}
+                            {showDashboardLink && (
+                              <Popover.Button
+                                as={(props: any) => (
+                                  <Button {...props} as="a" variant="primary" />
+                                )}
+                                href={'/dashboard'}
+                              >
+                                Dashboard
+                              </Popover.Button>
+                            )}
+                          </div>
+                        </CardBase>
+                      </Popover.Panel>
+                    </Transition.Child>
+                  </Transition.Root>
+                </Popover>
               </div>
             </div>
           </nav>
