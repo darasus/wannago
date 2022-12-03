@@ -77,7 +77,7 @@ export function PrimaryFeatures() {
                     <div
                       key={feature.title}
                       className={clsx(
-                        'group relative rounded-full py-1 px-4 lg:rounded-r-none lg:rounded-l-xl lg:p-6',
+                        'group relative rounded-md py-1 px-4 lg:rounded-r-none lg:rounded-l-xl lg:p-6',
                         selectedIndex === featureIndex
                           ? 'bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10'
                           : 'hover:bg-white/10 lg:hover:bg-white/5'
@@ -88,7 +88,7 @@ export function PrimaryFeatures() {
                           className={clsx(
                             'font-display text-lg outline-none',
                             selectedIndex === featureIndex
-                              ? 'text-blue-600 lg:text-white'
+                              ? 'text-gray-800 lg:text-white'
                               : 'text-blue-100 hover:text-white lg:text-white'
                           )}
                         >

@@ -4,7 +4,7 @@ import {Container} from './Container';
 export function Hero() {
   return (
     <Container className="py-20 text-center lg:py-32 ">
-      <h1 className="mx-auto max-w-4xl text-3xl md:text-5xl font-bold tracking-tight text-slate-800 sm:text-7xl">
+      <h1 className="mx-auto max-w-4xl text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-800">
         <div>Easiest way to create </div>
         <span className="relative whitespace-nowrap text-brand-200">
           <svg
