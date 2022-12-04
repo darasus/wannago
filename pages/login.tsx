@@ -10,7 +10,7 @@ export default function LoginPage() {
       </Head>
       <AppLayout>
         <div className="flex justify-center">
-          <SignIn />
+          <SignIn redirectUrl={'/dashboard'} />
         </div>
       </AppLayout>
     </>
