@@ -15,9 +15,14 @@ const loginRedirectUrl: Record<VercelEnv, string> = {
 const isProtectedRoute = (nextUrl: NextURL): boolean => {
   const isHomePage = nextUrl.pathname === '/';
   const isPublicEventPage = nextUrl.pathname.startsWith('/e/');
+  const isStaticImagePath = nextUrl.pathname.startsWith('/images/');
   const isgetEventByNanoId = nextUrl.pathname.startsWith(
     '/api/trpc/event.getEventByNanoId'
   );
+
+  if (isStaticImagePath) {
+    return false;
+  }
 
   if (isHomePage) {
     return false;
