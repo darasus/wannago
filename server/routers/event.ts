@@ -218,10 +218,9 @@ export const eventRouter = router({
 
       const messageData: MailgunMessageData = {
         from: 'WannaGo Team <hi@wannago.app>',
-        to: 'idarase@gmail.com',
-        subject: `Thanks for signing up for ${event.title}!`,
+        to: input.email,
+        subject: `Thanks for signing up for "${event.title}"!`,
         html: createEventSubscribeEmailTemplate(event),
-        text: 'jello',
       };
 
       await ctx.mailgun.messages
