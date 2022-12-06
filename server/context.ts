@@ -3,11 +3,14 @@ import {clerkClient, getAuth} from '@clerk/nextjs/server';
 import {PrismaClient} from '@prisma/client';
 import * as trpc from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
+import MailgunClient from 'mailgun.js/client';
+import {mailgun} from '../lib/mailgun';
 import {prisma} from '../lib/prisma';
 
 interface CreateContextOptions {
   user: User | null;
   prisma: PrismaClient;
+  mailgun: MailgunClient;
 }
 
 /**
@@ -18,6 +21,7 @@ export async function createContextInner(_opts: CreateContextOptions) {
   return {
     user: _opts.user,
     prisma: _opts.prisma,
+    mailgun: _opts.mailgun,
   };
 }
 
@@ -39,5 +43,5 @@ export async function createContext(
 
   const user = await getUser();
 
-  return await createContextInner({user, prisma});
+  return await createContextInner({user, prisma, mailgun});
 }

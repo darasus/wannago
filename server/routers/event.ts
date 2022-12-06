@@ -3,6 +3,10 @@ import {z} from 'zod';
 import {nanoid} from 'nanoid';
 import {Client} from '@googlemaps/google-maps-services-js';
 import {User} from '@prisma/client';
+import {MailgunMessageData} from 'mailgun.js/interfaces/Messages';
+import ReactRender from 'react-dom/server';
+import {EventView} from '../../components/EventView/EventView';
+import {createEventSubscribeEmailTemplate} from '../../utils/createEventSubscribeEmailTemplate';
 
 export const eventRouter = router({
   getEventById: publicProcedure
@@ -199,7 +203,7 @@ export const eventRouter = router({
         });
       }
 
-      return ctx.prisma.event.update({
+      const event = await ctx.prisma.event.update({
         where: {
           id: input.eventId,
         },
@@ -211,6 +215,25 @@ export const eventRouter = router({
           },
         },
       });
+
+      const messageData: MailgunMessageData = {
+        from: 'WannaGo Team <hi@wannago.app>',
+        to: 'idarase@gmail.com',
+        subject: `Thanks for signing up for ${event.title}!`,
+        html: createEventSubscribeEmailTemplate(event),
+        text: 'jello',
+      };
+
+      await ctx.mailgun.messages
+        .create('email.wannago.app', messageData)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+
+      return event;
     }),
   getNumberOfAttendees: publicProcedure
     .input(z.object({eventId: z.string()}))
