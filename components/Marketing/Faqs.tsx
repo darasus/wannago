@@ -1,56 +1,110 @@
-import Image from 'next/image';
 import {Container} from './Container';
 
 const faqs = [
   [
     {
-      question: 'Does TaxPal handle VAT?',
+      question: 'How do I create an event page?',
       answer:
-        'Well no, but if you move your company offshore you can probably ignore it.',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
     },
     {
-      question: 'Can I pay for my subscription via purchase order?',
-      answer: 'Absolutely, we are happy to take your money in all forms.',
+      question: 'Can I customize my event page?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
     },
     {
-      question: 'How do I apply for a job at TaxPal?',
+      question: 'How do I share my event page with others?',
       answer:
-        'We only hire our customers, so subscribe for a minimum of 6 months and then let’s talk.',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Can my guests RSVP on my event page?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Can I see who is coming to my event?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Is there a limit to the number of guests I can invite?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
     },
   ],
   [
     {
-      question: 'What was that testimonial about tax fraud all about?',
+      question: 'Can I add multiple events to my event page?',
       answer:
-        'TaxPal is just a software application, ultimately your books are your responsibility.',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
     },
     {
-      question:
-        'TaxPal sounds horrible but why do I still feel compelled to purchase?',
+      question: 'Is there a cost to use EventPage?',
       answer:
-        'This is the power of excellent visual design. You just can’t resist it, no matter how poorly it actually functions.',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
     },
     {
-      question:
-        'I found other companies called TaxPal, are you sure you can use this name?',
+      question: 'Can I add photos to my event page?',
       answer:
-        'Honestly not sure at all. We haven’t actually incorporated or anything, we just thought it sounded cool and made this website.',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Can I add a map to my event page?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Can I add a description to my event?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Can I add a schedule or agenda to my event page?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Can I add a list of attendees to my event page?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
     },
   ],
   [
     {
-      question: 'How do you generate reports?',
+      question: 'Can I add links to my event page?',
       answer:
-        'You just tell us what data you need a report for, and we get our kids to create beautiful charts for you using only the finest crayons.',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
     },
     {
-      question: 'Can we expect more inventory features?',
-      answer: 'In life it’s really better to never expect anything at all.',
+      question: 'Can I add a contact form to my event page?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
     },
     {
-      question: 'I lost my password, how do I get into my account?',
+      question: 'Can I add a social media feed to my event page?',
       answer:
-        'Send us an email and we will send you a copy of our latest password spreadsheet so you can find your information.',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Can I add a countdown to my event?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Can I add a password to my event page?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Can I add a theme to my event page?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
+    },
+    {
+      question: 'Can I add a background image to my event page?',
+      answer:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut nunc quam. ',
     },
   ],
 ];

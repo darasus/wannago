@@ -4,28 +4,41 @@ import {Tab} from '@headlessui/react';
 import clsx from 'clsx';
 import {Container} from './Container';
 
+// Easy event page creation: With PrivateEventPages.com, you can quickly and easily create a private event page and customize it with all the details your guests need to know.
+// Invite only the guests you want: Our platform allows you to invite only the people you want to attend your event, ensuring that it stays private.
+// Customizable event pages: You can upload photos and videos, add details about the date, time, and location of your event, and even include information about the dress code or any special instructions.
+// Easy communication with guests: Send reminders and messages to your guests to make sure they don't miss out on your event.
+// RSVP tracking: Keep track of who is attending your event with our easy-to-use RSVP system. You can see at a glance who has confirmed their attendance and who is still on the fence.
+
 const features = [
   {
-    title: 'Share event',
+    title: 'Create event page with ease',
     description:
-      'Share beautiful event pages with you network with short links.',
+      'With WannaGo, you can quickly and easily create a shareable event page and customize it with all the details your guests need to know.',
     image: '/images/screenshots/event-page.png',
   },
   {
-    title: 'Create event',
+    title: 'Invite only the guests you want',
     description:
-      "It couldn't be more easy to create events with WannaGo. Just fill out the form and you're done!",
+      "Our platform allows you to invite only the people you want to attend your event, ensuring that it stays private, whether it's your friends, family or twitter following.",
     image: '/images/screenshots/event-page.png',
   },
   {
-    title: 'Accept RSVP',
+    title: 'Customizable event pages',
     description:
-      'No sign-up required RSVPs, with simple and easy to use interface.',
+      'You can upload photo, add details about the date, time, and location of your event, and even include information about the dress code or any special instructions',
     image: '/images/screenshots/event-page.png',
   },
   {
-    title: 'Send reminder',
-    description: 'Send reminders to your guests to make sure they show up.',
+    title: 'Easy communication with guests',
+    description:
+      "Send reminders and messages to your guests to make sure they don't miss out on your event.",
+    image: '/images/screenshots/event-page.png',
+  },
+  {
+    title: 'RSVP tracking',
+    description:
+      'Keep track of who is attending your event with our easy-to-use RSVP system. You can see at a glance who has confirmed their attendance and who is still on the fence.',
     image: '/images/screenshots/event-page.png',
   },
 ];
@@ -77,7 +90,7 @@ export function PrimaryFeatures() {
                     <div
                       key={feature.title}
                       className={clsx(
-                        'group relative rounded-md py-1 px-4 lg:rounded-r-none lg:rounded-l-xl lg:p-6',
+                        'group relative rounded-md py-1 px-4 lg:rounded-r-none lg:rounded-l-xl lg:p-4',
                         selectedIndex === featureIndex
                           ? 'bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10'
                           : 'hover:bg-white/10 lg:hover:bg-white/5'
@@ -86,7 +99,7 @@ export function PrimaryFeatures() {
                       <h3>
                         <Tab
                           className={clsx(
-                            'font-display text-lg outline-none',
+                            'font-display text-mg outline-none',
                             selectedIndex === featureIndex
                               ? 'text-gray-800 lg:text-white'
                               : 'text-blue-100 hover:text-white lg:text-white'
@@ -98,7 +111,7 @@ export function PrimaryFeatures() {
                       </h3>
                       <p
                         className={clsx(
-                          'mt-2 hidden text-sm lg:block',
+                          'mt-2 hidden text-xs lg:block',
                           selectedIndex === featureIndex
                             ? 'text-white'
                             : 'text-blue-100 group-hover:text-white'
