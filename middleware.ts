@@ -20,6 +20,11 @@ const isProtectedRoute = (nextUrl: NextURL): boolean => {
     '/api/trpc/event.getEventByNanoId'
   );
   const isRegistrationPage = nextUrl.pathname.startsWith('/register');
+  const webhook = nextUrl.pathname.startsWith('/api/user');
+
+  if (webhook) {
+    return false;
+  }
 
   if (isStaticImagePath) {
     return false;

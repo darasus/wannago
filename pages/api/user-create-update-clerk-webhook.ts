@@ -3,7 +3,7 @@ import {z} from 'zod';
 import {prisma} from '../../lib/prisma';
 
 const scheme = z.object({
-  type: z.enum(['user.created', 'user.updated']),
+  type: z.enum(['user.created', 'user.updated', 'user.deleted']),
   data: z.object({
     id: z.string(),
     first_name: z.string(),
