@@ -10,7 +10,7 @@ export default function LoginPage() {
       </Head>
       <AppLayout>
         <div className="flex justify-center">
-          <SignIn redirectUrl={'/dashboard'} signUpUrl={'/register'} />
+          <SignIn redirectUrl={'/auth-success'} signUpUrl={'/register'} />
         </div>
       </AppLayout>
     </>

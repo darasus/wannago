@@ -10,20 +10,20 @@ export default function RegistrationSuccessPage() {
   const {user, isSignedIn} = useUser();
   const setupUser = trpc.user.setupUser.useMutation();
 
-  useEffect(() => {
-    if (isSignedIn) {
-      setupUser
-        .mutateAsync({
-          email: user.primaryEmailAddress?.emailAddress!,
-          firstName: user.firstName!,
-          lastName: user.lastName!,
-        })
-        .then(() => {
-          router.push('/dashboard');
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSignedIn]);
+  // useEffect(() => {
+  //   if (isSignedIn) {
+  //     setupUser
+  //       .mutateAsync({
+  //         email: user.primaryEmailAddress?.emailAddress!,
+  //         firstName: user.firstName!,
+  //         lastName: user.lastName!,
+  //       })
+  //       .then(() => {
+  //         router.push('/dashboard');
+  //       });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isSignedIn]);
 
   return null;
 }

@@ -38,6 +38,7 @@ model User {
   attendingEvents Event[]       @relation(name: "Attendees")
   firstName       String?
   lastName        String?
+  profileImageSrc String?
   organization    Organization? @relation(name: "UserOrganization", fields: [organizationId], references: [id])
   organizationId  String?
 
