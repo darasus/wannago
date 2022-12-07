@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
-import {prisma} from '../../lib/prisma';
+import {prisma} from '../../../lib/prisma';
 
 const scheme = z.object({
   type: z.enum(['user.created', 'user.updated', 'user.deleted']),
@@ -28,6 +28,21 @@ export default async function handler(
   const {data, type} = scheme.parse(req.body);
 
   if (type === 'user.created') {
+    const organization = await prisma.organization.create({
+      data: {},
+    });
+    const user = await prisma.user.findFirst({
+      where: {
+        email: data.email_addresses[0].email_address,
+      },
+    });
+    if (user) {
+      await prisma.user.delete({
+        where: {
+          id: user.id,
+        },
+      });
+    }
     await prisma.user.create({
       data: {
         externalId: data.id,
@@ -36,7 +51,9 @@ export default async function handler(
         lastName: data.last_name,
         profileImageSrc: data.profile_image_url,
         organization: {
-          create: {},
+          connect: {
+            id: organization.id,
+          },
         },
       },
     });
