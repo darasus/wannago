@@ -32,6 +32,9 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
       toast.success(`Event is updated!`);
     },
   });
+  const attendeesCount = trpc.event.getNumberOfAttendees.useQuery({
+    eventId: event.id,
+  });
 
   return (
     <CardBase>
@@ -64,7 +67,9 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
               'yyyy/MM/dd hh:m',
               timezone
             )}`}</Text>
-            <Text>{`Number of attendees: ${123}`}</Text>
+            <Text>{`Number of attendees: ${
+              attendeesCount.data?.count || 'Loading...'
+            }`}</Text>
           </div>
         </div>
         <div className="flex flex-col gap-2">

@@ -16,11 +16,16 @@ const isProtectedRoute = (nextUrl: NextURL): boolean => {
   const isHomePage = nextUrl.pathname === '/';
   const isPublicEventPage = nextUrl.pathname.startsWith('/e/');
   const isStaticImagePath = nextUrl.pathname.startsWith('/images/');
-  const isgetEventByNanoId = nextUrl.pathname.startsWith(
+  const isGetEventByNanoId = nextUrl.pathname.startsWith(
     '/api/trpc/event.getEventByNanoId'
   );
+  const isRegistrationPage = nextUrl.pathname.startsWith('/register');
 
   if (isStaticImagePath) {
+    return false;
+  }
+
+  if (isRegistrationPage) {
     return false;
   }
 
@@ -32,7 +37,7 @@ const isProtectedRoute = (nextUrl: NextURL): boolean => {
     return false;
   }
 
-  if (isgetEventByNanoId) {
+  if (isGetEventByNanoId) {
     return false;
   }
 

@@ -4,6 +4,7 @@ import {DateCard} from '../Card/DateCard/DateCard';
 import {EventUrlCard} from '../Card/EventUrlCard/EventUrlCard';
 import {InfoCard} from '../Card/InfoCard/InfoCard';
 import {LocationCard} from '../Card/LocationCard/LocationCard';
+import {OrganizerCard} from '../Card/OrganizerCard/OrganizerCard';
 import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
 
 interface Props {
@@ -15,6 +16,9 @@ export function EventView({event, timezone}: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
       <div className="md:col-span-8">
+        <div className="mb-4">
+          <OrganizerCard event={event} />
+        </div>
         <div className="mb-4">
           <InfoCard event={event} />
         </div>

@@ -10,7 +10,7 @@ export default function RegisterPage() {
       </Head>
       <AppLayout>
         <div className="flex justify-center">
-          <SignUp redirectUrl={'/dashboard'} />
+          <SignUp afterSignUpUrl={'/registration-success'} />
         </div>
       </AppLayout>
     </>

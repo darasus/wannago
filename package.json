@@ -12,7 +12,7 @@
     "lint": "next lint",
     "prisma:generate": "dotenv -e ./.vercel/.env.development.local -e ./.env -- npx prisma generate --data-proxy",
     "prisma:push": "dotenv -e ./.env -- npx prisma db push",
-    "prisma:studio": "dotenv -e ./.vercel/.env.development.local ./.env -- npx prisma studio",
+    "prisma:studio": "dotenv -e ./.env -- npx prisma studio",
     "vercel-build": "npx prisma generate --data-proxy && next build"
   },
   "dependencies": {

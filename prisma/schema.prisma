@@ -10,44 +10,42 @@ datasource db {
 }
 
 model Event {
-  id                   String   @id @default(uuid())
-  shortId              String?  @unique
-  title                String   @db.VarChar(255)
-  description          String   @db.LongText()
+  id                   String        @id @default(uuid())
+  shortId              String?       @unique
+  title                String        @db.VarChar(255)
+  description          String        @db.LongText()
   startDate            DateTime
   endDate              DateTime
   address              String
-  isPublished          Boolean? @default(false)
-  authorId             String
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  isPublished          Boolean?      @default(false)
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
   maxNumberOfAttendees Int?
   featuredImageSrc     String?
   longitude            Float?
   latitude             Float?
-  attendees            User[]
+  attendees            User[]        @relation(name: "Attendees")
+  organization         Organization? @relation(name: "EventOrganization", fields: [organizationId], references: [id])
+  organizationId       String?
+
+  @@index([organizationId])
 }
 
 model User {
-  id              String  @id @default(uuid())
-  email           String  @unique
-  attendingEvents Event[]
+  id              String        @id @default(uuid())
+  email           String        @unique
+  externalId      String?
+  attendingEvents Event[]       @relation(name: "Attendees")
   firstName       String?
   lastName        String?
+  organization    Organization? @relation(name: "UserOrganization", fields: [organizationId], references: [id])
+  organizationId  String?
+
+  @@index([organizationId])
 }
 
-// model Organization {
-//   id          String  @id @default(uuid())
-//   description String?
-//   user        User[]  @relation("UserOrganization")
-// }
-
-// model User {
-//   id             String         @id @default(uuid())
-//   email          String         @unique
-//   firstName      String
-//   lastName       String
-//   organization   Organization[] @relation("UserOrganization")
-//   createdEvents  Event[]        @relation("EventAuthor")
-//   attendedEvents Event[]        @relation("EventAttendees")
-// }
+model Organization {
+  id     String  @id @default(uuid())
+  users  User[]  @relation(name: "UserOrganization")
+  events Event[] @relation(name: "EventOrganization")
+}

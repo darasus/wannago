@@ -2,11 +2,12 @@ import {router, publicProcedure, protectedProcedure} from '../trpc';
 import {z} from 'zod';
 import {nanoid} from 'nanoid';
 import {Client} from '@googlemaps/google-maps-services-js';
-import {User} from '@prisma/client';
+import {prisma, User} from '@prisma/client';
 import {MailgunMessageData} from 'mailgun.js/interfaces/Messages';
 import ReactRender from 'react-dom/server';
 import {EventView} from '../../components/EventView/EventView';
 import {createEventSubscribeEmailTemplate} from '../../utils/createEventSubscribeEmailTemplate';
+import {TRPCError} from '@trpc/server';
 
 export const eventRouter = router({
   getEventById: publicProcedure
@@ -77,6 +78,23 @@ export const eventRouter = router({
           },
         });
 
+        const organization = await ctx.prisma.organization.findFirst({
+          where: {
+            users: {
+              some: {
+                externalId: ctx.user?.id,
+              },
+            },
+          },
+        });
+
+        if (!organization) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'No organization found',
+          });
+        }
+
         return ctx.prisma.event.create({
           data: {
             shortId: nanoid(6),
@@ -85,11 +103,15 @@ export const eventRouter = router({
             endDate: new Date(startDate).toISOString(),
             startDate: new Date(endDate).toISOString(),
             address: address,
-            authorId: ctx.user?.id,
             maxNumberOfAttendees,
             featuredImageSrc,
             longitude: response.data.results[0].geometry.location.lng,
             latitude: response.data.results[0].geometry.location.lat,
+            organization: {
+              connect: {
+                id: organization.id,
+              },
+            },
           },
         });
       }
@@ -162,7 +184,6 @@ export const eventRouter = router({
             startDate: new Date(startDate).toISOString(),
             endDate: new Date(endDate).toISOString(),
             address: address,
-            authorId: ctx.user?.id,
             maxNumberOfAttendees: maxNumberOfAttendees,
             featuredImageSrc,
             longitude: response.data.results[0].geometry.location.lng,
@@ -174,7 +195,13 @@ export const eventRouter = router({
   getMyEvents: protectedProcedure.query(async ({ctx}) => {
     const events = await ctx.prisma.event.findMany({
       where: {
-        authorId: ctx.user?.id,
+        organization: {
+          users: {
+            some: {
+              externalId: ctx.user?.id,
+            },
+          },
+        },
       },
     });
 
@@ -203,6 +230,10 @@ export const eventRouter = router({
             email: input.email,
             firstName: input.firstName,
             lastName: input.lastName,
+            externalId: null,
+            organization: {
+              create: {},
+            },
           },
         });
       }
@@ -269,7 +300,13 @@ export const eventRouter = router({
       const event = await ctx.prisma.event.findFirst({
         where: {
           id: input.eventId,
-          authorId: ctx.user?.id,
+          organization: {
+            users: {
+              some: {
+                externalId: ctx.user?.id,
+              },
+            },
+          },
         },
         include: {
           attendees: true,
