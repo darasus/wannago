@@ -7,6 +7,7 @@ import {Spinner} from '../components/Spinner/Spinner';
 import {EventCard} from '../components/Card/EventCard/EventCard';
 import Head from 'next/head';
 import {Container} from '../components/Marketing/Container';
+import {LoadingEventCard} from '../components/Card/LoadingEventCard/LoadingEventCard';
 
 export default function HomePage() {
   const router = useRouter();
@@ -26,11 +27,7 @@ export default function HomePage() {
             >
               <PlusCircleIcon width={50} height={50} />
             </button>
-            {isLoading && (
-              <div className="flex justify-center">
-                <Spinner />
-              </div>
-            )}
+            {isLoading && <LoadingEventCard />}
             {data?.events?.map(event => {
               return (
                 <Link href={`/event/${event.id}`} key={event.id}>
