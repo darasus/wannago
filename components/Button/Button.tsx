@@ -52,7 +52,7 @@ export const Button = forwardRef(function Button(
       type="button"
       {...props}
       className={clsx(
-        'cursor-pointer',
+        'cursor-pointer justify-center',
         {
           // base button styles
           'inline-flex items-center rounded-xl border shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2':

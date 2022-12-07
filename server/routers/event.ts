@@ -185,6 +185,8 @@ export const eventRouter = router({
       z.object({
         eventId: z.string(),
         email: z.string().email('Is not valid email'),
+        firstName: z.string(),
+        lastName: z.string(),
       })
     )
     .mutation(async ({input, ctx}) => {
@@ -199,6 +201,18 @@ export const eventRouter = router({
         user = await ctx.prisma.user.create({
           data: {
             email: input.email,
+            firstName: input.firstName,
+            lastName: input.lastName,
+          },
+        });
+      }
+
+      if (!user.firstName || !user.lastName) {
+        await ctx.prisma.user.update({
+          where: {id: user.id},
+          data: {
+            firstName: input.firstName,
+            lastName: input.lastName,
           },
         });
       }
@@ -263,6 +277,31 @@ export const eventRouter = router({
       });
 
       return event?.attendees || [];
+    }),
+  deleteAttendee: protectedProcedure
+    .input(z.object({eventId: z.string().uuid(), userId: z.string().uuid()}))
+    .mutation(async ({input, ctx}) => {
+      const event = await ctx.prisma.event.findFirst({
+        where: {
+          id: input.eventId,
+        },
+        include: {
+          attendees: true,
+        },
+      });
+
+      return ctx.prisma.event.update({
+        where: {
+          id: input.eventId,
+        },
+        data: {
+          attendees: {
+            disconnect: {
+              id: input.userId,
+            },
+          },
+        },
+      });
     }),
   publishEvent: protectedProcedure
     .input(z.object({isPublished: z.boolean(), eventId: z.string()}))

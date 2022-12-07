@@ -11,6 +11,8 @@ import {Text} from '../../Text/Text';
 
 interface Form {
   email: string;
+  firstName: string;
+  lastName: string;
 }
 
 interface Props {
@@ -42,7 +44,7 @@ export function ParticipantsCard({event}: Props) {
   });
 
   const onSubmit = handleSubmit(async data => {
-    await mutateAsync({eventId: event.id, email: data.email});
+    await mutateAsync({eventId: event.id, ...data});
     await refetch();
     reset();
   });
@@ -66,15 +68,26 @@ export function ParticipantsCard({event}: Props) {
             <Text className="font-bold">Wanna go?</Text>
             <div className="mb-2" />
             <div className="flex">
-              <div className="grow mr-2">
-                <Input
-                  placeholder="Type your email here..."
-                  {...register('email')}
-                />
+              <div className="grid grid-cols-12 gap-2 grow mr-2">
+                <div className="col-span-6">
+                  <Input placeholder="First name" {...register('firstName')} />
+                </div>
+                <div className="col-span-6">
+                  <Input placeholder="Last name" {...register('lastName')} />
+                </div>
+                <div className="col-span-8">
+                  <Input placeholder="Email" {...register('email')} />
+                </div>
+                <div className="col-span-4">
+                  <Button
+                    type="submit"
+                    isLoading={isSubmitting}
+                    className="w-full"
+                  >
+                    Join
+                  </Button>
+                </div>
               </div>
-              <Button type="submit" isLoading={isSubmitting}>
-                Join
-              </Button>
             </div>
             <div className="border-b-2 border-dotted my-4" />
             <div className="flex">

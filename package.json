@@ -6,16 +6,14 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "dotenv -e ./.vercel/.env.development.local -- next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma:generate": "dotenv -e ./.vercel/.env.development.local -- npx prisma generate --data-proxy",
-    "prisma:push": "dotenv -e ./.env.db -- npx prisma db push",
-    "prisma:migrate:deploy": "dotenv -e ./.env.db -- npx prisma migrate deploy",
-    "prisma:studio": "dotenv -e ./.env.db -- npx prisma studio",
-    "vercel-build": "npx prisma generate --data-proxy && next build",
-    "migrate-deploy": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" npx prisma migrate deploy"
+    "prisma:generate": "dotenv -e ./.vercel/.env.development.local -e ./.env -- npx prisma generate --data-proxy",
+    "prisma:push": "dotenv -e ./.env -- npx prisma db push",
+    "prisma:studio": "dotenv -e ./.vercel/.env.development.local ./.env -- npx prisma studio",
+    "vercel-build": "npx prisma generate --data-proxy && next build"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.6.5",
