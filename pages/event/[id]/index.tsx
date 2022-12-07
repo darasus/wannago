@@ -15,7 +15,7 @@ export default function EventPage({
   const router = useRouter();
   const id = router.query.id as string;
   const user = useUser();
-  const {data} = trpc.event.getEventById.useQuery(
+  const {data, refetch} = trpc.event.getEventById.useQuery(
     {
       id,
     },
@@ -38,7 +38,11 @@ export default function EventPage({
       <AppLayout>
         <Container className="md:px-4">
           <div className="mb-4">
-            <AdminSection event={data} timezone={timezone} />
+            <AdminSection
+              event={data}
+              timezone={timezone}
+              refetchEvent={refetch}
+            />
           </div>
           <EventView event={data} timezone={clientTimezone} />
         </Container>

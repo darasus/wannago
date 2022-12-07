@@ -17,6 +17,13 @@ export function EventCard({event}: Props) {
     <CardBase className="flex flex-col p-0">
       {event.featuredImageSrc && (
         <div className="grow overflow-hidden relative justify-center bg-black rounded-t-xl aspect-video">
+          <div className="absolute left-4 top-4 z-10">
+            {event.isPublished ? (
+              <Badge color="green">Published</Badge>
+            ) : (
+              <Badge color="gray">Draft</Badge>
+            )}
+          </div>
           <Image
             src={event.featuredImageSrc}
             alt=""

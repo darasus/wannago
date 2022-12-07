@@ -3,21 +3,20 @@ import Image from 'next/image';
 import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../../Badge/Badge';
 import {Text} from '../../Text/Text';
+import {Event} from '@prisma/client';
 
 interface Props {
-  title: string;
-  description: string;
-  featuredImageSrc: string | null;
+  event: Event;
 }
 
-export function InfoCard({title, description, featuredImageSrc}: Props) {
+export function InfoCard({event}: Props) {
   return (
     <>
       <CardBase className="p-0">
         <div className="flex items-center overflow-hidden relative justify-center aspect-video bg-black rounded-t-xl safari-rounded-border-fix">
-          {featuredImageSrc && (
+          {event.featuredImageSrc && (
             <Image
-              src={featuredImageSrc}
+              src={event.featuredImageSrc}
               alt=""
               fill
               style={{objectFit: 'cover'}}
@@ -32,7 +31,7 @@ export function InfoCard({title, description, featuredImageSrc}: Props) {
             </Badge>
             {/* <Button variant="link-neutral">Share</Button> */}
           </div>
-          <Text className="text-2xl font-bold">{title}</Text>
+          <Text className="text-2xl font-bold">{event.title}</Text>
           <div />
           <div
             className={clsx(
@@ -44,7 +43,7 @@ export function InfoCard({title, description, featuredImageSrc}: Props) {
           >
             <div
               className="text-boty"
-              dangerouslySetInnerHTML={{__html: description}}
+              dangerouslySetInnerHTML={{__html: event.description}}
             />
           </div>
         </div>

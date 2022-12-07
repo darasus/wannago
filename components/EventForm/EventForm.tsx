@@ -117,7 +117,7 @@ export function EventForm({onSubmit, isEdit}: Props) {
             </div>
             <div>
               <Button isLoading={isSubmitting} type="submit">
-                Publish
+                Save
               </Button>
             </div>
           </div>

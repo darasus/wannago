@@ -23,6 +23,14 @@ export default function EventPage({
     return null;
   }
 
+  if (!data.isPublished) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">Event is not found 🫣</h1>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Head>

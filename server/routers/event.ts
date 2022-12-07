@@ -264,4 +264,14 @@ export const eventRouter = router({
 
       return event?.attendees || [];
     }),
+  publishEvent: protectedProcedure
+    .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
+    .mutation(async ({input, ctx}) => {
+      return ctx.prisma.event.update({
+        where: {id: input.eventId},
+        data: {
+          isPublished: input.isPublished,
+        },
+      });
+    }),
 });

@@ -16,11 +16,7 @@ export function EventView({event, timezone}: Props) {
     <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
       <div className="md:col-span-8">
         <div className="mb-4">
-          <InfoCard
-            title={event.title}
-            description={event.description}
-            featuredImageSrc={event.featuredImageSrc}
-          />
+          <InfoCard event={event} />
         </div>
         <div>
           <LocationCard

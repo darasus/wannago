@@ -1,6 +1,13 @@
-import {PencilIcon, TrashIcon, UsersIcon} from '@heroicons/react/24/solid';
+import {
+  PencilIcon,
+  TrashIcon,
+  UsersIcon,
+  PlayCircleIcon,
+  PauseCircleIcon,
+} from '@heroicons/react/24/solid';
 import {Event} from '@prisma/client';
 import {useRouter} from 'next/router';
+import {toast} from 'react-hot-toast';
 import {formatDate} from '../../utils/formatDate';
 import {trpc} from '../../utils/trpc';
 import {Badge} from '../Badge/Badge';
@@ -11,12 +18,19 @@ import {Text} from '../Text/Text';
 interface Props {
   event: Event;
   timezone?: string | null;
+  refetchEvent: () => void;
 }
 
-export function AdminSection({event, timezone}: Props) {
+export function AdminSection({event, timezone, refetchEvent}: Props) {
   const router = useRouter();
-  const {mutate, isLoading} = trpc.event.remove.useMutation({
+  const remove = trpc.event.remove.useMutation({
     onSuccess: () => router.push('/dashboard'),
+  });
+  const publish = trpc.event.publishEvent.useMutation({
+    onSuccess: () => {
+      refetchEvent();
+      toast.success(`Event is updated!`);
+    },
   });
 
   return (
@@ -72,11 +86,39 @@ export function AdminSection({event, timezone}: Props) {
             >
               Edit event
             </Button>
+            {event.isPublished && (
+              <Button
+                variant="danger"
+                iconLeft={
+                  <PauseCircleIcon className="h-5 w-5" aria-hidden="true" />
+                }
+                onClick={() =>
+                  publish.mutate({eventId: event.id, isPublished: false})
+                }
+                isLoading={publish.isLoading}
+              >
+                Unpublish
+              </Button>
+            )}
+            {!event.isPublished && (
+              <Button
+                variant="primary"
+                iconLeft={
+                  <PlayCircleIcon className="h-5 w-5" aria-hidden="true" />
+                }
+                onClick={() =>
+                  publish.mutate({eventId: event.id, isPublished: true})
+                }
+                isLoading={publish.isLoading}
+              >
+                Publish
+              </Button>
+            )}
             <Button
               variant="danger"
               iconLeft={<TrashIcon className="h-5 w-5" aria-hidden="true" />}
-              onClick={() => mutate({id: event.id})}
-              isLoading={isLoading}
+              onClick={() => remove.mutate({id: event.id})}
+              isLoading={remove.isLoading}
             >
               Delete event
             </Button>
