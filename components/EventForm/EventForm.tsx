@@ -103,7 +103,7 @@ export function EventForm({onSubmit, isEdit}: Props) {
                 })}
               />
             </div>
-            <div>
+            <div className="max-w-xl">
               <FileInput
                 label="Event image"
                 error={errors.featuredImageSrc}
