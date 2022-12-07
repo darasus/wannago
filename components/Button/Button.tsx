@@ -97,8 +97,12 @@ export const Button = forwardRef(function Button(
         <Spinner />
       ) : (
         <>
+          {
+            (iconLeft &&= (
+              <div className={clsx({'mr-2': !!children})}>{iconLeft}</div>
+            ))
+          }
           {children}
-          {iconLeft || ''}
         </>
       )}
     </Component>

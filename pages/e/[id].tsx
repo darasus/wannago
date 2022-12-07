@@ -29,12 +29,7 @@ export default function EventPage({
         <title>{`${data.title} | WannaGo`}</title>
       </Head>
       <Container className="md:px-4">
-        <EventView
-          event={data}
-          myEvent={false}
-          isPublicView={true}
-          timezone={clientTimezone}
-        />
+        <EventView event={data} timezone={clientTimezone} />
       </Container>
       <StickyBranding />
     </div>

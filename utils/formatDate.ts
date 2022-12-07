@@ -5,7 +5,7 @@ import {format as timeagoFormat} from 'timeago.js';
 export function formatDate(
   date: Date,
   formatString: string,
-  timezone?: string
+  timezone?: string | null
 ): string {
   const d = utcToZonedTime(
     date,

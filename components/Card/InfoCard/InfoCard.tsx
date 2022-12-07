@@ -3,28 +3,18 @@ import Image from 'next/image';
 import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../../Badge/Badge';
 import {Text} from '../../Text/Text';
-import {EditControls} from './EditControls';
 
 interface Props {
-  eventId: string;
   title: string;
   description: string;
-  showManageTools?: boolean;
   featuredImageSrc: string | null;
 }
 
-export function InfoCard({
-  title,
-  description,
-  showManageTools,
-  eventId,
-  featuredImageSrc,
-}: Props) {
+export function InfoCard({title, description, featuredImageSrc}: Props) {
   return (
     <>
       <CardBase className="p-0">
         <div className="flex items-center overflow-hidden relative justify-center aspect-video bg-black rounded-t-xl safari-rounded-border-fix">
-          {showManageTools && <EditControls eventId={eventId} />}
           {featuredImageSrc && (
             <Image
               src={featuredImageSrc}

@@ -3,6 +3,7 @@ import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
+import {AdminSection} from '../../../components/AdminSection/AdminSection';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EventView} from '../../../components/EventView/EventView';
 import {Container} from '../../../components/Marketing/Container';
@@ -36,12 +37,10 @@ export default function EventPage({
       </Head>
       <AppLayout>
         <Container className="md:px-4">
-          <EventView
-            event={data}
-            myEvent={user.user?.id === data.authorId}
-            isPublicView={false}
-            timezone={clientTimezone}
-          />
+          <div className="mb-4">
+            <AdminSection event={data} timezone={timezone} />
+          </div>
+          <EventView event={data} timezone={clientTimezone} />
         </Container>
       </AppLayout>
     </>
