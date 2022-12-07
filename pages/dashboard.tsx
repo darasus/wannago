@@ -11,7 +11,7 @@ import {LoadingEventCard} from '../components/Card/LoadingEventCard/LoadingEvent
 
 export default function HomePage() {
   const router = useRouter();
-  const {data, isLoading} = trpc.event.getMyEvents.useQuery();
+  const {data, isLoading} = trpc.me.getMyEvents.useQuery();
 
   return (
     <>

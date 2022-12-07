@@ -23,10 +23,10 @@ interface Props {
 
 export function AdminSection({event, timezone, refetchEvent}: Props) {
   const router = useRouter();
-  const remove = trpc.event.remove.useMutation({
+  const remove = trpc.eventManager.remove.useMutation({
     onSuccess: () => router.push('/dashboard'),
   });
-  const publish = trpc.event.publishEvent.useMutation({
+  const publish = trpc.eventManager.publishEvent.useMutation({
     onSuccess: () => {
       refetchEvent();
       toast.success(`Event is updated!`);

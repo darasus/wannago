@@ -23,6 +23,7 @@ export const eventRouter = router({
         },
       });
     }),
+
   getEventByNanoId: publicProcedure
     .input(
       z.object({
@@ -36,177 +37,7 @@ export const eventRouter = router({
         },
       });
     }),
-  create: protectedProcedure
-    .input(
-      z.object({
-        title: z.string(),
-        description: z.string(),
-        startDate: z.string(),
-        endDate: z.string(),
-        address: z.string(),
-        featuredImageSrc: z.string(),
-        maxNumberOfAttendees: z
-          .number()
-          .or(z.string())
-          .transform((val): number => {
-            if (typeof val === 'number') {
-              return val;
-            }
-            return Number(val);
-          }),
-      })
-    )
-    .mutation(
-      async ({
-        input: {
-          title,
-          description,
-          address,
-          endDate,
-          featuredImageSrc,
-          maxNumberOfAttendees,
-          startDate,
-        },
-        ctx,
-      }) => {
-        const client = new Client();
 
-        const response = await client.geocode({
-          params: {
-            key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-            address,
-          },
-        });
-
-        const organization = await ctx.prisma.organization.findFirst({
-          where: {
-            users: {
-              some: {
-                externalId: ctx.user?.id,
-              },
-            },
-          },
-        });
-
-        if (!organization) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: 'No organization found',
-          });
-        }
-
-        return ctx.prisma.event.create({
-          data: {
-            shortId: nanoid(6),
-            title,
-            description,
-            endDate: new Date(startDate).toISOString(),
-            startDate: new Date(endDate).toISOString(),
-            address: address,
-            maxNumberOfAttendees,
-            featuredImageSrc,
-            longitude: response.data.results[0].geometry.location.lng,
-            latitude: response.data.results[0].geometry.location.lat,
-            organization: {
-              connect: {
-                id: organization.id,
-              },
-            },
-          },
-        });
-      }
-    ),
-  remove: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().min(1),
-      })
-    )
-    .mutation(async ({input, ctx}) => {
-      return ctx.prisma.event.delete({
-        where: {
-          id: input.id,
-        },
-      });
-    }),
-
-  edit: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().uuid(),
-        title: z.string(),
-        description: z.string(),
-        startDate: z.string(),
-        endDate: z.string(),
-        address: z.string(),
-        featuredImageSrc: z.string(),
-        maxNumberOfAttendees: z
-          .number()
-          .or(z.string())
-          .transform((val): number => {
-            if (typeof val === 'number') {
-              return val;
-            }
-            return Number(val);
-          }),
-      })
-    )
-    .mutation(
-      async ({
-        input: {
-          id,
-          address,
-          description,
-          endDate,
-          maxNumberOfAttendees,
-          featuredImageSrc,
-          startDate,
-          title,
-        },
-        ctx,
-      }) => {
-        const client = new Client();
-
-        const response = await client.geocode({
-          params: {
-            key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-            address,
-          },
-        });
-
-        return ctx.prisma.event.update({
-          where: {
-            id,
-          },
-          data: {
-            title: title,
-            description: description,
-            startDate: new Date(startDate).toISOString(),
-            endDate: new Date(endDate).toISOString(),
-            address: address,
-            maxNumberOfAttendees: maxNumberOfAttendees,
-            featuredImageSrc,
-            longitude: response.data.results[0].geometry.location.lng,
-            latitude: response.data.results[0].geometry.location.lat,
-          },
-        });
-      }
-    ),
-  getMyEvents: protectedProcedure.query(async ({ctx}) => {
-    const events = await ctx.prisma.event.findMany({
-      where: {
-        organization: {
-          users: {
-            some: {
-              externalId: ctx.user?.id,
-            },
-          },
-        },
-      },
-    });
-
-    return {events};
-  }),
   rsvp: publicProcedure
     .input(
       z.object({
@@ -279,6 +110,7 @@ export const eventRouter = router({
 
       return event;
     }),
+
   getNumberOfAttendees: publicProcedure
     .input(z.object({eventId: z.string()}))
     .query(async ({input, ctx}) => {
@@ -294,6 +126,7 @@ export const eventRouter = router({
 
       return {count};
     }),
+
   attendees: protectedProcedure
     .input(z.object({eventId: z.string()}))
     .query(async ({input, ctx}) => {
@@ -315,6 +148,7 @@ export const eventRouter = router({
 
       return event?.attendees || [];
     }),
+
   deleteAttendee: protectedProcedure
     .input(z.object({eventId: z.string().uuid(), userId: z.string().uuid()}))
     .mutation(async ({input, ctx}) => {
@@ -340,13 +174,19 @@ export const eventRouter = router({
         },
       });
     }),
-  publishEvent: protectedProcedure
-    .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
-    .mutation(async ({input, ctx}) => {
-      return ctx.prisma.event.update({
-        where: {id: input.eventId},
-        data: {
-          isPublished: input.isPublished,
+
+  getEventOrganizer: publicProcedure
+    .input(z.object({eventId: z.string().uuid()}))
+    .query(async ({input, ctx}) => {
+      return ctx.prisma.user.findFirst({
+        where: {
+          organization: {
+            events: {
+              some: {
+                id: input.eventId,
+              },
+            },
+          },
         },
       });
     }),

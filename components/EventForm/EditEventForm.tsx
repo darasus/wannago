@@ -11,7 +11,7 @@ interface Props {
 
 export function EditEventForm({event}: Props) {
   const {push} = useRouter();
-  const {mutateAsync} = trpc.event.edit.useMutation({
+  const {mutateAsync} = trpc.eventManager.edit.useMutation({
     onSuccess: data => {
       push(`/event/${data.id}`);
     },
