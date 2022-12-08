@@ -91,13 +91,13 @@ export function ParticipantsCard({event}: Props) {
             </div>
             <div className="border-b-2 border-dotted my-4" />
             <div className="flex">
-              <Avatar
+              {/* <Avatar
                 images={[
                   'https://source.unsplash.com/eyJhcHBfaWQiOjEyMDd9',
                   'https://source.unsplash.com/YzLMmxDTrvI',
                   'https://source.unsplash.com/6G6akT8biLg',
                 ]}
-              />
+              /> */}
               <div className="grow" />
               {data && (
                 <Text className="text-gray-400">{`${data?.count} people attending`}</Text>
