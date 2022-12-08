@@ -7,6 +7,7 @@ module.exports = {
       'www.gravatar.com',
       'imagedelivery.net',
       'images.clerk.dev',
+      'gravatar.com',
     ],
   },
 };

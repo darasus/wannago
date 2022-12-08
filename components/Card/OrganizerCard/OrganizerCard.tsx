@@ -8,6 +8,7 @@ import {Button} from '../../Button/Button';
 import Image from 'next/image';
 import {useState} from 'react';
 import {ContactForm} from './ContactForm';
+import {Spinner} from '../../Spinner/Spinner';
 
 interface Props {
   event: Event;
@@ -15,13 +16,15 @@ interface Props {
 
 export function OrganizerCard({event}: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const {data} = trpc.event.getEventOrganizer.useQuery({
+  const {data, isLoading} = trpc.event.getEventOrganizer.useQuery({
     eventId: event.id,
   });
 
   const onOpenFormClick = () => {
     setIsOpen(true);
   };
+
+  const name = data ? `${data?.firstName} ${data?.lastName}` : 'Loading...';
 
   return (
     <>
@@ -36,8 +39,13 @@ export function OrganizerCard({event}: Props) {
             </Button>
           </div>
           <div className="flex items-center gap-x-2">
-            <div className="flex h-10 w-10 items-center overflow-hidden relative justify-center  bg-black rounded-full safari-rounded-border-fix">
-              {data?.profileImageSrc && (
+            <div className="flex h-10 w-10 items-center overflow-hidden relative justify-center rounded-full safari-rounded-border-fix">
+              {isLoading && (
+                <div className="flex items-center justify-center h-full w-full bg-gray-100 rounded-full border border-gray-200">
+                  <Spinner className="text-gray-400" />
+                </div>
+              )}
+              {data?.profileImageSrc ? (
                 <Image
                   src={data?.profileImageSrc}
                   alt=""
@@ -45,9 +53,19 @@ export function OrganizerCard({event}: Props) {
                   style={{objectFit: 'cover'}}
                   priority
                 />
+              ) : (
+                <Image
+                  src={
+                    'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+                  }
+                  alt=""
+                  fill
+                  style={{objectFit: 'cover'}}
+                  priority
+                />
               )}
             </div>
-            <Text className="font-bold">{`${data?.firstName} ${data?.lastName}`}</Text>
+            <Text className="font-bold">{name}</Text>
           </div>
         </div>
       </CardBase>

@@ -99,9 +99,11 @@ export function ParticipantsCard({event}: Props) {
                 ]}
               /> */}
               <div className="grow" />
-              {data && (
-                <Text className="text-gray-400">{`${data?.count} people attending`}</Text>
-              )}
+              <Text className="text-gray-400">
+                {typeof data?.count === 'number'
+                  ? `${data?.count} people attending`
+                  : 'Loading...'}
+              </Text>
             </div>
           </div>
         </CardBase>
