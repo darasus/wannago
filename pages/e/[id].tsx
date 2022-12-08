@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 import {useMemo} from 'react';
 import {EventView} from '../../components/EventView/EventView';
 import {Container} from '../../components/Marketing/Container';
-import {StickyBranding} from '../../components/StickyBranding/StickyBranding';
+import {PublicEventBranding} from '../../components/PublicEventBranding/PublicEventBranding';
 import {trpc} from '../../utils/trpc';
 
 export default function EventPage({
@@ -39,7 +39,7 @@ export default function EventPage({
       <Container className="md:px-4">
         <EventView event={data} timezone={clientTimezone} />
       </Container>
-      <StickyBranding />
+      <PublicEventBranding />
     </div>
   );
 }
