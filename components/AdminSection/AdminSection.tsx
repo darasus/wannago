@@ -68,7 +68,9 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
               timezone
             )}`}</Text>
             <Text>{`Number of attendees: ${
-              attendeesCount.data?.count || 'Loading...'
+              typeof attendeesCount.data?.count === 'number'
+                ? attendeesCount.data?.count
+                : 'Loading...'
             }`}</Text>
           </div>
         </div>
