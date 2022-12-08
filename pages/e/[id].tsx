@@ -6,14 +6,22 @@ import {EventView} from '../../components/EventView/EventView';
 import {Container} from '../../components/Marketing/Container';
 import {PublicEventBranding} from '../../components/PublicEventBranding/PublicEventBranding';
 import {trpc} from '../../utils/trpc';
+import ms from 'ms';
 
 export default function EventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  const {data} = trpc.event.getEventByNanoId.useQuery({
-    id: router.query.id as string,
-  });
+  const {data} = trpc.event.getEventByNanoId.useQuery(
+    {
+      id: router.query.id as string,
+    },
+    {
+      trpc: {
+        ssr: true,
+      },
+    }
+  );
   const clientTimezone = useMemo(
     () => timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
     [timezone]
@@ -47,11 +55,13 @@ export default function EventPage({
 export async function getServerSideProps({
   req,
   res,
-  query,
 }: GetServerSidePropsContext) {
   const timezone = req.headers['x-vercel-ip-timezone'] as string | undefined;
 
-  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
+  res.setHeader(
+    'Cache-Control',
+    `s-maxage=${ms('1m')}, stale-while-revalidate=${ms('7 days')}`
+  );
 
   return {
     props: {timezone: timezone || null},
