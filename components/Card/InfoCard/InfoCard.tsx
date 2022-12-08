@@ -31,7 +31,7 @@ export function InfoCard({event}: Props) {
             </Badge>
             {/* <Button variant="link-neutral">Share</Button> */}
           </div>
-          <Text className="text-2xl font-bold">{event.title}</Text>
+          <Text className="text-2xl font-bold mb-2">{event.title}</Text>
           <div />
           <div
             className={clsx(
