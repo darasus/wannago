@@ -6,6 +6,7 @@ module.exports = {
       'source.unsplash.com',
       'www.gravatar.com',
       'imagedelivery.net',
+      'images.clerk.dev',
     ],
   },
 };
