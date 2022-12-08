@@ -99,14 +99,7 @@ export const eventRouter = router({
         html: createEventSubscribeEmailTemplate(event),
       };
 
-      await ctx.mailgun.messages
-        .create('email.wannago.app', messageData)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      await ctx.mailgun.messages.create('email.wannago.app', messageData);
 
       return event;
     }),

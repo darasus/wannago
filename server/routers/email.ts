@@ -16,14 +16,7 @@ export const emailRouter = router({
         html: '<div style="color:pink;">HTML version of the body</div>',
       };
 
-      ctx.mailgun.messages
-        .create('email.wannago.app', messageData)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.error(err);
-        });
+      ctx.mailgun.messages.create('email.wannago.app', messageData);
 
       return {status: 'ok'};
     }),

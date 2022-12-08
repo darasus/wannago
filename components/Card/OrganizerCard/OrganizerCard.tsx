@@ -16,8 +16,6 @@ export function OrganizerCard({event}: Props) {
     eventId: event.id,
   });
 
-  console.log(data);
-
   return (
     <>
       <CardBase>
