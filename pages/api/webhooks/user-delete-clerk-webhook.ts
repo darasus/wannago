@@ -26,12 +26,30 @@ export default async function handler(
         externalId: data.id,
       },
     });
+
     if (user) {
+      const organization = await prisma.organization.findFirst({
+        where: {
+          id: user.organizationId!,
+        },
+        include: {
+          users: true,
+        },
+      });
+
       await prisma.user.delete({
         where: {
           id: user.id,
         },
       });
+
+      if (organization?.users.length === 1) {
+        await prisma.organization.delete({
+          where: {
+            id: organization.id,
+          },
+        });
+      }
     }
   }
 
