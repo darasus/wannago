@@ -1,4 +1,5 @@
 import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
+import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
@@ -7,21 +8,18 @@ import {Container} from '../../components/Marketing/Container';
 import {PublicEventBranding} from '../../components/PublicEventBranding/PublicEventBranding';
 import {trpc} from '../../utils/trpc';
 import ms from 'ms';
+import {appRouter} from '../../server/routers/_app';
+import {createContext} from '../../server/context';
+import * as trpcNext from '@trpc/server/adapters/next';
+import SuperJSON from 'superjson';
 
 export default function EventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  const {data} = trpc.event.getEventByNanoId.useQuery(
-    {
-      id: router.query.id as string,
-    },
-    {
-      trpc: {
-        ssr: true,
-      },
-    }
-  );
+  const {data} = trpc.event.getEventByNanoId.useQuery({
+    id: router.query.id as string,
+  });
   const clientTimezone = useMemo(
     () => timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
     [timezone]
@@ -55,8 +53,24 @@ export default function EventPage({
 export async function getServerSideProps({
   req,
   res,
-}: GetServerSidePropsContext) {
+  params,
+}: GetServerSidePropsContext<{id: string}>) {
   const timezone = req.headers['x-vercel-ip-timezone'] as string | undefined;
+
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: await createContext({req, res} as trpcNext.CreateNextContextOptions),
+    transformer: SuperJSON,
+  });
+
+  const event = await ssg.event.getEventByNanoId.fetch({id: params?.id!});
+
+  if (event) {
+    await ssg.event.getEventOrganizer.prefetch({eventId: event?.id});
+    await ssg.event.getNumberOfAttendees.prefetch({eventId: event?.id!});
+  }
+
+  await ssg.event.getEventByNanoId.prefetch({id: params?.id!});
 
   res.setHeader(
     'Cache-Control',
@@ -64,6 +78,6 @@ export async function getServerSideProps({
   );
 
   return {
-    props: {timezone: timezone || null},
+    props: {timezone: timezone || null, trpcState: ssg.dehydrate()},
   };
 }

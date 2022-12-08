@@ -18,6 +18,9 @@ export const trpc = createTRPCNext<AppRouter>({
           url: `${getBaseUrl()}/api/trpc`,
         }),
       ],
+      queryClientConfig: {
+        defaultOptions: {queries: {keepPreviousData: true}},
+      },
     };
   },
   ssr: false,
