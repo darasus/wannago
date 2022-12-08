@@ -57,13 +57,21 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
         <InputWrapper label={label} error={error}>
           <input ref={ref} {...props} className="hidden" />
           <EditorContent
-            className={clsx('border  rounded-md p-2', {
-              'input-focus': editor?.isFocused,
-              'border-gray-300': !error,
-              'border-red-300': error,
-              'border-brand-500 ring-brand-500': editor?.isFocused && !!error,
-              'border-red-500 ring-red-500': editor?.isFocused && error,
-            })}
+            className={clsx(
+              'border rounded-md p-2',
+              'prose',
+              'prose-h1:m-0 prose-h2:m-0 prose-h3:m-0',
+              'prose-p:m-0',
+              'prose-ul:m-0',
+              'prose-li:m-0',
+              {
+                'input-focus': editor?.isFocused,
+                'border-gray-300': !error,
+                'border-red-300': error,
+                'border-brand-500 ring-brand-500': editor?.isFocused && !!error,
+                'border-red-500 ring-red-500': editor?.isFocused && error,
+              }
+            )}
             editor={editor}
             onSubmit={e => {
               e.preventDefault();
