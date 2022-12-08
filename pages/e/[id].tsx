@@ -7,7 +7,6 @@ import {EventView} from '../../components/EventView/EventView';
 import {Container} from '../../components/Marketing/Container';
 import {PublicEventBranding} from '../../components/PublicEventBranding/PublicEventBranding';
 import {trpc} from '../../utils/trpc';
-import ms from 'ms';
 import {appRouter} from '../../server/routers/_app';
 import {createContext} from '../../server/context';
 import * as trpcNext from '@trpc/server/adapters/next';
@@ -72,9 +71,10 @@ export async function getServerSideProps({
 
   await ssg.event.getEventByNanoId.prefetch({id: params?.id!});
 
+  const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
   res.setHeader(
     'Cache-Control',
-    `s-maxage=${ms('1m')}, stale-while-revalidate=${ms('7 days')}`
+    `s-maxage=60, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`
   );
 
   return {
