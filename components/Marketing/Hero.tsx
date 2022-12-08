@@ -1,9 +1,10 @@
+import Image from 'next/image';
 import {Button} from '../Button/Button';
 import {Container} from './Container';
 
 export function Hero() {
   return (
-    <Container className="py-20 text-center lg:py-32 ">
+    <Container className="pt-20 text-center lg:pt-32 mb-0">
       <h1 className="mx-auto max-w-4xl text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-800">
         <div>Easiest way to create </div>
         <span className="relative whitespace-nowrap text-brand-200">
@@ -23,50 +24,23 @@ export function Hero() {
         Most event management software is too complicated and expensive.{' '}
         <span className="font-bold">We solved this problem for you.</span>
       </p>
-      <div className="mt-10 flex justify-center gap-x-6">
+      <div className="mt-10 flex justify-center gap-x-6 mb-16">
         <Button>Create your first event</Button>
       </div>
-      {/* <div className="mt-36 lg:mt-44">
-        <p className="font-display text-base text-slate-980000">
-          Trusted by these six companies so far
-        </p>
-        <ul
-          role="list"
-          className="mt-8 flex items-center justify-center gap-x-8 sm:flex-col sm:gap-x-0 sm:gap-y-10 xl:flex-row xl:gap-x-12 xl:gap-y-0"
-        >
-          {[
-            [
-              {name: 'Transistor', logo: '/images/logos/transistor.svg'},
-              {name: 'Tuple', logo: '/images/logos/tuple.svg'},
-              {name: 'StaticKit', logo: '/images/logos/statickit.svg'},
-            ],
-            [
-              {name: 'Mirage', logo: '/images/logos/mirage.svg'},
-              {name: 'Laravel', logo: '/images/logos/laravel.svg'},
-              {name: 'Statamic', logo: '/images/logos/statamic.svg'},
-            ],
-          ].map((group, groupIndex) => (
-            <li key={groupIndex}>
-              <ul
-                role="list"
-                className="flex flex-col items-center gap-y-8 sm:flex-row sm:gap-x-12 sm:gap-y-0"
-              >
-                {group.map(company => (
-                  <li key={company.name} className="flex">
-                    <Image
-                      src={company.logo}
-                      alt={company.name}
-                      unoptimized
-                      width={100}
-                      height={100}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </div> */}
+      <div className="relative w-full max-w-4xl m-auto" style={{height: 600}}>
+        <Image
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'top',
+          }}
+          className="w-full"
+          src={'/images/screenshots/event-view.png'}
+          alt=""
+          priority
+          fill
+          sizes="(min-width: 1024px) 67.8125rem, (min-width: 640px) 100vw, 45rem"
+        />
+      </div>
     </Container>
   );
 }

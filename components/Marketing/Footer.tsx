@@ -6,9 +6,9 @@ import {NavLink} from '../NavLink/NavLink';
 
 export function Footer() {
   return (
-    <footer className="bg-slate-50">
+    <footer>
       <Container className="m-0 my-0">
-        <div className="flex items-center p-4">
+        <div className="flex items-center py-4">
           <Logo href="/" />
           <div className="grow" />
           <div className="-my-1 flex justify-center gap-x-4">
@@ -17,7 +17,7 @@ export function Footer() {
             <NavLink href="#pricing">Pricing</NavLink>
           </div>
         </div>
-        <div className="flex flex-col items-center border-t border-slate-400/10 py-4 sm:flex-row-reverse sm:justify-between">
+        <div className="flex flex-col items-center py-4 sm:flex-row-reverse sm:justify-between">
           <div className="flex gap-x-6">
             <Link
               href="https://twitter.com"

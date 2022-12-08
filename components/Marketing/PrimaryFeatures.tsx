@@ -4,12 +4,6 @@ import {Tab} from '@headlessui/react';
 import clsx from 'clsx';
 import {Container} from './Container';
 
-// Easy event page creation: With PrivateEventPages.com, you can quickly and easily create a private event page and customize it with all the details your guests need to know.
-// Invite only the guests you want: Our platform allows you to invite only the people you want to attend your event, ensuring that it stays private.
-// Customizable event pages: You can upload photos and videos, add details about the date, time, and location of your event, and even include information about the dress code or any special instructions.
-// Easy communication with guests: Send reminders and messages to your guests to make sure they don't miss out on your event.
-// RSVP tracking: Keep track of who is attending your event with our easy-to-use RSVP system. You can see at a glance who has confirmed their attendance and who is still on the fence.
-
 const features = [
   {
     title: 'Create event page with ease',
@@ -27,7 +21,7 @@ const features = [
     title: 'Customizable event pages',
     description:
       'You can upload photo, add details about the date, time, and location of your event, and even include information about the dress code or any special instructions',
-    image: '/images/screenshots/event-page.png',
+    image: '/images/screenshots/edit-page.png',
   },
   {
     title: 'Easy communication with guests',

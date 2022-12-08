@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import {Button} from '../Button/Button';
 import {Container} from './Container';
+import {SecionHeader} from './SecionHeader';
 
 const faqs = [
   [
@@ -91,29 +92,14 @@ export function Faqs() {
     <section
       id="faq"
       aria-labelledby="faq-title"
-      className="relative overflow-hidden bg-gray-800 py-20 sm:py-32 px-4"
+      className="relative overflow-hidden bg-white py-20 sm:py-32 px-4"
     >
-      {/* <Image
-        className="absolute top-0 left-1/2 max-w-none translate-x-[-30%] -translate-y-1/4"
-        src={'/images/background-faqs.jpg'}
-        alt=""
-        width={1558}
-        height={946}
-        unoptimized
-      /> */}
-      <Container className="relative">
-        <div className="mx-auto lg:mx-0 text-center">
-          <h2
-            id="faq-title"
-            className="font-bold text-3xl tracking-tight text-brand-200 sm:text-4xl"
-          >
-            Frequently asked questions
-          </h2>
-          <p className="mt-4 text-lg tracking-tight text-slate-100">
-            If you can’t find what you’re looking for, email our support team
-            and if you’re lucky someone will get back to you.
-          </p>
-        </div>
+      <Container className="relative my-0">
+        <SecionHeader
+          title="Frequently asked questions"
+          description="If you can’t find what you’re looking for, email our support team
+            and if you’re lucky someone will get back to you."
+        />
         <ul
           role="list"
           className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3"
@@ -123,10 +109,10 @@ export function Faqs() {
               <ul role="list" className="flex flex-col gap-y-8">
                 {column.map((faq, faqIndex) => (
                   <li key={faqIndex}>
-                    <h3 className="font-bold text-lg text-slate-100 leading-5">
+                    <h3 className="font-bold text-lg text-gray-800 leading-5">
                       {faq.question}
                     </h3>
-                    <p className="mt-4 text-sm text-slate-100">{faq.answer}</p>
+                    <p className="mt-4 text-sm text-gray-800">{faq.answer}</p>
                   </li>
                 ))}
               </ul>
