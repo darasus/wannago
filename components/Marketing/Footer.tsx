@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {Container} from '../Container/Container';
+import {navItems} from '../Header/Header';
 import {Logo} from '../Logo/Logo';
 import {NavLink} from '../NavLink/NavLink';
 
@@ -11,9 +12,13 @@ export function Footer() {
           <Logo href="/" />
           <div className="grow" />
           <div className="-my-1 flex justify-center gap-x-4">
-            <NavLink href="#features">Features</NavLink>
-            <NavLink href="#testimonials">Testimonials</NavLink>
-            <NavLink href="#pricing">Pricing</NavLink>
+            {navItems.map(({href, label}) => {
+              return (
+                <NavLink key={href} href={href}>
+                  {label}
+                </NavLink>
+              );
+            })}
           </div>
         </div>
         <div className="flex flex-col items-center py-4 sm:flex-row-reverse sm:justify-between">

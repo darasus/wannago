@@ -10,9 +10,8 @@ import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';
 import {UserSecsion} from '../UserSecsion/UserSecsion';
 
-const navItems = [
+export const navItems = [
   {label: 'Features', href: '#features'},
-  {label: 'Pricing', href: '#pricing'},
   {label: 'FAQ', href: '#faq'},
 ];
 

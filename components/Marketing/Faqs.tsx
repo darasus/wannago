@@ -89,7 +89,7 @@ const faqs = [
 
 export function Faqs() {
   return (
-    <SectionContainer className="bg-white">
+    <SectionContainer id="faq" className="bg-white">
       <Container className="relative my-0">
         <SecionHeader
           title="Frequently asked questions"

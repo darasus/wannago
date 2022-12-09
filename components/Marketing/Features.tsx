@@ -83,7 +83,7 @@ function Feature({feature, isActive, className, ...props}: any) {
 
 export function Features() {
   return (
-    <SectionContainer className="bg-white">
+    <SectionContainer id="features" className="bg-white">
       <Container className="my-0">
         <SecionHeader
           title="Easiest way to invite your network to your place"
