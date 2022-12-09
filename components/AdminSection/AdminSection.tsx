@@ -81,14 +81,14 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
           <div className="flex flex-col items-start gap-2">
             <Button
               variant="neutral"
-              iconLeft={<UsersIcon className="h-5 w-5" aria-hidden="true" />}
+              iconLeft={<UsersIcon className="h-5 w-5" />}
               onClick={() => router.push(`/event/${event.id}/attendees`)}
             >
               View attendees
             </Button>
             <Button
               variant="neutral"
-              iconLeft={<PencilIcon className="h-5 w-5" aria-hidden="true" />}
+              iconLeft={<PencilIcon className="h-5 w-5" />}
               onClick={() => router.push(`/event/${event.id}/edit`)}
             >
               Edit event
@@ -96,9 +96,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
             {event.isPublished && (
               <Button
                 variant="danger"
-                iconLeft={
-                  <PauseCircleIcon className="h-5 w-5" aria-hidden="true" />
-                }
+                iconLeft={<PauseCircleIcon className="h-5 w-5" />}
                 onClick={() =>
                   publish.mutate({eventId: event.id, isPublished: false})
                 }
@@ -110,9 +108,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
             {!event.isPublished && (
               <Button
                 variant="primary"
-                iconLeft={
-                  <PlayCircleIcon className="h-5 w-5" aria-hidden="true" />
-                }
+                iconLeft={<PlayCircleIcon className="h-5 w-5" />}
                 onClick={() =>
                   publish.mutate({eventId: event.id, isPublished: true})
                 }
@@ -123,7 +119,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
             )}
             <Button
               variant="danger"
-              iconLeft={<TrashIcon className="h-5 w-5" aria-hidden="true" />}
+              iconLeft={<TrashIcon className="h-5 w-5" />}
               onClick={() => remove.mutate({id: event.id})}
               isLoading={remove.isLoading}
             >

@@ -12,7 +12,6 @@ export function Hero() {
         <div>Easiest way to create </div>
         <span className="relative whitespace-nowrap text-brand-200">
           <svg
-            aria-hidden="true"
             viewBox="0 0 418 42"
             className="absolute top-2/3 left-0 h-[0.58em] w-full fill-brand-600/70"
             preserveAspectRatio="none"

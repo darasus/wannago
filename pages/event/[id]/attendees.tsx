@@ -34,7 +34,7 @@ function Item({user, refetch, eventId}: ItemProps) {
             userId: user.id,
           });
         }}
-        iconLeft={<TrashIcon className="h-5 w-5" aria-hidden="true" />}
+        iconLeft={<TrashIcon className="h-5 w-5" />}
         variant="danger"
       />
     </CardBase>

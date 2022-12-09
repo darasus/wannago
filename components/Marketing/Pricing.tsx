@@ -4,12 +4,7 @@ import {Container} from '../Container/Container';
 
 function SwirlyDoodle({className}: any) {
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 281 40"
-      className={className}
-      preserveAspectRatio="none"
-    >
+    <svg viewBox="0 0 281 40" className={className} preserveAspectRatio="none">
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -22,7 +17,6 @@ function SwirlyDoodle({className}: any) {
 function CheckIcon({className}: any) {
   return (
     <svg
-      aria-hidden="true"
       className={clsx(
         'h-6 w-6 flex-none fill-current stroke-current',
         className
@@ -90,7 +84,6 @@ function Plan({
         variant={featured ? 'primary' : 'secondary'}
         color="white"
         className="mt-8"
-        aria-label={`Get started with the ${name} plan for ${price}`}
       >
         Get started
       </Button>
@@ -100,11 +93,7 @@ function Plan({
 
 export function Pricing() {
   return (
-    <section
-      id="pricing"
-      aria-label="Pricing"
-      className="bg-slate-900 py-20 sm:py-32"
-    >
+    <section id="pricing" className="bg-slate-900 py-20 sm:py-32">
       <Container>
         <div className="md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">

@@ -18,7 +18,6 @@ export const navItems = [
 function MobileNavIcon({open}: any) {
   return (
     <svg
-      aria-hidden="true"
       className="h-3.5 w-3.5 overflow-visible stroke-slate-700"
       fill="none"
       strokeWidth={2}
@@ -108,10 +107,7 @@ export function Header() {
               )}
               <div className="-mr-1 md:hidden">
                 <Popover>
-                  <Popover.Button
-                    className="relative z-10 flex h-8 w-8 items-center justify-center [&:not(:focus-visible)]:focus:outline-none"
-                    aria-label="Toggle Navigation"
-                  >
+                  <Popover.Button className="relative z-10 flex h-8 w-8 items-center justify-center [&:not(:focus-visible)]:focus:outline-none">
                     {({open}) => <MobileNavIcon open={open} />}
                   </Popover.Button>
                   <Transition.Root className="z-10">

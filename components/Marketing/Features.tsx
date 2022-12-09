@@ -63,10 +63,7 @@ function Feature({feature, isActive, className, ...props}: any) {
       {...props}
     >
       <div className={clsx('w-9 rounded-lg bg-gray-800')}>
-        <div
-          aria-hidden="true"
-          className="h-9 w-9 flex items-center justify-center"
-        >
+        <div className="h-9 w-9 flex items-center justify-center">
           {feature.icon}
         </div>
       </div>
