@@ -45,6 +45,9 @@ module.exports = {
           1000: `${token.color.brandDark}`,
         },
       },
+      height: {
+        'hero-preview': 600,
+      },
     },
   },
   plugins: [lineClamp, forms, typography],

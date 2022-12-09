@@ -32,7 +32,7 @@ export function Hero() {
           Create your first event
         </Button>
       </div>
-      <div className="relative w-full max-w-4xl m-auto" style={{height: 600}}>
+      <div className="relative w-full max-w-4xl m-auto h-80 md:h-96 lg:h-hero-preview">
         <Image
           style={{
             objectFit: 'cover',
