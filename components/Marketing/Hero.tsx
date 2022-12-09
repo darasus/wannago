@@ -1,8 +1,11 @@
 import Image from 'next/image';
+import {useRouter} from 'next/router';
 import {Button} from '../Button/Button';
-import {Container} from './Container';
+import {Container} from '../Container/Container';
 
 export function Hero() {
+  const router = useRouter();
+
   return (
     <Container className="pt-20 text-center lg:pt-32 mb-0">
       <h1 className="mx-auto max-w-4xl text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-800">
@@ -25,7 +28,9 @@ export function Hero() {
         <span className="font-bold">We solved this problem for you.</span>
       </p>
       <div className="mt-10 flex justify-center gap-x-6 mb-16">
-        <Button>Create your first event</Button>
+        <Button size="lg" onClick={() => router.push('/login')}>
+          Create your first event
+        </Button>
       </div>
       <div className="relative w-full max-w-4xl m-auto" style={{height: 600}}>
         <Image

@@ -1,11 +1,14 @@
-import Image from 'next/image';
+import {useRouter} from 'next/router';
 import {Button} from '../Button/Button';
-import {Container} from './Container';
+import {Container} from '../Container/Container';
 import {SecionHeader} from './SecionHeader';
+import {SectionContainer} from './SectionContainer';
 
 export function CallToAction() {
+  const router = useRouter();
+
   return (
-    <section className="relative overflow-hidden py-32">
+    <SectionContainer>
       <Container className="relative my-0">
         <SecionHeader
           title="Get started today"
@@ -13,9 +16,11 @@ export function CallToAction() {
             see for yourself."
         />
         <div className="flex justify-center">
-          <Button>Create account</Button>
+          <Button size="lg" onClick={() => router.push('/login')}>
+            Create account
+          </Button>
         </div>
       </Container>
-    </section>
+    </SectionContainer>
   );
 }

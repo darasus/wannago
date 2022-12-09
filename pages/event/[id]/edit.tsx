@@ -2,7 +2,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EditEventForm} from '../../../components/EventForm/EditEventForm';
-import {Container} from '../../../components/Marketing/Container';
+import {Container} from '../../../components/Container/Container';
 import {trpc} from '../../../utils/trpc';
 
 export default function EventEditPage() {

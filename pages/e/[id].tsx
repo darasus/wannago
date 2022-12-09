@@ -4,7 +4,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
 import {EventView} from '../../components/EventView/EventView';
-import {Container} from '../../components/Marketing/Container';
+import {Container} from '../../components/Container/Container';
 import {PublicEventBranding} from '../../components/PublicEventBranding/PublicEventBranding';
 import {trpc} from '../../utils/trpc';
 import {appRouter} from '../../server/routers/_app';

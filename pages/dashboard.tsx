@@ -6,7 +6,7 @@ import {trpc} from '../utils/trpc';
 import {Spinner} from '../components/Spinner/Spinner';
 import {EventCard} from '../components/Card/EventCard/EventCard';
 import Head from 'next/head';
-import {Container} from '../components/Marketing/Container';
+import {Container} from '../components/Container/Container';
 import {LoadingEventCard} from '../components/Card/LoadingEventCard/LoadingEventCard';
 
 export default function HomePage() {

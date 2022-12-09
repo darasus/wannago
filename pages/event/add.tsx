@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import AppLayout from '../../components/AppLayout/AppLayout';
 import {AddEventForm} from '../../components/EventForm/AddEventForm';
-import {Container} from '../../components/Marketing/Container';
+import {Container} from '../../components/Container/Container';
 
 export default function EventAddPage() {
   return (

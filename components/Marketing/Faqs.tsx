@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import {Button} from '../Button/Button';
-import {Container} from './Container';
+import {Container} from '../Container/Container';
 import {SecionHeader} from './SecionHeader';
+import {SectionContainer} from './SectionContainer';
 
 const faqs = [
   [
@@ -89,11 +89,7 @@ const faqs = [
 
 export function Faqs() {
   return (
-    <section
-      id="faq"
-      aria-labelledby="faq-title"
-      className="relative overflow-hidden bg-white py-20 sm:py-32 px-4"
-    >
+    <SectionContainer className="bg-white">
       <Container className="relative my-0">
         <SecionHeader
           title="Frequently asked questions"
@@ -120,6 +116,6 @@ export function Faqs() {
           ))}
         </ul>
       </Container>
-    </section>
+    </SectionContainer>
   );
 }

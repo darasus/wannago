@@ -2,7 +2,7 @@ import {Fragment} from 'react';
 import Link from 'next/link';
 import {Popover, Transition} from '@headlessui/react';
 import clsx from 'clsx';
-import {Container} from '../Marketing/Container';
+import {Container} from '../Container/Container';
 import {Logo} from '../Logo/Logo';
 import {CardBase} from '../Card/CardBase/CardBase';
 import {Button} from '../Button/Button';

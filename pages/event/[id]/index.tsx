@@ -6,7 +6,7 @@ import {useMemo} from 'react';
 import {AdminSection} from '../../../components/AdminSection/AdminSection';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EventView} from '../../../components/EventView/EventView';
-import {Container} from '../../../components/Marketing/Container';
+import {Container} from '../../../components/Container/Container';
 import {trpc} from '../../../utils/trpc';
 
 export default function EventPage({
