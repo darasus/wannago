@@ -1,6 +1,7 @@
 import {Event} from '@prisma/client';
 import {Client} from '@upstash/qstash';
 import {differenceInSeconds, sub} from 'date-fns';
+import {REMINDER_PERIOD_IN_SECONDS} from '../constants';
 
 const queue = new Client({
   token: process.env.QSTASH_TOKEN!,
@@ -12,7 +13,7 @@ export class QStash {
   private createDelay({startDate}: {startDate: Date}) {
     const now = new Date();
     const notifyTime = sub(new Date(startDate), {
-      hours: 3,
+      minutes: REMINDER_PERIOD_IN_SECONDS,
     });
     const delay = differenceInSeconds(notifyTime, now);
 

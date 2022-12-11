@@ -8,19 +8,10 @@ import {User} from '@prisma/client';
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
   .mutation(async ({input, ctx}) => {
-    const event = await ctx.prisma.event.update({
-      where: {id: input.eventId},
-      data: {
-        isPublished: input.isPublished,
-      },
-    });
-
-    const message = await ctx.qStash.scheduleEventEmail({event});
-
     return ctx.prisma.event.update({
       where: {id: input.eventId},
       data: {
-        messageId: message.messageId,
+        isPublished: input.isPublished,
       },
     });
   });
@@ -190,7 +181,18 @@ const create = protectedProcedure
         },
       });
 
-      return event;
+      const message = await ctx.qStash.updateEventEmailSchedule({event});
+
+      const updatedEvent = await ctx.prisma.event.update({
+        where: {
+          id: event.id,
+        },
+        data: {
+          messageId: message.messageId,
+        },
+      });
+
+      return updatedEvent;
     }
   );
 
