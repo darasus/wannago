@@ -1,13 +1,9 @@
-import {router, publicProcedure, protectedProcedure} from '../trpc';
+import {router, protectedProcedure} from '../trpc';
 import {z} from 'zod';
 import {nanoid} from 'nanoid';
 import {Client} from '@googlemaps/google-maps-services-js';
-import {prisma, User} from '@prisma/client';
-import {MailgunMessageData} from 'mailgun.js/interfaces/Messages';
-import ReactRender from 'react-dom/server';
-import {EventView} from '../../components/EventView/EventView';
-import {createEventSubscribeEmailTemplate} from '../../utils/createEventSubscribeEmailTemplate';
 import {TRPCError} from '@trpc/server';
+import {sub, differenceInSeconds, differenceInMinutes} from 'date-fns';
 
 export const eventManagerRouter = router({
   create: protectedProcedure
@@ -43,9 +39,7 @@ export const eventManagerRouter = router({
         },
         ctx,
       }) => {
-        const client = new Client();
-
-        const response = await client.geocode({
+        const response = await ctx.googleMaps.geocode({
           params: {
             key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
             address,
@@ -69,7 +63,7 @@ export const eventManagerRouter = router({
           });
         }
 
-        return ctx.prisma.event.create({
+        const event = await ctx.prisma.event.create({
           data: {
             shortId: nanoid(6),
             title,
@@ -88,6 +82,8 @@ export const eventManagerRouter = router({
             },
           },
         });
+
+        return event;
       }
     ),
 
@@ -171,11 +167,18 @@ export const eventManagerRouter = router({
   publishEvent: protectedProcedure
     .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
     .mutation(async ({input, ctx}) => {
-      return ctx.prisma.event.update({
+      const event = await ctx.prisma.event.update({
         where: {id: input.eventId},
         data: {
           isPublished: input.isPublished,
         },
       });
+
+      await ctx.qStash.scheduleEventEmail({
+        eventId: event.id,
+        startDate: event.startDate,
+      });
+
+      return event;
     }),
 });

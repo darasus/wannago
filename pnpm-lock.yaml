@@ -33,6 +33,7 @@ specifiers:
   '@types/node': ^18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': ^18.0.9
+  '@upstash/qstash': ^0.3.1
   '@upstash/redis': ^1.16.1
   '@vercel/og': ^0.0.21
   autoprefixer: ^10.4.13
@@ -94,6 +95,7 @@ dependencies:
   '@trpc/next': 10.4.1_e37umgspnifazforu32y3emiea
   '@trpc/react-query': 10.4.1_vfg2wewkjrohb7a47nwqf7fxxi
   '@trpc/server': 10.4.1
+  '@upstash/qstash': 0.3.1
   '@upstash/redis': 1.16.1
   '@vercel/og': 0.0.21
   calendar-link: 2.4.0
@@ -318,6 +320,10 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
+
+  /@deno/shim-crypto/0.3.1:
+    resolution: {integrity: sha512-ed4pNnfur6UbASEgF34gVxR9p7Mc3qF+Ygbmjiil8ws5IhNFhPDFy5vE5hQAUA9JmVsSxXPcVLM5Rf8LOZqQ5Q==}
+    dev: false
 
   /@eslint/eslintrc/0.4.3:
     resolution: {integrity: sha512-J6KFFz5QCYUJq3pf0mjEcCJVERbzv71PUIDczuh9JkwGEzced6CO5ADLHB1rbf/+oPBtoPfMYNOpGDzCANlbXw==}
@@ -1249,6 +1255,12 @@ packages:
       '@typescript-eslint/types': 5.45.0
       eslint-visitor-keys: 3.3.0
     dev: true
+
+  /@upstash/qstash/0.3.1:
+    resolution: {integrity: sha512-aIBB/+iVhbNCyy5UQ1o9sCNczt+y+ytCNQPvpTln4o+TBl1GMQ/jltJmNAX0FkDed6kAxY0KowbOqoZks/fK7Q==}
+    dependencies:
+      '@deno/shim-crypto': 0.3.1
+    dev: false
 
   /@upstash/redis/1.16.1:
     resolution: {integrity: sha512-tejZ5vvWthxDFe3gebZodlRY3qqiQU20TxtL/fL7yddHAeduWeKN1GcSC9WBJJA0avZUAgLk/FSHL5N+HM04AA==}

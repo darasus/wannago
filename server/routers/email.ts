@@ -1,6 +1,5 @@
 import {router, protectedProcedure} from '../trpc';
 import {z} from 'zod';
-import {getBaseUrl} from '../../utils/getBaseUrl';
 
 export const emailRouter = router({
   sendQuestionToOrganizer: protectedProcedure
@@ -21,24 +20,15 @@ export const emailRouter = router({
         },
       });
 
-      const eventUrl = `${getBaseUrl()}/e/${event?.shortId}`;
+      if (!event) {
+        throw new Error('Event not found!');
+      }
 
-      const messageData = {
-        from: `${input.firstName} ${input.lastName} <${input.email}>`,
-        to: ctx.user.emailAddresses[0].emailAddress,
-        subject: 'Someone asked you a question on WannaGo',
-        html: `
-          <div>
-            <div>Event: <a href="${eventUrl}" target="_blank">${event?.title}</a></div>
-            <div>Email: ${input.email}</div>
-            <div>Name: ${input.firstName} ${input.lastName}</div>
-            <div>Subject: ${input.subject}</div>
-            <div>Message: ${input.message}</div>
-          </div>
-        `,
-      };
-
-      ctx.mailgun.messages.create('email.wannago.app', messageData);
+      await ctx.mail.sendQuestionToOrganizer({
+        event,
+        organizerEmail: ctx.user.emailAddresses[0].emailAddress,
+        ...input,
+      });
 
       return {status: 'ok'};
     }),

@@ -4,13 +4,18 @@ import {PrismaClient} from '@prisma/client';
 import * as trpc from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
 import MailgunClient from 'mailgun.js/client';
-import {mailgun} from '../lib/mailgun';
 import {prisma} from '../lib/prisma';
+import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
+import {googleMaps} from '../lib/googleMaps';
+import {QStash} from '../lib/qStash';
+import {Mail} from '../lib/mail';
 
 interface CreateContextOptions {
   user: User | null;
   prisma: PrismaClient;
-  mailgun: MailgunClient;
+  mail: Mail;
+  qStash: QStash;
+  googleMaps: GoogleMapsClient;
 }
 
 /**
@@ -21,7 +26,9 @@ export async function createContextInner(_opts: CreateContextOptions) {
   return {
     user: _opts.user,
     prisma: _opts.prisma,
-    mailgun: _opts.mailgun,
+    mail: _opts.mail,
+    qStash: _opts.qStash,
+    googleMaps: _opts.googleMaps,
   };
 }
 
@@ -43,5 +50,11 @@ export async function createContext(
 
   const user = await getUser();
 
-  return await createContextInner({user, prisma, mailgun});
+  return await createContextInner({
+    user,
+    prisma,
+    mail: new Mail(),
+    qStash: new QStash(),
+    googleMaps,
+  });
 }
