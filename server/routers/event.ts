@@ -60,7 +60,7 @@ const update = protectedProcedure
         },
       });
 
-      const event = await ctx.prisma.event.update({
+      let event = await ctx.prisma.event.update({
         where: {
           id,
         },
@@ -79,14 +79,18 @@ const update = protectedProcedure
 
       const message = await ctx.qStash.updateEventEmailSchedule({event});
 
-      return ctx.prisma.event.update({
-        where: {
-          id,
-        },
-        data: {
-          messageId: message.messageId,
-        },
-      });
+      if (message?.messageId) {
+        event = await ctx.prisma.event.update({
+          where: {
+            id,
+          },
+          data: {
+            messageId: message.messageId,
+          },
+        });
+      }
+
+      return event;
     }
   );
 
@@ -161,7 +165,7 @@ const create = protectedProcedure
         });
       }
 
-      const event = await ctx.prisma.event.create({
+      let event = await ctx.prisma.event.create({
         data: {
           shortId: nanoid(6),
           title,
@@ -183,16 +187,18 @@ const create = protectedProcedure
 
       const message = await ctx.qStash.updateEventEmailSchedule({event});
 
-      const updatedEvent = await ctx.prisma.event.update({
-        where: {
-          id: event.id,
-        },
-        data: {
-          messageId: message.messageId,
-        },
-      });
+      if (message?.messageId) {
+        event = await ctx.prisma.event.update({
+          where: {
+            id: event.id,
+          },
+          data: {
+            messageId: message.messageId,
+          },
+        });
+      }
 
-      return updatedEvent;
+      return event;
     }
   );
 

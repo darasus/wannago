@@ -13,14 +13,27 @@ export class QStash {
   private createDelay({startDate}: {startDate: Date}) {
     const now = new Date();
     const notifyTime = sub(new Date(startDate), {
-      minutes: REMINDER_PERIOD_IN_SECONDS,
+      seconds: REMINDER_PERIOD_IN_SECONDS,
     });
     const delay = differenceInSeconds(notifyTime, now);
 
     return delay;
   }
 
-  async scheduleEventEmail({event}: {event: Event}) {
+  isWithinReminderPeriod(startDate: Date) {
+    const secondsToStart = differenceInSeconds(startDate, new Date());
+    const isWithinReminderPeriod =
+      Math.sign(secondsToStart) !== -1 &&
+      secondsToStart > REMINDER_PERIOD_IN_SECONDS;
+
+    return isWithinReminderPeriod;
+  }
+
+  async createEventEmailSchedule({event}: {event: Event}) {
+    if (!this.isWithinReminderPeriod(event.startDate)) {
+      return null;
+    }
+
     const message = await this.qStash.publishJSON({
       body: {
         eventId: event.id,
@@ -40,6 +53,10 @@ export class QStash {
       });
     }
 
-    return this.scheduleEventEmail({event});
+    if (!this.isWithinReminderPeriod(event.startDate)) {
+      return null;
+    }
+
+    return this.createEventEmailSchedule({event});
   }
 }

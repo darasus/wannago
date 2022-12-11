@@ -28,17 +28,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const mail = new Mail();
-    const minutedToStart = differenceInSeconds(event.startDate, new Date());
-    const isWithinReminderPeriod =
-      Math.sign(minutedToStart) !== -1 &&
-      minutedToStart > REMINDER_PERIOD_IN_SECONDS;
 
-    if (isWithinReminderPeriod) {
-      await mail.sendEventReminderEmail({
-        event,
-        users: event.attendees,
-      });
-    }
+    await mail.sendEventReminderEmail({
+      event,
+      users: event.attendees,
+    });
 
     res.send('OK');
   } catch (err) {
