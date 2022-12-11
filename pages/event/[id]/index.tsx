@@ -1,4 +1,3 @@
-import {useUser} from '@clerk/nextjs';
 import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
@@ -14,7 +13,6 @@ export default function EventPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const id = router.query.id as string;
-  const user = useUser();
   const {data, refetch} = trpc.event.getById.useQuery(
     {
       id,
