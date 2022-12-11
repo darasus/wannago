@@ -3,7 +3,7 @@ import {z} from 'zod';
 import {nanoid} from 'nanoid';
 import {Client} from '@googlemaps/google-maps-services-js';
 import {TRPCError} from '@trpc/server';
-import {prisma, User} from '@prisma/client';
+import {User} from '@prisma/client';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
@@ -15,12 +15,14 @@ const publish = protectedProcedure
       },
     });
 
-    await ctx.qStash.scheduleEventEmail({
-      eventId: event.id,
-      startDate: event.startDate,
-    });
+    const message = await ctx.qStash.scheduleEventEmail({event});
 
-    return event;
+    return ctx.prisma.event.update({
+      where: {id: input.eventId},
+      data: {
+        messageId: message.messageId,
+      },
+    });
   });
 
 const update = protectedProcedure
@@ -67,7 +69,7 @@ const update = protectedProcedure
         },
       });
 
-      return ctx.prisma.event.update({
+      const event = await ctx.prisma.event.update({
         where: {
           id,
         },
@@ -81,6 +83,17 @@ const update = protectedProcedure
           featuredImageSrc,
           longitude: response.data.results[0].geometry.location.lng,
           latitude: response.data.results[0].geometry.location.lat,
+        },
+      });
+
+      const message = await ctx.qStash.updateEventEmailSchedule({event});
+
+      return ctx.prisma.event.update({
+        where: {
+          id,
+        },
+        data: {
+          messageId: message.messageId,
         },
       });
     }

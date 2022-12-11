@@ -27,6 +27,7 @@ model Event {
   attendees            User[]        @relation(name: "Attendees")
   organization         Organization? @relation(name: "EventOrganization", fields: [organizationId], references: [id])
   organizationId       String?
+  messageId            String?
 
   @@index([organizationId])
 }
