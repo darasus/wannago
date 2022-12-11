@@ -59,12 +59,12 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
             </Text>
             <Text>{`Created at: ${formatDate(
               event.createdAt,
-              'yyyy/MM/dd hh:m',
+              'yyyy/MM/dd hh:mm',
               timezone
             )}`}</Text>
             <Text>{`Last updated at: ${formatDate(
               event.updatedAt,
-              'yyyy/MM/dd hh:m',
+              'yyyy/MM/dd hh:mm',
               timezone
             )}`}</Text>
             <Text>{`Number of attendees: ${
