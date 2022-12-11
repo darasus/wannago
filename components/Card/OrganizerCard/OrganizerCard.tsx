@@ -35,7 +35,7 @@ export function OrganizerCard({event}: Props) {
               Who
             </Badge>
             <Button onClick={onOpenFormClick} variant="link-neutral">
-              Ask a question
+              Message organizer
             </Button>
           </div>
           <div className="flex items-center gap-x-2">
