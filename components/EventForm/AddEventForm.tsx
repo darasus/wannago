@@ -1,3 +1,4 @@
+import {zonedTimeToUtc} from 'date-fns-tz';
 import {useRouter} from 'next/router';
 import {FormProvider} from 'react-hook-form';
 import {trpc} from '../../utils/trpc';
@@ -17,7 +18,17 @@ export function AddEventForm() {
   const {handleSubmit} = form;
 
   const onSubmit = handleSubmit(async data => {
-    await mutateAsync(data);
+    await mutateAsync({
+      ...data,
+      startDate: zonedTimeToUtc(
+        data.startDate,
+        Intl.DateTimeFormat().resolvedOptions().timeZone
+      ),
+      endDate: zonedTimeToUtc(
+        data.endDate,
+        Intl.DateTimeFormat().resolvedOptions().timeZone
+      ),
+    });
   });
 
   return (

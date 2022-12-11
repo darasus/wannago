@@ -4,6 +4,7 @@ import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 import {FormProvider} from 'react-hook-form';
 import {trpc} from '../../utils/trpc';
+import {zonedTimeToUtc} from 'date-fns-tz';
 
 interface Props {
   event: Event;
@@ -26,6 +27,14 @@ export function EditEventForm({event}: Props) {
     await mutateAsync({
       ...data,
       id: event.id,
+      startDate: zonedTimeToUtc(
+        data.startDate,
+        Intl.DateTimeFormat().resolvedOptions().timeZone
+      ),
+      endDate: zonedTimeToUtc(
+        data.endDate,
+        Intl.DateTimeFormat().resolvedOptions().timeZone
+      ),
     });
   });
 

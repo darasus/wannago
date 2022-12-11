@@ -1,6 +1,6 @@
 import {Event} from '@prisma/client';
-import {format} from 'date-fns';
 import {useForm} from 'react-hook-form';
+import {formatDate} from '../../../utils/formatDate';
 import {Form} from '../types';
 
 export function useEventForm(props?: {event?: Event}) {
@@ -9,10 +9,10 @@ export function useEventForm(props?: {event?: Event}) {
     defaultValues: {
       title: event?.title,
       startDate: event?.startDate
-        ? format(new Date(event?.startDate), "yyyy-MM-dd'T'hh:mm")
+        ? formatDate(new Date(event?.startDate), "yyyy-MM-dd'T'HH:mm")
         : undefined,
       endDate: event?.endDate
-        ? format(new Date(event?.endDate), "yyyy-MM-dd'T'hh:mm")
+        ? formatDate(new Date(event?.endDate), "yyyy-MM-dd'T'HH:mm")
         : undefined,
       description: event?.description,
       address: event?.address,
