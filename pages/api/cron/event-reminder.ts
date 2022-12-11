@@ -3,8 +3,6 @@ import {verifySignature} from '@upstash/qstash/nextjs';
 import {prisma} from '../../../lib/prisma';
 import {z} from 'zod';
 import {Mail} from '../../../lib/mail';
-import {differenceInSeconds} from 'date-fns';
-import {REMINDER_PERIOD_IN_SECONDS} from '../../../constants';
 
 const schema = z.object({
   eventId: z.string().uuid(),
@@ -29,10 +27,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const mail = new Mail();
 
-    await mail.sendEventReminderEmail({
-      event,
-      users: event.attendees,
-    });
+    if (event.isPublished) {
+      await mail.sendEventReminderEmail({
+        event,
+        users: event.attendees,
+      });
+    }
 
     res.send('OK');
   } catch (err) {

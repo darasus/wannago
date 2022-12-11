@@ -4,6 +4,7 @@ import {nanoid} from 'nanoid';
 import {Client} from '@googlemaps/google-maps-services-js';
 import {TRPCError} from '@trpc/server';
 import {User} from '@prisma/client';
+import {differenceInSeconds} from 'date-fns';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
@@ -77,7 +78,10 @@ const update = protectedProcedure
         },
       });
 
-      const message = await ctx.qStash.updateEventEmailSchedule({event});
+      const message = await ctx.qStash.updateEventEmailSchedule({
+        event,
+        isTimeChanged: differenceInSeconds(startDate, event.startDate) !== 0,
+      });
 
       if (message?.messageId) {
         event = await ctx.prisma.event.update({
@@ -185,7 +189,9 @@ const create = protectedProcedure
         },
       });
 
-      const message = await ctx.qStash.updateEventEmailSchedule({event});
+      const message = await ctx.qStash.createEventEmailSchedule({
+        event,
+      });
 
       if (message?.messageId) {
         event = await ctx.prisma.event.update({
