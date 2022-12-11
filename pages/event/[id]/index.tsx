@@ -7,13 +7,14 @@ import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EventView} from '../../../components/EventView/EventView';
 import {Container} from '../../../components/Container/Container';
 import {trpc} from '../../../utils/trpc';
+import {Spinner} from '../../../components/Spinner/Spinner';
 
 export default function EventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const id = router.query.id as string;
-  const {data, refetch} = trpc.event.getById.useQuery(
+  const {data, refetch, isLoading} = trpc.event.getById.useQuery(
     {
       id,
     },
@@ -23,6 +24,14 @@ export default function EventPage({
     () => timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
     [timezone]
   );
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen w-screen">
+        <Spinner />
+      </div>
+    );
+  }
 
   if (!data) {
     return null;
