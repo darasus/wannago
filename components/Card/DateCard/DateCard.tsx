@@ -55,9 +55,13 @@ export function DateCard({event, timezone}: Props) {
           <div />
           <Text>{`${formatDate(
             new Date(event.startDate),
-            'k:mm',
+            'HH:mm',
             timezone
-          )} - ${formatDate(new Date(event.endDate), 'k:mm', timezone)}`}</Text>
+          )} - ${formatDate(
+            new Date(event.endDate),
+            'HH:mm',
+            timezone
+          )}`}</Text>
         </div>
       </div>
     </CardBase>
