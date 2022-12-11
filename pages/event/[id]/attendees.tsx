@@ -16,7 +16,7 @@ interface ItemProps {
 }
 
 function Item({user, refetch, eventId}: ItemProps) {
-  const removeAttendee = trpc.event.deleteAttendee.useMutation({
+  const removeUser = trpc.event.removeUser.useMutation({
     onSuccess() {
       refetch();
     },
@@ -27,9 +27,9 @@ function Item({user, refetch, eventId}: ItemProps) {
       <Text>{`${user.firstName} ${user.lastName} - ${user.email}`}</Text>
       <div className="grow" />
       <Button
-        isLoading={removeAttendee.isLoading}
+        isLoading={removeUser.isLoading}
         onClick={() => {
-          removeAttendee.mutate({
+          removeUser.mutate({
             eventId,
             userId: user.id,
           });
@@ -44,7 +44,7 @@ function Item({user, refetch, eventId}: ItemProps) {
 export default function EventEditPage() {
   const router = useRouter();
   const eventId = router.query.id as string;
-  const {data, refetch} = trpc.event.attendees.useQuery(
+  const {data, refetch} = trpc.event.getAttendees.useQuery(
     {
       eventId,
     },

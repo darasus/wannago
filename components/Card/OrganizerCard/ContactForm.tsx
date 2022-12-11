@@ -23,7 +23,7 @@ interface Form {
 }
 
 export function ContactForm({isOpen, onClose, event}: Props) {
-  const sendEmail = trpc.mailgun.sendQuestionToOrganizer.useMutation();
+  const sendEmail = trpc.mail.sendQuestionToOrganizer.useMutation();
   const {register, handleSubmit} = useForm<Form>();
 
   const onSubmit = handleSubmit(async data => {

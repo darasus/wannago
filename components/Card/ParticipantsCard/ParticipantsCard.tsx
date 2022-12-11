@@ -29,7 +29,7 @@ export function ParticipantsCard({event}: Props) {
     formState: {isSubmitting},
     reset,
   } = useForm<Form>();
-  const {mutateAsync, error} = trpc.event.rsvp.useMutation({
+  const {mutateAsync, error} = trpc.event.join.useMutation({
     onError: error => {
       const validationErrors = (error.data?.zodError?.fieldErrors || {}) as any;
       Object.keys(validationErrors).forEach(key => {

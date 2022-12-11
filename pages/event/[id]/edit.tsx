@@ -8,7 +8,7 @@ import {trpc} from '../../../utils/trpc';
 export default function EventEditPage() {
   const router = useRouter();
   const id = router.query.id as string;
-  const {data} = trpc.event.getEventById.useQuery(
+  const {data} = trpc.event.getById.useQuery(
     {
       id,
     },

@@ -6,7 +6,7 @@ import {useEventForm} from './hooks/useEventForm';
 
 export function AddEventForm() {
   const {push} = useRouter();
-  const {mutateAsync} = trpc.eventManager.create.useMutation({
+  const {mutateAsync} = trpc.event.create.useMutation({
     onSettled(data) {
       if (data?.id) {
         push(`/event/${data.id}`);

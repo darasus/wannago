@@ -15,7 +15,7 @@ export default function EventPage({
   const router = useRouter();
   const id = router.query.id as string;
   const user = useUser();
-  const {data, refetch} = trpc.event.getEventById.useQuery(
+  const {data, refetch} = trpc.event.getById.useQuery(
     {
       id,
     },

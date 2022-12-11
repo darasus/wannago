@@ -16,7 +16,7 @@ interface Props {
 
 export function OrganizerCard({event}: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const {data, isLoading} = trpc.event.getEventOrganizer.useQuery({
+  const {data, isLoading} = trpc.event.getOrganizer.useQuery({
     eventId: event.id,
   });
 

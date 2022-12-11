@@ -1,7 +1,7 @@
 import {router, protectedProcedure} from '../trpc';
 import {z} from 'zod';
 
-export const emailRouter = router({
+export const mailRouter = router({
   sendQuestionToOrganizer: protectedProcedure
     .input(
       z.object({

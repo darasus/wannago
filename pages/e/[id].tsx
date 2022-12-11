@@ -16,7 +16,7 @@ export default function EventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  const {data} = trpc.event.getEventByNanoId.useQuery({
+  const {data} = trpc.event.getByShortId.useQuery({
     id: router.query.id as string,
   });
   const clientTimezone = useMemo(
@@ -62,14 +62,14 @@ export async function getServerSideProps({
     transformer: SuperJSON,
   });
 
-  const event = await ssg.event.getEventByNanoId.fetch({id: params?.id!});
+  const event = await ssg.event.getByShortId.fetch({id: params?.id!});
 
   if (event) {
-    await ssg.event.getEventOrganizer.prefetch({eventId: event?.id});
+    await ssg.event.getOrganizer.prefetch({eventId: event?.id});
     await ssg.event.getNumberOfAttendees.prefetch({eventId: event?.id!});
   }
 
-  await ssg.event.getEventByNanoId.prefetch({id: params?.id!});
+  await ssg.event.getByShortId.prefetch({id: params?.id!});
 
   const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
   res.setHeader(
