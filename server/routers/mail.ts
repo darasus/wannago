@@ -40,6 +40,8 @@ const messageEventParticipants = protectedProcedure
       throw new Error('Organizer not found!');
     }
 
+    console.log('hello');
+
     await ctx.mail.sendMessageToEventParticipants({
       event,
       users,
