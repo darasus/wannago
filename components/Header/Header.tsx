@@ -1,5 +1,4 @@
 import {Fragment} from 'react';
-import Link from 'next/link';
 import {Popover, Transition} from '@headlessui/react';
 import clsx from 'clsx';
 import {Container} from '../Container/Container';
@@ -81,6 +80,7 @@ export function Header() {
                     className="hidden md:block"
                     variant="secondary"
                     size="xs"
+                    data-testid="dashboard-button"
                   >
                     <span>Dashboard</span>
                   </Button>
@@ -94,10 +94,15 @@ export function Header() {
                     className="hidden md:block"
                     variant="secondary"
                     size="xs"
+                    data-testid="login-button"
                   >
                     <span>Sign in</span>
                   </Button>
-                  <Button onClick={() => router.push('/register')} size="xs">
+                  <Button
+                    onClick={() => router.push('/register')}
+                    size="xs"
+                    data-testid="register-button"
+                  >
                     <span>
                       Get started{' '}
                       <span className="hidden lg:inline">today</span>
@@ -107,7 +112,10 @@ export function Header() {
               )}
               <div className="-mr-1 md:hidden">
                 <Popover>
-                  <Popover.Button className="relative z-10 flex h-8 w-8 items-center justify-center [&:not(:focus-visible)]:focus:outline-none">
+                  <Popover.Button
+                    className="relative z-10 flex h-8 w-8 items-center justify-center [&:not(:focus-visible)]:focus:outline-none"
+                    data-testid="mobile-nav-button"
+                  >
                     {({open}) => <MobileNavIcon open={open} />}
                   </Popover.Button>
                   <Transition.Root className="z-10">
@@ -152,6 +160,7 @@ export function Header() {
                                       {...props}
                                       as="a"
                                       variant="secondary"
+                                      data-testid="mobile-login-button"
                                     />
                                   )}
                                   href={'/login'}
@@ -164,9 +173,10 @@ export function Header() {
                                       {...props}
                                       as="a"
                                       variant="primary"
+                                      data-testid="mobile-register-button"
                                     />
                                   )}
-                                  href={'/login'}
+                                  href={'/register'}
                                 >
                                   Register
                                 </Popover.Button>
@@ -175,7 +185,12 @@ export function Header() {
                             {showDashboardLink && (
                               <Popover.Button
                                 as={(props: any) => (
-                                  <Button {...props} as="a" variant="primary" />
+                                  <Button
+                                    {...props}
+                                    as="a"
+                                    variant="primary"
+                                    data-testid="mobile-dashboard-button"
+                                  />
                                 )}
                                 href={'/dashboard'}
                               >
