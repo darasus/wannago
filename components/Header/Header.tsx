@@ -48,6 +48,8 @@ export function Header() {
   const showDashboardLink = isSignedIn && isHome;
   const showAuthButtons = isHome && !isSignedIn;
 
+  console.log('hi');
+
   return (
     <header>
       <Container className="md:px-4">
