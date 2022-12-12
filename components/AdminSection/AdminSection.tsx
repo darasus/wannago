@@ -14,6 +14,7 @@ import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../Card/CardBase/CardBase';
 import {Text} from '../Text/Text';
+import {MessageParticipantsButton} from './components/MessageParticipantsButton';
 
 interface Props {
   event: Event;
@@ -93,6 +94,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
             >
               Edit event
             </Button>
+            <MessageParticipantsButton />
             {event.isPublished && (
               <Button
                 variant="danger"

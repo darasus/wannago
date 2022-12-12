@@ -83,4 +83,39 @@ export class Mail {
       })
     );
   }
+
+  async sendMessageToEventParticipants({
+    users,
+    subject,
+    message,
+    event,
+    organizerUser,
+  }: {
+    users: User[];
+    subject: string;
+    message: string;
+    event: Event;
+    organizerUser: User;
+  }) {
+    const eventUrl = `${getBaseUrl()}/e/${event?.shortId}`;
+
+    await Promise.all(
+      users.map(async user => {
+        const messageData = {
+          from: `${organizerUser.firstName} ${organizerUser.lastName} <${organizerUser.email}>`,
+          to: user.email,
+          subject: `Message from event organizer: "${event.title}"`,
+          html: `
+            <div>
+              <div>Event: <a href="${eventUrl}" target="_blank">${event?.title}</a></div>
+              <div>Subject: ${subject}</div>
+              <div>Message: ${message}</div>
+            </div>
+          `,
+        };
+
+        await this.mailgun.messages.create('email.wannago.app', messageData);
+      })
+    );
+  }
 }
