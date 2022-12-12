@@ -43,6 +43,7 @@
     "@trpc/server": "^10.4.1",
     "@upstash/qstash": "^0.3.1",
     "@upstash/redis": "^1.16.1",
+    "@vercel/analytics": "^0.1.6",
     "@vercel/og": "^0.0.21",
     "calendar-link": "^2.4.0",
     "clsx": "^1.2.1",
