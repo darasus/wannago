@@ -1,14 +1,16 @@
 import {router, protectedProcedure, publicProcedure} from '../trpc';
 import {z} from 'zod';
 import {nanoid} from 'nanoid';
-import {Client} from '@googlemaps/google-maps-services-js';
 import {TRPCError} from '@trpc/server';
 import {User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
+import {authorizeChange} from '../../utils/getIsMyEvent';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
   .mutation(async ({input, ctx}) => {
+    await authorizeChange({ctx, eventId: input.eventId});
+
     return ctx.prisma.event.update({
       where: {id: input.eventId},
       data: {
@@ -20,7 +22,7 @@ const publish = protectedProcedure
 const update = protectedProcedure
   .input(
     z.object({
-      id: z.string().uuid(),
+      eventId: z.string().uuid(),
       title: z.string(),
       description: z.string(),
       startDate: z.date(),
@@ -41,7 +43,7 @@ const update = protectedProcedure
   .mutation(
     async ({
       input: {
-        id,
+        eventId,
         address,
         description,
         startDate,
@@ -52,9 +54,9 @@ const update = protectedProcedure
       },
       ctx,
     }) => {
-      const client = new Client();
+      await authorizeChange({ctx, eventId});
 
-      const response = await client.geocode({
+      const response = await ctx.googleMaps.geocode({
         params: {
           key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
           address,
@@ -63,7 +65,7 @@ const update = protectedProcedure
 
       let event = await ctx.prisma.event.update({
         where: {
-          id,
+          id: eventId,
         },
         data: {
           title: title,
@@ -86,7 +88,7 @@ const update = protectedProcedure
       if (message?.messageId) {
         event = await ctx.prisma.event.update({
           where: {
-            id,
+            id: eventId,
           },
           data: {
             messageId: message.messageId,
@@ -101,13 +103,15 @@ const update = protectedProcedure
 const remove = protectedProcedure
   .input(
     z.object({
-      id: z.string().min(1),
+      eventId: z.string().min(1),
     })
   )
-  .mutation(async ({input, ctx}) => {
+  .mutation(async ({input: {eventId}, ctx}) => {
+    await authorizeChange({ctx, eventId});
+
     return ctx.prisma.event.delete({
       where: {
-        id: input.id,
+        id: eventId,
       },
     });
   });
@@ -208,16 +212,18 @@ const create = protectedProcedure
     }
   );
 
-const getById = publicProcedure
+const getById = protectedProcedure
   .input(
     z.object({
-      id: z.string().min(1),
+      eventId: z.string().min(1),
     })
   )
-  .query(async ({input, ctx}) => {
+  .query(async ({input: {eventId}, ctx}) => {
+    await authorizeChange({ctx, eventId});
+
     return ctx.prisma.event.findFirst({
       where: {
-        id: input.id,
+        id: eventId,
       },
     });
   });
@@ -321,15 +327,17 @@ const removeUser = protectedProcedure
       userId: z.string().uuid(),
     })
   )
-  .mutation(async ({ctx, input}) => {
+  .mutation(async ({input: {eventId, userId}, ctx}) => {
+    await authorizeChange({ctx, eventId});
+
     return ctx.prisma.event.update({
       where: {
-        id: input.eventId,
+        id: eventId,
       },
       data: {
         attendees: {
           disconnect: {
-            id: input.userId,
+            id: userId,
           },
         },
       },
@@ -354,12 +362,14 @@ const getNumberOfAttendees = publicProcedure
 
 const getAttendees = protectedProcedure
   .input(z.object({eventId: z.string().uuid()}))
-  .query(({input, ctx}) => {
+  .query(async ({input: {eventId}, ctx}) => {
+    await authorizeChange({ctx, eventId});
+
     return ctx.prisma.user.findMany({
       where: {
         attendingEvents: {
           some: {
-            id: input.eventId,
+            id: eventId,
           },
         },
       },

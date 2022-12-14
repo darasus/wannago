@@ -1,5 +1,6 @@
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
+import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../Card/CardBase/CardBase';
 import {FileInput} from '../Input/FileInput/FileInput';
@@ -23,15 +24,18 @@ export function EventForm({onSubmit, isEdit}: Props) {
 
   return (
     <div>
-      <CardBase>
+      <CardBase className="p-8">
         <form onSubmit={onSubmit}>
-          <div className="grid grid-cols-1 gap-4">
-            <div className="text-center">
-              <Text className="text-2xl font-bold uppercase">
-                {isEdit ? 'Edit event' : 'Create event'}
-              </Text>
+          <div className="text-center pt-4 pb-8">
+            <Text className="text-2xl font-bold uppercase">
+              {isEdit ? 'Edit event' : 'Create event'}
+            </Text>
+          </div>
+          <div className="grid grid-cols-12 gap-4">
+            <div className="flex justify-end items-start col-span-4">
+              <Badge color="pink">What</Badge>
             </div>
-            <div>
+            <div className="flex flex-col col-span-8 gap-y-4">
               <Input
                 label="Event title"
                 error={errors.title}
@@ -42,8 +46,6 @@ export function EventForm({onSubmit, isEdit}: Props) {
                   },
                 })}
               />
-            </div>
-            <div>
               <RichTextarea
                 label="Event description"
                 error={errors.description}
@@ -51,8 +53,21 @@ export function EventForm({onSubmit, isEdit}: Props) {
                   required: {value: true, message: 'Description is required'},
                 })}
               />
+              <FileInput
+                label="Event image"
+                error={errors.featuredImageSrc}
+                {...register('featuredImageSrc', {
+                  required: {
+                    value: true,
+                    message: 'Featured image is required',
+                  },
+                })}
+              />
             </div>
-            <div>
+            <div className="flex justify-end items-start col-span-4">
+              <Badge color="yellow">When</Badge>
+            </div>
+            <div className="flex flex-col col-span-8 gap-y-4">
               <Input
                 type="datetime-local"
                 label="Event start date"
@@ -61,8 +76,6 @@ export function EventForm({onSubmit, isEdit}: Props) {
                   required: {value: true, message: 'Start date is required'},
                 })}
               />
-            </div>
-            <div>
               <Input
                 type="datetime-local"
                 label="Event end date"
@@ -72,7 +85,10 @@ export function EventForm({onSubmit, isEdit}: Props) {
                 })}
               />
             </div>
-            <div>
+            <div className="flex justify-end items-start col-span-4">
+              <Badge color="blue">Where</Badge>
+            </div>
+            <div className="flex flex-col col-span-8 gap-y-4">
               <LocationInput
                 label="Event address"
                 error={errors.address}
@@ -81,7 +97,10 @@ export function EventForm({onSubmit, isEdit}: Props) {
                 })}
               />
             </div>
-            <div>
+            <div className="flex justify-end items-start col-span-4">
+              <Badge color="purple">Attend</Badge>
+            </div>
+            <div className="flex flex-col col-span-8 gap-y-4">
               <Input
                 type="number"
                 label="Max number of attendees"
@@ -103,21 +122,10 @@ export function EventForm({onSubmit, isEdit}: Props) {
                 })}
               />
             </div>
-            <div className="max-w-xl">
-              <FileInput
-                label="Event image"
-                error={errors.featuredImageSrc}
-                {...register('featuredImageSrc', {
-                  required: {
-                    value: true,
-                    message: 'Featured image is required',
-                  },
-                })}
-              />
-            </div>
-            <div>
+            <div className="flex justify-end items-start col-span-4" />
+            <div className="flex justify-center col-span-8">
               <Button isLoading={isSubmitting} type="submit">
-                Save
+                Save as draft
               </Button>
             </div>
           </div>

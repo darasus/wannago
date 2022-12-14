@@ -11,6 +11,7 @@ import {appRouter} from '../../server/routers/_app';
 import {createContext} from '../../server/context';
 import * as trpcNext from '@trpc/server/adapters/next';
 import SuperJSON from 'superjson';
+import {Meta} from '../../components/Meta/Meta';
 
 export default function EventPage({
   timezone,
@@ -38,9 +39,12 @@ export default function EventPage({
 
   return (
     <div>
-      <Head>
-        <title>{`${data.title} | WannaGo`}</title>
-      </Head>
+      <Meta
+        title={data.title}
+        description={data.description.slice(0, 100)}
+        imageSrc={`/api/og-image?eventId=${data.id}`}
+        shortEventId={data.shortId!}
+      />
       <Container className="md:px-4">
         <EventView event={data} timezone={clientTimezone} />
       </Container>

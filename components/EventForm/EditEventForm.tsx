@@ -26,7 +26,7 @@ export function EditEventForm({event}: Props) {
   const onSubmit = handleSubmit(async data => {
     await mutateAsync({
       ...data,
-      id: event.id,
+      eventId: event.id,
       startDate: zonedTimeToUtc(
         data.startDate,
         Intl.DateTimeFormat().resolvedOptions().timeZone

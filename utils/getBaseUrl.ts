@@ -1,4 +1,8 @@
 export const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_BASE_URL_OVERRIDE) {
+    return `https://${process.env.NEXT_PUBLIC_BASE_URL_OVERRIDE}`;
+  }
+
   if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
     return 'https://www.wannago.app';
   }

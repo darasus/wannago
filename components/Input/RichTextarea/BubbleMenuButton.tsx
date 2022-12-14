@@ -12,7 +12,7 @@ export function BubbleMenuButton({
     <button
       {...props}
       className={clsx(
-        'relative inline-flex items-center border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500',
+        'relative inline-flex items-center border border-gray-300 bg-white px-2 py-1 text-sm text-gray-700 hover:bg-gray-50 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500',
         {'font-bold': isActive},
         className
       )}
