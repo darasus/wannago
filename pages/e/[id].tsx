@@ -41,7 +41,9 @@ export default function EventPage({
     <div>
       <Meta
         title={data.title}
-        description={data.description.slice(0, 100)}
+        description={data.description
+          .replace(/(<([^>]+)>)/gi, '')
+          .slice(0, 100)}
         imageSrc={`/api/og-image?eventId=${data.id}`}
         shortEventId={data.shortId!}
       />
