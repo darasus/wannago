@@ -122,7 +122,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
             <Button
               variant="danger"
               iconLeft={<TrashIcon className="h-5 w-5" />}
-              onClick={() => remove.mutate({id: event.id})}
+              onClick={() => remove.mutate({eventId: event.id})}
               isLoading={remove.isLoading}
             >
               Delete event

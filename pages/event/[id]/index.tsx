@@ -13,12 +13,12 @@ export default function EventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  const id = router.query.id as string;
+  const eventId = router.query.id as string;
   const {data, refetch, isLoading} = trpc.event.getById.useQuery(
     {
-      id,
+      eventId,
     },
-    {enabled: !!id}
+    {enabled: !!eventId}
   );
   const clientTimezone = useMemo(
     () => timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
