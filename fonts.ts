@@ -8,4 +8,5 @@ export const logoFont = LogoFont({
 export const bodyFont = BodyFont({
   weight: ['400', '500', '700', '800', '900'],
   display: 'swap',
+  subsets: ['latin'],
 });
