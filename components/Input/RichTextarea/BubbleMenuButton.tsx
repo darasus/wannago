@@ -8,7 +8,6 @@ export function BubbleMenuButton({
   onClick,
   ...props
 }: HTMLAttributes<HTMLButtonElement> & {isActive: boolean}) {
-  console.log(isActive);
   return (
     <button
       {...props}

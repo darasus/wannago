@@ -71,7 +71,7 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
         )}
       </div>
       <div className="flex justify-center">
-        <Button as="label" htmlFor="button-upload" variant="secondary">
+        <Button as="label" htmlFor="button-upload" variant="neutral">
           Upload image
         </Button>
       </div>
