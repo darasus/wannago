@@ -4,14 +4,7 @@ import type {NextRequest} from 'next/server';
 import {NextURL} from 'next/dist/server/web/next-url';
 import {getBaseUrl} from './utils/getBaseUrl';
 
-const publicPathnames = [
-  '/e/',
-  '/images/',
-  '/api/trpc/event.getEventByNanoId',
-  '/register',
-  '/login',
-  '/api',
-];
+const publicPathnames = ['/e/', '/images/', '/register', '/login', '/api'];
 
 const isProtectedRoute = (nextUrl: NextURL): boolean => {
   const isHomePage = nextUrl.pathname === '/';
