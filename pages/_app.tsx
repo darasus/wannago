@@ -17,7 +17,6 @@ function MyApp({Component, pageProps}: AppProps) {
       <Head>
         <link rel="shortcut icon" href={`${getBaseUrl()}/api/favicon`} />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={clsx(bodyFont.className, 'text-gray-800')}>
         <ClerkProvider {...pageProps} appearance={clerkAppearance}>
