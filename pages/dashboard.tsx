@@ -3,12 +3,13 @@ import {PlusCircleIcon} from '@heroicons/react/24/outline';
 import {useRouter} from 'next/router';
 import AppLayout from '../components/AppLayout/AppLayout';
 import {trpc} from '../utils/trpc';
-import {Spinner} from '../components/Spinner/Spinner';
 import {EventCard} from '../components/Card/EventCard/EventCard';
 import Head from 'next/head';
 import {Container} from '../components/Container/Container';
 import {LoadingEventCard} from '../components/Card/LoadingEventCard/LoadingEventCard';
 import clsx from 'clsx';
+import {GetServerSidePropsContext} from 'next';
+import {buildClerkProps, clerkClient, getAuth} from '@clerk/nextjs/server';
 
 export default function HomePage() {
   const router = useRouter();
@@ -50,4 +51,20 @@ export default function HomePage() {
       </AppLayout>
     </>
   );
+}
+
+export async function getServerSideProps({
+  req,
+  res,
+}: GetServerSidePropsContext) {
+  const {userId} = getAuth(req);
+  const user = userId ? await clerkClient.users.getUser(userId) : null;
+
+  const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
+  res.setHeader(
+    'Cache-Control',
+    `s-maxage=60, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`
+  );
+
+  return {props: {...buildClerkProps(req, {user})}};
 }
