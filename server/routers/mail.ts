@@ -49,45 +49,47 @@ const messageEventParticipants = protectedProcedure
     });
   });
 
-export const mailRouter = router({
-  sendQuestionToOrganizer: publicProcedure
-    .input(
-      z.object({
-        eventId: z.string().uuid(),
-        firstName: z.string(),
-        lastName: z.string(),
-        email: z.string(),
-        subject: z.string(),
-        message: z.string(),
-      })
-    )
-    .mutation(async ({input, ctx}) => {
-      const event = await ctx.prisma.event.findUnique({
-        where: {
-          id: input.eventId,
-        },
-        include: {
-          organization: {
-            include: {
-              users: true,
-            },
+const sendQuestionToOrganizer = publicProcedure
+  .input(
+    z.object({
+      eventId: z.string().uuid(),
+      firstName: z.string(),
+      lastName: z.string(),
+      email: z.string(),
+      subject: z.string(),
+      message: z.string(),
+    })
+  )
+  .mutation(async ({input, ctx}) => {
+    const event = await ctx.prisma.event.findUnique({
+      where: {
+        id: input.eventId,
+      },
+      include: {
+        organization: {
+          include: {
+            users: true,
           },
         },
+      },
+    });
+
+    if (!event) {
+      throw new Error('Event not found!');
+    }
+
+    for (const user of event.organization?.users || []) {
+      await ctx.mail.sendQuestionToOrganizer({
+        event,
+        organizerEmail: user.email,
+        ...input,
       });
+    }
 
-      if (!event) {
-        throw new Error('Event not found!');
-      }
+    return {status: 'ok'};
+  });
 
-      for (const user of event.organization?.users || []) {
-        await ctx.mail.sendQuestionToOrganizer({
-          event,
-          organizerEmail: user.email,
-          ...input,
-        });
-      }
-
-      return {status: 'ok'};
-    }),
+export const mailRouter = router({
+  sendQuestionToOrganizer,
   messageEventParticipants,
 });
