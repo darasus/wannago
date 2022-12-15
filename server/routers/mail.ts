@@ -1,4 +1,4 @@
-import {router, protectedProcedure} from '../trpc';
+import {router, protectedProcedure, publicProcedure} from '../trpc';
 import {z} from 'zod';
 
 const messageEventParticipants = protectedProcedure
@@ -50,7 +50,7 @@ const messageEventParticipants = protectedProcedure
   });
 
 export const mailRouter = router({
-  sendQuestionToOrganizer: protectedProcedure
+  sendQuestionToOrganizer: publicProcedure
     .input(
       z.object({
         eventId: z.string().uuid(),
@@ -66,17 +66,26 @@ export const mailRouter = router({
         where: {
           id: input.eventId,
         },
+        include: {
+          organization: {
+            include: {
+              users: true,
+            },
+          },
+        },
       });
 
       if (!event) {
         throw new Error('Event not found!');
       }
 
-      await ctx.mail.sendQuestionToOrganizer({
-        event,
-        organizerEmail: ctx.user.emailAddresses[0].emailAddress,
-        ...input,
-      });
+      for (const user of event.organization?.users || []) {
+        await ctx.mail.sendQuestionToOrganizer({
+          event,
+          organizerEmail: user.email,
+          ...input,
+        });
+      }
 
       return {status: 'ok'};
     }),
