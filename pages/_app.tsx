@@ -19,7 +19,11 @@ function MyApp({Component, pageProps}: AppProps) {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
       <div className={clsx(bodyFont.className, 'text-gray-800')}>
-        <ClerkProvider {...pageProps} appearance={clerkAppearance}>
+        <ClerkProvider
+          {...pageProps}
+          appearance={clerkAppearance}
+          supportEmail="hi@wannago.app"
+        >
           <Toaster />
           <Component {...pageProps} />
         </ClerkProvider>
