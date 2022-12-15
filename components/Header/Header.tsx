@@ -76,7 +76,8 @@ export function Header() {
               {showDashboardLink && (
                 <>
                   <Button
-                    onClick={() => router.push('/dashboard')}
+                    as="a"
+                    href="/dashboard"
                     className="hidden md:block"
                     variant="secondary"
                     size="xs"
@@ -99,7 +100,8 @@ export function Header() {
                     <span>Sign in</span>
                   </Button>
                   <Button
-                    onClick={() => router.push('/register')}
+                    as="a"
+                    href={'/register'}
                     size="xs"
                     data-testid="register-button"
                   >
@@ -161,9 +163,9 @@ export function Header() {
                                       as="a"
                                       variant="secondary"
                                       data-testid="mobile-login-button"
+                                      href={'/login'}
                                     />
                                   )}
-                                  href={'/login'}
                                 >
                                   Login
                                 </Popover.Button>
@@ -174,9 +176,9 @@ export function Header() {
                                       as="a"
                                       variant="primary"
                                       data-testid="mobile-register-button"
+                                      href={'/register'}
                                     />
                                   )}
-                                  href={'/register'}
                                 >
                                   Register
                                 </Popover.Button>
@@ -190,9 +192,9 @@ export function Header() {
                                     as="a"
                                     variant="primary"
                                     data-testid="mobile-dashboard-button"
+                                    href={'/dashboard'}
                                   />
                                 )}
-                                href={'/dashboard'}
                               >
                                 Dashboard
                               </Popover.Button>
