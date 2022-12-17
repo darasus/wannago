@@ -2,8 +2,15 @@ import {Event, User} from '@prisma/client';
 import formData from 'form-data';
 import Mailgun from 'mailgun.js';
 import {MailgunMessageData} from 'mailgun.js/interfaces/Messages';
-import {createEventSubscribeEmailTemplate} from '../utils/createEventSubscribeEmailTemplate';
 import {getBaseUrl} from '../utils/getBaseUrl';
+import {render} from '@react-email/render';
+import {
+  EventSubscribe,
+  MessageToOrganizer,
+  EventReminder,
+  MessageToAttendees,
+} from 'email';
+import {formatDate} from '../utils/formatDate';
 
 const mailgunIstance = new Mailgun(formData);
 const mailgun = mailgunIstance.client({
@@ -19,7 +26,15 @@ export class Mail {
       from: 'WannaGo Team <hi@wannago.app>',
       to: user.email,
       subject: `Thanks for signing up for "${event.title}"!`,
-      html: createEventSubscribeEmailTemplate(event),
+      html: render(
+        <EventSubscribe
+          title={event.title}
+          address={event.address}
+          eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
+          startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
+          endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
+        />
+      ),
     };
 
     await this.mailgun.messages.create('email.wannago.app', messageData);
@@ -42,41 +57,41 @@ export class Mail {
     subject: string;
     message: string;
   }) {
-    const eventUrl = `${getBaseUrl()}/e/${event?.shortId}`;
-
     const messageData = {
       from: `${firstName} ${lastName} <${email}>`,
       to: organizerEmail,
       subject: 'Someone asked you a question on WannaGo',
-      html: `
-          <div>
-            <div>Event: <a href="${eventUrl}" target="_blank">${event?.title}</a></div>
-            <div>Email: ${email}</div>
-            <div>Name: ${firstName} ${lastName}</div>
-            <div>Subject: ${subject}</div>
-            <div>Message: ${message}</div>
-          </div>
-        `,
+      html: render(
+        <MessageToOrganizer
+          eventTitle={event.title}
+          eventUrl={`${getBaseUrl()}/e/${event?.shortId}`}
+          message={message}
+          subject={subject}
+          senderName={`${firstName} ${lastName}`}
+          senderEmail={email}
+        />
+      ),
     };
 
     await this.mailgun.messages.create('email.wannago.app', messageData);
   }
 
   async sendEventReminderEmail({event, users}: {event: Event; users: User[]}) {
-    const eventUrl = `${getBaseUrl()}/e/${event?.shortId}`;
-
     await Promise.all(
       users.map(async user => {
         const messageData = {
           from: 'WannaGo Team <hi@wannago.app>',
           to: user.email,
           subject: `Your event is coming up! "${event.title}"!`,
-          html: `
-            <div>
-              <div>Your event is comming up:</div>
-              <div>Event: <a href="${eventUrl}" target="_blank">${event?.title}</a></div>
-            </div>
-          `,
+          html: render(
+            <EventReminder
+              title={event.title}
+              address={event.address}
+              eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
+              startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
+              endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
+            />
+          ),
         };
 
         await this.mailgun.messages.create('email.wannago.app', messageData);
@@ -97,21 +112,20 @@ export class Mail {
     event: Event;
     organizerUser: User;
   }) {
-    const eventUrl = `${getBaseUrl()}/e/${event?.shortId}`;
-
     await Promise.all(
       users.map(async user => {
         const messageData = {
           from: `${organizerUser.firstName} ${organizerUser.lastName} <${organizerUser.email}>`,
           to: user.email,
           subject: `Message from event organizer: "${event.title}"`,
-          html: `
-            <div>
-              <div>Event: <a href="${eventUrl}" target="_blank">${event?.title}</a></div>
-              <div>Subject: ${subject}</div>
-              <div>Message: ${message}</div>
-            </div>
-          `,
+          html: render(
+            <MessageToAttendees
+              eventUrl={`${getBaseUrl()}/e/${event?.shortId}`}
+              message={message}
+              eventTitle={event.title}
+              subject={subject}
+            />
+          ),
         };
 
         await this.mailgun.messages.create('email.wannago.app', messageData);

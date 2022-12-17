@@ -10,6 +10,7 @@
     "vercel-build": "npx prisma generate --data-proxy && next build"
   },
   "dependencies": {
-    "database": "workspace:*"
+    "database": "workspace:*",
+    "email": "workspace:*"
   }
 }
