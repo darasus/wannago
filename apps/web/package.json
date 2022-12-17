@@ -1,0 +1,15 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "dotenv -e ../../.vercel/.env.development.local -- next dev",
+    "build": "dotenv -e ../../.vercel/.env.development.local -- next build",
+    "start": "next start",
+    "lint": "next lint",
+    "vercel-build": "npx prisma generate --data-proxy && next build"
+  },
+  "dependencies": {
+    "database": "workspace:*"
+  }
+}

@@ -1,148 +1,171 @@
 lockfileVersion: 5.4
 
-specifiers:
-  '@clerk/nextjs': ^4.6.13
-  '@googlemaps/google-maps-services-js': ^3.3.16
-  '@headlessui/react': ^1.7.4
-  '@heroicons/react': ^2.0.13
-  '@hookform/resolvers': ^2.9.10
-  '@next/font': ^13.0.5
-  '@prisma/client': ^4.6.1
-  '@sentry/nextjs': ^7.26.0
-  '@tailwindcss/aspect-ratio': ^0.4.2
-  '@tailwindcss/forms': ^0.5.3
-  '@tailwindcss/line-clamp': ^0.4.2
-  '@tailwindcss/typography': ^0.5.8
-  '@tanstack/react-query': ^4.18.0
-  '@tiptap/core': 2.0.0-beta.202
-  '@tiptap/extension-bubble-menu': 2.0.0-beta.202
-  '@tiptap/extension-code-block-lowlight': 2.0.0-beta.202
-  '@tiptap/extension-floating-menu': 2.0.0-beta.202
-  '@tiptap/extension-image': 2.0.0-beta.202
-  '@tiptap/extension-link': 2.0.0-beta.202
-  '@tiptap/extension-placeholder': 2.0.0-beta.202
-  '@tiptap/react': 2.0.0-beta.202
-  '@tiptap/starter-kit': 2.0.0-beta.202
-  '@trpc/client': ^10.4.1
-  '@trpc/next': ^10.4.1
-  '@trpc/react-query': ^10.4.1
-  '@trpc/server': ^10.4.1
-  '@types/file-saver': ^2.0.5
-  '@types/formidable': ^2.0.5
-  '@types/lodash.debounce': ^4.0.7
-  '@types/ms': ^0.7.31
-  '@types/node': ^18.11.9
-  '@types/react': 18.0.25
-  '@types/react-dom': ^18.0.9
-  '@upstash/qstash': ^0.3.1
-  '@upstash/redis': ^1.16.1
-  '@vercel/analytics': ^0.1.6
-  '@vercel/og': ^0.0.21
-  autoprefixer: ^10.4.13
-  calendar-link: ^2.4.0
-  clsx: ^1.2.1
-  copy-to-clipboard: ^3.3.3
-  date-fns: ^2.29.3
-  date-fns-tz: ^1.3.7
-  dotenv-cli: ^6.0.0
-  eslint: ^7.24.0
-  eslint-config-next: latest
-  file-saver: ^2.0.5
-  form-data: ^4.0.0
-  formidable: ^2.0.1
-  got: ^12.5.3
-  ics: ^2.41.0
-  ky: ^0.32.2
-  lodash.debounce: ^4.0.8
-  mailgun.js: ^8.0.6
-  ms: ^2.1.3
-  nanoid: ^4.0.0
-  next: 13.0.6
-  postcss: ^8.4.19
-  prisma: ^4.6.1
-  react: 18.2.0
-  react-dom: 18.2.0
-  react-hook-form: ^7.39.4
-  react-hot-toast: ^2.4.0
-  superjson: ^1.11.0
-  tailwindcss: ^3.2.4
-  timeago.js: ^4.0.2
-  ts-node: ^10.9.1
-  typescript: ^4.9.3
-  zod: ^3.19.1
+importers:
 
-dependencies:
-  '@clerk/nextjs': 4.6.13_6jx7hpii6hgsrmhxgqrmo3277u
-  '@googlemaps/google-maps-services-js': 3.3.16
-  '@headlessui/react': 1.7.4_biqbaboplfbrettd7655fr4n2y
-  '@heroicons/react': 2.0.13_react@18.2.0
-  '@hookform/resolvers': 2.9.10_react-hook-form@7.39.4
-  '@next/font': 13.0.5
-  '@prisma/client': 4.6.1_prisma@4.6.1
-  '@sentry/nextjs': 7.26.0_next@13.0.6+react@18.2.0
-  '@tailwindcss/aspect-ratio': 0.4.2_tailwindcss@3.2.4
-  '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.4
-  '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.2.4
-  '@tailwindcss/typography': 0.5.8_tailwindcss@3.2.4
-  '@tanstack/react-query': 4.18.0_biqbaboplfbrettd7655fr4n2y
-  '@tiptap/core': 2.0.0-beta.202
-  '@tiptap/extension-bubble-menu': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
-  '@tiptap/extension-code-block-lowlight': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
-  '@tiptap/extension-floating-menu': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
-  '@tiptap/extension-image': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
-  '@tiptap/extension-link': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
-  '@tiptap/extension-placeholder': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
-  '@tiptap/react': 2.0.0-beta.202_b34bfmrzq6nwqs5zwwuhxagzky
-  '@tiptap/starter-kit': 2.0.0-beta.202
-  '@trpc/client': 10.4.1_@trpc+server@10.4.1
-  '@trpc/next': 10.4.1_e37umgspnifazforu32y3emiea
-  '@trpc/react-query': 10.4.1_vfg2wewkjrohb7a47nwqf7fxxi
-  '@trpc/server': 10.4.1
-  '@upstash/qstash': 0.3.1
-  '@upstash/redis': 1.16.1
-  '@vercel/analytics': 0.1.6_react@18.2.0
-  '@vercel/og': 0.0.21
-  calendar-link: 2.4.0
-  clsx: 1.2.1
-  copy-to-clipboard: 3.3.3
-  date-fns: 2.29.3
-  date-fns-tz: 1.3.7_date-fns@2.29.3
-  file-saver: 2.0.5
-  form-data: 4.0.0
-  formidable: 2.0.1
-  got: 12.5.3
-  ics: 2.41.0
-  ky: 0.32.2
-  lodash.debounce: 4.0.8
-  mailgun.js: 8.0.6
-  ms: 2.1.3
-  nanoid: 4.0.0
-  next: 13.0.6_biqbaboplfbrettd7655fr4n2y
-  react: 18.2.0
-  react-dom: 18.2.0_react@18.2.0
-  react-hook-form: 7.39.4_react@18.2.0
-  react-hot-toast: 2.4.0_biqbaboplfbrettd7655fr4n2y
-  superjson: 1.11.0
-  timeago.js: 4.0.2
-  zod: 3.19.1
+  .:
+    specifiers:
+      '@clerk/nextjs': ^4.6.13
+      '@googlemaps/google-maps-services-js': ^3.3.16
+      '@headlessui/react': ^1.7.4
+      '@heroicons/react': ^2.0.13
+      '@hookform/resolvers': ^2.9.10
+      '@next/font': ^13.0.5
+      '@prisma/client': ^4.6.1
+      '@sentry/nextjs': ^7.26.0
+      '@tailwindcss/aspect-ratio': ^0.4.2
+      '@tailwindcss/forms': ^0.5.3
+      '@tailwindcss/line-clamp': ^0.4.2
+      '@tailwindcss/typography': ^0.5.8
+      '@tanstack/react-query': ^4.18.0
+      '@tiptap/core': 2.0.0-beta.202
+      '@tiptap/extension-bubble-menu': 2.0.0-beta.202
+      '@tiptap/extension-code-block-lowlight': 2.0.0-beta.202
+      '@tiptap/extension-floating-menu': 2.0.0-beta.202
+      '@tiptap/extension-image': 2.0.0-beta.202
+      '@tiptap/extension-link': 2.0.0-beta.202
+      '@tiptap/extension-placeholder': 2.0.0-beta.202
+      '@tiptap/react': 2.0.0-beta.202
+      '@tiptap/starter-kit': 2.0.0-beta.202
+      '@trpc/client': ^10.4.1
+      '@trpc/next': ^10.4.1
+      '@trpc/react-query': ^10.4.1
+      '@trpc/server': ^10.4.1
+      '@types/file-saver': ^2.0.5
+      '@types/formidable': ^2.0.5
+      '@types/lodash.debounce': ^4.0.7
+      '@types/ms': ^0.7.31
+      '@types/node': ^18.11.9
+      '@types/react': 18.0.25
+      '@types/react-dom': ^18.0.9
+      '@upstash/qstash': ^0.3.1
+      '@upstash/redis': ^1.16.1
+      '@vercel/analytics': ^0.1.6
+      '@vercel/og': ^0.0.21
+      autoprefixer: ^10.4.13
+      calendar-link: ^2.4.0
+      clsx: ^1.2.1
+      copy-to-clipboard: ^3.3.3
+      date-fns: ^2.29.3
+      date-fns-tz: ^1.3.7
+      dotenv-cli: ^6.0.0
+      eslint: ^7.24.0
+      eslint-config-next: latest
+      file-saver: ^2.0.5
+      form-data: ^4.0.0
+      formidable: ^2.0.1
+      got: ^12.5.3
+      ics: ^2.41.0
+      ky: ^0.32.2
+      lodash.debounce: ^4.0.8
+      mailgun.js: ^8.0.6
+      ms: ^2.1.3
+      nanoid: ^4.0.0
+      next: 13.0.6
+      postcss: ^8.4.19
+      prisma: ^4.6.1
+      react: 18.2.0
+      react-dom: 18.2.0
+      react-hook-form: ^7.39.4
+      react-hot-toast: ^2.4.0
+      superjson: ^1.11.0
+      tailwindcss: ^3.2.4
+      timeago.js: ^4.0.2
+      ts-node: ^10.9.1
+      turbo: ^1.6.3
+      typescript: ^4.9.3
+      zod: ^3.19.1
+    dependencies:
+      '@clerk/nextjs': 4.6.13_6jx7hpii6hgsrmhxgqrmo3277u
+      '@googlemaps/google-maps-services-js': 3.3.16
+      '@headlessui/react': 1.7.4_biqbaboplfbrettd7655fr4n2y
+      '@heroicons/react': 2.0.13_react@18.2.0
+      '@hookform/resolvers': 2.9.10_react-hook-form@7.39.4
+      '@next/font': 13.0.5
+      '@prisma/client': 4.6.1_prisma@4.6.1
+      '@sentry/nextjs': 7.26.0_next@13.0.6+react@18.2.0
+      '@tailwindcss/aspect-ratio': 0.4.2_tailwindcss@3.2.4
+      '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.4
+      '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.2.4
+      '@tailwindcss/typography': 0.5.8_tailwindcss@3.2.4
+      '@tanstack/react-query': 4.18.0_biqbaboplfbrettd7655fr4n2y
+      '@tiptap/core': 2.0.0-beta.202
+      '@tiptap/extension-bubble-menu': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
+      '@tiptap/extension-code-block-lowlight': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
+      '@tiptap/extension-floating-menu': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
+      '@tiptap/extension-image': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
+      '@tiptap/extension-link': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
+      '@tiptap/extension-placeholder': 2.0.0-beta.202_fosglmwb3u6jhi6bbjmnlbdsbu
+      '@tiptap/react': 2.0.0-beta.202_b34bfmrzq6nwqs5zwwuhxagzky
+      '@tiptap/starter-kit': 2.0.0-beta.202
+      '@trpc/client': 10.4.1_@trpc+server@10.4.1
+      '@trpc/next': 10.4.1_e37umgspnifazforu32y3emiea
+      '@trpc/react-query': 10.4.1_vfg2wewkjrohb7a47nwqf7fxxi
+      '@trpc/server': 10.4.1
+      '@upstash/qstash': 0.3.1
+      '@upstash/redis': 1.16.1
+      '@vercel/analytics': 0.1.6_react@18.2.0
+      '@vercel/og': 0.0.21
+      calendar-link: 2.4.0
+      clsx: 1.2.1
+      copy-to-clipboard: 3.3.3
+      date-fns: 2.29.3
+      date-fns-tz: 1.3.7_date-fns@2.29.3
+      file-saver: 2.0.5
+      form-data: 4.0.0
+      formidable: 2.0.1
+      got: 12.5.3
+      ics: 2.41.0
+      ky: 0.32.2
+      lodash.debounce: 4.0.8
+      mailgun.js: 8.0.6
+      ms: 2.1.3
+      nanoid: 4.0.0
+      next: 13.0.6_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.39.4_react@18.2.0
+      react-hot-toast: 2.4.0_biqbaboplfbrettd7655fr4n2y
+      superjson: 1.11.0
+      timeago.js: 4.0.2
+      zod: 3.19.1
+    devDependencies:
+      '@types/file-saver': 2.0.5
+      '@types/formidable': 2.0.5
+      '@types/lodash.debounce': 4.0.7
+      '@types/ms': 0.7.31
+      '@types/node': 18.11.9
+      '@types/react': 18.0.25
+      '@types/react-dom': 18.0.9
+      autoprefixer: 10.4.13_postcss@8.4.19
+      dotenv-cli: 6.0.0
+      eslint: 7.32.0
+      eslint-config-next: 13.0.7_77fvizpdb3y4icyeo2mf4eo7em
+      postcss: 8.4.19
+      prisma: 4.6.1
+      tailwindcss: 3.2.4_v776zzvn44o7tpgzieipaairwm
+      ts-node: 10.9.1_wup25etrarvlqkprac7h35hj7u
+      turbo: 1.6.3
+      typescript: 4.9.3
 
-devDependencies:
-  '@types/file-saver': 2.0.5
-  '@types/formidable': 2.0.5
-  '@types/lodash.debounce': 4.0.7
-  '@types/ms': 0.7.31
-  '@types/node': 18.11.9
-  '@types/react': 18.0.25
-  '@types/react-dom': 18.0.9
-  autoprefixer: 10.4.13_postcss@8.4.19
-  dotenv-cli: 6.0.0
-  eslint: 7.32.0
-  eslint-config-next: 13.0.7_77fvizpdb3y4icyeo2mf4eo7em
-  postcss: 8.4.19
-  prisma: 4.6.1
-  tailwindcss: 3.2.4_v776zzvn44o7tpgzieipaairwm
-  ts-node: 10.9.1_wup25etrarvlqkprac7h35hj7u
-  typescript: 4.9.3
+  apps/web:
+    specifiers:
+      database: workspace:*
+    dependencies:
+      database: link:../../packages/database
+
+  packages/config:
+    specifiers: {}
+
+  packages/database:
+    specifiers:
+      config: workspace:*
+      tsconfig: workspace:*
+    devDependencies:
+      config: link:../config
+      tsconfig: link:../tsconfig
+
+  packages/tsconfig:
+    specifiers: {}
 
 packages:
 
@@ -4609,6 +4632,67 @@ packages:
     dependencies:
       tslib: 1.14.1
       typescript: 4.9.3
+    dev: true
+
+  /turbo-darwin-64/1.6.3:
+    resolution: {integrity: sha512-QmDIX0Yh1wYQl0bUS0gGWwNxpJwrzZU2GIAYt3aOKoirWA2ecnyb3R6ludcS1znfNV2MfunP+l8E3ncxUHwtjA==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo-darwin-arm64/1.6.3:
+    resolution: {integrity: sha512-75DXhFpwE7CinBbtxTxH08EcWrxYSPFow3NaeFwsG8aymkWXF+U2aukYHJA6I12n9/dGqf7yRXzkF0S/9UtdyQ==}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo-linux-64/1.6.3:
+    resolution: {integrity: sha512-O9uc6J0yoRPWdPg9THRQi69K6E2iZ98cRHNvus05lZbcPzZTxJYkYGb5iagCmCW/pq6fL4T4oLWAd6evg2LGQA==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo-linux-arm64/1.6.3:
+    resolution: {integrity: sha512-dCy667qqEtZIhulsRTe8hhWQNCJO0i20uHXv7KjLHuFZGCeMbWxB8rsneRoY+blf8+QNqGuXQJxak7ayjHLxiA==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo-windows-64/1.6.3:
+    resolution: {integrity: sha512-lKRqwL3mrVF09b9KySSaOwetehmGknV9EcQTF7d2dxngGYYX1WXoQLjFP9YYH8ZV07oPm+RUOAKSCQuDuMNhiA==}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo-windows-arm64/1.6.3:
+    resolution: {integrity: sha512-BXY1sDPEA1DgPwuENvDCD8B7Hb0toscjus941WpL8CVd10hg9pk/MWn9CNgwDO5Q9ks0mw+liDv2EMnleEjeNA==}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo/1.6.3:
+    resolution: {integrity: sha512-FtfhJLmEEtHveGxW4Ye/QuY85AnZ2ZNVgkTBswoap7UMHB1+oI4diHPNyqrQLG4K1UFtCkjOlVoLsllUh/9QRw==}
+    hasBin: true
+    requiresBuild: true
+    optionalDependencies:
+      turbo-darwin-64: 1.6.3
+      turbo-darwin-arm64: 1.6.3
+      turbo-linux-64: 1.6.3
+      turbo-linux-arm64: 1.6.3
+      turbo-windows-64: 1.6.3
+      turbo-windows-arm64: 1.6.3
     dev: true
 
   /type-check/0.4.0:

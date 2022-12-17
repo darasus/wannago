@@ -1,0 +1,16 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "./index.ts",
+  "scripts": {
+    "generate": "dotenv -e ./.vercel/.env.development.local -e ./.env -- npx prisma generate --data-proxy",
+    "push": "dotenv -e ./.env -- npx prisma db push",
+    "studio": "dotenv -e ./.env -- npx prisma studio"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "config": "workspace:*",
+    "tsconfig": "workspace:*"
+  }
+}
