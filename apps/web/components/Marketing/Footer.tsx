@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import {Button} from '../Button/Button';
 import {Container} from '../Container/Container';
 import {navItems} from '../Header/Header';
 import {Logo} from '../Logo/Logo';
@@ -14,9 +15,15 @@ export function Footer() {
           <div className="-my-1 flex justify-center gap-x-4">
             {navItems.map(({href, label}) => {
               return (
-                <NavLink key={href} href={href}>
+                <Button
+                  key={href}
+                  href={href}
+                  variant="neutral"
+                  size="xs"
+                  as="a"
+                >
                   {label}
-                </NavLink>
+                </Button>
               );
             })}
           </div>
@@ -29,7 +36,7 @@ export function Footer() {
               </svg>
             </Link>
           </div>
-          <p className="mt-6 text-sm sm:mt-0">
+          <p className="mt-6 text-sm sm:mt-0 font-bold">
             WannaGo &copy; {new Date().getFullYear()}
           </p>
         </div>

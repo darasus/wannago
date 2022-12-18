@@ -28,7 +28,7 @@ export function GoogleLocationImage({
   url.searchParams.set('markers', `color:red|${latitude},${longitude}`);
 
   return (
-    <div className="rounded-xl overflow-hidden">
+    <div className="rounded-3xl overflow-hidden">
       <Image src={url.toString()} alt="" width={width} height={height} />
     </div>
   );

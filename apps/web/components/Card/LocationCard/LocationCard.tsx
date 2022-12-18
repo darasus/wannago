@@ -19,7 +19,7 @@ export function LocationCard({address, longitude, latitude}: Props) {
   return (
     <CardBase>
       <div className="mb-2">
-        <Badge color="blue" className="mr-2">
+        <Badge color="gray" className="mr-2">
           Where
         </Badge>
         <Button onClick={onDirectionsClick} variant="link-neutral">

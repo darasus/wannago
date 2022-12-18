@@ -24,7 +24,7 @@ export function DateCard({event, timezone}: Props) {
   return (
     <CardBase>
       <div className="mb-2">
-        <Badge color="yellow" className="mr-2">
+        <Badge color="gray" className="mr-2">
           When
         </Badge>
         <Button onClick={handleCalendarClick} variant="link-neutral">
@@ -46,7 +46,7 @@ export function DateCard({event, timezone}: Props) {
         </div>
         <div className="grow">
           <Text className="font-bold capitalize">
-            {formatDate(new Date(event.startDate), 'EEEE, MMMM dd', timezone)}
+            {formatDate(new Date(event.startDate), 'EEE, MMMM dd', timezone)}
           </Text>{' '}
           <Text className="text-gray-500">{`(${formatTimeago(
             new Date(event.startDate),

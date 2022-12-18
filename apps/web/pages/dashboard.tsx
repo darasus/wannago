@@ -27,9 +27,9 @@ export default function HomePage() {
             className={clsx(
               'flex justify-center items-center w-full h-full p-4 mb-4',
               'border-dashed border-2 rounded-xl',
-              'bg-gray-200 hover:bg-gray-300 ',
-              'border-gray-400 hover:border-gray-500',
-              'text-gray-400 hover:text-gray-500'
+              'bg-gray-50 hover:bg-gray-100 ',
+              'border-gray-700 hover:border-gray-800',
+              'text-gray-700 hover:text-gray-800'
             )}
           >
             <PlusCircleIcon width={30} height={30} />

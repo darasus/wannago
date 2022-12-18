@@ -1,3 +1,6 @@
+import clsx from 'clsx';
+import {titleFontClassName} from '../../fonts';
+
 interface Props {
   title: string;
   description: string;
@@ -6,10 +9,13 @@ interface Props {
 
 export function SecionHeader({title, description, id}: Props) {
   return (
-    <div className="mx-auto text-center mb-16 max-w-xl">
+    <div className="mx-auto text-center mb-16 max-w-4xl">
       <h2
         id={id}
-        className="font-black text-3xl tracking-tight text-brand-200 sm:text-4xl"
+        className={clsx(
+          'font-black text-3xl tracking-tight sm:text-7xl',
+          titleFontClassName
+        )}
       >
         {title}
       </h2>

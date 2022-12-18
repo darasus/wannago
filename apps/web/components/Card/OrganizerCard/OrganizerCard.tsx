@@ -31,7 +31,7 @@ export function OrganizerCard({event}: Props) {
       <CardBase>
         <div>
           <div className="mb-2">
-            <Badge color="indigo" className="mr-2">
+            <Badge color="gray" className="mr-2">
               Who
             </Badge>
             <Button onClick={onOpenFormClick} variant="link-neutral">

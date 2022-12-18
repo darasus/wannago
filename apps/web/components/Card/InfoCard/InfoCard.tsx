@@ -12,8 +12,8 @@ interface Props {
 export function InfoCard({event}: Props) {
   return (
     <>
-      <CardBase className="p-0">
-        <div className="flex items-center overflow-hidden relative justify-center aspect-video bg-black rounded-t-xl safari-rounded-border-fix">
+      <CardBase>
+        <div className="flex items-center overflow-hidden relative justify-center aspect-video bg-black rounded-3xl safari-rounded-border-fix mb-4">
           {event.featuredImageSrc && (
             <Image
               src={event.featuredImageSrc}
@@ -24,9 +24,9 @@ export function InfoCard({event}: Props) {
             />
           )}
         </div>
-        <div className="p-4">
+        <div>
           <div className="mb-2">
-            <Badge color="pink" className="mr-2">
+            <Badge color="gray" className="mr-2">
               What
             </Badge>
             {/* <Button variant="link-neutral">Share</Button> */}

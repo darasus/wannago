@@ -15,17 +15,17 @@ export default function HomePage() {
         <title>WannaGo</title>
       </Head>
       <Hero />
-      <div className="h-px bg-gray-200" />
+      <div className="h-0.5 bg-gray-700" />
       {/* <PrimaryFeatures /> */}
       <Features />
-      <div className="h-px bg-gray-200" />
+      <div className="h-0.5 bg-gray-700" />
       {/* <SecondaryFeatures /> */}
       <CallToAction />
-      <div className="h-px bg-gray-200" />
+      <div className="h-0.5 bg-gray-700" />
       {/* <Testimonials /> */}
       {/* <Pricing /> */}
       <Faqs />
-      <div className="h-px bg-gray-200" />
+      <div className="h-0.5 bg-gray-700" />
       <Footer />
     </AppLayout>
   );

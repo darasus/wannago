@@ -58,7 +58,7 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
           <input ref={ref} {...props} className="hidden" />
           <EditorContent
             className={clsx(
-              'border rounded-md p-2',
+              'border-2 rounded-3xl p-2',
               'prose',
               'prose-h1:m-0 prose-h2:m-0 prose-h3:m-0',
               'prose-p:m-0',

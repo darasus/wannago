@@ -58,7 +58,7 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
         id="button-upload"
         containerClassName="hidden"
       />
-      <div className="relative flex justify-center items-center border-2 border-dashed border-gray-400 rounded-lg bg-gray-100 mb-4 text-gray-400 aspect-video overflow-hidden">
+      <div className="relative flex justify-center items-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-100 mb-4 text-gray-400 aspect-video overflow-hidden">
         {!isLoading && !imageSrc && (
           <div>
             <PhotoIcon />

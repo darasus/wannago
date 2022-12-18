@@ -82,15 +82,17 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
           <div className="flex flex-col items-start gap-2">
             <Button
               variant="neutral"
-              iconLeft={<UsersIcon className="h-5 w-5" />}
+              iconLeft={<UsersIcon className="h-3 w-3" />}
               onClick={() => router.push(`/event/${event.id}/attendees`)}
+              size="xs"
             >
               View attendees
             </Button>
             <Button
               variant="neutral"
-              iconLeft={<PencilIcon className="h-5 w-5" />}
+              iconLeft={<PencilIcon className="h-3 w-3" />}
               onClick={() => router.push(`/event/${event.id}/edit`)}
+              size="xs"
             >
               Edit event
             </Button>
@@ -98,11 +100,12 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
             {event.isPublished && (
               <Button
                 variant="danger"
-                iconLeft={<PauseCircleIcon className="h-5 w-5" />}
+                iconLeft={<PauseCircleIcon className="h-3 w-3" />}
                 onClick={() =>
                   publish.mutate({eventId: event.id, isPublished: false})
                 }
                 isLoading={publish.isLoading}
+                size="xs"
               >
                 Unpublish
               </Button>
@@ -110,20 +113,22 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
             {!event.isPublished && (
               <Button
                 variant="primary"
-                iconLeft={<PlayCircleIcon className="h-5 w-5" />}
+                iconLeft={<PlayCircleIcon className="h-3 w-3" />}
                 onClick={() =>
                   publish.mutate({eventId: event.id, isPublished: true})
                 }
                 isLoading={publish.isLoading}
+                size="xs"
               >
                 Publish
               </Button>
             )}
             <Button
               variant="danger"
-              iconLeft={<TrashIcon className="h-5 w-5" />}
+              iconLeft={<TrashIcon className="h-3 w-3" />}
               onClick={() => remove.mutate({eventId: event.id})}
               isLoading={remove.isLoading}
+              size="xs"
             >
               Delete event
             </Button>

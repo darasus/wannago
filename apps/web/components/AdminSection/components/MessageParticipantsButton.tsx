@@ -63,7 +63,8 @@ export function MessageParticipantsButton() {
       <Button
         onClick={handleOnClick}
         variant="neutral"
-        iconLeft={<EnvelopeIcon className="h-5 w-5" />}
+        iconLeft={<EnvelopeIcon className="h-3 w-3" />}
+        size="xs"
       >
         Message participants
       </Button>

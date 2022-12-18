@@ -14,9 +14,9 @@ export function EventCard({event}: Props) {
   const isUpdcoming = isFuture(event.startDate);
 
   return (
-    <CardBase className="flex flex-col p-0">
+    <CardBase className="flex flex-col">
       {event.featuredImageSrc && (
-        <div className="grow overflow-hidden relative justify-center bg-black rounded-t-xl aspect-video safari-rounded-border-fix">
+        <div className="grow overflow-hidden relative justify-center bg-black rounded-3xl aspect-video safari-rounded-border-fix mb-4">
           <div className="absolute left-4 top-4 z-10">
             {event.isPublished ? (
               <Badge color="green">Published</Badge>
@@ -33,7 +33,7 @@ export function EventCard({event}: Props) {
           />
         </div>
       )}
-      <div className="p-4">
+      <div>
         <div className="flex items-center">
           <Badge color={isUpdcoming ? 'green' : 'gray'} className="mr-2 mb-1">
             {isUpdcoming ? 'Upcoming' : 'Past'}

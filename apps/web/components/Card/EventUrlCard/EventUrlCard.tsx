@@ -13,9 +13,9 @@ export function EventUrlCard({url}: Props) {
   const [isCopied, copy] = useCopyClipboard(url);
 
   return (
-    <CardBase className="border-2 border-b-2 border-green-500 bg-green-50 border-dashed">
+    <CardBase>
       <div className="mb-2">
-        <Badge color="green" className="mr-2">
+        <Badge color="gray" className="mr-2">
           Invite
         </Badge>
         <Button onClick={copy} variant="link-neutral" disabled={isCopied}>
@@ -23,7 +23,7 @@ export function EventUrlCard({url}: Props) {
         </Button>
       </div>
       <div>
-        <Link className="text-green-800 hover:underline" href={url}>
+        <Link className="text-gray-700 font-bold hover:underline" href={url}>
           {url
             .replace('https://', '')
             .replace('http://', '')

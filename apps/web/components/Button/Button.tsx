@@ -53,12 +53,17 @@ export const Button = forwardRef(function Button(
       {...props}
       className={clsx(
         'cursor-pointer justify-center',
+        // base text styles
+        'text-gray-800 font-bold',
+        // base brder styles
+        'rounded-full border-2 border-gray-800',
         {
           // base button styles
-          'inline-flex items-center rounded-xl border shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2':
+          'inline-flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2':
             !(isLink || isLinkNeutral),
           // base link styles
-          'inline-flex items-center border-b': isLink || isLinkNeutral,
+          'border-t-0 border-l-0 border-r-0 rounded-none inline-flex items-center border-b':
+            isLink || isLinkNeutral,
           // sizes
           'px-2.5 py-1.5 text-xs':
             !isIconButton && isXs && !(isLink || isLinkNeutral),
@@ -66,7 +71,7 @@ export const Button = forwardRef(function Button(
             !isIconButton && isSm && !(isLink || isLinkNeutral),
           'px-4 py-2 text-sm':
             !isIconButton && isMd && !(isLink || isLinkNeutral),
-          'px-4 py-2 text-base':
+          'px-6 py-4 text-base':
             !isIconButton && isLg && !(isLink || isLinkNeutral),
           'px-6 py-3 text-base':
             !isIconButton && isXl && !(isLink || isLinkNeutral),
@@ -77,17 +82,14 @@ export const Button = forwardRef(function Button(
             !(isLink || isLinkNeutral),
           'p-3': isIconButton && isXl && !(isLink || isLinkNeutral),
           // colors
-          'border-transparent bg-brand-900 text-white hover:bg-brand-1000 focus:ring-brand-1000 font-bold':
-            isPrimary,
-          'border-transparent bg-brand-100 text-brand-800 hover:bg-brand-200 focus:ring-brand-500 font-bold':
-            isSecondary,
-          'border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 font-bold':
+          'bg-brand-600 hover:bg-brand-500 focus:ring-brand-1000': isPrimary,
+          'bg-brand-100 hover:bg-brand-200 focus:ring-brand-500': isSecondary,
+          'text-gray-50 bg-red-600 hover:bg-red-700 focus:ring-red-500':
             isDanger,
-          'border-gray-100 bg-white text-gray-800 hover:bg-gray-50 focus:ring-brand-500':
-            isNeutral,
-          'text-brand-600 hover:text-brand-500 border-brand-600 hover:border-brand-500 text-sm font-medium leading-none':
+          'bg-gray-50 hover:bg-gray-200 focus:ring-brand-500': isNeutral,
+          'text-brand-600 border-brand-600 hover:border-brand-500 text-sm leading-none':
             isLink,
-          'text-gray-400 hover:text-gray-500 border-gray-400 hover:border-gray-500 text-sm font-medium leading-none inline':
+          'border-b-2 border-b-gray-400 hover:border-gray-500 text-gray-400 hover:text-gray-500 text-sm leading-none inline':
             isLinkNeutral,
         },
         className

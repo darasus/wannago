@@ -33,7 +33,7 @@ export function EventForm({onSubmit, isEdit}: Props) {
           </div>
           <div className="grid grid-cols-12 gap-4">
             <div className="flex justify-end items-start col-span-4">
-              <Badge color="pink">What</Badge>
+              <Badge color="gray">What</Badge>
             </div>
             <div className="flex flex-col col-span-8 gap-y-4">
               <Input
@@ -65,7 +65,7 @@ export function EventForm({onSubmit, isEdit}: Props) {
               />
             </div>
             <div className="flex justify-end items-start col-span-4">
-              <Badge color="yellow">When</Badge>
+              <Badge color="gray">When</Badge>
             </div>
             <div className="flex flex-col col-span-8 gap-y-4">
               <Input
@@ -86,7 +86,7 @@ export function EventForm({onSubmit, isEdit}: Props) {
               />
             </div>
             <div className="flex justify-end items-start col-span-4">
-              <Badge color="blue">Where</Badge>
+              <Badge color="gray">Where</Badge>
             </div>
             <div className="flex flex-col col-span-8 gap-y-4">
               <LocationInput
@@ -98,7 +98,7 @@ export function EventForm({onSubmit, isEdit}: Props) {
               />
             </div>
             <div className="flex justify-end items-start col-span-4">
-              <Badge color="purple">Attend</Badge>
+              <Badge color="gray">Attend</Badge>
             </div>
             <div className="flex flex-col col-span-8 gap-y-4">
               <Input

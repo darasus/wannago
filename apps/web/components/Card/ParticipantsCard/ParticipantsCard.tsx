@@ -26,7 +26,7 @@ export function ParticipantsCard({event}: Props) {
   const {
     register,
     handleSubmit,
-    formState: {isSubmitting},
+    formState: {isSubmitting, errors: formErrors},
     reset,
   } = useForm<Form>();
   const {mutateAsync, error} = trpc.event.join.useMutation({
@@ -60,7 +60,7 @@ export function ParticipantsCard({event}: Props) {
         <CardBase>
           <div>
             <div className="mb-2">
-              <Badge color="purple" className="mr-2">
+              <Badge color="gray" className="mr-2">
                 Attend
               </Badge>
               {/* <Button variant="link-neutral">Invite</Button> */}
@@ -70,13 +70,31 @@ export function ParticipantsCard({event}: Props) {
             <div className="flex">
               <div className="grid grid-cols-12 gap-2 grow mr-2">
                 <div className="col-span-6">
-                  <Input placeholder="First name" {...register('firstName')} />
+                  <Input
+                    placeholder="First name"
+                    {...register('firstName', {
+                      required: 'First name is required',
+                    })}
+                    error={formErrors.firstName}
+                  />
                 </div>
                 <div className="col-span-6">
-                  <Input placeholder="Last name" {...register('lastName')} />
+                  <Input
+                    placeholder="Last name"
+                    {...register('lastName', {
+                      required: 'Last name is required',
+                    })}
+                    error={formErrors.lastName}
+                  />
                 </div>
                 <div className="col-span-8">
-                  <Input placeholder="Email" {...register('email')} />
+                  <Input
+                    placeholder="Email"
+                    {...register('email', {
+                      required: 'Email is required',
+                    })}
+                    error={formErrors.email}
+                  />
                 </div>
                 <div className="col-span-4">
                   <Button
