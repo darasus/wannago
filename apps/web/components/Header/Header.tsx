@@ -47,6 +47,7 @@ export function Header() {
   const showUserProfile = !isHome && isSignedIn;
   const showDashboardLink = isSignedIn && isHome;
   const showAuthButtons = isHome && !isSignedIn;
+  const showMobileMenu = !isSignedIn;
 
   return (
     <header>
@@ -112,100 +113,106 @@ export function Header() {
                   </Button>
                 </>
               )}
-              <div className="-mr-1 md:hidden">
-                <Popover>
-                  <Popover.Button
-                    className="relative z-10 flex h-8 w-8 items-center justify-center [&:not(:focus-visible)]:focus:outline-none"
-                    data-testid="mobile-nav-button"
-                  >
-                    {({open}) => <MobileNavIcon open={open} />}
-                  </Popover.Button>
-                  <Transition.Root className="z-10">
-                    <Transition.Child
-                      as={Fragment}
-                      enter="duration-150 ease-out"
-                      enterFrom="opacity-0 scale-95"
-                      enterTo="opacity-100 scale-100"
-                      leave="duration-100 ease-in"
-                      leaveFrom="opacity-100 scale-100"
-                      leaveTo="opacity-0 scale-95"
+              {showMobileMenu && (
+                <div className="-mr-1 md:hidden">
+                  <Popover>
+                    <Popover.Button
+                      className="relative z-10 flex h-8 w-8 items-center justify-center [&:not(:focus-visible)]:focus:outline-none"
+                      data-testid="mobile-nav-button"
                     >
-                      <Popover.Panel
-                        as="div"
-                        className="absolute z-50 inset-x-0 top-20 flex origin-top flex-col tracking-tight -mx-4"
+                      {({open}) => <MobileNavIcon open={open} />}
+                    </Popover.Button>
+                    <Transition.Root className="z-10">
+                      <Transition.Child
+                        as={Fragment}
+                        enter="duration-150 ease-out"
+                        enterFrom="opacity-0 scale-95"
+                        enterTo="opacity-100 scale-100"
+                        leave="duration-100 ease-in"
+                        leaveFrom="opacity-100 scale-100"
+                        leaveTo="opacity-0 scale-95"
                       >
-                        <CardBase>
-                          {navItems.map((item, i) => (
-                            <Fragment key={i}>
-                              <Popover.Button
-                                as={(props: any) => (
-                                  <Button {...props} as="a" variant="neutral" />
-                                )}
-                                href={item.href}
-                              >
-                                {item.label}
-                              </Popover.Button>
-                              <div
-                                className={clsx({
-                                  'mb-4': navItems.length - 1 !== i,
-                                })}
-                              />
-                            </Fragment>
-                          ))}
-                          <hr className="my-4 border-slate-300/40" />
-                          <div className="flex gap-4">
-                            {showAuthButtons && (
-                              <>
+                        <Popover.Panel
+                          as="div"
+                          className="absolute z-50 inset-x-0 top-20 flex origin-top flex-col tracking-tight -mx-4"
+                        >
+                          <CardBase>
+                            {navItems.map((item, i) => (
+                              <Fragment key={i}>
                                 <Popover.Button
                                   as={(props: any) => (
                                     <Button
                                       {...props}
                                       as="a"
-                                      variant="secondary"
-                                      data-testid="mobile-login-button"
-                                      href={'/login'}
+                                      variant="neutral"
                                     />
                                   )}
+                                  href={item.href}
                                 >
-                                  Login
+                                  {item.label}
                                 </Popover.Button>
+                                <div
+                                  className={clsx({
+                                    'mb-4': navItems.length - 1 !== i,
+                                  })}
+                                />
+                              </Fragment>
+                            ))}
+                            <hr className="my-4 border-slate-300/40" />
+                            <div className="flex gap-4">
+                              {showAuthButtons && (
+                                <>
+                                  <Popover.Button
+                                    as={(props: any) => (
+                                      <Button
+                                        {...props}
+                                        as="a"
+                                        variant="secondary"
+                                        data-testid="mobile-login-button"
+                                        href={'/login'}
+                                      />
+                                    )}
+                                  >
+                                    Login
+                                  </Popover.Button>
+                                  <Popover.Button
+                                    as={(props: any) => (
+                                      <Button
+                                        {...props}
+                                        as="a"
+                                        variant="primary"
+                                        data-testid="mobile-register-button"
+                                        href={'/register'}
+                                      />
+                                    )}
+                                  >
+                                    Register
+                                  </Popover.Button>
+                                </>
+                              )}
+                              {showDashboardLink && (
                                 <Popover.Button
                                   as={(props: any) => (
                                     <Button
                                       {...props}
                                       as="a"
                                       variant="primary"
-                                      data-testid="mobile-register-button"
-                                      href={'/register'}
+                                      data-testid="mobile-dashboard-button"
+                                      href={'/dashboard'}
                                     />
                                   )}
                                 >
-                                  Register
+                                  Dashboard
                                 </Popover.Button>
-                              </>
-                            )}
-                            {showDashboardLink && (
-                              <Popover.Button
-                                as={(props: any) => (
-                                  <Button
-                                    {...props}
-                                    as="a"
-                                    variant="primary"
-                                    data-testid="mobile-dashboard-button"
-                                    href={'/dashboard'}
-                                  />
-                                )}
-                              >
-                                Dashboard
-                              </Popover.Button>
-                            )}
-                          </div>
-                        </CardBase>
-                      </Popover.Panel>
-                    </Transition.Child>
-                  </Transition.Root>
-                </Popover>
-              </div>
+                              )}
+                            </div>
+                          </CardBase>
+                        </Popover.Panel>
+                      </Transition.Child>
+                    </Transition.Root>
+                  </Popover>
+                </div>
+              )}
             </div>
           </nav>
         </CardBase>
