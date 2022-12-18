@@ -6,7 +6,6 @@ import {
   PauseCircleIcon,
 } from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
-import {toast} from 'react-hot-toast';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../Card/CardBase/CardBase';
@@ -15,6 +14,7 @@ import {MessageParticipantsButton} from './components/MessageParticipantsButton'
 import {Event} from '@prisma/client';
 import {formatDate} from '../../utils/formatDate';
 import {trpc} from '../../utils/trpc';
+import {toast} from 'react-hot-toast';
 
 interface Props {
   event: Event;

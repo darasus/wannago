@@ -1,6 +1,4 @@
-import {Dialog, Transition} from '@headlessui/react';
 import {Event} from '@prisma/client';
-import {Fragment} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
 import {trpc} from '../../../utils/trpc';

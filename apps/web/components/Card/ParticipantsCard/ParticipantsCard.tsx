@@ -1,13 +1,12 @@
 import {Event} from '@prisma/client';
 import {useForm} from 'react-hook-form';
-import {toast} from 'react-hot-toast';
-import {Avatar} from '../../Avatar/Avatar';
 import {Button} from '../../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
 import {Input} from '../../Input/Input/Input';
 import {Badge} from '../../Badge/Badge';
 import {Text} from '../../Text/Text';
 import {trpc} from '../../../utils/trpc';
+import {toast} from 'react-hot-toast';
 
 interface Form {
   email: string;
@@ -37,9 +36,7 @@ export function ParticipantsCard({event}: Props) {
       });
     },
     onSuccess: () => {
-      toast.success('Successfully RSVPd, check your email for more details!', {
-        duration: 5000,
-      });
+      toast.success('Successfully RSVPd, check your email for more details!');
     },
   });
 
