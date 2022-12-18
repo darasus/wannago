@@ -52,7 +52,10 @@ export function MessageParticipantsButton() {
             <div>
               <Textarea {...register('message')} placeholder="Message" />
             </div>
-            <div>
+            <div className="flex justify-start gap-x-2">
+              <Button onClick={() => setIsOpen(false)} variant="neutral">
+                Send
+              </Button>
               <Button isLoading={isSubmitting} type="submit">
                 Send
               </Button>
