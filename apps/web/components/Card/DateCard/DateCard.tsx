@@ -33,7 +33,7 @@ export function DateCard({event, timezone}: Props) {
       </div>
       <div className="flex">
         <div className="mr-2">
-          <div className="flex flex-col justify-center items-center border rounded-xl px-4 py-2  shadow-md">
+          <div className="flex flex-col justify-center items-center border-2 border-gray-700 rounded-2xl px-4 py-2 bg-brand-400">
             <div className="h-0.5 bg-red-500 w-5 mb-1" />
             <Text className="text-2xl leading-none">
               {formatDate(new Date(event.startDate), 'dd', timezone)}
