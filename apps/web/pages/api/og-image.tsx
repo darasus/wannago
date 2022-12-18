@@ -28,6 +28,13 @@ export default async function handler(req: NextRequest) {
     },
   });
 
+  const maxTitleLength = 30;
+
+  const title =
+    event?.title && event?.title.length > maxTitleLength
+      ? `${event?.title.slice(0, maxTitleLength)}...`
+      : event?.title;
+
   return new ImageResponse(
     (
       <div
@@ -54,7 +61,9 @@ export default async function handler(req: NextRequest) {
                 marginBottom: 4,
                 fontFamily: 'Body',
               }}
-            >{`${event?.title}`}</span>
+            >
+              {title}
+            </span>
           </div>
         </div>
         {/* <div
