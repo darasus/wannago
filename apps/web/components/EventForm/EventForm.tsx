@@ -130,7 +130,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
                 Cancel
               </Button>
               <Button isLoading={isSubmitting} type="submit">
-                Save as draft
+                {isEdit ? 'Save' : 'Save as draft'}
               </Button>
             </div>
           </div>
