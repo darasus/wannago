@@ -89,11 +89,7 @@ export function Features() {
         <div className="grid lg:grid-cols-12 gap-10">
           {features.map(feature => (
             <div key={feature.name} className="col-span-4">
-              <Feature
-                feature={feature}
-                className="mx-auto max-w-2xl"
-                isActive
-              />
+              <Feature feature={feature} className="mx-auto max-w-2xl" />
             </div>
           ))}
         </div>

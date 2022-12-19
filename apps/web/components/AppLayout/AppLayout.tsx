@@ -7,7 +7,7 @@ export default function AppLayout({children}: PropsWithChildren) {
       <div className="relative z-10">
         <Header />
       </div>
-      <div className="relative">
+      <div>
         <div>{children}</div>
       </div>
     </div>

@@ -7,14 +7,28 @@ import {GetServerSidePropsContext} from 'next';
 import {buildClerkProps, clerkClient, getAuth} from '@clerk/nextjs/server';
 import AppLayout from '../components/AppLayout/AppLayout';
 import {Features} from '../components/Marketing/Features';
+import {useAnimateStars} from '../utils/animateStars';
+import {useLayoutEffect, useRef, useState} from 'react';
 
 export default function HomePage() {
+  const el = useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState(0);
+
+  useAnimateStars();
+
+  useLayoutEffect(() => {
+    if (el.current) {
+      setHeight(el.current.getBoundingClientRect().bottom);
+    }
+  }, []);
+
   return (
     <AppLayout>
       <Head>
         <title>WannaGo</title>
       </Head>
-      <Hero />
+      <canvas className="absolute top-0 left-0 w-full z-0" style={{height}} />
+      <Hero ref={el} />
       <div className="h-0.5 bg-gray-700" />
       {/* <PrimaryFeatures /> */}
       <Features />
