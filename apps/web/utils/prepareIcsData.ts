@@ -2,11 +2,12 @@ import {EventAttributes} from 'ics';
 import {format} from 'date-fns';
 import {Event} from '@prisma/client';
 import {getBaseUrl} from './getBaseUrl';
+import {stripHTML} from './stripHTML';
 
 export function prepareIcsData(event: Event): EventAttributes {
   const icsData: EventAttributes = {
     title: event.title,
-    description: event.description,
+    description: stripHTML(event.description),
     start: [
       Number(format(event.startDate, 'yyyy')),
       Number(format(event.startDate, 'M')),

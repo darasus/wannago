@@ -12,6 +12,7 @@ import {createContext} from '../../server/context';
 import * as trpcNext from '@trpc/server/adapters/next';
 import SuperJSON from 'superjson';
 import {Meta} from '../../components/Meta/Meta';
+import {stripHTML} from '../../utils/stripHTML';
 
 export default function EventPage({
   timezone,
@@ -41,9 +42,7 @@ export default function EventPage({
     <div>
       <Meta
         title={data.title}
-        description={data.description
-          .replace(/(<([^>]+)>)/gi, '')
-          .slice(0, 100)}
+        description={stripHTML(data.description).slice(0, 100)}
         imageSrc={`/api/og-image?eventId=${data.id}`}
         shortEventId={data.shortId!}
       />
