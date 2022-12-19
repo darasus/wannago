@@ -64,7 +64,7 @@ export function Header() {
                       href={item.href}
                       key={i}
                       variant="neutral"
-                      size="xs"
+                      size="sm"
                     >
                       {item.label}
                     </Button>
@@ -81,7 +81,7 @@ export function Header() {
                     href="/dashboard"
                     className="hidden md:block"
                     variant="secondary"
-                    size="xs"
+                    size="sm"
                     data-testid="dashboard-button"
                   >
                     <span>Dashboard</span>
@@ -95,7 +95,7 @@ export function Header() {
                     href="/login"
                     className="hidden md:block"
                     variant="secondary"
-                    size="xs"
+                    size="sm"
                     data-testid="login-button"
                   >
                     <span>Sign in</span>
@@ -103,7 +103,7 @@ export function Header() {
                   <Button
                     as="a"
                     href={'/register'}
-                    size="xs"
+                    size="sm"
                     data-testid="register-button"
                   >
                     <span>

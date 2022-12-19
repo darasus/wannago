@@ -39,11 +39,9 @@ export const Button = forwardRef(function Button(
   const isIconButton = iconLeft && !children;
   const isIconAndTextButton = iconLeft && children;
   // sizes
-  const isXs = size === 'xs';
   const isSm = size === 'sm';
   const isMd = size === 'md';
   const isLg = size === 'lg';
-  const isXl = size === 'xl';
 
   return (
     <Component
@@ -65,29 +63,23 @@ export const Button = forwardRef(function Button(
           'border-t-0 border-l-0 border-r-0 rounded-none inline-flex items-center border-b':
             isLink || isLinkNeutral,
           // sizes
-          'px-2.5 py-1.5 text-xs':
-            !isIconButton && isXs && !(isLink || isLinkNeutral),
-          'px-3 py-2 text-sm':
+          'px-2 py-1 text-sm':
             !isIconButton && isSm && !(isLink || isLinkNeutral),
-          'px-4 py-2 text-sm':
+          'px-4 py-2 text-base':
             !isIconButton && isMd && !(isLink || isLinkNeutral),
-          'px-6 py-4 text-base':
+          'px-6 py-4 text-md':
             !isIconButton && isLg && !(isLink || isLinkNeutral),
-          'px-6 py-3 text-base':
-            !isIconButton && isXl && !(isLink || isLinkNeutral),
-          'p-1.5': isIconButton && isXs && !(isLink || isLinkNeutral),
           'p-2':
             isIconButton &&
             (isSm || isMd || isLg) &&
             !(isLink || isLinkNeutral),
-          'p-3': isIconButton && isXl && !(isLink || isLinkNeutral),
           // colors
           'bg-brand-600 hover:bg-brand-500 focus:ring-brand-1000': isPrimary,
           'bg-brand-100 hover:bg-brand-200 focus:ring-brand-500': isSecondary,
           'text-gray-50 bg-red-600 hover:bg-red-700 focus:ring-red-500':
             isDanger,
           'bg-gray-50 hover:bg-gray-200 focus:ring-brand-500': isNeutral,
-          'text-brand-600 border-brand-600 hover:border-brand-500 text-sm leading-none':
+          'text-brand-100 border-brand-100 hover:border-brand-500 text-sm leading-none':
             isLink,
           'border-b-2 border-b-gray-400 hover:border-gray-500 text-gray-400 hover:text-gray-500 text-sm leading-none inline':
             isLinkNeutral,

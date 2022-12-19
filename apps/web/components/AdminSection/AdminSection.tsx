@@ -84,7 +84,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
               variant="neutral"
               iconLeft={<UsersIcon className="h-3 w-3" />}
               onClick={() => router.push(`/event/${event.id}/attendees`)}
-              size="xs"
+              size="sm"
             >
               View attendees
             </Button>
@@ -92,7 +92,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
               variant="neutral"
               iconLeft={<PencilIcon className="h-3 w-3" />}
               onClick={() => router.push(`/event/${event.id}/edit`)}
-              size="xs"
+              size="sm"
             >
               Edit event
             </Button>
@@ -105,7 +105,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
                   publish.mutate({eventId: event.id, isPublished: false})
                 }
                 isLoading={publish.isLoading}
-                size="xs"
+                size="sm"
               >
                 Unpublish
               </Button>
@@ -118,7 +118,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
                   publish.mutate({eventId: event.id, isPublished: true})
                 }
                 isLoading={publish.isLoading}
-                size="xs"
+                size="sm"
               >
                 Publish
               </Button>
@@ -128,7 +128,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
               iconLeft={<TrashIcon className="h-3 w-3" />}
               onClick={() => remove.mutate({eventId: event.id})}
               isLoading={remove.isLoading}
-              size="xs"
+              size="sm"
             >
               Delete event
             </Button>

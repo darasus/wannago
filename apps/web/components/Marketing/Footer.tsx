@@ -19,7 +19,7 @@ export function Footer() {
                   key={href}
                   href={href}
                   variant="neutral"
-                  size="xs"
+                  size="sm"
                   as="a"
                 >
                   {label}
