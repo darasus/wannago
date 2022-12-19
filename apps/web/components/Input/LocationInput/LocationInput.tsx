@@ -63,7 +63,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
               <Combobox.Options
                 as={CardBase}
                 className={clsx(
-                  'absolute z-50 mt-1 py-1 px-0 max-h-60 w-full overflow-auto ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm',
+                  'absolute z-50 mt-1 py-1 px-0 max-h-60 w-full overflow-auto ring-1 ring-black ring-opacity-5 focus:outline-none text-md',
                   {
                     hidden:
                       !data?.predictions || data?.predictions.length === 0,

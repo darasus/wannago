@@ -27,7 +27,7 @@ export const Input = forwardRef(function Input(
         data-tooltip-target="tooltip-default"
         type="text"
         className={clsx(
-          'block w-full rounded-full border-2 border-gray-300 sm:text-sm',
+          'block w-full rounded-full border-2 border-gray-300 sm:text-md',
           {'focus:border-gray-500 focus:ring-gray-500': !hasError},
           inputClassName,
           {

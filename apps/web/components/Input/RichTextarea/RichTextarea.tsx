@@ -22,7 +22,6 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
     const {
       formState: {defaultValues},
       setValue,
-      watch,
     } = useFormContext<Form>();
 
     const editor = useEditor({
@@ -58,8 +57,9 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
           <input ref={ref} {...props} className="hidden" />
           <EditorContent
             className={clsx(
-              'border-2 rounded-3xl p-2',
+              'border-2 rounded-3xl py-2 px-3',
               'prose',
+              'text-md',
               'prose-h1:m-0 prose-h2:m-0 prose-h3:m-0',
               'prose-p:m-0',
               'prose-ul:m-0',
