@@ -3,12 +3,13 @@ import {clerkClient, getAuth} from '@clerk/nextjs/server';
 import {PrismaClient} from '@prisma/client';
 import * as trpc from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
-import MailgunClient from 'mailgun.js/client';
 import {prisma} from '../../../packages/database/prisma';
 import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
 import {googleMaps} from '../lib/googleMaps';
 import {QStash} from '../lib/qStash';
 import {Mail} from '../lib/mail';
+import {FetchCreateContextFnOptions} from '@trpc/server/adapters/fetch';
+import {NextRequest} from 'next/server';
 
 interface CreateContextOptions {
   user: User | null;
@@ -39,11 +40,11 @@ export type Context = trpc.inferAsyncReturnType<typeof createContextInner>;
  * @link https://trpc.io/docs/context
  */
 export async function createContext(
-  opts: trpcNext.CreateNextContextOptions
+  opts: FetchCreateContextFnOptions
 ): Promise<Context> {
   // for API-response caching see https://trpc.io/docs/caching
   async function getUser() {
-    const {userId} = getAuth(opts.req);
+    const {userId} = getAuth(opts.req as NextRequest);
     const user = userId ? await clerkClient.users.getUser(userId) : null;
     return user;
   }
