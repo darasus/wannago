@@ -13,10 +13,27 @@ interface Props {
   timezone?: string;
 }
 
+function iOS() {
+  return (
+    [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod',
+    ].includes(navigator.platform) ||
+    // iPad on iOS 13 detection
+    (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+  );
+}
+
 export function DateCard({event, timezone}: Props) {
   const handleCalendarClick = () => {
     createEvent(prepareIcsData(event), (error, value) => {
-      const blob = new Blob([value], {type: 'text/plain;charset=utf-8'});
+      const blob = new Blob([value], {
+        type: iOS() ? 'text/calendar' : 'text/plain;charset=utf-8',
+      });
       saveAs(blob, 'event-schedule.ics');
     });
   };
