@@ -47,7 +47,7 @@ export function Header() {
   const showUserProfile = !isHome && isSignedIn;
   const showDashboardLink = isSignedIn && isHome;
   const showAuthButtons = isHome && !isSignedIn;
-  const showMobileMenu = !isSignedIn;
+  const showMobileMenu = !isSignedIn || isHome;
 
   return (
     <header>
