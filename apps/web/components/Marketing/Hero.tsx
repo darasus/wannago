@@ -1,3 +1,4 @@
+import {useUser} from '@clerk/nextjs';
 import {Transition} from '@headlessui/react';
 import {Event, Organization, User} from '@prisma/client';
 import clsx from 'clsx';
@@ -58,6 +59,7 @@ export const Hero = forwardRef(function Hero(
   _,
   ref: React.Ref<HTMLDivElement>
 ) {
+  const {isSignedIn} = useUser();
   const router = useRouter();
   const container = useRef<HTMLDivElement | null>(null);
   const [scale, setScale] = useState<number | null>(null);
@@ -95,7 +97,7 @@ export const Hero = forwardRef(function Hero(
         <Button
           className="pointer-events-auto"
           size="lg"
-          onClick={() => router.push('/login')}
+          onClick={() => router.push(isSignedIn ? '/event/add' : '/login')}
         >
           Create your first event
         </Button>
