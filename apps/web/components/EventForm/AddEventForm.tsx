@@ -6,6 +6,7 @@ import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 
 export function AddEventForm() {
+  const router = useRouter();
   const {push} = useRouter();
   const {mutateAsync} = trpc.event.create.useMutation({
     onSettled(data) {
@@ -33,7 +34,10 @@ export function AddEventForm() {
 
   return (
     <FormProvider {...form}>
-      <EventForm onSubmit={onSubmit} />
+      <EventForm
+        onSubmit={onSubmit}
+        onCancelClick={() => router.push(`/dashboard`)}
+      />
     </FormProvider>
   );
 }

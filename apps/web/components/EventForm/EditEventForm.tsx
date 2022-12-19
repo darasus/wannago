@@ -11,6 +11,7 @@ interface Props {
 }
 
 export function EditEventForm({event}: Props) {
+  const router = useRouter();
   const {push} = useRouter();
   const {mutateAsync} = trpc.event.update.useMutation({
     onSuccess: data => {
@@ -40,7 +41,11 @@ export function EditEventForm({event}: Props) {
 
   return (
     <FormProvider {...form}>
-      <EventForm onSubmit={onSubmit} isEdit />
+      <EventForm
+        onSubmit={onSubmit}
+        isEdit
+        onCancelClick={() => router.push(`/event/${event.id}`)}
+      />
     </FormProvider>
   );
 }

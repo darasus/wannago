@@ -1,5 +1,6 @@
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
+import {getBaseUrl} from '../../utils/getBaseUrl';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../Card/CardBase/CardBase';
@@ -14,9 +15,10 @@ interface Props {
   onSubmit: FormEventHandler;
   isLoading?: boolean;
   isEdit?: boolean;
+  onCancelClick: () => void;
 }
 
-export function EventForm({onSubmit, isEdit}: Props) {
+export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
   const {
     register,
     formState: {isSubmitting, errors},
@@ -31,8 +33,8 @@ export function EventForm({onSubmit, isEdit}: Props) {
               {isEdit ? 'Edit event' : 'Create event'}
             </Text>
           </div>
-          <div className="grid grid-cols-12 gap-4">
-            <div className="flex justify-end items-start col-span-4">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div className="flex md:justify-end items-start col-span-4">
               <Badge color="gray">What</Badge>
             </div>
             <div className="flex flex-col col-span-8 gap-y-4">
@@ -64,7 +66,7 @@ export function EventForm({onSubmit, isEdit}: Props) {
                 })}
               />
             </div>
-            <div className="flex justify-end items-start col-span-4">
+            <div className="flex md:justify-end items-start col-span-4">
               <Badge color="gray">When</Badge>
             </div>
             <div className="flex flex-col col-span-8 gap-y-4">
@@ -85,7 +87,7 @@ export function EventForm({onSubmit, isEdit}: Props) {
                 })}
               />
             </div>
-            <div className="flex justify-end items-start col-span-4">
+            <div className="flex md:justify-end items-start col-span-4">
               <Badge color="gray">Where</Badge>
             </div>
             <div className="flex flex-col col-span-8 gap-y-4">
@@ -97,7 +99,7 @@ export function EventForm({onSubmit, isEdit}: Props) {
                 })}
               />
             </div>
-            <div className="flex justify-end items-start col-span-4">
+            <div className="flex md:justify-end items-start col-span-4">
               <Badge color="gray">Attend</Badge>
             </div>
             <div className="flex flex-col col-span-8 gap-y-4">
@@ -123,7 +125,10 @@ export function EventForm({onSubmit, isEdit}: Props) {
               />
             </div>
             <div className="flex justify-end items-start col-span-4" />
-            <div className="flex justify-center col-span-8">
+            <div className="flex justify-center gap-x-4 col-span-8">
+              <Button onClick={onCancelClick} variant="neutral">
+                Cancel
+              </Button>
               <Button isLoading={isSubmitting} type="submit">
                 Save as draft
               </Button>
