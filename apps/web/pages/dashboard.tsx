@@ -10,6 +10,7 @@ import {LoadingEventCard} from '../components/Card/LoadingEventCard/LoadingEvent
 import clsx from 'clsx';
 import {GetServerSidePropsContext} from 'next';
 import {buildClerkProps, clerkClient, getAuth} from '@clerk/nextjs/server';
+import {Button} from '../components/Button/Button';
 
 export default function HomePage() {
   const router = useRouter();
@@ -22,18 +23,13 @@ export default function HomePage() {
       </Head>
       <AppLayout>
         <Container className="md:px-4">
-          <button
+          <Button
             onClick={() => router.push('/event/add')}
             className={clsx(
-              'flex justify-center items-center w-full h-full p-4 mb-4',
-              'border-dashed border-2 rounded-xl',
-              'bg-gray-50 hover:bg-gray-100 ',
-              'border-gray-700 hover:border-gray-800',
-              'text-gray-700 hover:text-gray-800'
+              'flex justify-center items-center w-full h-full p-4 mb-4'
             )}
-          >
-            <PlusCircleIcon width={30} height={30} />
-          </button>
+            iconLeft={<PlusCircleIcon width={30} height={30} />}
+          />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {isLoading &&
               Array.from({length: 3}).map((_, i) => (
