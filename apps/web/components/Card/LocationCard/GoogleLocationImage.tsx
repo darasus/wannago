@@ -19,13 +19,16 @@ export function GoogleLocationImage({
 
   url.searchParams.set('key', process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
   url.searchParams.set('size', `${width}x${height}`);
-  url.searchParams.set('zoom', '13');
+  url.searchParams.set('zoom', '16');
   url.searchParams.set('maptype', 'roadmap');
   url.searchParams.set('center', address);
   url.searchParams.set('scale', '2');
   url.searchParams.set('format', 'jpg');
-  url.searchParams.set('visible', 'Amsterdam');
   url.searchParams.set('markers', `color:red|${latitude},${longitude}`);
+
+  styles.forEach(style => {
+    url.searchParams.append('style', style);
+  });
 
   return (
     <div className="rounded-3xl overflow-hidden">
@@ -33,3 +36,24 @@ export function GoogleLocationImage({
     </div>
   );
 }
+
+const styles = [
+  'element:geometry|color:0xf5f5f5',
+  'element:labels.icon|visibility:off',
+  'element:labels.text.fill|color:0x616161',
+  'element:labels.text.stroke|color:0xf5f5f5',
+  'feature:administrative.land_parcel|element:labels.text.fill|color:0xbdbdbd',
+  'feature:poi|element:geometry|color:0xeeeeee',
+  'feature:poi|element:labels.text.fill|color:0x757575',
+  'feature:poi.park|element:geometry|color:0xe5e5e5',
+  'feature:poi.park|element:labels.text.fill|color:0x9e9e9e',
+  'feature:road|element:geometry|color:0xffffff',
+  'feature:road.arterial|element:labels.text.fill|color:0x757575',
+  'feature:road.highway|element:geometry|color:0xdadada',
+  'feature:road.highway|element:labels.text.fill|color:0x616161',
+  'feature:road.local|element:labels.text.fill|color:0x9e9e9e',
+  'feature:transit.line|element:geometry|color:0xe5e5e5',
+  'feature:transit.station|element:geometry|color:0xeeeeee',
+  'feature:water|element:geometry|color:0xc9c9c9',
+  'feature:water|element:labels.text.fill|color:0x9e9e9e&size=480x360',
+];
