@@ -44,13 +44,13 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
           Admin
         </Badge>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col gap-2">
           <div>
-            <Text className="font-bold">Event info</Text>
+            <Text className="font-bold">Info</Text>
           </div>
           <div className="flex flex-col gap-2">
-            <Text>
+            <Text className="text-sm">
               Status:{' '}
               {event.isPublished ? (
                 <Badge color="green">Published</Badge>
@@ -58,17 +58,17 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
                 <Badge color="gray">Draft</Badge>
               )}
             </Text>
-            <Text>{`Created at: ${formatDate(
+            <Text className="text-sm">{`Created at: ${formatDate(
               event.createdAt,
               'yyyy/MM/dd HH:mm',
               timezone
             )}`}</Text>
-            <Text>{`Last updated at: ${formatDate(
+            <Text className="text-sm">{`Last updated at: ${formatDate(
               event.updatedAt,
               'yyyy/MM/dd HH:mm',
               timezone
             )}`}</Text>
-            <Text>{`Number of attendees: ${
+            <Text className="text-sm">{`Number of attendees: ${
               typeof attendeesCount.data?.count === 'number'
                 ? attendeesCount.data?.count
                 : 'Loading...'
