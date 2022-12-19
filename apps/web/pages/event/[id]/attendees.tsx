@@ -8,6 +8,7 @@ import {CardBase} from '../../../components/Card/CardBase/CardBase';
 import {Container} from '../../../components/Container/Container';
 import {Text} from '../../../components/Text/Text';
 import {trpc} from '../../../utils/trpc';
+import {saveAs} from 'file-saver';
 
 interface ItemProps {
   user: User;
@@ -53,6 +54,18 @@ export default function EventEditPage() {
     }
   );
 
+  const handleDownloadCsvClick = () => {
+    const content =
+      'First name,Last name,Email\r\n' +
+      data
+        ?.map(user => {
+          return `${user.firstName},${user.lastName},${user.email}`;
+        })
+        .join('\r\n')!;
+    const blob = new Blob([content], {type: 'text/csv;charset=utf-8'});
+    saveAs(blob, 'file.csv');
+  };
+
   if (!data) {
     return null;
   }
@@ -64,6 +77,11 @@ export default function EventEditPage() {
       </Head>
       <AppLayout>
         <Container className="md:px-4">
+          <div className="flex justify-end mb-4">
+            <Button variant="neutral" onClick={handleDownloadCsvClick}>
+              Export CSV
+            </Button>
+          </div>
           {data.length === 0 && (
             <div className="text-center">
               <Text>No attendees yet</Text>
