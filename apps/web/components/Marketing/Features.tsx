@@ -9,6 +9,7 @@ import {
   EnvelopeOpenIcon,
 } from '@heroicons/react/24/outline';
 import {SectionContainer} from './SectionContainer';
+import {titleFontClassName} from '../../fonts';
 
 const features = [
   {
@@ -16,64 +17,62 @@ const features = [
     summary: 'Create event page with ease',
     description:
       'With WannaGo, you can quickly and easily create a shareable event page and customize it with all the details your guests need to know.',
-    icon: <CalendarDaysIcon className="text-gray-50" width={25} height={25} />,
+    icon: <CalendarDaysIcon width={25} height={25} />,
   },
   {
     name: 'Guests',
     summary: 'Invite only the guests you want',
     description:
       "Our platform allows you to invite only the people you want to attend your event, ensuring that it stays private, whether it's your friends, family or twitter following.",
-    icon: <UserGroupIcon className="text-gray-50" width={25} height={25} />,
+    icon: <UserGroupIcon width={25} height={25} />,
   },
   {
     name: 'Branding',
     summary: 'Customizable event pages',
     description:
       'You can upload photo, add details about the date, time, and location of your event, and even include information about the dress code or any special instructions.',
-    icon: (
-      <BuildingStorefrontIcon className="text-gray-50" width={25} height={25} />
-    ),
+    icon: <BuildingStorefrontIcon width={25} height={25} />,
   },
   {
     name: 'Comms',
     summary: 'Easy communication with guests',
     description:
       "Send reminders and messages to your guests to make sure they don't miss out on your event.",
-    icon: (
-      <ChatBubbleLeftEllipsisIcon
-        className="text-gray-50"
-        width={25}
-        height={25}
-      />
-    ),
+    icon: <ChatBubbleLeftEllipsisIcon width={25} height={25} />,
   },
   {
     name: 'Invites',
     summary: 'RSVP tracking',
     description:
       'Keep track of who is attending your event with our easy-to-use RSVP system. You can see at a glance who has confirmed their attendance and who is still on the fence.',
-    icon: <EnvelopeOpenIcon className="text-gray-50" width={25} height={25} />,
+    icon: <EnvelopeOpenIcon width={25} height={25} />,
   },
 ];
 
-function Feature({feature, isActive, className, ...props}: any) {
+function Feature({feature, className, ...props}: any) {
   return (
-    <div
-      className={clsx(className, !isActive && 'opacity-75 hover:opacity-100')}
-      {...props}
-    >
-      <div className={clsx('w-9 rounded-lg bg-gray-800')}>
-        <div className="h-9 w-9 flex items-center justify-center">
-          {feature.icon}
-        </div>
+    <div className={clsx(className, 'flex flex-col items-center')} {...props}>
+      <div
+        className={clsx(
+          'w-12 h-12 rounded-full bg-brand-800 border-2 border-gray-700 flex items-center justify-center'
+        )}
+      >
+        {feature.icon}
       </div>
-      <h3 className={clsx('mt-6 text-sm text-gray-400 uppercase font-bold')}>
+      <h3 className={clsx('mt-6 text-sm text-gray-400 uppercase')}>
         {feature.name}
       </h3>
-      <p className="mt-2 font-display text-xl text-slate-800">
+      <p
+        className={clsx(
+          titleFontClassName,
+          'mt-2 font-display text-xl text-slate-800'
+        )}
+      >
         {feature.summary}
       </p>
-      <p className="mt-4 text-sm text-slate-600">{feature.description}</p>
+      <p className="mt-4 text-sm text-slate-600 text-center">
+        {feature.description}
+      </p>
     </div>
   );
 }
