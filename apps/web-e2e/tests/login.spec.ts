@@ -6,5 +6,7 @@ test('Can login', async ({page}) => {
   await auth.login();
   const el = await page.getByTestId('add-event-button');
 
+  await page.reload();
+
   await expect(el).toBeVisible();
 });
