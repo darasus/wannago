@@ -41,10 +41,27 @@ jobs:
         - name: Build
           run: pnpm build
           env:
-            SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-            SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-            NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
-            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+            VERCEL_ANALYTICS_ID: ${{secrets.VERCEL_ANALYTICS_ID}}
+            VERCEL_WEB_ANALYTICS_ID: ${{secrets.VERCEL_WEB_ANALYTICS_ID}}
+            NEXT_PUBLIC_CLERK_FRONTEND_API: ${{secrets.NEXT_PUBLIC_CLERK_FRONTEND_API}}
+            CLERK_API_KEY: ${{secrets.CLERK_API_KEY}}
+            MIGRATE_DATABASE_URL: ${{secrets.MIGRATE_DATABASE_URL}}
+            NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}}
+            CLERK_JWT_KEY: ${{secrets.CLERK_JWT_KEY}}
+            DATABASE_URL: ${{secrets.DATABASE_URL}}
+            PRISMA_GENERATE_DATAPROXY: ${{secrets.PRISMA_GENERATE_DATAPROXY}}
+            UPSTASH_REDIS_REST_URL: ${{secrets.UPSTASH_REDIS_REST_URL}}
+            UPSTASH_REDIS_REST_TOKEN: ${{secrets.UPSTASH_REDIS_REST_TOKEN}}
+            CLOUDFLARE_API_KEY: ${{secrets.CLOUDFLARE_API_KEY}}
+            MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
+            QSTASH_URL: ${{secrets.QSTASH_URL}}
+            QSTASH_TOKEN: ${{secrets.QSTASH_TOKEN}}
+            QSTASH_CURRENT_SIGNING_KEY: ${{secrets.QSTASH_CURRENT_SIGNING_KEY}}
+            QSTASH_NEXT_SIGNING_KEY: ${{secrets.QSTASH_NEXT_SIGNING_KEY}}
+            SENTRY_ORG: ${{secrets.SENTRY_ORG}}
+            SENTRY_PROJECT: ${{secrets.SENTRY_PROJECT}}
+            NEXT_PUBLIC_SENTRY_DSN: ${{secrets.NEXT_PUBLIC_SENTRY_DSN}}
+            SENTRY_AUTH_TOKEN: ${{secrets.SENTRY_AUTH_TOKEN}}
  
         - name: Test
           run: pnpm test:e2e
