@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test:e2e": "npx playwright test --project=chromium",
-    "test:e2e:dev": "npx playwright test --project=chromium --headed",
-    "test:e2e:report": "npx playwright show-report"
+    "test:e2e": "pnpx playwright test --project=chromium",
+    "test:e2e:dev": "pnpx playwright test --project=chromium --headed",
+    "test:e2e:report": "pnpx playwright show-report"
   },
   "devDependencies": {
     "@playwright/test": "^1.29.0"
