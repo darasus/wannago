@@ -1,47 +1,25 @@
 import {Event, User} from '@prisma/client';
-import formData from 'form-data';
-import Mailgun from 'mailgun.js';
-import {MailgunMessageData} from 'mailgun.js/interfaces/Messages';
 import {getBaseUrl} from '../utils/getBaseUrl';
-import {render} from '@react-email/render';
-import {
-  EventSubscribe,
-  MessageToOrganizer,
-  EventReminder,
-  MessageToAttendees,
-} from 'email';
-import {formatDate} from '../utils/formatDate';
-
-const mailgunIstance = new Mailgun(formData);
-const mailgun = mailgunIstance.client({
-  username: 'api',
-  key: process.env.MAILGUN_API_KEY!,
-});
 
 export class Mail {
-  mailgun = mailgun;
-
-  async sendEventSignupEmail({event, user}: {event: Event; user: User}) {
-    const messageData: MailgunMessageData = {
-      from: 'WannaGo Team <hi@wannago.app>',
-      to: user.email,
-      subject: `Thanks for signing up for "${event.title}"!`,
-      html: render(
-        <EventSubscribe
-          title={event.title}
-          address={event.address}
-          eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
-          startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
-          endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-        />
-      ),
-    };
-
-    await this.mailgun.messages.create('email.wannago.app', messageData);
+  async sendEventSignupEmail({
+    eventId,
+    userId,
+  }: {
+    eventId: string;
+    userId: string;
+  }) {
+    return fetch(`${getBaseUrl()}/api/mailgun/send-event-signup-email`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userId,
+        eventId,
+      }),
+    });
   }
 
-  async sendQuestionToOrganizer({
-    event,
+  async sendQuestionToOrganizerEmail({
+    eventId,
     organizerEmail,
     email,
     firstName,
@@ -49,7 +27,7 @@ export class Mail {
     subject,
     message,
   }: {
-    event: Event;
+    eventId: string;
     organizerEmail: string;
     firstName: string;
     lastName: string;
@@ -57,79 +35,54 @@ export class Mail {
     subject: string;
     message: string;
   }) {
-    const messageData = {
-      from: `${firstName} ${lastName} <${email}>`,
-      to: organizerEmail,
-      subject: 'Someone asked you a question on WannaGo',
-      html: render(
-        <MessageToOrganizer
-          eventTitle={event.title}
-          eventUrl={`${getBaseUrl()}/e/${event?.shortId}`}
-          message={message}
-          subject={subject}
-          senderName={`${firstName} ${lastName}`}
-          senderEmail={email}
-        />
-      ),
-    };
-
-    await this.mailgun.messages.create('email.wannago.app', messageData);
-  }
-
-  async sendEventReminderEmail({event, users}: {event: Event; users: User[]}) {
-    await Promise.all(
-      users.map(async user => {
-        const messageData = {
-          from: 'WannaGo Team <hi@wannago.app>',
-          to: user.email,
-          subject: `Your event is coming up! "${event.title}"!`,
-          html: render(
-            <EventReminder
-              title={event.title}
-              address={event.address}
-              eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
-              startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
-              endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-            />
-          ),
-        };
-
-        await this.mailgun.messages.create('email.wannago.app', messageData);
-      })
+    return fetch(
+      `${getBaseUrl()}/api/mailgun/send-question-to-organizer-email`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          eventId,
+          organizerEmail,
+          email,
+          firstName,
+          lastName,
+          subject,
+          message,
+        }),
+      }
     );
   }
 
-  async sendMessageToEventParticipants({
-    users,
+  async sendMessageToEventSubscribersEmail({
     subject,
     message,
-    event,
-    organizerUser,
+    eventId,
+    organizerUserId,
   }: {
-    users: User[];
     subject: string;
     message: string;
-    event: Event;
-    organizerUser: User;
+    eventId: string;
+    organizerUserId: string;
   }) {
-    await Promise.all(
-      users.map(async user => {
-        const messageData = {
-          from: `${organizerUser.firstName} ${organizerUser.lastName} <${organizerUser.email}>`,
-          to: user.email,
-          subject: `Message from event organizer: "${event.title}"`,
-          html: render(
-            <MessageToAttendees
-              eventUrl={`${getBaseUrl()}/e/${event?.shortId}`}
-              message={message}
-              eventTitle={event.title}
-              subject={subject}
-            />
-          ),
-        };
-
-        await this.mailgun.messages.create('email.wannago.app', messageData);
-      })
+    return fetch(
+      `${getBaseUrl()}/api/mailgun/send-message-to-event-subscribers-email`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          eventId,
+          organizerUserId,
+          subject,
+          message,
+        }),
+      }
     );
+  }
+
+  async sendEventReminderEmail({eventId}: {eventId: string}) {
+    return fetch(`${getBaseUrl()}/api/mailgun/send-event-reminder-email`, {
+      method: 'POST',
+      body: JSON.stringify({
+        eventId,
+      }),
+    });
   }
 }

@@ -312,12 +312,10 @@ const join = publicProcedure
       },
     });
 
-    await ctx.mail.sendEventSignupEmail({
-      event,
-      user,
+    return ctx.mail.sendEventSignupEmail({
+      eventId: event.id,
+      userId: user.id,
     });
-
-    return event;
   });
 
 const removeUser = protectedProcedure

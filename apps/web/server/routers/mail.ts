@@ -40,12 +40,11 @@ const messageEventParticipants = protectedProcedure
       throw new Error('Organizer not found!');
     }
 
-    await ctx.mail.sendMessageToEventParticipants({
-      event,
-      users,
+    await ctx.mail.sendMessageToEventSubscribersEmail({
+      eventId: input.eventId,
       subject: input.subject,
       message: input.message,
-      organizerUser,
+      organizerUserId: organizerUser.id,
     });
   });
 
@@ -79,10 +78,14 @@ const sendQuestionToOrganizer = publicProcedure
     }
 
     for (const user of event.organization?.users || []) {
-      await ctx.mail.sendQuestionToOrganizer({
-        event,
+      await ctx.mail.sendQuestionToOrganizerEmail({
+        eventId: event.id,
         organizerEmail: user.email,
-        ...input,
+        firstName: input.firstName,
+        lastName: input.lastName,
+        email: input.email,
+        message: input.message,
+        subject: input.subject,
       });
     }
 

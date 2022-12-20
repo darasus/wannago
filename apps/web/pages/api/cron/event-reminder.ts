@@ -2,7 +2,7 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import {verifySignature} from '@upstash/qstash/nextjs';
 import {prisma} from '../../../../../packages/database/prisma';
 import {z} from 'zod';
-import {Mail} from '../../../lib/mail';
+import {Mailgun} from '../../../lib/mailgun';
 
 const schema = z.object({
   eventId: z.string().uuid(),
@@ -25,7 +25,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       throw new Error('Event not found!');
     }
 
-    const mail = new Mail();
+    const mail = new Mailgun();
 
     if (event.isPublished) {
       await mail.sendEventReminderEmail({
