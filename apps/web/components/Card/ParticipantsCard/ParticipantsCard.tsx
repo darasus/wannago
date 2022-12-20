@@ -16,9 +16,10 @@ interface Form {
 
 interface Props {
   event: Event;
+  fake?: boolean;
 }
 
-export function ParticipantsCard({event}: Props) {
+export function ParticipantsCard({event, fake}: Props) {
   const {data, refetch} = trpc.event.getNumberOfAttendees.useQuery({
     eventId: event.id,
   });
@@ -28,7 +29,7 @@ export function ParticipantsCard({event}: Props) {
     formState: {isSubmitting, errors: formErrors},
     reset,
   } = useForm<Form>();
-  const {mutateAsync, error} = trpc.event.join.useMutation({
+  const {mutateAsync} = trpc.event.join.useMutation({
     onError: error => {
       const validationErrors = (error.data?.zodError?.fieldErrors || {}) as any;
       Object.keys(validationErrors).forEach(key => {
@@ -46,10 +47,11 @@ export function ParticipantsCard({event}: Props) {
     reset();
   });
 
-  const errors = Object.values(error?.data?.zodError?.fieldErrors || {})
-    .map(v => v)
-    .flat()
-    .filter(Boolean) as string[];
+  const numberOfAttendees = fake
+    ? '121 people attending'
+    : typeof data?.count === 'number'
+    ? `${data?.count} people attending`
+    : 'Loading...';
 
   return (
     <>
@@ -114,11 +116,7 @@ export function ParticipantsCard({event}: Props) {
                 ]}
               /> */}
               <div className="grow" />
-              <Text className="text-gray-400">
-                {typeof data?.count === 'number'
-                  ? `${data?.count} people attending`
-                  : 'Loading...'}
-              </Text>
+              <Text className="text-gray-400">{numberOfAttendees}</Text>
             </div>
           </div>
         </CardBase>

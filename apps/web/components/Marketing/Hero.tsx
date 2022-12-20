@@ -175,7 +175,7 @@ export const Hero = forwardRef(function Hero(
                 enterTo="translate-y-0 opacity-1"
               >
                 <div className="mb-4">
-                  <ParticipantsCard event={event} />
+                  <ParticipantsCard event={event} fake />
                 </div>
               </Transition>
               <Transition
