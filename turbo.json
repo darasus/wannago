@@ -14,7 +14,14 @@
     "db:push": {
       "outputs": []
     },
+    "test:e2e": {
+      "outputs": [],
+      "cache": false
+    },
     "dev": {
+      "cache": false
+    },
+    "start": {
       "cache": false
     }
   }

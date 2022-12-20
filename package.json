@@ -10,7 +10,9 @@
     "generate": "turbo run generate",
     "build": "turbo run build",
     "dev": "turbo run dev --filter web",
-    "dev:email": "turbo run dev --filter email"
+    "start": "turbo run start --filter web",
+    "dev:email": "turbo run dev --filter email",
+    "test:e2e": "turbo run test:e2e --filter web-e2e"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.6.13",

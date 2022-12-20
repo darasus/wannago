@@ -19,7 +19,7 @@ export function UserSecsion() {
   if (!isLoaded) return null;
 
   return (
-    <div className="">
+    <div>
       <Popover className="relative">
         {({open}) => (
           <>
@@ -33,6 +33,7 @@ export function UserSecsion() {
                       height={20}
                       width={20}
                       alt={`Profile pic for ${user?.fullName}`}
+                      data-testid="user-header-button"
                     />
                   </div>
                 }
@@ -54,7 +55,11 @@ export function UserSecsion() {
                   <Button variant="neutral" as="a" href="/me">
                     Settings
                   </Button>
-                  <Button variant="secondary" onClick={onSignOutClick}>
+                  <Button
+                    variant="secondary"
+                    onClick={onSignOutClick}
+                    data-testid="logout-button"
+                  >
                     Logout
                   </Button>
                 </CardBase>

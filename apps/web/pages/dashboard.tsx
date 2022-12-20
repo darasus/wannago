@@ -27,6 +27,7 @@ export default function HomePage() {
               'flex justify-center items-center w-full h-full p-4 mb-4'
             )}
             iconLeft={<PlusCircleIcon width={30} height={30} />}
+            data-testid="add-event-button"
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {isLoading &&
@@ -35,7 +36,11 @@ export default function HomePage() {
               ))}
             {data?.events?.map(event => {
               return (
-                <Link href={`/event/${event.id}`} key={event.id}>
+                <Link
+                  href={`/event/${event.id}`}
+                  key={event.id}
+                  data-testid="event-card"
+                >
                   <EventCard event={event} />
                 </Link>
               );
