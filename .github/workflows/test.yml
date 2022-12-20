@@ -36,7 +36,7 @@ jobs:
           run: pnpm install
 
         - name: Install playwright
-          run: pnpx playwright install --with-deps
+          run: pnpm dlx playwright install --with-deps
  
         - name: Test
           run: pnpm test:e2e
