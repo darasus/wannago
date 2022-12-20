@@ -29,8 +29,14 @@ module.exports = {
       height: {
         'hero-preview': 600,
       },
-      transitionTimingFunction: {
-        'in-expo': 'cubic-bezier(.47,1.64,.41,.8)',
+      transitionDelay: {
+        0: '0ms',
+        100: '100ms',
+        200: '200ms',
+        300: '300ms',
+        400: '400ms',
+        500: '500ms',
+        600: '600ms',
       },
     },
   },

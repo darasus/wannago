@@ -2,7 +2,6 @@ import {useUser} from '@clerk/nextjs';
 import {Transition} from '@headlessui/react';
 import {Event, Organization, User} from '@prisma/client';
 import clsx from 'clsx';
-import Image from 'next/image';
 import {useRouter} from 'next/router';
 import {forwardRef, Fragment, useLayoutEffect, useRef, useState} from 'react';
 import {titleFontClassName} from '../../fonts';
@@ -12,7 +11,6 @@ import {DateCard} from '../Card/DateCard/DateCard';
 import {EventUrlCard} from '../Card/EventUrlCard/EventUrlCard';
 import {InfoCard} from '../Card/InfoCard/InfoCard';
 import {LocationCard} from '../Card/LocationCard/LocationCard';
-import {OrganizerCard} from '../Card/OrganizerCard/OrganizerCard';
 import {OrganizerCardView} from '../Card/OrganizerCard/OrganizerCardView';
 import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
 import {Container} from '../Container/Container';
@@ -113,15 +111,15 @@ export const Hero = forwardRef(function Hero(
             transformOrigin: 'top center',
           }}
         >
-          <Transition
-            show={canRenderPreview}
-            as={Fragment}
-            enter="transition ease-in-out duration-300 transform"
-            enterFrom="translate-y-full"
-            enterTo="translate-y-0"
-          >
-            <div className="grid grid-cols-12 gap-4">
-              <div className="col-span-8">
+          <div className="grid grid-cols-12 gap-4">
+            <div className="col-span-8">
+              <Transition
+                show={canRenderPreview}
+                as={Fragment}
+                enter="transition ease-in-out duration-500 transform delay-0"
+                enterFrom="translate-y-72 opacity-0"
+                enterTo="translate-y-0 opacity-1"
+              >
                 <div className="mb-4">
                   <OrganizerCardView
                     user={event.organization.users[0]}
@@ -129,9 +127,25 @@ export const Hero = forwardRef(function Hero(
                     onOpenFormClick={() => {}}
                   />
                 </div>
+              </Transition>
+              <Transition
+                show={canRenderPreview}
+                as={Fragment}
+                enter="transition ease-in-out duration-500 transform delay-100"
+                enterFrom="translate-y-72 opacity-0"
+                enterTo="translate-y-0 opacity-1"
+              >
                 <div className="mb-4">
                   <InfoCard event={event} />
                 </div>
+              </Transition>
+              <Transition
+                show={canRenderPreview}
+                as={Fragment}
+                enter="transition ease-in-out duration-500 transform delay-200"
+                enterFrom="translate-y-72 opacity-0"
+                enterTo="translate-y-0 opacity-1"
+              >
                 <div>
                   <LocationCard
                     address={event.address}
@@ -139,20 +153,44 @@ export const Hero = forwardRef(function Hero(
                     latitude={event.latitude!}
                   />
                 </div>
-              </div>
-              <div className="col-span-4">
+              </Transition>
+            </div>
+            <div className="col-span-4">
+              <Transition
+                show={canRenderPreview}
+                as={Fragment}
+                enter="transition ease-in-out duration-500 transform delay-300"
+                enterFrom="translate-y-72 opacity-0"
+                enterTo="translate-y-0 opacity-1"
+              >
                 <div className="mb-4">
                   <DateCard event={event} timezone={undefined} />
                 </div>
+              </Transition>
+              <Transition
+                show={canRenderPreview}
+                as={Fragment}
+                enter="transition ease-in-out duration-500 transform delay-400"
+                enterFrom="translate-y-72 opacity-0"
+                enterTo="translate-y-0 opacity-1"
+              >
                 <div className="mb-4">
                   <ParticipantsCard event={event} />
                 </div>
+              </Transition>
+              <Transition
+                show={canRenderPreview}
+                as={Fragment}
+                enter="transition ease-in-out duration-500 transform delay-500"
+                enterFrom="translate-y-72 opacity-0"
+                enterTo="translate-y-0 opacity-1"
+              >
                 <div>
                   <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
                 </div>
-              </div>
+              </Transition>
             </div>
-          </Transition>
+          </div>
         </div>
       </div>
     </Container>
