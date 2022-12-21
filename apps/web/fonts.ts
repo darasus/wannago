@@ -7,6 +7,7 @@ import {
 export const logoFont = LogoFont({
   weight: '400',
   display: 'swap',
+  subsets: ['latin'],
 });
 
 export const bodyFont = BodyFont({

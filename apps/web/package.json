@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "dotenv -e ../../.vercel/.env.development.local -- next dev",
     "build": "dotenv -e ../../.vercel/.env.development.local -- next build",
-    "start": "next start",
+    "start": "dotenv -e ../../.vercel/.env.development.local -- next start",
     "lint": "next lint",
     "vercel-build": "npx prisma generate --data-proxy && next build"
   },

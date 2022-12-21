@@ -1,20 +1,29 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["NODE_ENV"],
   "pipeline": {
     "build": {
-      "outputs": [".next/**"],
-      "dependsOn": ["^generate"]
+      "outputs": ["dist/**", ".next/**"],
+      "dependsOn": ["^generate", "^build"]
     },
     "lint": {
       "outputs": []
     },
     "generate": {
-      "dependsOn": ["^generate"]
+      "dependsOn": ["^generate"],
+      "cache": false
     },
     "db:push": {
       "outputs": []
     },
+    "test:e2e": {
+      "outputs": [],
+      "cache": false
+    },
     "dev": {
+      "cache": false
+    },
+    "start": {
       "cache": false
     }
   }
