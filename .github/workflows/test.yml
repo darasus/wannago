@@ -41,6 +41,7 @@ jobs:
         - name: Build
           run: pnpm build
           env:
+            CI: true
             VERCEL_ANALYTICS_ID: ${{secrets.VERCEL_ANALYTICS_ID}}
             VERCEL_WEB_ANALYTICS_ID: ${{secrets.VERCEL_WEB_ANALYTICS_ID}}
             NEXT_PUBLIC_CLERK_FRONTEND_API: ${{secrets.NEXT_PUBLIC_CLERK_FRONTEND_API}}
