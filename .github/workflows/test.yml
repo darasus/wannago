@@ -59,31 +59,6 @@ jobs:
           with:
             node-version: 16
             cache: 'pnpm'
-
-        - name: Check env vars
-          run: |
-            echo "CI: $CI"
-            echo "VERCEL_ANALYTICS_ID: $VERCEL_ANALYTICS_ID"
-            echo "VERCEL_WEB_ANALYTICS_ID: $VERCEL_WEB_ANALYTICS_ID"
-            echo "NEXT_PUBLIC_CLERK_FRONTEND_API: $NEXT_PUBLIC_CLERK_FRONTEND_API"
-            echo "CLERK_API_KEY: $CLERK_API_KEY"
-            echo "MIGRATE_DATABASE_URL: $MIGRATE_DATABASE_URL"
-            echo "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: $NEXT_PUBLIC_GOOGLE_MAPS_API_KEY"
-            echo "CLERK_JWT_KEY: $CLERK_JWT_KEY"
-            echo "DATABASE_URL: $DATABASE_URL"
-            echo "PRISMA_GENERATE_DATAPROXY: $PRISMA_GENERATE_DATAPROXY"
-            echo "UPSTASH_REDIS_REST_URL: $UPSTASH_REDIS_REST_URL"
-            echo "UPSTASH_REDIS_REST_TOKEN: $UPSTASH_REDIS_REST_TOKEN"
-            echo "CLOUDFLARE_API_KEY: $CLOUDFLARE_API_KEY"
-            echo "MAILGUN_API_KEY: $MAILGUN_API_KEY"
-            echo "QSTASH_URL: $QSTASH_URL"
-            echo "QSTASH_TOKEN: $QSTASH_TOKEN"
-            echo "QSTASH_CURRENT_SIGNING_KEY: $QSTASH_CURRENT_SIGNING_KEY"
-            echo "QSTASH_NEXT_SIGNING_KEY: $QSTASH_NEXT_SIGNING_KEY"
-            echo "SENTRY_ORG: $SENTRY_ORG"
-            echo "SENTRY_PROJECT: $SENTRY_PROJECT"
-            echo "NEXT_PUBLIC_SENTRY_DSN: $NEXT_PUBLIC_SENTRY_DSN"
-            echo "SENTRY_AUTH_TOKEN: $SENTRY_AUTH_TOKEN"
  
         - name: Install dependencies
           run: pnpm install
