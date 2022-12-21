@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test:e2e": "pnpm dlx playwright test --project=chromium --debug",
+    "test:e2e": "pnpm dlx playwright test --project=chromium",
     "test:e2e:dev": "pnpm dlx playwright test --project=chromium --headed",
     "test:e2e:report": "pnpm dlx playwright show-report"
   },
