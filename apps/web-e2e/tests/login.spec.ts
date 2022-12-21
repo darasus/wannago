@@ -5,7 +5,7 @@ test('Can login', async ({page}) => {
   const auth = new Auth(page);
   await auth.login();
 
-  await page.goto('http://localhost:3000/dashboard');
+  await page.goto('/dashboard');
 
   const el = await page.getByTestId('add-event-button');
 

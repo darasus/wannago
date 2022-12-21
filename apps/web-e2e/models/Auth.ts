@@ -11,17 +11,22 @@ export class Auth {
     await this.page.goto('http://localhost:3000/');
     await this.page.setViewportSize({width: 1070, height: 1016});
 
+    await this.page.waitForTimeout(3000);
+    await this.page.screenshot({path: 'screenshots/login.png'});
+
     const isUserSectionVisible = await this.page
       .getByTestId('user-header-button')
       .isVisible();
 
-    if (isUserSectionVisible) {
-      await this.page.getByTestId('user-header-button').click();
-      await this.page.getByTestId('logout-button').click();
-    }
+    // if (isUserSectionVisible) {
+    //   await this.page.getByTestId('user-header-button').click();
+    //   await this.page.getByTestId('logout-button').click();
+    // }
 
     await this.page.getByTestId('login-button').click();
-    await this.page.type('#identifier-field', 'idarase+clerk_test@gmail.com');
+    await this.page.type('#identifier-field', 'idarase+clerk_test@gmail.com', {
+      delay: 100,
+    });
     await this.page.click('.cl-formButtonPrimary');
     await this.page.type('[name="codeInput-0"]', '424242', {delay: 100});
 

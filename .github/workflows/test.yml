@@ -9,60 +9,100 @@ on:
 jobs:
   build:
       name: Build and Test
-      timeout-minutes: 15
+      timeout-minutes: 60
       runs-on: ubuntu-latest
       env:
-       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+        CI: true
+        TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+        TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+        VERCEL_ANALYTICS_ID: ${{ secrets.VERCEL_ANALYTICS_ID }}
+        VERCEL_WEB_ANALYTICS_ID: ${{ secrets.VERCEL_WEB_ANALYTICS_ID }}
+        NEXT_PUBLIC_CLERK_FRONTEND_API: ${{ secrets.NEXT_PUBLIC_CLERK_FRONTEND_API }}
+        CLERK_API_KEY: ${{ secrets.CLERK_API_KEY }}
+        MIGRATE_DATABASE_URL: ${{ secrets.MIGRATE_DATABASE_URL }}
+        NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+        CLERK_JWT_KEY: ${{ secrets.CLERK_JWT_KEY }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        PRISMA_GENERATE_DATAPROXY: ${{ secrets.PRISMA_GENERATE_DATAPROXY }}
+        UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+        UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
+        MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
+        QSTASH_URL: ${{ secrets.QSTASH_URL }}
+        QSTASH_TOKEN: ${{ secrets.QSTASH_TOKEN }}
+        QSTASH_CURRENT_SIGNING_KEY: ${{ secrets.QSTASH_CURRENT_SIGNING_KEY }}
+        QSTASH_NEXT_SIGNING_KEY: ${{ secrets.QSTASH_NEXT_SIGNING_KEY }}
+        SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
  
       steps:
+        - uses: actions/cache@v3
+          id: playwright-cache
+          with:
+            path: |
+              ~/.cache/ms-playwright
+            key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.json') }}
+
         - name: Check out code
           uses: actions/checkout@v3
           with:
             fetch-depth: 2
  
-        - uses: pnpm/action-setup@v2.0.1
+        - uses: pnpm/action-setup@v2
           with:
-            version: 6.32.2
-            node-version: 16
+            version: 7
  
         - name: Setup Node.js environment
           uses: actions/setup-node@v3
           with:
             node-version: 16
             cache: 'pnpm'
+
+        - name: Check env vars
+          run: |
+            echo "CI: $CI"
+            echo "VERCEL_ANALYTICS_ID: $VERCEL_ANALYTICS_ID"
+            echo "VERCEL_WEB_ANALYTICS_ID: $VERCEL_WEB_ANALYTICS_ID"
+            echo "NEXT_PUBLIC_CLERK_FRONTEND_API: $NEXT_PUBLIC_CLERK_FRONTEND_API"
+            echo "CLERK_API_KEY: $CLERK_API_KEY"
+            echo "MIGRATE_DATABASE_URL: $MIGRATE_DATABASE_URL"
+            echo "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: $NEXT_PUBLIC_GOOGLE_MAPS_API_KEY"
+            echo "CLERK_JWT_KEY: $CLERK_JWT_KEY"
+            echo "DATABASE_URL: $DATABASE_URL"
+            echo "PRISMA_GENERATE_DATAPROXY: $PRISMA_GENERATE_DATAPROXY"
+            echo "UPSTASH_REDIS_REST_URL: $UPSTASH_REDIS_REST_URL"
+            echo "UPSTASH_REDIS_REST_TOKEN: $UPSTASH_REDIS_REST_TOKEN"
+            echo "CLOUDFLARE_API_KEY: $CLOUDFLARE_API_KEY"
+            echo "MAILGUN_API_KEY: $MAILGUN_API_KEY"
+            echo "QSTASH_URL: $QSTASH_URL"
+            echo "QSTASH_TOKEN: $QSTASH_TOKEN"
+            echo "QSTASH_CURRENT_SIGNING_KEY: $QSTASH_CURRENT_SIGNING_KEY"
+            echo "QSTASH_NEXT_SIGNING_KEY: $QSTASH_NEXT_SIGNING_KEY"
+            echo "SENTRY_ORG: $SENTRY_ORG"
+            echo "SENTRY_PROJECT: $SENTRY_PROJECT"
+            echo "NEXT_PUBLIC_SENTRY_DSN: $NEXT_PUBLIC_SENTRY_DSN"
+            echo "SENTRY_AUTH_TOKEN: $SENTRY_AUTH_TOKEN"
  
         - name: Install dependencies
           run: pnpm install
-
+        
         - name: Install playwright
-          run: pnpm dlx playwright install chromium --with-deps
-
-        - name: Build
-          run: pnpm build
-          env:
-            CI: true
-            VERCEL_ANALYTICS_ID: ${{secrets.VERCEL_ANALYTICS_ID}}
-            VERCEL_WEB_ANALYTICS_ID: ${{secrets.VERCEL_WEB_ANALYTICS_ID}}
-            NEXT_PUBLIC_CLERK_FRONTEND_API: ${{secrets.NEXT_PUBLIC_CLERK_FRONTEND_API}}
-            CLERK_API_KEY: ${{secrets.CLERK_API_KEY}}
-            MIGRATE_DATABASE_URL: ${{secrets.MIGRATE_DATABASE_URL}}
-            NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}}
-            CLERK_JWT_KEY: ${{secrets.CLERK_JWT_KEY}}
-            DATABASE_URL: ${{secrets.DATABASE_URL}}
-            PRISMA_GENERATE_DATAPROXY: ${{secrets.PRISMA_GENERATE_DATAPROXY}}
-            UPSTASH_REDIS_REST_URL: ${{secrets.UPSTASH_REDIS_REST_URL}}
-            UPSTASH_REDIS_REST_TOKEN: ${{secrets.UPSTASH_REDIS_REST_TOKEN}}
-            CLOUDFLARE_API_KEY: ${{secrets.CLOUDFLARE_API_KEY}}
-            MAILGUN_API_KEY: ${{secrets.MAILGUN_API_KEY}}
-            QSTASH_URL: ${{secrets.QSTASH_URL}}
-            QSTASH_TOKEN: ${{secrets.QSTASH_TOKEN}}
-            QSTASH_CURRENT_SIGNING_KEY: ${{secrets.QSTASH_CURRENT_SIGNING_KEY}}
-            QSTASH_NEXT_SIGNING_KEY: ${{secrets.QSTASH_NEXT_SIGNING_KEY}}
-            SENTRY_ORG: ${{secrets.SENTRY_ORG}}
-            SENTRY_PROJECT: ${{secrets.SENTRY_PROJECT}}
-            NEXT_PUBLIC_SENTRY_DSN: ${{secrets.NEXT_PUBLIC_SENTRY_DSN}}
-            SENTRY_AUTH_TOKEN: ${{secrets.SENTRY_AUTH_TOKEN}}
+          run: pnpm dlx playwright install --with-deps
+          if: steps.playwright-cache.outputs.cache-hit != 'true'
+        
+        - name: Use cached playwright binaries
+          run: pnpm dlx playwright install-deps
+          if: steps.playwright-cache.outputs.cache-hit == 'true'
  
         - name: Test
           run: pnpm test:e2e
+
+        - uses: actions/upload-artifact@v3
+          if: always()
+          with:
+            name: playwright-report
+            path: playwright-report/
+            retention-days: 30
+
