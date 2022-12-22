@@ -8,6 +8,6 @@
     "test:e2e:report": "pnpm dlx playwright show-report"
   },
   "devDependencies": {
-    "@playwright/test": "^1.29.0"
+    "@playwright/test": "latest"
   }
 }
