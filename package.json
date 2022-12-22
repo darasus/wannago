@@ -57,6 +57,7 @@
     "formidable": "^2.0.1",
     "got": "^12.5.3",
     "ics": "^2.41.0",
+    "js-confetti": "^0.11.0",
     "ky": "^0.32.2",
     "lodash.debounce": "^4.0.8",
     "mailgun.js": "^8.0.6",
