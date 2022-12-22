@@ -8,6 +8,7 @@ import {Button} from '../Button/Button';
 import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';
 import {UserSecsion} from '../UserSecsion/UserSecsion';
+import {FeedbackFish} from '@feedback-fish/react';
 
 export const navItems = [
   {label: 'Features', href: '#features'},
@@ -69,6 +70,11 @@ export function Header() {
                       {item.label}
                     </Button>
                   ))}
+                  <FeedbackFish projectId="f843146d960b2f">
+                    <Button variant="neutral" size="sm">
+                      Feedback
+                    </Button>
+                  </FeedbackFish>
                 </div>
               )}
             </div>

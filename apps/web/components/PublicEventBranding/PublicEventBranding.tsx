@@ -1,16 +1,19 @@
-import clsx from 'clsx';
+import Link from 'next/link';
 import {getBaseUrl} from '../../utils/getBaseUrl';
-import {Logo} from '../Logo/Logo';
+import {LogoView} from '../Logo/Logo';
 
 export function PublicEventBranding() {
   return (
-    <div
-      className={clsx(
-        'flex items-center justify-center text-gray-500 px-3 py-1 rounded-full text-sm mb-4'
-      )}
+    <Link
+      href={getBaseUrl()}
+      className={
+        'flex items-center justify-center text-gray-500 rounded-lg text-sm'
+      }
     >
-      <span className="mr-2 font-bold">Built with</span>{' '}
-      <Logo href={getBaseUrl()} />
-    </div>
+      <div className="flex items-center justify-center px-2 ">
+        <span className="font-bold text-xs text-gray-800">Built with</span>{' '}
+      </div>
+      <LogoView />
+    </Link>
   );
 }

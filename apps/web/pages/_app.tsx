@@ -5,7 +5,7 @@ import {ClerkProvider} from '@clerk/nextjs';
 import Head from 'next/head';
 import {clerkAppearance} from '../clerkElements';
 import {trpc} from '../utils/trpc';
-import {toast, ToastBar, Toaster} from 'react-hot-toast';
+import {ToastBar, Toaster} from 'react-hot-toast';
 import {bodyFont} from '../fonts';
 import clsx from 'clsx';
 import {getBaseUrl} from '../utils/getBaseUrl';

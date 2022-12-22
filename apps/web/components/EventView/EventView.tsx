@@ -2,6 +2,7 @@ import {Event} from '@prisma/client';
 import {getBaseUrl} from '../../utils/getBaseUrl';
 import {DateCard} from '../Card/DateCard/DateCard';
 import {EventUrlCard} from '../Card/EventUrlCard/EventUrlCard';
+import {EventWannaGoArea} from '../Card/EventWannaGoArea/EventWannaGoArea';
 import {InfoCard} from '../Card/InfoCard/InfoCard';
 import {LocationCard} from '../Card/LocationCard/LocationCard';
 import {OrganizerCard} from '../Card/OrganizerCard/OrganizerCard';
@@ -30,15 +31,18 @@ export function EventView({event, timezone}: Props) {
           />
         </div>
       </div>
-      <div className="md:col-span-4">
-        <div className="mb-4">
+      <div className="flex flex-col md:col-span-4 gap-y-4">
+        <div>
           <DateCard event={event} timezone={timezone} />
         </div>
-        <div className="mb-4">
+        <div>
           <ParticipantsCard event={event} />
         </div>
         <div>
           <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
+        </div>
+        <div>
+          <EventWannaGoArea eventId={event.id} />
         </div>
       </div>
     </div>

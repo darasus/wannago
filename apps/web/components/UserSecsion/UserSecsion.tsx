@@ -5,6 +5,7 @@ import {useRouter} from 'next/router';
 import {Fragment} from 'react';
 import {Button} from '../Button/Button';
 import {CardBase} from '../Card/CardBase/CardBase';
+import {FeedbackFish} from '@feedback-fish/react';
 
 export function UserSecsion() {
   const router = useRouter();
@@ -55,6 +56,9 @@ export function UserSecsion() {
                   <Button variant="neutral" as="a" href="/me">
                     Settings
                   </Button>
+                  <FeedbackFish projectId="f843146d960b2f" userId={user?.id}>
+                    <Button variant="neutral">Feedback</Button>
+                  </FeedbackFish>
                   <Button
                     variant="secondary"
                     onClick={onSignOutClick}
