@@ -7,6 +7,7 @@ import {Badge} from '../../Badge/Badge';
 import {Text} from '../../Text/Text';
 import {trpc} from '../../../utils/trpc';
 import {toast} from 'react-hot-toast';
+import JSConfetti from 'js-confetti';
 
 interface Form {
   email: string;
@@ -38,6 +39,9 @@ export function ParticipantsCard({event, fake}: Props) {
     },
     onSuccess: () => {
       toast.success('Successfully RSVPd, check your email for more details!');
+      if (typeof window !== 'undefined') {
+        new JSConfetti().addConfetti({confettiNumber: 200, emojiSize: 10});
+      }
     },
   });
 

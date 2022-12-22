@@ -57,6 +57,7 @@ importers:
       formidable: ^2.0.1
       got: ^12.5.3
       ics: ^2.41.0
+      js-confetti: ^0.11.0
       ky: ^0.32.2
       lodash.debounce: ^4.0.8
       mailgun.js: ^8.0.6
@@ -119,6 +120,7 @@ importers:
       formidable: 2.0.1
       got: 12.5.3
       ics: 2.41.0
+      js-confetti: 0.11.0
       ky: 0.32.2
       lodash.debounce: 4.0.8
       mailgun.js: 8.0.6
@@ -3909,6 +3911,10 @@ packages:
       editorconfig: 0.15.3
       glob: 8.0.3
       nopt: 6.0.0
+    dev: false
+
+  /js-confetti/0.11.0:
+    resolution: {integrity: sha512-Hc7I3VI4r4H0nq5q/oQK+JJwGoYRYVHK72fGk8E9Ay1dbh+aiZ9yl0yFp1K4oYeq7YFDQAndYChwqLPA3QWQuA==}
     dev: false
 
   /js-tokens/4.0.0:
