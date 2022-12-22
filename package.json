@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.6.13",
+    "@feedback-fish/react": "^1.2.1",
     "@googlemaps/google-maps-services-js": "^3.3.16",
     "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.13",
