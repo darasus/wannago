@@ -9,9 +9,7 @@ const searchPlaces = protectedProcedure
     })
   )
   .query(async ({input, ctx}) => {
-    const response = await ctx.maps.suggestPlace(input);
-
-    return response;
+    return ctx.maps.suggestPlaces(input);
   });
 
 export const mapsRouter = router({

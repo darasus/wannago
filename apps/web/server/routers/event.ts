@@ -56,12 +56,7 @@ const update = protectedProcedure
     }) => {
       await authorizeChange({ctx, eventId});
 
-      const response = await ctx.googleMaps.geocode({
-        params: {
-          key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-          address,
-        },
-      });
+      const response = await ctx.maps.geocode({address});
 
       let event = await ctx.prisma.event.update({
         where: {
@@ -75,8 +70,8 @@ const update = protectedProcedure
           address: address,
           maxNumberOfAttendees: maxNumberOfAttendees,
           featuredImageSrc,
-          longitude: response.data.results[0].geometry.location.lng,
-          latitude: response.data.results[0].geometry.location.lat,
+          longitude: response.results[0].geometry.location.lng,
+          latitude: response.results[0].geometry.location.lat,
         },
       });
 
@@ -149,12 +144,7 @@ const create = protectedProcedure
       },
       ctx,
     }) => {
-      const response = await ctx.googleMaps.geocode({
-        params: {
-          key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-          address,
-        },
-      });
+      const response = await ctx.maps.geocode({address});
 
       const organization = await ctx.prisma.organization.findFirst({
         where: {
@@ -183,8 +173,8 @@ const create = protectedProcedure
           address: address,
           maxNumberOfAttendees,
           featuredImageSrc,
-          longitude: response.data.results[0].geometry.location.lng,
-          latitude: response.data.results[0].geometry.location.lat,
+          longitude: response.results[0].geometry.location.lng,
+          latitude: response.results[0].geometry.location.lat,
           organization: {
             connect: {
               id: organization.id,

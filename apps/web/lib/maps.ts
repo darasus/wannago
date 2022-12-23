@@ -1,5 +1,6 @@
 import {
   Client,
+  GeocodeResponseData,
   PlaceAutocompleteResponse,
   PlaceAutocompleteResponseData,
 } from '@googlemaps/google-maps-services-js';
@@ -8,7 +9,7 @@ import {getBaseUrl} from '../utils/getBaseUrl';
 export const googleMaps = new Client();
 
 export class Maps {
-  async suggestPlace({
+  async suggestPlaces({
     query,
   }: {
     query: string;
@@ -17,6 +18,15 @@ export class Maps {
       method: 'POST',
       body: JSON.stringify({
         query,
+      }),
+    }).then(res => res.json());
+  }
+
+  async geocode({address}: {address: string}): Promise<GeocodeResponseData> {
+    return fetch(`${getBaseUrl()}/api/maps/geocode`, {
+      method: 'POST',
+      body: JSON.stringify({
+        address,
       }),
     }).then(res => res.json());
   }
