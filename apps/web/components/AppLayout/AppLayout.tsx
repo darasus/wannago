@@ -4,7 +4,7 @@ import {Header} from '../Header/Header';
 export default function AppLayout({children}: PropsWithChildren) {
   return (
     <div>
-      <div className="relative z-10">
+      <div className="relative z-20">
         <Header />
       </div>
       <div>
