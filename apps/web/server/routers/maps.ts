@@ -8,17 +8,10 @@ const searchPlaces = protectedProcedure
       query: z.string(),
     })
   )
-  .query(async ({input}) => {
-    const client = new Client();
+  .query(async ({input, ctx}) => {
+    const response = await ctx.maps.suggestPlace(input);
 
-    const response = await client.placeAutocomplete({
-      params: {
-        key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-        input: input.query,
-      },
-    });
-
-    return response.data;
+    return response;
   });
 
 export const mapsRouter = router({

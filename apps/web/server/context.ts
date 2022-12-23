@@ -2,21 +2,19 @@ import {User} from '@clerk/nextjs/dist/api';
 import {clerkClient, getAuth} from '@clerk/nextjs/server';
 import {PrismaClient} from '@prisma/client';
 import * as trpc from '@trpc/server';
-import * as trpcNext from '@trpc/server/adapters/next';
 import {prisma} from '../../../packages/database/prisma';
-import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
-import {googleMaps} from '../lib/googleMaps';
 import {QStash} from '../lib/qStash';
 import {Mail} from '../lib/mail';
 import {FetchCreateContextFnOptions} from '@trpc/server/adapters/fetch';
 import {NextRequest} from 'next/server';
+import {Maps} from '../lib/maps';
 
 interface CreateContextOptions {
   user: User | null;
   prisma: PrismaClient;
   mail: Mail;
   qStash: QStash;
-  googleMaps: GoogleMapsClient;
+  maps: Maps;
 }
 
 /**
@@ -29,7 +27,7 @@ export async function createContextInner(_opts: CreateContextOptions) {
     prisma: _opts.prisma,
     mail: _opts.mail,
     qStash: _opts.qStash,
-    googleMaps: _opts.googleMaps,
+    maps: _opts.maps,
   };
 }
 
@@ -56,6 +54,6 @@ export async function createContext(
     prisma,
     mail: new Mail(),
     qStash: new QStash(),
-    googleMaps,
+    maps: new Maps(),
   });
 }

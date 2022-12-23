@@ -1,4 +1,3 @@
-import {Event, User} from '@prisma/client';
 import {getBaseUrl} from '../utils/getBaseUrl';
 
 export class Mail {
