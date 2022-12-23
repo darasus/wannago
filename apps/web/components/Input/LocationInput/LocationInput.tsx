@@ -10,7 +10,7 @@ import {useFormContext, useWatch} from 'react-hook-form';
 import {Form} from '../../EventForm/types';
 import {trpc} from '../../../utils/trpc';
 import {Combobox, Transition} from '@headlessui/react';
-import {CheckIcon} from '@heroicons/react/24/outline';
+import {CheckIcon} from '@heroicons/react/24/solid';
 import {useDebounce} from '../../../hooks/useDebounce';
 import clsx from 'clsx';
 import {CardBase} from '../../Card/CardBase/CardBase';
@@ -75,7 +75,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
                     key={place.place_id}
                     className={({active}) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 list-none ${
-                        active ? 'bg-purple-600 text-white' : 'text-gray-900'
+                        active ? 'bg-brand-400 text-gray-800' : 'text-gray-900'
                       }`
                     }
                     value={place.description}
@@ -84,7 +84,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
                       <>
                         <span
                           className={`block truncate ${
-                            selected ? 'font-medium' : 'font-normal'
+                            selected ? 'font-bold' : 'font-normal'
                           }`}
                         >
                           {place.description}
@@ -92,7 +92,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
                         {selected ? (
                           <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? 'text-white' : 'text-teal-600'
+                              active ? 'text-gray-800' : 'text-teal-600'
                             }`}
                           >
                             <CheckIcon className="h-5 w-5" />
