@@ -16,11 +16,8 @@ interface Props {
 export function EventView({event, timezone}: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-      <div className="md:col-span-8">
-        <div className="mb-4">
-          <OrganizerCard event={event} />
-        </div>
-        <div className="mb-4">
+      <div className="flex flex-col gap-y-4 md:col-span-8">
+        <div>
           <InfoCard event={event} />
         </div>
         <div>
@@ -31,7 +28,10 @@ export function EventView({event, timezone}: Props) {
           />
         </div>
       </div>
-      <div className="flex flex-col md:col-span-4 gap-y-4">
+      <div className="flex flex-col gap-y-4 md:col-span-4">
+        <div>
+          <OrganizerCard event={event} />
+        </div>
         <div>
           <DateCard event={event} timezone={timezone} />
         </div>

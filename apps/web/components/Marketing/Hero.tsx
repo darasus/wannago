@@ -3,7 +3,14 @@ import {Transition} from '@headlessui/react';
 import {Event, Organization, User} from '@prisma/client';
 import clsx from 'clsx';
 import {useRouter} from 'next/router';
-import {forwardRef, Fragment, useLayoutEffect, useRef, useState} from 'react';
+import {
+  forwardRef,
+  Fragment,
+  PropsWithChildren,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import {titleFontClassName} from '../../fonts';
 import {getBaseUrl} from '../../utils/getBaseUrl';
 import {Button} from '../Button/Button';
@@ -53,6 +60,25 @@ const event: Event & {organization: Organization & {users: User[]}} = {
   },
 };
 
+interface AnimateProps extends PropsWithChildren {
+  canRenderPreview: boolean;
+  delay: number;
+}
+
+const Animate = ({canRenderPreview, children, delay}: AnimateProps) => {
+  return (
+    <Transition
+      show={canRenderPreview}
+      as={Fragment}
+      enter={`transition ease-in-out duration-500 transform delay-${delay}`}
+      enterFrom="translate-y-72 opacity-0"
+      enterTo="translate-y-0 opacity-1"
+    >
+      {children}
+    </Transition>
+  );
+};
+
 export const Hero = forwardRef(function Hero(
   _,
   ref: React.Ref<HTMLDivElement>
@@ -69,6 +95,25 @@ export const Hero = forwardRef(function Hero(
     const scale = containerWidth / 1024;
     setScale(scale);
   }, [container]);
+
+  const elements = [
+    <InfoCard key={1} event={event} />,
+    <LocationCard
+      key={2}
+      address={event.address}
+      longitude={event.longitude!}
+      latitude={event.latitude!}
+    />,
+    <OrganizerCardView
+      key={3}
+      user={event.organization.users[0]}
+      isLoading={false}
+      onOpenFormClick={() => {}}
+    />,
+    <DateCard key={4} event={event} timezone={undefined} />,
+    <ParticipantsCard key={5} event={event} fake />,
+    <EventUrlCard key={6} url={`${getBaseUrl()}/e/${event.shortId}`} />,
+  ];
 
   return (
     <Container
@@ -112,83 +157,31 @@ export const Hero = forwardRef(function Hero(
           }}
         >
           <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-8">
-              <Transition
-                show={canRenderPreview}
-                as={Fragment}
-                enter="transition ease-in-out duration-500 transform delay-0"
-                enterFrom="translate-y-72 opacity-0"
-                enterTo="translate-y-0 opacity-1"
-              >
-                <div className="mb-4">
-                  <OrganizerCardView
-                    user={event.organization.users[0]}
-                    isLoading={false}
-                    onOpenFormClick={() => {}}
-                  />
-                </div>
-              </Transition>
-              <Transition
-                show={canRenderPreview}
-                as={Fragment}
-                enter="transition ease-in-out duration-500 transform delay-100"
-                enterFrom="translate-y-72 opacity-0"
-                enterTo="translate-y-0 opacity-1"
-              >
-                <div className="mb-4">
-                  <InfoCard event={event} />
-                </div>
-              </Transition>
-              <Transition
-                show={canRenderPreview}
-                as={Fragment}
-                enter="transition ease-in-out duration-500 transform delay-200"
-                enterFrom="translate-y-72 opacity-0"
-                enterTo="translate-y-0 opacity-1"
-              >
-                <div>
-                  <LocationCard
-                    address={event.address}
-                    longitude={event.longitude!}
-                    latitude={event.latitude!}
-                  />
-                </div>
-              </Transition>
+            <div className="flex flex-col col-span-8 gap-y-4">
+              {elements.slice(0, 1).map((el, i) => {
+                return (
+                  <Animate
+                    key={i}
+                    canRenderPreview={canRenderPreview}
+                    delay={i * 100}
+                  >
+                    <div>{el}</div>
+                  </Animate>
+                );
+              })}
             </div>
-            <div className="col-span-4">
-              <Transition
-                show={canRenderPreview}
-                as={Fragment}
-                enter="transition ease-in-out duration-500 transform delay-300"
-                enterFrom="translate-y-72 opacity-0"
-                enterTo="translate-y-0 opacity-1"
-              >
-                <div className="mb-4">
-                  <DateCard event={event} timezone={undefined} />
-                </div>
-              </Transition>
-              <Transition
-                show={canRenderPreview}
-                as={Fragment}
-                enter="transition ease-in-out duration-500 transform delay-400"
-                enterFrom="translate-y-72 opacity-0"
-                enterTo="translate-y-0 opacity-1"
-              >
-                <div className="mb-4">
-                  <ParticipantsCard event={event} fake />
-                </div>
-              </Transition>
-              <Transition
-                show={canRenderPreview}
-                as={Fragment}
-                enter="transition ease-in-out duration-500 transform delay-500"
-                enterFrom="translate-y-72 opacity-0"
-                enterTo="translate-y-0 opacity-1"
-              >
-                <div>
-                  <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
-                </div>
-              </Transition>
+            <div className="flex flex-col col-span-4 gap-y-4">
+              {elements.slice(2, 7).map((el, i) => {
+                return (
+                  <Animate
+                    key={i}
+                    canRenderPreview={canRenderPreview}
+                    delay={(i + 2) * 100}
+                  >
+                    <div>{el}</div>
+                  </Animate>
+                );
+              })}
             </div>
           </div>
         </div>
