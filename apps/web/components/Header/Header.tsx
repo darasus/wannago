@@ -70,15 +70,15 @@ export function Header() {
                       {item.label}
                     </Button>
                   ))}
-                  <FeedbackFish projectId="f843146d960b2f">
-                    <Button variant="neutral" size="sm">
-                      Feedback
-                    </Button>
-                  </FeedbackFish>
                 </div>
               )}
             </div>
             <div className="flex items-center gap-x-5 md:gap-x-4">
+              <FeedbackFish projectId="f843146d960b2f">
+                <Button variant="neutral" size="sm">
+                  Feedback
+                </Button>
+              </FeedbackFish>
               {showUserProfile && <UserSecsion />}
               {showDashboardLink && (
                 <>
