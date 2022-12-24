@@ -1,7 +1,6 @@
 import {FeedbackFish} from '@feedback-fish/react';
 import {useState} from 'react';
 import {Button} from '../Button/Button';
-import {CardBase} from '../Card/CardBase/CardBase';
 import {Container} from '../Container/Container';
 import {Accordion} from './Accordion';
 import {SecionHeader} from './SecionHeader';

@@ -22,7 +22,7 @@ export function UserSecsion() {
   return (
     <div>
       <Popover className="relative">
-        {({open}) => (
+        {() => (
           <>
             <Popover.Button as="div">
               <Button

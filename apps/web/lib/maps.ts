@@ -1,7 +1,6 @@
 import {
   Client,
   GeocodeResponseData,
-  PlaceAutocompleteResponse,
   PlaceAutocompleteResponseData,
 } from '@googlemaps/google-maps-services-js';
 import {getBaseUrl} from '../utils/getBaseUrl';

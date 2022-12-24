@@ -1,6 +1,14 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["NODE_ENV"],
+  "globalEnv": [
+    "NODE_ENV",
+    "MAILGUN_API_KEY",
+    "UPSTASH_REDIS_REST_TOKEN",
+    "UPSTASH_REDIS_REST_URL",
+    "QSTASH_TOKEN",
+    "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY",
+    "CLOUDFLARE_API_KEY"
+  ],
   "pipeline": {
     "build": {
       "outputs": ["dist/**", ".next/**"],

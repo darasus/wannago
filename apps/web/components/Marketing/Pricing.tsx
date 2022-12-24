@@ -39,14 +39,7 @@ function CheckIcon({className}: any) {
   );
 }
 
-function Plan({
-  name,
-  price,
-  description,
-  href,
-  features,
-  featured = false,
-}: any) {
+function Plan({name, price, description, features, featured = false}: any) {
   return (
     <section
       className={clsx(

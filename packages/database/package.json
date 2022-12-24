@@ -6,11 +6,12 @@
   "scripts": {
     "generate": "dotenv -e ./.vercel/.env.development.local -e ./.env -- npx prisma generate --data-proxy",
     "push": "dotenv -e ./.env -- npx prisma db push",
-    "studio": "dotenv -e ./.env -- npx prisma studio"
+    "studio": "dotenv -e ./.env -- npx prisma studio",
+    "lint": "eslint"
   },
   "dependencies": {},
   "devDependencies": {
-    "config": "workspace:*",
+    "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
   }
 }

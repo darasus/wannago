@@ -37,7 +37,7 @@ export const Button = forwardRef(function Button(
   const isDanger = variant === 'danger';
   // icons
   const isIconButton = iconLeft && !children;
-  const isIconAndTextButton = iconLeft && children;
+  // const isIconAndTextButton = iconLeft && children;
   // sizes
   const isSm = size === 'sm';
   const isMd = size === 'md';

@@ -1,0 +1,13 @@
+{
+  "name": "eslint-config-custom",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-react": "latest",
+    "eslint-config-turbo": "latest"
+  }
+}

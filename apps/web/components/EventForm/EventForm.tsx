@@ -1,6 +1,5 @@
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {getBaseUrl} from '../../utils/getBaseUrl';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../Card/CardBase/CardBase';

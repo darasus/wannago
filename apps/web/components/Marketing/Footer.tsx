@@ -3,7 +3,6 @@ import {Button} from '../Button/Button';
 import {Container} from '../Container/Container';
 import {navItems} from '../Header/Header';
 import {Logo} from '../Logo/Logo';
-import {NavLink} from '../NavLink/NavLink';
 
 export function Footer() {
   return (

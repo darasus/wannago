@@ -1,8 +1,4 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import fs from 'fs';
-import FormData from 'form-data';
-import formidable from 'formidable';
-import got from 'got';
 import {Mailgun} from '../../../lib/mailgun';
 import {z} from 'zod';
 import {prisma} from 'database/prisma';

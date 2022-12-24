@@ -1,5 +1,4 @@
 import {ImageResponse} from '@vercel/og';
-import {NextRequest} from 'next/server';
 
 export const config = {
   runtime: 'experimental-edge',
@@ -9,7 +8,7 @@ const fontResponse = fetch(
   new URL('../../public/paytone-one.ttf', import.meta.url)
 ).then(res => res.arrayBuffer());
 
-export default async function handler(req: NextRequest) {
+export default async function handler() {
   const [font] = await Promise.all([fontResponse]);
 
   return new ImageResponse(

@@ -4,7 +4,8 @@
   "license": "MIT",
   "main": "./index.ts",
   "scripts": {
-    "dev": "email dev"
+    "dev": "email dev",
+    "lint": "eslint"
   },
   "dependencies": {
     "@react-email/button": "^0.0.4",
@@ -20,7 +21,7 @@
     "react-email": "1.2.1-canary.4"
   },
   "devDependencies": {
-    "config": "workspace:*",
+    "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
   }
 }

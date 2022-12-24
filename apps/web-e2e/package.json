@@ -8,6 +8,7 @@
     "test:e2e:report": "pnpm dlx playwright show-report"
   },
   "devDependencies": {
-    "@playwright/test": "latest"
+    "@playwright/test": "latest",
+    "eslint-config-custom": "workspace:*"
   }
 }

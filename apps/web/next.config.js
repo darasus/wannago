@@ -28,9 +28,7 @@ const moduleExports = {
       'gravatar.com',
     ],
   },
-  experimental: {
-    transpilePackages: ['database'],
-  },
+  transpilePackages: ['database'],
 };
 
 // Make sure adding Sentry options is the last code to run before exporting, to
