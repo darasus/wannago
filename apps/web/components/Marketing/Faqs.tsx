@@ -98,7 +98,7 @@ export function Faqs() {
               {"If you can't find what you're looking for, send us a "}
               <FeedbackFish projectId="f843146d960b2f">
                 <Button variant="link" className="text-xl">
-                  Feedback
+                  feedback
                 </Button>
               </FeedbackFish>
               {" and we'll try to respond as soon as possible."}
