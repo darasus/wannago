@@ -20,17 +20,15 @@ export const Accordion = ({
 }: Props) => {
   const isOpen = index === isExpanded;
 
-  // By using `AnimatePresence` to mount and unmount the contents, we can animate
-  // them in and out while also only rendering the contents of open accordions
   return (
     <div className="mb-2">
       <motion.header
-        className="flex items-center text-xl cursor-pointer font-medium"
+        className="flex items-start text-xl cursor-pointer font-medium"
         initial={false}
         onClick={() => setExpanded(isOpen ? false : index)}
       >
         <motion.div
-          className="flex items-center justify-center bg-gray-200 h-8 w-8 rounded-full mr-2"
+          className="flex items-center justify-center bg-gray-100 h-7 w-7 rounded-full mr-2 shrink-0"
           initial={false}
           animate={{rotate: isOpen ? '0deg' : '180deg'}}
         >
