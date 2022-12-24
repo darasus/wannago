@@ -1,5 +1,5 @@
 import {useUser} from '@clerk/nextjs';
-import {Transition} from '@headlessui/react';
+import {motion, Variants, AnimatePresence} from 'framer-motion';
 import {Event, Organization, User} from '@prisma/client';
 import clsx from 'clsx';
 import {useRouter} from 'next/router';
@@ -61,21 +61,32 @@ const event: Event & {organization: Organization & {users: User[]}} = {
 };
 
 interface AnimateProps extends PropsWithChildren {
-  canRenderPreview: boolean;
-  delay: number;
+  delay?: number;
 }
 
-const Animate = ({canRenderPreview, children, delay}: AnimateProps) => {
+const Animate = ({children, delay}: AnimateProps) => {
   return (
-    <Transition
-      show={canRenderPreview}
-      as={Fragment}
-      enter={`transition ease-in-out duration-500 transform delay-${delay}`}
-      enterFrom="translate-y-72 opacity-0"
-      enterTo="translate-y-0 opacity-1"
-    >
-      {children}
-    </Transition>
+    <AnimatePresence>
+      <motion.div
+        className="card-container"
+        initial={{
+          y: 100,
+          opacity: 0,
+        }}
+        animate={{
+          y: 0,
+          opacity: 1,
+          transition: {
+            type: 'spring',
+            bounce: 0.4,
+            duration: 1.5,
+            delay,
+          },
+        }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
@@ -118,7 +129,7 @@ export const Hero = forwardRef(function Hero(
   return (
     <Container
       ref={ref}
-      className="pt-20 lg:pt-32 mb-0 relative z-10 md:pointer-events-none"
+      className="pt-20 lg:pt-32 mb-0 relative z-10 md:pointer-events-none overflow-hidden"
     >
       <h1
         className={clsx(
@@ -147,7 +158,7 @@ export const Hero = forwardRef(function Hero(
       </div>
       <div
         ref={container}
-        className="flex justify-center relative w-full m-auto h-80 md:h-96 lg:h-hero-preview overflow-hidden"
+        className="flex justify-center relative w-full m-auto h-80 md:h-96 lg:h-hero-preview"
       >
         <div
           style={{
@@ -156,34 +167,28 @@ export const Hero = forwardRef(function Hero(
             transformOrigin: 'top center',
           }}
         >
-          <div className="grid grid-cols-12 gap-4">
-            <div className="flex flex-col col-span-8 gap-y-4">
-              {elements.slice(0, 1).map((el, i) => {
-                return (
-                  <Animate
-                    key={i}
-                    canRenderPreview={canRenderPreview}
-                    delay={i * 100}
-                  >
-                    <div>{el}</div>
-                  </Animate>
-                );
-              })}
+          {canRenderPreview && (
+            <div className="grid grid-cols-12 gap-4">
+              <div className="flex flex-col col-span-8 gap-y-4">
+                {elements.slice(0, 1).map((el, i) => {
+                  return (
+                    <Animate key={i}>
+                      <div>{el}</div>
+                    </Animate>
+                  );
+                })}
+              </div>
+              <div className="flex flex-col col-span-4 gap-y-4">
+                {elements.slice(2, 7).map((el, i) => {
+                  return (
+                    <Animate key={i} delay={(i + 1) / 2}>
+                      <div>{el}</div>
+                    </Animate>
+                  );
+                })}
+              </div>
             </div>
-            <div className="flex flex-col col-span-4 gap-y-4">
-              {elements.slice(2, 7).map((el, i) => {
-                return (
-                  <Animate
-                    key={i}
-                    canRenderPreview={canRenderPreview}
-                    delay={(i + 2) * 100}
-                  >
-                    <div>{el}</div>
-                  </Animate>
-                );
-              })}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </Container>
