@@ -1,11 +1,10 @@
 import {useUser} from '@clerk/nextjs';
-import {motion, Variants, AnimatePresence} from 'framer-motion';
+import {motion, AnimatePresence} from 'framer-motion';
 import {Event, Organization, User} from '@prisma/client';
 import clsx from 'clsx';
 import {useRouter} from 'next/router';
 import {
   forwardRef,
-  Fragment,
   PropsWithChildren,
   useLayoutEffect,
   useRef,
@@ -127,70 +126,72 @@ export const Hero = forwardRef(function Hero(
   ];
 
   return (
-    <Container
-      ref={ref}
-      className="pt-20 lg:pt-32 mb-0 relative z-10 md:pointer-events-none overflow-hidden"
-    >
-      <h1
-        className={clsx(
-          titleFontClassName,
-          'mx-auto max-w-4xl text-3xl md:text-4xl lg:text-7xl tracking-tight text-slate-800 text-center'
-        )}
+    <div>
+      <Container
+        ref={ref}
+        className="pt-20 lg:pt-32 mb-0 relative z-10 md:pointer-events-none overflow-hidden"
       >
-        <div>Create and share </div>
-        <span className="relative whitespace-nowrap">
-          {/* <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-1000"> */}
-          <span className="relative">beautiful event pages</span>
-        </span>
-      </h1>
-      <p className="mx-auto mt-6 max-w-xl text-lg tracking-tight text-slate-700 text-center">
-        Most event management software is too complicated and expensive.{' '}
-        <span className="font-bold">We solved this problem for you.</span>
-      </p>
-      <div className="mt-10 flex justify-center gap-x-6 mb-16">
-        <Button
-          className="pointer-events-auto"
-          size="lg"
-          onClick={() => router.push(isSignedIn ? '/event/add' : '/login')}
-        >
-          Create your first event
-        </Button>
-      </div>
-      <div
-        ref={container}
-        className="flex justify-center relative w-full m-auto h-80 md:h-96 lg:h-hero-preview"
-      >
-        <div
-          style={{
-            minWidth: 1024,
-            scale: `${scale}`,
-            transformOrigin: 'top center',
-          }}
-        >
-          {canRenderPreview && (
-            <div className="grid grid-cols-12 gap-4">
-              <div className="flex flex-col col-span-8 gap-y-4">
-                {elements.slice(0, 1).map((el, i) => {
-                  return (
-                    <Animate key={i}>
-                      <div>{el}</div>
-                    </Animate>
-                  );
-                })}
-              </div>
-              <div className="flex flex-col col-span-4 gap-y-4">
-                {elements.slice(2, 7).map((el, i) => {
-                  return (
-                    <Animate key={i} delay={(i + 1) / 2}>
-                      <div>{el}</div>
-                    </Animate>
-                  );
-                })}
-              </div>
-            </div>
+        <h1
+          className={clsx(
+            titleFontClassName,
+            'mx-auto max-w-4xl text-3xl md:text-4xl lg:text-7xl tracking-tight text-slate-800 text-center'
           )}
+        >
+          <div>Create and share </div>
+          <span className="relative whitespace-nowrap">
+            {/* <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-1000"> */}
+            <span className="relative">beautiful event pages</span>
+          </span>
+        </h1>
+        <p className="mx-auto mt-6 max-w-xl text-lg tracking-tight text-slate-700 text-center">
+          Most event management software is too complicated and expensive.{' '}
+          <span className="font-bold">We solved this problem for you.</span>
+        </p>
+        <div className="mt-10 flex justify-center gap-x-6 mb-16">
+          <Button
+            className="pointer-events-auto"
+            size="lg"
+            onClick={() => router.push(isSignedIn ? '/event/add' : '/login')}
+          >
+            Create your first event
+          </Button>
         </div>
-      </div>
-    </Container>
+        <div
+          ref={container}
+          className="flex justify-center relative w-full m-auto h-80 md:h-96 lg:h-hero-preview"
+        >
+          <div
+            style={{
+              minWidth: 1024,
+              scale: `${scale}`,
+              transformOrigin: 'top center',
+            }}
+          >
+            {canRenderPreview && (
+              <div className="grid grid-cols-12 gap-4">
+                <div className="flex flex-col col-span-8 gap-y-4">
+                  {elements.slice(0, 1).map((el, i) => {
+                    return (
+                      <Animate key={i}>
+                        <div>{el}</div>
+                      </Animate>
+                    );
+                  })}
+                </div>
+                <div className="flex flex-col col-span-4 gap-y-4">
+                  {elements.slice(2, 7).map((el, i) => {
+                    return (
+                      <Animate key={i} delay={(i + 1) / 2}>
+                        <div>{el}</div>
+                      </Animate>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </Container>
+    </div>
   );
 });
