@@ -49,7 +49,7 @@ export default function EventPage({
         shortEventId={data.shortId!}
       />
       <Container className="md:px-4">
-        <EventView event={data} timezone={clientTimezone} />
+        <EventView event={data} timezone={clientTimezone} isPublic />
       </Container>
     </div>
   );

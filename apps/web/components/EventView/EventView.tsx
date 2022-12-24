@@ -11,9 +11,10 @@ import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
 interface Props {
   event: Event;
   timezone?: string;
+  isPublic?: boolean;
 }
 
-export function EventView({event, timezone}: Props) {
+export function EventView({event, timezone, isPublic}: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
       <div className="flex flex-col gap-y-4 md:col-span-8">
@@ -41,9 +42,11 @@ export function EventView({event, timezone}: Props) {
         <div>
           <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
         </div>
-        <div>
-          <EventWannaGoArea eventId={event.id} />
-        </div>
+        {isPublic && (
+          <div>
+            <EventWannaGoArea eventId={event.id} />
+          </div>
+        )}
       </div>
     </div>
   );
