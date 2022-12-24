@@ -3,7 +3,7 @@ import {titleFontClassName} from '../../fonts';
 
 interface Props {
   title: string;
-  description: string;
+  description: string | JSX.Element;
   id?: string;
 }
 
