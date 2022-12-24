@@ -21,9 +21,14 @@ interface Props {
 }
 
 export function ParticipantsCard({event, fake}: Props) {
-  const {data, refetch} = trpc.event.getNumberOfAttendees.useQuery({
-    eventId: event.id,
-  });
+  const {data, refetch} = trpc.event.getNumberOfAttendees.useQuery(
+    {
+      eventId: event.id,
+    },
+    {
+      enabled: !fake,
+    }
+  );
   const {
     register,
     handleSubmit,
