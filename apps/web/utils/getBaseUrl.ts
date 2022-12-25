@@ -1,16 +1,8 @@
-import {isProd} from './isProd';
+import {env} from '../lib/env/client';
 
 export const getBaseUrl = () => {
-  if (isProd) {
-    return 'https://www.wannago.app';
-  }
-
-  if (process.env.NEXT_PUBLIC_BASE_URL_OVERRIDE) {
-    return `https://${process.env.NEXT_PUBLIC_BASE_URL_OVERRIDE}`;
-  }
-
-  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
-    return 'https://www.wannago.app';
+  if (env.NEXT_PUBLIC_BASE_URL) {
+    return env.NEXT_PUBLIC_BASE_URL;
   }
 
   const vercelUrl =
