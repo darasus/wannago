@@ -82,11 +82,13 @@ export function Header() {
             </div>
             <div className="flex items-center gap-x-5 md:gap-x-4">
               {showFeedback && (
-                <FeedbackFish projectId="f843146d960b2f">
-                  <Button variant="neutral" size="sm">
-                    Feedback
-                  </Button>
-                </FeedbackFish>
+                <div className="hidden md:block">
+                  <FeedbackFish projectId="f843146d960b2f">
+                    <Button variant="neutral" size="sm">
+                      Feedback
+                    </Button>
+                  </FeedbackFish>
+                </div>
               )}
               {showUserProfile && <UserSection />}
               {showDashboardLink && (
@@ -152,27 +154,27 @@ export function Header() {
                           className="absolute z-50 inset-x-0 top-20 flex origin-top flex-col tracking-tight -mx-4"
                         >
                           <CardBase>
-                            {navItems.map((item, i) => (
-                              <Fragment key={i}>
-                                <Popover.Button
-                                  as={(props: any) => (
-                                    <Button
-                                      {...props}
-                                      as="a"
-                                      variant="neutral"
-                                    />
-                                  )}
-                                  href={item.href}
-                                >
-                                  {item.label}
-                                </Popover.Button>
-                                <div
-                                  className={clsx({
-                                    'mb-4': navItems.length - 1 !== i,
-                                  })}
-                                />
-                              </Fragment>
-                            ))}
+                            <div className="flex flex-col items-start gap-y-4">
+                              {navItems.map((item, i) => (
+                                <Fragment key={i}>
+                                  <Popover.Button
+                                    as={(props: any) => (
+                                      <Button
+                                        {...props}
+                                        as="a"
+                                        variant="neutral"
+                                      />
+                                    )}
+                                    href={item.href}
+                                  >
+                                    {item.label}
+                                  </Popover.Button>
+                                </Fragment>
+                              ))}
+                              <FeedbackFish projectId="f843146d960b2f">
+                                <Button variant="neutral">Feedback</Button>
+                              </FeedbackFish>
+                            </div>
                             <hr className="my-4 border-slate-300/40" />
                             <div className="flex gap-4">
                               {showAuthButtons && (
