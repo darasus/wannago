@@ -3,12 +3,12 @@ import {useState} from 'react';
 import {Button} from '../Button/Button';
 import {Container} from '../Container/Container';
 import {Accordion} from './Accordion';
-import {SecionHeader} from './SecionHeader';
+import {SectionHeader} from './SectionHeader';
 import {SectionContainer} from './SectionContainer';
 
 const faqs = [
   {
-    question: 'How do I create an event page?',
+    question: 'How do I create event page?',
     answer: (
       <span>
         After creating account on wannago.app, simply go to{' '}
@@ -23,47 +23,47 @@ const faqs = [
   },
   {
     question: 'Can I customize my event page?',
-    answer: `Unfortunately right now it is not possible to customize the visuals of your event page.`,
+    answer: `Unfortunately right now it is not possible to customize your event page but we're planning to add that feature in the future.`,
   },
   {
     question: 'How do I share my event page with others?',
-    answer: `To share your event page with others, simply copy the link to your event page (in the green box) and share it via email, social media, or any other platform you prefer.`,
+    answer: `To share your event page with others, simply copy public link to your event page and share it via email, social media, or any other platform your choice.`,
   },
   {
     question: 'Can my guests RSVP on my event page?',
-    answer: `Yes, your guests can RSVP on your event page by filing in email address and clicking on the "Join" button.`,
+    answer: `Yes, your guests can RSVP on your event page by filling in name, email address and clicking on "Join" button.`,
   },
   {
     question: 'Can I see who is coming to my event?',
-    answer: `Yes, you can see who is coming to your event by viewing the list of attendees on your event page.`,
+    answer: `Yes, you can see who is coming to your event by viewing the list of attendees on your event page. You can also export a list of attendees as csv file.`,
   },
   {
     question: 'Is there a limit to the number of guests I can invite?',
-    answer: `There is no limit to the number of guests you can invite to your event.`,
+    answer: `There is no limit on the number of guests you can invite to your event.`,
   },
   {
     question: 'Can I add multiple events?',
     answer: `There is not limit in how many events you can create.`,
   },
   {
-    question: 'Is there a cost to use EventPage?',
-    answer: `No, WannaGo is completely free to use right now but we're planning to add extra paid features in the future.`,
+    question: 'Is there a cost to use WannaGo?',
+    answer: `No, WannaGo is completely free to use right now but we're planning to add premium features in the future.`,
   },
   {
     question: 'Can I add photos and videos to my event page?',
-    answer: `Currently you can add only one photo to your event page.`,
+    answer: `Currently you can add only one featured photo to your event page.`,
   },
   {
     question: 'Can I add a map to my event page?',
-    answer: `Yes, you can add a map to your event page by entering the address of your event, map with correct location will automatically show up on yout event page.`,
+    answer: `Yes, you can add a map to your event page by entering the address of your event, map with correct location will automatically show up on your event page.`,
   },
   {
     question: 'Can I add a description to my event?',
-    answer: `Yes, you can add rich description to your event with a simple text editor on the event form.`,
+    answer: `Yes, you can add rich text description to your event with a simple text editor in the event form.`,
   },
   {
     question: `Can I add a schedule or agenda to my event page?`,
-    answer: `Currently it is possible in the description field but we're working on a more advanced way of defining your agenda.`,
+    answer: `Currently it is possible to add agenda in the description field but we're working on a more dedicated way of creating agendas.`,
   },
   {
     question: 'Can I add a list of attendees to my event page?',
@@ -76,7 +76,7 @@ const faqs = [
   },
   {
     question: 'Can I add a contact form to my event page?',
-    answer: `Yes, you can ask a question by clicking on "Have questions?" in the organizer section on the event page.`,
+    answer: `Yes, all event pages have a contact form.`,
   },
   {
     question: 'Can I add a password to my event page?',
@@ -90,8 +90,8 @@ export function Faqs() {
   return (
     <SectionContainer id="faq" className="bg-white">
       <Container className="grid md:grid-cols-2 items-center gap-x-8 relative my-0">
-        <SecionHeader
-          title="Frequently asked questions"
+        <SectionHeader
+          title="FAQs"
           description={
             <>
               {"If you can't find what you're looking for, send us a "}

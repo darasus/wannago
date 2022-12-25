@@ -11,7 +11,7 @@ import {getBaseUrl} from '../../utils/getBaseUrl';
 import {Button} from '../Button/Button';
 import {Container} from '../Container/Container';
 import {SectionContainer} from './SectionContainer';
-import {SecionHeader} from './SecionHeader';
+import {SectionHeader} from './SectionHeader';
 
 const initial = {
   right: {x: 50, opacity: 0},
@@ -119,7 +119,7 @@ export default function EventSlider() {
   return (
     <SectionContainer id="examples">
       <Container>
-        <SecionHeader
+        <SectionHeader
           title="Examples of events"
           description="If you can't find what you're looking for, send us a"
         />

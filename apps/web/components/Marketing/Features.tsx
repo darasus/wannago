@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import {Container} from '../Container/Container';
-import {SecionHeader} from './SecionHeader';
+import {SectionHeader} from './SectionHeader';
 import {
   UserGroupIcon,
   CalendarDaysIcon,
@@ -81,7 +81,7 @@ export function Features() {
   return (
     <SectionContainer id="features" className="bg-white">
       <Container className="my-0">
-        <SecionHeader
+        <SectionHeader
           title="Easiest way to invite your network to your place"
           description="All you need to do is welcome your guests and we will take care of
             the rest."

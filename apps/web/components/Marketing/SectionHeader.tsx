@@ -7,7 +7,7 @@ interface Props {
   id?: string;
 }
 
-export function SecionHeader({title, description, id}: Props) {
+export function SectionHeader({title, description, id}: Props) {
   return (
     <div className="mx-auto text-center mb-16 max-w-4xl">
       <h2

@@ -1,7 +1,7 @@
 import {useRouter} from 'next/router';
 import {Button} from '../Button/Button';
 import {Container} from '../Container/Container';
-import {SecionHeader} from './SecionHeader';
+import {SectionHeader} from './SectionHeader';
 import {SectionContainer} from './SectionContainer';
 
 export function CallToAction() {
@@ -10,7 +10,7 @@ export function CallToAction() {
   return (
     <SectionContainer>
       <Container className="relative my-0">
-        <SecionHeader
+        <SectionHeader
           title="Get started today"
           description="Nothing stops you from trying out WannaGo, just create account and
             see for yourself."
