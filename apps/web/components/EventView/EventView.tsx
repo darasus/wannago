@@ -15,9 +15,12 @@ interface Props {
 }
 
 export function EventView({event, timezone, isPublic}: Props) {
+  const organizer = <OrganizerCard event={event} />;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
       <div className="flex flex-col gap-y-4 md:col-span-8">
+        <div className="block md:hidden">{organizer}</div>
         <div>
           <InfoCard event={event} />
         </div>
@@ -30,9 +33,7 @@ export function EventView({event, timezone, isPublic}: Props) {
         </div>
       </div>
       <div className="flex flex-col gap-y-4 md:col-span-4">
-        <div>
-          <OrganizerCard event={event} />
-        </div>
+        <div className="hidden md:block">{organizer}</div>
         <div>
           <DateCard event={event} timezone={timezone} />
         </div>
