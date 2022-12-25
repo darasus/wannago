@@ -1,4 +1,10 @@
+import {isProd} from './isProd';
+
 export const getBaseUrl = () => {
+  if (isProd) {
+    return 'https://www.wannago.app';
+  }
+
   if (process.env.NEXT_PUBLIC_BASE_URL_OVERRIDE) {
     return `https://${process.env.NEXT_PUBLIC_BASE_URL_OVERRIDE}`;
   }
