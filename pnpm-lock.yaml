@@ -50,6 +50,7 @@ importers:
       date-fns: ^2.29.3
       date-fns-tz: ^1.3.7
       dotenv-cli: ^6.0.0
+      fathom-client: ^3.5.0
       file-saver: ^2.0.5
       form-data: ^4.0.0
       formidable: ^2.0.1
@@ -114,6 +115,7 @@ importers:
       copy-to-clipboard: 3.3.3
       date-fns: 2.29.3
       date-fns-tz: 1.3.7_date-fns@2.29.3
+      fathom-client: 3.5.0
       file-saver: 2.0.5
       form-data: 4.0.0
       formidable: 2.0.1
@@ -3190,6 +3192,10 @@ packages:
     resolution: {integrity: sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==}
     dependencies:
       reusify: 1.0.4
+
+  /fathom-client/3.5.0:
+    resolution: {integrity: sha512-BiRDS9Q9a8Zma0H717FWC5cvf545K/CsxBpxKT22TcSl1EbRhhlHWIJgrdeiQUfdorBK2ppy09TwMOhRsbos/A==}
+    dev: false
 
   /fflate/0.7.4:
     resolution: {integrity: sha512-5u2V/CDW15QM1XbbgS+0DfPxVB+jUKhWEKuuFuHncbk3tEEqzmoXL+2KyOFuKGqOnmdIy0/davWF1CkuwtibCw==}

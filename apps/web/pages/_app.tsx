@@ -11,8 +11,34 @@ import clsx from 'clsx';
 import {getBaseUrl} from '../utils/getBaseUrl';
 import {Analytics} from '@vercel/analytics/react';
 import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/24/outline';
+import {useEffect} from 'react';
+import * as Fathom from 'fathom-client';
+import {useRouter} from 'next/router';
+import {isProd} from '../utils/isProd';
+import {env} from '../lib/env/client';
 
 function MyApp({Component, pageProps}: AppProps) {
+  const router = useRouter();
+
+  useEffect(() => {
+    Fathom.load(env.NEXT_PUBLIC_USE_FATHOM_KEY, {
+      includedDomains: ['wannago.app', 'www.wannago.app'],
+    });
+
+    function onRouteChangeComplete() {
+      Fathom.trackPageview();
+    }
+
+    if (isProd) {
+      router.events.on('routeChangeComplete', onRouteChangeComplete);
+    }
+
+    return () => {
+      router.events.off('routeChangeComplete', onRouteChangeComplete);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Head>
