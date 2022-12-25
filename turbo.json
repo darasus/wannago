@@ -8,8 +8,7 @@
     "QSTASH_TOKEN",
     "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY",
     "CLOUDFLARE_API_KEY",
-    "NEXT_PUBLIC_VERCEL_ENV",
-    "NEXT_PUBLIC_USE_FATHOM_KEY"
+    "NEXT_PUBLIC_VERCEL_ENV"
   ],
   "pipeline": {
     "build": {

@@ -15,7 +15,6 @@ export const serverSchema = z.object({
  * To expose them to the client, prefix them with `NEXT_PUBLIC_`.
  */
 export const clientSchema = z.object({
-  NEXT_PUBLIC_USE_FATHOM_KEY: z.string(),
   NEXT_PUBLIC_VERCEL_ENV: z.string(),
 });
 
@@ -26,6 +25,5 @@ export const clientSchema = z.object({
  * @type {{ [k in keyof z.infer<typeof clientSchema>]: z.infer<typeof clientSchema>[k] | undefined }}
  */
 export const clientEnv = {
-  NEXT_PUBLIC_USE_FATHOM_KEY: process.env.NEXT_PUBLIC_USE_FATHOM_KEY,
   NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
 };
