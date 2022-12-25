@@ -12,9 +12,9 @@ import {FeedbackFish} from '@feedback-fish/react';
 import {getBaseUrl} from '../../utils/getBaseUrl';
 
 export const navItems = [
-  {label: 'Features', href: `${getBaseUrl()}/#features`},
-  {label: 'FAQ', href: `${getBaseUrl()}/#faq`},
-  {label: 'Examples', href: `${getBaseUrl()}/examples`},
+  {label: 'Features', href: `/#features`},
+  {label: 'FAQ', href: `/#faq`},
+  {label: 'Examples', href: `/examples`},
 ];
 
 function MobileNavIcon({open}: any) {
