@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function EventCard({event}: Props) {
-  const isUpdcoming = isFuture(event.startDate);
+  const isUpcoming = isFuture(event.startDate);
 
   return (
     <CardBase className="flex flex-col">
@@ -35,11 +35,11 @@ export function EventCard({event}: Props) {
       )}
       <div>
         <div className="flex items-center">
-          <Badge color={isUpdcoming ? 'green' : 'gray'} className="mr-2 mb-1">
-            {isUpdcoming ? 'Upcoming' : 'Past'}
+          <Badge color={isUpcoming ? 'green' : 'gray'} className="mr-2 mb-1">
+            {isUpcoming ? 'Upcoming' : 'Past'}
           </Badge>
           <Text className="text-sm text-gray-600 truncate">
-            {formatDate(event.startDate, 'yyyy/MM/dd hh:m')}
+            {formatDate(event.startDate, 'yyyy/MM/dd HH:mm')}
           </Text>
         </div>
         <div />
