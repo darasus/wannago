@@ -9,10 +9,12 @@ import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';
 import {UserSecsion} from '../UserSecsion/UserSecsion';
 import {FeedbackFish} from '@feedback-fish/react';
+import {exampleIds} from '../../exampleIds';
 
 export const navItems = [
   {label: 'Features', href: '#features'},
   {label: 'FAQ', href: '#faq'},
+  // {label: 'Examples', href: `/examples/${exampleIds[0]}`},
 ];
 
 function MobileNavIcon({open}: any) {
@@ -46,6 +48,7 @@ export function Header() {
   const isHome = router.pathname === '/';
   const {isSignedIn} = useUser();
   const showUserProfile = !isHome && isSignedIn;
+  const showFeedback = isHome;
   const showDashboardLink = isSignedIn && isHome;
   const showAuthButtons = isHome && !isSignedIn;
   const showMobileMenu = !isSignedIn || isHome;
@@ -74,11 +77,13 @@ export function Header() {
               )}
             </div>
             <div className="flex items-center gap-x-5 md:gap-x-4">
-              <FeedbackFish projectId="f843146d960b2f">
-                <Button variant="neutral" size="sm">
-                  Feedback
-                </Button>
-              </FeedbackFish>
+              {showFeedback && (
+                <FeedbackFish projectId="f843146d960b2f">
+                  <Button variant="neutral" size="sm">
+                    Feedback
+                  </Button>
+                </FeedbackFish>
+              )}
               {showUserProfile && <UserSecsion />}
               {showDashboardLink && (
                 <>
