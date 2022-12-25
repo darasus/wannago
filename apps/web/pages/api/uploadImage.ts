@@ -3,6 +3,7 @@ import fs from 'fs';
 import FormData from 'form-data';
 import formidable from 'formidable';
 import got from 'got';
+import {env} from '../../lib/env/server';
 
 export const config = {
   api: {
@@ -36,7 +37,7 @@ export default async function handler(
           {
             body: payload,
             headers: {
-              Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
+              Authorization: `Bearer ${env.CLOUDFLARE_API_KEY}`,
             },
           }
         )

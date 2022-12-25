@@ -11,11 +11,12 @@ import {
   MessageToAttendees,
 } from 'email';
 import {formatDate} from '../utils/formatDate';
+import {env} from './env/server';
 
 const mailgunIstance = new MailgunClient(formData);
 const mailgun = mailgunIstance.client({
   username: 'api',
-  key: process.env.MAILGUN_API_KEY!,
+  key: env.MAILGUN_API_KEY!,
 });
 
 export class Mailgun {

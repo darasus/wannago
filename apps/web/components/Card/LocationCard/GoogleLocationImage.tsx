@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import {env} from '../../../lib/env/client';
 
 interface Props {
   address: string;
@@ -17,7 +18,7 @@ export function GoogleLocationImage({
 }: Props) {
   const url = new URL('https://maps.googleapis.com/maps/api/staticmap');
 
-  url.searchParams.set('key', process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
+  url.searchParams.set('key', env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
   url.searchParams.set('size', `${width}x${height}`);
   url.searchParams.set('zoom', '16');
   url.searchParams.set('maptype', 'roadmap');

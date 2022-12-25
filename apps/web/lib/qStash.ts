@@ -2,9 +2,10 @@ import {Event} from '@prisma/client';
 import {Client} from '@upstash/qstash';
 import {differenceInSeconds, sub} from 'date-fns';
 import {REMINDER_PERIOD_IN_SECONDS} from '../constants';
+import {env} from './env/server';
 
 const queue = new Client({
-  token: process.env.QSTASH_TOKEN!,
+  token: env.QSTASH_TOKEN!,
 });
 
 export class QStash {
