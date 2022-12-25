@@ -15,7 +15,7 @@ export const serverSchema = z.object({
  * To expose them to the client, prefix them with `NEXT_PUBLIC_`.
  */
 export const clientSchema = z.object({
-  NEXT_PUBLIC_BASE_URL: z.string(),
+  NEXT_PUBLIC_BASE_URL: z.string().optional(),
 });
 
 /**

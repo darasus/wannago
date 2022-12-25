@@ -24,9 +24,10 @@ export default function ExamplesPage() {
             {data?.map(event => {
               return (
                 <Link
-                  href={`/examples/${event.id}`}
+                  href={`/e/${event.shortId}`}
                   key={event.id}
                   data-testid="example-event-card"
+                  target={'_blank'}
                 >
                   <EventCard event={event} />
                 </Link>
