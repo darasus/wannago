@@ -54,7 +54,7 @@ export function MessageParticipantsButton() {
             </div>
             <div className="flex justify-start gap-x-2">
               <Button onClick={() => setIsOpen(false)} variant="neutral">
-                Send
+                Cancel
               </Button>
               <Button isLoading={isSubmitting} type="submit">
                 Send
