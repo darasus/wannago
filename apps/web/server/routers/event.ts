@@ -368,9 +368,6 @@ const getExamples = publicProcedure.query(({ctx}) => {
   return ctx.prisma.event
     .findMany({
       where: {
-        title: {
-          contains: '__EXAMPLE__',
-        },
         isPublished: true,
         organization: {
           users: {
