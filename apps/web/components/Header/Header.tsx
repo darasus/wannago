@@ -7,9 +7,8 @@ import {CardBase} from '../Card/CardBase/CardBase';
 import {Button} from '../Button/Button';
 import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';
-import {UserSection} from '../UserSection/UserSecsion';
+import {UserSection} from '../UserSection/UserSection';
 import {FeedbackFish} from '@feedback-fish/react';
-import {getBaseUrl} from '../../utils/getBaseUrl';
 
 export const navItems = [
   {label: 'Features', href: `/#features`},

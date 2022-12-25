@@ -5,16 +5,20 @@ import {formatDate} from '../../../utils/formatDate';
 import {Badge} from '../../Badge/Badge';
 import {CardBase} from '../CardBase/CardBase';
 import {Text} from '../../Text/Text';
+import {forwardRef} from 'react';
 
 interface Props {
   event: Event;
 }
 
-export function EventCard({event}: Props) {
+export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
+  {event},
+  ref
+) {
   const isUpcoming = isFuture(event.startDate);
 
   return (
-    <CardBase className="flex flex-col">
+    <CardBase ref={ref} className="flex flex-col">
       {event.featuredImageSrc && (
         <div className="grow overflow-hidden relative justify-center bg-black rounded-3xl aspect-video safari-rounded-border-fix mb-4">
           <div className="absolute left-4 top-4 z-10">
@@ -30,6 +34,7 @@ export function EventCard({event}: Props) {
             fill
             style={{objectFit: 'cover'}}
             priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
       )}
@@ -47,4 +52,4 @@ export function EventCard({event}: Props) {
       </div>
     </CardBase>
   );
-}
+});

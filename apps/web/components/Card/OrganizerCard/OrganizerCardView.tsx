@@ -38,9 +38,10 @@ export function OrganizerCardView({isLoading, onOpenFormClick, user}: Props) {
                 <Image
                   src={user?.profileImageSrc}
                   alt=""
-                  fill
                   style={{objectFit: 'cover'}}
                   priority
+                  width={100}
+                  height={100}
                 />
               ) : (
                 <Image
