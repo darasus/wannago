@@ -7,7 +7,7 @@ import {CardBase} from '../Card/CardBase/CardBase';
 import {Button} from '../Button/Button';
 import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';
-import {UserSecsion} from '../UserSecsion/UserSecsion';
+import {UserSection} from '../UserSection/UserSection';
 import {FeedbackFish} from '@feedback-fish/react';
 import {exampleIds} from '../../exampleIds';
 
@@ -84,7 +84,7 @@ export function Header() {
                   </Button>
                 </FeedbackFish>
               )}
-              {showUserProfile && <UserSecsion />}
+              {showUserProfile && <UserSection />}
               {showDashboardLink && (
                 <>
                   <Button

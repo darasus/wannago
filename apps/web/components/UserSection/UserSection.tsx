@@ -7,7 +7,7 @@ import {Button} from '../Button/Button';
 import {CardBase} from '../Card/CardBase/CardBase';
 import {FeedbackFish} from '@feedback-fish/react';
 
-export function UserSecsion() {
+export function UserSection() {
   const router = useRouter();
   const {user, isLoaded} = useUser();
   const {signOut} = useClerk();
