@@ -7,14 +7,14 @@ import {CardBase} from '../Card/CardBase/CardBase';
 import {Button} from '../Button/Button';
 import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';
-import {UserSection} from '../UserSection/UserSection';
+import {UserSection} from '../UserSection/UserSecsion';
 import {FeedbackFish} from '@feedback-fish/react';
-import {exampleIds} from '../../exampleIds';
+import {getBaseUrl} from '../../utils/getBaseUrl';
 
 export const navItems = [
-  {label: 'Features', href: '#features'},
-  {label: 'FAQ', href: '#faq'},
-  // {label: 'Examples', href: `/examples/${exampleIds[0]}`},
+  {label: 'Features', href: `${getBaseUrl()}/#features`},
+  {label: 'FAQ', href: `${getBaseUrl()}/#faq`},
+  {label: 'Examples', href: `${getBaseUrl()}/examples`},
 ];
 
 function MobileNavIcon({open}: any) {
@@ -43,15 +43,19 @@ function MobileNavIcon({open}: any) {
   );
 }
 
+function isPublicRoute(pathname: string) {
+  return pathname === '/' || pathname.startsWith('/examples');
+}
+
 export function Header() {
   const router = useRouter();
-  const isHome = router.pathname === '/';
+  const isPublic = isPublicRoute(router.pathname);
   const {isSignedIn} = useUser();
-  const showUserProfile = !isHome && isSignedIn;
-  const showFeedback = isHome;
-  const showDashboardLink = isSignedIn && isHome;
-  const showAuthButtons = isHome && !isSignedIn;
-  const showMobileMenu = !isSignedIn || isHome;
+  const showUserProfile = !isPublic && isSignedIn;
+  const showFeedback = isPublic;
+  const showDashboardLink = isSignedIn && isPublic;
+  const showAuthButtons = isPublic && !isSignedIn;
+  const showMobileMenu = !isSignedIn || isPublic;
 
   return (
     <header>
@@ -59,8 +63,8 @@ export function Header() {
         <CardBase>
           <nav className="relative flex justify-between">
             <div className="flex items-center">
-              <Logo href={isHome ? '/' : '/dashboard'} className="mr-8" />
-              {isHome && (
+              <Logo href={isPublic ? '/' : '/dashboard'} className="mr-8" />
+              {isPublic && (
                 <div className="hidden md:flex gap-x-5 md:gap-x-4">
                   {navItems.map((item, i) => (
                     <Button

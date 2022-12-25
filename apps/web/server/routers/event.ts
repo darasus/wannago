@@ -364,6 +364,33 @@ const getAttendees = protectedProcedure
     });
   });
 
+const getExamples = publicProcedure.query(({ctx}) => {
+  return ctx.prisma.event
+    .findMany({
+      where: {
+        title: {
+          contains: '__EXAMPLE__',
+        },
+        isPublished: true,
+        organization: {
+          users: {
+            some: {
+              email: 'idarase+examples@gmail.com',
+            },
+          },
+        },
+      },
+    })
+    .then(events => {
+      return events.map(event => {
+        return {
+          ...event,
+          title: event.title.replace('__EXAMPLE__', ''),
+        };
+      });
+    });
+});
+
 export const eventRouter = router({
   create,
   remove,
@@ -376,4 +403,5 @@ export const eventRouter = router({
   removeUser,
   getNumberOfAttendees,
   getAttendees,
+  getExamples,
 });
