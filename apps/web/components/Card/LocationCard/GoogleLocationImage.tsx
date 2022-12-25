@@ -32,7 +32,7 @@ export function GoogleLocationImage({
   });
 
   return (
-    <div className="rounded-3xl overflow-hidden" style={{height}}>
+    <div className="rounded-3xl overflow-hidden">
       <Image src={url.toString()} alt="" width={width} height={height} />
     </div>
   );
