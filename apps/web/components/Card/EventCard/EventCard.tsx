@@ -43,12 +43,12 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
           <Badge color={isUpcoming ? 'green' : 'gray'} className="mr-2 mb-1">
             {isUpcoming ? 'Upcoming' : 'Past'}
           </Badge>
-          <Text className="text-sm text-gray-600 truncate">
+          <Text className="text-sm text-gray-600">
             {formatDate(event.startDate, 'yyyy/MM/dd HH:mm')}
           </Text>
         </div>
         <div />
-        <Text className="text-2xl font-bold truncate">{event.title}</Text>
+        <Text className="text-2xl font-bold line-clamp-2">{event.title}</Text>
       </div>
     </CardBase>
   );
