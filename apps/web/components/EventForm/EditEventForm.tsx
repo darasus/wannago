@@ -5,6 +5,7 @@ import {useEventForm} from './hooks/useEventForm';
 import {FormProvider} from 'react-hook-form';
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {trpc} from '../../utils/trpc';
+import {logEvent} from '../../lib/gtag';
 
 interface Props {
   event: Event;
@@ -25,6 +26,9 @@ export function EditEventForm({event}: Props) {
   const {handleSubmit} = form;
 
   const onSubmit = handleSubmit(async data => {
+    logEvent({
+      action: 'event_update_submitted',
+    });
     await mutateAsync({
       ...data,
       eventId: event.id,
