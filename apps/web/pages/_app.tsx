@@ -11,14 +11,47 @@ import clsx from 'clsx';
 import {getBaseUrl} from '../utils/getBaseUrl';
 import {Analytics} from '@vercel/analytics/react';
 import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/24/outline';
+import Script from 'next/script';
+import {env} from '../lib/env/client';
+import {pageView} from '../lib/gtag';
+import {useEffect} from 'react';
+import {useRouter} from 'next/router';
 
 function MyApp({Component, pageProps}: AppProps) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      console.log({url});
+      pageView(url);
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <>
       <Head>
         <link rel="shortcut icon" href={`${getBaseUrl()}/api/favicon`} />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
+        `}
+      </Script>
       <div className={clsx(bodyFont.className, 'text-gray-800')}>
         <ClerkProvider
           {...pageProps}

@@ -11,7 +11,8 @@
     "NEXT_PUBLIC_BASE_URL",
     "SENTRY_DSN",
     "NEXT_PUBLIC_SENTRY_DSN",
-    "CI"
+    "CI",
+    "NEXT_PUBLIC_GA_MEASUREMENT_ID"
   ],
   "pipeline": {
     "build": {

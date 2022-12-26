@@ -34,6 +34,7 @@ importers:
       '@trpc/server': ^10.4.1
       '@types/file-saver': ^2.0.5
       '@types/formidable': ^2.0.5
+      '@types/gtag.js': ^0.0.12
       '@types/lodash.debounce': ^4.0.7
       '@types/ms': ^0.7.31
       '@types/node': ^18.11.9
@@ -137,6 +138,7 @@ importers:
     devDependencies:
       '@types/file-saver': 2.0.5
       '@types/formidable': 2.0.5
+      '@types/gtag.js': 0.0.12
       '@types/lodash.debounce': 4.0.7
       '@types/ms': 0.7.31
       '@types/node': 18.11.9
@@ -1532,6 +1534,10 @@ packages:
       '@types/minimatch': 5.1.2
       '@types/node': 18.11.15
     dev: false
+
+  /@types/gtag.js/0.0.12:
+    resolution: {integrity: sha512-YQV9bUsemkzG81Ea295/nF/5GijnD2Af7QhEofh7xu+kvCN6RdodgNwwGWXB5GMI3NoyvQo0odNctoH/qLMIpg==}
+    dev: true
 
   /@types/http-cache-semantics/4.0.1:
     resolution: {integrity: sha512-SZs7ekbP8CN0txVG2xVRH6EgKmEm31BOxA07vkFaETzZz1xh+cbt8BcI0slpymvwhx5dlFnQG2rTlPVQn+iRPQ==}
