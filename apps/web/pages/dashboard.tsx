@@ -9,8 +9,9 @@ import {Container} from '../components/Container/Container';
 import {LoadingEventCard} from '../components/Card/LoadingEventCard/LoadingEventCard';
 import clsx from 'clsx';
 import {Button} from '../components/Button/Button';
+import {withProtected} from '../utils/withAuthProtect';
 
-export default function HomePage() {
+function Dashboard() {
   const router = useRouter();
   const {data, isLoading} = trpc.me.getMyEvents.useQuery();
 
@@ -51,3 +52,5 @@ export default function HomePage() {
     </>
   );
 }
+
+export default withProtected(Dashboard);

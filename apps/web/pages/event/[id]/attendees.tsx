@@ -9,6 +9,7 @@ import {Container} from '../../../components/Container/Container';
 import {Text} from '../../../components/Text/Text';
 import {trpc} from '../../../utils/trpc';
 import {saveAs} from 'file-saver';
+import {withProtected} from '../../../utils/withAuthProtect';
 
 interface ItemProps {
   user: User;
@@ -42,7 +43,7 @@ function Item({user, refetch, eventId}: ItemProps) {
   );
 }
 
-export default function EventEditPage() {
+function EventAttendeesPage() {
   const router = useRouter();
   const eventId = router.query.id as string;
   const {data, refetch} = trpc.event.getAttendees.useQuery(
@@ -102,3 +103,5 @@ export default function EventEditPage() {
     </>
   );
 }
+
+export default withProtected(EventAttendeesPage);

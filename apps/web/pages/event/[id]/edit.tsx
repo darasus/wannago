@@ -4,8 +4,9 @@ import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EditEventForm} from '../../../components/EventForm/EditEventForm';
 import {Container} from '../../../components/Container/Container';
 import {trpc} from '../../../utils/trpc';
+import {withProtected} from '../../../utils/withAuthProtect';
 
-export default function EventEditPage() {
+function EventEditPage() {
   const router = useRouter();
   const eventId = router.query.id as string;
   const {data} = trpc.event.getById.useQuery(
@@ -34,3 +35,5 @@ export default function EventEditPage() {
     </>
   );
 }
+
+export default withProtected(EventEditPage);

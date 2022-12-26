@@ -8,8 +8,9 @@ import {EventView} from '../../../components/EventView/EventView';
 import {Container} from '../../../components/Container/Container';
 import {trpc} from '../../../utils/trpc';
 import {Spinner} from '../../../components/Spinner/Spinner';
+import {withProtected} from '../../../utils/withAuthProtect';
 
-export default function EventPage({
+function InternalEventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
@@ -70,3 +71,5 @@ export async function getServerSideProps({
     props: {timezone: timezone || null},
   };
 }
+
+export default withProtected(InternalEventPage);

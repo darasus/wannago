@@ -2,8 +2,9 @@ import {UserProfile, useUser} from '@clerk/nextjs';
 import Head from 'next/head';
 import {clerkAppearance} from '../clerkElements';
 import AppLayout from '../components/AppLayout/AppLayout';
+import {withProtected} from '../utils/withAuthProtect';
 
-export default function RegisterPage() {
+function ProfilePage() {
   const {user} = useUser();
   return (
     <>
@@ -18,3 +19,5 @@ export default function RegisterPage() {
     </>
   );
 }
+
+export default withProtected(ProfilePage);

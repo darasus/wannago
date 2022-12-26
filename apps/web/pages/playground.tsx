@@ -2,7 +2,7 @@ import {Button} from '../components/Button/Button';
 
 const sizes = ['sm', 'md', 'lg'] as const;
 
-export default function RegisterPage() {
+export default function PlaygroundPage() {
   return (
     <div className="flex flex-col gap-y-4 p-4">
       {sizes.map(size => {

@@ -8,7 +8,7 @@ import {Meta} from '../../components/Meta/Meta';
 import {stripHTML} from '../../utils/stripHTML';
 import {Spinner} from '../../components/Spinner/Spinner';
 
-export default function EventPage({
+function PublicEventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
@@ -86,3 +86,5 @@ export async function getServerSideProps({
     props: {timezone: timezone || null},
   };
 }
+
+export default PublicEventPage;
