@@ -22,7 +22,6 @@ function MyApp({Component, pageProps}: AppProps) {
 
   useEffect(() => {
     const handleRouteChange = (url: URL) => {
-      console.log({url});
       pageView(url);
     };
 

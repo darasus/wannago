@@ -1,20 +1,17 @@
 import {useClerk, useUser} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import Image from 'next/image';
-import {useRouter} from 'next/router';
 import {Fragment} from 'react';
 import {Button} from '../Button/Button';
 import {CardBase} from '../Card/CardBase/CardBase';
 import {FeedbackFish} from '@feedback-fish/react';
 
 export function UserSection() {
-  const router = useRouter();
   const {user, isLoaded} = useUser();
   const {signOut} = useClerk();
 
   const onSignOutClick = async () => {
     await signOut();
-    router.push('/');
   };
 
   if (!isLoaded) return null;

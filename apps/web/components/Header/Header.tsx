@@ -43,7 +43,13 @@ function MobileNavIcon({open}: any) {
 }
 
 function isPublicRoute(pathname: string) {
-  return pathname === '/' || pathname.startsWith('/examples');
+  return (
+    pathname === '/' ||
+    pathname.startsWith('/examples') ||
+    pathname.startsWith('/e/') ||
+    pathname.startsWith('/login') ||
+    pathname.startsWith('/register')
+  );
 }
 
 export function Header() {
@@ -170,9 +176,11 @@ export function Header() {
                                   </Popover.Button>
                                 </Fragment>
                               ))}
-                              <FeedbackFish projectId="f843146d960b2f">
-                                <Button variant="neutral">Feedback</Button>
-                              </FeedbackFish>
+                              <div>
+                                <FeedbackFish projectId="f843146d960b2f">
+                                  <Button variant="neutral">Feedback</Button>
+                                </FeedbackFish>
+                              </div>
                             </div>
                             <hr className="my-4 border-slate-300/40" />
                             <div className="flex gap-4">
