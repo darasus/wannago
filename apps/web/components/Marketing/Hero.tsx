@@ -137,15 +137,15 @@ export const Hero = forwardRef(function Hero(
             'mx-auto max-w-4xl text-3xl md:text-4xl lg:text-7xl tracking-tight text-slate-800 text-center'
           )}
         >
-          <div>Create and share </div>
-          <span className="relative whitespace-nowrap">
-            {/* <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-1000"> */}
-            <span className="relative">beautiful event pages</span>
-          </span>
+          Generate more <span className="whitespace-nowrap">sign ups</span> with{' '}
+          <div>stunning and simple</div> event pages
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-lg tracking-tight text-slate-700 text-center">
-          Most event management software is too complicated and expensive.{' '}
-          <span className="font-bold">We solved this problem for you.</span>
+          <span className="">
+            {'Send killer invitations to your birthday or corporate event'}
+            <br />
+            {'and be ready to meet your guests'}
+          </span>
         </p>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">
           <Button
