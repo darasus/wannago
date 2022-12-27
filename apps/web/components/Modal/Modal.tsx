@@ -24,7 +24,7 @@ export function Modal({children, isOpen, onClose, title}: Props) {
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center text-center">
+          <div className="flex min-h-full items-center justify-center text-left">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -37,7 +37,7 @@ export function Modal({children, isOpen, onClose, title}: Props) {
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 shadow-xl transition-all border-2 border-slate-800 mx-4">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-bold leading-6 text-gray-900"
                 >
                   {title}
                 </Dialog.Title>
