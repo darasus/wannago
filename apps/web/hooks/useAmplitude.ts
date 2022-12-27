@@ -6,10 +6,15 @@ type EventType =
   | 'button_clicked'
   | 'page_viewed'
   | 'user_logged_in'
-  | 'user_logged_out';
+  | 'user_logged_out'
+  | 'event_create_submitted'
+  | 'event_update_submitted'
+  | 'event_created'
+  | 'event_updated';
 
 interface Options {
   pathname?: string;
+  eventId?: string;
 }
 
 export function useAmplitude() {
@@ -21,6 +26,7 @@ export function useAmplitude() {
         event_type: eventType,
         event_properties: {
           pathname: options?.pathname ?? router.pathname,
+          event_id: options?.eventId,
         },
       });
     },

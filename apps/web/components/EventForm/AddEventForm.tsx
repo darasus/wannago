@@ -1,16 +1,20 @@
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {useRouter} from 'next/router';
 import {FormProvider} from 'react-hook-form';
-import {logEvent} from '../../lib/gtag';
+import {useAmplitude} from '../../hooks/useAmplitude';
 import {trpc} from '../../utils/trpc';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 
 export function AddEventForm() {
+  const {logEvent} = useAmplitude();
   const router = useRouter();
   const {push} = useRouter();
   const {mutateAsync} = trpc.event.create.useMutation({
-    onSettled(data) {
+    onSuccess(data) {
+      logEvent('event_created', {
+        eventId: data?.id,
+      });
       if (data?.id) {
         push(`/event/${data.id}`);
       }
@@ -20,9 +24,7 @@ export function AddEventForm() {
   const {handleSubmit} = form;
 
   const onSubmit = handleSubmit(async data => {
-    logEvent({
-      action: 'event_create_submitted',
-    });
+    logEvent('event_create_submitted');
     await mutateAsync({
       ...data,
       startDate: zonedTimeToUtc(

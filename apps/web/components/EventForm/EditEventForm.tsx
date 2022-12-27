@@ -5,17 +5,21 @@ import {useEventForm} from './hooks/useEventForm';
 import {FormProvider} from 'react-hook-form';
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {trpc} from '../../utils/trpc';
-import {logEvent} from '../../lib/gtag';
+import {useAmplitude} from '../../hooks/useAmplitude';
 
 interface Props {
   event: Event;
 }
 
 export function EditEventForm({event}: Props) {
+  const {logEvent} = useAmplitude();
   const router = useRouter();
   const {push} = useRouter();
   const {mutateAsync} = trpc.event.update.useMutation({
     onSuccess: data => {
+      logEvent('event_updated', {
+        eventId: data?.id,
+      });
       push(`/event/${data.id}`);
     },
   });
@@ -26,9 +30,7 @@ export function EditEventForm({event}: Props) {
   const {handleSubmit} = form;
 
   const onSubmit = handleSubmit(async data => {
-    logEvent({
-      action: 'event_update_submitted',
-    });
+    logEvent('event_update_submitted');
     await mutateAsync({
       ...data,
       eventId: event.id,
