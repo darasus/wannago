@@ -16,6 +16,7 @@
     "test:e2e": "turbo run test:e2e --filter web-e2e"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^1.6.7",
     "@clerk/nextjs": "^4.6.15",
     "@feedback-fish/react": "^1.2.1",
     "@googlemaps/google-maps-services-js": "^3.3.16",

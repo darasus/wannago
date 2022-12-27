@@ -12,7 +12,8 @@
     "SENTRY_DSN",
     "NEXT_PUBLIC_SENTRY_DSN",
     "CI",
-    "NEXT_PUBLIC_GA_MEASUREMENT_ID"
+    "NEXT_PUBLIC_GA_MEASUREMENT_ID",
+    "NEXT_PUBLIC_AMPLITUDE_API_KEY"
   ],
   "pipeline": {
     "build": {

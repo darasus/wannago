@@ -16,6 +16,7 @@ import {env} from '../lib/env/client';
 import {pageView} from '../lib/gtag';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
+import {Amplitude} from '../components/Amplitude/Amplitude';
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter();
@@ -57,6 +58,7 @@ function MyApp({Component, pageProps}: AppProps) {
           appearance={clerkAppearance}
           supportEmail="hi@wannago.app"
         >
+          <Amplitude />
           <Toaster>
             {t => (
               <ToastBar
