@@ -18,11 +18,7 @@ export function EventWannaGoArea({eventId}: Props) {
           userId={user?.id}
           metadata={{eventid: eventId}}
         >
-          <Button
-            variant="link"
-            size="sm"
-            className="text-slate-800 border-b-2 border-b-slate-800"
-          >
+          <Button variant="link-neutral" size="sm">
             Feedback
           </Button>
         </FeedbackFish>

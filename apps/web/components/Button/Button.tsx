@@ -53,7 +53,7 @@ export const Button = forwardRef(function Button(
         'cursor-pointer justify-center',
         // base text styles
         'text-slate-800 font-bold',
-        // base brder styles
+        // base borders styles
         'rounded-full border-2 border-slate-800',
         {
           // base button styles
