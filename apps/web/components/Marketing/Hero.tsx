@@ -138,7 +138,8 @@ export const Hero = forwardRef(function Hero(
           )}
         >
           Generate more <span className="whitespace-nowrap">sign ups</span> with{' '}
-          <div>stunning and simple</div> event pages
+          <span className="zigzag">stunning</span> and{' '}
+          <span className="zigzag">simple</span> event pages
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-lg tracking-tight text-slate-700 text-center">
           <span className="">
