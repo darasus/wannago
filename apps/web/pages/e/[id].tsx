@@ -45,7 +45,7 @@ function PublicEventPage({
   if (!data.isPublished) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-2xl font-bold">Event is not found 🫣</h1>
+        <h1 className="text-2xl font-bold">Page not found 🫣</h1>
       </div>
     );
   }
@@ -85,6 +85,12 @@ export async function getServerSideProps({
     'Cache-Control',
     `s-maxage=60, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`
   );
+
+  if (!event?.isPublished) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {timezone: timezone || null, event: SuperJSON.stringify(event)},
