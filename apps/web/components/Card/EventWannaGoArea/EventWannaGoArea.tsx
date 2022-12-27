@@ -21,7 +21,7 @@ export function EventWannaGoArea({eventId}: Props) {
           <Button
             variant="link"
             size="sm"
-            className="text-gray-700 border-b-2 border-b-gray-700"
+            className="text-slate-800 border-b-2 border-b-slate-800"
           >
             Feedback
           </Button>

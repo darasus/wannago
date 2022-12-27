@@ -11,7 +11,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
     <div
       ref={ref}
       className={clsx(
-        'border-2 border-gray-700 bg-gray-50 p-6 rounded-3xl',
+        'border-2 border-slate-800 bg-gray-50 p-6 rounded-3xl',
         className
       )}
     >

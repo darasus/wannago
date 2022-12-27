@@ -22,7 +22,7 @@ export function EventUrlCard({url}: Props) {
         </Button>
       </div>
       <div>
-        <Link className="text-gray-700 font-bold hover:underline" href={url}>
+        <Link className="text-slate-800 font-bold hover:underline" href={url}>
           {url
             .replace('https://', '')
             .replace('http://', '')

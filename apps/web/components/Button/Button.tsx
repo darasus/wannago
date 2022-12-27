@@ -52,9 +52,9 @@ export const Button = forwardRef(function Button(
       className={clsx(
         'cursor-pointer justify-center',
         // base text styles
-        'text-gray-800 font-bold',
+        'text-slate-800 font-bold',
         // base brder styles
-        'rounded-full border-2 border-gray-800',
+        'rounded-full border-2 border-slate-800',
         {
           // base button styles
           'inline-flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2':

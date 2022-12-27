@@ -54,7 +54,7 @@ function Feature({feature, className, ...props}: any) {
     <div className={clsx(className, 'flex flex-col items-center')} {...props}>
       <div
         className={clsx(
-          'w-12 h-12 rounded-full bg-brand-800 border-2 border-gray-700 flex items-center justify-center'
+          'w-12 h-12 rounded-full bg-brand-800 border-2 border-slate-800 flex items-center justify-center'
         )}
       >
         {feature.icon}

@@ -31,7 +31,7 @@ export const Accordion = ({
           initial={false}
           animate={{rotate: isOpen ? '0deg' : '180deg'}}
         >
-          <ChevronDownIcon className="h-5 w-5 text-gray-700" />
+          <ChevronDownIcon className="h-5 w-5 text-slate-800" />
         </motion.div>
         {title}
       </motion.header>
@@ -42,7 +42,7 @@ export const Accordion = ({
             initial="collapsed"
             animate="open"
             exit="collapsed"
-            className="text-gray-700"
+            className="text-slate-800"
             variants={{
               open: {opacity: 1, height: 'auto'},
               collapsed: {opacity: 0, height: 0},

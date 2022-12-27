@@ -43,17 +43,17 @@ export default function HomePage() {
         </motion.div>
       </div>
       <Hero ref={el} />
-      <div className="h-0.5 bg-gray-700" />
+      <div className="h-0.5 bg-slate-800" />
       {/* <PrimaryFeatures /> */}
       <Features />
-      <div className="h-0.5 bg-gray-700" />
+      <div className="h-0.5 bg-slate-800" />
       {/* <SecondaryFeatures /> */}
       <CallToAction />
-      <div className="h-0.5 bg-gray-700" />
+      <div className="h-0.5 bg-slate-800" />
       {/* <Testimonials /> */}
       {/* <Pricing /> */}
       <Faqs />
-      <div className="h-0.5 bg-gray-700" />
+      <div className="h-0.5 bg-slate-800" />
       <Footer />
     </AppLayout>
   );
