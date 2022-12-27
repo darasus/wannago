@@ -7,14 +7,24 @@ import {trpc} from '../../utils/trpc';
 import {Meta} from '../../components/Meta/Meta';
 import {stripHTML} from '../../utils/stripHTML';
 import {Spinner} from '../../components/Spinner/Spinner';
+import {createProxySSGHelpers} from '@trpc/react-query/ssg';
+import {appRouter} from '../../server/routers/_app';
+import {createContext} from '../../server/context';
+import SuperJSON from 'superjson';
 
 function PublicEventPage({
   timezone,
+  event,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  const {data, isLoading} = trpc.event.getByShortId.useQuery({
-    id: router.query.id as string,
-  });
+  const {data, isLoading} = trpc.event.getByShortId.useQuery(
+    {
+      id: router.query.id as string,
+    },
+    {
+      initialData: SuperJSON.parse(event),
+    }
+  );
   const clientTimezone = useMemo(
     () => timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
     [timezone]
@@ -58,23 +68,17 @@ function PublicEventPage({
 export async function getServerSideProps({
   req,
   res,
+  params,
 }: GetServerSidePropsContext<{id: string}>) {
   const timezone = req.headers['x-vercel-ip-timezone'] as string | undefined;
 
-  // const ssg = createProxySSGHelpers({
-  //   router: appRouter,
-  //   ctx: await createContext({req, res} as trpcNext.CreateNextContextOptions),
-  //   transformer: SuperJSON,
-  // });
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: await createContext(),
+    transformer: SuperJSON,
+  });
 
-  // const event = await ssg.event.getByShortId.fetch({id: params?.id!});
-
-  // if (event) {
-  //   await ssg.event.getOrganizer.prefetch({eventId: event?.id});
-  //   await ssg.event.getNumberOfAttendees.prefetch({eventId: event?.id!});
-  // }
-
-  // await ssg.event.getByShortId.prefetch({id: params?.id!});
+  const event = await ssg.event.getByShortId.fetch({id: params?.id!});
 
   const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
   res.setHeader(
@@ -83,7 +87,7 @@ export async function getServerSideProps({
   );
 
   return {
-    props: {timezone: timezone || null},
+    props: {timezone: timezone || null, event: SuperJSON.stringify(event)},
   };
 }
 

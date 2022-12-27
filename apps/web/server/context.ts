@@ -38,13 +38,17 @@ export type Context = trpc.inferAsyncReturnType<typeof createContextInner>;
  * @link https://trpc.io/docs/context
  */
 export async function createContext(
-  opts: FetchCreateContextFnOptions
+  opts?: FetchCreateContextFnOptions
 ): Promise<Context> {
   // for API-response caching see https://trpc.io/docs/caching
   async function getUser() {
-    const {userId} = getAuth(opts.req as NextRequest);
-    const user = userId ? await clerkClient.users.getUser(userId) : null;
-    return user;
+    if (opts?.req) {
+      const {userId} = getAuth(opts?.req as NextRequest);
+      const user = userId ? await clerkClient.users.getUser(userId) : null;
+      return user;
+    }
+
+    return null;
   }
 
   const user = await getUser();
