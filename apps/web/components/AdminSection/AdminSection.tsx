@@ -70,7 +70,7 @@ export function AdminSection({event, timezone, refetchEvent}: Props) {
             )}`}</Text>
             <Text className="text-sm">{`Number of attendees: ${
               typeof attendeesCount.data?.count === 'number'
-                ? attendeesCount.data?.count
+                ? `${attendeesCount.data?.count} of max ${event.maxNumberOfAttendees}`
                 : 'Loading...'
             }`}</Text>
           </div>
