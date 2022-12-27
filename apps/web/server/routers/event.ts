@@ -372,7 +372,7 @@ const getExamples = publicProcedure.query(({ctx}) => {
         organization: {
           users: {
             some: {
-              email: 'idarase+examples@gmail.com',
+              email: 'hi+example@wannago.app',
             },
           },
         },
