@@ -1,5 +1,6 @@
 import {toast} from 'react-hot-toast';
 import {trpc} from '../utils/trpc';
+import {useAmplitude} from './useAmplitude';
 import {useConfirmDialog} from './useConfirmDialog';
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
 }
 
 export function useUnpublishEvent({eventId}: Props) {
+  const {logEvent} = useAmplitude();
   const {mutateAsync, isLoading} = trpc.event.publish.useMutation({
     onSuccess: () => {
       toast.success(`Event is successfully unpublished!`);
@@ -21,6 +23,7 @@ export function useUnpublishEvent({eventId}: Props) {
       'This event will not be available to anyone when visiting public link.',
     onConfirm: async () => {
       await mutateAsync({eventId, isPublished: false});
+      logEvent('event_unpublished', {eventId});
       await refetch();
     },
   });

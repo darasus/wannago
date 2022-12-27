@@ -10,7 +10,10 @@ type EventType =
   | 'event_create_submitted'
   | 'event_update_submitted'
   | 'event_created'
-  | 'event_updated';
+  | 'event_updated'
+  | 'event_deleted'
+  | 'event_published'
+  | 'event_unpublished';
 
 interface Options {
   pathname?: string;
