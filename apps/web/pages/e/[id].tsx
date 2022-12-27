@@ -54,7 +54,7 @@ function PublicEventPage({
     <div>
       <Meta
         title={data.title}
-        description={stripHTML(data.description).slice(0, 100)}
+        description={`${stripHTML(data.description).slice(0, 100)}...`}
         imageSrc={`/api/og-image?eventId=${data.id}`}
         shortEventId={data.shortId!}
       />
