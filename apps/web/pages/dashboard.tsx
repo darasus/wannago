@@ -14,6 +14,7 @@ import {withProtected} from '../utils/withAuthProtect';
 function Dashboard() {
   const router = useRouter();
   const {data, isLoading} = trpc.me.getMyEvents.useQuery();
+  const haveNoEvents = data?.events?.length === 0;
 
   return (
     <>
@@ -47,6 +48,17 @@ function Dashboard() {
               );
             })}
           </div>
+          {haveNoEvents && (
+            <div className="text-center">
+              <span className="text-5xl">🤷</span>
+              <div />
+              <span className="text-lg font-medium">
+                {
+                  'It looks empty here, start by clicking on "+" button to create your first event.'
+                }
+              </span>
+            </div>
+          )}
         </Container>
       </AppLayout>
     </>
