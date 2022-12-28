@@ -13,7 +13,9 @@ type EventType =
   | 'event_updated'
   | 'event_deleted'
   | 'event_published'
-  | 'event_unpublished';
+  | 'event_unpublished'
+  | 'event_sign_up_submitted'
+  | 'event_message_to_organizer_submitted';
 
 interface Options {
   pathname?: string;

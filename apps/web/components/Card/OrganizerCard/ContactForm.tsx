@@ -1,6 +1,7 @@
 import {Event} from '@prisma/client';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
+import {useAmplitude} from '../../../hooks/useAmplitude';
 import {trpc} from '../../../utils/trpc';
 import {Button} from '../../Button/Button';
 import {Input} from '../../Input/Input/Input';
@@ -22,12 +23,16 @@ interface Form {
 }
 
 export function ContactForm({isOpen, onClose, event}: Props) {
+  const {logEvent} = useAmplitude();
   const sendEmail = trpc.mail.sendQuestionToOrganizer.useMutation();
   const {register, handleSubmit} = useForm<Form>();
 
   const onSubmit = handleSubmit(async data => {
+    logEvent('event_message_to_organizer_submitted', {
+      eventId: event.id,
+    });
     await sendEmail.mutateAsync({...data, eventId: event.id});
-    toast.success('Email sent, we will get back to you soon!');
+    toast.success('Email sent! Organizer will get back to you soon!');
     onClose();
   });
 

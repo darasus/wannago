@@ -26,7 +26,7 @@ interface Props {
 
 export function AdminSection({event, timezone}: Props) {
   const router = useRouter();
-  const attendeesCount = useAttendeeCount(event.id);
+  const attendeesCount = useAttendeeCount({eventId: event.id});
   const {modal: removeEventModal, onRemoveClick} = useRemoveEvent({
     eventId: event.id,
   });

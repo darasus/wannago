@@ -8,6 +8,8 @@ import {Text} from '../../Text/Text';
 import {trpc} from '../../../utils/trpc';
 import {toast} from 'react-hot-toast';
 import JSConfetti from 'js-confetti';
+import {useAttendeeCount} from '../../../hooks/useAttendeeCount';
+import {useAmplitude} from '../../../hooks/useAmplitude';
 
 interface Form {
   email: string;
@@ -21,14 +23,8 @@ interface Props {
 }
 
 export function ParticipantsCard({event, fake}: Props) {
-  const {data, refetch} = trpc.event.getNumberOfAttendees.useQuery(
-    {
-      eventId: event.id,
-    },
-    {
-      enabled: !fake,
-    }
-  );
+  const {logEvent} = useAmplitude();
+  const {data, refetch} = useAttendeeCount({eventId: event.id, fake});
   const {
     register,
     handleSubmit,
@@ -37,13 +33,21 @@ export function ParticipantsCard({event, fake}: Props) {
   } = useForm<Form>();
   const {mutateAsync} = trpc.event.join.useMutation({
     onError: error => {
-      const validationErrors = (error.data?.zodError?.fieldErrors || {}) as any;
-      Object.keys(validationErrors).forEach(key => {
-        toast.error(validationErrors?.[key]);
-      });
+      const validationErrors = error.data?.zodError?.fieldErrors || {};
+      Object.keys(validationErrors).forEach(
+        (key: keyof typeof validationErrors) => {
+          const message = validationErrors?.[key];
+          if (message) {
+            toast.error(message.join(', '));
+          }
+        }
+      );
     },
     onSuccess: () => {
-      toast.success('Successfully RSVPd, check your email for more details!');
+      logEvent('event_sign_up_submitted', {
+        eventId: event.id,
+      });
+      toast.success('Signed up! Check your email for more details!');
       if (typeof window !== 'undefined') {
         new JSConfetti().addConfetti({confettiNumber: 200, emojiSize: 10});
       }
