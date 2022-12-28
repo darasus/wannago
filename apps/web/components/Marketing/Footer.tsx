@@ -1,8 +1,10 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import {Button} from '../Button/Button';
 import {Container} from '../Container/Container';
 import {navItems} from '../Header/Header';
 import {Logo} from '../Logo/Logo';
+import {Text} from '../Text/Text';
 
 export function Footer() {
   return (
@@ -35,9 +37,19 @@ export function Footer() {
               </svg>
             </Link>
           </div>
-          <p className="mt-6 text-sm sm:mt-0 font-bold">
-            WannaGo &copy; {new Date().getFullYear()}
-          </p>
+          <Text className="mt-6 text-sm sm:mt-0 font-bold">
+            WannaGo &copy; {new Date().getFullYear()} ·{' '}
+            <span className="font-medium">
+              Designed and developed in Amsterdam{' '}
+              <Image
+                className="inline-block"
+                src="/images/amsterdam.png"
+                width={20}
+                height={20}
+                alt="amsterdam flag"
+              />
+            </span>
+          </Text>
         </div>
       </Container>
     </footer>
