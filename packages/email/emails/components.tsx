@@ -3,7 +3,7 @@ import {Section} from '@react-email/section';
 import {Text as REText} from '@react-email/text';
 import {Link as RELink} from '@react-email/link';
 import {Button as REButton} from '@react-email/button';
-import {PropsWithChildren} from 'react';
+import React, {PropsWithChildren} from 'react';
 
 interface TitleProps extends PropsWithChildren {}
 
@@ -11,10 +11,12 @@ export function Title({children}: TitleProps) {
   return <REText style={title}>{children}</REText>;
 }
 
-interface TextProps extends PropsWithChildren {}
+interface TextProps extends PropsWithChildren {
+  style?: React.CSSProperties;
+}
 
-export function Text({children}: TextProps) {
-  return <REText style={text}>{children}</REText>;
+export function Text({children, style}: TextProps) {
+  return <REText style={{...text, ...style}}>{children}</REText>;
 }
 
 export function Logo() {
@@ -50,7 +52,7 @@ export function Link({children, href}: LinkProps) {
       href={href}
       style={{
         fontFamily,
-        color: token.color.brand,
+        color: token.dark,
         textDecoration: 'underline',
       }}
     >
@@ -68,15 +70,18 @@ export function Button({children, href}: ButtonProps) {
     <REButton
       style={{
         fontFamily,
-        backgroundColor: token.color.brand,
-        borderRadius: '7px',
-        fontWeight: '600',
-        color: '#ffffff',
+        borderRadius: '100px',
+        color: token.dark,
         fontSize: '15px',
+        fontWeight: 'bold',
         textDecoration: 'none',
         textAlign: 'center' as const,
         display: 'block',
-        padding: '15px 15px',
+        padding: '15px 25px',
+        borderWidth: '1px',
+        borderColor: token.dark,
+        borderStyle: 'solid',
+        backgroundColor: token.brand,
       }}
       href={href}
     >
@@ -118,11 +123,8 @@ export function Image({imageSrc, alt}: ImageProps) {
 
 // TODO: fix design token
 const token = {
-  textColor: '#1f2937',
-  buttonColor: '#05fecc',
-  color: {
-    brand: '#0033FF',
-  },
+  dark: 'rgb(30, 41, 59)',
+  brand: 'rgb(216, 226, 220)',
 };
 
 export const gutter = 20;
@@ -151,7 +153,7 @@ export const title = {
   fontSize: '24px',
   letterSpacing: '-0.5px',
   lineHeight: '1.3',
-  color: token.textColor,
+  color: token.dark,
   padding: '17px 0 0',
   fontWeight: 'bold',
 };
@@ -160,7 +162,7 @@ export const text = {
   fontFamily,
   fontSize: '15px',
   lineHeight: '1.4',
-  color: token.textColor,
+  color: token.dark,
   margin: 0,
 };
 

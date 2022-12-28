@@ -2,11 +2,9 @@ import {Container} from '@react-email/container';
 import {Head} from '@react-email/head';
 import {Hr} from '@react-email/hr';
 import {Html} from '@react-email/html';
-import {Preview} from '@react-email/preview';
 import {Section} from '@react-email/section';
 import * as React from 'react';
 import {
-  buttonContainer,
   container,
   Header,
   hr,
@@ -14,7 +12,6 @@ import {
   Text,
   Title,
   Link,
-  Button,
   Footer,
   gutter,
 } from './components';

@@ -17,18 +17,10 @@ import {
 } from './components';
 
 interface Props {
-  eventTitle: string;
-  eventUrl: string;
-  subject: string;
-  message: string;
+  code: string;
 }
 
-export default function MessageToAttendees({
-  eventUrl = 'https://www.wannago.app',
-  eventTitle = 'Event name',
-  subject = 'Test subject',
-  message = 'Test message',
-}: Props) {
+export default function LoginCode({code = '123123123'}: Props) {
   return (
     <Html>
       <Head />
@@ -36,22 +28,19 @@ export default function MessageToAttendees({
         <Container style={container}>
           <Header />
           <Section>
-            <Title>
-              {`Message from organizer of `}
-              <Link href={eventUrl}>{eventTitle}</Link>
-            </Title>
+            <Title>{`Verification code`}</Title>
           </Section>
           <Section style={{marginBottom: gutter}}>
-            <Text>
-              <b>{subject}</b>
-            </Text>
-            <Text>{message}</Text>
+            <Text>Enter the following verification code when prompted:</Text>
+          </Section>
+          <Section style={{marginBottom: gutter}}>
+            <Text style={{fontSize: 40, fontWeight: 'bold'}}>{code}</Text>
+          </Section>
+          <Section style={{marginBottom: gutter}}>
+            <Text>To protect your account, do not share this code.</Text>
           </Section>
           <Hr style={hr} />
-          <Text>
-            Simply reply to this email if you want to respond to this message.
-          </Text>
-          <Text>Thanks,</Text>
+          <Text>Sincerely,</Text>
           <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />
         </Container>
