@@ -69,7 +69,7 @@ export function MessageParticipantsButton() {
         iconLeft={<EnvelopeIcon className="h-3 w-3" />}
         size="sm"
       >
-        Message participants
+        Message attendees
       </Button>
     </>
   );

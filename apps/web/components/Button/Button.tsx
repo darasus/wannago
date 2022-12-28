@@ -50,7 +50,7 @@ export const Button = forwardRef(function Button(
       type="button"
       {...props}
       className={clsx(
-        'cursor-pointer justify-center',
+        'cursor-pointer justify-center shrink-0',
         // base text styles
         'text-slate-800 font-bold',
         // base borders styles

@@ -15,7 +15,7 @@ export function formatDate(
   return format(d, formatString);
 }
 
-export function formatTimeago(date: Date, timezone?: string) {
+export function formatTimeago(date: Date, timezone?: string | null) {
   const d = utcToZonedTime(
     date,
     timezone || Intl.DateTimeFormat().resolvedOptions().timeZone

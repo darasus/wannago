@@ -12,7 +12,7 @@ import {CardBase} from '../Card/CardBase/CardBase';
 import {Text} from '../Text/Text';
 import {MessageParticipantsButton} from './components/MessageParticipantsButton';
 import {Event} from '@prisma/client';
-import {formatDate} from '../../utils/formatDate';
+import {formatTimeago} from '../../utils/formatDate';
 import {useAttendeeCount} from '../../hooks/useAttendeeCount';
 import {useRemoveEvent} from '../../hooks/useRemoveEvent';
 import {usePublishEvent} from '../../hooks/usePublishEvent';
@@ -37,6 +37,33 @@ export function AdminSection({event, timezone}: Props) {
     eventId: event.id,
   });
 
+  const values: {
+    label: string;
+    value: string;
+    badgeColor?: 'green' | 'yellow';
+  }[] = [
+    {
+      label: 'Status',
+      value: event.isPublished ? 'Published' : 'Draft',
+      badgeColor: event.isPublished ? 'green' : 'yellow',
+    },
+    {
+      label: 'Created',
+      value: formatTimeago(event.createdAt, timezone),
+    },
+    {
+      label: 'Updated',
+      value: formatTimeago(event.updatedAt, timezone),
+    },
+    {
+      label: 'Attendees',
+      value:
+        typeof attendeesCount.data?.count === 'number'
+          ? `${attendeesCount.data?.count} of max ${event.maxNumberOfAttendees}`
+          : 'Loading...',
+    },
+  ];
+
   return (
     <>
       {removeEventModal}
@@ -44,92 +71,69 @@ export function AdminSection({event, timezone}: Props) {
       {unpublishModal}
       <CardBase>
         <div className="flex items-center">
-          <Badge color="gray" className="mr-2 mb-1">
+          <Badge color="gray" className="mr-2 mb-2">
             Admin
           </Badge>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col gap-2">
-            <div>
-              <Text className="font-bold">Info</Text>
-            </div>
-            <div className="flex flex-col gap-2">
-              <Text className="text-sm">
-                Status:{' '}
-                {event.isPublished ? (
-                  <Badge color="green">Published</Badge>
-                ) : (
-                  <Badge color="gray">Draft</Badge>
-                )}
-              </Text>
-              <Text className="text-sm">{`Created at: ${formatDate(
-                event.createdAt,
-                'yyyy/MM/dd HH:mm',
-                timezone
-              )}`}</Text>
-              <Text className="text-sm">{`Last updated at: ${formatDate(
-                event.updatedAt,
-                'yyyy/MM/dd HH:mm',
-                timezone
-              )}`}</Text>
-              <Text className="text-sm">{`Number of attendees: ${
-                typeof attendeesCount.data?.count === 'number'
-                  ? `${attendeesCount.data?.count} of max ${event.maxNumberOfAttendees}`
-                  : 'Loading...'
-              }`}</Text>
-            </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col md:flex-row md:items-center gap-2">
+            {values.map(v => {
+              return (
+                <div className="flex items-center gap-x-1">
+                  <Text className="text-xs">{`${v.label}:`}</Text>
+                  <Badge color={v.badgeColor} size="sm">
+                    {v.value}
+                  </Badge>
+                </div>
+              );
+            })}
           </div>
-          <div className="flex flex-col gap-2">
-            <div>
-              <Text className="font-bold">Manage event</Text>
-            </div>
-            <div className="flex flex-col items-start gap-2">
-              <Button
-                variant="neutral"
-                iconLeft={<UsersIcon className="h-3 w-3" />}
-                onClick={() => router.push(`/event/${event.id}/attendees`)}
-                size="sm"
-              >
-                View attendees
-              </Button>
-              <Button
-                variant="neutral"
-                iconLeft={<PencilIcon className="h-3 w-3" />}
-                onClick={() => router.push(`/event/${event.id}/edit`)}
-                size="sm"
-              >
-                Edit event
-              </Button>
-              <MessageParticipantsButton />
-              {event.isPublished && (
-                <Button
-                  variant="danger"
-                  iconLeft={<PauseCircleIcon className="h-3 w-3" />}
-                  onClick={() => onUnpublishClick()}
-                  size="sm"
-                >
-                  Unpublish
-                </Button>
-              )}
-              {!event.isPublished && (
-                <Button
-                  variant="primary"
-                  iconLeft={<PlayCircleIcon className="h-3 w-3" />}
-                  onClick={() => onPublishClick()}
-                  size="sm"
-                >
-                  Publish
-                </Button>
-              )}
+          <div className="flex flex-col md:flex-row md:items-center gap-2">
+            <Button
+              variant="neutral"
+              iconLeft={<PencilIcon className="h-3 w-3" />}
+              onClick={() => router.push(`/event/${event.id}/edit`)}
+              size="sm"
+            >
+              Edit event
+            </Button>
+            {event.isPublished && (
               <Button
                 variant="danger"
-                iconLeft={<TrashIcon className="h-3 w-3" />}
-                onClick={onRemoveClick}
+                iconLeft={<PauseCircleIcon className="h-3 w-3" />}
+                onClick={() => onUnpublishClick()}
                 size="sm"
               >
-                Delete event
+                Unpublish
               </Button>
-            </div>
+            )}
+            {!event.isPublished && (
+              <Button
+                variant="primary"
+                iconLeft={<PlayCircleIcon className="h-3 w-3" />}
+                onClick={() => onPublishClick()}
+                size="sm"
+              >
+                Publish
+              </Button>
+            )}
+            <Button
+              variant="danger"
+              iconLeft={<TrashIcon className="h-3 w-3" />}
+              onClick={onRemoveClick}
+              size="sm"
+            >
+              Delete event
+            </Button>
+            <Button
+              variant="neutral"
+              iconLeft={<UsersIcon className="h-3 w-3" />}
+              onClick={() => router.push(`/event/${event.id}/attendees`)}
+              size="sm"
+            >
+              View attendees
+            </Button>
+            <MessageParticipantsButton />
           </div>
         </div>
       </CardBase>
