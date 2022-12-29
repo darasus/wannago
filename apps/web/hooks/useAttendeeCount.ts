@@ -12,7 +12,7 @@ export function useAttendeeCount({
       eventId: eventId!,
     },
     {
-      enabled: !!eventId || !fake,
+      enabled: !!eventId && !fake,
     }
   );
 }
