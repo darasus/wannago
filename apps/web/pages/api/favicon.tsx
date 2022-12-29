@@ -2,7 +2,6 @@ import {ImageResponse} from '@vercel/og';
 
 export const config = {
   runtime: 'experimental-edge',
-  regions: ['fra1'],
 };
 
 const fontResponse = fetch(
