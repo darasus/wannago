@@ -9,6 +9,7 @@ import {
   MessageToOrganizer,
   EventReminder,
   MessageToAttendees,
+  LoginCode,
 } from 'email';
 import {formatDate} from '../utils/formatDate';
 import {env} from './env/server';
@@ -132,5 +133,24 @@ export class Mailgun {
         await this.mailgun.messages.create('email.wannago.app', messageData);
       })
     );
+  }
+
+  async sendLoginCodeEmail({
+    code,
+    email,
+    subject,
+  }: {
+    code: string;
+    email: string;
+    subject: string;
+  }) {
+    const messageData: MailgunMessageData = {
+      from: 'WannaGo Team <hi@wannago.app>',
+      to: email,
+      subject,
+      html: render(<LoginCode code={code} />),
+    };
+
+    await this.mailgun.messages.create('email.wannago.app', messageData);
   }
 }
