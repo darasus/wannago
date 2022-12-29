@@ -4,6 +4,7 @@ import {prisma} from '../../../../packages/database/prisma';
 
 export const config = {
   runtime: 'experimental-edge',
+  regions: ['fra1'],
 };
 
 export default async function handler(req: NextRequest) {
