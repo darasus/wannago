@@ -11,7 +11,7 @@ export function AnimateRender({children, delay}: AnimateRenderProps) {
       <motion.div
         className="card-container"
         initial={{
-          y: 100,
+          y: 50,
           opacity: 0,
         }}
         animate={{
@@ -19,8 +19,8 @@ export function AnimateRender({children, delay}: AnimateRenderProps) {
           opacity: 1,
           transition: {
             type: 'spring',
-            bounce: 0.4,
-            duration: 1.5,
+            bounce: 0,
+            duration: 1,
             delay,
           },
         }}
