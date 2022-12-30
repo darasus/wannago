@@ -2,6 +2,7 @@ import {zonedTimeToUtc} from 'date-fns-tz';
 import {useRouter} from 'next/router';
 import {FormProvider} from 'react-hook-form';
 import {useAmplitude} from '../../hooks/useAmplitude';
+import {trackEventCreateConversion} from '../../lib/gtag';
 import {trpc} from '../../utils/trpc';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
@@ -25,6 +26,7 @@ export function AddEventForm() {
 
   const onSubmit = handleSubmit(async data => {
     logEvent('event_create_submitted');
+    trackEventCreateConversion();
     await mutateAsync({
       ...data,
       startDate: zonedTimeToUtc(

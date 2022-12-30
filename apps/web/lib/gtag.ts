@@ -21,3 +21,9 @@ export const logEvent = ({action, category, label, value}: GTagEvent) => {
     value: value,
   });
 };
+
+export const trackEventCreateConversion = () => {
+  window.gtag('event', 'conversion', {
+    send_to: 'AW-11052152044/k6AECKyb1oYYEOzpiZYp',
+  });
+};
