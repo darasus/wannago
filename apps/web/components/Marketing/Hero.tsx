@@ -20,6 +20,11 @@ import {LocationCard} from '../Card/LocationCard/LocationCard';
 import {OrganizerCardView} from '../Card/OrganizerCard/OrganizerCardView';
 import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
 import {Container} from '../Container/Container';
+import dynamic from 'next/dynamic';
+
+const DynamicSpinningCircle = dynamic(() => import('./SpinningCircle'), {
+  ssr: false,
+});
 
 const date = new Date();
 
@@ -126,7 +131,8 @@ export const Hero = forwardRef(function Hero(
   ];
 
   return (
-    <div>
+    <div className="relative overflow-hidden">
+      <DynamicSpinningCircle />
       <Container
         ref={ref}
         className="pt-20 lg:pt-32 mb-0 relative z-10 md:pointer-events-none overflow-hidden"

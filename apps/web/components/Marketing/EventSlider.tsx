@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
 import {Event, Organization, User} from '@prisma/client';
 import {InfoCard} from '../Card/InfoCard/InfoCard';
