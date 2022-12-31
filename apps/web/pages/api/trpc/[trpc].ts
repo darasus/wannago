@@ -19,9 +19,7 @@ export default async function handler(req: NextRequest) {
         console.error('Something went wrong', error);
       }
     },
-    batching: {
-      enabled: true,
-    },
+
     responseMeta({paths, type, errors}) {
       const shouldCache =
         paths &&
