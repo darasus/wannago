@@ -19,14 +19,11 @@ const t = initTRPC.context<Context>().create({
   },
 });
 
-export const router = t.router;
-export const publicProcedure = t.procedure;
 export const middleware = t.middleware;
-export const mergeRouters = t.mergeRouters;
 
-const isAuthed = t.middleware(({next, ctx}) => {
+const isAuthenticated = middleware(({next, ctx}) => {
   if (!ctx.user) {
-    throw new TRPCError({code: 'UNAUTHORIZED'});
+    throw new TRPCError({code: 'UNAUTHORIZED', message: 'Not authenticated'});
   }
   return next({
     ctx: {
@@ -35,4 +32,20 @@ const isAuthed = t.middleware(({next, ctx}) => {
   });
 });
 
-export const protectedProcedure = t.procedure.use(isAuthed);
+const logger = middleware(async ({next, path, type, meta}) => {
+  const start = Date.now();
+  const result = await next();
+  const durationMs = Date.now() - start;
+  result.ok
+    ? console.log('OK request timing:', {path, type, durationMs, meta})
+    : console.log('Non-OK request timing', {path, type, durationMs, meta});
+  return result;
+});
+
+export const router = t.router;
+
+export const publicProcedure = t.procedure.use(logger);
+
+export const mergeRouters = t.mergeRouters;
+
+export const protectedProcedure = t.procedure.use(isAuthenticated);
