@@ -5,6 +5,8 @@ import {TRPCError} from '@trpc/server';
 import {User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
 import {authorizeChange} from '../../utils/getIsMyEvent';
+import {random} from '../../utils/random';
+import {env} from '../../lib/env/server';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
@@ -365,27 +367,45 @@ const getAttendees = protectedProcedure
   });
 
 const getExamples = publicProcedure.query(({ctx}) => {
-  return ctx.prisma.event
-    .findMany({
-      where: {
-        isPublished: true,
-        organization: {
-          users: {
-            some: {
-              email: 'hi+example@wannago.app',
-            },
+  return ctx.prisma.event.findMany({
+    where: {
+      isPublished: true,
+      organization: {
+        users: {
+          some: {
+            email: 'hi+example@wannago.app',
           },
         },
       },
-    })
-    .then(events => {
-      return events.map(event => {
-        return {
-          ...event,
-          title: event.title.replace('__EXAMPLE__', ''),
-        };
-      });
-    });
+    },
+  });
+});
+
+const getRandomExample = publicProcedure.query(async ({ctx}) => {
+  const events = await ctx.prisma.event.findMany({
+    where: {
+      isPublished: true,
+      organization: {
+        users: {
+          some: {
+            email:
+              env.NODE_ENV === 'development'
+                ? 'idarase+clerk_test@gmail.com'
+                : 'hi+example@wannago.app',
+          },
+        },
+      },
+    },
+    include: {
+      organization: {
+        include: {
+          users: true,
+        },
+      },
+    },
+  });
+
+  return random(events);
 });
 
 export const eventRouter = router({
@@ -401,4 +421,5 @@ export const eventRouter = router({
   getNumberOfAttendees,
   getAttendees,
   getExamples,
+  getRandomExample,
 });

@@ -22,5 +22,25 @@ export default async function handler(req: NextRequest) {
     batching: {
       enabled: true,
     },
+    responseMeta({paths, type, errors}) {
+      const shouldCache =
+        paths &&
+        paths.length === 1 &&
+        paths.every(path => path.includes('getRandomExample'));
+      const allOk = errors.length === 0;
+      const isQuery = type === 'query';
+
+      if (shouldCache && allOk && isQuery) {
+        const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
+
+        return {
+          headers: {
+            'cache-control': `s-maxage=60, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`,
+          },
+        };
+      }
+
+      return {};
+    },
   });
 }
