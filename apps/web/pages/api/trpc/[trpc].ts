@@ -35,7 +35,7 @@ export default async function handler(req: NextRequest) {
 
         return {
           headers: {
-            'Cache-Control': `s-maxage=60, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`,
+            'Cache-Control': `s-maxage=10, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`,
           },
         };
       }
