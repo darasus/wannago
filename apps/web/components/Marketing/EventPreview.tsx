@@ -10,7 +10,9 @@ import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
 import {AnimateRender} from './AnimateRender';
 
 function Event() {
-  const {data: event} = trpc.event.getRandomExample.useQuery();
+  const {data: event} = trpc.event.getRandomExample.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+  });
 
   if (!event) return null;
   if (!event.organization?.users[0]) return null;
