@@ -19,12 +19,9 @@ export default async function handler(req: NextRequest) {
         console.error('Something went wrong', error);
       }
     },
-
     responseMeta({paths, type, errors}) {
       const shouldCache =
-        paths &&
-        paths.length === 1 &&
-        paths.every(path => path.includes('getRandomExample'));
+        paths && paths.every(path => path.includes('getRandomExample'));
       const allOk = errors.length === 0;
       const isQuery = type === 'query';
 
