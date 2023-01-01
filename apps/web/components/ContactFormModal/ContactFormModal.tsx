@@ -1,40 +1,22 @@
-import {Event} from '@prisma/client';
-import {useForm} from 'react-hook-form';
-import {toast} from 'react-hot-toast';
-import {useAmplitude} from '../../../hooks/useAmplitude';
-import {trpc} from '../../../utils/trpc';
-import {Button} from '../../Button/Button';
-import {Input} from '../../Input/Input/Input';
-import {Textarea} from '../../Input/Input/Textarea';
-import {Modal} from '../../Modal/Modal';
+import {FormEventHandler} from 'react';
+import {useFormContext} from 'react-hook-form';
+import {ContactForm} from '../../types/forms';
+import {Button} from '../Button/Button';
+import {Input} from '../Input/Input/Input';
+import {Textarea} from '../Input/Input/Textarea';
+import {Modal} from '../Modal/Modal';
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  event: Event;
+  onSubmit: FormEventHandler;
 }
 
-interface Form {
-  subject: string;
-  message: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-}
-
-export function ContactForm({isOpen, onClose, event}: Props) {
-  const {logEvent} = useAmplitude();
-  const sendEmail = trpc.mail.sendQuestionToOrganizer.useMutation();
-  const {register, handleSubmit} = useForm<Form>();
-
-  const onSubmit = handleSubmit(async data => {
-    logEvent('event_message_to_organizer_submitted', {
-      eventId: event.id,
-    });
-    await sendEmail.mutateAsync({...data, eventId: event.id});
-    toast.success('Email sent! Organizer will get back to you soon!');
-    onClose();
-  });
+export function ContactFormModal({isOpen, onClose, onSubmit}: Props) {
+  const {
+    register,
+    formState: {isSubmitting},
+  } = useFormContext<ContactForm>();
 
   return (
     <Modal title="Ask a question" isOpen={isOpen} onClose={onClose}>
@@ -59,7 +41,7 @@ export function ContactForm({isOpen, onClose, event}: Props) {
             <Button onClick={onClose} variant="neutral">
               Cancel
             </Button>
-            <Button type="submit" isLoading={sendEmail.isLoading}>
+            <Button type="submit" isLoading={isSubmitting}>
               Send
             </Button>
           </div>

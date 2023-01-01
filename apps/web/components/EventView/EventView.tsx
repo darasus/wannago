@@ -5,7 +5,7 @@ import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {EventWannaGoArea} from '../EventWannaGoArea/EventWannaGoArea';
 import {InfoCard} from '../InfoCard/InfoCard';
 import {LocationCard} from '../../features/LocationCard/LocationCard';
-import {OrganizerCard} from '../Card/OrganizerCard/OrganizerCard';
+import {OrganizerCard} from '../../features/OrganizerCard/OrganizerCard';
 import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard';
 
 interface Props {

@@ -3,7 +3,7 @@ import {motion, AnimatePresence} from 'framer-motion';
 import {Event, Organization, User} from '@prisma/client';
 import {InfoCard} from '../InfoCard/InfoCard';
 import {LocationCard} from '../../features/LocationCard/LocationCard';
-import {OrganizerCardView} from '../Card/OrganizerCard/OrganizerCardView';
+import {OrganizerCardView} from '../OrganizerCard/OrganizerCard';
 import {DateCard} from '../../features/DateCard/DateCard';
 import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
