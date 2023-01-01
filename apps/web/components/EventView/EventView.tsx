@@ -2,7 +2,7 @@ import {Event} from '@prisma/client';
 import {getBaseUrl} from '../../utils/getBaseUrl';
 import {DateCard} from '../../features/DateCard/DateCard';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
-import {EventWannaGoArea} from '../Card/EventWannaGoArea/EventWannaGoArea';
+import {EventWannaGoArea} from '../EventWannaGoArea/EventWannaGoArea';
 import {InfoCard} from '../InfoCard/InfoCard';
 import {LocationCard} from '../Card/LocationCard/LocationCard';
 import {OrganizerCard} from '../Card/OrganizerCard/OrganizerCard';
