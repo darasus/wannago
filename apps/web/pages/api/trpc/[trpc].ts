@@ -5,7 +5,7 @@ import {fetchRequestHandler} from '@trpc/server/adapters/fetch';
 
 export const config = {
   runtime: 'edge',
-  regions: ['fra1'],
+  // regions: ['fra1'],
 };
 
 export default async function handler(req: NextRequest) {
