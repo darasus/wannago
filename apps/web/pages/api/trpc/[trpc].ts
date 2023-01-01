@@ -4,7 +4,7 @@ import {NextRequest} from 'next/server';
 import {fetchRequestHandler} from '@trpc/server/adapters/fetch';
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
   regions: ['fra1'],
 };
 

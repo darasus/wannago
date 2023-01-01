@@ -4,7 +4,7 @@ import {prisma} from '../../../../packages/database/prisma';
 import {ONE_WEEK_IN_SECONDS} from '../../constants';
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
   regions: ['fra1'],
 };
 
