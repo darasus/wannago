@@ -19,23 +19,5 @@ export default async function handler(req: NextRequest) {
         console.error('Something went wrong', error);
       }
     },
-    responseMeta({paths, type, errors}) {
-      const shouldCache =
-        paths && paths.every(path => path.includes('getRandomExample'));
-      const allOk = errors.length === 0;
-      const isQuery = type === 'query';
-
-      if (shouldCache && allOk && isQuery) {
-        const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
-
-        return {
-          headers: {
-            'Cache-Control': `s-maxage=10, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`,
-          },
-        };
-      }
-
-      return {};
-    },
   });
 }
