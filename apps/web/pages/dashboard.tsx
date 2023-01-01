@@ -3,7 +3,7 @@ import {PlusCircleIcon} from '@heroicons/react/24/outline';
 import {useRouter} from 'next/router';
 import AppLayout from '../components/AppLayout/AppLayout';
 import {trpc} from '../utils/trpc';
-import {EventCard} from '../components/Card/EventCard/EventCard';
+import {EventCard} from '../components/EventCard/EventCard';
 import Head from 'next/head';
 import {Container} from '../components/Container/Container';
 import {LoadingEventCard} from '../components/Card/LoadingEventCard/LoadingEventCard';
