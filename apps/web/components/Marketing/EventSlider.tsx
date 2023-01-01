@@ -6,7 +6,7 @@ import {LocationCard} from '../Card/LocationCard/LocationCard';
 import {OrganizerCardView} from '../Card/OrganizerCard/OrganizerCardView';
 import {DateCard} from '../../features/DateCard/DateCard';
 import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
-import {EventUrlCard} from '../Card/EventUrlCard/EventUrlCard';
+import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {getBaseUrl} from '../../utils/getBaseUrl';
 import {Button} from '../Button/Button';
 import {Container} from '../Container/Container';
