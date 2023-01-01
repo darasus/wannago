@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout/AppLayout';
 import {EventCard} from '../components/EventCard/EventCard';
-import {LoadingEventCard} from '../components/Card/LoadingEventCard/LoadingEventCard';
+import {LoadingEventCard} from '../components/LoadingEventCard/LoadingEventCard';
 import {Container} from '../components/Container/Container';
 import {trpc} from '../utils/trpc';
 

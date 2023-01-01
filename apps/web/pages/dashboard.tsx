@@ -6,7 +6,7 @@ import {trpc} from '../utils/trpc';
 import {EventCard} from '../components/EventCard/EventCard';
 import Head from 'next/head';
 import {Container} from '../components/Container/Container';
-import {LoadingEventCard} from '../components/Card/LoadingEventCard/LoadingEventCard';
+import {LoadingEventCard} from '../components/LoadingEventCard/LoadingEventCard';
 import clsx from 'clsx';
 import {Button} from '../components/Button/Button';
 import {withProtected} from '../utils/withAuthProtect';
