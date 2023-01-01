@@ -32,19 +32,9 @@ const isAuthenticated = middleware(({next, ctx}) => {
   });
 });
 
-const logger = middleware(async ({next, path, type, meta}) => {
-  const start = Date.now();
-  const result = await next();
-  const durationMs = Date.now() - start;
-  result.ok
-    ? console.log('OK request timing:', {path, type, durationMs, meta})
-    : console.log('Non-OK request timing', {path, type, durationMs, meta});
-  return result;
-});
-
 export const router = t.router;
 
-export const publicProcedure = t.procedure.use(logger);
+export const publicProcedure = t.procedure;
 
 export const mergeRouters = t.mergeRouters;
 
