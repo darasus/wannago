@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {env} from '../../../lib/env/client';
+import {env} from '../../lib/env/client';
 
 interface Props {
   address: string;
@@ -9,7 +9,7 @@ interface Props {
   latitude: number;
 }
 
-export function GoogleLocationImage({
+export function LocationImage({
   width = 500,
   height = 500,
   address,

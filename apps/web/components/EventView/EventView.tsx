@@ -4,7 +4,7 @@ import {DateCard} from '../../features/DateCard/DateCard';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {EventWannaGoArea} from '../EventWannaGoArea/EventWannaGoArea';
 import {InfoCard} from '../InfoCard/InfoCard';
-import {LocationCard} from '../Card/LocationCard/LocationCard';
+import {LocationCard} from '../../features/LocationCard/LocationCard';
 import {OrganizerCard} from '../Card/OrganizerCard/OrganizerCard';
 import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
 

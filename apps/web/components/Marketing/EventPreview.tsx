@@ -4,7 +4,7 @@ import {trpc} from '../../utils/trpc';
 import {DateCard} from '../../features/DateCard/DateCard';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {InfoCard} from '../InfoCard/InfoCard';
-import {LocationCard} from '../Card/LocationCard/LocationCard';
+import {LocationCard} from '../../features/LocationCard/LocationCard';
 import {OrganizerCardView} from '../Card/OrganizerCard/OrganizerCardView';
 import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
 import {AnimateRender} from './AnimateRender';

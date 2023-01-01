@@ -2,7 +2,7 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
 import {Event, Organization, User} from '@prisma/client';
 import {InfoCard} from '../InfoCard/InfoCard';
-import {LocationCard} from '../Card/LocationCard/LocationCard';
+import {LocationCard} from '../../features/LocationCard/LocationCard';
 import {OrganizerCardView} from '../Card/OrganizerCard/OrganizerCardView';
 import {DateCard} from '../../features/DateCard/DateCard';
 import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
