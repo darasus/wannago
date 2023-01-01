@@ -4,7 +4,7 @@ import {Event, Organization, User} from '@prisma/client';
 import {InfoCard} from '../Card/InfoCard/InfoCard';
 import {LocationCard} from '../Card/LocationCard/LocationCard';
 import {OrganizerCardView} from '../Card/OrganizerCard/OrganizerCardView';
-import {DateCard} from '../Card/DateCard/DateCard';
+import {DateCard} from '../../features/DateCard/DateCard';
 import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
 import {EventUrlCard} from '../Card/EventUrlCard/EventUrlCard';
 import {getBaseUrl} from '../../utils/getBaseUrl';
