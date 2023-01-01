@@ -16,7 +16,7 @@ import {env} from '../lib/env/client';
 import {pageView} from '../lib/gtag';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
-import {Amplitude} from '../components/Amplitude/Amplitude';
+import {Amplitude} from '../features/Amplitude/Amplitude';
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter();
