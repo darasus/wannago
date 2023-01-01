@@ -2,7 +2,7 @@ import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
-import {CardBase} from '../Card/CardBase/CardBase';
+import {CardBase} from '../CardBase/CardBase';
 import {FileInput} from '../Input/FileInput/FileInput';
 import {Input} from '../Input/Input/Input';
 import {LocationInput} from '../Input/LocationInput/LocationInput';

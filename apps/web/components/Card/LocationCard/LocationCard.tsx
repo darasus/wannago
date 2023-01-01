@@ -1,4 +1,4 @@
-import {CardBase} from '../CardBase/CardBase';
+import {CardBase} from '../../CardBase/CardBase';
 import {Badge} from '../../Badge/Badge';
 import {Text} from '../../Text/Text';
 import * as React from 'react';

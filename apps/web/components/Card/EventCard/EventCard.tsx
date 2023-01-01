@@ -3,7 +3,7 @@ import {isFuture} from 'date-fns';
 import Image from 'next/image';
 import {formatDate} from '../../../utils/formatDate';
 import {Badge} from '../../Badge/Badge';
-import {CardBase} from '../CardBase/CardBase';
+import {CardBase} from '../../CardBase/CardBase';
 import {Text} from '../../Text/Text';
 import {forwardRef} from 'react';
 

@@ -4,7 +4,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {Button} from '../../../components/Button/Button';
-import {CardBase} from '../../../components/Card/CardBase/CardBase';
+import {CardBase} from '../../../components/CardBase/CardBase';
 import {Container} from '../../../components/Container/Container';
 import {Text} from '../../../components/Text/Text';
 import {trpc} from '../../../utils/trpc';

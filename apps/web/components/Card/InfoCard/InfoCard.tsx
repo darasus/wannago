@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
-import {CardBase} from '../CardBase/CardBase';
+import {CardBase} from '../../CardBase/CardBase';
 import {Badge} from '../../Badge/Badge';
 import {Text} from '../../Text/Text';
 import {Event} from '@prisma/client';

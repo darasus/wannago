@@ -7,7 +7,7 @@ import {Combobox, Transition} from '@headlessui/react';
 import {CheckIcon} from '@heroicons/react/24/solid';
 import {useDebounce} from '../../../hooks/useDebounce';
 import clsx from 'clsx';
-import {CardBase} from '../../Card/CardBase/CardBase';
+import {CardBase} from '../../CardBase/CardBase';
 
 type ExtractProps<T> = T extends ComponentType<infer P> ? P : T;
 

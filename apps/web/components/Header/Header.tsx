@@ -3,7 +3,7 @@ import {Popover, Transition} from '@headlessui/react';
 import clsx from 'clsx';
 import {Container} from '../Container/Container';
 import {Logo} from '../Logo/Logo';
-import {CardBase} from '../Card/CardBase/CardBase';
+import {CardBase} from '../CardBase/CardBase';
 import {Button} from '../Button/Button';
 import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';

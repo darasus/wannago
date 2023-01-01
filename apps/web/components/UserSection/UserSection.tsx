@@ -3,7 +3,7 @@ import {Popover, Transition} from '@headlessui/react';
 import Image from 'next/image';
 import {Fragment} from 'react';
 import {Button} from '../Button/Button';
-import {CardBase} from '../Card/CardBase/CardBase';
+import {CardBase} from '../CardBase/CardBase';
 import {FeedbackFish} from '@feedback-fish/react';
 
 export function UserSection() {

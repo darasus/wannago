@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import useCopyClipboard from '../../../hooks/useCopyClipboard';
 import {Button} from '../../Button/Button';
-import {CardBase} from '../CardBase/CardBase';
+import {CardBase} from '../../CardBase/CardBase';
 import {Badge} from '../../Badge/Badge';
 
 interface Props {

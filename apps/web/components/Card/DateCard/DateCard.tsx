@@ -1,5 +1,5 @@
 import {Button} from '../../Button/Button';
-import {CardBase} from '../CardBase/CardBase';
+import {CardBase} from '../../CardBase/CardBase';
 import {Badge} from '../../Badge/Badge';
 import {Text} from '../../Text/Text';
 import {saveAs} from 'file-saver';

@@ -8,7 +8,7 @@ import {
 import {useRouter} from 'next/router';
 import {Badge} from '../../components/Badge/Badge';
 import {Button} from '../../components/Button/Button';
-import {CardBase} from '../../components/Card/CardBase/CardBase';
+import {CardBase} from '../../components/CardBase/CardBase';
 import {Text} from '../../components/Text/Text';
 import {MessageParticipantsButton} from '../MessageParticipantsButton/MessageParticipantsButton';
 import {Event} from '@prisma/client';
