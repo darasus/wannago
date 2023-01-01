@@ -10,12 +10,11 @@ import {JoinForm} from '../../types/forms';
 
 interface Props {
   event: Event;
-  fake?: boolean;
 }
 
-export function ParticipantsCard({event, fake}: Props) {
+export function ParticipantsCard({event}: Props) {
   const {logEvent} = useAmplitude();
-  const {data, refetch} = useAttendeeCount({eventId: event.id, fake});
+  const {data, refetch} = useAttendeeCount({eventId: event.id});
   const form = useForm<JoinForm>();
   const {handleSubmit, reset} = form;
   const {mutateAsync} = trpc.event.join.useMutation({
@@ -47,11 +46,10 @@ export function ParticipantsCard({event, fake}: Props) {
     reset();
   });
 
-  const numberOfAttendees = fake
-    ? '121 people attending'
-    : typeof data?.count === 'number'
-    ? `${data?.count} people attending`
-    : 'Loading...';
+  const numberOfAttendees =
+    typeof data?.count === 'number'
+      ? `${data?.count} people attending`
+      : 'Loading...';
 
   return (
     <FormProvider {...form}>

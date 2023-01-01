@@ -1,4 +1,4 @@
-import {Event, User} from '@prisma/client';
+import {Event} from '@prisma/client';
 import {useState} from 'react';
 import {ContactFormModal} from '../../components/ContactFormModal/ContactFormModal';
 import {trpc} from '../../utils/trpc';
@@ -10,8 +10,6 @@ import {toast} from 'react-hot-toast';
 
 interface Props {
   event: Event;
-  fake?: boolean;
-  fakeUser?: Partial<User>;
 }
 
 export function OrganizerCard({event}: Props) {

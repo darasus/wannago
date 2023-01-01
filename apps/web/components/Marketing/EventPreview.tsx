@@ -1,12 +1,13 @@
 import {useRef, useState, useLayoutEffect} from 'react';
 import {getBaseUrl} from '../../utils/getBaseUrl';
+import {MockFormProvider} from '../../utils/MockFormProvider';
 import {trpc} from '../../utils/trpc';
-import {DateCard} from '../../features/DateCard/DateCard';
+import {DateCard} from '../DateCard/DateCard';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {InfoCard} from '../InfoCard/InfoCard';
-import {LocationCard} from '../../features/LocationCard/LocationCard';
+import {LocationCard} from '../LocationCard/LocationCard';
 import {OrganizerCard as OrganizerCardView} from '../OrganizerCard/OrganizerCard';
-import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard';
+import {ParticipantsCard} from '../ParticipantsCard/ParticipantsCard';
 import {AnimateRender} from './AnimateRender';
 
 function Event() {
@@ -22,29 +23,50 @@ function Event() {
     {
       el: (
         <LocationCard
-          key={2}
           address={event.address}
           longitude={event.longitude!}
           latitude={event.latitude!}
+          onGetDirectionsClick={() => {}}
         />
       ),
       delay: 1,
     },
     {
       el: (
-        <OrganizerCardView
-          key={3}
-          user={event.organization?.users[0]}
-          isLoading={false}
-          onOpenFormClick={() => {}}
-        />
+        <MockFormProvider>
+          <OrganizerCardView
+            user={event.organization?.users[0]}
+            isLoading={false}
+            onOpenFormClick={() => {}}
+          />
+        </MockFormProvider>
       ),
       delay: 2,
     },
-    {el: <DateCard key={4} event={event} timezone={undefined} />, delay: 3},
-    {el: <ParticipantsCard key={5} event={event} fake />, delay: 4},
     {
-      el: <EventUrlCard key={6} url={`${getBaseUrl()}/e/${event.shortId}`} />,
+      el: (
+        <DateCard
+          endDate={event.endDate}
+          startDate={event.startDate}
+          timezone={undefined}
+          onAddToCalendarClick={() => {}}
+        />
+      ),
+      delay: 3,
+    },
+    {
+      el: (
+        <MockFormProvider>
+          <ParticipantsCard
+            numberOfAttendees={'31 people attending'}
+            onSubmit={() => {}}
+          />
+        </MockFormProvider>
+      ),
+      delay: 4,
+    },
+    {
+      el: <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />,
       delay: 5,
     },
   ];
