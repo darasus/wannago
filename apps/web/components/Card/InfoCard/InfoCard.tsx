@@ -43,7 +43,7 @@ export function InfoCard({event}: Props) {
             )}
           >
             <div
-              className="text-boty"
+              className="text-body"
               dangerouslySetInnerHTML={{__html: event.description}}
             />
           </div>

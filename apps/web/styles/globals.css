@@ -13,7 +13,7 @@ body {
   }
 }
 
-.text-boty {
+.text-body {
   @apply prose p-0;
   @apply prose-p:m-0;
   @apply prose-h1:m-0 prose-h2:m-0 prose-h3:m-0 prose-h4:m-0 prose-h5:m-0 prose-h6:m-0;
@@ -21,7 +21,7 @@ body {
   @apply prose-li:m-0;
 }
 
-.text-boty .ProseMirror {
+.text-body .ProseMirror {
   @apply p-2;
 }
 
