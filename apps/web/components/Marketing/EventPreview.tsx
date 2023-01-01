@@ -18,39 +18,52 @@ function Event() {
   if (!event.organization?.users[0]) return null;
 
   const elements = [
-    <InfoCard key={1} event={event} />,
-    <LocationCard
-      key={2}
-      address={event.address}
-      longitude={event.longitude!}
-      latitude={event.latitude!}
-    />,
-    <OrganizerCardView
-      key={3}
-      user={event.organization?.users[0]}
-      isLoading={false}
-      onOpenFormClick={() => {}}
-    />,
-    <DateCard key={4} event={event} timezone={undefined} />,
-    <ParticipantsCard key={5} event={event} fake />,
-    <EventUrlCard key={6} url={`${getBaseUrl()}/e/${event.shortId}`} />,
+    {el: <InfoCard key={1} event={event} />, delay: 0},
+    {
+      el: (
+        <LocationCard
+          key={2}
+          address={event.address}
+          longitude={event.longitude!}
+          latitude={event.latitude!}
+        />
+      ),
+      delay: 1,
+    },
+    {
+      el: (
+        <OrganizerCardView
+          key={3}
+          user={event.organization?.users[0]}
+          isLoading={false}
+          onOpenFormClick={() => {}}
+        />
+      ),
+      delay: 2,
+    },
+    {el: <DateCard key={4} event={event} timezone={undefined} />, delay: 3},
+    {el: <ParticipantsCard key={5} event={event} fake />, delay: 4},
+    {
+      el: <EventUrlCard key={6} url={`${getBaseUrl()}/e/${event.shortId}`} />,
+      delay: 5,
+    },
   ];
 
   return (
     <div className="grid grid-cols-12 gap-4">
       <div className="flex flex-col col-span-8 gap-y-4">
-        {elements.slice(0, 1).map((el, i) => {
+        {elements.slice(0, 2).map(({el, delay}, i) => {
           return (
-            <AnimateRender key={i}>
+            <AnimateRender key={i} delay={(delay + 1) / 2}>
               <div>{el}</div>
             </AnimateRender>
           );
         })}
       </div>
       <div className="flex flex-col col-span-4 gap-y-4">
-        {elements.slice(2, 7).map((el, i) => {
+        {elements.slice(2, 7).map(({el, delay}, i) => {
           return (
-            <AnimateRender key={i} delay={(i + 1) / 2}>
+            <AnimateRender key={i} delay={(delay + 1) / 2}>
               <div>{el}</div>
             </AnimateRender>
           );
