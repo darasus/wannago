@@ -6,7 +6,7 @@ import {EventWannaGoArea} from '../EventWannaGoArea/EventWannaGoArea';
 import {InfoCard} from '../InfoCard/InfoCard';
 import {LocationCard} from '../../features/LocationCard/LocationCard';
 import {OrganizerCard} from '../Card/OrganizerCard/OrganizerCard';
-import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
+import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard';
 
 interface Props {
   event: Event;

@@ -6,7 +6,7 @@ import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {InfoCard} from '../InfoCard/InfoCard';
 import {LocationCard} from '../../features/LocationCard/LocationCard';
 import {OrganizerCardView} from '../Card/OrganizerCard/OrganizerCardView';
-import {ParticipantsCard} from '../Card/ParticipantsCard/ParticipantsCard';
+import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard';
 import {AnimateRender} from './AnimateRender';
 
 function Event() {
