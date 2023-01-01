@@ -1,6 +1,7 @@
 import {ImageResponse} from '@vercel/og';
 import {NextRequest} from 'next/server';
 import {prisma} from '../../../../packages/database/prisma';
+import {ONE_WEEK_IN_SECONDS} from '../../constants';
 
 export const config = {
   runtime: 'experimental-edge',
@@ -77,6 +78,9 @@ export default async function handler(req: NextRequest) {
       </div>
     ),
     {
+      headers: {
+        'Cache-Control': `s-maxage=60, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`,
+      },
       width: 1200,
       height: 630,
       fonts: [
