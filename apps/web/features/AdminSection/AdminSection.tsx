@@ -6,11 +6,11 @@ import {
   PauseCircleIcon,
 } from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
-import {Badge} from '../Badge/Badge';
-import {Button} from '../Button/Button';
-import {CardBase} from '../Card/CardBase/CardBase';
-import {Text} from '../Text/Text';
-import {MessageParticipantsButton} from './components/MessageParticipantsButton';
+import {Badge} from '../../components/Badge/Badge';
+import {Button} from '../../components/Button/Button';
+import {CardBase} from '../../components/Card/CardBase/CardBase';
+import {Text} from '../../components/Text/Text';
+import {MessageParticipantsButton} from '../MessageParticipantsButton/MessageParticipantsButton';
 import {Event} from '@prisma/client';
 import {formatTimeago} from '../../utils/formatDate';
 import {useAttendeeCount} from '../../hooks/useAttendeeCount';

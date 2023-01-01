@@ -2,7 +2,7 @@ import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
-import {AdminSection} from '../../../components/AdminSection/AdminSection';
+import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EventView} from '../../../components/EventView/EventView';
 import {Container} from '../../../components/Container/Container';

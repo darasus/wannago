@@ -3,11 +3,9 @@ import {useRouter} from 'next/router';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
-import {trpc} from '../../../utils/trpc';
-import {Button} from '../../Button/Button';
-import {Input} from '../../Input/Input/Input';
-import {Textarea} from '../../Input/Input/Textarea';
-import {Modal} from '../../Modal/Modal';
+import {trpc} from '../../utils/trpc';
+import {Button} from '../../components/Button/Button';
+import {MessageParticipantsFormModal} from '../../components/MessageParticipantsFormModal/MessageParticipantsFormModal';
 
 interface Form {
   subject: string;
@@ -39,30 +37,13 @@ export function MessageParticipantsButton() {
 
   return (
     <>
-      <Modal
+      <MessageParticipantsFormModal
         isOpen={isOpen}
-        title="Get in touch with participants"
+        isSubmitting={isSubmitting}
         onClose={() => setIsOpen(false)}
-      >
-        <form onSubmit={handleOnSubmit}>
-          <div className="flex flex-col gap-y-4">
-            <div>
-              <Input {...register('subject')} placeholder="Subject" />
-            </div>
-            <div>
-              <Textarea {...register('message')} placeholder="Message" />
-            </div>
-            <div className="flex justify-start gap-x-2">
-              <Button onClick={() => setIsOpen(false)} variant="neutral">
-                Cancel
-              </Button>
-              <Button isLoading={isSubmitting} type="submit">
-                Send
-              </Button>
-            </div>
-          </div>
-        </form>
-      </Modal>
+        onSubmit={handleOnSubmit}
+        register={register}
+      />
       <Button
         onClick={handleOnClick}
         variant="neutral"
