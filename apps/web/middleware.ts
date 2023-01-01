@@ -1,21 +1,7 @@
 import {withClerkMiddleware} from '@clerk/nextjs/server';
-import {NextRequest, NextResponse} from 'next/server';
-import {ONE_WEEK_IN_SECONDS} from './constants';
+import {NextResponse} from 'next/server';
 
-export default withClerkMiddleware((req: NextRequest) => {
-  console.log(req.nextUrl.pathname);
-
-  if (req.nextUrl.pathname === '/api/trpc/event.getRandomExample') {
-    const response = NextResponse.next();
-
-    response.headers.set(
-      'Cache-Control',
-      `s-maxage=10, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`
-    );
-
-    return response;
-  }
-
+export default withClerkMiddleware(() => {
   return NextResponse.next();
 });
 
