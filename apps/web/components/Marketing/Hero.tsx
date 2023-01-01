@@ -36,16 +36,15 @@ export const Hero = forwardRef(function Hero(
           )}
         >
           Generate more <span className="whitespace-nowrap">sign ups</span> with{' '}
-          <span className="zigzag">stunning</span> and{' '}
-          <span className="zigzag">simple</span> event pages
+          <span className="zigzag">simple</span> and{' '}
+          <span className="zigzag">stunning</span> event pages
         </h1>
-        <p className="mx-auto mt-6 max-w-xl text-lg tracking-tight text-slate-700 text-center">
-          <span className="">
-            {'Send killer invitations to your birthday or corporate event'}
-            <br />
-            {'and be ready to meet your guests'}
+        <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-slate-700 text-center">
+          <span className="font-medium">
+            Send killer invitations to your private event and get ready to meet
+            your guests
           </span>
-        </p>
+        </div>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">
           <Button
             className="pointer-events-auto"
