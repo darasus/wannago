@@ -23,6 +23,7 @@
     "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.13",
     "@hookform/resolvers": "^2.9.10",
+    "@kodingdotninja/use-tailwind-breakpoint": "^0.0.5",
     "@next/font": "^13.0.5",
     "@prisma/client": "^4.6.1",
     "@react-email/render": "^0.0.2",

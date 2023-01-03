@@ -11,6 +11,7 @@ importers:
       '@headlessui/react': ^1.7.4
       '@heroicons/react': ^2.0.13
       '@hookform/resolvers': ^2.9.10
+      '@kodingdotninja/use-tailwind-breakpoint': ^0.0.5
       '@next/font': ^13.0.5
       '@prisma/client': ^4.6.1
       '@react-email/render': ^0.0.2
@@ -86,6 +87,7 @@ importers:
       '@headlessui/react': 1.7.4_biqbaboplfbrettd7655fr4n2y
       '@heroicons/react': 2.0.13_react@18.2.0
       '@hookform/resolvers': 2.9.10_react-hook-form@7.39.4
+      '@kodingdotninja/use-tailwind-breakpoint': 0.0.5_react@18.2.0
       '@next/font': 13.0.5
       '@prisma/client': 4.6.1_prisma@4.6.1
       '@react-email/render': 0.0.2_react@18.2.0
@@ -563,6 +565,17 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+
+  /@kodingdotninja/use-tailwind-breakpoint/0.0.5_react@18.2.0:
+    resolution: {integrity: sha512-7h52zL+l+14u9diyjVcGoS5NRIwrc6euIGlHDwtJXlrR3h31RNyTrOfimy7PJTvS4fFdNgbzyrNcGfhj3sDRfQ==}
+    peerDependencies:
+      react: '>=16.8'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /@motionone/animation/10.15.1:
     resolution: {integrity: sha512-mZcJxLjHor+bhcPuIFErMDNyrdb2vJur8lSfMCsuCB4UyV8ILZLvK+t+pg56erv8ud9xQGK/1OGPt10agPrCyQ==}

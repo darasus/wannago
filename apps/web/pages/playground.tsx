@@ -1,8 +1,28 @@
 import {ArrowDownCircleIcon} from '@heroicons/react/24/solid';
+import {Accordion} from '../components/Accordion/Accordion';
 import {Button} from '../components/Button/Button';
 import {Input} from '../components/Input/Input/Input';
 
 const sizes = ['sm', 'md', 'lg'] as const;
+
+const items = [
+  {
+    label: 'What is Tailwind CSS?',
+    content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
+  },
+  {
+    label: 'What is Tailwind CSS?',
+    content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
+  },
+  {
+    label: 'What is Tailwind CSS?',
+    content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
+  },
+  {
+    label: 'What is Tailwind CSS?',
+    content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
+  },
+];
 
 export default function PlaygroundPage() {
   return (
@@ -48,6 +68,9 @@ export default function PlaygroundPage() {
           <Input placeholder="Placeholder..." />
           <Input label="Hello" placeholder="Placeholder..." isLoading />
         </div>
+      </div>
+      <div className="flex flex-col p-4">
+        <Accordion items={items} />
       </div>
     </>
   );

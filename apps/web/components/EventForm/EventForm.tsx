@@ -1,5 +1,7 @@
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
+import {useBreakpoint} from '../../hooks/useBreakpoint';
+import {Accordion} from '../Accordion/Accordion';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
@@ -17,114 +19,143 @@ interface Props {
 }
 
 export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
+  const isMobile = useBreakpoint('sm');
   const {
     register,
     formState: {isSubmitting, errors},
   } = useFormContext<Form>();
 
+  const items = [
+    {
+      label: 'What',
+      content: (
+        <>
+          <Input
+            label="Event title"
+            error={errors.title}
+            {...register('title', {
+              required: {
+                value: true,
+                message: 'Title is required',
+              },
+            })}
+          />
+          <RichTextarea
+            label="Event description"
+            error={errors.description}
+            {...register('description', {
+              required: {value: true, message: 'Description is required'},
+            })}
+          />
+          <FileInput
+            label="Event image"
+            error={errors.featuredImageSrc}
+            {...register('featuredImageSrc', {
+              required: {
+                value: true,
+                message: 'Featured image is required',
+              },
+            })}
+          />
+        </>
+      ),
+    },
+    {
+      label: 'When',
+      content: (
+        <>
+          <Input
+            type="datetime-local"
+            label="Event start date"
+            error={errors.startDate}
+            {...register('startDate', {
+              required: {value: true, message: 'Start date is required'},
+            })}
+          />
+          <Input
+            type="datetime-local"
+            label="Event end date"
+            error={errors.endDate}
+            {...register('endDate', {
+              required: {value: true, message: 'End date is required'},
+            })}
+          />
+        </>
+      ),
+    },
+    {
+      label: 'Where',
+      content: (
+        <>
+          <LocationInput
+            label="Event address"
+            error={errors.address}
+            {...register('address', {
+              required: {value: true, message: 'Address is required'},
+            })}
+          />
+        </>
+      ),
+    },
+    {
+      label: 'Attend',
+      content: (
+        <>
+          <Input
+            type="number"
+            label="Max number of attendees"
+            error={errors.maxNumberOfAttendees}
+            {...register('maxNumberOfAttendees', {
+              required: {
+                value: true,
+                message: 'Max number of attendees is required',
+              },
+              min: {
+                value: 1,
+                message: 'Min number of attendees must be at least 1',
+              },
+              max: {
+                value: 1_000_000,
+                message:
+                  'Max number of attendees must be not more that 1,000,000',
+              },
+            })}
+          />
+        </>
+      ),
+    },
+  ];
+
   return (
-    <div>
-      <CardBase className="p-8">
-        <form onSubmit={onSubmit}>
-          {/* <div className="bg-gray-100 rounded-3xl px-4 py-2 mb-4">
-            <Text className="text-2xl font-bold">
-              {isEdit ? 'Edit event' : 'Create event'}
-            </Text>
-          </div> */}
-          <div className="flex flex-col gap-y-4">
-            <div>
-              <Badge color="gray">What</Badge>
+    <CardBase className="p-8 md:sticky md:top-4">
+      <form onSubmit={onSubmit}>
+        <div className="flex flex-col gap-y-4">
+          {isMobile && isEdit ? (
+            <Accordion items={items} defaultExpandedIndex={0} />
+          ) : (
+            <div className="flex flex-col gap-y-4">
+              {items.map(({label, content}) => {
+                return (
+                  <div>
+                    <div className="mb-2">
+                      <Badge color="gray">{label}</Badge>
+                    </div>
+                    {content}
+                  </div>
+                );
+              })}
             </div>
-            <Input
-              label="Event title"
-              error={errors.title}
-              {...register('title', {
-                required: {
-                  value: true,
-                  message: 'Title is required',
-                },
-              })}
-            />
-            <RichTextarea
-              label="Event description"
-              error={errors.description}
-              {...register('description', {
-                required: {value: true, message: 'Description is required'},
-              })}
-            />
-            <FileInput
-              label="Event image"
-              error={errors.featuredImageSrc}
-              {...register('featuredImageSrc', {
-                required: {
-                  value: true,
-                  message: 'Featured image is required',
-                },
-              })}
-            />
-            <div>
-              <Badge color="gray">When</Badge>
-            </div>
-            <Input
-              type="datetime-local"
-              label="Event start date"
-              error={errors.startDate}
-              {...register('startDate', {
-                required: {value: true, message: 'Start date is required'},
-              })}
-            />
-            <Input
-              type="datetime-local"
-              label="Event end date"
-              error={errors.endDate}
-              {...register('endDate', {
-                required: {value: true, message: 'End date is required'},
-              })}
-            />
-            <div>
-              <Badge color="gray">Where</Badge>
-            </div>
-            <LocationInput
-              label="Event address"
-              error={errors.address}
-              {...register('address', {
-                required: {value: true, message: 'Address is required'},
-              })}
-            />
-            <div>
-              <Badge color="gray">Attend</Badge>
-            </div>
-            <Input
-              type="number"
-              label="Max number of attendees"
-              error={errors.maxNumberOfAttendees}
-              {...register('maxNumberOfAttendees', {
-                required: {
-                  value: true,
-                  message: 'Max number of attendees is required',
-                },
-                min: {
-                  value: 1,
-                  message: 'Min number of attendees must be at least 1',
-                },
-                max: {
-                  value: 1_000_000,
-                  message:
-                    'Max number of attendees must be not more that 1,000,000',
-                },
-              })}
-            />
-            <div className="flex gap-x-2">
-              <Button onClick={onCancelClick} variant="neutral">
-                Cancel
-              </Button>
-              <Button isLoading={isSubmitting} type="submit">
-                {isEdit ? 'Save' : 'Save as draft'}
-              </Button>
-            </div>
+          )}
+          <div className="flex gap-x-2">
+            <Button onClick={onCancelClick} variant="neutral">
+              Cancel
+            </Button>
+            <Button isLoading={isSubmitting} type="submit">
+              {isEdit ? 'Save' : 'Save as draft'}
+            </Button>
           </div>
-        </form>
-      </CardBase>
-    </div>
+        </div>
+      </form>
+    </CardBase>
   );
 }
