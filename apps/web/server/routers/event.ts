@@ -288,25 +288,36 @@ const join = publicProcedure
       });
     }
 
-    const event = await ctx.prisma.eventSignUp.create({
-      data: {
-        event: {
-          connect: {
-            id: input.eventId,
-          },
-        },
-        user: {
-          connect: {
-            id: user.id,
-          },
-        },
+    const existingSignUp = await ctx.prisma.eventSignUp.findFirst({
+      where: {
+        eventId: input.eventId,
+        userId: user.id,
       },
     });
 
-    return ctx.mail.sendEventSignupEmail({
-      eventId: event.id,
+    if (!existingSignUp) {
+      await ctx.prisma.eventSignUp.create({
+        data: {
+          event: {
+            connect: {
+              id: input.eventId,
+            },
+          },
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
+        },
+      });
+    }
+
+    await ctx.mail.sendEventSignupEmail({
+      eventId: input.eventId,
       userId: user.id,
     });
+
+    return {success: true};
   });
 
 const removeUser = protectedProcedure
