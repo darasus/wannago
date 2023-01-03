@@ -1,7 +1,5 @@
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {useBreakpoint} from '../../hooks/useBreakpoint';
-import {Accordion} from '../Accordion/Accordion';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
@@ -19,7 +17,6 @@ interface Props {
 }
 
 export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
-  const isMobile = useBreakpoint('sm');
   const {
     register,
     formState: {isSubmitting, errors},
@@ -130,22 +127,18 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
     <CardBase className="p-8 md:sticky md:top-4">
       <form onSubmit={onSubmit}>
         <div className="flex flex-col gap-y-4">
-          {isMobile && isEdit ? (
-            <Accordion items={items} defaultExpandedIndex={0} />
-          ) : (
-            <div className="flex flex-col gap-y-4">
-              {items.map(({label, content}) => {
-                return (
-                  <div>
-                    <div className="mb-2">
-                      <Badge color="gray">{label}</Badge>
-                    </div>
-                    {content}
+          <div className="flex flex-col gap-y-4">
+            {items.map(({label, content}, i) => {
+              return (
+                <div key={i}>
+                  <div className="mb-2">
+                    <Badge color="gray">{label}</Badge>
                   </div>
-                );
-              })}
-            </div>
-          )}
+                  {content}
+                </div>
+              );
+            })}
+          </div>
           <div className="flex gap-x-2">
             <Button onClick={onCancelClick} variant="neutral">
               Cancel

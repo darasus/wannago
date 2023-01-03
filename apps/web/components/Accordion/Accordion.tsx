@@ -23,7 +23,7 @@ export function Accordion({items, defaultExpandedIndex}: Props) {
         const isExpanded = expandedIndex === i;
 
         return (
-          <div>
+          <div key={i}>
             <motion.header
               className="flex"
               initial={false}
