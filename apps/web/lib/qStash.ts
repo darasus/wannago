@@ -47,17 +47,7 @@ export class QStash {
     return message;
   }
 
-  async updateEventEmailSchedule({
-    event,
-    isTimeChanged,
-  }: {
-    event: Event;
-    isTimeChanged: boolean;
-  }) {
-    if (!isTimeChanged) {
-      return null;
-    }
-
+  async updateEventEmailSchedule({event}: {event: Event}) {
     if (event.messageId) {
       await this.qStash.messages.delete({
         id: event.messageId,

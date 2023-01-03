@@ -77,20 +77,24 @@ const update = protectedProcedure
         },
       });
 
-      const message = await ctx.qStash.updateEventEmailSchedule({
-        event,
-        isTimeChanged: differenceInSeconds(startDate, event.startDate) !== 0,
-      });
+      const isTimeChanged =
+        differenceInSeconds(startDate, event.startDate) !== 0;
 
-      if (message?.messageId) {
-        event = await ctx.prisma.event.update({
-          where: {
-            id: eventId,
-          },
-          data: {
-            messageId: message.messageId,
-          },
+      if (isTimeChanged) {
+        const message = await ctx.qStash.updateEventEmailSchedule({
+          event,
         });
+
+        if (message?.messageId) {
+          event = await ctx.prisma.event.update({
+            where: {
+              id: eventId,
+            },
+            data: {
+              messageId: message.messageId,
+            },
+          });
+        }
       }
 
       return event;
