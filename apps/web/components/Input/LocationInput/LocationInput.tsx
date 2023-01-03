@@ -25,7 +25,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
       name: 'address',
     });
     const debouncedValue = useDebounce(address);
-    const {data} = trpc.maps.searchPlaces.useQuery(
+    const {data, isFetching} = trpc.maps.searchPlaces.useQuery(
       {
         query: debouncedValue as string,
       },
@@ -45,6 +45,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
                 {...props}
                 as={Input}
                 autoComplete="off"
+                isLoading={isFetching}
               />
             </div>
             <Transition

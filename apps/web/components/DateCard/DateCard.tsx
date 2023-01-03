@@ -1,3 +1,4 @@
+import {isSameDay} from 'date-fns';
 import {formatDate, formatTimeago} from '../../utils/formatDate';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
@@ -17,6 +18,8 @@ export function DateCard({
   timezone,
   onAddToCalendarClick,
 }: Props) {
+  const isAtSameDay = isSameDay(new Date(startDate), new Date(endDate));
+
   return (
     <CardBase>
       <div className="mb-2">
@@ -49,11 +52,23 @@ export function DateCard({
             timezone
           )})`}</Text>
           <div />
-          <Text>{`${formatDate(
-            new Date(startDate),
-            'HH:mm',
-            timezone
-          )} - ${formatDate(new Date(endDate), 'HH:mm', timezone)}`}</Text>
+          {isAtSameDay ? (
+            <Text>{`${formatDate(
+              new Date(startDate),
+              'HH:mm',
+              timezone
+            )} - ${formatDate(new Date(endDate), 'HH:mm', timezone)}`}</Text>
+          ) : (
+            <Text className="text-sm">{`${formatDate(
+              new Date(startDate),
+              'MMM dd, HH:mm',
+              timezone
+            )} - ${formatDate(
+              new Date(endDate),
+              'MMM dd, HH:mm',
+              timezone
+            )}`}</Text>
+          )}
         </div>
       </div>
     </CardBase>

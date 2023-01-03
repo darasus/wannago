@@ -8,7 +8,7 @@ import {Spinner} from '../Spinner/Spinner';
 
 interface Props {
   onOpenFormClick: () => void;
-  isLoading: boolean;
+  isLoading?: boolean;
   user: User | null;
 }
 

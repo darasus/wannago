@@ -88,12 +88,16 @@ export const Button = forwardRef(function Button(
       )}
     >
       {isLoading ? (
-        <Spinner />
+        <Spinner className="h-5 w-5" />
       ) : (
         <>
           {
             (iconLeft &&= (
-              <div className={clsx({'mr-2': !!children})}>{iconLeft}</div>
+              <div
+                className={clsx('text-slate-800 h-5 w-5', {'mr-2': !!children})}
+              >
+                {iconLeft}
+              </div>
             ))
           }
           {children}

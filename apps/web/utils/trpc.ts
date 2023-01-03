@@ -19,7 +19,9 @@ export const trpc = createTRPCNext<AppRouter>({
         }),
       ],
       queryClientConfig: {
-        defaultOptions: {queries: {keepPreviousData: true}},
+        defaultOptions: {
+          queries: {keepPreviousData: true, refetchOnWindowFocus: false},
+        },
       },
     };
   },

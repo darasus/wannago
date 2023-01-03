@@ -7,7 +7,6 @@ import {FileInput} from '../Input/FileInput/FileInput';
 import {Input} from '../Input/Input/Input';
 import {LocationInput} from '../Input/LocationInput/LocationInput';
 import {RichTextarea} from '../Input/RichTextarea/RichTextarea';
-import {Text} from '../Text/Text';
 import {Form} from './types';
 
 interface Props {
@@ -27,104 +26,95 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
     <div>
       <CardBase className="p-8">
         <form onSubmit={onSubmit}>
-          <div className="text-center pt-4 pb-8">
-            <Text className="text-2xl font-bold uppercase">
+          {/* <div className="bg-gray-100 rounded-3xl px-4 py-2 mb-4">
+            <Text className="text-2xl font-bold">
               {isEdit ? 'Edit event' : 'Create event'}
             </Text>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-            <div className="flex md:justify-end items-start col-span-4">
+          </div> */}
+          <div className="flex flex-col gap-y-4">
+            <div>
               <Badge color="gray">What</Badge>
             </div>
-            <div className="flex flex-col col-span-8 gap-y-4">
-              <Input
-                label="Event title"
-                error={errors.title}
-                {...register('title', {
-                  required: {
-                    value: true,
-                    message: 'Title is required',
-                  },
-                })}
-              />
-              <RichTextarea
-                label="Event description"
-                error={errors.description}
-                {...register('description', {
-                  required: {value: true, message: 'Description is required'},
-                })}
-              />
-              <FileInput
-                label="Event image"
-                error={errors.featuredImageSrc}
-                {...register('featuredImageSrc', {
-                  required: {
-                    value: true,
-                    message: 'Featured image is required',
-                  },
-                })}
-              />
-            </div>
-            <div className="flex md:justify-end items-start col-span-4">
+            <Input
+              label="Event title"
+              error={errors.title}
+              {...register('title', {
+                required: {
+                  value: true,
+                  message: 'Title is required',
+                },
+              })}
+            />
+            <RichTextarea
+              label="Event description"
+              error={errors.description}
+              {...register('description', {
+                required: {value: true, message: 'Description is required'},
+              })}
+            />
+            <FileInput
+              label="Event image"
+              error={errors.featuredImageSrc}
+              {...register('featuredImageSrc', {
+                required: {
+                  value: true,
+                  message: 'Featured image is required',
+                },
+              })}
+            />
+            <div>
               <Badge color="gray">When</Badge>
             </div>
-            <div className="flex flex-col col-span-8 gap-y-4">
-              <Input
-                type="datetime-local"
-                label="Event start date"
-                error={errors.startDate}
-                {...register('startDate', {
-                  required: {value: true, message: 'Start date is required'},
-                })}
-              />
-              <Input
-                type="datetime-local"
-                label="Event end date"
-                error={errors.endDate}
-                {...register('endDate', {
-                  required: {value: true, message: 'End date is required'},
-                })}
-              />
-            </div>
-            <div className="flex md:justify-end items-start col-span-4">
+            <Input
+              type="datetime-local"
+              label="Event start date"
+              error={errors.startDate}
+              {...register('startDate', {
+                required: {value: true, message: 'Start date is required'},
+              })}
+            />
+            <Input
+              type="datetime-local"
+              label="Event end date"
+              error={errors.endDate}
+              {...register('endDate', {
+                required: {value: true, message: 'End date is required'},
+              })}
+            />
+            <div>
               <Badge color="gray">Where</Badge>
             </div>
-            <div className="flex flex-col col-span-8 gap-y-4">
-              <LocationInput
-                label="Event address"
-                error={errors.address}
-                {...register('address', {
-                  required: {value: true, message: 'Address is required'},
-                })}
-              />
-            </div>
-            <div className="flex md:justify-end items-start col-span-4">
+            <LocationInput
+              label="Event address"
+              error={errors.address}
+              {...register('address', {
+                required: {value: true, message: 'Address is required'},
+              })}
+            />
+            <div>
               <Badge color="gray">Attend</Badge>
             </div>
-            <div className="flex flex-col col-span-8 gap-y-4">
-              <Input
-                type="number"
-                label="Max number of attendees"
-                error={errors.maxNumberOfAttendees}
-                {...register('maxNumberOfAttendees', {
-                  required: {
-                    value: true,
-                    message: 'Max number of attendees is required',
-                  },
-                  min: {
-                    value: 1,
-                    message: 'Min number of attendees must be at least 1',
-                  },
-                  max: {
-                    value: 1_000_000,
-                    message:
-                      'Max number of attendees must be not more that 1,000,000',
-                  },
-                })}
-              />
-            </div>
-            <div className="flex justify-end items-start col-span-4" />
-            <div className="flex justify-center gap-x-4 col-span-8">
+            <Input
+              type="number"
+              label="Max number of attendees"
+              error={errors.maxNumberOfAttendees}
+              {...register('maxNumberOfAttendees', {
+                required: {
+                  value: true,
+                  message: 'Max number of attendees is required',
+                },
+                min: {
+                  value: 1,
+                  message: 'Min number of attendees must be at least 1',
+                },
+                max: {
+                  value: 1_000_000,
+                  message:
+                    'Max number of attendees must be not more that 1,000,000',
+                },
+              })}
+            />
+            <div className="flex gap-x-2">
               <Button onClick={onCancelClick} variant="neutral">
                 Cancel
               </Button>

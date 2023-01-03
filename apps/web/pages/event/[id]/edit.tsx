@@ -27,8 +27,8 @@ function EventEditPage() {
       <Head>
         <title>{`Edit event | WannaGo`}</title>
       </Head>
-      <AppLayout>
-        <Container className="md:px-4">
+      <AppLayout maxSize="lg">
+        <Container maxSize="lg">
           <EditEventForm event={data} />
         </Container>
       </AppLayout>

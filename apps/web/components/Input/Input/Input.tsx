@@ -2,16 +2,18 @@ import {InputWrapper} from './InputWrapper';
 import clsx from 'clsx';
 import {forwardRef} from 'react';
 import {FieldError} from 'react-hook-form';
+import {Spinner} from '../../Spinner/Spinner';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   inputClassName?: string;
   containerClassName?: string;
   error?: FieldError;
+  isLoading?: boolean;
 }
 
 export const Input = forwardRef(function Input(
-  {containerClassName, inputClassName, error, ...props}: Props,
+  {containerClassName, inputClassName, error, isLoading, ...props}: Props,
   ref: React.Ref<HTMLInputElement>
 ) {
   const hasError = Boolean(error);
@@ -38,6 +40,11 @@ export const Input = forwardRef(function Input(
         {...props}
         ref={ref}
       />
+      {isLoading && (
+        <div className="absolute top-0 bottom-0 right-4 flex items-center">
+          <Spinner />
+        </div>
+      )}
     </InputWrapper>
   );
 });

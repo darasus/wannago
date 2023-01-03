@@ -217,6 +217,13 @@ const getById = protectedProcedure
       where: {
         id: eventId,
       },
+      include: {
+        organization: {
+          include: {
+            users: true,
+          },
+        },
+      },
     });
   });
 

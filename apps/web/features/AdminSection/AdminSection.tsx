@@ -91,7 +91,7 @@ export function AdminSection({event, timezone}: Props) {
           <div className="flex flex-col md:flex-row md:items-center gap-2">
             <Button
               variant="neutral"
-              iconLeft={<PencilIcon className="h-3 w-3" />}
+              iconLeft={<PencilIcon />}
               onClick={() => router.push(`/event/${event.id}/edit`)}
               size="sm"
             >
@@ -100,7 +100,7 @@ export function AdminSection({event, timezone}: Props) {
             {event.isPublished && (
               <Button
                 variant="danger"
-                iconLeft={<PauseCircleIcon className="h-3 w-3" />}
+                iconLeft={<PauseCircleIcon />}
                 onClick={() => onUnpublishClick()}
                 size="sm"
               >
@@ -110,7 +110,7 @@ export function AdminSection({event, timezone}: Props) {
             {!event.isPublished && (
               <Button
                 variant="primary"
-                iconLeft={<PlayCircleIcon className="h-3 w-3" />}
+                iconLeft={<PlayCircleIcon />}
                 onClick={() => onPublishClick()}
                 size="sm"
               >
@@ -119,7 +119,7 @@ export function AdminSection({event, timezone}: Props) {
             )}
             <Button
               variant="danger"
-              iconLeft={<TrashIcon className="h-3 w-3" />}
+              iconLeft={<TrashIcon />}
               onClick={onRemoveClick}
               size="sm"
             >
@@ -127,7 +127,7 @@ export function AdminSection({event, timezone}: Props) {
             </Button>
             <Button
               variant="neutral"
-              iconLeft={<UsersIcon className="h-3 w-3" />}
+              iconLeft={<UsersIcon />}
               onClick={() => router.push(`/event/${event.id}/attendees`)}
               size="sm"
             >

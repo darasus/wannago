@@ -5,7 +5,7 @@ import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {EventWannaGoArea} from '../EventWannaGoArea/EventWannaGoArea';
 import {InfoCard} from '../InfoCard/InfoCard';
 import {LocationCard} from '../../features/LocationCard/LocationCard';
-import {OrganizerCard} from '../../features/OrganizerCard/OrganizerCard';
+import {OrganizerCard} from '../Card/OrganizerCard/OrganizerCard';
 import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard';
 
 interface Props {
@@ -22,7 +22,11 @@ export function EventView({event, timezone, isPublic}: Props) {
       <div className="flex flex-col gap-y-4 md:col-span-8">
         <div className="block md:hidden">{organizer}</div>
         <div>
-          <InfoCard event={event} />
+          <InfoCard
+            title={event.title}
+            description={event.description}
+            featuredImageSrc={event.featuredImageSrc}
+          />
         </div>
         <div>
           <LocationCard

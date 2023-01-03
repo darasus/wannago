@@ -1,11 +1,11 @@
 import {Event} from '@prisma/client';
 import {useState} from 'react';
-import {ContactFormModal} from '../../components/ContactFormModal/ContactFormModal';
-import {trpc} from '../../utils/trpc';
-import {OrganizerCard as OrganizerCardView} from '../../components/OrganizerCard/OrganizerCard';
-import {useAmplitude} from '../../hooks/useAmplitude';
+import {ContactFormModal} from '../../ContactFormModal/ContactFormModal';
+import {trpc} from '../../../utils/trpc';
+import {OrganizerCard as OrganizerCardView} from '../../OrganizerCard/OrganizerCard';
+import {useAmplitude} from '../../../hooks/useAmplitude';
 import {FormProvider, useForm} from 'react-hook-form';
-import {ContactForm} from '../../types/forms';
+import {ContactForm} from '../../../types/forms';
 import {toast} from 'react-hot-toast';
 
 interface Props {

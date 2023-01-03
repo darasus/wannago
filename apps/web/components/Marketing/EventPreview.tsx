@@ -11,15 +11,23 @@ import {ParticipantsCard} from '../ParticipantsCard/ParticipantsCard';
 import {AnimateRender} from './AnimateRender';
 
 function Event() {
-  const {data: event} = trpc.event.getRandomExample.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-  });
+  const {data: event} = trpc.event.getRandomExample.useQuery();
 
   if (!event) return null;
   if (!event.organization?.users[0]) return null;
 
   const elements = [
-    {el: <InfoCard key={1} event={event} />, delay: 0},
+    {
+      el: (
+        <InfoCard
+          key={1}
+          title={event.title}
+          description={event.description}
+          featuredImageSrc={event.featuredImageSrc}
+        />
+      ),
+      delay: 0,
+    },
     {
       el: (
         <LocationCard

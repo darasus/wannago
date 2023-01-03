@@ -28,7 +28,7 @@ function Dashboard() {
             className={clsx(
               'flex justify-center items-center w-full h-full p-4 mb-4'
             )}
-            iconLeft={<PlusCircleIcon width={30} height={30} />}
+            iconLeft={<PlusCircleIcon />}
             data-testid="add-event-button"
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

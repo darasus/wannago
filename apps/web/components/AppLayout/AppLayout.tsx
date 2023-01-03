@@ -1,11 +1,18 @@
 import {PropsWithChildren} from 'react';
+import {Container} from '../Container/Container';
 import {Header} from '../Header/Header';
 
-export default function AppLayout({children}: PropsWithChildren) {
+interface Props extends PropsWithChildren {
+  maxSize?: 'md' | 'lg';
+}
+
+export default function AppLayout({children, maxSize = 'md'}: Props) {
   return (
     <div>
       <div className="relative z-20">
-        <Header />
+        <Container maxSize={maxSize}>
+          <Header />
+        </Container>
       </div>
       <div>
         <div>{children}</div>

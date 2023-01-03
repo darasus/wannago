@@ -1,5 +1,4 @@
 import {router, protectedProcedure} from '../trpc';
-import {Client} from '@googlemaps/google-maps-services-js';
 import {z} from 'zod';
 
 const searchPlaces = protectedProcedure
@@ -12,6 +11,13 @@ const searchPlaces = protectedProcedure
     return ctx.maps.suggestPlaces(input);
   });
 
+const getGeolocation = protectedProcedure
+  .input(z.object({address: z.string()}))
+  .query(async ({ctx, input}) => {
+    return ctx.maps.geocode({address: input.address});
+  });
+
 export const mapsRouter = router({
   searchPlaces,
+  getGeolocation,
 });
