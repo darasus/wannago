@@ -10,16 +10,6 @@ const messageEventParticipants = protectedProcedure
     })
   )
   .mutation(async ({input, ctx}) => {
-    const users = await ctx.prisma.user.findMany({
-      where: {
-        attendingEvents: {
-          some: {
-            id: input.eventId,
-          },
-        },
-      },
-    });
-
     const event = await ctx.prisma.event.findUnique({
       where: {
         id: input.eventId,

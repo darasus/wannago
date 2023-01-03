@@ -17,7 +17,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         id: body.eventId,
       },
       include: {
-        attendees: true,
+        eventSignUps: {
+          include: {
+            user: true,
+          },
+        },
       },
     });
 
@@ -30,7 +34,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (event.isPublished) {
       await mail.sendEventReminderEmail({
         event,
-        users: event.attendees,
+        users: event.eventSignUps.map(signUp => signUp.user),
       });
     }
 

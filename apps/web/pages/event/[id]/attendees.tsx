@@ -59,8 +59,8 @@ function EventAttendeesPage() {
     const content =
       'First name,Last name,Email\r\n' +
       data
-        ?.map(user => {
-          return `${user.firstName},${user.lastName},${user.email}`;
+        ?.map(signUp => {
+          return `${signUp.user.firstName},${signUp.user.lastName},${signUp.user.email}`;
         })
         .join('\r\n')!;
     const blob = new Blob([content], {type: 'text/csv;charset=utf-8'});
@@ -88,11 +88,11 @@ function EventAttendeesPage() {
               <Text>No attendees yet</Text>
             </div>
           )}
-          {data?.map(user => {
+          {data?.map(signUp => {
             return (
               <Item
-                key={user.id}
-                user={user}
+                key={signUp.user.id}
+                user={signUp.user}
                 eventId={eventId}
                 refetch={refetch}
               />

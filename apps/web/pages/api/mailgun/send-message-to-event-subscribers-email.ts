@@ -27,13 +27,12 @@ export default async function handler(
   const organizerUser = await prisma.user.findUnique({
     where: {id: body.organizerUserId},
   });
-  const users = await prisma.user.findMany({
+  const signUps = await prisma.eventSignUp.findMany({
     where: {
-      attendingEvents: {
-        some: {
-          id: body.eventId,
-        },
-      },
+      eventId: body.eventId,
+    },
+    include: {
+      user: true,
     },
   });
 
@@ -49,7 +48,7 @@ export default async function handler(
     organizerUser,
     subject: body.subject,
     message: body.message,
-    users,
+    users: signUps.map(signUp => signUp.user),
   });
 
   res.status(200).json({success: true});

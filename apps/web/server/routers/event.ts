@@ -288,22 +288,14 @@ const join = publicProcedure
       });
     }
 
-    if (!user.firstName || !user.lastName) {
-      await ctx.prisma.user.update({
-        where: {id: user.id},
-        data: {
-          firstName: input.firstName,
-          lastName: input.lastName,
-        },
-      });
-    }
-
-    const event = await ctx.prisma.event.update({
-      where: {
-        id: input.eventId,
-      },
+    const event = await ctx.prisma.eventSignUp.create({
       data: {
-        attendees: {
+        event: {
+          connect: {
+            id: input.eventId,
+          },
+        },
+        user: {
           connect: {
             id: user.id,
           },
@@ -327,30 +319,33 @@ const removeUser = protectedProcedure
   .mutation(async ({input: {eventId, userId}, ctx}) => {
     await authorizeChange({ctx, eventId});
 
-    return ctx.prisma.event.update({
+    const signUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
-        id: eventId,
+        userId: userId,
+        eventId: eventId,
       },
-      data: {
-        attendees: {
-          disconnect: {
-            id: userId,
-          },
-        },
+    });
+
+    if (!signUp) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'User is not signed up for this event',
+      });
+    }
+
+    return ctx.prisma.eventSignUp.delete({
+      where: {
+        id: signUp.id,
       },
     });
   });
 
 const getNumberOfAttendees = publicProcedure
   .input(z.object({eventId: z.string().uuid()}))
-  .query(async ({input, ctx}) => {
-    const count = await ctx.prisma.user.count({
+  .query(async ({input: {eventId}, ctx}) => {
+    const count = await ctx.prisma.eventSignUp.count({
       where: {
-        attendingEvents: {
-          some: {
-            id: input.eventId,
-          },
-        },
+        eventId,
       },
     });
 
@@ -362,13 +357,12 @@ const getAttendees = protectedProcedure
   .query(async ({input: {eventId}, ctx}) => {
     await authorizeChange({ctx, eventId});
 
-    return ctx.prisma.user.findMany({
+    return ctx.prisma.eventSignUp.findMany({
       where: {
-        attendingEvents: {
-          some: {
-            id: eventId,
-          },
-        },
+        eventId,
+      },
+      include: {
+        user: true,
       },
     });
   });

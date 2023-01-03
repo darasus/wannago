@@ -24,10 +24,10 @@ model Event {
   featuredImageSrc     String?
   longitude            Float?
   latitude             Float?
-  attendees            User[]        @relation(name: "Attendees")
   organization         Organization? @relation(name: "EventOrganization", fields: [organizationId], references: [id])
   organizationId       String?
   messageId            String?
+  eventSignUps         EventSignUp[] @relation(name: "EventSignUps")
 
   @@index([organizationId])
 }
@@ -36,12 +36,12 @@ model User {
   id              String        @id @default(uuid())
   email           String        @unique
   externalId      String?
-  attendingEvents Event[]       @relation(name: "Attendees")
   firstName       String?
   lastName        String?
   profileImageSrc String?
   organization    Organization? @relation(name: "UserOrganization", fields: [organizationId], references: [id])
   organizationId  String?
+  eventSignUps    EventSignUp[] @relation(name: "EventSignUpUser")
 
   @@index([organizationId])
 }
@@ -50,4 +50,18 @@ model Organization {
   id     String  @id @default(uuid())
   users  User[]  @relation(name: "UserOrganization")
   events Event[] @relation(name: "EventOrganization")
+}
+
+model EventSignUp {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  event      Event    @relation(name: "EventSignUps", fields: [eventId], references: [id])
+  eventId    String
+  user       User     @relation(name: "EventSignUpUser", fields: [userId], references: [id])
+  userId     String
+  hasPlusOne Boolean? @default(false)
+
+  @@index([eventId])
+  @@index([userId])
 }
