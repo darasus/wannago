@@ -99,12 +99,12 @@ export function Header() {
                 <Button
                   as="a"
                   href="/dashboard"
-                  className="hidden md:block"
+                  className="hidden md:flex"
                   variant="secondary"
                   size="sm"
                   data-testid="dashboard-button"
                 >
-                  <span>Dashboard</span>
+                  Dashboard
                 </Button>
               </>
             )}
@@ -113,7 +113,7 @@ export function Header() {
                 <Button
                   as="a"
                   href="/login"
-                  className="hidden md:block"
+                  className="hidden md:flex"
                   variant="secondary"
                   size="sm"
                   data-testid="login-button"
