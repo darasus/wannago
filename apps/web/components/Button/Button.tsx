@@ -63,11 +63,11 @@ export const Button = forwardRef(function Button(
           'border-t-0 border-l-0 border-r-0 rounded-none inline-flex items-center border-b':
             isLink || isLinkNeutral,
           // sizes
-          'px-2 py-1 text-sm':
+          'h-8 px-2 text-sm':
             !isIconButton && isSm && !(isLink || isLinkNeutral),
-          'px-4 py-2 text-base':
+          'h-11 px-4 text-base':
             !isIconButton && isMd && !(isLink || isLinkNeutral),
-          'px-6 py-4 text-md':
+          'h-16 px-6 text-md':
             !isIconButton && isLg && !(isLink || isLinkNeutral),
           'p-2':
             isIconButton &&
