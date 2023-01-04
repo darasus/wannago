@@ -1,5 +1,4 @@
-import {isSameDay} from 'date-fns';
-import {formatDate, formatTimeago} from '../../utils/formatDate';
+import {formatDate, formatTimeago, isSameDay} from '../../utils/formatDate';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
@@ -18,7 +17,11 @@ export function DateCard({
   timezone,
   onAddToCalendarClick,
 }: Props) {
-  const isAtSameDay = isSameDay(new Date(startDate), new Date(endDate));
+  const isAtSameDay = isSameDay(
+    new Date(startDate),
+    new Date(endDate),
+    timezone
+  );
 
   return (
     <CardBase>
