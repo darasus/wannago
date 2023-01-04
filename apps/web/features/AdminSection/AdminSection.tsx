@@ -77,9 +77,9 @@ export function AdminSection({event, timezone}: Props) {
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col md:flex-row md:items-center gap-2">
-            {values.map(v => {
+            {values.map((v, i) => {
               return (
-                <div className="flex items-center gap-x-1">
+                <div key={i} className="flex items-center gap-x-1">
                   <Text className="text-xs">{`${v.label}:`}</Text>
                   <Badge color={v.badgeColor} size="sm">
                     {v.value}
