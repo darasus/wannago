@@ -44,7 +44,7 @@ export default async function handler(req: NextRequest) {
         style={{backgroundColor: '#FFE5D9'}}
       >
         <div
-          tw="flex w-full h-full border-4 border-slate-800 flex-col p-8 bg-gray-50"
+          tw="flex w-full h-full border-4 border-gray-800 flex-col p-8 bg-gray-50"
           style={{borderRadius: 50}}
         >
           <div
@@ -56,7 +56,7 @@ export default async function handler(req: NextRequest) {
               borderRadius: 50,
             }}
           />
-          <div tw="flex flex-col rounded-xl leading-none text-slate-800">
+          <div tw="flex flex-col rounded-xl leading-none text-gray-800">
             <span
               style={{
                 fontSize: 80,
@@ -69,7 +69,7 @@ export default async function handler(req: NextRequest) {
           </div>
         </div>
         {/* <div
-          tw="flex absolute right-5 bottom-5 flex-col bg-slate-800 rounded-xl py-4 px-6 text-slate-100 uppercase leading-none text-left text-6xl"
+          tw="flex absolute right-5 bottom-5 flex-col bg-gray-800 rounded-xl py-4 px-6 text-gray-100 uppercase leading-none text-left text-6xl"
           style={{fontFamily: 'Logo'}}
         >
           <div>wanna</div>

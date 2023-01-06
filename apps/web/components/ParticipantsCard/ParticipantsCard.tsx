@@ -14,10 +14,10 @@ export function ParticipantsCard({onSubmit, numberOfAttendees}: Props) {
     <CardBase>
       <div>
         <div className="mb-2">
-          <Badge color="gray" className="mr-2">
+          <Badge color="gray" className="mr-2" size="xs">
             Attend
           </Badge>
-          {/* <Button variant="link-neutral">Invite</Button> */}
+          {/* <Button variant="link">Invite</Button> */}
         </div>
         <Text className="font-bold">Wanna go?</Text>
         <div className="mb-2" />

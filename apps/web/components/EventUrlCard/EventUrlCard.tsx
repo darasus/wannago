@@ -14,15 +14,20 @@ export function EventUrlCard({url}: Props) {
   return (
     <CardBase>
       <div className="mb-2">
-        <Badge color="gray" className="mr-2">
+        <Badge color="gray" className="mr-2" size="xs">
           Invite
         </Badge>
-        <Button onClick={copy} variant="link-neutral" disabled={isCopied}>
+        <Button
+          onClick={copy}
+          variant="link-gray"
+          disabled={isCopied}
+          size="xs"
+        >
           {isCopied ? 'Copied!' : 'Copy url'}
         </Button>
       </div>
       <div>
-        <Link className="text-slate-800 font-bold hover:underline" href={url}>
+        <Link className="text-gray-800 font-bold hover:underline" href={url}>
           {url
             .replace('https://', '')
             .replace('http://', '')

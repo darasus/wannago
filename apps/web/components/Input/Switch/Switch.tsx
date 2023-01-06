@@ -39,7 +39,7 @@ export function Switch({children, name, defaultValue, control}: Props) {
             aria-hidden="true"
             className={clsx(
               'h-6 w-6 md:h-4 md:w-4',
-              'relative top-1 left-1 pointer-events-none inline-block transform rounded-full bg-gray-50 border-2 border-slate-800 shadow-lg ring-0 transition duration-200 ease-in-out',
+              'relative top-1 left-1 pointer-events-none inline-block transform rounded-full bg-gray-50 border-2 border-gray-800 shadow-lg ring-0 transition duration-200 ease-in-out',
               {'translate-x-7': field.value},
               {'translate-x-0': !field.value}
             )}

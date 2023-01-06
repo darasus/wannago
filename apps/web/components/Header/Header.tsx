@@ -18,7 +18,7 @@ export const navItems = [
 function MobileNavIcon({open}: any) {
   return (
     <svg
-      className="h-3.5 w-3.5 overflow-visible stroke-slate-700"
+      className="h-3.5 w-3.5 overflow-visible stroke-gray-800"
       fill="none"
       strokeWidth={2}
       strokeLinecap="round"
@@ -179,7 +179,7 @@ export function Header() {
                               </FeedbackFish>
                             </div>
                           </div>
-                          <hr className="my-4 border-slate-300/40" />
+                          <hr className="my-4 border-gray-300/40" />
                           <div className="flex gap-4">
                             {showAuthButtons && (
                               <>

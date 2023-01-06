@@ -29,8 +29,8 @@ export const Button = forwardRef(function Button(
   ref: React.Ref<HTMLButtonElement>
 ) {
   // variants
-  const isLink = variant === 'link';
-  const isLinkNeutral = variant === 'link-neutral';
+  const isLink = variant === 'link' || variant === 'link-gray';
+  const isLinkGray = variant === 'link-gray';
   const isPrimary = variant === 'primary';
   const isSecondary = variant === 'secondary';
   const isNeutral = variant === 'neutral';
@@ -39,6 +39,7 @@ export const Button = forwardRef(function Button(
   const isIconButton = iconLeft && !children;
   // const isIconAndTextButton = iconLeft && children;
   // sizes
+  const isXs = size === 'xs';
   const isSm = size === 'sm';
   const isMd = size === 'md';
   const isLg = size === 'lg';
@@ -52,37 +53,34 @@ export const Button = forwardRef(function Button(
       className={clsx(
         'cursor-pointer justify-center shrink-0',
         // base text styles
-        'text-slate-800 font-bold',
+        'text-gray-800 font-bold',
         // base borders styles
-        'rounded-full border-2 border-slate-800',
+        'rounded-full border-2 border-gray-800',
         {
           // base button styles
           'inline-flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2':
-            !(isLink || isLinkNeutral),
+            !isLink,
           // base link styles
-          'border-t-0 border-l-0 border-r-0 rounded-none inline-flex items-center border-b':
-            isLink || isLinkNeutral,
+          'border-t-0 border-l-0 border-r-0 rounded-none inline-flex items-center border-0 border-b leading-none font-normal':
+            isLink,
           // sizes
-          'h-8 px-2 text-sm':
-            !isIconButton && isSm && !(isLink || isLinkNeutral),
-          'h-11 px-4 text-base':
-            !isIconButton && isMd && !(isLink || isLinkNeutral),
-          'h-16 px-6 text-md':
-            !isIconButton && isLg && !(isLink || isLinkNeutral),
-          'p-2':
-            isIconButton &&
-            (isSm || isMd || isLg) &&
-            !(isLink || isLinkNeutral),
+          'h-6 px-2': !isIconButton && isXs && !isLink,
+          'h-8 px-2': !isIconButton && isSm && !isLink,
+          'h-11 px-4': !isIconButton && isMd && !isLink,
+          'h-16 px-6': !isIconButton && isLg && !isLink,
+          'p-2': isIconButton && (isSm || isMd || isLg) && !isLink,
+          'text-xs': !isIconButton && isXs,
+          'text-sm': !isIconButton && isSm,
+          'text-base': !isIconButton && isMd,
+          'text-md': !isIconButton && isLg,
           // colors
           'bg-brand-600 hover:bg-brand-500 focus:ring-brand-1000': isPrimary,
           'bg-brand-100 hover:bg-brand-200 focus:ring-brand-500': isSecondary,
           'text-gray-50 bg-red-600 hover:bg-red-700 focus:ring-red-500':
             isDanger,
           'bg-gray-50 hover:bg-gray-200 focus:ring-brand-500': isNeutral,
-          'text-brand-100 border-brand-100 hover:border-brand-500 text-sm leading-none':
-            isLink,
-          'border-b-2 border-b-gray-400 hover:border-gray-500 text-gray-400 hover:text-gray-500 text-sm leading-none inline':
-            isLinkNeutral,
+          '!text-gray-500 !border-gray-500 hover:!text-gray-800 hover:!border-gray-800':
+            isLinkGray,
         },
         className
       )}
@@ -94,7 +92,7 @@ export const Button = forwardRef(function Button(
           {
             (iconLeft &&= (
               <div
-                className={clsx('text-slate-800 h-5 w-5', {'mr-2': !!children})}
+                className={clsx('text-gray-800 h-5 w-5', {'mr-2': !!children})}
               >
                 {iconLeft}
               </div>

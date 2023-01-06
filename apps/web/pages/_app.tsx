@@ -52,7 +52,7 @@ function MyApp({Component, pageProps}: AppProps) {
           gtag('config', '${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
         `}
       </Script>
-      <div className={clsx(bodyFont.className, 'text-slate-800')}>
+      <div className={clsx(bodyFont.className, 'text-gray-800')}>
         <ClerkProvider
           {...pageProps}
           appearance={clerkAppearance}
@@ -72,7 +72,7 @@ function MyApp({Component, pageProps}: AppProps) {
                 {({message}) => (
                   <div
                     className={clsx(
-                      'p-4 flex items-center max-w-md w-full border-2 border-slate-800 bg-brand-600 rounded-3xl'
+                      'p-4 flex items-center max-w-md w-full border-2 border-gray-800 bg-brand-600 rounded-3xl'
                     )}
                   >
                     <div

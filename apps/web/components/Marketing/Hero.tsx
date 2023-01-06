@@ -32,14 +32,14 @@ export const Hero = forwardRef(function Hero(
         <h1
           className={clsx(
             titleFontClassName,
-            'mx-auto max-w-4xl text-3xl md:text-4xl lg:text-7xl tracking-tight text-slate-800 text-center'
+            'mx-auto max-w-4xl text-3xl md:text-4xl lg:text-7xl tracking-tight text-gray-800 text-center'
           )}
         >
           Generate more <span className="whitespace-nowrap">sign ups</span> with{' '}
           <span className="zigzag">simple</span> and{' '}
           <span className="zigzag">stunning</span> event pages
         </h1>
-        <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-slate-700 text-center">
+        <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-gray-800 text-center">
           <span className="font-medium">
             Send killer invitations to your private event and get ready to meet
             your guests

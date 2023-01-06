@@ -1,4 +1,4 @@
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 export type ButtonVariant =
   | 'primary'
@@ -6,4 +6,4 @@ export type ButtonVariant =
   | 'neutral'
   | 'danger'
   | 'link'
-  | 'link-neutral';
+  | 'link-gray';

@@ -19,7 +19,7 @@ export function LogoView({className}: {className?: string}) {
     <div
       className={clsx(
         logoFont.className,
-        'bg-slate-800 rounded-md p-2 text-slate-100 uppercase leading-none text-left',
+        'bg-gray-800 rounded-md p-2 text-gray-50 uppercase leading-none text-left',
         className
       )}
     >

@@ -28,10 +28,10 @@ export function InfoCard({description, featuredImageSrc, title}: Props) {
         </div>
         <div>
           <div className="mb-2">
-            <Badge color="gray" className="mr-2">
+            <Badge color="gray" className="mr-2" size="xs">
               What
             </Badge>
-            {/* <Button variant="link-neutral">Share</Button> */}
+            {/* <Button variant="link">Share</Button> */}
           </div>
           <Text className="text-2xl font-bold mb-2">{title}</Text>
           <div />

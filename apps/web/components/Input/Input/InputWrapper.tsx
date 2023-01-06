@@ -24,7 +24,7 @@ export function InputWrapper({
       {label && (
         <label
           htmlFor={id}
-          className={clsx('block text-md text-slate-800 mb-1 ml-2 font-bold')}
+          className={clsx('block text-md text-gray-800 mb-1 ml-2 font-bold')}
         >
           {label}
         </label>

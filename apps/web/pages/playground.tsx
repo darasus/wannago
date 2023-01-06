@@ -2,9 +2,8 @@ import {ArrowDownCircleIcon} from '@heroicons/react/24/solid';
 import {Accordion} from '../components/Accordion/Accordion';
 import {Button} from '../components/Button/Button';
 import {Input} from '../components/Input/Input/Input';
-import {Switch} from '../components/Input/Switch/Switch';
 
-const sizes = ['sm', 'md', 'lg'] as const;
+const sizes = ['xs', 'sm', 'md', 'lg'] as const;
 
 const items = [
   {
@@ -42,11 +41,11 @@ export default function PlaygroundPage() {
               <Button size={size} variant="neutral">
                 Neutral
               </Button>
-              <Button size={size} variant="link-neutral">
-                Link neutral
-              </Button>
               <Button size={size} variant="link">
                 Link
+              </Button>
+              <Button size={size} variant="link-gray">
+                Link gray
               </Button>
               <Button size={size} variant="danger">
                 Danger

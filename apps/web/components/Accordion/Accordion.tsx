@@ -36,7 +36,7 @@ export function Accordion({items, defaultExpandedIndex}: Props) {
                   initial={false}
                   animate={{rotate: isExpanded ? '0deg' : '180deg'}}
                 >
-                  <ChevronDownIcon className="h-4 w-4 text-slate-800" />
+                  <ChevronDownIcon className="h-4 w-4 text-gray-800" />
                 </motion.div>
               </div>
             </motion.header>
@@ -53,7 +53,7 @@ export function Accordion({items, defaultExpandedIndex}: Props) {
                   }}
                   transition={{duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98]}}
                 >
-                  <div className="text-slate-800 pt-2">{content}</div>
+                  <div className="text-gray-800 pt-2">{content}</div>
                 </motion.section>
               )}
             </AnimatePresence>

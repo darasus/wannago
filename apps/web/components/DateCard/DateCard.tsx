@@ -26,16 +26,16 @@ export function DateCard({
   return (
     <CardBase>
       <div className="mb-2">
-        <Badge color="gray" className="mr-2">
+        <Badge color="gray" className="mr-2" size="xs">
           When
         </Badge>
-        <Button onClick={onAddToCalendarClick} variant="link-neutral">
+        <Button onClick={onAddToCalendarClick} variant="link-gray" size="xs">
           Add to calendar
         </Button>
       </div>
       <div className="flex">
         <div className="mr-2">
-          <div className="flex flex-col justify-center items-center border-2 border-slate-800 rounded-2xl px-4 py-2 bg-brand-400">
+          <div className="flex flex-col justify-center items-center border-2 border-gray-800 rounded-2xl px-4 py-2 bg-brand-400">
             <div className="h-0.5 bg-red-500 w-5 mb-1" />
             <Text className="text-2xl leading-none">
               {formatDate(new Date(startDate), 'dd', timezone)}

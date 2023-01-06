@@ -13,7 +13,7 @@ export default async function handler() {
 
   return new ImageResponse(
     (
-      <div tw="flex flex-col justify-center items-center bg-slate-800 text-gray-100 w-full h-full">
+      <div tw="flex flex-col justify-center items-center bg-gray-800 text-gray-100 w-full h-full">
         <span
           tw="text-2xl leading-none text-center"
           style={{

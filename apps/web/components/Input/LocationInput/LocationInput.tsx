@@ -70,7 +70,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
                     key={place.place_id}
                     className={({active}) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 list-none ${
-                        active ? 'bg-brand-400 text-slate-800' : 'text-gray-900'
+                        active ? 'bg-brand-400 text-gray-800' : 'text-gray-900'
                       }`
                     }
                     value={place.description}
@@ -87,7 +87,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
                         {selected ? (
                           <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? 'text-slate-800' : 'text-teal-600'
+                              active ? 'text-gray-800' : 'text-teal-600'
                             }`}
                           >
                             <CheckIcon className="h-5 w-5" />

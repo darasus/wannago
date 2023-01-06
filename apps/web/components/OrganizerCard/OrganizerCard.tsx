@@ -18,11 +18,11 @@ export function OrganizerCard({isLoading, onOpenFormClick, user}: Props) {
   return (
     <CardBase>
       <div>
-        <div className="mb-2">
-          <Badge color="gray" className="mr-2">
+        <div className="flex items-center mb-2">
+          <Badge color="gray" size="xs" className="mr-2">
             Who
           </Badge>
-          <Button onClick={onOpenFormClick} variant="link-neutral">
+          <Button onClick={onOpenFormClick} variant="link-gray" size="xs">
             Message organizer
           </Button>
         </div>
