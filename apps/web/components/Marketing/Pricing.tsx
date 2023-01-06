@@ -86,7 +86,7 @@ function Plan({name, price, description, features, featured = false}: any) {
 
 export function Pricing() {
   return (
-    <section id="pricing" className="bg-slate-900 py-20 sm:py-32">
+    <section id="pricing" className="bg-slate-800 py-20 sm:py-32">
       <Container>
         <div className="md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">

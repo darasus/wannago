@@ -30,10 +30,13 @@ export const Switch = forwardRef<HTMLInputElement, Props>(function Switch(
           onChange={setEnabled}
           className={clsx(
             'pointer-events-none',
-            {'bg-green-300': enabled},
-            {'bg-gray-200': !enabled},
-            'relative inline-flex h-9 w-16 shrink-0 cursor-pointer transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75',
-            'border-2 border-slate-800',
+            {'bg-green-300 border-green-500': enabled},
+            {'bg-white border-gray-300': !enabled},
+            'h-9 w-16 md:h-7 md:w-14',
+            'relative inline-flex shrink-0',
+            'transition-colors duration-200 ease-in-out',
+            'focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75',
+            'border-2',
             'rounded-full'
           )}
         >
@@ -41,7 +44,8 @@ export const Switch = forwardRef<HTMLInputElement, Props>(function Switch(
           <span
             aria-hidden="true"
             className={clsx(
-              'relative top-1 left-1 pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out',
+              'h-6 w-6 md:h-4 md:w-4',
+              'relative top-1 left-1 pointer-events-none inline-block transform rounded-full bg-gray-50 border-2 border-slate-800 shadow-lg ring-0 transition duration-200 ease-in-out',
               {'translate-x-7': enabled},
               {'translate-x-0': !enabled}
             )}
