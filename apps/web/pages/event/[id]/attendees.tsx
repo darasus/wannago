@@ -10,39 +10,45 @@ import {Text} from '../../../components/Text/Text';
 import {trpc} from '../../../utils/trpc';
 import {saveAs} from 'file-saver';
 import {withProtected} from '../../../utils/withAuthProtect';
+import {useConfirmDialog} from '../../../hooks/useConfirmDialog';
 
 interface ItemProps {
   user: User;
   eventId: string;
-  refetch: () => void;
+  refetch: () => Promise<any>;
   hasPlusOne: boolean | null;
 }
 
 function Item({user, refetch, eventId, hasPlusOne}: ItemProps) {
-  const removeUser = trpc.event.removeUser.useMutation({
-    onSuccess() {
-      refetch();
+  const removeUser = trpc.event.removeUser.useMutation();
+  const {modal, open} = useConfirmDialog({
+    title: 'Remove attendee?',
+    description: `Are you sure you want to remove ${user.firstName} ${user.lastName} from the event?`,
+    onConfirm: async () => {
+      await removeUser.mutateAsync({
+        eventId,
+        userId: user.id,
+      });
+      await refetch();
     },
   });
 
   return (
-    <CardBase key={user.id} className="flex items-center mb-2">
-      <Text>{`${user.firstName} ${user.lastName} · ${user.email}${
-        hasPlusOne ? ' · +1' : ''
-      }`}</Text>
-      <div className="grow" />
-      <Button
-        isLoading={removeUser.isLoading}
-        onClick={() => {
-          removeUser.mutate({
-            eventId,
-            userId: user.id,
-          });
-        }}
-        iconLeft={<TrashIcon />}
-        variant="danger"
-      />
-    </CardBase>
+    <>
+      {modal}
+      <CardBase key={user.id} className="flex items-center mb-2">
+        <Text>{`${user.firstName} ${user.lastName} · ${user.email}${
+          hasPlusOne ? ' · +1' : ''
+        }`}</Text>
+        <div className="grow" />
+        <Button
+          isLoading={removeUser.isLoading}
+          onClick={open}
+          iconLeft={<TrashIcon />}
+          variant="danger"
+        />
+      </CardBase>
+    </>
   );
 }
 
