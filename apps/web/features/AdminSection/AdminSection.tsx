@@ -71,7 +71,7 @@ export function AdminSection({event, timezone}: Props) {
       {unpublishModal}
       <CardBase>
         <div className="flex items-center">
-          <Badge color="gray" className="mr-2 mb-2">
+          <Badge color="gray" className="mr-2 mb-2" size="xs">
             Admin
           </Badge>
         </div>
@@ -81,7 +81,7 @@ export function AdminSection({event, timezone}: Props) {
               return (
                 <div key={i} className="flex items-center gap-x-1">
                   <Text className="text-xs">{`${v.label}:`}</Text>
-                  <Badge color={v.badgeColor} size="sm">
+                  <Badge color={v.badgeColor} size="xs">
                     {v.value}
                   </Badge>
                 </div>
