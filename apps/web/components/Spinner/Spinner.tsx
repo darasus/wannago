@@ -4,7 +4,7 @@ interface Props {
   className?: string;
 }
 
-export function Spinner({className}: Props) {
+export function Spinner({className = 'h-5 w-5'}: Props) {
   return (
     <svg
       className={clsx('animate-spin block', className)}
