@@ -1,41 +1,35 @@
-import {
-  forwardRef,
-  InputHTMLAttributes,
-  PropsWithChildren,
-  useState,
-} from 'react';
+import {PropsWithChildren} from 'react';
 import {Switch as _Switch} from '@headlessui/react';
 import clsx from 'clsx';
 import {Text} from '../../Text/Text';
+import {Control, useController} from 'react-hook-form';
 
-type Props = PropsWithChildren &
-  InputHTMLAttributes<HTMLInputElement> & {
-    label?: string;
-  };
+type Props = PropsWithChildren & {
+  label?: string;
+  name: string;
+  defaultValue: boolean;
+  control: Control<any>;
+};
 
-export const Switch = forwardRef<HTMLInputElement, Props>(function Switch(
-  {children, defaultChecked, onChange, ...props},
-  ref
-) {
-  const [enabled, setEnabled] = useState(defaultChecked || false);
+export function Switch({children, name, defaultValue, control}: Props) {
+  const {
+    field,
+    fieldState: {},
+  } = useController({name, control, defaultValue});
 
   return (
     <>
-      <label
-        htmlFor="checkbox"
-        className="flex items-center gap-x-2 cursor-pointer"
-      >
+      <label htmlFor="checkbox" className="flex items-center gap-x-2">
         <_Switch
-          checked={enabled}
-          onChange={setEnabled}
+          checked={field.value}
+          onChange={field.onChange}
           className={clsx(
-            'pointer-events-none',
-            {'bg-green-300 border-green-500': enabled},
-            {'bg-white border-gray-300': !enabled},
+            {'bg-green-300 border-green-500': field.value},
+            {'bg-white border-gray-300': !field.value},
             'h-9 w-16 md:h-7 md:w-14',
             'relative inline-flex shrink-0',
             'transition-colors duration-200 ease-in-out',
-            'focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75',
+            'focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75',
             'border-2',
             'rounded-full'
           )}
@@ -46,24 +40,13 @@ export const Switch = forwardRef<HTMLInputElement, Props>(function Switch(
             className={clsx(
               'h-6 w-6 md:h-4 md:w-4',
               'relative top-1 left-1 pointer-events-none inline-block transform rounded-full bg-gray-50 border-2 border-slate-800 shadow-lg ring-0 transition duration-200 ease-in-out',
-              {'translate-x-7': enabled},
-              {'translate-x-0': !enabled}
+              {'translate-x-7': field.value},
+              {'translate-x-0': !field.value}
             )}
           />
         </_Switch>
         {children && <Text className="text-gray-400">{children}</Text>}
       </label>
-      <input
-        ref={ref}
-        type="checkbox"
-        {...props}
-        className="hidden"
-        id={'checkbox'}
-        onChange={e => {
-          onChange?.(e);
-          setEnabled(!enabled);
-        }}
-      />
     </>
   );
-});
+}

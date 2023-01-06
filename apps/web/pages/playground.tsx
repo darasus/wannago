@@ -64,7 +64,7 @@ export default function PlaygroundPage() {
       <div className="flex flex-col gap-y-4 my-4">
         <div className="flex items-center gap-x-4">
           <Input label="Hello" placeholder="Placeholder..." isLoading />
-          <Switch>+1</Switch>
+          {/* <Switch>+1</Switch> */}
         </div>
       </div>
       <div className="flex flex-col p-4">

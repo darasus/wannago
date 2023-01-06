@@ -12,7 +12,8 @@ interface Props {
 export function JoinForm({onSubmit}: Props) {
   const {
     register,
-    formState: {errors, isSubmitting},
+    formState: {errors, isSubmitting, defaultValues},
+    control,
   } = useFormContext<JoinFormType>();
 
   return (
@@ -51,7 +52,13 @@ export function JoinForm({onSubmit}: Props) {
           </Button>
         </div>
         <div className="col-span-12">
-          <Switch {...register('hasPlusOne')}>Bring +1</Switch>
+          <Switch
+            name="hasPlusOne"
+            control={control}
+            defaultValue={defaultValues?.hasPlusOne || false}
+          >
+            Bring +1
+          </Switch>
         </div>
       </div>
     </form>
