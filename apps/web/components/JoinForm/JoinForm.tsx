@@ -3,6 +3,7 @@ import {useFormContext} from 'react-hook-form';
 import type {JoinForm as JoinFormType} from '../../types/forms';
 import {Button} from '../Button/Button';
 import {Input} from '../Input/Input/Input';
+import {Switch} from '../Input/Switch/Switch';
 
 interface Props {
   onSubmit: FormEventHandler;
@@ -48,6 +49,9 @@ export function JoinForm({onSubmit}: Props) {
           <Button type="submit" isLoading={isSubmitting} className="w-full">
             Join
           </Button>
+        </div>
+        <div className="col-span-12">
+          <Switch {...register('hasPlusOne')}>Bring +1</Switch>
         </div>
       </div>
     </form>

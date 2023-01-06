@@ -15,9 +15,10 @@ interface ItemProps {
   user: User;
   eventId: string;
   refetch: () => void;
+  hasPlusOne: boolean | null;
 }
 
-function Item({user, refetch, eventId}: ItemProps) {
+function Item({user, refetch, eventId, hasPlusOne}: ItemProps) {
   const removeUser = trpc.event.removeUser.useMutation({
     onSuccess() {
       refetch();
@@ -26,7 +27,9 @@ function Item({user, refetch, eventId}: ItemProps) {
 
   return (
     <CardBase key={user.id} className="flex items-center mb-2">
-      <Text>{`${user.firstName} ${user.lastName} - ${user.email}`}</Text>
+      <Text>{`${user.firstName} ${user.lastName} · ${user.email}${
+        hasPlusOne ? ' · +1' : ''
+      }`}</Text>
       <div className="grow" />
       <Button
         isLoading={removeUser.isLoading}
@@ -57,10 +60,12 @@ function EventAttendeesPage() {
 
   const handleDownloadCsvClick = () => {
     const content =
-      'First name,Last name,Email\r\n' +
+      'First name,Last name,Email,Plus one\r\n' +
       data
         ?.map(signUp => {
-          return `${signUp.user.firstName},${signUp.user.lastName},${signUp.user.email}`;
+          return `${signUp.user.firstName},${signUp.user.lastName},${
+            signUp.user.email
+          },${signUp.hasPlusOne ? 'Yes' : 'No'}`;
         })
         .join('\r\n')!;
     const blob = new Blob([content], {type: 'text/csv;charset=utf-8'});
@@ -95,6 +100,7 @@ function EventAttendeesPage() {
                 user={signUp.user}
                 eventId={eventId}
                 refetch={refetch}
+                hasPlusOne={signUp.hasPlusOne}
               />
             );
           })}

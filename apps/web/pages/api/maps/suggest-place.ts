@@ -19,16 +19,12 @@ export default async function handler(
 
   const client = new Client();
 
-  try {
-    const response = await client.placeAutocomplete({
-      params: {
-        key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-        input: body.query,
-      },
-    });
+  const response = await client.placeAutocomplete({
+    params: {
+      key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+      input: body.query,
+    },
+  });
 
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.log('HERE', error);
-  }
+  res.status(200).json(response.data);
 }

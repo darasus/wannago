@@ -2,6 +2,7 @@ import {ArrowDownCircleIcon} from '@heroicons/react/24/solid';
 import {Accordion} from '../components/Accordion/Accordion';
 import {Button} from '../components/Button/Button';
 import {Input} from '../components/Input/Input/Input';
+import {Switch} from '../components/Input/Switch/Switch';
 
 const sizes = ['sm', 'md', 'lg'] as const;
 
@@ -30,10 +31,7 @@ export default function PlaygroundPage() {
       <div className="flex flex-col gap-y-4 my-4">
         {sizes.map(size => {
           return (
-            <div
-              key={size}
-              className="flex items-center gap-x-4 border-t border-b border-black"
-            >
+            <div key={size} className="flex items-center gap-x-4">
               <Button size={size}>Default</Button>
               <Button size={size} variant="primary">
                 Primary
@@ -64,13 +62,16 @@ export default function PlaygroundPage() {
         })}
       </div>
       <div className="flex flex-col gap-y-4 my-4">
-        <div className="flex items-center gap-x-4 border-t border-b border-black">
+        <div className="flex items-center gap-x-4">
           <Input placeholder="Placeholder..." />
           <Input label="Hello" placeholder="Placeholder..." isLoading />
         </div>
       </div>
       <div className="flex flex-col p-4">
         <Accordion items={items} />
+      </div>
+      <div className="flex flex-col p-4">
+        <Switch>+1</Switch>
       </div>
     </>
   );

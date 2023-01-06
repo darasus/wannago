@@ -268,6 +268,7 @@ const join = publicProcedure
       email: z.string().email('Is not valid email'),
       firstName: z.string(),
       lastName: z.string(),
+      hasPlusOne: z.boolean(),
     })
   )
   .mutation(async ({input, ctx}) => {
@@ -302,6 +303,7 @@ const join = publicProcedure
     if (!existingSignUp) {
       await ctx.prisma.eventSignUp.create({
         data: {
+          hasPlusOne: input.hasPlusOne,
           event: {
             connect: {
               id: input.eventId,
@@ -358,13 +360,21 @@ const removeUser = protectedProcedure
 const getNumberOfAttendees = publicProcedure
   .input(z.object({eventId: z.string().uuid()}))
   .query(async ({input: {eventId}, ctx}) => {
-    const count = await ctx.prisma.eventSignUp.count({
+    const signUps = await ctx.prisma.eventSignUp.findMany({
       where: {
         eventId,
       },
     });
 
-    return {count};
+    return {
+      count: signUps.reduce((acc, next) => {
+        if (next.hasPlusOne) {
+          return acc + 2;
+        }
+
+        return acc + 1;
+      }, 0),
+    };
   });
 
 const getAttendees = protectedProcedure

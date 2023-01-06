@@ -2,6 +2,7 @@ export interface JoinForm {
   email: string;
   firstName: string;
   lastName: string;
+  hasPlusOne: boolean;
 }
 
 export interface ContactForm {

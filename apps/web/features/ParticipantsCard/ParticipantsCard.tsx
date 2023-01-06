@@ -16,7 +16,7 @@ export function ParticipantsCard({event}: Props) {
   const {logEvent} = useAmplitude();
   const {data, refetch} = useAttendeeCount({eventId: event.id});
   const form = useForm<JoinForm>();
-  const {handleSubmit, reset} = form;
+  const {handleSubmit, reset, watch} = form;
   const {mutateAsync} = trpc.event.join.useMutation({
     onError: error => {
       const validationErrors = error.data?.zodError?.fieldErrors || {};
