@@ -43,16 +43,20 @@ function InternalEventPage({
       <Head>
         <title>{`${data.title} | WannaGo`}</title>
       </Head>
-      <AppLayout>
-        <Container className="md:px-4">
-          <div className="mb-4">
-            <AdminSection
-              event={data}
-              timezone={timezone}
-              refetchEvent={refetch}
-            />
+      <AppLayout maxSize="lg">
+        <Container maxSize="lg">
+          <div className="grid grid-cols-12 gap-3">
+            <div className="col-span-12 lg:col-span-3">
+              <AdminSection
+                event={data}
+                timezone={timezone}
+                refetchEvent={refetch}
+              />
+            </div>
+            <div className="col-span-12 lg:col-span-9">
+              <EventView event={data} timezone={clientTimezone} />
+            </div>
           </div>
-          <EventView event={data} timezone={clientTimezone} />
         </Container>
       </AppLayout>
     </>

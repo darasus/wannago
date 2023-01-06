@@ -17,6 +17,7 @@ import {useAttendeeCount} from '../../hooks/useAttendeeCount';
 import {useRemoveEvent} from '../../hooks/useRemoveEvent';
 import {usePublishEvent} from '../../hooks/usePublishEvent';
 import {useUnpublishEvent} from '../../hooks/useUnpublishEvent';
+import {getBaseUrl} from '../../utils/getBaseUrl';
 
 interface Props {
   event: Event;
@@ -62,6 +63,12 @@ export function AdminSection({event, timezone}: Props) {
           ? `${attendeesCount.data?.count} of max ${event.maxNumberOfAttendees}`
           : 'Loading...',
     },
+    {
+      label: 'Public url',
+      value: `${getBaseUrl()}/e/${event.shortId}`
+        .replace('https://www.', '')
+        .replace('http://', ''),
+    },
   ];
 
   return (
@@ -76,7 +83,7 @@ export function AdminSection({event, timezone}: Props) {
           </Badge>
         </div>
         <div className="flex flex-col gap-2">
-          <div className="flex flex-col md:flex-row md:items-center gap-2">
+          <div className="flex flex-col gap-2">
             {values.map((v, i) => {
               return (
                 <div key={i} className="flex items-center gap-x-1">
@@ -88,7 +95,7 @@ export function AdminSection({event, timezone}: Props) {
               );
             })}
           </div>
-          <div className="flex flex-col md:flex-row md:items-center gap-2">
+          <div className="flex flex-col gap-2 items-start">
             <Button
               variant="neutral"
               iconLeft={<PencilIcon />}
