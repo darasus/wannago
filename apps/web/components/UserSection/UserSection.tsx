@@ -28,8 +28,8 @@ export function UserSection() {
                   <div className="rounded-full overflow-hidden">
                     <Image
                       src={user?.profileImageUrl!}
-                      height={20}
-                      width={20}
+                      height={24}
+                      width={24}
                       alt={`Profile pic for ${user?.fullName}`}
                       data-testid="user-header-button"
                     />
