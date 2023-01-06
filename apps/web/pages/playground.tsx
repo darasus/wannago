@@ -50,6 +50,16 @@ export default function PlaygroundPage() {
               <Button size={size} variant="danger">
                 Danger
               </Button>
+              <Button
+                size={size}
+                variant="danger"
+                iconLeft={<ArrowDownCircleIcon />}
+              >
+                Danger with icon
+              </Button>
+              <Button size={size} variant="danger" isLoading>
+                Danger with spinner
+              </Button>
               <Button size={size} isLoading>
                 Loading
               </Button>

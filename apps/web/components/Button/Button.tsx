@@ -76,7 +76,7 @@ export const Button = forwardRef(function Button(
           // colors
           'bg-brand-600 hover:bg-brand-500 focus:ring-brand-1000': isPrimary,
           'bg-brand-100 hover:bg-brand-200 focus:ring-brand-500': isSecondary,
-          'text-gray-50 bg-red-600 hover:bg-red-700 focus:ring-red-500':
+          '!text-gray-50 bg-red-600 hover:bg-red-700 focus:ring-red-500':
             isDanger,
           'bg-gray-50 hover:bg-gray-200 focus:ring-brand-500': isNeutral,
           '!text-gray-500 !border-gray-500 hover:!text-gray-800 hover:!border-gray-800':
@@ -91,6 +91,7 @@ export const Button = forwardRef(function Button(
             'h-4 w-4': isXs,
             'h-5 w-5': isSm,
             'h-6 w-6': isMd || isLg,
+            'text-gray-50': isDanger,
           })}
         />
       ) : (
@@ -99,13 +100,14 @@ export const Button = forwardRef(function Button(
             (iconLeft &&= (
               <div
                 className={clsx(
-                  'text-gray-800',
                   {
                     'h-4 w-4': isXs,
                     'h-5 w-5': isSm,
                     'h-6 w-6': isMd || isLg,
+                    '!text-gray-50': isDanger,
                   },
-                  {'mr-2': !!children}
+                  {'mr-2': !!children},
+                  'text-gray-800'
                 )}
               >
                 {iconLeft}
