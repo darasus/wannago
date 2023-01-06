@@ -23,9 +23,13 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
         <div className="grow overflow-hidden relative justify-center bg-black rounded-3xl aspect-video safari-rounded-border-fix mb-4">
           <div className="absolute left-4 top-4 z-10">
             {event.isPublished ? (
-              <Badge color="green">Published</Badge>
+              <Badge color="green" size="xs">
+                Published
+              </Badge>
             ) : (
-              <Badge color="gray">Draft</Badge>
+              <Badge color="gray" size="xs">
+                Draft
+              </Badge>
             )}
           </div>
           <Image
@@ -40,7 +44,11 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
       )}
       <div>
         <div className="flex items-center">
-          <Badge color={isUpcoming ? 'green' : 'gray'} className="mr-2 mb-1">
+          <Badge
+            color={isUpcoming ? 'green' : 'gray'}
+            className="mr-2 mb-1"
+            size="xs"
+          >
             {isUpcoming ? 'Upcoming' : 'Past'}
           </Badge>
           <Text className="text-sm text-gray-600">
