@@ -61,7 +61,7 @@ export const Button = forwardRef(function Button(
           'inline-flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2':
             !isLink,
           // base link styles
-          'border-t-0 border-l-0 border-r-0 rounded-none inline-flex items-center border-0 border-b leading-none font-normal':
+          'border-t-0 border-l-0 border-r-0 rounded-none inline-flex items-center border-0 border-b-2 leading-none font-bold':
             isLink,
           // sizes
           'h-6 px-2': !isIconButton && isXs && !isLink,
@@ -79,7 +79,7 @@ export const Button = forwardRef(function Button(
           '!text-gray-50 bg-red-600 hover:bg-red-700 focus:ring-red-500':
             isDanger,
           'bg-gray-50 hover:bg-gray-200 focus:ring-brand-500': isNeutral,
-          '!text-gray-500 !border-gray-500 hover:!text-gray-800 hover:!border-gray-800':
+          '!text-gray-400 !border-gray-400 hover:!text-gray-800 hover:!border-gray-800':
             isLinkGray,
         },
         className
