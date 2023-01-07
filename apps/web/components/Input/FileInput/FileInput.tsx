@@ -46,6 +46,7 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
         inputClassName="hidden"
       />
       <Input
+        data-testid="file-input"
         onChange={handleFileInputChange}
         type="file"
         id="button-upload"
@@ -60,7 +61,13 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
         )}
         {isLoading && <Spinner />}
         {!isLoading && imageSrc && (
-          <Image alt="" src={imageSrc} fill className="object-cover" />
+          <Image
+            data-testid="file-input-image-preview"
+            alt=""
+            src={imageSrc}
+            fill
+            className="object-cover"
+          />
         )}
       </div>
       <div className="flex justify-center">

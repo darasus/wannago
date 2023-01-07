@@ -34,6 +34,10 @@
       "outputs": [],
       "cache": false
     },
+    "test:e2e:dev": {
+      "outputs": [],
+      "cache": false
+    },
     "dev": {
       "cache": false
     },
