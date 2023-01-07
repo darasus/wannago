@@ -62,14 +62,33 @@ jobs:
  
         - name: Install dependencies
           run: pnpm install
+
+        - name: Cache Cypress binary
+          uses: actions/cache@v3
+          with:
+            path: ~/.cache/Cypress
+            key: cypress-${{ runner.os }}-cypress-${{ hashFiles('**/package.json') }}
+            restore-keys: |
+              cypress-${{ runner.os }}-cypress-
+
+        - name: install dependencies and verify Cypress
+          env:
+            CI: 1
+          run: |
+            npm ci
+            npx cypress verify
+            npx cypress info
+            npx cypress version
+            npx cypress version --component package
+            npx cypress version --component binary
+            npx cypress version --component electron
+            npx cypress version --component node
         
         - name: Cypress run
-          uses: cypress-io/github-action@v5
+          run: pnpm test:e2e
           with:
             build: pnpm build
             start: pnpm start
-            headless: true
-            browser: chrome
  
         # - name: Test
         #   run: pnpm test:e2e
