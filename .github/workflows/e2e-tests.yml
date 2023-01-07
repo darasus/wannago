@@ -43,7 +43,7 @@ jobs:
 
  
       steps:
-        # - uses: actions/cache@v3
+        - uses: actions/cache@v3
         #   id: playwright-cache
         #   with:
         #     path: |
