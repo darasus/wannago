@@ -13,6 +13,8 @@ jobs:
       runs-on: ubuntu-latest
       env:
         CI: true
+        NEXT_PUBLIC_BASE_URL: "http://localhost:3000"
+
         TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
         TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
         VERCEL_ANALYTICS_ID: ${{ secrets.VERCEL_ANALYTICS_ID }}
@@ -36,6 +38,9 @@ jobs:
         SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+        NEXT_PUBLIC_AMPLITUDE_API_KEY: ${{ secrets.NEXT_PUBLIC_AMPLITUDE_API_KEY }}
+
  
       steps:
         # - uses: actions/cache@v3
