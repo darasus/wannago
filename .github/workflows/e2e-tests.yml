@@ -85,10 +85,10 @@ jobs:
             npx cypress version --component node
         
         - name: Cypress run
-          run: pnpm test:e2e
-          with:
-            build: pnpm build
-            start: pnpm start
+          run: |
+            pnpm build
+            pnpm start
+            pnpm test:e2e
  
         # - name: Test
         #   run: pnpm test:e2e
