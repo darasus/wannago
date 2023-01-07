@@ -75,14 +75,14 @@ jobs:
           env:
             CI: 1
           run: |
-            npm ci
-            npx cypress verify
-            npx cypress info
-            npx cypress version
-            npx cypress version --component package
-            npx cypress version --component binary
-            npx cypress version --component electron
-            npx cypress version --component node
+            pnpm install
+            pnpm dlx cypress verify
+            pnpm dlx cypress info
+            pnpm dlx cypress version
+            pnpm dlx cypress version --component package
+            pnpm dlx cypress version --component binary
+            pnpm dlx cypress version --component electron
+            pnpm dlx cypress version --component node
         
         - name: Cypress run
           run: |
