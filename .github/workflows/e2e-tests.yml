@@ -68,8 +68,8 @@ jobs:
           with:
             build: pnpm build
             start: pnpm start
-            browser: chrome
             headless: true
+            browser: chrome
  
         # - name: Test
         #   run: pnpm test:e2e
