@@ -28,6 +28,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
       content: (
         <>
           <Input
+            data-testid="event-form-title"
             label="Event title"
             error={errors.title}
             {...register('title', {
@@ -38,6 +39,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             })}
           />
           <RichTextarea
+            dataTestId="event-form-description"
             label="Event description"
             error={errors.description}
             {...register('description', {
@@ -45,6 +47,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             })}
           />
           <FileInput
+            data-testid="event-form-image"
             label="Event image"
             error={errors.featuredImageSrc}
             {...register('featuredImageSrc', {
@@ -64,6 +67,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
           <Input
             type="datetime-local"
             label="Event start date"
+            data-testid="event-form-start-date"
             error={errors.startDate}
             {...register('startDate', {
               required: {value: true, message: 'Start date is required'},
@@ -72,6 +76,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
           <Input
             type="datetime-local"
             label="Event end date"
+            data-testid="event-form-end-date"
             error={errors.endDate}
             {...register('endDate', {
               required: {value: true, message: 'End date is required'},
@@ -86,6 +91,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
         <>
           <LocationInput
             label="Event address"
+            data-testid="event-form-location"
             error={errors.address}
             {...register('address', {
               required: {value: true, message: 'Address is required'},
@@ -101,6 +107,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
           <Input
             type="number"
             label="Max number of attendees"
+            data-testid="event-form-max-attendees"
             error={errors.maxNumberOfAttendees}
             {...register('maxNumberOfAttendees', {
               required: {
@@ -143,7 +150,11 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             <Button onClick={onCancelClick} variant="neutral">
               Cancel
             </Button>
-            <Button isLoading={isSubmitting} type="submit">
+            <Button
+              isLoading={isSubmitting}
+              type="submit"
+              data-testid="event-form-submit-button"
+            >
               {isEdit ? 'Save' : 'Save as draft'}
             </Button>
           </div>

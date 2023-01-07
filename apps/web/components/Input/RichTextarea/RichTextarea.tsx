@@ -15,10 +15,11 @@ import {BubbleMenuButtonGroup} from './BubbleMenuButtonGroup';
 interface Props extends HTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: FieldError;
+  dataTestId?: string;
 }
 
 export const RichTextarea = forwardRef<HTMLInputElement, Props>(
-  function RichTextarea({label, error, ...props}, ref) {
+  function RichTextarea({label, error, dataTestId, ...props}, ref) {
     const {
       formState: {defaultValues},
       setValue,
@@ -53,9 +54,10 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
             <BubbleMenuButtonGroup editor={editor} />
           </FloatingMenu>
         )}
-        <InputWrapper label={label} error={error}>
+        <InputWrapper label={label} error={error} data-testid={dataTestId}>
           <input ref={ref} {...props} className="hidden" />
           <EditorContent
+            data-testid={dataTestId}
             className={clsx(
               'border-2 rounded-3xl py-2 px-3 max-w-full',
               'prose',

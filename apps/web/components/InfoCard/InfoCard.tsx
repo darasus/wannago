@@ -33,7 +33,9 @@ export function InfoCard({description, featuredImageSrc, title}: Props) {
             </Badge>
             {/* <Button variant="link">Share</Button> */}
           </div>
-          <Text className="text-2xl font-bold mb-2">{title}</Text>
+          <Text className="text-2xl font-bold mb-2" data-testid="event-title">
+            {title}
+          </Text>
           <div />
           <div
             className={clsx(

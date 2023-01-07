@@ -53,7 +53,6 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
               leave="transition ease-in duration-100"
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
-              // afterLeave={() => setQuery('')}
             >
               <Combobox.Options
                 as={CardBase}
@@ -68,6 +67,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
                 {data?.predictions?.map(place => (
                   <Combobox.Option
                     key={place.place_id}
+                    data-testid="location-input-option"
                     className={({active}) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 list-none ${
                         active ? 'bg-brand-400 text-gray-800' : 'text-gray-900'
