@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test:e2e": "pnpm dlx playwright test",
-    "test:e2e:dev": "pnpm dlx playwright test --headed",
-    "test:e2e:report": "pnpm dlx playwright show-report"
+    "test:e2e": "pnpm cypress run",
+    "test:e2e:dev": "pnpm cypress open"
   },
   "devDependencies": {
-    "@playwright/test": "latest",
+    "cypress": "12.3.0",
     "eslint-config-custom": "workspace:*"
   }
 }

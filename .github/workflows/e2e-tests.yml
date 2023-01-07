@@ -13,6 +13,8 @@ jobs:
       runs-on: ubuntu-latest
       env:
         CI: true
+        NEXT_PUBLIC_BASE_URL: "http://localhost:3000"
+
         TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
         TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
         VERCEL_ANALYTICS_ID: ${{ secrets.VERCEL_ANALYTICS_ID }}
@@ -36,14 +38,17 @@ jobs:
         SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
         NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+        NEXT_PUBLIC_AMPLITUDE_API_KEY: ${{ secrets.NEXT_PUBLIC_AMPLITUDE_API_KEY }}
+
  
       steps:
-        - uses: actions/cache@v3
-          id: playwright-cache
-          with:
-            path: |
-              ~/.cache/ms-playwright
-            key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.json') }}
+        # - uses: actions/cache@v3
+        #   id: playwright-cache
+        #   with:
+        #     path: |
+        #       ~/.cache/ms-playwright
+        #     key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.json') }}
 
         - name: Check out code
           uses: actions/checkout@v3
@@ -62,22 +67,40 @@ jobs:
  
         - name: Install dependencies
           run: pnpm install
-        
-        - name: Install playwright
-          run: pnpm dlx playwright install --with-deps
-          if: steps.playwright-cache.outputs.cache-hit != 'true'
-        
-        - name: Use cached playwright binaries
-          run: pnpm dlx playwright install-deps
-          if: steps.playwright-cache.outputs.cache-hit == 'true'
- 
-        - name: Test
-          run: pnpm test:e2e
 
-        - uses: actions/upload-artifact@v3
-          if: always()
+        - name: Cache Cypress binary
+          uses: actions/cache@v3
           with:
-            name: playwright-report
-            path: playwright-report/
-            retention-days: 30
+            path: ~/.cache/Cypress
+            key: cypress-${{ runner.os }}-cypress-${{ hashFiles('**/package.json') }}
+            restore-keys: |
+              cypress-${{ runner.os }}-cypress-
+
+        - name: install dependencies and verify Cypress
+          env:
+            CI: 1
+          run: |
+            pnpm install
+            pnpm dlx cypress verify
+            pnpm dlx cypress info
+            pnpm dlx cypress version
+            pnpm dlx cypress version --component package
+            pnpm dlx cypress version --component binary
+            pnpm dlx cypress version --component electron
+            pnpm dlx cypress version --component node
+        
+        - name: Cypress run
+          run: |
+            pnpm build
+            pnpm run-p --race start test:e2e
+ 
+        # - name: Test
+        #   run: pnpm test:e2e
+
+        # - uses: actions/upload-artifact@v3
+        #   if: always()
+        #   with:
+        #     name: playwright-report
+        #     path: playwright-report/
+        #     retention-days: 30
 
