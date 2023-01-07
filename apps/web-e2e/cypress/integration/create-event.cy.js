@@ -1,5 +1,5 @@
-describe('Login', () => {
-  it('Can login', () => {
+describe('Create event', () => {
+  it('Can create event', () => {
     cy.login();
     cy.get('[data-testid="add-event-button"]').click();
     cy.get('[data-testid="event-form-title"]').type('Test title');
