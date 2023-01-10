@@ -1,7 +1,7 @@
 import {getBaseUrl} from '../utils/getBaseUrl';
 
 export class Mail {
-  async sendEventSignupEmail({
+  async sendEventSignUpEmail({
     eventId,
     userId,
   }: {
@@ -9,6 +9,22 @@ export class Mail {
     userId: string;
   }) {
     return fetch(`${getBaseUrl()}/api/mailgun/send-event-signup-email`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userId,
+        eventId,
+      }),
+    });
+  }
+
+  async sendEventInviteEmail({
+    eventId,
+    userId,
+  }: {
+    eventId: string;
+    userId: string;
+  }) {
+    return fetch(`${getBaseUrl()}/api/mailgun/send-event-invite-email`, {
       method: 'POST',
       body: JSON.stringify({
         userId,

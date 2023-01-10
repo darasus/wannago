@@ -2,7 +2,7 @@ import {router, protectedProcedure, publicProcedure} from '../trpc';
 import {z} from 'zod';
 import {nanoid} from 'nanoid';
 import {TRPCError} from '@trpc/server';
-import {User} from '@prisma/client';
+import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
 import {authorizeChange} from '../../utils/getIsMyEvent';
 import {random} from '../../utils/random';
@@ -318,7 +318,7 @@ const join = publicProcedure
       });
     }
 
-    await ctx.mail.sendEventSignupEmail({
+    await ctx.mail.sendEventSignUpEmail({
       eventId: input.eventId,
       userId: user.id,
     });
@@ -326,7 +326,7 @@ const join = publicProcedure
     return {success: true};
   });
 
-const removeUser = protectedProcedure
+const cancelRsvp = protectedProcedure
   .input(
     z.object({
       eventId: z.string().uuid(),
@@ -350,9 +350,12 @@ const removeUser = protectedProcedure
       });
     }
 
-    return ctx.prisma.eventSignUp.delete({
+    return ctx.prisma.eventSignUp.update({
       where: {
         id: signUp.id,
+      },
+      data: {
+        status: 'CANCELLED',
       },
     });
   });
@@ -363,6 +366,7 @@ const getNumberOfAttendees = publicProcedure
     const signUps = await ctx.prisma.eventSignUp.findMany({
       where: {
         eventId,
+        status: 'REGISTERED',
       },
     });
 
@@ -434,6 +438,112 @@ const getRandomExample = publicProcedure.query(async ({ctx}) => {
   return random(events);
 });
 
+const getAllEventsAttendees = protectedProcedure
+  .input(
+    z.object({
+      eventId: z.string().uuid(),
+    })
+  )
+  .query(async ({ctx, input}) => {
+    const organization = await ctx.prisma.organization.findFirst({
+      where: {
+        users: {
+          some: {
+            externalId: ctx.user.id,
+          },
+        },
+      },
+    });
+
+    const eventSignUps = await ctx.prisma.eventSignUp.findMany({
+      where: {
+        event: {
+          organizationId: organization?.id,
+        },
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    const userMap: Record<
+      string,
+      User & {status: EventRegistrationStatus | null}
+    > = {};
+
+    for (const eventSignUp of eventSignUps) {
+      if (!userMap[eventSignUp.userId]) {
+        userMap[eventSignUp.userId] = {
+          ...eventSignUp.user,
+          status: null,
+        };
+      }
+
+      if (eventSignUp.eventId === input.eventId) {
+        userMap[eventSignUp.userId].status = eventSignUp.status;
+      }
+    }
+
+    return Object.values(userMap);
+  });
+
+const invitePastAttendee = protectedProcedure
+  .input(
+    z.object({
+      userId: z.string().uuid(),
+      eventId: z.string().uuid(),
+    })
+  )
+  .mutation(async ({ctx, input}) => {
+    const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
+      where: {
+        userId: input.userId,
+        eventId: input.eventId,
+      },
+      include: {
+        event: true,
+      },
+    });
+
+    console.log('HERE', eventSignUp?.event);
+
+    if (eventSignUp?.event.isPublished === false) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: `You can't invite user to unpublished event. Please publish first.`,
+      });
+    }
+
+    if (eventSignUp?.status === 'REGISTERED') {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'User is already signed up for this event',
+      });
+    }
+
+    if (eventSignUp?.status === 'INVITED') {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'User is already invited for this event',
+      });
+    }
+
+    const invite = await ctx.prisma.eventSignUp.create({
+      data: {
+        status: 'INVITED',
+        eventId: input.eventId,
+        userId: input.userId,
+      },
+    });
+
+    await ctx.mail.sendEventInviteEmail({
+      eventId: input.eventId,
+      userId: input.userId,
+    });
+
+    return invite;
+  });
+
 export const eventRouter = router({
   create,
   remove,
@@ -443,9 +553,11 @@ export const eventRouter = router({
   getByShortId,
   getOrganizer,
   join,
-  removeUser,
+  cancelRsvp,
   getNumberOfAttendees,
   getAttendees,
   getExamples,
   getRandomExample,
+  getAllEventsAttendees,
+  invitePastAttendee,
 });

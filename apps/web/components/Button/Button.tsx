@@ -24,6 +24,7 @@ export const Button = forwardRef(function Button(
     iconLeft,
     isLoading,
     as = 'button',
+    disabled,
     ...props
   }: Props,
   ref: React.Ref<HTMLButtonElement>
@@ -49,6 +50,7 @@ export const Button = forwardRef(function Button(
       as={as}
       ref={ref}
       type="button"
+      disabled={disabled || isLoading}
       {...props}
       className={clsx(
         'cursor-pointer justify-center shrink-0',
@@ -56,6 +58,7 @@ export const Button = forwardRef(function Button(
         'text-gray-800 font-bold',
         // base borders styles
         'rounded-full border-2 border-gray-800',
+        'disabled:opacity-50 disabled:pointer-events-none',
         {
           // base button styles
           'inline-flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2':

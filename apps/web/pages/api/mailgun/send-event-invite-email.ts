@@ -31,6 +31,7 @@ export default async function handler(
       },
     },
   });
+
   const user = await prisma.user.findUnique({
     where: {id: body.userId},
   });
@@ -51,7 +52,7 @@ export default async function handler(
     });
   }
 
-  await mailgun.sendEventSignUpEmail({
+  await mailgun.sendEventInviteEmail({
     event,
     user,
     organizerUser,

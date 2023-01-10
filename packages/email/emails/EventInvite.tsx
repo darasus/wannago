@@ -23,15 +23,17 @@ interface Props {
   startDate: string;
   endDate: string;
   address: string;
-  eventUrl: string;
+  confirmUrl: string;
+  organizerName: string;
 }
 
-export default function EventSubscribe({
+export default function EventInvite({
   title = 'Event name',
-  address = '2022/12/11 11:3',
-  endDate = '2022/12/11 11:3',
-  startDate = '2022/12/11 11:3',
-  eventUrl = 'https://www.wannago.app',
+  address = '2022/12/11 11:30',
+  endDate = '2022/12/11 11:30',
+  startDate = '2022/12/11 11:30',
+  confirmUrl = 'https://www.wannago.app',
+  organizerName = 'Organizer Name',
 }: Props) {
   return (
     <Html>
@@ -43,19 +45,23 @@ export default function EventSubscribe({
             <Title>{`You've been invited to: ${title}`}</Title>
           </Section>
           <Section style={{marginBottom: gutter}}>
-            <Text>{`Start: ${startDate}`}</Text>
-            <Text>{`End: ${endDate}`}</Text>
-            <Text>{`Address: ${address}`}</Text>
+            <Text>
+              <b>Organizer:</b> {organizerName}
+            </Text>
+            <Text>
+              <b>Start:</b> {startDate}
+            </Text>
+            <Text>
+              <b>End:</b> {endDate}
+            </Text>
+            <Text>
+              <b>Address:</b> {address}
+            </Text>
           </Section>
           <Section style={buttonContainer}>
-            <Button href={eventUrl}>View event</Button>
+            <Button href={confirmUrl}>Confirm invite</Button>
           </Section>
           <Hr style={hr} />
-          <Text>
-            {
-              "If you didn't sign up to this event, you can safely ignore this email."
-            }
-          </Text>
           <Text>Thanks,</Text>
           <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />

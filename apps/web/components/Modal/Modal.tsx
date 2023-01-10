@@ -37,7 +37,7 @@ export function Modal({children, isOpen, onClose, title}: Props) {
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 shadow-xl transition-all border-2 border-gray-800 mx-4">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-bold leading-6 text-gray-900"
+                  className="text-xl font-bold leading-6 text-gray-900"
                 >
                   {title}
                 </Dialog.Title>
