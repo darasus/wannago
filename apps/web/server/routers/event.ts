@@ -495,19 +495,27 @@ const invitePastAttendee = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
+    const event = await ctx.prisma.event.findUnique({
+      where: {
+        id: input.eventId,
+      },
+    });
+
+    if (!event) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Event not found',
+      });
+    }
+
     const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
         userId: input.userId,
         eventId: input.eventId,
       },
-      include: {
-        event: true,
-      },
     });
 
-    console.log('HERE', eventSignUp?.event);
-
-    if (eventSignUp?.event.isPublished === false) {
+    if (event.isPublished === false) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
         message: `You can't invite user to unpublished event. Please publish first.`,
