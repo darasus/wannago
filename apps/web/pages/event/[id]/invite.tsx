@@ -81,7 +81,7 @@ function EventAttendeesPage() {
           <PageHeader title={'Invite'} />
           {data.length === 0 && (
             <div className="text-center">
-              <Text>No attendees yet</Text>
+              <Text>{`You don't have users to invite yet...`}</Text>
             </div>
           )}
           {data?.map(user => {
