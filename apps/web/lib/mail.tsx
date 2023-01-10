@@ -17,6 +17,22 @@ export class Mail {
     });
   }
 
+  async sendEventInviteEmail({
+    eventId,
+    userId,
+  }: {
+    eventId: string;
+    userId: string;
+  }) {
+    return fetch(`${getBaseUrl()}/api/mailgun/send-event-invite-email`, {
+      method: 'POST',
+      body: JSON.stringify({
+        userId,
+        eventId,
+      }),
+    });
+  }
+
   async sendQuestionToOrganizerEmail({
     eventId,
     organizerEmail,

@@ -10,6 +10,7 @@ import {
   EventReminder,
   MessageToAttendees,
   LoginCode,
+  EventInvite,
 } from 'email';
 import {formatDate} from '../utils/formatDate';
 import {env} from './env/server';
@@ -41,6 +42,39 @@ export class Mailgun {
           title={event.title}
           address={event.address}
           eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
+          startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
+          endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
+          organizerName={`${organizerUser.firstName} ${organizerUser.lastName}`}
+        />
+      ),
+    };
+
+    await this.mailgun.messages.create('email.wannago.app', messageData);
+  }
+
+  async sendEventInviteEmail({
+    event,
+    user,
+    organizerUser,
+  }: {
+    event: Event;
+    user: User;
+    organizerUser: User;
+  }) {
+    const url = new URL(`${getBaseUrl()}/api/confirm-invite`);
+
+    url.searchParams.append('eventShortId', event.shortId!);
+    url.searchParams.append('email', user.email);
+
+    const messageData: MailgunMessageData = {
+      from: 'WannaGo Team <hi@wannago.app>',
+      to: user.email,
+      subject: `You're invited to: "${event.title}"!`,
+      html: render(
+        <EventInvite
+          title={event.title}
+          address={event.address}
+          confirmUrl={url.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
           organizerName={`${organizerUser.firstName} ${organizerUser.lastName}`}

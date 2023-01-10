@@ -504,7 +504,9 @@ const invitePastAttendee = protectedProcedure
       },
     });
 
-    if (!eventSignUp?.event.isPublished) {
+    console.log('HERE', eventSignUp?.event);
+
+    if (eventSignUp?.event.isPublished === false) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
         message: `You can't invite user to unpublished event. Please publish first.`,
@@ -525,13 +527,20 @@ const invitePastAttendee = protectedProcedure
       });
     }
 
-    return ctx.prisma.eventSignUp.create({
+    const invite = await ctx.prisma.eventSignUp.create({
       data: {
         status: 'INVITED',
         eventId: input.eventId,
         userId: input.userId,
       },
     });
+
+    await ctx.mail.sendEventInviteEmail({
+      eventId: input.eventId,
+      userId: input.userId,
+    });
+
+    return invite;
   });
 
 export const eventRouter = router({
