@@ -141,15 +141,6 @@ export function AdminSection({event, timezone}: Props) {
             >
               Attendees
             </Button>
-            <Button
-              onClick={() => router.push(`/event/${event.id}/invite`)}
-              disabled={!event.isPublished}
-              size="sm"
-              variant="neutral"
-              iconLeft={<UserPlusIcon />}
-            >
-              Invite
-            </Button>
             <MessageParticipantsButton />
           </div>
         </div>

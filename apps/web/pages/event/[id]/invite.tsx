@@ -9,47 +9,75 @@ import {Text} from '../../../components/Text/Text';
 import {trpc} from '../../../utils/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {toast} from 'react-hot-toast';
-import {useCallback} from 'react';
 import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {PageHeader} from '../../../components/PageHeader/PageHeader';
+import {useConfirmDialog} from '../../../hooks/useConfirmDialog';
 
-interface ItemProps {
+interface InviteButtonProps {
+  eventId: string;
+  user: User;
+  refetch?: () => Promise<any>;
+  disabled?: boolean;
+}
+
+export function InviteButton({
+  refetch,
+  user,
+  eventId,
+  disabled,
+}: InviteButtonProps) {
+  const {mutateAsync, isLoading} = trpc.event.invitePastAttendee.useMutation({
+    onError(error) {
+      toast.error(error.message);
+    },
+    async onSuccess() {
+      await refetch?.();
+      toast.success(`User is successfully invited!`);
+    },
+  });
+  const {open, modal} = useConfirmDialog({
+    title: `Invite ${user.firstName} ${user.lastName}?`,
+    description: `Are you sure you want to invite ${user.firstName} ${user.lastName} to the event? We will send invitation to this email address: ${user.email}`,
+    onConfirm: async () => {
+      await mutateAsync({userId: user.id, eventId});
+    },
+  });
+
+  return (
+    <>
+      {modal}
+      <Button
+        isLoading={isLoading}
+        onClick={open}
+        variant="neutral"
+        size="sm"
+        disabled={disabled}
+      >
+        Invite
+      </Button>
+    </>
+  );
+}
+
+interface UserRowProps {
   user: User & {status: EventRegistrationStatus | null};
   eventId: string;
   refetch: () => Promise<any>;
 }
 
-function Item({user, eventId, refetch}: ItemProps) {
-  const {mutate, isLoading} = trpc.event.invitePastAttendee.useMutation({
-    onError(error) {
-      toast.error(error.message);
-    },
-    async onSuccess() {
-      await refetch();
-      toast.success(`User is successfully invited!`);
-    },
-  });
-
-  const onInviteClick = useCallback(() => {
-    mutate({userId: user.id, eventId});
-  }, [eventId, mutate, user.id]);
-
+function UserRow({user, eventId, refetch}: UserRowProps) {
   return (
     <>
       <CardBase key={user.id} className="flex items-center mb-2">
         <Text>{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
         <div className="grow" />
         {user.status && <EventRegistrationStatusBadge status={user.status} />}
-        {user.status === null && (
-          <Button
-            isLoading={isLoading}
-            onClick={onInviteClick}
-            variant="neutral"
-            size="sm"
-          >
-            Invite
-          </Button>
-        )}
+        <InviteButton
+          user={user}
+          eventId={eventId}
+          refetch={refetch}
+          disabled={user.status !== null}
+        />
       </CardBase>
     </>
   );
@@ -84,7 +112,7 @@ function EventAttendeesPage() {
           )}
           {data?.map(user => {
             return (
-              <Item
+              <UserRow
                 key={user.id}
                 user={user}
                 eventId={eventId}

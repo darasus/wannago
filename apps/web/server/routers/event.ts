@@ -499,7 +499,17 @@ const invitePastAttendee = protectedProcedure
         userId: input.userId,
         eventId: input.eventId,
       },
+      include: {
+        event: true,
+      },
     });
+
+    if (!eventSignUp?.event.isPublished) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: `You can't invite user to unpublished event. Please publish first.`,
+      });
+    }
 
     if (eventSignUp?.status === 'REGISTERED') {
       throw new TRPCError({
