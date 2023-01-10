@@ -21,8 +21,19 @@ export default async function handler(
 
   const body = scheme.parse(JSON.parse(req.body));
 
-  const event = await prisma.event.findUnique({where: {id: body.eventId}});
-  const user = await prisma.user.findUnique({where: {id: body.userId}});
+  const event = await prisma.event.findUnique({
+    where: {id: body.eventId},
+    include: {
+      organization: {
+        include: {
+          users: true,
+        },
+      },
+    },
+  });
+  const user = await prisma.user.findUnique({
+    where: {id: body.userId},
+  });
 
   if (!event || !user) {
     throw new TRPCError({
@@ -31,9 +42,19 @@ export default async function handler(
     });
   }
 
-  await mailgun.sendEventSignupEmail({
+  const organizerUser = event.organization?.users[0];
+
+  if (!organizerUser) {
+    throw new TRPCError({
+      code: 'BAD_REQUEST',
+      message: 'Organizer user not found',
+    });
+  }
+
+  await mailgun.sendEventSignUpEmail({
     event,
     user,
+    organizerUser,
   });
 
   res.status(200).json({success: true});

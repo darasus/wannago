@@ -318,7 +318,7 @@ const join = publicProcedure
       });
     }
 
-    await ctx.mail.sendEventSignupEmail({
+    await ctx.mail.sendEventSignUpEmail({
       eventId: input.eventId,
       userId: user.id,
     });

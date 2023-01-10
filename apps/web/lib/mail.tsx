@@ -1,7 +1,7 @@
 import {getBaseUrl} from '../utils/getBaseUrl';
 
 export class Mail {
-  async sendEventSignupEmail({
+  async sendEventSignUpEmail({
     eventId,
     userId,
   }: {
