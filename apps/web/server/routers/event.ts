@@ -326,7 +326,7 @@ const join = publicProcedure
     return {success: true};
   });
 
-const removeUser = protectedProcedure
+const cancelRsvp = protectedProcedure
   .input(
     z.object({
       eventId: z.string().uuid(),
@@ -350,9 +350,12 @@ const removeUser = protectedProcedure
       });
     }
 
-    return ctx.prisma.eventSignUp.delete({
+    return ctx.prisma.eventSignUp.update({
       where: {
         id: signUp.id,
+      },
+      data: {
+        status: 'CANCELLED',
       },
     });
   });
@@ -530,7 +533,7 @@ export const eventRouter = router({
   getByShortId,
   getOrganizer,
   join,
-  removeUser,
+  cancelRsvp,
   getNumberOfAttendees,
   getAttendees,
   getExamples,

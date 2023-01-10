@@ -1,4 +1,3 @@
-import {TrashIcon} from '@heroicons/react/24/solid';
 import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
@@ -10,32 +9,16 @@ import {Text} from '../../../components/Text/Text';
 import {trpc} from '../../../utils/trpc';
 import {saveAs} from 'file-saver';
 import {withProtected} from '../../../utils/withAuthProtect';
-import {useConfirmDialog} from '../../../hooks/useConfirmDialog';
-import {Badge} from '../../../components/Badge/Badge';
 import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
+import {PageHeader} from '../../../components/PageHeader/PageHeader';
 
 interface ItemProps {
   user: User;
   status: EventRegistrationStatus;
-  eventId: string;
-  refetch: () => Promise<any>;
   hasPlusOne: boolean | null;
 }
 
-function Item({user, refetch, eventId, hasPlusOne, status}: ItemProps) {
-  const removeUser = trpc.event.removeUser.useMutation();
-  const {modal, open} = useConfirmDialog({
-    title: 'Remove attendee?',
-    description: `Are you sure you want to remove ${user.firstName} ${user.lastName} from the event?`,
-    onConfirm: async () => {
-      await removeUser.mutateAsync({
-        eventId,
-        userId: user.id,
-      });
-      await refetch();
-    },
-  });
-
+function Item({user, hasPlusOne, status}: ItemProps) {
   const label =
     user.firstName +
     ' ' +
@@ -45,27 +28,18 @@ function Item({user, refetch, eventId, hasPlusOne, status}: ItemProps) {
     (hasPlusOne ? ' · +1' : '');
 
   return (
-    <>
-      {modal}
-      <CardBase key={user.id} className="flex items-center mb-2">
-        <Text>{label}</Text>
-        <div className="grow" />
-        <EventRegistrationStatusBadge status={status} />
-        <Button
-          isLoading={removeUser.isLoading}
-          onClick={open}
-          iconLeft={<TrashIcon />}
-          variant="danger"
-        />
-      </CardBase>
-    </>
+    <CardBase key={user.id} className="flex items-center mb-2">
+      <Text>{label}</Text>
+      <div className="grow" />
+      <EventRegistrationStatusBadge status={status} />
+    </CardBase>
   );
 }
 
 function EventAttendeesPage() {
   const router = useRouter();
   const eventId = router.query.id as string;
-  const {data, refetch} = trpc.event.getAttendees.useQuery(
+  const {data} = trpc.event.getAttendees.useQuery(
     {
       eventId,
     },
@@ -99,11 +73,22 @@ function EventAttendeesPage() {
       </Head>
       <AppLayout>
         <Container className="md:px-4">
-          <div className="flex justify-end mb-4">
-            <Button variant="neutral" onClick={handleDownloadCsvClick}>
+          <PageHeader title={'Attendees'}>
+            <Button
+              variant="neutral"
+              onClick={() => router.push(`/event/${eventId}/invite`)}
+              size="sm"
+            >
+              Invite
+            </Button>
+            <Button
+              variant="neutral"
+              onClick={handleDownloadCsvClick}
+              size="sm"
+            >
               Export CSV
             </Button>
-          </div>
+          </PageHeader>
           {data.length === 0 && (
             <div className="text-center">
               <Text>No attendees yet</Text>
@@ -114,8 +99,6 @@ function EventAttendeesPage() {
               <Item
                 key={signUp.user.id}
                 user={signUp.user}
-                eventId={eventId}
-                refetch={refetch}
                 hasPlusOne={signUp.hasPlusOne}
                 status={signUp.status}
               />

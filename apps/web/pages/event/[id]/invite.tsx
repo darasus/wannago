@@ -13,6 +13,7 @@ import {useCallback} from 'react';
 import clsx from 'clsx';
 import {titleFont} from '../../../fonts';
 import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
+import {PageHeader} from '../../../components/PageHeader/PageHeader';
 
 interface ItemProps {
   user: User & {status: EventRegistrationStatus | null};
@@ -22,10 +23,10 @@ interface ItemProps {
 
 function Item({user, eventId, refetch}: ItemProps) {
   const {mutate, isLoading} = trpc.event.invitePastAttendee.useMutation({
-    onError(error, variables, context) {
+    onError(error) {
       toast.error(error.message);
     },
-    async onSuccess(data, variables, context) {
+    async onSuccess() {
       await refetch();
       toast.success(`User is successfully invited!`);
     },
@@ -41,9 +42,16 @@ function Item({user, eventId, refetch}: ItemProps) {
         <Text>{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
         <div className="grow" />
         {user.status && <EventRegistrationStatusBadge status={user.status} />}
-        <Button isLoading={isLoading} onClick={onInviteClick} variant="neutral">
-          Invite
-        </Button>
+        {user.status === null && (
+          <Button
+            isLoading={isLoading}
+            onClick={onInviteClick}
+            variant="neutral"
+            size="sm"
+          >
+            Invite
+          </Button>
+        )}
       </CardBase>
     </>
   );
@@ -70,13 +78,7 @@ function EventAttendeesPage() {
       </Head>
       <AppLayout>
         <Container>
-          <CardBase className="mb-4 border-dashed bg-transparent">
-            <div>
-              <Text className={clsx(titleFont.className, 'text-2xl')}>
-                Invite
-              </Text>
-            </div>
-          </CardBase>
+          <PageHeader title={'Invite'} />
           {data.length === 0 && (
             <div className="text-center">
               <Text>No attendees yet</Text>
