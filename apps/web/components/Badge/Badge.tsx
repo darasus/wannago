@@ -3,7 +3,15 @@ import React from 'react';
 
 type Props = React.PropsWithChildren & {
   className?: string;
-  color?: 'gray' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
+  color?:
+    | 'gray'
+    | 'yellow'
+    | 'green'
+    | 'blue'
+    | 'indigo'
+    | 'purple'
+    | 'pink'
+    | 'red';
   size?: 'xs' | 'sm' | 'md' | 'lg';
 };
 
@@ -26,6 +34,7 @@ export function Badge({
           'bg-indigo-100 text-indigo-800': color === 'indigo',
           'bg-purple-100 text-purple-800': color === 'purple',
           'bg-pink-100 text-pink-800': color === 'pink',
+          'bg-red-100 text-red-800': color === 'red',
         },
         {
           'h-6 px-2 text-xs': size === 'xs',

@@ -1,5 +1,5 @@
 import {TrashIcon} from '@heroicons/react/24/solid';
-import {User} from '@prisma/client';
+import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
@@ -11,15 +11,18 @@ import {trpc} from '../../../utils/trpc';
 import {saveAs} from 'file-saver';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {useConfirmDialog} from '../../../hooks/useConfirmDialog';
+import {Badge} from '../../../components/Badge/Badge';
+import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 
 interface ItemProps {
   user: User;
+  status: EventRegistrationStatus;
   eventId: string;
   refetch: () => Promise<any>;
   hasPlusOne: boolean | null;
 }
 
-function Item({user, refetch, eventId, hasPlusOne}: ItemProps) {
+function Item({user, refetch, eventId, hasPlusOne, status}: ItemProps) {
   const removeUser = trpc.event.removeUser.useMutation();
   const {modal, open} = useConfirmDialog({
     title: 'Remove attendee?',
@@ -33,14 +36,21 @@ function Item({user, refetch, eventId, hasPlusOne}: ItemProps) {
     },
   });
 
+  const label =
+    user.firstName +
+    ' ' +
+    user.lastName +
+    ' · ' +
+    user.email +
+    (hasPlusOne ? ' · +1' : '');
+
   return (
     <>
       {modal}
       <CardBase key={user.id} className="flex items-center mb-2">
-        <Text>{`${user.firstName} ${user.lastName} · ${user.email}${
-          hasPlusOne ? ' · +1' : ''
-        }`}</Text>
+        <Text>{label}</Text>
         <div className="grow" />
+        <EventRegistrationStatusBadge status={status} />
         <Button
           isLoading={removeUser.isLoading}
           onClick={open}
@@ -107,6 +117,7 @@ function EventAttendeesPage() {
                 eventId={eventId}
                 refetch={refetch}
                 hasPlusOne={signUp.hasPlusOne}
+                status={signUp.status}
               />
             );
           })}

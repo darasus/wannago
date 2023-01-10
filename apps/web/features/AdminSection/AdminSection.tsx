@@ -4,6 +4,7 @@ import {
   UsersIcon,
   PlayCircleIcon,
   PauseCircleIcon,
+  UserPlusIcon,
 } from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import {Badge} from '../../components/Badge/Badge';
@@ -138,7 +139,16 @@ export function AdminSection({event, timezone}: Props) {
               onClick={() => router.push(`/event/${event.id}/attendees`)}
               size="sm"
             >
-              View attendees
+              Attendees
+            </Button>
+            <Button
+              onClick={() => router.push(`/event/${event.id}/invite`)}
+              disabled={!event.isPublished}
+              size="sm"
+              variant="neutral"
+              iconLeft={<UserPlusIcon />}
+            >
+              Invite
             </Button>
             <MessageParticipantsButton />
           </div>
