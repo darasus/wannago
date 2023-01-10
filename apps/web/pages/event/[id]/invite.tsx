@@ -10,8 +10,6 @@ import {trpc} from '../../../utils/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {toast} from 'react-hot-toast';
 import {useCallback} from 'react';
-import clsx from 'clsx';
-import {titleFont} from '../../../fonts';
 import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {PageHeader} from '../../../components/PageHeader/PageHeader';
 
