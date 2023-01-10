@@ -366,6 +366,7 @@ const getNumberOfAttendees = publicProcedure
     const signUps = await ctx.prisma.eventSignUp.findMany({
       where: {
         eventId,
+        status: 'REGISTERED',
       },
     });
 
