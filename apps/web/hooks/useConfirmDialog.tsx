@@ -14,7 +14,9 @@ export function useConfirmDialog({title, description, onConfirm}: Props) {
 
   const onSubmit = async () => {
     setIsLoading(true);
-    await onConfirm();
+    try {
+      await onConfirm();
+    } catch (error) {}
     setIsOpen(false);
     setIsLoading(false);
   };
