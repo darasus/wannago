@@ -1,6 +1,9 @@
 import {prisma} from 'database';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
+import {Mailgun} from '../../lib/mailgun';
+
+const mailgun = new Mailgun();
 
 const scheme = z.object({
   eventShortId: z.string(),
@@ -26,6 +29,18 @@ export default async function handler(
         email: params.email,
       },
     },
+    include: {
+      user: true,
+      event: {
+        include: {
+          organization: {
+            include: {
+              users: true,
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!eventSignUp) {
@@ -41,5 +56,17 @@ export default async function handler(
     },
   });
 
-  res.redirect(`/e/${params.eventShortId}?inviteConfirmed=true`);
+  if (
+    eventSignUp?.user &&
+    eventSignUp.event.organization?.users &&
+    eventSignUp.event.organization?.users?.length > 0
+  ) {
+    await mailgun.sendEventSignUpEmail({
+      event: eventSignUp.event,
+      organizerUser: eventSignUp.event.organization.users[0],
+      user: eventSignUp.user,
+    });
+  }
+
+  await res.redirect(`/e/${params.eventShortId}?inviteConfirmed=true`);
 }
