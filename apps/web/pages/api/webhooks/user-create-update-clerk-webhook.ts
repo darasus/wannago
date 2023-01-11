@@ -31,32 +31,47 @@ export default async function handler(
     const organization = await prisma.organization.create({
       data: {},
     });
+
     const user = await prisma.user.findFirst({
       where: {
         email: data.email_addresses[0].email_address,
       },
     });
+
     if (user) {
-      await prisma.user.delete({
+      await prisma.user.update({
         where: {
           id: user.id,
         },
-      });
-    }
-    await prisma.user.create({
-      data: {
-        externalId: data.id,
-        email: data.email_addresses[0].email_address,
-        firstName: data.first_name,
-        lastName: data.last_name,
-        profileImageSrc: data.profile_image_url,
-        organization: {
-          connect: {
-            id: organization.id,
+        data: {
+          externalId: data.id,
+          email: data.email_addresses[0].email_address,
+          firstName: data.first_name,
+          lastName: data.last_name,
+          profileImageSrc: data.profile_image_url,
+          organization: {
+            connect: {
+              id: organization.id,
+            },
           },
         },
-      },
-    });
+      });
+    } else {
+      await prisma.user.create({
+        data: {
+          externalId: data.id,
+          email: data.email_addresses[0].email_address,
+          firstName: data.first_name,
+          lastName: data.last_name,
+          profileImageSrc: data.profile_image_url,
+          organization: {
+            connect: {
+              id: organization.id,
+            },
+          },
+        },
+      });
+    }
   }
 
   if (type === 'user.updated') {
