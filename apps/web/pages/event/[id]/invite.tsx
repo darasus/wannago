@@ -12,6 +12,7 @@ import {toast} from 'react-hot-toast';
 import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {PageHeader} from '../../../components/PageHeader/PageHeader';
 import {useConfirmDialog} from '../../../hooks/useConfirmDialog';
+import {AdminInviteButton} from '../../../features/AdminInviteButton/AdminInviteButton';
 
 interface InviteButtonProps {
   eventId: string;
@@ -104,7 +105,9 @@ function EventAttendeesPage() {
       </Head>
       <AppLayout>
         <Container>
-          <PageHeader title={'Invite'} />
+          <PageHeader title={'Invite'}>
+            <AdminInviteButton refetch={refetch} />
+          </PageHeader>
           {data.length === 0 && (
             <div className="text-center">
               <Text>{`You don't have users to invite yet...`}</Text>

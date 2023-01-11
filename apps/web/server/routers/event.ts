@@ -393,6 +393,9 @@ const getAttendees = protectedProcedure
       include: {
         user: true,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   });
 
@@ -463,6 +466,9 @@ const getAllEventsAttendees = protectedProcedure
       },
       include: {
         user: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     });
 
@@ -552,6 +558,80 @@ const invitePastAttendee = protectedProcedure
     return invite;
   });
 
+const inviteByEmail = publicProcedure
+  .input(
+    z.object({
+      eventId: z.string(),
+      email: z.string().email('Is not valid email'),
+      firstName: z.string(),
+      lastName: z.string(),
+      hasPlusOne: z.boolean(),
+    })
+  )
+  .mutation(async ({input, ctx}) => {
+    await authorizeChange({ctx, eventId: input.eventId});
+
+    let user: User | null = null;
+
+    user = await ctx.prisma.user.findUnique({
+      where: {
+        email: input.email,
+      },
+    });
+
+    if (!user) {
+      user = await ctx.prisma.user.create({
+        data: {
+          email: input.email,
+          firstName: input.firstName,
+          lastName: input.lastName,
+          externalId: null,
+          organization: {
+            create: {},
+          },
+        },
+      });
+    }
+
+    const existingSignUp = await ctx.prisma.eventSignUp.findFirst({
+      where: {
+        eventId: input.eventId,
+        userId: user.id,
+      },
+    });
+
+    if (existingSignUp) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'User is already signed up for this event',
+      });
+    }
+
+    await ctx.prisma.eventSignUp.create({
+      data: {
+        hasPlusOne: input.hasPlusOne,
+        event: {
+          connect: {
+            id: input.eventId,
+          },
+        },
+        status: 'INVITED',
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+      },
+    });
+
+    await ctx.mail.sendEventInviteEmail({
+      eventId: input.eventId,
+      userId: user.id,
+    });
+
+    return {success: true};
+  });
+
 export const eventRouter = router({
   create,
   remove,
@@ -568,4 +648,5 @@ export const eventRouter = router({
   getRandomExample,
   getAllEventsAttendees,
   invitePastAttendee,
+  inviteByEmail,
 });

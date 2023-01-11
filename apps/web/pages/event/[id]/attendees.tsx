@@ -11,6 +11,7 @@ import {saveAs} from 'file-saver';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {PageHeader} from '../../../components/PageHeader/PageHeader';
+import {useEventId} from '../../../hooks/useEventId';
 
 interface ItemProps {
   user: User;
@@ -38,7 +39,7 @@ function Item({user, hasPlusOne, status}: ItemProps) {
 
 function EventAttendeesPage() {
   const router = useRouter();
-  const eventId = router.query.id as string;
+  const eventId = useEventId();
   const {data} = trpc.event.getAttendees.useQuery(
     {
       eventId,
