@@ -1,12 +1,12 @@
 import {useState} from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {Button} from '../../components/Button/Button';
 import {Modal} from '../../components/Modal/Modal';
-import {JoinForm} from '../../components/JoinForm/JoinForm';
-import {JoinForm as JoinFormType} from '../../types/forms';
+import {AdminInviteForm} from '../../types/forms';
 import {trpc} from '../../utils/trpc';
 import {useEventId} from '../../hooks/useEventId';
 import {toast} from 'react-hot-toast';
+import {Input} from '../../components/Input/Input/Input';
 
 interface Props {
   refetch: () => Promise<any>;
@@ -15,7 +15,12 @@ interface Props {
 export function AdminInviteButton({refetch}: Props) {
   const eventId = useEventId();
   const [on, set] = useState(false);
-  const form = useForm<JoinFormType>();
+  const {
+    handleSubmit,
+    reset,
+    register,
+    formState: {isSubmitting, errors},
+  } = useForm<AdminInviteForm>();
   const {mutateAsync} = trpc.event.inviteByEmail.useMutation({
     onError(error) {
       toast.error(error.message);
@@ -25,18 +30,51 @@ export function AdminInviteButton({refetch}: Props) {
     },
   });
 
-  const onSubmit = form.handleSubmit(async data => {
+  const onSubmit = handleSubmit(async data => {
     await mutateAsync({...data, eventId});
     await refetch();
-    form.reset();
+    reset();
   });
 
   return (
     <>
       <Modal title="Invite by email" isOpen={on} onClose={() => set(false)}>
-        <FormProvider {...form}>
-          <JoinForm onSubmit={onSubmit} />
-        </FormProvider>
+        <form onSubmit={onSubmit}>
+          <div className="grid grid-cols-12 gap-2 grow mr-2">
+            <div className="col-span-6">
+              <Input
+                placeholder="First name"
+                {...register('firstName', {
+                  required: 'First name is required',
+                })}
+                error={errors.firstName}
+              />
+            </div>
+            <div className="col-span-6">
+              <Input
+                placeholder="Last name"
+                {...register('lastName', {
+                  required: 'Last name is required',
+                })}
+                error={errors.lastName}
+              />
+            </div>
+            <div className="col-span-8">
+              <Input
+                placeholder="Email"
+                {...register('email', {
+                  required: 'Email is required',
+                })}
+                error={errors.email}
+              />
+            </div>
+            <div className="col-span-4">
+              <Button type="submit" isLoading={isSubmitting} className="w-full">
+                Invite
+              </Button>
+            </div>
+          </div>
+        </form>
       </Modal>
       <Button size="sm" variant="neutral" onClick={() => set(true)}>
         Invite by email

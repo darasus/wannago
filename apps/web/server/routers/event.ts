@@ -565,7 +565,6 @@ const inviteByEmail = publicProcedure
       email: z.string().email('Is not valid email'),
       firstName: z.string(),
       lastName: z.string(),
-      hasPlusOne: z.boolean(),
     })
   )
   .mutation(async ({input, ctx}) => {
@@ -609,7 +608,6 @@ const inviteByEmail = publicProcedure
 
     await ctx.prisma.eventSignUp.create({
       data: {
-        hasPlusOne: input.hasPlusOne,
         event: {
           connect: {
             id: input.eventId,
