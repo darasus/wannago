@@ -45,7 +45,7 @@ function InternalEventPage({
       </Head>
       <AppLayout maxSize="lg">
         <Container maxSize="lg">
-          <div className="grid grid-cols-12 gap-3">
+          <div className="grid grid-cols-12 gap-4">
             <div className="col-span-12 lg:col-span-3">
               <AdminSection
                 event={data}
