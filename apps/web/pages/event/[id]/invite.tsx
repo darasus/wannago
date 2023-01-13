@@ -69,7 +69,7 @@ interface UserRowProps {
 function UserRow({user, eventId, refetch}: UserRowProps) {
   return (
     <>
-      <CardBase key={user.id} className="flex items-center mb-2">
+      <CardBase key={user.id} className="flex items-center">
         <Text>{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
         <div className="grow" />
         {user.status && <EventRegistrationStatusBadge status={user.status} />}
@@ -104,7 +104,7 @@ function EventAttendeesPage() {
         <title>{`Attendees | WannaGo`}</title>
       </Head>
       <AppLayout>
-        <Container>
+        <Container className="flex flex-col gap-y-4">
           <PageHeader title={'Invite'}>
             <AdminInviteButton refetch={refetch} />
           </PageHeader>

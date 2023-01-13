@@ -10,7 +10,7 @@ interface Props extends PropsWithChildren {
 
 export function PageHeader({title, children}: Props) {
   return (
-    <CardBase className="mb-4 border-dashed bg-transparent">
+    <CardBase variant="translucent">
       <div className="flex items-center">
         <Text className={clsx(titleFont.className, 'text-2xl')}>{title}</Text>
         <div className="grow" />

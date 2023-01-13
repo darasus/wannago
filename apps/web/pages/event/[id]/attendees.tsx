@@ -29,7 +29,7 @@ function Item({user, hasPlusOne, status}: ItemProps) {
     (hasPlusOne ? ' · +1' : '');
 
   return (
-    <CardBase key={user.id} className="flex items-center mb-2">
+    <CardBase key={user.id} className="flex items-center">
       <Text>{label}</Text>
       <div className="grow" />
       <EventRegistrationStatusBadge status={status} />
@@ -73,7 +73,7 @@ function EventAttendeesPage() {
         <title>{`Attendees | WannaGo`}</title>
       </Head>
       <AppLayout>
-        <Container className="md:px-4">
+        <Container className="flex flex-col gap-y-4">
           <PageHeader title={'Attendees'}>
             <Button
               variant="neutral"

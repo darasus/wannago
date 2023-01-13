@@ -11,6 +11,7 @@ import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
 import {LocationCard} from '../LocationCard/LocationCard';
 import {DateCard} from '../DateCard/DateCard';
 import {TitleCard} from '../TitleCard/TitleCard';
+import {PageHeader} from '../PageHeader/PageHeader';
 
 interface Props {
   event: Event & {organization: (Organization & {users: User[]}) | null};
@@ -87,7 +88,7 @@ export function EditEventForm({event}: Props) {
         </div>
         <div className="col-span-8 pointer-events-none hidden md:block">
           <div className="flex flex-col gap-y-4">
-            <TitleCard>Preview</TitleCard>
+            <PageHeader title="Preview" />
             <div>
               <OrganizerCard
                 user={event.organization?.users[0]!}
