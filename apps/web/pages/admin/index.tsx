@@ -11,22 +11,26 @@ export default function AdminPage() {
         <table className="table-auto border border-black w-full">
           <thead>
             <tr>
-              <th className="text-left">First name</th>
-              <th className="text-left">Last name</th>
-              <th className="text-left">Email</th>
-              <th className="text-left">External id</th>
-              <th className="text-left">Events</th>
+              <th className="text-left border border-black">First name</th>
+              <th className="text-left border border-black">Last name</th>
+              <th className="text-left border border-black">Created at</th>
+              <th className="text-left border border-black">Email</th>
+              <th className="text-left border border-black">External id</th>
+              <th className="text-left border border-black">Events</th>
             </tr>
           </thead>
           <tbody>
             {data?.map(user => {
               return (
-                <tr>
-                  <td>{user.firstName}</td>
-                  <td>{user.lastName}</td>
-                  <td>{user.email}</td>
-                  <td>{user.externalId}</td>
-                  <td>
+                <tr className="border border-black">
+                  <td className="border border-black">{user.firstName}</td>
+                  <td className="border border-black">{user.lastName}</td>
+                  <td className="border border-black">
+                    {user.createdAt.toDateString()}
+                  </td>
+                  <td className="border border-black">{user.email}</td>
+                  <td className="border border-black">{user.externalId}</td>
+                  <td className="border border-black">
                     {user.organization?.events.map(event => {
                       return (
                         <>
