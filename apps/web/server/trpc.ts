@@ -2,6 +2,7 @@ import {Context} from './context';
 import {initTRPC, TRPCError} from '@trpc/server';
 import superjson from 'superjson';
 import {ZodError} from 'zod';
+import {UserType} from '@prisma/client';
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
@@ -32,6 +33,24 @@ const isAuthenticated = middleware(({next, ctx}) => {
   });
 });
 
+const isAdmin = middleware(async ({next, ctx}) => {
+  const user = await ctx.prisma.user.findFirst({
+    where: {
+      externalId: ctx.user?.id,
+    },
+  });
+
+  if (user?.type === UserType.ADMIN) {
+    return next({
+      ctx: {
+        user: ctx.user,
+      },
+    });
+  }
+
+  throw new TRPCError({code: 'UNAUTHORIZED', message: 'Not authenticated'});
+});
+
 export const router = t.router;
 
 export const publicProcedure = t.procedure;
@@ -39,3 +58,5 @@ export const publicProcedure = t.procedure;
 export const mergeRouters = t.mergeRouters;
 
 export const protectedProcedure = t.procedure.use(isAuthenticated);
+
+export const adminProcedure = t.procedure.use(isAdmin);

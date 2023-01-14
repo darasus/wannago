@@ -42,6 +42,7 @@ model User {
   organization    Organization? @relation(name: "UserOrganization", fields: [organizationId], references: [id])
   organizationId  String?
   eventSignUps    EventSignUp[] @relation(name: "EventSignUpUser")
+  type            UserType      @default(USER)
 
   @@index([organizationId])
 }
@@ -72,4 +73,9 @@ enum EventRegistrationStatus {
   REGISTERED
   CANCELLED
   INVITED
+}
+
+enum UserType {
+  ADMIN
+  USER
 }
