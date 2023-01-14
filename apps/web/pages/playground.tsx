@@ -2,6 +2,8 @@ import {ArrowDownCircleIcon} from '@heroicons/react/24/solid';
 import {Accordion} from '../components/Accordion/Accordion';
 import {Button} from '../components/Button/Button';
 import {Input} from '../components/Input/Input/Input';
+import {Text} from '../components/Text/Text';
+import {TextAnimation} from '../components/TextAnimation/TextAnimation';
 
 const sizes = ['xs', 'sm', 'md', 'lg'] as const;
 
@@ -78,6 +80,11 @@ export default function PlaygroundPage() {
       </div>
       <div className="flex flex-col p-4">
         <Accordion items={items} />
+      </div>
+      <div className="flex flex-col p-4">
+        <Text className="text-xl">
+          <TextAnimation texts={['private event', 'birthday', 'wedding']} />
+        </Text>
       </div>
     </>
   );
