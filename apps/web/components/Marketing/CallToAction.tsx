@@ -12,8 +12,7 @@ export function CallToAction() {
       <Container className="relative my-0">
         <SectionHeader
           title="Get started today"
-          description="Nothing stops you from trying out WannaGo, just create account and
-            see for yourself."
+          description="Nothing stops you from trying out WannaGo, just create free account and see for yourself."
         />
         <div className="flex justify-center">
           <Button size="lg" onClick={() => router.push('/login')}>
