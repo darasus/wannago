@@ -1,48 +1,69 @@
 import {AnimatePresence, motion} from 'framer-motion';
-import {useEffect, useState} from 'react';
+import {memo, useEffect, useMemo, useState} from 'react';
 
 interface Props {
   texts: string[];
 }
 
-export function TextAnimation({texts}: Props) {
-  const [text, setText] = useState(texts[0]);
+export const TextAnimation = memo(
+  function TextAnimation({texts}: Props) {
+    const values = useMemo(() => {
+      return texts.map(text => {
+        return {
+          text,
+          id: Math.random(),
+        };
+      });
+    }, []);
+    const [value, setValue] = useState<{text: string; id: number}>(values[0]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const index = texts.indexOf(text);
-      const nextIndex = index + 1;
-      const nextText = texts[nextIndex % texts.length];
-      if (text !== nextText) {
-        setText(nextText);
-      }
-    }, 5000);
+    useEffect(() => {
+      const interval = setInterval(() => {
+        const index = values.indexOf(value);
+        const nextIndex = index + 1;
+        const nextValue = values[nextIndex % values.length];
+        if (value.id !== nextValue.id) {
+          setValue(nextValue);
+        }
+      }, 5000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [text, texts]);
+      return () => {
+        clearInterval(interval);
+      };
+    }, [value, values]);
 
-  return (
-    <span>
-      <AnimatePresence mode="wait">
-        {text.split('').map((character, i) => {
-          return (
-            <motion.span
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-              transition={{
-                duration: 0.2,
-                delay: 0.1 * i,
-              }}
-              key={Math.random()}
-            >
-              {character}
-            </motion.span>
-          );
-        })}
-      </AnimatePresence>
-    </span>
-  );
-}
+    const characters = useMemo(() => {
+      return value.text.split('').map(character => {
+        return {
+          character,
+          id: Math.random(),
+        };
+      });
+    }, [value.text]);
+
+    return (
+      <span>
+        <AnimatePresence mode="wait">
+          {characters.map(({character, id}, i) => {
+            return (
+              <motion.span
+                style={{opacity: 0}}
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                exit={{opacity: 0}}
+                transition={{
+                  duration: 0.2,
+                  delay: 0.1 * i,
+                }}
+                key={id}
+              >
+                {character}
+              </motion.span>
+            );
+          })}
+        </AnimatePresence>
+      </span>
+    );
+  },
+  () => false
+);

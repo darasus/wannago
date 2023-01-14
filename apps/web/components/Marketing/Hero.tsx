@@ -42,7 +42,16 @@ export const Hero = forwardRef(function Hero(
           <br />
           pages for your
           <br />
-          <TextAnimation texts={['private event', 'birthday', 'party']} />
+          <TextAnimation
+            texts={[
+              'private event',
+              'birthday',
+              'party',
+              'wedding',
+              'company event',
+              'house viewing',
+            ]}
+          />
         </h1>
         <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-gray-800 text-center">
           <span className="font-medium">
