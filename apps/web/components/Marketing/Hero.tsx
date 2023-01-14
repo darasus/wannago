@@ -6,6 +6,7 @@ import {titleFontClassName} from '../../fonts';
 import {Button} from '../Button/Button';
 import {Container} from '../Container/Container';
 import dynamic from 'next/dynamic';
+import {TextAnimation} from '../TextAnimation/TextAnimation';
 
 const DynamicSpinningCircle = dynamic(() => import('./SpinningCircle'), {
   ssr: false,
@@ -35,9 +36,22 @@ export const Hero = forwardRef(function Hero(
             'mx-auto max-w-4xl text-3xl md:text-4xl lg:text-7xl tracking-tight text-gray-800 text-center'
           )}
         >
-          Generate more <span className="whitespace-nowrap">sign ups</span> with{' '}
-          <span className="zigzag">simple</span> and{' '}
-          <span className="zigzag">stunning</span> event pages
+          Create
+          <br /> <span className="zigzag">simple</span> and{' '}
+          <span className="zigzag">stunning</span>
+          <br />
+          pages for your
+          <br />
+          <TextAnimation
+            texts={[
+              'private event',
+              'birthday',
+              'party',
+              'wedding',
+              'company event',
+              'house viewing',
+            ]}
+          />
         </h1>
         <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-gray-800 text-center">
           <span className="font-medium">
