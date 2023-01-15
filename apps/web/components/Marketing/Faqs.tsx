@@ -22,12 +22,12 @@ const faqs = [
     ),
   },
   {
-    question: 'Can I customize my event page?',
-    answer: `Unfortunately right now it is not possible to customize your event page but we're planning to add that feature in the future.`,
+    question: 'Can I customize event page visuals?',
+    answer: `Unfortunately right now it is not possible to customize the visuals of your event page but we're planning to add that feature in the future.`,
   },
   {
-    question: 'How do I share my event page with others?',
-    answer: `To share your event page with others, simply copy public link to your event page and share it via email, social media, or any other platform your choice.`,
+    question: 'How do I invite people to my event?',
+    answer: `You can invite people to your event either by sending them email invitation through attendees section or by sharing a public link to your event page by any means like WhatsApp or Twitter.`,
   },
   {
     question: 'Can my guests RSVP on my event page?',
@@ -39,15 +39,15 @@ const faqs = [
   },
   {
     question: 'Is there a limit to the number of guests I can invite?',
-    answer: `There is no limit on the number of guests you can invite to your event.`,
+    answer: `Currently there is no limit on the number of guests you can invite to your event.`,
   },
   {
     question: 'Can I add multiple events?',
-    answer: `There is not limit in how many events you can create.`,
+    answer: `Currently there is not limit to how many events you can create.`,
   },
   {
-    question: 'Is there a cost to use WannaGo?',
-    answer: `No, WannaGo is completely free to use right now but we're planning to add premium features in the future.`,
+    question: 'Is WannaGo completely free?',
+    answer: `Yes. WannaGo is completely free to use right now but we're planning on adding premium features in the future.`,
   },
   {
     question: 'Can I add photos and videos to my event page?',
