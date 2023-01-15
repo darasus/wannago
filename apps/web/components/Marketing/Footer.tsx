@@ -41,13 +41,11 @@ export function Footer() {
             WannaGo &copy; {new Date().getFullYear()} ·{' '}
             <span className="font-medium">
               Designed and developed in Amsterdam{' '}
-              <Image
-                className="inline-block"
-                src="/images/amsterdam.png"
-                width={20}
-                height={20}
-                alt="amsterdam flag"
-              />
+              <div className="inline-flex items-center justify-center border border-gray-800 h-[16px] w-[30px] bg-red-500 rounded-[4px] relative -top-[1px]">
+                <div className="inline-flex items-center justify-center bg-gray-800 w-full h-[8px] text-[9px] text-gray-50">
+                  ⤫⤫⤫
+                </div>
+              </div>
             </span>
           </Text>
         </div>
