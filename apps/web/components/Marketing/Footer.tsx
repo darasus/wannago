@@ -29,7 +29,22 @@ export function Footer() {
             })}
           </div>
         </div>
-        <div className="flex flex-col items-center py-4 sm:flex-row-reverse sm:justify-between">
+        <div className="flex items-center py-4">
+          <div className="grow">
+            <Text className="text-sm">
+              WannaGo &copy; {new Date().getFullYear()} ·{' '}
+            </Text>
+            <span>
+              <Text className="text-sm">
+                Designed and developed in Amsterdam{' '}
+              </Text>
+              <span className="inline-flex items-center justify-center border border-gray-800 h-[16px] w-[30px] bg-red-500 rounded-[4px] relative -top-[1px]">
+                <span className="inline-flex items-center justify-center bg-gray-800 w-full h-[8px] text-[9px] text-gray-50">
+                  ⤫⤫⤫
+                </span>
+              </span>
+            </span>
+          </div>
           <div className="flex gap-x-6">
             <Link href="https://twitter.com/wannagohq">
               <svg className="h-6 w-6 fill-gray-800 group-hover:fill-gray-800">
@@ -37,17 +52,6 @@ export function Footer() {
               </svg>
             </Link>
           </div>
-          <Text className="mt-6 text-sm sm:mt-0 font-bold">
-            WannaGo &copy; {new Date().getFullYear()} ·{' '}
-            <span className="font-medium">
-              Designed and developed in Amsterdam{' '}
-              <div className="inline-flex items-center justify-center border border-gray-800 h-[16px] w-[30px] bg-red-500 rounded-[4px] relative -top-[1px]">
-                <div className="inline-flex items-center justify-center bg-gray-800 w-full h-[8px] text-[9px] text-gray-50">
-                  ⤫⤫⤫
-                </div>
-              </div>
-            </span>
-          </Text>
         </div>
       </Container>
     </footer>
