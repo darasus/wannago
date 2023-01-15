@@ -74,7 +74,9 @@ function Event() {
       delay: 4,
     },
     {
-      el: <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />,
+      el: (
+        <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} eventId={''} />
+      ),
       delay: 5,
     },
   ];

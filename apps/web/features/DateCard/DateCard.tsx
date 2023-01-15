@@ -5,6 +5,7 @@ import {prepareIcsData} from '../../utils/prepareIcsData';
 import {iOS} from '../../utils/iOS';
 import {DateCard as DataCardView} from '../../components/DateCard/DateCard';
 import {Android} from '../../utils/Android';
+import {useAmplitude} from '../../hooks/useAmplitude';
 
 interface Props {
   event: Event;
@@ -12,7 +13,11 @@ interface Props {
 }
 
 export function DateCard({event, timezone}: Props) {
+  const {logEvent} = useAmplitude();
   const handleCalendarClick = () => {
+    logEvent('add_to_calendar_button_clicked', {
+      eventId: event.id,
+    });
     createEvent(prepareIcsData(event), (error, value) => {
       const blob = new Blob([value], {
         type: iOS() || Android() ? 'text/calendar' : 'text/plain;charset=utf-8',

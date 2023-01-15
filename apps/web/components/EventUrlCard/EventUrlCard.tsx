@@ -3,13 +3,21 @@ import useCopyClipboard from '../../hooks/useCopyClipboard';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../Badge/Badge';
+import {useAmplitude} from '../../hooks/useAmplitude';
 
 interface Props {
   url: string;
+  eventId: string;
 }
 
-export function EventUrlCard({url}: Props) {
+export function EventUrlCard({url, eventId}: Props) {
   const [isCopied, copy] = useCopyClipboard(url);
+  const {logEvent} = useAmplitude();
+
+  const onCopyUrlClick = () => {
+    logEvent('copy_url_button_clicked', {eventId});
+    copy();
+  };
 
   return (
     <CardBase>
@@ -18,7 +26,7 @@ export function EventUrlCard({url}: Props) {
           Invite
         </Badge>
         <Button
-          onClick={copy}
+          onClick={onCopyUrlClick}
           variant="link-gray"
           disabled={isCopied}
           size="xs"

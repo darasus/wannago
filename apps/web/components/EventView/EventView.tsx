@@ -33,6 +33,7 @@ export function EventView({event, timezone, isPublic}: Props) {
             address={event.address}
             longitude={event.longitude!}
             latitude={event.latitude!}
+            eventId={event.id}
           />
         </div>
       </div>
@@ -45,7 +46,10 @@ export function EventView({event, timezone, isPublic}: Props) {
           <ParticipantsCard event={event} />
         </div>
         <div>
-          <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} />
+          <EventUrlCard
+            url={`${getBaseUrl()}/e/${event.shortId}`}
+            eventId={event.id}
+          />
         </div>
         {isPublic && (
           <div>

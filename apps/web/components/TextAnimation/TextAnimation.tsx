@@ -14,6 +14,7 @@ export const TextAnimation = memo(
           id: Math.random(),
         };
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const [value, setValue] = useState<{text: string; id: number}>(values[0]);
 

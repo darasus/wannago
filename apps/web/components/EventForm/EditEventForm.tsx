@@ -10,7 +10,6 @@ import {InfoCard} from '../InfoCard/InfoCard';
 import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
 import {LocationCard} from '../LocationCard/LocationCard';
 import {DateCard} from '../DateCard/DateCard';
-import {TitleCard} from '../TitleCard/TitleCard';
 import {PageHeader} from '../PageHeader/PageHeader';
 
 interface Props {
