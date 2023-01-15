@@ -61,8 +61,9 @@ export const Hero = forwardRef(function Hero(
         </h1>
         <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-gray-800 text-center">
           <span className="font-medium">
-            Send killer invitations to your private event and get ready to meet
-            your guests
+            {
+              'Send killer invitations to your event and get ready to meet your guests'
+            }
           </span>
         </div>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">
