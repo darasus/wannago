@@ -1,5 +1,5 @@
 import {getMobileOperatingSystem} from './getMobileOperatingSystem';
 
-export function iOS() {
+export function Android() {
   return getMobileOperatingSystem() === 'iOS';
 }
