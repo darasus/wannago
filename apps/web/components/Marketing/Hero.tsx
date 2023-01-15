@@ -52,10 +52,14 @@ export const Hero = forwardRef(function Hero(
               'house viewing',
               'meetup',
               'anniversary',
+              'bar and bat mitzvah',
               'family event',
               'reunion',
+              'shower',
               'networking event',
+              'graduation',
               'retirement party',
+              'fundraiser event',
             ]}
           />
         </h1>
