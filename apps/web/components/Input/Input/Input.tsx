@@ -1,8 +1,8 @@
 import {InputWrapper} from './InputWrapper';
-import clsx from 'clsx';
 import {forwardRef} from 'react';
 import {FieldError} from 'react-hook-form';
 import {Spinner} from '../../Spinner/Spinner';
+import {cn} from '../../../utils/cn';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -28,7 +28,7 @@ export const Input = forwardRef(function Input(
       <input
         data-tooltip-target="tooltip-default"
         type="text"
-        className={clsx(
+        className={cn(
           'h-11 block w-full rounded-full border-2 bg-white border-gray-300 sm:text-md placeholder-gray-400',
           {'focus:border-gray-500 focus:ring-gray-500': !hasError},
           inputClassName,

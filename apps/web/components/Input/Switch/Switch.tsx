@@ -1,8 +1,8 @@
 import {PropsWithChildren} from 'react';
 import {Switch as _Switch} from '@headlessui/react';
-import clsx from 'clsx';
 import {Text} from '../../Text/Text';
 import {Control, useController} from 'react-hook-form';
+import {cn} from '../../../utils/cn';
 
 type Props = PropsWithChildren & {
   label?: string;
@@ -23,7 +23,7 @@ export function Switch({children, name, defaultValue, control}: Props) {
         <_Switch
           checked={field.value}
           onChange={field.onChange}
-          className={clsx(
+          className={cn(
             {'bg-green-300 border-green-500': field.value},
             {'bg-white border-gray-300': !field.value},
             'h-9 w-16 md:h-7 md:w-14',
@@ -37,7 +37,7 @@ export function Switch({children, name, defaultValue, control}: Props) {
           <span className="sr-only">Use setting</span>
           <span
             aria-hidden="true"
-            className={clsx(
+            className={cn(
               'h-6 w-6 md:h-4 md:w-4',
               'relative top-1 left-1 pointer-events-none inline-block transform rounded-full bg-gray-50 border-2 border-gray-800 shadow-lg ring-0 transition duration-200 ease-in-out',
               {'translate-x-7': field.value},

@@ -1,8 +1,8 @@
-import clsx from 'clsx';
 import Image from 'next/image';
 import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../Badge/Badge';
 import {Text} from '../Text/Text';
+import {cn} from '../../utils/cn';
 
 interface Props {
   title: string;
@@ -38,7 +38,7 @@ export function InfoCard({description, featuredImageSrc, title}: Props) {
           </Text>
           <div />
           <div
-            className={clsx(
+            className={cn(
               'prose',
               'prose-h1:text-gray-900 prose-h2:text-gray-900 prose-h3:text-gray-900 prose-h4:text-gray-900 prose-h5:text-gray-900 prose-h6:text-gray-900',
               'prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-pre:rounded-md prose-pre:text-gray-900',

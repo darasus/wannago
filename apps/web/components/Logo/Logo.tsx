@@ -1,6 +1,6 @@
-import clsx from 'clsx';
 import Link, {LinkProps} from 'next/link';
 import {logoFont} from '../../fonts';
+import {cn} from '../../utils/cn';
 
 interface Props extends LinkProps {
   className?: string;
@@ -17,7 +17,7 @@ export function Logo({className, ...props}: Props) {
 export function LogoView({className}: {className?: string}) {
   return (
     <div
-      className={clsx(
+      className={cn(
         logoFont.className,
         'bg-gray-800 rounded-md p-2 text-gray-50 uppercase leading-none text-left',
         className

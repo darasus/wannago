@@ -5,9 +5,9 @@ import {
   useEditor,
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import clsx from 'clsx';
 import {forwardRef, HTMLAttributes} from 'react';
 import {FieldError, useFormContext} from 'react-hook-form';
+import {cn} from '../../../utils/cn';
 import {Form} from '../../EventForm/types';
 import {InputWrapper} from '../Input/InputWrapper';
 import {BubbleMenuButtonGroup} from './BubbleMenuButtonGroup';
@@ -58,7 +58,7 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
           <input ref={ref} {...props} className="hidden" />
           <EditorContent
             data-testid={dataTestId}
-            className={clsx(
+            className={cn(
               'border-2 rounded-3xl py-2 px-3 max-w-full',
               'prose',
               'text-md',

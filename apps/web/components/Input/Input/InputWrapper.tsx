@@ -1,7 +1,7 @@
 import {ExclamationCircleIcon} from '@heroicons/react/24/solid';
-import clsx from 'clsx';
 import {PropsWithChildren} from 'react';
 import {FieldError} from 'react-hook-form';
+import {cn} from '../../../utils/cn';
 
 interface Props extends PropsWithChildren {
   label?: string;
@@ -20,16 +20,16 @@ export function InputWrapper({
   const hasError = Boolean(error);
 
   return (
-    <div className={clsx(containerClassName)}>
+    <div className={cn(containerClassName)}>
       {label && (
         <label
           htmlFor={id}
-          className={clsx('block text-md text-gray-800 mb-1 ml-2 font-bold')}
+          className={cn('block text-md text-gray-800 mb-1 ml-2 font-bold')}
         >
           {label}
         </label>
       )}
-      <div className={clsx({'mt-1': !!id})}>
+      <div className={cn({'mt-1': !!id})}>
         <div className="relative">
           {children}
           {hasError && (

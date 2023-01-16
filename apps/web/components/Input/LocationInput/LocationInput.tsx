@@ -6,8 +6,8 @@ import {trpc} from '../../../utils/trpc';
 import {Combobox, Transition} from '@headlessui/react';
 import {CheckIcon} from '@heroicons/react/24/solid';
 import {useDebounce} from '../../../hooks/useDebounce';
-import clsx from 'clsx';
 import {CardBase} from '../../CardBase/CardBase';
+import {cn} from '../../../utils/cn';
 
 type ExtractProps<T> = T extends ComponentType<infer P> ? P : T;
 
@@ -56,7 +56,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
             >
               <Combobox.Options
                 as={CardBase}
-                className={clsx(
+                className={cn(
                   'absolute z-50 mt-1 py-1 px-0 max-h-60 w-full overflow-auto ring-1 ring-black ring-opacity-5 focus:outline-none text-md',
                   {
                     hidden:

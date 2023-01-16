@@ -1,6 +1,5 @@
 import {Fragment} from 'react';
 import {Popover, Transition} from '@headlessui/react';
-import clsx from 'clsx';
 import {Logo} from '../Logo/Logo';
 import {CardBase} from '../CardBase/CardBase';
 import {Button} from '../Button/Button';
@@ -8,6 +7,7 @@ import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';
 import {UserSection} from '../UserSection/UserSection';
 import {FeedbackFish} from '@feedback-fish/react';
+import {cn} from '../../utils/cn';
 
 export const navItems = [
   {label: 'Features', href: `/#features`},
@@ -25,14 +25,11 @@ function MobileNavIcon({open}: any) {
     >
       <path
         d="M0 1H14M0 7H14M0 13H14"
-        className={clsx(
-          'origin-center transition',
-          open && 'scale-90 opacity-0'
-        )}
+        className={cn('origin-center transition', open && 'scale-90 opacity-0')}
       />
       <path
         d="M2 2L12 12M12 2L2 12"
-        className={clsx(
+        className={cn(
           'origin-center transition',
           !open && 'scale-90 opacity-0'
         )}

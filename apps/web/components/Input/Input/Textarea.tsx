@@ -1,7 +1,7 @@
 import {InputWrapper} from './InputWrapper';
-import clsx from 'clsx';
 import {forwardRef} from 'react';
 import {FieldError} from 'react-hook-form';
+import {cn} from '../../../utils/cn';
 
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -25,7 +25,7 @@ export const Textarea = forwardRef(function Input(
     >
       <textarea
         data-tooltip-target="tooltip-default"
-        className={clsx(
+        className={cn(
           'block w-full rounded-3xl border-2 border-gray-300 shadow-sm sm:text-sm',
           {'focus:border-gray-500 focus:ring-gray-500': !hasError},
           inputClassName,

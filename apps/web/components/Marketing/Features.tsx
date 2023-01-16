@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import {Container} from '../Container/Container';
 import {SectionHeader} from './SectionHeader';
 import {
@@ -11,6 +10,7 @@ import {
 } from '@heroicons/react/24/outline';
 import {SectionContainer} from './SectionContainer';
 import {titleFontClassName} from '../../fonts';
+import {cn} from '../../utils/cn';
 
 const features = [
   {
@@ -59,19 +59,19 @@ const features = [
 
 function Feature({feature, className, ...props}: any) {
   return (
-    <div className={clsx(className, 'flex flex-col items-center')} {...props}>
+    <div className={cn(className, 'flex flex-col items-center')} {...props}>
       <div
-        className={clsx(
+        className={cn(
           'w-12 h-12 rounded-full bg-brand-800 border-2 border-gray-800 flex items-center justify-center'
         )}
       >
         {feature.icon}
       </div>
-      <h3 className={clsx('mt-6 text-sm text-gray-400 uppercase')}>
+      <h3 className={cn('mt-6 text-sm text-gray-400 uppercase')}>
         {feature.name}
       </h3>
       <p
-        className={clsx(
+        className={cn(
           titleFontClassName,
           'mt-2 font-display text-xl text-gray-800'
         )}

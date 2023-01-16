@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import {forwardRef, HTMLAttributes, PropsWithChildren} from 'react';
+import {cn} from '../../utils/cn';
 
 interface Props extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
   maxSize?: 'md' | 'lg';
@@ -12,7 +12,7 @@ export const Container = forwardRef<HTMLDivElement, Props>(function Container(
   return (
     <div
       ref={ref}
-      className={clsx('mx-auto px-4 my-4', className, {
+      className={cn('mx-auto px-4 my-4', className, {
         'max-w-5xl': maxSize === 'md',
         'max-w-7xl': maxSize === 'lg',
       })}

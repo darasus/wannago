@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '../../utils/cn';
 
 interface Props {
   className?: string;
@@ -7,7 +7,7 @@ interface Props {
 export function Spinner({className = 'h-5 w-5'}: Props) {
   return (
     <svg
-      className={clsx('animate-spin block', className)}
+      className={cn('animate-spin block', className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

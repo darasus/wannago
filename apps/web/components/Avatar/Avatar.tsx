@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import Image from 'next/image';
+import {cn} from '../../utils/cn';
 
 interface Props {
   images: string[];
@@ -8,7 +8,7 @@ interface Props {
 
 export function Avatar({images, className}: Props) {
   return (
-    <div className={clsx('isolate flex -space-x-1 overflow-hidden', className)}>
+    <div className={cn('isolate flex -space-x-1 overflow-hidden', className)}>
       {images.map(imageSrc => {
         return (
           <Image

@@ -7,9 +7,9 @@ import {EventCard} from '../components/EventCard/EventCard';
 import Head from 'next/head';
 import {Container} from '../components/Container/Container';
 import {LoadingEventCard} from '../components/LoadingEventCard/LoadingEventCard';
-import clsx from 'clsx';
 import {Button} from '../components/Button/Button';
 import {withProtected} from '../utils/withAuthProtect';
+import {cn} from '../utils/cn';
 
 function Dashboard() {
   const router = useRouter();
@@ -25,7 +25,7 @@ function Dashboard() {
         <Container className="md:px-4">
           <Button
             onClick={() => router.push('/event/add')}
-            className={clsx(
+            className={cn(
               'flex justify-center items-center w-full h-full p-4 mb-4'
             )}
             iconLeft={<PlusCircleIcon />}

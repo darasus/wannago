@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import {forwardRef, PropsWithChildren} from 'react';
+import {cn} from '../../utils/cn';
 
 type Props = PropsWithChildren & {
   className?: string;
@@ -13,7 +13,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
   return (
     <div
       ref={ref}
-      className={clsx(
+      className={cn(
         'p-6 rounded-3xl border-2',
         {'border-gray-800 bg-gray-50': variant === 'normal'},
         {'border-black/10 bg-black/5': variant === 'translucent'},

@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '../../utils/cn';
 import {Button} from '../Button/Button';
 import {Container} from '../Container/Container';
 
@@ -17,10 +17,7 @@ function SwirlyDoodle({className}: any) {
 function CheckIcon({className}: any) {
   return (
     <svg
-      className={clsx(
-        'h-6 w-6 flex-none fill-current stroke-current',
-        className
-      )}
+      className={cn('h-6 w-6 flex-none fill-current stroke-current', className)}
     >
       <path
         d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z"
@@ -42,14 +39,14 @@ function CheckIcon({className}: any) {
 function Plan({name, price, description, features, featured = false}: any) {
   return (
     <section
-      className={clsx(
+      className={cn(
         'flex flex-col rounded-3xl px-6 sm:px-8',
         featured ? 'order-first bg-blue-600 py-8 lg:order-none' : 'lg:py-8'
       )}
     >
       <h3 className="mt-5 font-display text-lg text-white">{name}</h3>
       <p
-        className={clsx(
+        className={cn(
           'mt-2 text-base',
           featured ? 'text-white' : 'text-gray-400'
         )}
@@ -61,7 +58,7 @@ function Plan({name, price, description, features, featured = false}: any) {
       </p>
       <ul
         role="list"
-        className={clsx(
+        className={cn(
           'order-last mt-10 flex flex-col gap-y-3 text-sm',
           featured ? 'text-white' : 'text-gray-200'
         )}

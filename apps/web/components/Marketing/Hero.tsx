@@ -1,5 +1,4 @@
 import {useUser} from '@clerk/nextjs';
-import clsx from 'clsx';
 import {useRouter} from 'next/router';
 import {forwardRef} from 'react';
 import {titleFontClassName} from '../../fonts';
@@ -7,6 +6,7 @@ import {Button} from '../Button/Button';
 import {Container} from '../Container/Container';
 import dynamic from 'next/dynamic';
 import {TextAnimation} from '../TextAnimation/TextAnimation';
+import {cn} from '../../utils/cn';
 
 const DynamicSpinningCircle = dynamic(() => import('./SpinningCircle'), {
   ssr: false,
@@ -31,7 +31,7 @@ export const Hero = forwardRef(function Hero(
         className="pt-20 lg:pt-32 mb-0 relative z-10 md:pointer-events-none overflow-hidden"
       >
         <h1
-          className={clsx(
+          className={cn(
             titleFontClassName,
             'mx-auto max-w-4xl text-3xl md:text-4xl lg:text-7xl tracking-tight text-gray-800 text-center'
           )}

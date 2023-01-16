@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import {cn} from '../../utils/cn';
 
 type Props = React.PropsWithChildren & {
   className?: string;
@@ -23,7 +23,7 @@ export function Badge({
 }: Props) {
   return (
     <span
-      className={clsx(
+      className={cn(
         'inline-flex items-center rounded-full text-sm font-bold shrink-0',
         className,
         {

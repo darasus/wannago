@@ -1,6 +1,6 @@
-import clsx from 'clsx';
 import Link, {LinkProps} from 'next/link';
 import {ButtonHTMLAttributes, forwardRef, PropsWithChildren} from 'react';
+import {cn} from '../../utils/cn';
 import {Spinner} from '../Spinner/Spinner';
 import {ButtonSize, ButtonVariant} from './types';
 
@@ -52,7 +52,7 @@ export const Button = forwardRef(function Button(
       type="button"
       disabled={disabled || isLoading}
       {...props}
-      className={clsx(
+      className={cn(
         'cursor-pointer justify-center shrink-0',
         // base text styles
         'text-gray-800 font-bold',
@@ -90,7 +90,7 @@ export const Button = forwardRef(function Button(
     >
       {isLoading ? (
         <Spinner
-          className={clsx({
+          className={cn({
             'h-4 w-4': isXs,
             'h-5 w-5': isSm,
             'h-6 w-6': isMd || isLg,
@@ -102,7 +102,7 @@ export const Button = forwardRef(function Button(
           {
             (iconLeft &&= (
               <div
-                className={clsx(
+                className={cn(
                   {
                     'h-4 w-4': isXs,
                     'h-5 w-5': isSm,

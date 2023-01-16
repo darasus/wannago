@@ -7,7 +7,6 @@ import {clerkAppearance} from '../clerkElements';
 import {trpc} from '../utils/trpc';
 import {ToastBar, Toaster} from 'react-hot-toast';
 import {bodyFont} from '../fonts';
-import clsx from 'clsx';
 import {getBaseUrl} from '../utils/getBaseUrl';
 import {Analytics} from '@vercel/analytics/react';
 import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/24/outline';
@@ -17,6 +16,7 @@ import {pageView} from '../lib/gtag';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {Amplitude} from '../features/Amplitude/Amplitude';
+import {cn} from '../utils/cn';
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter();
@@ -52,7 +52,7 @@ function MyApp({Component, pageProps}: AppProps) {
           gtag('config', '${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
         `}
       </Script>
-      <div className={clsx(bodyFont.className, 'text-gray-800')}>
+      <div className={cn(bodyFont.className, 'text-gray-800')}>
         <ClerkProvider
           {...pageProps}
           appearance={clerkAppearance}
@@ -71,12 +71,12 @@ function MyApp({Component, pageProps}: AppProps) {
               >
                 {({message}) => (
                   <div
-                    className={clsx(
+                    className={cn(
                       'p-4 flex items-center max-w-md w-full border-2 border-gray-800 bg-brand-600 rounded-3xl'
                     )}
                   >
                     <div
-                      className={clsx(
+                      className={cn(
                         'flex justify-center items-center shrink-0 h-7 w-7 rounded-full mr-2 border',
                         {
                           'bg-green-600 border-green-700': t.type === 'success',
