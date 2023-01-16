@@ -68,6 +68,7 @@ export default function PlaygroundPage() {
               <Button size={size} iconLeft={<ArrowDownCircleIcon />}>
                 With icon
               </Button>
+              <Button size={size} iconLeft={<ArrowDownCircleIcon />} />
             </div>
           );
         })}

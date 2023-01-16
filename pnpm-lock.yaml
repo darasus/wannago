@@ -49,6 +49,7 @@ importers:
       '@vercel/og': ^0.0.21
       autoprefixer: ^10.4.13
       calendar-link: ^2.4.0
+      class-variance-authority: ^0.4.0
       clsx: ^1.2.1
       copy-to-clipboard: ^3.3.3
       date-fns: ^2.29.3
@@ -120,6 +121,7 @@ importers:
       '@vercel/analytics': 0.1.6_react@18.2.0
       '@vercel/og': 0.0.21
       calendar-link: 2.4.0
+      class-variance-authority: 0.4.0_typescript@4.9.3
       clsx: 1.2.1
       copy-to-clipboard: 3.3.3
       date-fns: 2.29.3
@@ -2459,6 +2461,17 @@ packages:
       define-property: 0.2.5
       isobject: 3.0.1
       static-extend: 0.1.2
+    dev: false
+
+  /class-variance-authority/0.4.0_typescript@4.9.3:
+    resolution: {integrity: sha512-74enNN8O9ZNieycac/y8FxqgyzZhZbxmCitAtAeUrLPlxjSd5zA7LfpprmxEcOmQBnaGs5hYhiSGnJ0mqrtBLQ==}
+    peerDependencies:
+      typescript: '>= 4.5.5 < 5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 4.9.3
     dev: false
 
   /clean-stack/2.2.0:
