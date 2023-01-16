@@ -58,6 +58,8 @@ export function Header() {
   const showAuthButtons = isPublic && !isSignedIn;
   const showMobileMenu = !isSignedIn || isPublic;
 
+  console.log(showDashboardLink);
+
   return (
     <header>
       <CardBase>
@@ -96,7 +98,6 @@ export function Header() {
                 <Button
                   as="a"
                   href="/dashboard"
-                  className="hidden md:flex"
                   variant="secondary"
                   size="sm"
                   data-testid="dashboard-button"
