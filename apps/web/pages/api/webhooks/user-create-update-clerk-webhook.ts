@@ -1,6 +1,7 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
 import {prisma} from '../../../../../packages/database/prisma';
+import {Telegram} from '../../../lib/telegram';
 
 const scheme = z.object({
   type: z.enum(['user.created', 'user.updated', 'user.deleted']),
@@ -57,7 +58,7 @@ export default async function handler(
         },
       });
     } else {
-      await prisma.user.create({
+      const user = await prisma.user.create({
         data: {
           externalId: data.id,
           email: data.email_addresses[0].email_address,
@@ -70,6 +71,12 @@ export default async function handler(
             },
           },
         },
+      });
+
+      const tg = new Telegram();
+
+      await tg.sendMessageToWannaGoChannel({
+        message: `New user created: ${user.firstName} ${user.lastName} (${user.email})`,
       });
     }
   }

@@ -13,6 +13,8 @@ const _serverEnv = serverSchema.safeParse({
   CLOUDFLARE_API_KEY: process.env.CLOUDFLARE_API_KEY,
   QSTASH_TOKEN: process.env.QSTASH_TOKEN,
   MAILGUN_API_KEY: process.env.MAILGUN_API_KEY,
+  TELEGRAM_CHAT_BOT_TOKEN: process.env.TELEGRAM_CHAT_BOT_TOKEN,
+  TELEGRAM_CHANNEL_ID: process.env.TELEGRAM_CHANNEL_ID,
 });
 
 if (!_serverEnv.success) {

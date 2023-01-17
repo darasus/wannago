@@ -58,8 +58,6 @@ export function Header() {
   const showAuthButtons = isPublic && !isSignedIn;
   const showMobileMenu = !isSignedIn || isPublic;
 
-  console.log(showDashboardLink);
-
   return (
     <header>
       <CardBase>

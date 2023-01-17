@@ -7,6 +7,8 @@ export const serverSchema = z.object({
   CLOUDFLARE_API_KEY: z.string(),
   QSTASH_TOKEN: z.string(),
   MAILGUN_API_KEY: z.string(),
+  TELEGRAM_CHAT_BOT_TOKEN: z.string(),
+  TELEGRAM_CHANNEL_ID: z.string(),
 });
 
 export const clientSchema = z.object({
