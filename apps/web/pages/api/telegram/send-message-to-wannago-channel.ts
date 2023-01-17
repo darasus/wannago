@@ -17,7 +17,7 @@ export default async function handler(
     res.status(405).json({error: 'Method Not Allowed'});
   }
 
-  const {message} = scheme.parse(req.body);
+  const {message} = scheme.parse(JSON.parse(req.body));
 
   bot.sendMessage(env.TELEGRAM_CHANNEL_ID, message);
 
