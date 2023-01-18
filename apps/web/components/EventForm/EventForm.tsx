@@ -1,5 +1,6 @@
+import {isBefore, isEqual} from 'date-fns';
 import {FormEventHandler} from 'react';
-import {useFormContext} from 'react-hook-form';
+import {useFormContext, useWatch} from 'react-hook-form';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
@@ -21,6 +22,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
     register,
     formState: {isSubmitting, errors},
   } = useFormContext<Form>();
+  const startDate = useWatch<Form>({name: 'startDate'});
 
   const items = [
     {
@@ -80,6 +82,12 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             error={errors.endDate}
             {...register('endDate', {
               required: {value: true, message: 'End date is required'},
+              validate: (value: string) => {
+                return isBefore(new Date(value), new Date(startDate)) ||
+                  isEqual(new Date(value), new Date(startDate))
+                  ? 'End date must be after start date'
+                  : undefined;
+              },
             })}
           />
         </>
