@@ -45,23 +45,35 @@ export const TextAnimation = memo(
     return (
       <span>
         <AnimatePresence mode="wait">
-          {characters.map(({character, id}, i) => {
-            return (
-              <motion.span
-                style={{opacity: 0}}
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                exit={{opacity: 0}}
-                transition={{
-                  duration: 0.2,
-                  delay: 0.1 * i,
-                }}
-                key={id}
-              >
-                {character}
-              </motion.span>
-            );
-          })}
+          <motion.div
+            key={value.id}
+            style={{opacity: 0}}
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+            transition={{
+              duration: 0.2,
+            }}
+          >
+            {characters.map(({character, id}, i) => {
+              return (
+                <AnimatePresence mode="wait" key={id}>
+                  <motion.span
+                    style={{opacity: 0}}
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    exit={{opacity: 0}}
+                    transition={{
+                      duration: 0.2,
+                      delay: 0.1 * i,
+                    }}
+                  >
+                    {character}
+                  </motion.span>
+                </AnimatePresence>
+              );
+            })}
+          </motion.div>
         </AnimatePresence>
       </span>
     );
