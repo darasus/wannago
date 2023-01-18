@@ -1,7 +1,7 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
 import {Client} from '@googlemaps/google-maps-services-js';
-import {env} from '../../../lib/env/server';
+import {env} from 'server-env';
 
 const scheme = z.object({
   query: z.string(),

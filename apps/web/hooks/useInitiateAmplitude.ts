@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {init} from '@amplitude/analytics-browser';
 import {useUser} from '@clerk/nextjs';
-import {env} from '../lib/env/client';
+import {env} from 'client-env';
 
 export function useInitiateAmplitude() {
   const {user} = useUser();

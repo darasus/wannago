@@ -1,5 +1,5 @@
 import {Redis} from '@upstash/redis';
-import {env} from './env/server';
+import {env} from 'server-env';
 
 export class CacheService {
   redis = new Redis({

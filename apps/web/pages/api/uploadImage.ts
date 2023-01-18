@@ -3,7 +3,7 @@ import fs from 'fs';
 import FormData from 'form-data';
 import formidable from 'formidable';
 import got from 'got';
-import {env} from '../../lib/env/server';
+import {env} from 'server-env';
 
 export const config = {
   api: {

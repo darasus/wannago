@@ -1,7 +1,7 @@
+import {env} from 'server-env';
 import {NextApiRequest, NextApiResponse} from 'next';
 import TelegramBot from 'node-telegram-bot-api';
 import {z} from 'zod';
-import {env} from '../../../lib/env/server';
 
 const scheme = z.object({
   message: z.string(),
