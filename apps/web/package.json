@@ -12,6 +12,8 @@
   "dependencies": {
     "database": "workspace:*",
     "eslint-config-custom": "workspace:*",
+    "client-env": "workspace:*",
+    "server-env": "workspace:*",
     "email": "workspace:*"
   }
 }

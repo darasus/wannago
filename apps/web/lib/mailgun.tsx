@@ -13,7 +13,7 @@ import {
   EventInvite,
 } from 'email';
 import {formatDate} from '../utils/formatDate';
-import {env} from './env/server';
+import {env} from 'server-env';
 
 const mailgunIstance = new MailgunClient(formData);
 const mailgun = mailgunIstance.client({

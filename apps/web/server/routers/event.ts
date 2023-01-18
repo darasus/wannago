@@ -6,7 +6,7 @@ import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
 import {authorizeChange} from '../../utils/getIsMyEvent';
 import {random} from '../../utils/random';
-import {env} from '../../lib/env/server';
+import {env} from 'server-env';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))

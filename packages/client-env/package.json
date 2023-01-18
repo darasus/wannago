@@ -1,0 +1,14 @@
+{
+  "name": "client-env",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "./index.ts",
+  "scripts": {
+    "lint": "eslint"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  }
+}

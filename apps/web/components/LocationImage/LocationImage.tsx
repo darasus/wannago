@@ -1,5 +1,5 @@
+import {env} from 'client-env';
 import Image from 'next/image';
-import {env} from '../../lib/env/client';
 
 interface Props {
   address: string;

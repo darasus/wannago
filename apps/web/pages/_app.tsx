@@ -11,12 +11,12 @@ import {getBaseUrl} from '../utils/getBaseUrl';
 import {Analytics} from '@vercel/analytics/react';
 import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/24/outline';
 import Script from 'next/script';
-import {env} from '../lib/env/client';
 import {pageView} from '../lib/gtag';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {Amplitude} from '../features/Amplitude/Amplitude';
 import {cn} from '../utils/cn';
+import {env} from 'client-env';
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter();

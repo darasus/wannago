@@ -1,4 +1,4 @@
-import {env} from './env/client';
+import {env} from 'client-env';
 
 export function pageView(url: URL) {
   window?.gtag('config', env.NEXT_PUBLIC_GA_MEASUREMENT_ID, {
