@@ -133,8 +133,8 @@ export class Mailgun {
               title={event.title}
               address={event.address}
               eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
-              startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
-              endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
+              startDate={formatDate(event.startDate, 'MMMM d, yyyy HH:mm')}
+              endDate={formatDate(event.endDate, 'MMMM d, yyyy HH:mm')}
             />
           ),
         };
