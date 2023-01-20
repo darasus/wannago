@@ -2,6 +2,9 @@ import {router, protectedProcedure} from '../trpc';
 
 const getMyEvents = protectedProcedure.query(async ({ctx}) => {
   const events = await ctx.prisma.event.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
     where: {
       organization: {
         users: {
