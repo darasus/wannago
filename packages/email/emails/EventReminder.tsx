@@ -21,7 +21,6 @@ import {
 interface Props {
   title: string;
   startDate: string;
-  endDate: string;
   address: string;
   eventUrl: string;
 }
@@ -29,7 +28,6 @@ interface Props {
 export default function EventReminder({
   title = 'Event name',
   address = '2022/12/11 11:3',
-  endDate = '2022/12/11 11:3',
   startDate = '2022/12/11 11:3',
   eventUrl = 'https://www.wannago.app',
 }: Props) {
@@ -52,11 +50,6 @@ export default function EventReminder({
               <b>Start:</b>
               {` `}
               {startDate}
-            </Text>
-            <Text>
-              <b>End:</b>
-              {` `}
-              {endDate}
             </Text>
             <Text>
               <b>Address:</b>
