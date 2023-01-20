@@ -33,9 +33,9 @@ export function InfoCard({description, featuredImageSrc, title}: Props) {
             </Badge>
             {/* <Button variant="link">Share</Button> */}
           </div>
-          <Text className="text-2xl font-bold mb-2" data-testid="event-title">
+          <h1 className="text-3xl font-bold mb-2" data-testid="event-title">
             {title}
-          </Text>
+          </h1>
           <div />
           <div
             className={cn(
