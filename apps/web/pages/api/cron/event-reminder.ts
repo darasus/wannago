@@ -18,6 +18,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
       include: {
         eventSignUps: {
+          where: {
+            status: 'REGISTERED',
+          },
           include: {
             user: true,
           },
