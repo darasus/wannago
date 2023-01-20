@@ -7,6 +7,7 @@ import {differenceInSeconds} from 'date-fns';
 import {authorizeChange} from '../../utils/getIsMyEvent';
 import {random} from '../../utils/random';
 import {env} from 'server-env';
+import {utcToZonedTime} from 'date-fns-tz';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
@@ -60,6 +61,12 @@ const update = protectedProcedure
 
       const response = await ctx.maps.geocode({address});
 
+      const originalEvent = await ctx.prisma.event.findUnique({
+        where: {
+          id: eventId,
+        },
+      });
+
       let event = await ctx.prisma.event.update({
         where: {
           id: eventId,
@@ -77,12 +84,17 @@ const update = protectedProcedure
         },
       });
 
-      const isTimeChanged =
-        differenceInSeconds(startDate, event.startDate) !== 0;
+      const isTimeChanged = originalEvent?.startDate
+        ? differenceInSeconds(
+            utcToZonedTime(startDate, ctx.timezone),
+            utcToZonedTime(originalEvent.startDate, ctx.timezone)
+          ) !== 0
+        : false;
 
       if (isTimeChanged) {
         const message = await ctx.qStash.updateEventEmailSchedule({
           event,
+          timezone: ctx.timezone,
         });
 
         if (message?.messageId) {
@@ -190,6 +202,7 @@ const create = protectedProcedure
       });
 
       const message = await ctx.qStash.createEventEmailSchedule({
+        timezone: ctx.timezone,
         event,
       });
 

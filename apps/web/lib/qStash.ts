@@ -1,6 +1,7 @@
 import {Event} from '@prisma/client';
 import {Client} from '@upstash/qstash';
 import {differenceInSeconds, sub} from 'date-fns';
+import {utcToZonedTime} from 'date-fns-tz';
 import {env} from 'server-env';
 import {REMINDER_PERIOD_IN_SECONDS} from '../constants';
 
@@ -21,8 +22,10 @@ export class QStash {
     return delay;
   }
 
-  isWithinReminderPeriod(startDate: Date) {
-    const secondsToStart = differenceInSeconds(startDate, new Date());
+  isWithinReminderPeriod(startDate: Date, timezone: string) {
+    const selectedDate = utcToZonedTime(startDate, timezone);
+    const now = utcToZonedTime(new Date(), timezone);
+    const secondsToStart = differenceInSeconds(selectedDate, now);
     const isWithinReminderPeriod =
       Math.sign(secondsToStart) !== -1 &&
       secondsToStart > REMINDER_PERIOD_IN_SECONDS;
@@ -30,8 +33,14 @@ export class QStash {
     return isWithinReminderPeriod;
   }
 
-  async createEventEmailSchedule({event}: {event: Event}) {
-    if (!this.isWithinReminderPeriod(event.startDate)) {
+  async createEventEmailSchedule({
+    event,
+    timezone,
+  }: {
+    event: Event;
+    timezone: string;
+  }) {
+    if (!this.isWithinReminderPeriod(event.startDate, timezone)) {
       return null;
     }
 
@@ -47,17 +56,23 @@ export class QStash {
     return message;
   }
 
-  async updateEventEmailSchedule({event}: {event: Event}) {
+  async updateEventEmailSchedule({
+    event,
+    timezone,
+  }: {
+    event: Event;
+    timezone: string;
+  }) {
     if (event.messageId) {
       await this.qStash.messages.delete({
         id: event.messageId,
       });
     }
 
-    if (!this.isWithinReminderPeriod(event.startDate)) {
+    if (!this.isWithinReminderPeriod(event.startDate, timezone)) {
       return null;
     }
 
-    return this.createEventEmailSchedule({event});
+    return this.createEventEmailSchedule({event, timezone});
   }
 }

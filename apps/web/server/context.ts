@@ -15,6 +15,7 @@ interface CreateContextOptions {
   mail: Mail;
   qStash: QStash;
   maps: Maps;
+  timezone: string;
 }
 
 /**
@@ -28,6 +29,7 @@ export async function createContextInner(_opts: CreateContextOptions) {
     mail: _opts.mail,
     qStash: _opts.qStash,
     maps: _opts.maps,
+    timezone: _opts.timezone,
   };
 }
 
@@ -40,7 +42,8 @@ export type Context = trpc.inferAsyncReturnType<typeof createContextInner>;
 export async function createContext(
   opts?: FetchCreateContextFnOptions
 ): Promise<Context> {
-  // for API-response caching see https://trpc.io/docs/caching
+  const timezone = opts?.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
+
   async function getUser() {
     if (opts?.req) {
       const {userId} = getAuth(opts?.req as NextRequest);
@@ -59,5 +62,6 @@ export async function createContext(
     mail: new Mail(),
     qStash: new QStash(),
     maps: new Maps(),
+    timezone,
   });
 }
