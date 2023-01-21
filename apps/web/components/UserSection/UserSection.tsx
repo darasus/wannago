@@ -5,10 +5,13 @@ import {Fragment} from 'react';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
 import {FeedbackFish} from '@feedback-fish/react';
+import {trpc} from '../../utils/trpc';
 
 export function UserSection() {
   const {user, isLoaded} = useUser();
   const {signOut} = useClerk();
+  const {data} = trpc.me.me.useQuery();
+  const showAdminLink = data?.type === 'ADMIN';
 
   const onSignOutClick = async () => {
     await signOut();
@@ -53,6 +56,11 @@ export function UserSection() {
                   <Button variant="neutral" as="a" href="/me">
                     Settings
                   </Button>
+                  {showAdminLink && (
+                    <Button variant="neutral" as="a" href="/admin">
+                      Admin
+                    </Button>
+                  )}
                   <FeedbackFish projectId="f843146d960b2f" userId={user?.id}>
                     <Button variant="neutral">Feedback</Button>
                   </FeedbackFish>

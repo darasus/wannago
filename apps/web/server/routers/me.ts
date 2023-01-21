@@ -1,7 +1,7 @@
 import {router, protectedProcedure} from '../trpc';
 
 const getMyEvents = protectedProcedure.query(async ({ctx}) => {
-  const events = await ctx.prisma.event.findMany({
+  return ctx.prisma.event.findMany({
     orderBy: {
       createdAt: 'desc',
     },
@@ -15,10 +15,17 @@ const getMyEvents = protectedProcedure.query(async ({ctx}) => {
       },
     },
   });
+});
 
-  return {events};
+const me = protectedProcedure.query(async ({ctx}) => {
+  return ctx.prisma.user.findUnique({
+    where: {
+      email: ctx.user?.emailAddresses[0].emailAddress,
+    },
+  });
 });
 
 export const meRouter = router({
   getMyEvents,
+  me,
 });

@@ -14,7 +14,7 @@ import {cn} from '../utils/cn';
 function Dashboard() {
   const router = useRouter();
   const {data, isLoading} = trpc.me.getMyEvents.useQuery();
-  const haveNoEvents = data?.events?.length === 0;
+  const haveNoEvents = data?.length === 0;
 
   return (
     <>
@@ -36,7 +36,7 @@ function Dashboard() {
               Array.from({length: 3}).map((_, i) => (
                 <LoadingEventCard key={i} />
               ))}
-            {data?.events?.map(event => {
+            {data?.map(event => {
               return (
                 <Link
                   href={`/event/${event.id}`}
