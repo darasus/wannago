@@ -40,8 +40,7 @@ export default function AdminPage() {
                         <>
                           <a
                             className="underline"
-                            href={`/e/${event.shortId}`}
-                            target="_blank"
+                            href={`/event/${event.id}`}
                             rel="noreferrer"
                           >
                             {`${event.title} (${

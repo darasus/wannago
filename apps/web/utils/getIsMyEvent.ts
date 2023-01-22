@@ -25,7 +25,9 @@ export async function authorizeChange({
     event => event.id === eventId
   );
 
-  if (!isMyEvent) {
+  const isAdmin = user?.type === 'ADMIN';
+
+  if (!isMyEvent && !isAdmin) {
     throw new TRPCError({
       code: 'FORBIDDEN',
       message: 'Not authorized',
