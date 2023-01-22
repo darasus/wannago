@@ -82,17 +82,17 @@ export async function getServerSideProps({
 
   const event = await ssg.event.getByShortId.fetch({id: params?.id!});
 
-  const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
-  res.setHeader(
-    'Cache-Control',
-    `s-maxage=60, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`
-  );
-
   if (!event?.isPublished) {
     return {
       notFound: true,
     };
   }
+
+  const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
+  res.setHeader(
+    'Cache-Control',
+    `s-maxage=60, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`
+  );
 
   return {
     props: {timezone: timezone || null, event: SuperJSON.stringify(event)},
