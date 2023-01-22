@@ -17,6 +17,7 @@ export default function AdminPage() {
         <Table>
           <THead>
             <TRow>
+              <Th>#</Th>
               <Th>First name</Th>
               <Th>Last name</Th>
               <Th>Created at</Th>
@@ -26,9 +27,10 @@ export default function AdminPage() {
             </TRow>
           </THead>
           <TBody>
-            {data?.map(user => {
+            {data?.map((user, i) => {
               return (
                 <TRow>
+                  <Td>{data.length - i}</Td>
                   <Td>{user.firstName}</Td>
                   <Td>{user.lastName}</Td>
                   <Td>{user.createdAt.toDateString()}</Td>
