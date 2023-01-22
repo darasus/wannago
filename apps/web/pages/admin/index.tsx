@@ -1,36 +1,40 @@
 import AppLayout from '../../components/AppLayout/AppLayout';
 import {Container} from '../../components/Container/Container';
+import {Table} from '../../components/Table/Table';
+import {TBody} from '../../components/Table/TBody';
+import {Td} from '../../components/Table/Td';
+import {Th} from '../../components/Table/Th';
+import {THead} from '../../components/Table/THead';
+import {TRow} from '../../components/Table/TRow';
 import {trpc} from '../../utils/trpc';
 
 export default function AdminPage() {
   const {data} = trpc.admin.getAllRegisteredUsers.useQuery();
 
   return (
-    <AppLayout>
-      <Container>
-        <table className="table-auto border border-black w-full">
-          <thead>
-            <tr>
-              <th className="text-left border border-black">First name</th>
-              <th className="text-left border border-black">Last name</th>
-              <th className="text-left border border-black">Created at</th>
-              <th className="text-left border border-black">Email</th>
-              <th className="text-left border border-black">External id</th>
-              <th className="text-left border border-black">Events</th>
-            </tr>
-          </thead>
-          <tbody>
+    <AppLayout maxSize="lg">
+      <Container maxSize="lg">
+        <Table>
+          <THead>
+            <TRow>
+              <Th>First name</Th>
+              <Th>Last name</Th>
+              <Th>Created at</Th>
+              <Th>Email</Th>
+              <Th>External id</Th>
+              <Th>Events</Th>
+            </TRow>
+          </THead>
+          <TBody>
             {data?.map(user => {
               return (
-                <tr className="border border-black">
-                  <td className="border border-black">{user.firstName}</td>
-                  <td className="border border-black">{user.lastName}</td>
-                  <td className="border border-black">
-                    {user.createdAt.toDateString()}
-                  </td>
-                  <td className="border border-black">{user.email}</td>
-                  <td className="border border-black">{user.externalId}</td>
-                  <td className="border border-black">
+                <TRow>
+                  <Td>{user.firstName}</Td>
+                  <Td>{user.lastName}</Td>
+                  <Td>{user.createdAt.toDateString()}</Td>
+                  <Td>{user.email}</Td>
+                  <Td>{user.externalId}</Td>
+                  <Td>
                     {user.organization?.events.map(event => {
                       return (
                         <>
@@ -48,12 +52,12 @@ export default function AdminPage() {
                         </>
                       );
                     })}
-                  </td>
-                </tr>
+                  </Td>
+                </TRow>
               );
             })}
-          </tbody>
-        </table>
+          </TBody>
+        </Table>
       </Container>
     </AppLayout>
   );
