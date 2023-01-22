@@ -8,18 +8,27 @@ import {authorizeChange} from '../../utils/getIsMyEvent';
 import {random} from '../../utils/random';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
+import {getBaseUrl} from '../../utils/getBaseUrl';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
   .mutation(async ({input, ctx}) => {
     await authorizeChange({ctx, eventId: input.eventId});
 
-    return ctx.prisma.event.update({
+    const result = await ctx.prisma.event.update({
       where: {id: input.eventId},
       data: {
         isPublished: input.isPublished,
       },
     });
+
+    await ctx.telegram.sendMessageToWannaGoChannel({
+      message: `${ctx.user.firstName} ${ctx.user.lastName} published event "${
+        result.title
+      }" ${getBaseUrl()}/e/${result.shortId}`,
+    });
+
+    return result;
   });
 
 const update = protectedProcedure

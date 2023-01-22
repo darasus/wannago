@@ -8,6 +8,7 @@ import {Mail} from '../lib/mail';
 import {FetchCreateContextFnOptions} from '@trpc/server/adapters/fetch';
 import {NextRequest} from 'next/server';
 import {Maps} from '../lib/maps';
+import {Telegram} from '../lib/telegram';
 
 interface CreateContextOptions {
   user: User | null;
@@ -16,6 +17,7 @@ interface CreateContextOptions {
   qStash: QStash;
   maps: Maps;
   timezone: string;
+  telegram: Telegram;
 }
 
 /**
@@ -30,6 +32,7 @@ export async function createContextInner(_opts: CreateContextOptions) {
     qStash: _opts.qStash,
     maps: _opts.maps,
     timezone: _opts.timezone,
+    telegram: _opts.telegram,
   };
 }
 
@@ -63,5 +66,6 @@ export async function createContext(
     qStash: new QStash(),
     maps: new Maps(),
     timezone,
+    telegram: new Telegram(),
   });
 }
