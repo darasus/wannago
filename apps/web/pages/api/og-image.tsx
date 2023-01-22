@@ -2,7 +2,6 @@ import {ImageResponse} from '@vercel/og';
 import {NextRequest} from 'next/server';
 import {prisma} from '../../../../packages/database/prisma';
 import {ONE_WEEK_IN_SECONDS} from '../../constants';
-import Image from 'next/image';
 
 export const config = {
   runtime: 'edge',
@@ -64,14 +63,15 @@ export default async function handler(req: NextRequest) {
             }}
           />
           <div
-            tw="flex text-gray-800 w-full"
+            tw="flex text-gray-800 w-full h-full"
             style={{
               fontFamily: 'Body',
             }}
           >
-            <div tw="flex flex-col">
+            <div tw="flex flex-col h-full justify-center">
               <div tw="flex items-center mb-8">
                 <div tw="flex rounded-full overflow-hidden mr-4">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     width={70}
                     height={70}
