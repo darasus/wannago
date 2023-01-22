@@ -160,6 +160,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             </Button>
             <Button
               isLoading={isSubmitting}
+              disabled={isSubmitting}
               type="submit"
               data-testid="event-form-submit-button"
             >
