@@ -2,6 +2,7 @@ import {ImageResponse} from '@vercel/og';
 import {NextRequest} from 'next/server';
 import {prisma} from '../../../../packages/database/prisma';
 import {ONE_WEEK_IN_SECONDS} from '../../constants';
+import Image from 'next/image';
 
 export const config = {
   runtime: 'edge',
@@ -28,27 +29,33 @@ export default async function handler(req: NextRequest) {
     where: {
       id: eventId,
     },
+    include: {
+      organization: {
+        include: {
+          users: true,
+        },
+      },
+    },
   });
 
-  const maxTitleLength = 30;
+  const maxTitleLength = 100;
 
   const title =
     event?.title && event?.title.length > maxTitleLength
       ? `${event?.title.slice(0, maxTitleLength)}...`
       : event?.title;
 
+  const user = event?.organization?.users[0]!;
+
   return new ImageResponse(
     (
-      <div
-        tw="flex w-full h-full flex-col p-8"
-        style={{backgroundColor: '#FFE5D9'}}
-      >
+      <div tw="flex w-full h-full p-8" style={{backgroundColor: '#FFE5D9'}}>
         <div
-          tw="flex w-full h-full border-4 border-gray-800 flex-col p-8 bg-gray-50"
+          tw="flex w-full max-w-full h-full border-4 border-gray-800 p-8 bg-gray-50"
           style={{borderRadius: 50}}
         >
           <div
-            tw="flex grow w-full mb-6"
+            tw="flex h-full w-[400px] mr-6"
             style={{
               backgroundImage: `url(${event?.featuredImageSrc!})`,
               backgroundPosition: 'center center',
@@ -56,16 +63,32 @@ export default async function handler(req: NextRequest) {
               borderRadius: 50,
             }}
           />
-          <div tw="flex flex-col rounded-xl leading-none text-gray-800">
-            <span
-              style={{
-                fontSize: 80,
-                marginBottom: 4,
-                fontFamily: 'Body',
-              }}
-            >
-              {title}
-            </span>
+          <div
+            tw="flex text-gray-800 w-full"
+            style={{
+              fontFamily: 'Body',
+            }}
+          >
+            <div tw="flex flex-col">
+              <div tw="flex items-center mb-8">
+                <div tw="flex rounded-full overflow-hidden mr-4">
+                  <img
+                    width={70}
+                    height={70}
+                    src={user.profileImageSrc!}
+                    alt="Profile Image"
+                  />
+                </div>
+                <span
+                  style={{fontSize: 50}}
+                >{`${user.firstName} ${user.lastName}`}</span>
+              </div>
+              <div tw="flex flex-col max-w-[600px]">
+                <span tw="max-w-full leading-[60px]" style={{fontSize: 70}}>
+                  {title}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
         {/* <div
