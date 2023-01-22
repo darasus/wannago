@@ -8,7 +8,7 @@ import {Text} from '../Text/Text';
 export function Footer() {
   return (
     <footer>
-      <Container className="m-0 my-0">
+      <Container className="m-0 my-0 m-auto">
         <div className="flex items-center py-4">
           <Logo href="/" />
           <div className="grow" />
