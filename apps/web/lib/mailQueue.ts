@@ -18,7 +18,8 @@ export class MailQueue {
         type,
       },
       retries: 5,
-      url: `${getBaseUrl()}/api/email-handler`,
+      // url: `${getBaseUrl()}/api/email-handler`,
+      url: `https://www.wannago.app/api/trpc/email.handle`,
     });
   }
 

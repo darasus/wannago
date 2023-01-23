@@ -12,7 +12,7 @@ type Input = z.input<typeof scheme>;
 
 export class Postmark {
   sendTransactionalEmail({from, to, subject, htmlString}: Input) {
-    return fetch('https://api.postmarkapp.com/api/trpc/email.handle', {
+    return fetch('https://api.postmarkapp.com/email', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
