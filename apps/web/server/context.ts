@@ -9,6 +9,7 @@ import {FetchCreateContextFnOptions} from '@trpc/server/adapters/fetch';
 import {NextRequest} from 'next/server';
 import {Maps} from '../lib/maps';
 import {Telegram} from '../lib/telegram';
+import {Postmark} from '../lib/portmark';
 
 interface CreateContextOptions {
   user: User | null;
@@ -18,6 +19,7 @@ interface CreateContextOptions {
   maps: Maps;
   timezone: string;
   telegram: Telegram;
+  postmark: Postmark;
 }
 
 /**
@@ -33,6 +35,7 @@ export async function createContextInner(_opts: CreateContextOptions) {
     maps: _opts.maps,
     timezone: _opts.timezone,
     telegram: _opts.telegram,
+    postmark: _opts.postmark,
   };
 }
 
@@ -59,7 +62,7 @@ export async function createContext(
 
   const user = await getUser();
 
-  return await createContextInner({
+  return createContextInner({
     user,
     prisma,
     mail: new Mail(),
@@ -67,5 +70,6 @@ export async function createContext(
     maps: new Maps(),
     timezone,
     telegram: new Telegram(),
+    postmark: new Postmark(),
   });
 }
