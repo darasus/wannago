@@ -10,6 +10,7 @@ import {NextRequest} from 'next/server';
 import {Maps} from '../lib/maps';
 import {Telegram} from '../lib/telegram';
 import {Postmark} from '../lib/portmark';
+import {MailQueue} from '../lib/mailQueue';
 
 interface CreateContextOptions {
   user: User | null;
@@ -20,6 +21,7 @@ interface CreateContextOptions {
   timezone: string;
   telegram: Telegram;
   postmark: Postmark;
+  mailQueue: MailQueue;
 }
 
 /**
@@ -36,6 +38,7 @@ export async function createContextInner(_opts: CreateContextOptions) {
     timezone: _opts.timezone,
     telegram: _opts.telegram,
     postmark: _opts.postmark,
+    mailQueue: _opts.mailQueue,
   };
 }
 
@@ -71,5 +74,6 @@ export async function createContext(
     timezone,
     telegram: new Telegram(),
     postmark: new Postmark(),
+    mailQueue: new MailQueue(),
   });
 }

@@ -1,6 +1,5 @@
 import {Client} from '@upstash/qstash';
 import {env} from 'server-env';
-import {getBaseUrl} from '../utils/getBaseUrl';
 
 export enum EmailType {
   EventSignUp = 'EventSignUp',
@@ -18,8 +17,10 @@ export class MailQueue {
         type,
       },
       retries: 5,
-      // url: `${getBaseUrl()}/api/email-handler`,
+      // INFO: NEED to always use production email handler
+      // to process requests from qstash
       url: `https://www.wannago.app/api/trpc/email.handle`,
+      // url: `${getBaseUrl()}/api/email-handler`,
     });
   }
 
