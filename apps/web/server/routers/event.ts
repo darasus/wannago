@@ -22,13 +22,17 @@ const publish = protectedProcedure
       },
     });
 
-    await ctx.telegram
-      .sendMessageToWannaGoChannel({
-        message: `${ctx.user.firstName} ${ctx.user.lastName} published event "${
-          result.title
-        }" ${getBaseUrl()}/e/${result.shortId}`,
-      })
-      .catch(console.error);
+    if (result.isPublished) {
+      await ctx.telegram
+        .sendMessageToWannaGoChannel({
+          message: `${ctx.user.firstName} ${
+            ctx.user.lastName
+          } published event "${result.title}" ${getBaseUrl()}/e/${
+            result.shortId
+          }`,
+        })
+        .catch(console.error);
+    }
 
     return result;
   });
