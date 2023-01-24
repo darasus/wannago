@@ -22,7 +22,7 @@ const publish = protectedProcedure
       },
     });
 
-    if (result.isPublished) {
+    if (result.isPublished && env.NODE_ENV !== 'development') {
       await ctx.telegram
         .sendMessageToWannaGoChannel({
           message: `${ctx.user.firstName} ${

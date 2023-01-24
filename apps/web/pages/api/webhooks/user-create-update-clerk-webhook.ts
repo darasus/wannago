@@ -1,4 +1,5 @@
 import {NextApiRequest, NextApiResponse} from 'next';
+import {env} from 'server-env';
 import {z} from 'zod';
 import {prisma} from '../../../../../packages/database/prisma';
 import {Telegram} from '../../../lib/telegram';
@@ -75,11 +76,13 @@ export default async function handler(
 
       const telegram = new Telegram();
 
-      await telegram
-        .sendMessageToWannaGoChannel({
-          message: `New user created: ${user.firstName} ${user.lastName} (${user.email})`,
-        })
-        .catch(console.error);
+      if (env.NODE_ENV !== 'development') {
+        await telegram
+          .sendMessageToWannaGoChannel({
+            message: `New user created: ${user.firstName} ${user.lastName} (${user.email})`,
+          })
+          .catch(console.error);
+      }
     }
   }
 
