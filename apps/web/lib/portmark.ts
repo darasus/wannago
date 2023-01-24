@@ -1,3 +1,4 @@
+import {captureException} from '@sentry/nextjs';
 import {env} from 'server-env';
 import {z} from 'zod';
 
@@ -26,6 +27,8 @@ export class Postmark {
         HtmlBody: htmlString,
         MessageStream: 'outbound',
       }),
+    }).catch(error => {
+      captureException(error);
     });
   }
 }
