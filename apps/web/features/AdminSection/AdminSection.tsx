@@ -46,7 +46,7 @@ export function AdminSection({event, timezone}: Props) {
     ? `${getBaseUrl()}/e/${event.shortId}`
         .replace('https://www.', '')
         .replace('http://', '')
-    : 'publish_event_first';
+    : `${getBaseUrl()}/e/abcdef`;
 
   const values: {
     label: string;
@@ -83,7 +83,7 @@ export function AdminSection({event, timezone}: Props) {
               : 'To see public link you need to publish your event first'
           }
         >
-          <span className={cn({'blur-sm': !event.isPublished})}>
+          <span className={cn({'blur-[3px]': !event.isPublished})}>
             {publicEventUrl}
           </span>
         </Tooltip>

@@ -6,6 +6,7 @@ import {Badge} from '../Badge/Badge';
 import {useAmplitude} from '../../hooks/useAmplitude';
 import {cn} from '../../utils/cn';
 import {Tooltip} from '../Tooltip/Tooltip';
+import {getBaseUrl} from '../../utils/getBaseUrl';
 
 interface Props {
   url: string;
@@ -14,7 +15,7 @@ interface Props {
 }
 
 export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
-  const url = isPublished ? _url : 'pleasePublishEventFirst';
+  const url = isPublished ? _url : `${getBaseUrl()}/e/abcdef`;
   const [isCopied, copy] = useCopyClipboard(url);
   const {logEvent} = useAmplitude();
 
@@ -48,7 +49,7 @@ export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
         >
           <Link
             className={cn('text-gray-800 font-bold hover:underline', {
-              'blur-sm pointer-events-none': !isPublished,
+              'blur-[3px] pointer-events-none': !isPublished,
             })}
             href={url}
           >
