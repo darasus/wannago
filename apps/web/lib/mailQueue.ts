@@ -3,21 +3,27 @@ import {env} from 'server-env';
 
 export enum EmailType {
   EventSignUp = 'EventSignUp',
+  EventInvite = 'EventInvite',
+  MessageToOrganizer = 'MessageToOrganizer',
+  MessageToAllAttendees = 'MessageToAllAttendees',
 }
 
 export class MailQueue {
-  queue = new Client({
+  private queue = new Client({
     token: env.QSTASH_TOKEN!,
   });
 
-  publish({type, ...props}: Record<string, string> & {type: EmailType}) {
+  private publish({
+    type,
+    ...props
+  }: Record<string, string> & {type: EmailType}) {
     return this.queue.publishJSON({
       body: {
         ...props,
         type,
       },
       retries: 5,
-      // INFO: NEED to always use production email handler
+      // INFO: need to always use production email handler
       // to process requests from qstash
       url: `https://www.wannago.app/api/trpc/email.handle`,
       // url: `${getBaseUrl()}/api/email-handler`,
@@ -32,5 +38,36 @@ export class MailQueue {
     userId: string;
   }) {
     return this.publish({eventId, userId, type: EmailType.EventSignUp});
+  }
+
+  async sendEventInviteEmail({
+    eventId,
+    userId,
+  }: {
+    eventId: string;
+    userId: string;
+  }) {
+    return this.publish({eventId, userId, type: EmailType.EventInvite});
+  }
+
+  async sendQuestionToOrganizerEmail(props: {
+    eventId: string;
+    organizerEmail: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    message: string;
+    subject: string;
+  }) {
+    return this.publish({...props, type: EmailType.MessageToOrganizer});
+  }
+
+  async sendMessageToAllAttendeesEmail(props: {
+    subject: string;
+    message: string;
+    eventId: string;
+    organizerUserId: string;
+  }) {
+    return this.publish({...props, type: EmailType.MessageToAllAttendees});
   }
 }
