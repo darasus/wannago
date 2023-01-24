@@ -80,7 +80,7 @@ export function AdminSection({event, timezone}: Props) {
           text={
             event.isPublished
               ? undefined
-              : 'To see public link you need to publish your event first'
+              : 'To see public link please publish event first'
           }
         >
           <span className={cn({'blur-[3px]': !event.isPublished})}>

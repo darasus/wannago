@@ -44,7 +44,7 @@ export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
           text={
             isPublished
               ? undefined
-              : 'To see public link you need to publish your event first'
+              : 'To see public link please publish event first'
           }
         >
           <Link

@@ -68,6 +68,7 @@ function Event() {
           <ParticipantsCard
             numberOfAttendees={'31 people attending'}
             onSubmit={() => {}}
+            isPublished={true}
           />
         </MockFormProvider>
       ),

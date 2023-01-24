@@ -47,6 +47,7 @@ export function ParticipantsCard({event}: Props) {
       <ParticipantsCardView
         onSubmit={onSubmit}
         numberOfAttendees={numberOfAttendees}
+        isPublished={event.isPublished ?? false}
       />
     </FormProvider>
   );
