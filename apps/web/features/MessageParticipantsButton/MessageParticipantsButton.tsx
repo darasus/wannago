@@ -30,7 +30,9 @@ export function MessageParticipantsButton() {
 
   const handleOnSubmit = handleSubmit(async data => {
     await messageToUsers.mutateAsync({eventId, ...data});
-    toast.success('Message is sent!');
+    toast.success('Message is sent!', {
+      duration: 10000,
+    });
     setIsOpen(false);
     reset();
   });
