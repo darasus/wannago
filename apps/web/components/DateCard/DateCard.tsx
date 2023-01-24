@@ -1,15 +1,17 @@
+import {useMemo} from 'react';
 import {formatDate, isSameDay} from '../../utils/formatDate';
+import {getRelativeTime} from '../../utils/getRelativeTime';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
 import {Text} from '../Text/Text';
-import RelativeTime from './RelativeTime';
 
 interface Props {
   onAddToCalendarClick: () => void;
   startDate: Date;
   endDate: Date;
   timezone?: string;
+  relativeTimeString?: string;
 }
 
 export function DateCard({
@@ -17,11 +19,17 @@ export function DateCard({
   startDate,
   timezone,
   onAddToCalendarClick,
+  relativeTimeString,
 }: Props) {
   const isAtSameDay = isSameDay(
     new Date(startDate),
     new Date(endDate),
     timezone
+  );
+
+  const relativeTime = useMemo(
+    () => getRelativeTime(startDate, endDate, timezone),
+    [startDate, endDate, timezone]
   );
 
   return (
@@ -53,11 +61,7 @@ export function DateCard({
           </Text>{' '}
           <div />
           <Text className="text-gray-500">
-            <RelativeTime
-              startDate={startDate}
-              endDate={endDate}
-              timezone={timezone}
-            />
+            {relativeTimeString || relativeTime}
           </Text>
           <div />
           {isAtSameDay ? (

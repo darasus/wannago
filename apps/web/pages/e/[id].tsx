@@ -12,10 +12,13 @@ import {appRouter} from '../../server/routers/_app';
 import {createContext} from '../../server/context';
 import SuperJSON from 'superjson';
 import {useHandleInviteConfirm} from '../../hooks/useHandleInviteConfirm';
+import {formatTimeago, isPast} from '../../utils/formatDate';
+import {getRelativeTime} from '../../utils/getRelativeTime';
 
 function PublicEventPage({
   timezone,
   event,
+  relativeTimeString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   useHandleInviteConfirm();
   const router = useRouter();
@@ -61,7 +64,12 @@ function PublicEventPage({
         shortEventId={data.shortId!}
       />
       <Container className="md:px-4">
-        <EventView event={data} timezone={clientTimezone} isPublic />
+        <EventView
+          event={data}
+          timezone={clientTimezone}
+          isPublic
+          relativeTimeString={relativeTimeString}
+        />
       </Container>
     </div>
   );
@@ -88,6 +96,12 @@ export async function getServerSideProps({
     };
   }
 
+  const relativeTimeString = getRelativeTime(
+    event.startDate,
+    event.endDate,
+    timezone
+  );
+
   const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
   res.setHeader(
     'Cache-Control',
@@ -95,7 +109,11 @@ export async function getServerSideProps({
   );
 
   return {
-    props: {timezone: timezone || null, event: SuperJSON.stringify(event)},
+    props: {
+      relativeTimeString,
+      timezone: timezone || null,
+      event: SuperJSON.stringify(event),
+    },
   };
 }
 

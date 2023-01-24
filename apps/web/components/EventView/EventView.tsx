@@ -13,9 +13,15 @@ interface Props {
   event: Event;
   timezone?: string;
   isPublic?: boolean;
+  relativeTimeString?: string;
 }
 
-export function EventView({event, timezone, isPublic}: Props) {
+export function EventView({
+  event,
+  timezone,
+  isPublic,
+  relativeTimeString,
+}: Props) {
   const organizer = <OrganizerCard event={event} />;
 
   return (
@@ -41,7 +47,11 @@ export function EventView({event, timezone, isPublic}: Props) {
       <div className="flex flex-col gap-y-4 md:col-span-4">
         <div className="hidden md:block">{organizer}</div>
         <div>
-          <DateCard event={event} timezone={timezone} />
+          <DateCard
+            event={event}
+            timezone={timezone}
+            relativeTimeString={relativeTimeString}
+          />
         </div>
         {!isPast(event.endDate, timezone) && (
           <div>
