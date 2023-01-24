@@ -29,7 +29,6 @@ jobs:
         UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
         UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
         CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
-        MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
         QSTASH_URL: ${{ secrets.QSTASH_URL }}
         QSTASH_TOKEN: ${{ secrets.QSTASH_TOKEN }}
         QSTASH_CURRENT_SIGNING_KEY: ${{ secrets.QSTASH_CURRENT_SIGNING_KEY }}
