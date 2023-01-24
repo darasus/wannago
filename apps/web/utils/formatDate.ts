@@ -58,7 +58,5 @@ export function isPast(_date: Date, timezone?: string | null) {
     timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
   );
 
-  console.log(_differenceInSeconds(dLeft, dRight));
-
   return _differenceInSeconds(dLeft, dRight) < 0;
 }
