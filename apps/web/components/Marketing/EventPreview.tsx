@@ -75,7 +75,11 @@ function Event() {
     },
     {
       el: (
-        <EventUrlCard url={`${getBaseUrl()}/e/${event.shortId}`} eventId={''} />
+        <EventUrlCard
+          url={`${getBaseUrl()}/e/${event.shortId}`}
+          eventId={''}
+          isPublished={true}
+        />
       ),
       delay: 5,
     },

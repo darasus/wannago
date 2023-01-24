@@ -49,6 +49,7 @@ export function EventView({event, timezone, isPublic}: Props) {
           <EventUrlCard
             url={`${getBaseUrl()}/e/${event.shortId}`}
             eventId={event.id}
+            isPublished={event.isPublished ?? false}
           />
         </div>
         {isPublic && (

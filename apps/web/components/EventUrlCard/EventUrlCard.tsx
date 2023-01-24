@@ -11,7 +11,7 @@ import {getBaseUrl} from '../../utils/getBaseUrl';
 interface Props {
   url: string;
   eventId: string;
-  isPublished?: boolean;
+  isPublished: boolean;
 }
 
 export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
