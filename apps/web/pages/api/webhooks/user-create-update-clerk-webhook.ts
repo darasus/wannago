@@ -73,11 +73,13 @@ export default async function handler(
         },
       });
 
-      const tg = new Telegram();
+      const telegram = new Telegram();
 
-      await tg.sendMessageToWannaGoChannel({
-        message: `New user created: ${user.firstName} ${user.lastName} (${user.email})`,
-      });
+      await telegram
+        .sendMessageToWannaGoChannel({
+          message: `New user created: ${user.firstName} ${user.lastName} (${user.email})`,
+        })
+        .catch(console.error);
     }
   }
 
