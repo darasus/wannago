@@ -50,10 +50,10 @@ export function DateCard({
           <Text className="font-bold capitalize">
             {formatDate(new Date(startDate), 'EEE, MMMM dd', timezone)}
           </Text>{' '}
-          <Text className="text-gray-500">{`(${formatTimeago(
-            new Date(startDate),
-            timezone
-          )})`}</Text>
+          <div />
+          <Text className="text-gray-500">
+            {formatTimeago(new Date(startDate), timezone)}
+          </Text>
           <div />
           {isAtSameDay ? (
             <Text>{`${formatDate(
