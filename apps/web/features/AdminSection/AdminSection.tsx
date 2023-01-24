@@ -46,7 +46,9 @@ export function AdminSection({event, timezone}: Props) {
     ? `${getBaseUrl()}/e/${event.shortId}`
         .replace('https://www.', '')
         .replace('http://', '')
-    : `${getBaseUrl()}/e/abcdef`;
+    : `${getBaseUrl()}/e/abcdef`
+        .replace('https://www.', '')
+        .replace('http://', '');
 
   const values: {
     label: string;
