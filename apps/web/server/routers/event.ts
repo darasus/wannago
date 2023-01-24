@@ -340,7 +340,7 @@ const join = publicProcedure
       });
     }
 
-    await ctx.mail.sendEventSignUpEmail({
+    await ctx.mailQueue.sendEventSignUpEmail({
       eventId: input.eventId,
       userId: user.id,
     });
@@ -572,7 +572,7 @@ const invitePastAttendee = protectedProcedure
       },
     });
 
-    await ctx.mail.sendEventInviteEmail({
+    await ctx.mailQueue.sendEventInviteEmail({
       eventId: input.eventId,
       userId: input.userId,
     });
@@ -644,7 +644,7 @@ const inviteByEmail = publicProcedure
       },
     });
 
-    await ctx.mail.sendEventInviteEmail({
+    await ctx.mailQueue.sendEventInviteEmail({
       eventId: input.eventId,
       userId: user.id,
     });
