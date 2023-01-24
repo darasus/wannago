@@ -1,9 +1,9 @@
 import {prisma} from 'database';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
-import {Mailgun} from '../../lib/mailgun';
+import {MailQueue} from '../../lib/mailQueue';
 
-const mailgun = new Mailgun();
+const mailQueue = new MailQueue();
 
 const scheme = z.object({
   eventShortId: z.string(),
@@ -61,10 +61,9 @@ export default async function handler(
     eventSignUp.event.organization?.users &&
     eventSignUp.event.organization?.users?.length > 0
   ) {
-    await mailgun.sendEventSignUpEmail({
-      event: eventSignUp.event,
-      organizerUser: eventSignUp.event.organization.users[0],
-      user: eventSignUp.user,
+    await mailQueue.sendEventSignUpEmail({
+      eventId: eventSignUp.event.id,
+      userId: eventSignUp.user.id,
     });
   }
 
