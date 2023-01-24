@@ -27,12 +27,14 @@ export function OrganizerCard({event}: Props) {
   const form = useForm<ContactForm>();
 
   const onSubmit = form.handleSubmit(async data => {
+    await sendEmail.mutateAsync({...data, eventId: event.id});
+    toast.success('Email sent! Organizer will get back to you soon!', {
+      duration: 10000,
+    });
+    setIsOpen(false);
     logEvent('event_message_to_organizer_submitted', {
       eventId: event.id,
     });
-    await sendEmail.mutateAsync({...data, eventId: event.id});
-    toast.success('Email sent! Organizer will get back to you soon!');
-    setIsOpen(false);
   });
 
   return (

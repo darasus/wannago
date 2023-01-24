@@ -1,11 +1,12 @@
 import {EnvelopeIcon} from '@heroicons/react/24/solid';
-import {useRouter} from 'next/router';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
 import {trpc} from '../../utils/trpc';
 import {Button} from '../../components/Button/Button';
 import {MessageParticipantsFormModal} from '../../components/MessageParticipantsFormModal/MessageParticipantsFormModal';
+import {useAmplitude} from '../../hooks/useAmplitude';
+import {useEventId} from '../../hooks/useEventId';
 
 interface Form {
   subject: string;
@@ -13,8 +14,8 @@ interface Form {
 }
 
 export function MessageParticipantsButton() {
-  const router = useRouter();
-  const eventId = router.query.id as string;
+  const eventId = useEventId();
+  const {logEvent} = useAmplitude();
   const [isOpen, setIsOpen] = useState(false);
   const {
     register,
@@ -35,6 +36,9 @@ export function MessageParticipantsButton() {
     });
     setIsOpen(false);
     reset();
+    logEvent('event_message_to_attendees_submitted', {
+      eventId,
+    });
   });
 
   return (
