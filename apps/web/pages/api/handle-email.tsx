@@ -97,7 +97,7 @@ export default async function handle(
     }
 
     await postmark.sendTransactionalEmail({
-      from: 'hi@wannago.app',
+      replyTo: 'WannaGo Team <hi@wannago.app>',
       to: user.email,
       subject: `Thanks for signing up for "${event.title}"!`,
       htmlString: render(
@@ -153,7 +153,7 @@ export default async function handle(
     url.searchParams.append('email', user.email);
 
     await postmark.sendTransactionalEmail({
-      from: 'hi@wannago.app',
+      replyTo: 'WannaGo Team <hi@wannago.app>',
       to: user.email,
       subject: `You're invited to: "${event.title}"!`,
       htmlString: render(
@@ -190,7 +190,7 @@ export default async function handle(
     }
 
     await postmark.sendTransactionalEmail({
-      from: email,
+      replyTo: `${firstName} ${lastName} <${email}>`,
       to: organizerEmail,
       subject: 'Someone asked you a question on WannaGo',
       htmlString: render(
@@ -235,7 +235,7 @@ export default async function handle(
         .map(signUp => signUp.user)
         .map(async user => {
           const messageData = {
-            from: organizerUser.email,
+            replyTo: `${organizerUser.firstName} ${organizerUser.lastName} <${organizerUser.email}>`,
             to: user.email,
             subject: `Message from event organizer: "${event.title}"`,
             htmlString: render(

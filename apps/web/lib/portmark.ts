@@ -3,8 +3,8 @@ import {env} from 'server-env';
 import {z} from 'zod';
 
 const scheme = z.object({
-  from: z.string().email(),
   to: z.string().email(),
+  replyTo: z.string().email(),
   subject: z.string(),
   htmlString: z.string(),
 });
@@ -12,7 +12,7 @@ const scheme = z.object({
 type Input = z.input<typeof scheme>;
 
 export class Postmark {
-  sendTransactionalEmail({from, to, subject, htmlString}: Input) {
+  sendTransactionalEmail({to, subject, htmlString, replyTo}: Input) {
     return fetch('https://api.postmarkapp.com/email', {
       method: 'POST',
       headers: {
@@ -21,8 +21,9 @@ export class Postmark {
         'X-Postmark-Server-Token': env.POSTMARK_API_KEY,
       },
       body: JSON.stringify({
-        From: from,
+        From: 'hi@wannago.app',
         To: to,
+        ReplyTo: replyTo,
         Subject: subject,
         HtmlBody: htmlString,
         MessageStream: 'outbound',
