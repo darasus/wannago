@@ -26,7 +26,9 @@ export function formatTimeago(date: Date, timezone?: string | null) {
     timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
   );
 
-  return timeagoFormat(d, 'en_US');
+  return timeagoFormat(d, 'en_US', {
+    minInterval: 60,
+  });
 }
 
 export function isSameDay(

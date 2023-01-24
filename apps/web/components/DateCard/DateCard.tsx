@@ -1,14 +1,9 @@
-import {useMemo} from 'react';
-import {
-  formatDate,
-  formatTimeago,
-  isPast,
-  isSameDay,
-} from '../../utils/formatDate';
+import {formatDate, isSameDay} from '../../utils/formatDate';
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
 import {Text} from '../Text/Text';
+import RelativeTime from './RelativeTime';
 
 interface Props {
   onAddToCalendarClick: () => void;
@@ -16,18 +11,6 @@ interface Props {
   endDate: Date;
   timezone?: string;
 }
-
-const getRelativeTime = (startDate: Date, endDate: Date, timezone?: string) => {
-  if (isPast(endDate, timezone)) {
-    return `Ended ${formatTimeago(new Date(endDate), timezone)}`;
-  }
-
-  if (isPast(startDate, timezone)) {
-    return `Started ${formatTimeago(new Date(startDate), timezone)}`;
-  }
-
-  return `${formatTimeago(new Date(startDate), timezone)}`;
-};
 
 export function DateCard({
   endDate,
@@ -39,11 +22,6 @@ export function DateCard({
     new Date(startDate),
     new Date(endDate),
     timezone
-  );
-
-  const relativeTime = useMemo(
-    () => getRelativeTime(startDate, endDate, timezone),
-    [startDate, endDate, timezone]
   );
 
   return (
@@ -74,7 +52,13 @@ export function DateCard({
             {formatDate(new Date(startDate), 'EEE, MMMM dd', timezone)}
           </Text>{' '}
           <div />
-          <Text className="text-gray-500">{relativeTime}</Text>
+          <Text className="text-gray-500">
+            <RelativeTime
+              startDate={startDate}
+              endDate={endDate}
+              timezone={timezone}
+            />
+          </Text>
           <div />
           {isAtSameDay ? (
             <Text>{`${formatDate(
