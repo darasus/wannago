@@ -4,7 +4,7 @@ import {z} from 'zod';
 
 const scheme = z.object({
   to: z.string().email(),
-  replyTo: z.string().email(),
+  replyTo: z.string().email().optional(),
   subject: z.string(),
   htmlString: z.string(),
 });
@@ -23,7 +23,7 @@ export class Postmark {
       body: JSON.stringify({
         From: 'hi@wannago.app',
         To: to,
-        ReplyTo: replyTo,
+        ReplyTo: replyTo || to,
         Subject: subject,
         HtmlBody: htmlString,
         MessageStream: 'outbound',

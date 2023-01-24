@@ -1,6 +1,10 @@
+import {render} from '@react-email/render';
+import {LoginCode} from 'email';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
-import {Mailgun} from '../../../lib/mailgun';
+import {Postmark} from '../../../lib/postmark';
+
+const postmark = new Postmark();
 
 const scheme = z.object({
   type: z.enum(['email.created']),
@@ -24,12 +28,10 @@ export default async function handler(
   const {data, type} = scheme.parse(req.body);
 
   if (type === 'email.created') {
-    const mailgun = new Mailgun();
-
-    await mailgun.sendLoginCodeEmail({
-      code: data.data.otp_code,
-      email: data.to_email_address,
+    await postmark.sendTransactionalEmail({
+      to: data.to_email_address,
       subject: data.subject,
+      htmlString: render(<LoginCode code={data.data.otp_code} />),
     });
   }
 
