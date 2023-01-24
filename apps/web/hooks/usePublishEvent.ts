@@ -1,6 +1,7 @@
 import {toast} from 'react-hot-toast';
 import {trpc} from '../utils/trpc';
 import {useAmplitude} from './useAmplitude';
+import {useConfetti} from './useConfetti';
 import {useConfirmDialog} from './useConfirmDialog';
 
 interface Props {
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export function usePublishEvent({eventId}: Props) {
+  const {confetti} = useConfetti();
   const {logEvent} = useAmplitude();
   const {mutateAsync, isLoading} = trpc.event.publish.useMutation({
     onSuccess: () => {
@@ -22,6 +24,7 @@ export function usePublishEvent({eventId}: Props) {
       'This event will be available to everyone when visiting public link.',
     onConfirm: async () => {
       await mutateAsync({eventId, isPublished: true});
+      confetti();
       logEvent('event_published', {eventId});
       await refetch();
     },

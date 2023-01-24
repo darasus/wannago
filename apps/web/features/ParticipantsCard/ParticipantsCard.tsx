@@ -3,16 +3,17 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {ParticipantsCard as ParticipantsCardView} from '../../components/ParticipantsCard/ParticipantsCard';
 import {trpc} from '../../utils/trpc';
 import {toast} from 'react-hot-toast';
-import JSConfetti from 'js-confetti';
 import {useAttendeeCount} from '../../hooks/useAttendeeCount';
 import {useAmplitude} from '../../hooks/useAmplitude';
 import {JoinForm} from '../../types/forms';
+import {useConfetti} from '../../hooks/useConfetti';
 
 interface Props {
   event: Event;
 }
 
 export function ParticipantsCard({event}: Props) {
+  const {confetti} = useConfetti();
   const {logEvent} = useAmplitude();
   const {data, refetch} = useAttendeeCount({eventId: event.id});
   const form = useForm<JoinForm>();
@@ -26,9 +27,7 @@ export function ParticipantsCard({event}: Props) {
         eventId: event.id,
       });
       toast.success('Signed up! Check your email for more details!');
-      if (typeof window !== 'undefined') {
-        new JSConfetti().addConfetti({confettiNumber: 200, emojiSize: 10});
-      }
+      confetti();
     },
   });
 
