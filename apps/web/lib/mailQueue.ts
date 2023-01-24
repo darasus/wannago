@@ -25,7 +25,7 @@ export class MailQueue {
       retries: 5,
       // INFO: need to always use production email handler
       // to process requests from qstash
-      url: `https://www.wannago.app/api/trpc/email.handle`,
+      url: `https://www.wannago.app/api/handle-email`,
       // url: `${getBaseUrl()}/api/email-handler`,
     });
   }
