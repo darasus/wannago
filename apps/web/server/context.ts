@@ -4,18 +4,16 @@ import {PrismaClient} from '@prisma/client/edge';
 import * as trpc from '@trpc/server';
 import {prisma} from '../../../packages/database/prisma';
 import {QStash} from '../lib/qStash';
-import {Mail} from '../lib/mail';
 import {FetchCreateContextFnOptions} from '@trpc/server/adapters/fetch';
 import {NextRequest} from 'next/server';
 import {Maps} from '../lib/maps';
 import {Telegram} from '../lib/telegram';
-import {Postmark} from '../lib/portmark';
+import {Postmark} from '../lib/postmark';
 import {MailQueue} from '../lib/mailQueue';
 
 interface CreateContextOptions {
   user: User | null;
   prisma: PrismaClient;
-  mail: Mail;
   qStash: QStash;
   maps: Maps;
   timezone: string;
@@ -32,7 +30,6 @@ export async function createContextInner(_opts: CreateContextOptions) {
   return {
     user: _opts.user,
     prisma: _opts.prisma,
-    mail: _opts.mail,
     qStash: _opts.qStash,
     maps: _opts.maps,
     timezone: _opts.timezone,
@@ -68,7 +65,6 @@ export async function createContext(
   return createContextInner({
     user,
     prisma,
-    mail: new Mail(),
     qStash: new QStash(),
     maps: new Maps(),
     timezone,

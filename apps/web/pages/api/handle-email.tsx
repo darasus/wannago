@@ -10,7 +10,7 @@ import {
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
 import {EmailType} from '../../lib/mailQueue';
-import {Postmark} from '../../lib/portmark';
+import {Postmark} from '../../lib/postmark';
 import {formatDate} from '../../utils/formatDate';
 import {getBaseUrl} from '../../utils/getBaseUrl';
 
