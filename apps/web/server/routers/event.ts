@@ -321,30 +321,49 @@ const join = publicProcedure
       });
     }
 
-    const existingSignUp = await ctx.prisma.eventSignUp.findFirst({
-      where: {
-        eventId: input.eventId,
-        userId: user.id,
-      },
-    });
-
-    if (!existingSignUp) {
-      await ctx.prisma.eventSignUp.create({
-        data: {
-          hasPlusOne: input.hasPlusOne,
-          event: {
-            connect: {
-              id: input.eventId,
-            },
-          },
-          user: {
-            connect: {
-              id: user.id,
-            },
-          },
+    const [existingSignUp, event] = await Promise.all([
+      ctx.prisma.eventSignUp.findFirst({
+        where: {
+          eventId: input.eventId,
+          userId: user.id,
         },
+      }),
+      ctx.prisma.event.findFirst({
+        where: {
+          id: input.eventId,
+        },
+      }),
+    ]);
+
+    if (!event?.isPublished) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Event is not published yet.',
       });
     }
+
+    if (existingSignUp) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'You are already signed up for this event.',
+      });
+    }
+
+    await ctx.prisma.eventSignUp.create({
+      data: {
+        hasPlusOne: input.hasPlusOne,
+        event: {
+          connect: {
+            id: input.eventId,
+          },
+        },
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+      },
+    });
 
     await ctx.mailQueue.sendEventSignUpEmail({
       eventId: input.eventId,

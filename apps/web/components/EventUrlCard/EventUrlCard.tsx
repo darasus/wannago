@@ -4,13 +4,17 @@ import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../Badge/Badge';
 import {useAmplitude} from '../../hooks/useAmplitude';
+import {cn} from '../../utils/cn';
+import {Tooltip} from '../Tooltip/Tooltip';
 
 interface Props {
   url: string;
   eventId: string;
+  isPublished?: boolean;
 }
 
-export function EventUrlCard({url, eventId}: Props) {
+export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
+  const url = isPublished ? _url : 'pleasePublishEventFirst';
   const [isCopied, copy] = useCopyClipboard(url);
   const {logEvent} = useAmplitude();
 
@@ -35,12 +39,25 @@ export function EventUrlCard({url, eventId}: Props) {
         </Button>
       </div>
       <div>
-        <Link className="text-gray-800 font-bold hover:underline" href={url}>
-          {url
-            .replace('https://', '')
-            .replace('http://', '')
-            .replace('www.', '')}
-        </Link>
+        <Tooltip
+          text={
+            isPublished
+              ? undefined
+              : 'To see public link you need to publish your event first'
+          }
+        >
+          <Link
+            className={cn('text-gray-800 font-bold hover:underline', {
+              'blur-sm pointer-events-none': !isPublished,
+            })}
+            href={url}
+          >
+            {url
+              .replace('https://', '')
+              .replace('http://', '')
+              .replace('www.', '')}
+          </Link>
+        </Tooltip>
       </div>
     </CardBase>
   );

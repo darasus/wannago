@@ -18,16 +18,8 @@ export function ParticipantsCard({event}: Props) {
   const form = useForm<JoinForm>();
   const {handleSubmit, reset} = form;
   const {mutateAsync} = trpc.event.join.useMutation({
-    onError: error => {
-      const validationErrors = error.data?.zodError?.fieldErrors || {};
-      Object.keys(validationErrors).forEach(
-        (key: keyof typeof validationErrors) => {
-          const message = validationErrors?.[key];
-          if (message) {
-            toast.error(message.join(', '));
-          }
-        }
-      );
+    onError(error) {
+      toast.error(error.message);
     },
     onSuccess: () => {
       logEvent('event_sign_up_submitted', {

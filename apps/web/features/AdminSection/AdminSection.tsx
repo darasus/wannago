@@ -19,6 +19,9 @@ import {useRemoveEvent} from '../../hooks/useRemoveEvent';
 import {usePublishEvent} from '../../hooks/usePublishEvent';
 import {useUnpublishEvent} from '../../hooks/useUnpublishEvent';
 import {getBaseUrl} from '../../utils/getBaseUrl';
+import {Tooltip} from '../../components/Tooltip/Tooltip';
+import React from 'react';
+import {cn} from '../../utils/cn';
 
 interface Props {
   event: Event;
@@ -39,9 +42,15 @@ export function AdminSection({event, timezone}: Props) {
     eventId: event.id,
   });
 
+  const publicEventUrl = event.isPublished
+    ? `${getBaseUrl()}/e/${event.shortId}`
+        .replace('https://www.', '')
+        .replace('http://', '')
+    : 'publish_event_first';
+
   const values: {
     label: string;
-    value: string;
+    value: JSX.Element | string;
     badgeColor?: 'green' | 'yellow';
   }[] = [
     {
@@ -66,9 +75,19 @@ export function AdminSection({event, timezone}: Props) {
     },
     {
       label: 'Public url',
-      value: `${getBaseUrl()}/e/${event.shortId}`
-        .replace('https://www.', '')
-        .replace('http://', ''),
+      value: (
+        <Tooltip
+          text={
+            event.isPublished
+              ? undefined
+              : 'To see public link you need to publish your event first'
+          }
+        >
+          <span className={cn({'blur-sm': !event.isPublished})}>
+            {publicEventUrl}
+          </span>
+        </Tooltip>
+      ),
     },
   ];
 
@@ -97,14 +116,6 @@ export function AdminSection({event, timezone}: Props) {
             })}
           </div>
           <div className="flex flex-col gap-2 items-start">
-            <Button
-              variant="neutral"
-              iconLeft={<PencilIcon />}
-              onClick={() => router.push(`/event/${event.id}/edit`)}
-              size="sm"
-            >
-              Edit event
-            </Button>
             {event.isPublished && (
               <Button
                 variant="danger"
@@ -125,6 +136,14 @@ export function AdminSection({event, timezone}: Props) {
                 Publish
               </Button>
             )}
+            <Button
+              variant="neutral"
+              iconLeft={<PencilIcon />}
+              onClick={() => router.push(`/event/${event.id}/edit`)}
+              size="sm"
+            >
+              Edit event
+            </Button>
             <Button
               variant="danger"
               iconLeft={<TrashIcon />}
