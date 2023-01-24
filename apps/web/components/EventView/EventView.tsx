@@ -7,6 +7,7 @@ import {InfoCard} from '../InfoCard/InfoCard';
 import {LocationCard} from '../../features/LocationCard/LocationCard';
 import {OrganizerCard} from '../../features/OrganizerCard/OrganizerCard';
 import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard';
+import {isPast} from '../../utils/formatDate';
 
 interface Props {
   event: Event;
@@ -42,9 +43,11 @@ export function EventView({event, timezone, isPublic}: Props) {
         <div>
           <DateCard event={event} timezone={timezone} />
         </div>
-        <div>
-          <ParticipantsCard event={event} />
-        </div>
+        {!isPast(event.endDate, timezone) && (
+          <div>
+            <ParticipantsCard event={event} />
+          </div>
+        )}
         <div>
           <EventUrlCard
             url={`${getBaseUrl()}/e/${event.shortId}`}

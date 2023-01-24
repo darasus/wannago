@@ -1,4 +1,9 @@
-import {format, isSameDay as _isSameDay} from 'date-fns';
+import {
+  format as _format,
+  isSameDay as _isSameDay,
+  isPast as _isPast,
+  differenceInSeconds as _differenceInSeconds,
+} from 'date-fns';
 import {utcToZonedTime} from 'date-fns-tz';
 import {format as timeagoFormat} from 'timeago.js';
 
@@ -12,7 +17,7 @@ export function formatDate(
     timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
   );
 
-  return format(d, formatString);
+  return _format(d, formatString);
 }
 
 export function formatTimeago(date: Date, timezone?: string | null) {
@@ -40,4 +45,20 @@ export function isSameDay(
   );
 
   return _isSameDay(dLeft, dRight);
+}
+
+export function isPast(_date: Date, timezone?: string | null) {
+  const dLeft = utcToZonedTime(
+    _date,
+    timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
+
+  const dRight = utcToZonedTime(
+    new Date(),
+    timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
+
+  console.log(_differenceInSeconds(dLeft, dRight));
+
+  return _differenceInSeconds(dLeft, dRight) < 0;
 }
