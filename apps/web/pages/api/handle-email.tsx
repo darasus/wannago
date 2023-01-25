@@ -52,14 +52,21 @@ export default async function handle(
       },
     });
 
+    if (!event) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Event not found',
+      });
+    }
+
     const user = await prisma.user.findUnique({
       where: {id: userId},
     });
 
-    if (!event || !user) {
+    if (!user) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
-        message: 'Event or user not found',
+        message: 'User not found',
       });
     }
 
@@ -108,14 +115,21 @@ export default async function handle(
       },
     });
 
+    if (!event) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Event not found',
+      });
+    }
+
     const user = await prisma.user.findUnique({
       where: {id: userId},
     });
 
-    if (!event || !user) {
+    if (!user) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
-        message: 'Event or user not found',
+        message: 'User not found',
       });
     }
 
@@ -213,6 +227,13 @@ export default async function handle(
       where: {id: organizerUserId},
     });
 
+    if (!organizerUser) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Organizer user not found',
+      });
+    }
+
     const signUps = await prisma.eventSignUp.findMany({
       where: {
         eventId: eventId,
@@ -222,10 +243,10 @@ export default async function handle(
       },
     });
 
-    if (!event || !organizerUser) {
+    if (!event) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
-        message: 'Event or user not found',
+        message: 'Event not found',
       });
     }
 
@@ -263,11 +284,33 @@ export default async function handle(
       where: {id: userId},
     });
 
+    if (!user) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'User not found',
+      });
+    }
+
     const eventCount = await prisma.event.count({
       where: {
         organizationId: user?.organizationId,
       },
     });
+
+    const forbidden = await prisma.emailPreference.findFirst({
+      where: {
+        userId: user.id,
+        emailType: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
+        isActive: false,
+      },
+    });
+
+    if (forbidden) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Email type is forbidden',
+      });
+    }
 
     const hasNoEvents = eventCount === 0;
 
