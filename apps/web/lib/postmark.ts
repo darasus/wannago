@@ -12,7 +12,12 @@ const scheme = z.object({
 type Input = z.input<typeof scheme>;
 
 export class Postmark {
-  sendTransactionalEmail({to, subject, htmlString, replyTo}: Input) {
+  private client({
+    to,
+    replyTo,
+    subject,
+    htmlString,
+  }: Input & {messageStream: 'outbound' | 'broadcasts'}) {
     return fetch('https://api.postmarkapp.com/email', {
       method: 'POST',
       headers: {
@@ -30,6 +35,26 @@ export class Postmark {
       }),
     }).catch(error => {
       captureException(error);
+    });
+  }
+
+  sendTransactionalEmail({to, subject, htmlString, replyTo}: Input) {
+    return this.client({
+      to,
+      subject,
+      htmlString,
+      replyTo,
+      messageStream: 'outbound',
+    });
+  }
+
+  sendBroadcastEmail({to, subject, htmlString, replyTo}: Input) {
+    return this.client({
+      to,
+      subject,
+      htmlString,
+      replyTo,
+      messageStream: 'broadcasts',
     });
   }
 }

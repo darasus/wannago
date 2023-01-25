@@ -272,9 +272,9 @@ export default async function handle(
     const hasNoEvents = eventCount === 0;
 
     if (hasNoEvents && user?.firstName) {
-      await postmark.sendTransactionalEmail({
+      await postmark.sendBroadcastEmail({
         replyTo: 'WannaGo Team <hi@wannago.app>',
-        to: 'hi@wannago.app',
+        to: user.email,
         subject: 'We would love to hear your feedback',
         htmlString: render(
           <AfterRegisterNoCreatedEventFollowUpEmail
