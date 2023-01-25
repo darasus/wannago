@@ -105,7 +105,7 @@ export async function getServerSideProps({
   const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
   res.setHeader(
     'Cache-Control',
-    `s-maxage=60, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`
+    `s-maxage=10, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`
   );
 
   return {
