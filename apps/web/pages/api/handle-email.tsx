@@ -4,6 +4,7 @@ import {prisma} from 'database';
 import {
   EventInvite,
   EventSignUp,
+  AfterRegisterNoCreatedEventFollowUpEmail,
   MessageToAttendees,
   MessageToOrganizer,
 } from 'email';
@@ -22,36 +23,6 @@ export const baseEventHandlerSchema = z
   })
   .passthrough();
 
-export const sendEventSignUpEmailSchema = baseEventHandlerSchema.extend({
-  eventId: z.string().uuid(),
-  userId: z.string().uuid(),
-});
-
-export const sendEventInviteEmailSchema = baseEventHandlerSchema.extend({
-  eventId: z.string().uuid(),
-  userId: z.string().uuid(),
-});
-
-export const sendQuestionToOrganizerEmailSchema = baseEventHandlerSchema.extend(
-  {
-    eventId: z.string().uuid(),
-    organizerEmail: z.string().email(),
-    firstName: z.string(),
-    lastName: z.string(),
-    email: z.string().email(),
-    subject: z.string(),
-    message: z.string(),
-  }
-);
-
-export const sendMessageToAllAttendeesEmailSchema =
-  baseEventHandlerSchema.extend({
-    subject: z.string(),
-    message: z.string(),
-    eventId: z.string().uuid(),
-    organizerUserId: z.string().uuid(),
-  });
-
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
@@ -63,6 +34,11 @@ export default async function handle(
   const input = baseEventHandlerSchema.parse(req.body);
 
   if (input.type === EmailType.EventSignUp) {
+    const sendEventSignUpEmailSchema = baseEventHandlerSchema.extend({
+      eventId: z.string().uuid(),
+      userId: z.string().uuid(),
+    });
+
     const {eventId, userId} = sendEventSignUpEmailSchema.parse(input);
 
     const event = await prisma.event.findUnique({
@@ -114,6 +90,11 @@ export default async function handle(
   }
 
   if (input.type === EmailType.EventInvite) {
+    const sendEventInviteEmailSchema = baseEventHandlerSchema.extend({
+      eventId: z.string().uuid(),
+      userId: z.string().uuid(),
+    });
+
     const {eventId, userId} = sendEventInviteEmailSchema.parse(input);
 
     const event = await prisma.event.findUnique({
@@ -170,6 +151,16 @@ export default async function handle(
   }
 
   if (input.type === EmailType.MessageToOrganizer) {
+    const sendQuestionToOrganizerEmailSchema = baseEventHandlerSchema.extend({
+      eventId: z.string().uuid(),
+      organizerEmail: z.string().email(),
+      firstName: z.string(),
+      lastName: z.string(),
+      email: z.string().email(),
+      subject: z.string(),
+      message: z.string(),
+    });
+
     const {
       email,
       eventId,
@@ -207,13 +198,21 @@ export default async function handle(
   }
 
   if (input.type === EmailType.MessageToAllAttendees) {
-    const {eventId, message, organizerUserId, subject} =
-      sendMessageToAllAttendeesEmailSchema.parse(input);
+    const scheme = baseEventHandlerSchema.extend({
+      subject: z.string(),
+      message: z.string(),
+      eventId: z.string().uuid(),
+      organizerUserId: z.string().uuid(),
+    });
+
+    const {eventId, message, organizerUserId, subject} = scheme.parse(input);
 
     const event = await prisma.event.findUnique({where: {id: eventId}});
+
     const organizerUser = await prisma.user.findUnique({
       where: {id: organizerUserId},
     });
+
     const signUps = await prisma.eventSignUp.findMany({
       where: {
         eventId: eventId,
@@ -251,6 +250,39 @@ export default async function handle(
           await postmark.sendTransactionalEmail(messageData);
         })
     );
+  }
+
+  if (input.type === EmailType.AfterRegisterNoCreatedEventFollowUpEmail) {
+    const scheme = baseEventHandlerSchema.extend({
+      userId: z.string().uuid(),
+    });
+
+    const {userId} = scheme.parse(input);
+
+    const user = await prisma.user.findUnique({
+      where: {id: userId},
+    });
+
+    const eventCount = await prisma.event.count({
+      where: {
+        organizationId: user?.organizationId,
+      },
+    });
+
+    const hasNoEvents = eventCount === 0;
+
+    if (hasNoEvents && user?.firstName) {
+      await postmark.sendTransactionalEmail({
+        replyTo: 'WannaGo Team <hi@wannago.app>',
+        to: 'hi@wannago.app',
+        subject: 'We would love to hear your feedback',
+        htmlString: render(
+          <AfterRegisterNoCreatedEventFollowUpEmail
+            firstName={user?.firstName}
+          />
+        ),
+      });
+    }
   }
 
   return res.status(200).json({success: true});

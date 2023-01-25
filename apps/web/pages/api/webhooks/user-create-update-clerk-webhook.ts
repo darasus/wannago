@@ -2,6 +2,7 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import {env} from 'server-env';
 import {z} from 'zod';
 import {prisma} from '../../../../../packages/database/prisma';
+import {MailQueue} from '../../../lib/mailQueue';
 import {Telegram} from '../../../lib/telegram';
 
 const scheme = z.object({
@@ -18,6 +19,8 @@ const scheme = z.object({
     ),
   }),
 });
+
+const mailQueue = new MailQueue();
 
 export default async function handler(
   req: NextApiRequest,
@@ -82,6 +85,13 @@ export default async function handler(
             message: `New user created: ${user.firstName} ${user.lastName} (${user.email})`,
           })
           .catch(console.error);
+      }
+
+      // TODO: remove this one tested in production
+      if (user.email.startsWith('idarase')) {
+        await mailQueue.enqueueAfterRegisterNoCreatedEventFollowUpEmail({
+          userId: user.id,
+        });
       }
     }
   }

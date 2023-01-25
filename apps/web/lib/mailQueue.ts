@@ -7,6 +7,7 @@ export enum EmailType {
   EventInvite = 'EventInvite',
   MessageToOrganizer = 'MessageToOrganizer',
   MessageToAllAttendees = 'MessageToAllAttendees',
+  AfterRegisterNoCreatedEventFollowUpEmail = 'AfterRegisterNoCreatedEventFollowUpEmail',
 }
 
 export class MailQueue {
@@ -16,40 +17,34 @@ export class MailQueue {
 
   private publish({
     type,
-    ...props
-  }: Record<string, string> & {type: EmailType}) {
+    delay,
+    body,
+  }: {
+    type: EmailType;
+    delay?: number;
+    body: {[key: string]: string};
+  }) {
     return this.queue.publishJSON({
       body: {
-        ...props,
+        ...body,
         type,
       },
       retries: 5,
       // url: `${getBaseUrl()}/api/handle-email`,
       url: `https://www.wannago.app/api/handle-email`,
+      delay,
     });
   }
 
-  async sendEventSignUpEmail({
-    eventId,
-    userId,
-  }: {
-    eventId: string;
-    userId: string;
-  }) {
-    return this.publish({eventId, userId, type: EmailType.EventSignUp});
+  async sendEventSignUpEmail(body: {eventId: string; userId: string}) {
+    return this.publish({body, type: EmailType.EventSignUp});
   }
 
-  async sendEventInviteEmail({
-    eventId,
-    userId,
-  }: {
-    eventId: string;
-    userId: string;
-  }) {
-    return this.publish({eventId, userId, type: EmailType.EventInvite});
+  async sendEventInviteEmail(body: {eventId: string; userId: string}) {
+    return this.publish({body, type: EmailType.EventInvite});
   }
 
-  async sendQuestionToOrganizerEmail(props: {
+  async sendQuestionToOrganizerEmail(body: {
     eventId: string;
     organizerEmail: string;
     firstName: string;
@@ -58,15 +53,29 @@ export class MailQueue {
     message: string;
     subject: string;
   }) {
-    return this.publish({...props, type: EmailType.MessageToOrganizer});
+    return this.publish({body, type: EmailType.MessageToOrganizer});
   }
 
-  async sendMessageToAllAttendeesEmail(props: {
+  async sendMessageToAllAttendeesEmail(body: {
     subject: string;
     message: string;
     eventId: string;
     organizerUserId: string;
   }) {
-    return this.publish({...props, type: EmailType.MessageToAllAttendees});
+    return this.publish({body, type: EmailType.MessageToAllAttendees});
+  }
+
+  /**
+   * This is a follow up email to the organizer if they have not created an event in 2 days
+   */
+  async enqueueAfterRegisterNoCreatedEventFollowUpEmail(body: {
+    userId: string;
+  }) {
+    return this.publish({
+      body,
+      type: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
+      // delay: 60 * 60 * 24 * 2,
+      delay: 10,
+    });
   }
 }
