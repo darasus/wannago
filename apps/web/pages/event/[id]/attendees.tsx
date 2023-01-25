@@ -12,6 +12,8 @@ import {withProtected} from '../../../utils/withAuthProtect';
 import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {PageHeader} from '../../../components/PageHeader/PageHeader';
 import {useEventId} from '../../../hooks/useEventId';
+import {MessageParticipantsButton} from '../../../features/MessageParticipantsButton/MessageParticipantsButton';
+import {UserPlusIcon, DocumentArrowDownIcon} from '@heroicons/react/24/solid';
 
 interface ItemProps {
   user: User;
@@ -75,10 +77,12 @@ function EventAttendeesPage() {
       <AppLayout>
         <Container className="flex flex-col gap-y-4">
           <PageHeader title={'Attendees'}>
+            <MessageParticipantsButton />
             <Button
               variant="neutral"
               onClick={() => router.push(`/event/${eventId}/invite`)}
               size="sm"
+              iconLeft={<UserPlusIcon />}
             >
               Invite
             </Button>
@@ -86,6 +90,7 @@ function EventAttendeesPage() {
               variant="neutral"
               onClick={handleDownloadCsvClick}
               size="sm"
+              iconLeft={<DocumentArrowDownIcon />}
             >
               Export CSV
             </Button>

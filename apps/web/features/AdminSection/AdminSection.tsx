@@ -4,14 +4,12 @@ import {
   UsersIcon,
   PlayCircleIcon,
   PauseCircleIcon,
-  UserPlusIcon,
 } from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import {Badge} from '../../components/Badge/Badge';
 import {Button} from '../../components/Button/Button';
 import {CardBase} from '../../components/CardBase/CardBase';
 import {Text} from '../../components/Text/Text';
-import {MessageParticipantsButton} from '../MessageParticipantsButton/MessageParticipantsButton';
 import {Event} from '@prisma/client';
 import {formatTimeago} from '../../utils/formatDate';
 import {useAttendeeCount} from '../../hooks/useAttendeeCount';
@@ -144,15 +142,7 @@ export function AdminSection({event, timezone}: Props) {
               onClick={() => router.push(`/event/${event.id}/edit`)}
               size="sm"
             >
-              Edit event
-            </Button>
-            <Button
-              variant="danger"
-              iconLeft={<TrashIcon />}
-              onClick={onRemoveClick}
-              size="sm"
-            >
-              Delete event
+              Edit
             </Button>
             <Button
               variant="neutral"
@@ -162,7 +152,14 @@ export function AdminSection({event, timezone}: Props) {
             >
               Attendees
             </Button>
-            <MessageParticipantsButton />
+            <Button
+              variant="danger"
+              iconLeft={<TrashIcon />}
+              onClick={onRemoveClick}
+              size="sm"
+            >
+              Delete event
+            </Button>
           </div>
         </div>
       </CardBase>
