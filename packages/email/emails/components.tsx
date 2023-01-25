@@ -1,14 +1,14 @@
 import {Img} from '@react-email/img';
 import {Section} from '@react-email/section';
-import {Text as REText} from '@react-email/text';
-import {Link as RELink} from '@react-email/link';
-import {Button as REButton} from '@react-email/button';
+import {Text as _Text} from '@react-email/text';
+import {Link as _Link} from '@react-email/link';
+import {Button as _Button} from '@react-email/button';
 import React, {PropsWithChildren} from 'react';
 
 interface TitleProps extends PropsWithChildren {}
 
 export function Title({children}: TitleProps) {
-  return <REText style={title}>{children}</REText>;
+  return <_Text style={title}>{children}</_Text>;
 }
 
 interface TextProps extends PropsWithChildren {
@@ -16,7 +16,7 @@ interface TextProps extends PropsWithChildren {
 }
 
 export function Text({children, style}: TextProps) {
-  return <REText style={{...text, ...style}}>{children}</REText>;
+  return <_Text style={{...text, ...style}}>{children}</_Text>;
 }
 
 export function Logo() {
@@ -48,7 +48,7 @@ interface LinkProps extends PropsWithChildren {
 
 export function Link({children, href}: LinkProps) {
   return (
-    <RELink
+    <_Link
       href={href}
       style={{
         fontFamily,
@@ -57,7 +57,7 @@ export function Link({children, href}: LinkProps) {
       }}
     >
       {children}
-    </RELink>
+    </_Link>
   );
 }
 
@@ -67,7 +67,7 @@ interface ButtonProps extends PropsWithChildren {
 
 export function Button({children, href}: ButtonProps) {
   return (
-    <REButton
+    <_Button
       style={{
         fontFamily,
         borderRadius: '100px',
@@ -86,7 +86,7 @@ export function Button({children, href}: ButtonProps) {
       href={href}
     >
       {children}
-    </REButton>
+    </_Button>
   );
 }
 

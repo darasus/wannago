@@ -62,7 +62,7 @@ export default function EventInvite({
             <Button href={confirmUrl}>Confirm invite</Button>
           </Section>
           <Hr style={hr} />
-          <Text>Thanks,</Text>
+          <Text>Sincerely,</Text>
           <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />
         </Container>

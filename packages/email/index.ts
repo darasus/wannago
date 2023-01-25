@@ -4,6 +4,7 @@ import MessageToOrganizer from './emails/MessageToOrganizer';
 import EventReminder from './emails/EventReminder';
 import MessageToAttendees from './emails/MessageToAttendees';
 import LoginCode from './emails/LoginCode';
+import AfterRegisterNoCreatedEventFollowUpEmail from './emails/AfterRegisterNoCreatedEventFollowUpEmail';
 
 export {
   EventInvite,
@@ -12,4 +13,5 @@ export {
   EventReminder,
   MessageToAttendees,
   LoginCode,
+  AfterRegisterNoCreatedEventFollowUpEmail,
 };

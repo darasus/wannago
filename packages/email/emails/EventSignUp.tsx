@@ -67,7 +67,7 @@ export default function EventSignUp({
               "If you didn't sign up to this event, you can safely ignore this email."
             }
           </Text>
-          <Text>Thanks,</Text>
+          <Text>Sincerely,</Text>
           <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />
         </Container>
