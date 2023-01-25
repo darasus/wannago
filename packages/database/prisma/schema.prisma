@@ -33,18 +33,19 @@ model Event {
 }
 
 model User {
-  id              String        @id @default(uuid())
-  email           String        @unique
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @default(now()) @updatedAt
-  externalId      String?
-  firstName       String?
-  lastName        String?
-  profileImageSrc String?
-  organization    Organization? @relation(name: "UserOrganization", fields: [organizationId], references: [id])
-  organizationId  String?
-  eventSignUps    EventSignUp[] @relation(name: "EventSignUpUser")
-  type            UserType      @default(USER)
+  id               String            @id @default(uuid())
+  email            String            @unique
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @default(now()) @updatedAt
+  externalId       String?
+  firstName        String?
+  lastName         String?
+  profileImageSrc  String?
+  organization     Organization?     @relation(name: "UserOrganization", fields: [organizationId], references: [id])
+  organizationId   String?
+  eventSignUps     EventSignUp[]     @relation(name: "EventSignUpUser")
+  type             UserType          @default(USER)
+  emailPreferences EmailPreference[] @relation(name: "EmailPreference")
 
   @@index([organizationId])
 }
@@ -80,4 +81,22 @@ enum EventRegistrationStatus {
 enum UserType {
   ADMIN
   USER
+}
+
+enum EmailType {
+  EventSignUp
+  EventInvite
+  MessageToOrganizer
+  MessageToAllAttendees
+  AfterRegisterNoCreatedEventFollowUpEmail
+}
+
+model EmailPreference {
+  id          String    @id @default(uuid())
+  newsletters EmailType
+  User        User      @relation(name: "EmailPreference", fields: [userId], references: [id])
+  userId      String
+  isActive    Boolean   @default(true)
+
+  @@index([userId])
 }
