@@ -61,7 +61,7 @@ export default async function handler(
     eventSignUp.event.organization?.users &&
     eventSignUp.event.organization?.users?.length > 0
   ) {
-    await mailQueue.sendEventSignUpEmail({
+    await mailQueue.enqueueEventSignUpEmail({
       eventId: eventSignUp.event.id,
       userId: eventSignUp.user.id,
     });

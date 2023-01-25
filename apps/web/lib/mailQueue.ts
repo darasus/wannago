@@ -1,14 +1,6 @@
+import {EmailType} from '@prisma/client';
 import {Client} from '@upstash/qstash';
 import {env} from 'server-env';
-import {getBaseUrl} from '../utils/getBaseUrl';
-
-export enum EmailType {
-  EventSignUp = 'EventSignUp',
-  EventInvite = 'EventInvite',
-  MessageToOrganizer = 'MessageToOrganizer',
-  MessageToAllAttendees = 'MessageToAllAttendees',
-  AfterRegisterNoCreatedEventFollowUpEmail = 'AfterRegisterNoCreatedEventFollowUpEmail',
-}
 
 export class MailQueue {
   private queue = new Client({
@@ -36,15 +28,15 @@ export class MailQueue {
     });
   }
 
-  async sendEventSignUpEmail(body: {eventId: string; userId: string}) {
+  async enqueueEventSignUpEmail(body: {eventId: string; userId: string}) {
     return this.publish({body, type: EmailType.EventSignUp});
   }
 
-  async sendEventInviteEmail(body: {eventId: string; userId: string}) {
+  async enqueueEventInviteEmail(body: {eventId: string; userId: string}) {
     return this.publish({body, type: EmailType.EventInvite});
   }
 
-  async sendQuestionToOrganizerEmail(body: {
+  async enqueueQuestionToOrganizerEmail(body: {
     eventId: string;
     organizerEmail: string;
     firstName: string;
@@ -56,7 +48,7 @@ export class MailQueue {
     return this.publish({body, type: EmailType.MessageToOrganizer});
   }
 
-  async sendMessageToAllAttendeesEmail(body: {
+  async enqueueMessageToAllAttendeesEmail(body: {
     subject: string;
     message: string;
     eventId: string;

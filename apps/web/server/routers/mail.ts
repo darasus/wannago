@@ -30,7 +30,7 @@ const messageEventParticipants = protectedProcedure
       throw new Error('Organizer not found!');
     }
 
-    await ctx.mailQueue.sendMessageToAllAttendeesEmail({
+    await ctx.mailQueue.enqueueMessageToAllAttendeesEmail({
       eventId: input.eventId,
       subject: input.subject,
       message: input.message,
@@ -68,7 +68,7 @@ const sendQuestionToOrganizer = publicProcedure
     }
 
     for (const user of event.organization?.users || []) {
-      await ctx.mailQueue.sendQuestionToOrganizerEmail({
+      await ctx.mailQueue.enqueueQuestionToOrganizerEmail({
         eventId: event.id,
         organizerEmail: user.email,
         firstName: input.firstName,

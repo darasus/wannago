@@ -1,3 +1,4 @@
+import {EmailType} from '@prisma/client';
 import {render} from '@react-email/render';
 import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
@@ -10,7 +11,6 @@ import {
 } from 'email';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
-import {EmailType} from '../../lib/mailQueue';
 import {Postmark} from '../../lib/postmark';
 import {formatDate} from '../../utils/formatDate';
 import {getBaseUrl} from '../../utils/getBaseUrl';
