@@ -74,8 +74,7 @@ export class MailQueue {
     return this.publish({
       body,
       type: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
-      // delay: 60 * 60 * 24 * 2,
-      delay: 10,
+      delay: 60 * 60 * 24 * 2,
     });
   }
 }

@@ -87,12 +87,9 @@ export default async function handler(
           .catch(console.error);
       }
 
-      // TODO: remove this one tested in production
-      if (user.email.startsWith('idarase')) {
-        await mailQueue.enqueueAfterRegisterNoCreatedEventFollowUpEmail({
-          userId: user.id,
-        });
-      }
+      await mailQueue.enqueueAfterRegisterNoCreatedEventFollowUpEmail({
+        userId: user.id,
+      });
     }
   }
 
