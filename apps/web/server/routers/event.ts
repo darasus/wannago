@@ -349,6 +349,25 @@ const join = publicProcedure
       });
     }
 
+    const eventSignUpsCount = await ctx.prisma.eventSignUp.count({
+      where: {
+        eventId: input.eventId,
+        status: {
+          in: ['REGISTERED', 'INVITED'],
+        },
+      },
+    });
+
+    if (
+      typeof event?.maxNumberOfAttendees === 'number' &&
+      eventSignUpsCount >= event?.maxNumberOfAttendees
+    ) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Event is full and no longer accepts sign ups.',
+      });
+    }
+
     await ctx.prisma.eventSignUp.create({
       data: {
         hasPlusOne: input.hasPlusOne,
@@ -589,6 +608,25 @@ const invitePastAttendee = protectedProcedure
       });
     }
 
+    const eventSignUpsCount = await ctx.prisma.eventSignUp.count({
+      where: {
+        eventId: input.eventId,
+        status: {
+          in: ['REGISTERED', 'INVITED'],
+        },
+      },
+    });
+
+    if (
+      typeof event?.maxNumberOfAttendees === 'number' &&
+      eventSignUpsCount >= event?.maxNumberOfAttendees
+    ) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Event is full and no longer accepts sign ups.',
+      });
+    }
+
     const invite = await ctx.prisma.eventSignUp.create({
       data: {
         status: 'INVITED',
@@ -650,6 +688,31 @@ const inviteByEmail = publicProcedure
       throw new TRPCError({
         code: 'BAD_REQUEST',
         message: 'User is already signed up for this event',
+      });
+    }
+
+    const event = await ctx.prisma.event.findUnique({
+      where: {
+        id: input.eventId,
+      },
+    });
+
+    const eventSignUpsCount = await ctx.prisma.eventSignUp.count({
+      where: {
+        eventId: input.eventId,
+        status: {
+          in: ['REGISTERED', 'INVITED'],
+        },
+      },
+    });
+
+    if (
+      typeof event?.maxNumberOfAttendees === 'number' &&
+      eventSignUpsCount >= event?.maxNumberOfAttendees
+    ) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Event is full and no longer accepts sign ups.',
       });
     }
 
