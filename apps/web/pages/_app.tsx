@@ -17,6 +17,7 @@ import {useRouter} from 'next/router';
 import {Amplitude} from '../features/Amplitude/Amplitude';
 import {cn} from '../utils/cn';
 import {env} from 'client-env';
+import {Sentry} from '../features/Sentry/Sentry';
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter();
@@ -59,6 +60,7 @@ function MyApp({Component, pageProps}: AppProps) {
           supportEmail="hi@wannago.app"
         >
           <Amplitude />
+          <Sentry />
           <Toaster>
             {t => (
               <ToastBar
