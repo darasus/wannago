@@ -53,12 +53,12 @@ function EventAttendeesPage() {
 
   const handleDownloadCsvClick = () => {
     const content =
-      'First name,Last name,Email,Plus one\r\n' +
+      'First name,Last name,Email,Plus one,Status\r\n' +
       data
         ?.map(signUp => {
           return `${signUp.user.firstName},${signUp.user.lastName},${
             signUp.user.email
-          },${signUp.hasPlusOne ? 'Yes' : 'No'}`;
+          },${signUp.hasPlusOne ? 'Yes' : 'No'},${signUp.status}`;
         })
         .join('\r\n')!;
     const blob = new Blob([content], {type: 'text/csv;charset=utf-8'});
