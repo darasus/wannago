@@ -24,7 +24,8 @@ export class MailQueue {
         type,
       },
       retries: 5,
-      url: `${getBaseUrl()}/api/handle-email`,
+      // url: `${getBaseUrl()}/api/handle-email`,
+      url: `https://www.wannago.app/api/handle-email`,
     });
   }
 
