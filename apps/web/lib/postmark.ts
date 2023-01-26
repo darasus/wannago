@@ -17,6 +17,7 @@ export class Postmark {
     replyTo,
     subject,
     htmlString,
+    messageStream,
   }: Input & {messageStream: 'outbound' | 'broadcasts'}) {
     return fetch('https://api.postmarkapp.com/email', {
       method: 'POST',
@@ -31,7 +32,7 @@ export class Postmark {
         ReplyTo: replyTo || to,
         Subject: subject,
         HtmlBody: htmlString,
-        MessageStream: 'outbound',
+        MessageStream: messageStream,
       }),
     }).catch(error => {
       captureException(error);
