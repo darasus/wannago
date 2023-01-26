@@ -18,7 +18,7 @@ export class Postmark {
     subject,
     htmlString,
     messageStream,
-  }: Input & {messageStream: 'outbound' | 'broadcasts'}) {
+  }: Input & {messageStream: 'outbound' | 'broadcast'}) {
     return fetch('https://api.postmarkapp.com/email', {
       method: 'POST',
       headers: {
@@ -55,7 +55,7 @@ export class Postmark {
       subject,
       htmlString,
       replyTo,
-      messageStream: 'broadcasts',
+      messageStream: 'broadcast',
     });
   }
 }
