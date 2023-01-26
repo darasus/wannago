@@ -64,16 +64,10 @@ export class MailQueue {
   async enqueueAfterRegisterNoCreatedEventFollowUpEmail(body: {
     userId: string;
   }) {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: body.userId,
-      },
-    });
-
     return this.publish({
       body,
       type: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
-      delay: user?.email.startsWith('idarase') ? 10 : 60 * 60 * 24 * 2,
+      delay: 60 * 60 * 24 * 2,
     });
   }
 }
