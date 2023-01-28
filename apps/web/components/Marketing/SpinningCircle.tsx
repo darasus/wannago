@@ -1,12 +1,12 @@
 import {motion} from 'framer-motion';
-import {useRef, useState, useLayoutEffect} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {CircleBackground} from './CircleBackground';
 
 export default function SpinningCircle() {
   const ref = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(0);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (ref.current) {
       setHeight(ref.current.getBoundingClientRect().height);
     }

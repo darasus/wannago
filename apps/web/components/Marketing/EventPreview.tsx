@@ -1,4 +1,4 @@
-import {useRef, useState, useLayoutEffect} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {getBaseUrl} from '../../utils/getBaseUrl';
 import {MockFormProvider} from '../../utils/MockFormProvider';
 import {trpc} from '../../utils/trpc';
@@ -115,7 +115,7 @@ export default function EventPreview() {
   const [scale, setScale] = useState<number | null>(null);
   const canRenderPreview = scale !== null && scale > 0;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const el = ref.current?.getBoundingClientRect();
     const containerWidth = el?.width || 1024;
     const scale = containerWidth / 1024;
