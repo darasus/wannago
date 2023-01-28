@@ -6,11 +6,12 @@ import {Text} from '../Text/Text';
 
 interface Props extends PropsWithChildren {
   title: string;
+  className?: string;
 }
 
-export function PageHeader({title, children}: Props) {
+export function PageHeader({title, children, className}: Props) {
   return (
-    <CardBase variant="translucent">
+    <CardBase variant="translucent" className={className}>
       <div className="flex items-center">
         <Text className={cn(titleFont.className, 'text-2xl')}>{title}</Text>
         <div className="grow" />

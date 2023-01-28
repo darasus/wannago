@@ -2,6 +2,7 @@ import {isBefore, isEqual} from 'date-fns';
 import {FormEventHandler} from 'react';
 import {useFormContext, useWatch} from 'react-hook-form';
 import {Badge} from '../Badge/Badge';
+import {PageHeader} from '../PageHeader/PageHeader';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
 import {FileInput} from '../Input/FileInput/FileInput';
@@ -139,36 +140,38 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
   ];
 
   return (
-    <CardBase className="p-8 md:sticky md:top-4">
-      <form onSubmit={onSubmit}>
-        <div className="flex flex-col gap-y-4">
+    <>
+      <div className="md:sticky md:top-4">
+        <form onSubmit={onSubmit}>
           <div className="flex flex-col gap-y-4">
             {items.map(({label, content}, i) => {
               return (
-                <div key={i}>
+                <CardBase key={i}>
                   <div className="mb-2">
-                    <Badge color="gray">{label}</Badge>
+                    <Badge color="gray" size="xs">
+                      {label}
+                    </Badge>
                   </div>
-                  {content}
-                </div>
+                  <div className="flex flex-col gap-y-2">{content}</div>
+                </CardBase>
               );
             })}
+            <CardBase className="flex gap-x-2">
+              <Button onClick={onCancelClick} variant="neutral">
+                Cancel
+              </Button>
+              <Button
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
+                type="submit"
+                data-testid="event-form-submit-button"
+              >
+                {isEdit ? 'Save' : 'Save as draft'}
+              </Button>
+            </CardBase>
           </div>
-          <div className="flex gap-x-2">
-            <Button onClick={onCancelClick} variant="neutral">
-              Cancel
-            </Button>
-            <Button
-              isLoading={isSubmitting}
-              disabled={isSubmitting}
-              type="submit"
-              data-testid="event-form-submit-button"
-            >
-              {isEdit ? 'Save' : 'Save as draft'}
-            </Button>
-          </div>
-        </div>
-      </form>
-    </CardBase>
+        </form>
+      </div>
+    </>
   );
 }
