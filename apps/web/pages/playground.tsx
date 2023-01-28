@@ -49,6 +49,9 @@ export default function PlaygroundPage() {
               <Button size={size} variant="link-gray">
                 Link gray
               </Button>
+              <Button size={size} variant="success">
+                Success
+              </Button>
               <Button size={size} variant="danger">
                 Danger
               </Button>

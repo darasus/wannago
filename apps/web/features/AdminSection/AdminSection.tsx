@@ -116,26 +116,6 @@ export function AdminSection({event, timezone}: Props) {
             })}
           </div>
           <div className="flex flex-col gap-2 items-start">
-            {event.isPublished && (
-              <Button
-                variant="danger"
-                iconLeft={<PauseCircleIcon />}
-                onClick={() => onUnpublishClick()}
-                size="sm"
-              >
-                Unpublish
-              </Button>
-            )}
-            {!event.isPublished && (
-              <Button
-                variant="primary"
-                iconLeft={<PlayCircleIcon />}
-                onClick={() => onPublishClick()}
-                size="sm"
-              >
-                Publish
-              </Button>
-            )}
             <Button
               variant="neutral"
               iconLeft={<PencilIcon />}
@@ -152,6 +132,26 @@ export function AdminSection({event, timezone}: Props) {
             >
               Attendees
             </Button>
+            {event.isPublished && (
+              <Button
+                variant="danger"
+                iconLeft={<PauseCircleIcon />}
+                onClick={() => onUnpublishClick()}
+                size="sm"
+              >
+                Unpublish
+              </Button>
+            )}
+            {!event.isPublished && (
+              <Button
+                variant="success"
+                iconLeft={<PlayCircleIcon />}
+                onClick={() => onPublishClick()}
+                size="sm"
+              >
+                Publish
+              </Button>
+            )}
             <Button
               variant="danger"
               iconLeft={<TrashIcon />}

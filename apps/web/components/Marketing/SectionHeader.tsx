@@ -19,9 +19,7 @@ export function SectionHeader({title, description, id}: Props) {
       >
         {title}
       </h2>
-      <p className="mt-4 font-medium text-xl tracking-tight text-gray-800">
-        {description}
-      </p>
+      <p className="mt-4 font-medium text-xl tracking-tight">{description}</p>
     </div>
   );
 }

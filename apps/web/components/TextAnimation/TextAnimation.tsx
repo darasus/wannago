@@ -33,49 +33,55 @@ export const TextAnimation = memo(
       };
     }, [value, values]);
 
-    const characters = useMemo(() => {
-      return value.text.split('').map(character => {
-        return {
-          character,
-          id: Math.random(),
-        };
-      });
-    }, [value.text]);
-
     return (
-      <span>
+      <div className="flex justify-center">
         <AnimatePresence mode="wait">
           <motion.div
-            key={value.id}
-            style={{opacity: 0}}
-            initial={{opacity: 0}}
-            animate={{opacity: 1}}
-            exit={{opacity: 0}}
-            transition={{
-              duration: 0.2,
+            key={value.text}
+            className="bg-slate-700 rounded-full px-6 py-2 box-content"
+            initial={{
+              width: 0,
+            }}
+            animate={{
+              width: 'auto',
+              transition: {
+                width: {
+                  duration: 0.4,
+                },
+              },
+            }}
+            exit={{
+              width: 0,
+              transition: {
+                width: {
+                  duration: 0.4,
+                  delay: 0.5,
+                },
+              },
             }}
           >
-            {characters.map(({character, id}, i) => {
-              return (
-                <AnimatePresence mode="wait" key={id}>
-                  <motion.span
-                    style={{opacity: 0}}
-                    initial={{opacity: 0}}
-                    animate={{opacity: 1}}
-                    exit={{opacity: 0}}
-                    transition={{
-                      duration: 0.2,
-                      delay: 0.1 * i,
-                    }}
-                  >
-                    {character}
-                  </motion.span>
-                </AnimatePresence>
-              );
-            })}
+            <motion.span
+              className="block text-xl lg:text-5xl text-slate-50 lg:leading-[70px] lg:-mt-[8px] whitespace-nowrap"
+              key={value.text}
+              style={{opacity: 1}}
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{
+                opacity: 0,
+                transition: {
+                  delay: 0,
+                },
+              }}
+              transition={{
+                duration: 1,
+                delay: 0.5,
+              }}
+            >
+              {value.text}
+            </motion.span>
           </motion.div>
         </AnimatePresence>
-      </span>
+      </div>
     );
   },
   () => false

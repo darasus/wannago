@@ -62,7 +62,7 @@ function Feature({feature, className, ...props}: any) {
     <div className={cn(className, 'flex flex-col items-center')} {...props}>
       <div
         className={cn(
-          'w-12 h-12 rounded-full bg-brand-800 border-2 border-gray-800 flex items-center justify-center'
+          'w-12 h-12 rounded-full bg-brand-100 border-2 border-gray-800 flex items-center justify-center'
         )}
       >
         {feature.icon}
@@ -70,12 +70,7 @@ function Feature({feature, className, ...props}: any) {
       <h3 className={cn('mt-6 text-sm text-gray-400 uppercase')}>
         {feature.name}
       </h3>
-      <p
-        className={cn(
-          titleFontClassName,
-          'mt-2 font-display text-xl text-gray-800'
-        )}
-      >
+      <p className={cn(titleFontClassName, 'mt-2 font-display text-xl')}>
         {feature.summary}
       </p>
       <p className="mt-4 text-sm text-gray-600 text-center">

@@ -33,15 +33,16 @@ export const Hero = forwardRef(function Hero(
         <h1
           className={cn(
             titleFontClassName,
-            'mx-auto max-w-4xl text-3xl md:text-4xl lg:text-7xl tracking-tight text-gray-800 text-center'
+            'mx-auto max-w-4xl text-3xl md:text-4xl lg:text-7xl tracking-tight text-center',
+            'bg-clip-text bg-gradient-to-br from-brand-100 to-brand-1000',
+            'pb-2'
           )}
         >
-          Create
-          <br /> <span className="zigzag">simple</span> and{' '}
-          <span className="zigzag">stunning</span>
-          <br />
-          pages for your
-          <br />
+          <span className="block text-transparent mb-4">
+            <span className="block">Create</span>
+            <span className="block">simple and stunning</span>
+            <span className="block">pages for your</span>
+          </span>
           <TextAnimation
             texts={[
               'private event',
@@ -65,9 +66,8 @@ export const Hero = forwardRef(function Hero(
         </h1>
         <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-gray-800 text-center">
           <span className="font-medium">
-            {
-              'Send killer invitations to your event and get ready to meet your guests'
-            }
+            Send killer invitations to your event, and get ready to meet your
+            guests.
           </span>
         </div>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">

@@ -63,7 +63,7 @@ export default async function handler(req: NextRequest) {
             }}
           />
           <div
-            tw="flex text-gray-800 w-full h-full"
+            tw="flex text-slate-700 w-full h-full"
             style={{
               fontFamily: 'Body',
             }}

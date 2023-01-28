@@ -44,13 +44,13 @@ export function DateCard({
       </div>
       <div className="flex">
         <div className="mr-2">
-          <div className="flex flex-col justify-center items-center border-2 border-gray-800 rounded-2xl px-4 py-2 bg-brand-400">
-            <div className="h-0.5 bg-red-500 w-5 mb-1" />
-            <Text className="text-2xl leading-none">
+          <div className="flex flex-col justify-center items-center border-2 border-gray-800 rounded-2xl px-4 py-3 bg-slate-200">
+            {/* <div className="h-0.5 bg-slate-800 w-5 mb-1" /> */}
+            <Text className="text-2xl leading-none font-extrabold">
               {formatDate(new Date(startDate), 'dd', timezone)}
             </Text>
             <div />
-            <Text className="uppercase text-xs leading-none text-gray-500">
+            <Text className="uppercase text-xs leading-none font-bold">
               {formatDate(new Date(startDate), 'MMM', timezone)}
             </Text>
           </div>

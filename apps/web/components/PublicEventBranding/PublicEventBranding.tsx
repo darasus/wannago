@@ -11,7 +11,7 @@ export function PublicEventBranding() {
       }
     >
       <div className="flex items-center justify-center bg-gray-50 border-2 border-gray-800 pt-2 pb-3 px-1.5 rounded-t-md -mb-2">
-        <span className="font-bold text-xs text-gray-800">Built with</span>{' '}
+        <span className="font-bold text-xs">Built with</span>{' '}
       </div>
       <LogoView />
     </Link>

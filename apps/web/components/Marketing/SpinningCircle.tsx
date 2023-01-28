@@ -15,7 +15,7 @@ export default function SpinningCircle() {
   return (
     <div
       ref={ref}
-      className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 flex justify-center items-center"
+      className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 flex justify-center items-center pointer-events-none z-0"
     >
       <div style={{height, width: '100%'}}>
         <motion.div

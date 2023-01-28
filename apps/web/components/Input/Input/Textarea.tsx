@@ -26,7 +26,7 @@ export const Textarea = forwardRef(function Input(
       <textarea
         data-tooltip-target="tooltip-default"
         className={cn(
-          'block w-full rounded-3xl border-2 border-gray-300 shadow-sm sm:text-sm',
+          'block w-full rounded-3xl border-2 border-gray-300 shadow-sm sm:text-md placeholder-gray-400',
           {'focus:border-gray-500 focus:ring-gray-500': !hasError},
           inputClassName,
           {

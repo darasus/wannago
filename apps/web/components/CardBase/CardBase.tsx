@@ -15,7 +15,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
       ref={ref}
       className={cn(
         'p-6 rounded-3xl border-2',
-        {'border-gray-800 bg-gray-50': variant === 'normal'},
+        {'border-gray-800 bg-white': variant === 'normal'},
         {'border-black/10 bg-black/5': variant === 'translucent'},
         {},
         className

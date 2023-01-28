@@ -10,7 +10,7 @@ interface Props extends React.PropsWithChildren {
 export function Modal({children, isOpen, onClose, title}: Props) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
+      <Dialog as="div" className="relative z-50" onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -20,7 +20,7 @@ export function Modal({children, isOpen, onClose, title}: Props) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-brand-400 bg-opacity-50" />
+          <div className="fixed inset-0 bg-slate-700 bg-opacity-50" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
