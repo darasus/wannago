@@ -6,6 +6,7 @@ import {Td} from '../../components/Table/Td';
 import {Th} from '../../components/Table/Th';
 import {THead} from '../../components/Table/THead';
 import {TRow} from '../../components/Table/TRow';
+import {formatDate} from '../../utils/formatDate';
 import {trpc} from '../../utils/trpc';
 
 export default function AdminPage() {
@@ -33,7 +34,7 @@ export default function AdminPage() {
                   <Td>{data.length - i}</Td>
                   <Td>{user.firstName}</Td>
                   <Td>{user.lastName}</Td>
-                  <Td>{user.createdAt.toDateString()}</Td>
+                  <Td>{formatDate(user.createdAt, 'dd MMM, HH:mm')}</Td>
                   <Td>{user.email}</Td>
                   <Td>{user.externalId}</Td>
                   <Td>
