@@ -1,5 +1,6 @@
 import {AnimatePresence, motion} from 'framer-motion';
 import {memo, useEffect, useMemo, useState} from 'react';
+import {cn} from '../../utils/cn';
 
 interface Props {
   texts: string[];
@@ -61,7 +62,12 @@ export const TextAnimation = memo(
             }}
           >
             <motion.span
-              className="block text-2xl lg:text-5xl text-slate-50 lg:leading-[70px] lg:-mt-[8px] whitespace-nowrap"
+              className={cn(
+                'block whitespace-nowrap',
+                'text-2xl lg:text-5xl text-slate-50',
+                'lg:leading-[70px]',
+                '-mt-[2px] lg:-mt-[8px]'
+              )}
               key={value.text}
               style={{opacity: 1}}
               initial={{opacity: 0}}
