@@ -61,7 +61,7 @@ export const TextAnimation = memo(
             }}
           >
             <motion.span
-              className="block text-xl lg:text-5xl text-slate-50 lg:leading-[70px] lg:-mt-[8px] whitespace-nowrap"
+              className="block text-2xl lg:text-5xl text-slate-50 lg:leading-[70px] lg:-mt-[8px] whitespace-nowrap"
               key={value.text}
               style={{opacity: 1}}
               initial={{opacity: 0}}

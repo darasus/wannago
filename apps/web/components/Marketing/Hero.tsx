@@ -33,7 +33,7 @@ export const Hero = forwardRef(function Hero(
         <h1
           className={cn(
             titleFontClassName,
-            'mx-auto max-w-4xl text-3xl md:text-4xl lg:text-7xl tracking-tight text-center',
+            'mx-auto max-w-4xl text-4xl lg:text-7xl tracking-tight text-center',
             'bg-clip-text bg-gradient-to-br from-brand-100 to-brand-1000',
             'pb-2'
           )}
