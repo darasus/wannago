@@ -39,6 +39,12 @@ export default function AdminPage() {
                   <Td>{user.externalId}</Td>
                   <Td>
                     {user.organization?.events.map(event => {
+                      const status = event.isPublished ? 'published' : 'draft';
+                      const signUpCount = event.isPublished
+                        ? event.eventSignUps.length
+                        : 0;
+                      const label = `${event.title} (${status}) - ${signUpCount} sign ups`;
+
                       return (
                         <>
                           <a
@@ -46,9 +52,7 @@ export default function AdminPage() {
                             href={`/event/${event.id}`}
                             rel="noreferrer"
                           >
-                            {`${event.title} (${
-                              event.isPublished ? 'published' : 'draft'
-                            })`}
+                            {label}
                           </a>
                           <br />
                         </>

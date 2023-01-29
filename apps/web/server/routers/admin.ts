@@ -12,6 +12,9 @@ const getAllRegisteredUsers = adminProcedure.query(async ({ctx}) => {
         include: {
           events: {
             orderBy: {createdAt: 'desc'},
+            include: {
+              eventSignUps: true,
+            },
           },
         },
       },
