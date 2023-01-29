@@ -1,4 +1,4 @@
-import {Event} from '@prisma/client';
+import {Event, Image} from '@prisma/client';
 import {getBaseUrl} from '../../utils/getBaseUrl';
 import {DateCard} from '../../features/DateCard/DateCard';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
@@ -10,7 +10,7 @@ import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard
 import {isPast} from '../../utils/formatDate';
 
 interface Props {
-  event: Event;
+  event: Event & {featuredImage?: Image};
   timezone?: string;
   isPublic?: boolean;
   relativeTimeString?: string;
@@ -33,6 +33,7 @@ export function EventView({
             title={event.title}
             description={event.description}
             featuredImageSrc={event.featuredImageSrc}
+            featuredImage={event.featuredImage}
           />
         </div>
         <div>

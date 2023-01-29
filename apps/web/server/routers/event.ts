@@ -9,6 +9,7 @@ import {random} from '../../utils/random';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 import {getBaseUrl} from '../../utils/getBaseUrl';
+import {getImageMetaData} from '../../utils/getImageMetaData';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
@@ -196,6 +197,10 @@ const create = protectedProcedure
         });
       }
 
+      const {height, width, imageSrcBase64} = await getImageMetaData(
+        featuredImageSrc
+      );
+
       let event = await ctx.prisma.event.create({
         data: {
           shortId: nanoid(6),
@@ -211,6 +216,14 @@ const create = protectedProcedure
           organization: {
             connect: {
               id: organization.id,
+            },
+          },
+          featuredImage: {
+            create: {
+              src: featuredImageSrc,
+              width,
+              height,
+              imageSrcBase64,
             },
           },
         },
@@ -250,6 +263,7 @@ const getById = protectedProcedure
         id: eventId,
       },
       include: {
+        featuredImage: true,
         organization: {
           include: {
             users: true,

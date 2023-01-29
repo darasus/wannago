@@ -21,6 +21,8 @@ model Event {
   updatedAt            DateTime      @updatedAt
   maxNumberOfAttendees Int?
   featuredImageSrc     String?
+  featuredImage        Image?        @relation(name: "FeaturedImage", fields: [featuredImageId], references: [id])
+  featuredImageId      String?
   longitude            Float?
   latitude             Float?
   organization         Organization? @relation(name: "EventOrganization", fields: [organizationId], references: [id])
@@ -29,6 +31,7 @@ model Event {
   eventSignUps         EventSignUp[] @relation(name: "EventSignUps")
 
   @@index([organizationId])
+  @@index([featuredImageId])
 }
 
 model User {
@@ -98,4 +101,15 @@ model EmailPreference {
   isActive  Boolean   @default(true)
 
   @@index([userId])
+}
+
+model Image {
+  id             String   @id @default(uuid())
+  src            String
+  imageSrcBase64 String   @db.LongText()
+  width          Int
+  height         Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  events         Event[]  @relation(name: "FeaturedImage")
 }

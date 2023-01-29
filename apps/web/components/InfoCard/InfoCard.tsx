@@ -3,26 +3,50 @@ import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../Badge/Badge';
 import {Text} from '../Text/Text';
 import {cn} from '../../utils/cn';
+import {Image as ImageType} from '@prisma/client';
 
 interface Props {
   title: string;
   featuredImageSrc: string | null;
+  featuredImage?: ImageType;
   description: string;
 }
 
-export function InfoCard({description, featuredImageSrc, title}: Props) {
+export function InfoCard({
+  description,
+  featuredImageSrc,
+  title,
+  featuredImage,
+}: Props) {
+  const src = featuredImage ? featuredImage.src : featuredImageSrc;
+
+  console.log(featuredImage);
+
   return (
     <>
       <CardBase>
-        <div className="flex items-center overflow-hidden relative justify-center aspect-video bg-black rounded-3xl safari-rounded-border-fix mb-4">
-          {featuredImageSrc && (
+        <div
+          className={cn(
+            'flex items-center overflow-hidden relative justify-center bg-slate-700 rounded-3xl safari-rounded-border-fix mb-4',
+            {
+              'aspect-video': !Boolean(
+                featuredImage?.height && featuredImage?.width
+              ),
+            }
+          )}
+        >
+          {src && (
             <Image
-              src={featuredImageSrc}
-              alt=""
-              fill
-              style={{objectFit: 'cover'}}
               priority
+              src={src}
+              alt={title}
+              fill={!Boolean(featuredImage?.height && featuredImage?.width)}
+              style={featuredImageSrc ? {objectFit: 'cover'} : {}}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              width={featuredImage?.width}
+              height={featuredImage?.height}
+              blurDataURL={featuredImage?.imageSrcBase64}
+              placeholder="blur"
             />
           )}
         </div>
