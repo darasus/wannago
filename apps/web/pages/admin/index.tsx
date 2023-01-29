@@ -13,8 +13,8 @@ export default function AdminPage() {
   const {data} = trpc.admin.getAllRegisteredUsers.useQuery();
 
   return (
-    <AppLayout maxSize="lg">
-      <Container maxSize="lg">
+    <AppLayout maxSize="full">
+      <Container maxSize="full">
         <Table>
           <THead>
             <TRow>

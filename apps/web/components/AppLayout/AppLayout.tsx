@@ -3,7 +3,7 @@ import {Container} from '../Container/Container';
 import {Header} from '../Header/Header';
 
 interface Props extends PropsWithChildren {
-  maxSize?: 'md' | 'lg';
+  maxSize?: 'md' | 'lg' | 'full';
 }
 
 export default function AppLayout({children, maxSize = 'md'}: Props) {
