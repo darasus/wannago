@@ -18,6 +18,7 @@ export function InfoCard({
   title,
   featuredImage,
 }: Props) {
+  const isNewImage = Boolean(featuredImage);
   const src = featuredImage ? featuredImage.src : featuredImageSrc;
 
   console.log(featuredImage);
@@ -46,7 +47,7 @@ export function InfoCard({
               width={featuredImage?.width}
               height={featuredImage?.height}
               blurDataURL={featuredImage?.imageSrcBase64}
-              placeholder="blur"
+              placeholder={isNewImage ? 'blur' : undefined}
             />
           )}
         </div>
