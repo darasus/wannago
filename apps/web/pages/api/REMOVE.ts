@@ -14,36 +14,14 @@ export default async function handler(
         event.featuredImageSrc
       );
 
-      const dbEvent = await prisma.event.findFirst({
+      await prisma.event.update({
         where: {id: event.id},
+        data: {
+          featuredImageHeight: height,
+          featuredImageWidth: width,
+          featuredImagePreviewSrc: imageSrcBase64,
+        },
       });
-
-      if (!dbEvent?.featuredImageHeight && height) {
-        await prisma.event.update({
-          where: {id: event.id},
-          data: {
-            featuredImageHeight: height,
-          },
-        });
-      }
-
-      if (!dbEvent?.featuredImageWidth && width) {
-        await prisma.event.update({
-          where: {id: event.id},
-          data: {
-            featuredImageWidth: width,
-          },
-        });
-      }
-
-      if (!dbEvent?.featuredImagePreviewSrc && imageSrcBase64) {
-        await prisma.event.update({
-          where: {id: event.id},
-          data: {
-            featuredImagePreviewSrc: imageSrcBase64,
-          },
-        });
-      }
     }
   }
 
