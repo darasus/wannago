@@ -211,19 +211,14 @@ const create = protectedProcedure
           address: address,
           maxNumberOfAttendees,
           featuredImageSrc,
+          featuredImageHeight: height,
+          featuredImageWidth: width,
+          featuredImagePreviewSrc: imageSrcBase64,
           longitude: response.results[0].geometry.location.lng,
           latitude: response.results[0].geometry.location.lat,
           organization: {
             connect: {
               id: organization.id,
-            },
-          },
-          featuredImage: {
-            create: {
-              src: featuredImageSrc,
-              width,
-              height,
-              imageSrcBase64,
             },
           },
         },
@@ -263,7 +258,6 @@ const getById = protectedProcedure
         id: eventId,
       },
       include: {
-        featuredImage: true,
         organization: {
           include: {
             users: true,
@@ -283,6 +277,13 @@ const getByShortId = publicProcedure
     return ctx.prisma.event.findFirst({
       where: {
         shortId: input.id,
+      },
+      include: {
+        organization: {
+          include: {
+            users: true,
+          },
+        },
       },
     });
   });

@@ -6,4 +6,7 @@ export interface Form {
   address: string;
   maxNumberOfAttendees: number;
   featuredImageSrc: string;
+  featuredImageHeight: number;
+  featuredImageWidth: number;
+  featuredImagePreviewSrc: string;
 }

@@ -1,28 +1,28 @@
 import Image from 'next/image';
 import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../Badge/Badge';
-import {Text} from '../Text/Text';
 import {cn} from '../../utils/cn';
-import {Image as ImageType} from '@prisma/client';
 import {cloudflareImageLoader} from '../../utils/cloudflareImageLoader';
+import {Event} from '@prisma/client';
 
 interface Props {
-  title: string;
-  featuredImageSrc: string | null;
-  featuredImage?: ImageType;
-  description: string;
+  event: Event;
 }
 
-export function InfoCard({
-  description,
-  featuredImageSrc,
-  title,
-  featuredImage,
-}: Props) {
-  const isNewImage = Boolean(featuredImage);
-  const src = featuredImage ? featuredImage.src : featuredImageSrc;
+export function InfoCard({event}: Props) {
+  const {
+    description,
+    title,
+    featuredImageSrc,
+    featuredImageHeight,
+    featuredImageWidth,
+    featuredImagePreviewSrc,
+  } = event;
 
-  console.log(featuredImage);
+  const isNewImage = Boolean(
+    typeof featuredImageHeight === 'number' &&
+      typeof featuredImageWidth === 'number'
+  );
 
   return (
     <>
@@ -31,24 +31,22 @@ export function InfoCard({
           className={cn(
             'flex items-center overflow-hidden relative justify-center bg-slate-700 rounded-3xl safari-rounded-border-fix mb-4',
             {
-              'aspect-video': !Boolean(
-                featuredImage?.height && featuredImage?.width
-              ),
+              'aspect-video': !isNewImage,
             }
           )}
         >
-          {src && (
+          {featuredImageSrc && (
             <Image
               priority
-              src={src}
+              src={featuredImageSrc}
               alt={title}
               loader={cloudflareImageLoader}
-              fill={!Boolean(featuredImage?.height && featuredImage?.width)}
-              style={featuredImageSrc ? {objectFit: 'cover'} : {}}
+              fill={!isNewImage}
+              style={!isNewImage ? {objectFit: 'cover'} : {}}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              width={featuredImage?.width}
-              height={featuredImage?.height}
-              blurDataURL={featuredImage?.imageSrcBase64}
+              width={featuredImageWidth || undefined}
+              height={featuredImageHeight || undefined}
+              blurDataURL={featuredImagePreviewSrc || undefined}
               placeholder={isNewImage ? 'blur' : undefined}
             />
           )}

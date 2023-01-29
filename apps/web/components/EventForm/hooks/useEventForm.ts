@@ -22,6 +22,9 @@ export function useEventForm(props?: {event?: Event}) {
       address: event?.address,
       maxNumberOfAttendees: event?.maxNumberOfAttendees || undefined,
       featuredImageSrc: event?.featuredImageSrc || undefined,
+      featuredImageHeight: event?.featuredImageHeight || undefined,
+      featuredImageWidth: event?.featuredImageWidth || undefined,
+      featuredImagePreviewSrc: event?.featuredImagePreviewSrc || undefined,
     },
   });
 
