@@ -4,6 +4,7 @@ import {Badge} from '../Badge/Badge';
 import {Text} from '../Text/Text';
 import {cn} from '../../utils/cn';
 import {Image as ImageType} from '@prisma/client';
+import {cloudflareImageLoader} from '../../utils/cloudflareImageLoader';
 
 interface Props {
   title: string;
@@ -41,6 +42,7 @@ export function InfoCard({
               priority
               src={src}
               alt={title}
+              loader={cloudflareImageLoader}
               fill={!Boolean(featuredImage?.height && featuredImage?.width)}
               style={featuredImageSrc ? {objectFit: 'cover'} : {}}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
