@@ -12,12 +12,16 @@ export function formatDate(
   formatString: string,
   timezone?: string | null
 ): string {
-  const d = utcToZonedTime(
-    date,
-    timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
-  );
+  try {
+    const d = utcToZonedTime(
+      date,
+      timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
 
-  return _format(d, formatString);
+    return _format(d, formatString);
+  } catch (error) {
+    return 'Invalid date and time';
+  }
 }
 
 export function formatTimeago(date: Date, timezone?: string | null) {
