@@ -48,6 +48,9 @@ const update = protectedProcedure
       endDate: z.date(),
       address: z.string(),
       featuredImageSrc: z.string(),
+      featuredImageHeight: z.number(),
+      featuredImageWidth: z.number(),
+      featuredImagePreviewSrc: z.string(),
       maxNumberOfAttendees: z
         .number()
         .or(z.string())
@@ -69,6 +72,9 @@ const update = protectedProcedure
         endDate,
         maxNumberOfAttendees,
         featuredImageSrc,
+        featuredImageHeight,
+        featuredImageWidth,
+        featuredImagePreviewSrc,
         title,
       },
       ctx,
@@ -95,6 +101,9 @@ const update = protectedProcedure
           address: address,
           maxNumberOfAttendees: maxNumberOfAttendees,
           featuredImageSrc,
+          featuredImageHeight,
+          featuredImageWidth,
+          featuredImagePreviewSrc,
           longitude: response.results[0].geometry.location.lng,
           latitude: response.results[0].geometry.location.lat,
         },
@@ -154,6 +163,9 @@ const create = protectedProcedure
       endDate: z.date(),
       address: z.string(),
       featuredImageSrc: z.string(),
+      featuredImageHeight: z.number(),
+      featuredImageWidth: z.number(),
+      featuredImagePreviewSrc: z.string(),
       maxNumberOfAttendees: z
         .number()
         .or(z.string())
@@ -173,6 +185,9 @@ const create = protectedProcedure
         address,
         endDate,
         featuredImageSrc,
+        featuredImageHeight,
+        featuredImageWidth,
+        featuredImagePreviewSrc,
         maxNumberOfAttendees,
         startDate,
       },
@@ -197,10 +212,6 @@ const create = protectedProcedure
         });
       }
 
-      const {height, width, imageSrcBase64} = await getImageMetaData(
-        featuredImageSrc
-      );
-
       let event = await ctx.prisma.event.create({
         data: {
           shortId: nanoid(6),
@@ -211,9 +222,9 @@ const create = protectedProcedure
           address: address,
           maxNumberOfAttendees,
           featuredImageSrc,
-          featuredImageHeight: height,
-          featuredImageWidth: width,
-          featuredImagePreviewSrc: imageSrcBase64,
+          featuredImageHeight,
+          featuredImageWidth,
+          featuredImagePreviewSrc,
           longitude: response.results[0].geometry.location.lng,
           latitude: response.results[0].geometry.location.lat,
           organization: {
