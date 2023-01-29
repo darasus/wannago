@@ -5,7 +5,6 @@ import {ONE_WEEK_IN_SECONDS} from '../../constants';
 
 export const config = {
   runtime: 'edge',
-  regions: ['fra1'],
 };
 
 export default async function handler(req: NextRequest) {
@@ -46,6 +45,8 @@ export default async function handler(req: NextRequest) {
 
   const user = event?.organization?.users[0]!;
 
+  console.log(event?.featuredImageSrc);
+
   return new ImageResponse(
     (
       <div tw="flex w-full h-full p-8" style={{backgroundColor: '#FFE5D9'}}>
@@ -54,14 +55,19 @@ export default async function handler(req: NextRequest) {
           style={{borderRadius: 50}}
         >
           <div
-            tw="flex h-full w-[400px] mr-6"
+            tw="flex h-full w-[400px] mr-6 overflow-hidden"
             style={{
-              backgroundImage: `url(${event?.featuredImageSrc!})`,
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover',
               borderRadius: 50,
             }}
-          />
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              tw="w-full h-full"
+              src={event?.featuredImageSrc!}
+              style={{objectFit: 'cover'}}
+              alt=""
+            />
+          </div>
           <div
             tw="flex text-slate-700 w-full h-full"
             style={{
