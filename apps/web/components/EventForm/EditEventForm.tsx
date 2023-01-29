@@ -95,11 +95,7 @@ export function EditEventForm({event}: Props) {
               />
             </div>
             <div>
-              <InfoCard
-                title={updatedEvent.title}
-                description={updatedEvent.description}
-                featuredImageSrc={updatedEvent.featuredImageSrc}
-              />
+              <InfoCard event={updatedEvent} />
             </div>
             <div>
               <LocationCard

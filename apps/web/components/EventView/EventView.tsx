@@ -29,11 +29,7 @@ export function EventView({
       <div className="flex flex-col gap-y-4 md:col-span-8">
         <div className="block md:hidden">{organizer}</div>
         <div>
-          <InfoCard
-            title={event.title}
-            description={event.description}
-            featuredImageSrc={event.featuredImageSrc}
-          />
+          <InfoCard event={event} />
         </div>
         <div>
           <LocationCard

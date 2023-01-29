@@ -18,14 +18,7 @@ function Event() {
 
   const elements = [
     {
-      el: (
-        <InfoCard
-          key={1}
-          title={event.title}
-          description={event.description}
-          featuredImageSrc={event.featuredImageSrc}
-        />
-      ),
+      el: <InfoCard key={1} event={event} />,
       delay: 0,
     },
     {

@@ -18,9 +18,10 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
     formState: {defaultValues},
     setValue,
   } = useFormContext<Form>();
-  const [imageSrc, setSrc] = useState<string | null>(
+  const [imageSrc, setImageSrc] = useState<string | null>(
     defaultValues?.featuredImageSrc || null
   );
+
   const {isLoading, handleFileUpload} = useUploadImage();
 
   const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +29,11 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
     if (file) {
       handleFileUpload(file).then(data => {
         if (data) {
-          const imageSrc = data.variants[0];
-          setSrc(imageSrc);
-          setValue('featuredImageSrc', imageSrc);
+          setImageSrc(data.url);
+          setValue('featuredImageSrc', data.url);
+          setValue('featuredImageHeight', data.height);
+          setValue('featuredImageWidth', data.width);
+          setValue('featuredImagePreviewSrc', data.imageSrcBase64);
         }
       });
     }

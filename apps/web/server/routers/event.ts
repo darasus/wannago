@@ -9,6 +9,7 @@ import {random} from '../../utils/random';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 import {getBaseUrl} from '../../utils/getBaseUrl';
+import {getImageMetaData} from '../../utils/getImageMetaData';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
@@ -47,6 +48,9 @@ const update = protectedProcedure
       endDate: z.date(),
       address: z.string(),
       featuredImageSrc: z.string(),
+      featuredImageHeight: z.number(),
+      featuredImageWidth: z.number(),
+      featuredImagePreviewSrc: z.string(),
       maxNumberOfAttendees: z
         .number()
         .or(z.string())
@@ -68,6 +72,9 @@ const update = protectedProcedure
         endDate,
         maxNumberOfAttendees,
         featuredImageSrc,
+        featuredImageHeight,
+        featuredImageWidth,
+        featuredImagePreviewSrc,
         title,
       },
       ctx,
@@ -94,6 +101,9 @@ const update = protectedProcedure
           address: address,
           maxNumberOfAttendees: maxNumberOfAttendees,
           featuredImageSrc,
+          featuredImageHeight,
+          featuredImageWidth,
+          featuredImagePreviewSrc,
           longitude: response.results[0].geometry.location.lng,
           latitude: response.results[0].geometry.location.lat,
         },
@@ -153,6 +163,9 @@ const create = protectedProcedure
       endDate: z.date(),
       address: z.string(),
       featuredImageSrc: z.string(),
+      featuredImageHeight: z.number(),
+      featuredImageWidth: z.number(),
+      featuredImagePreviewSrc: z.string(),
       maxNumberOfAttendees: z
         .number()
         .or(z.string())
@@ -172,6 +185,9 @@ const create = protectedProcedure
         address,
         endDate,
         featuredImageSrc,
+        featuredImageHeight,
+        featuredImageWidth,
+        featuredImagePreviewSrc,
         maxNumberOfAttendees,
         startDate,
       },
@@ -206,6 +222,9 @@ const create = protectedProcedure
           address: address,
           maxNumberOfAttendees,
           featuredImageSrc,
+          featuredImageHeight,
+          featuredImageWidth,
+          featuredImagePreviewSrc,
           longitude: response.results[0].geometry.location.lng,
           latitude: response.results[0].geometry.location.lat,
           organization: {
@@ -269,6 +288,13 @@ const getByShortId = publicProcedure
     return ctx.prisma.event.findFirst({
       where: {
         shortId: input.id,
+      },
+      include: {
+        organization: {
+          include: {
+            users: true,
+          },
+        },
       },
     });
   });

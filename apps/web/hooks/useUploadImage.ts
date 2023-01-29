@@ -1,11 +1,16 @@
 import ky from 'ky';
 import {useCallback, useState} from 'react';
+import {z} from 'zod';
 import {getBaseUrl} from '../utils/getBaseUrl';
 
-interface FileUploadResponse {
-  id: string;
-  variants: string[];
-}
+const schema = z.object({
+  url: z.string().url(),
+  imageSrcBase64: z.string(),
+  height: z.number(),
+  width: z.number(),
+});
+
+type FileUploadResponse = z.infer<typeof schema>;
 
 interface Props {
   onSuccess?: (result: FileUploadResponse) => void;
@@ -18,13 +23,11 @@ const uploadFile = (file: File) => {
   payload.append('file', file);
 
   return ky
-    .post(`${getBaseUrl()}/api/uploadImage`, {
+    .post(`${getBaseUrl()}/api/upload-image`, {
       body: payload,
     })
     .json()
-    .then(({result}: any) => {
-      return {id: result.id, variants: result.variants} as FileUploadResponse;
-    });
+    .then(res => schema.parse(res));
 };
 
 export function useUploadImage(props?: Props) {

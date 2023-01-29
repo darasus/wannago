@@ -9,24 +9,27 @@ datasource db {
 }
 
 model Event {
-  id                   String        @id @default(uuid())
-  shortId              String?       @unique
-  title                String        @db.VarChar(255)
-  description          String        @db.LongText()
-  startDate            DateTime
-  endDate              DateTime
-  address              String
-  isPublished          Boolean?      @default(false)
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
-  maxNumberOfAttendees Int?
-  featuredImageSrc     String?
-  longitude            Float?
-  latitude             Float?
-  organization         Organization? @relation(name: "EventOrganization", fields: [organizationId], references: [id])
-  organizationId       String?
-  messageId            String?
-  eventSignUps         EventSignUp[] @relation(name: "EventSignUps")
+  id                      String        @id @default(uuid())
+  shortId                 String?       @unique
+  title                   String        @db.VarChar(255)
+  description             String        @db.LongText()
+  startDate               DateTime
+  endDate                 DateTime
+  address                 String
+  isPublished             Boolean?      @default(false)
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
+  maxNumberOfAttendees    Int?
+  featuredImageSrc        String?
+  featuredImageWidth      Int?
+  featuredImageHeight     Int?
+  featuredImagePreviewSrc String?       @db.LongText()
+  longitude               Float?
+  latitude                Float?
+  organization            Organization? @relation(name: "EventOrganization", fields: [organizationId], references: [id])
+  organizationId          String?
+  messageId               String?
+  eventSignUps            EventSignUp[] @relation(name: "EventSignUps")
 
   @@index([organizationId])
 }
@@ -99,3 +102,14 @@ model EmailPreference {
 
   @@index([userId])
 }
+
+// model Image {
+//   id             String   @id @default(uuid())
+//   src            String
+//   imageSrcBase64 String   @db.LongText()
+//   width          Int
+//   height         Int
+//   createdAt      DateTime @default(now())
+//   updatedAt      DateTime @updatedAt
+//   events         Event[]  @relation(name: "FeaturedImage")
+// }
