@@ -19,12 +19,12 @@ export function ParticipantsCard({
 }: Props) {
   const tooltipText = isPublished
     ? undefined
-    : 'To enable sign ups please publish event first';
+    : 'To enable sign-ups, please publish the event first.';
 
   return (
-    <CardBase>
-      <Tooltip text={tooltipText}>
-        <div className={cn({'blur-[3px] pointer-events-none': !isPublished})}>
+    <Tooltip text={tooltipText}>
+      <CardBase isBlur={!isPublished}>
+        <div>
           <div className="mb-2">
             <Badge color="gray" className="mr-2" size="xs">
               Attend
@@ -47,7 +47,7 @@ export function ParticipantsCard({
             <Text className="text-gray-400">{numberOfAttendees}</Text>
           </div>
         </div>
-      </Tooltip>
-    </CardBase>
+      </CardBase>
+    </Tooltip>
   );
 }

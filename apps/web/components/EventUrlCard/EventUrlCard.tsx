@@ -24,42 +24,43 @@ export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
     copy();
   };
 
+  const publicEventUrl = isPublished
+    ? url
+    : `${getBaseUrl()}/e/abcdef`
+        .replace('https://www.', '')
+        .replace('http://', '');
+
   return (
-    <CardBase>
-      <div className="mb-2">
-        <Badge color="gray" className="mr-2" size="xs">
-          Invite
-        </Badge>
-        <Button
-          onClick={onCopyUrlClick}
-          variant="link-gray"
-          disabled={isCopied}
-          size="xs"
-        >
-          {isCopied ? 'Copied!' : 'Copy url'}
-        </Button>
-      </div>
-      <div>
-        <Tooltip
-          text={
-            isPublished
-              ? undefined
-              : 'To see public link please publish event first'
-          }
-        >
+    <Tooltip
+      text={
+        isPublished
+          ? undefined
+          : 'To see the public link, please publish the event first.'
+      }
+    >
+      <CardBase isBlur={!isPublished}>
+        <div className="mb-2">
+          <Badge color="gray" className="mr-2" size="xs">
+            Invite
+          </Badge>
+          <Button
+            onClick={onCopyUrlClick}
+            variant="link-gray"
+            disabled={isCopied}
+            size="xs"
+          >
+            {isCopied ? 'Copied!' : 'Copy url'}
+          </Button>
+        </div>
+        <div>
           <Link
-            className={cn('text-gray-800 font-bold hover:underline', {
-              'blur-[3px] pointer-events-none': !isPublished,
-            })}
+            className={cn('text-gray-800 font-bold hover:underline')}
             href={url}
           >
-            {url
-              .replace('https://', '')
-              .replace('http://', '')
-              .replace('www.', '')}
+            {publicEventUrl}
           </Link>
-        </Tooltip>
-      </div>
-    </CardBase>
+        </div>
+      </CardBase>
+    </Tooltip>
   );
 }
