@@ -19,37 +19,28 @@ export function InfoCard({event}: Props) {
     featuredImagePreviewSrc,
   } = event;
 
-  const isNewImage = Boolean(
-    typeof featuredImageHeight === 'number' &&
-      typeof featuredImageWidth === 'number'
-  );
+  const heightRatio = featuredImageHeight / featuredImageWidth;
+  const imageWidth = 610;
+  const imageHeight = Number((heightRatio * imageWidth).toFixed(0));
 
   return (
     <>
       <CardBase>
         <div
           className={cn(
-            'flex items-center overflow-hidden relative justify-center bg-slate-700 rounded-3xl safari-rounded-border-fix mb-4',
-            {
-              'aspect-video': !isNewImage,
-            }
+            'flex items-center overflow-hidden relative justify-center bg-slate-700 rounded-3xl safari-rounded-border-fix mb-4'
           )}
         >
-          {featuredImageSrc && (
-            <Image
-              priority
-              src={featuredImageSrc}
-              alt={title}
-              loader={cloudflareImageLoader}
-              fill={!isNewImage}
-              style={!isNewImage ? {objectFit: 'cover'} : {}}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              width={featuredImageWidth || undefined}
-              height={featuredImageHeight || undefined}
-              blurDataURL={featuredImagePreviewSrc || undefined}
-              placeholder={isNewImage ? 'blur' : undefined}
-            />
-          )}
+          <Image
+            priority
+            src={featuredImageSrc}
+            alt={title}
+            loader={cloudflareImageLoader}
+            width={imageWidth}
+            height={imageHeight}
+            blurDataURL={featuredImagePreviewSrc}
+            placeholder={'blur'}
+          />
         </div>
         <div>
           <div className="mb-2">

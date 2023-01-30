@@ -4,14 +4,11 @@ interface Props {
   quality?: number;
 }
 
-export function cloudflareImageLoader({src, width, quality}: Props) {
-  const params = [`width=${width}`];
+export function cloudflareImageLoader({src, width, quality = 70}: Props) {
+  const url = new URL(src);
 
-  if (quality) {
-    params.push(`quality=${quality}`);
-  }
+  url.searchParams.append('width', width.toString());
+  url.searchParams.append('quality', quality.toString());
 
-  const paramsString = params.join(',');
-
-  return `${src}?${paramsString}`;
+  return url.toString();
 }
