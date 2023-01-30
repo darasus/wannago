@@ -1,4 +1,4 @@
-import {Event} from '@prisma/client';
+import {Event, User} from '@prisma/client';
 import {useState} from 'react';
 import {ContactFormModal} from '../../components/ContactFormModal/ContactFormModal';
 import {trpc} from '../../utils/trpc';
@@ -9,14 +9,19 @@ import {ContactForm} from '../../types/forms';
 import {toast} from 'react-hot-toast';
 
 interface Props {
-  event: Event;
+  event: Event & {organization?: {users?: User[]}};
 }
 
 export function OrganizerCard({event}: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const {data, isLoading} = trpc.event.getOrganizer.useQuery({
-    eventId: event.id,
-  });
+  const {data, isLoading} = trpc.event.getOrganizer.useQuery(
+    {
+      eventId: event.id,
+    },
+    {
+      initialData: event.organization?.users?.[0],
+    }
+  );
 
   const onOpenFormClick = () => {
     setIsOpen(true);
