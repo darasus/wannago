@@ -3,9 +3,11 @@ import {getBaseUrl} from '../../utils/getBaseUrl';
 import {LogoView} from '../Logo/Logo';
 
 export function PublicEventBranding() {
+  const url = getBaseUrl().endsWith('/') ? getBaseUrl() : `${getBaseUrl()}/`;
+
   return (
     <Link
-      href={getBaseUrl()}
+      href={url}
       className={
         'flex flex-col items-center justify-center text-gray-500 text-sm lg:fixed right-4 bottom-4'
       }
