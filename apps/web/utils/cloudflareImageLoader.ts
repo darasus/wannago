@@ -4,7 +4,13 @@ interface Props {
   quality?: number;
 }
 
-export function cloudflareImageLoader({src, width, quality = 70}: Props) {
+export function cloudflareImageLoader({
+  src,
+  width: _width,
+  quality = 70,
+}: Props) {
+  const maxWidth = 1240;
+  const width = _width > maxWidth ? maxWidth : _width;
   const url = new URL(src);
 
   url.searchParams.append('width', width.toString());
