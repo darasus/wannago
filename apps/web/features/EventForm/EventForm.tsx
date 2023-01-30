@@ -1,14 +1,14 @@
 import {isBefore, isEqual} from 'date-fns';
 import {FormEventHandler} from 'react';
 import {useFormContext, useWatch} from 'react-hook-form';
-import {Badge} from '../Badge/Badge';
-import {PageHeader} from '../PageHeader/PageHeader';
-import {Button} from '../Button/Button';
-import {CardBase} from '../CardBase/CardBase';
-import {FileInput} from '../Input/FileInput/FileInput';
-import {Input} from '../Input/Input/Input';
-import {LocationInput} from '../Input/LocationInput/LocationInput';
-import {RichTextarea} from '../Input/RichTextarea/RichTextarea';
+import {Badge} from '../../components/Badge/Badge';
+import {PageHeader} from '../../components/PageHeader/PageHeader';
+import {Button} from '../../components/Button/Button';
+import {CardBase} from '../../components/CardBase/CardBase';
+import {FileInput} from '../../components/Input/FileInput/FileInput';
+import {Input} from '../../components/Input/Input/Input';
+import {LocationInput} from '../../components/Input/LocationInput/LocationInput';
+import {RichTextarea} from '../../components/Input/RichTextarea/RichTextarea';
 import {Form} from './types';
 
 interface Props {

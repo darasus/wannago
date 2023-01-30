@@ -6,7 +6,7 @@ import {PhotoIcon} from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import {Spinner} from '../../Spinner/Spinner';
 import {useFormContext} from 'react-hook-form';
-import {Form} from '../../EventForm/types';
+import {Form} from '../../../features/EventForm/types';
 
 interface Props extends ComponentProps<typeof Input> {}
 

@@ -8,7 +8,7 @@ import StarterKit from '@tiptap/starter-kit';
 import {forwardRef, HTMLAttributes} from 'react';
 import {FieldError, useFormContext} from 'react-hook-form';
 import {cn} from '../../../utils/cn';
-import {Form} from '../../EventForm/types';
+import {Form} from '../../../features/EventForm/types';
 import {InputWrapper} from '../Input/InputWrapper';
 import {BubbleMenuButtonGroup} from './BubbleMenuButtonGroup';
 

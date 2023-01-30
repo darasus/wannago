@@ -6,11 +6,11 @@ import {FormProvider} from 'react-hook-form';
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {trpc} from '../../utils/trpc';
 import {useAmplitude} from '../../hooks/useAmplitude';
-import {InfoCard} from '../InfoCard/InfoCard';
-import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
-import {LocationCard} from '../LocationCard/LocationCard';
-import {DateCard} from '../DateCard/DateCard';
-import {PageHeader} from '../PageHeader/PageHeader';
+import {InfoCard} from '../../components/InfoCard/InfoCard';
+import {OrganizerCard} from '../../components/OrganizerCard/OrganizerCard';
+import {LocationCard} from '../../components/LocationCard/LocationCard';
+import {DateCard} from '../../components/DateCard/DateCard';
+import {PageHeader} from '../../components/PageHeader/PageHeader';
 
 interface Props {
   event: Event & {organization: (Organization & {users: User[]}) | null};

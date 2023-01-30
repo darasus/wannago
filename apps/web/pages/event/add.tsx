@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import AppLayout from '../../components/AppLayout/AppLayout';
-import {AddEventForm} from '../../components/EventForm/AddEventForm';
+import {AddEventForm} from '../../features/EventForm/AddEventForm';
 import {Container} from '../../components/Container/Container';
 import {withProtected} from '../../utils/withAuthProtect';
 import {PageHeader} from '../../components/PageHeader/PageHeader';
