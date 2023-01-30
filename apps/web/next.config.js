@@ -27,7 +27,6 @@ const moduleExports = {
       'images.clerk.dev',
       'gravatar.com',
     ],
-    imageSizes: [620, 1240],
   },
   transpilePackages: ['database'],
 };

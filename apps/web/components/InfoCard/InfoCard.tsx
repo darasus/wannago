@@ -19,10 +19,6 @@ export function InfoCard({event}: Props) {
     featuredImagePreviewSrc,
   } = event;
 
-  const heightRatio = featuredImageHeight / featuredImageWidth;
-  const imageWidth = 620;
-  const imageHeight = Number((heightRatio * imageWidth).toFixed(0));
-
   return (
     <>
       <CardBase>
@@ -36,10 +32,11 @@ export function InfoCard({event}: Props) {
             src={featuredImageSrc}
             alt={title}
             loader={cloudflareImageLoader}
-            width={imageWidth}
-            height={imageHeight}
+            width={featuredImageWidth}
+            height={featuredImageHeight}
             blurDataURL={featuredImagePreviewSrc}
             placeholder={'blur'}
+            sizes="320 640 750 1000"
           />
         </div>
         <div>
