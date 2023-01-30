@@ -25,7 +25,7 @@ export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
   };
 
   const publicEventUrl = isPublished
-    ? url
+    ? url.replace('https://www.', '').replace('http://', '')
     : `${getBaseUrl()}/e/abcdef`
         .replace('https://www.', '')
         .replace('http://', '');
