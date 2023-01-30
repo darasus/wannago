@@ -20,7 +20,7 @@ export function InfoCard({event}: Props) {
   } = event;
 
   const heightRatio = featuredImageHeight / featuredImageWidth;
-  const imageWidth = 610;
+  const imageWidth = 620;
   const imageHeight = Number((heightRatio * imageWidth).toFixed(0));
 
   return (
