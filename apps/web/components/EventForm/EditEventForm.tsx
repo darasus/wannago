@@ -71,8 +71,8 @@ export function EditEventForm({event}: Props) {
     maxNumberOfAttendees,
     startDate: new Date(startDate),
     endDate: new Date(endDate),
-    longitude: geolocation?.results[0]?.geometry.location.lng || null,
-    latitude: geolocation?.results[0]?.geometry.location.lat || null,
+    longitude: geolocation?.results[0]?.geometry.location.lng as number,
+    latitude: geolocation?.results[0]?.geometry.location.lat as number,
   };
 
   return (

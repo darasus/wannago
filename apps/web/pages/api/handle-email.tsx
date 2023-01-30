@@ -293,7 +293,7 @@ export default async function handle(
 
     const eventCount = await prisma.event.count({
       where: {
-        organizationId: user?.organizationId,
+        organizationId: user.organizationId,
       },
     });
 
