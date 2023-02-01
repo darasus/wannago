@@ -15,7 +15,6 @@ model Event {
   description             String        @db.LongText()
   startDate               DateTime
   endDate                 DateTime
-  address                 String
   isPublished             Boolean       @default(false)
   createdAt               DateTime      @default(now())
   updatedAt               DateTime      @updatedAt
@@ -24,8 +23,10 @@ model Event {
   featuredImageWidth      Int
   featuredImageHeight     Int
   featuredImagePreviewSrc String        @db.LongText()
-  longitude               Float
-  latitude                Float
+  streamUrl               String?
+  address                 String?
+  longitude               Float?
+  latitude                Float?
   organization            Organization  @relation(name: "EventOrganization", fields: [organizationId], references: [id])
   organizationId          String
   messageId               String?

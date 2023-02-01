@@ -8,6 +8,7 @@ import {LocationCard} from '../../features/LocationCard/LocationCard';
 import {OrganizerCard} from '../../features/OrganizerCard/OrganizerCard';
 import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard';
 import {isPast} from '../../utils/formatDate';
+import {StreamCard} from '../StreamCard/StreamCard';
 
 interface Props {
   event: Event;
@@ -32,12 +33,15 @@ export function EventView({
           <InfoCard event={event} />
         </div>
         <div>
-          <LocationCard
-            address={event.address}
-            longitude={event.longitude!}
-            latitude={event.latitude!}
-            eventId={event.id}
-          />
+          {event.address && (
+            <LocationCard
+              address={event.address}
+              longitude={event.longitude!}
+              latitude={event.latitude!}
+              eventId={event.id}
+            />
+          )}
+          {event.streamUrl && <StreamCard streamUrl={event.streamUrl} />}
         </div>
       </div>
       <div className="flex flex-col gap-y-4 md:col-span-4">

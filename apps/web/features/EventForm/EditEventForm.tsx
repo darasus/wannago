@@ -11,6 +11,7 @@ import {OrganizerCard} from '../../components/OrganizerCard/OrganizerCard';
 import {LocationCard} from '../../components/LocationCard/LocationCard';
 import {DateCard} from '../../components/DateCard/DateCard';
 import {PageHeader} from '../../components/PageHeader/PageHeader';
+import {StreamCard} from '../../components/StreamCard/StreamCard';
 
 interface Props {
   event: Event & {organization: (Organization & {users: User[]}) | null};
@@ -34,10 +35,31 @@ export function EditEventForm({event}: Props) {
 
   const {handleSubmit, watch} = form;
 
-  const onSubmit = handleSubmit(async data => {
+  const onSubmit = handleSubmit(async ({streamUrl, address, type, ...data}) => {
     logEvent('event_update_submitted');
+
+    let location: {streamUrl: string | null; address: string | null} = {
+      streamUrl: null,
+      address: null,
+    };
+
+    if (streamUrl && type === 'online') {
+      location = {
+        streamUrl,
+        address: null,
+      };
+    }
+
+    if (address && type === 'offline') {
+      location = {
+        address,
+        streamUrl: null,
+      };
+    }
+
     await mutateAsync({
       ...data,
+      ...location,
       eventId: event.id,
       startDate: zonedTimeToUtc(
         data.startDate,
@@ -58,14 +80,22 @@ export function EditEventForm({event}: Props) {
     maxNumberOfAttendees,
     startDate,
     title,
+    streamUrl,
+    type,
   } = watch();
 
-  const {data: geolocation} = trpc.maps.getGeolocation.useQuery({address});
+  const {data: geolocation} = trpc.maps.getGeolocation.useQuery(
+    {address: address!},
+    {
+      enabled: !!address,
+    }
+  );
 
   const updatedEvent: Event = {
     ...event,
     title,
-    address,
+    address: address || null,
+    streamUrl: streamUrl || null,
     description,
     featuredImageSrc,
     maxNumberOfAttendees,
@@ -97,14 +127,21 @@ export function EditEventForm({event}: Props) {
             <div>
               <InfoCard event={updatedEvent} />
             </div>
-            <div>
-              <LocationCard
-                address={updatedEvent.address}
-                latitude={updatedEvent.latitude!}
-                longitude={updatedEvent.longitude!}
-                onGetDirectionsClick={() => {}}
-              />
-            </div>
+            {type === 'offline' && updatedEvent.address && (
+              <div>
+                <LocationCard
+                  address={updatedEvent.address}
+                  latitude={updatedEvent.latitude!}
+                  longitude={updatedEvent.longitude!}
+                  onGetDirectionsClick={() => {}}
+                />
+              </div>
+            )}
+            {type === 'online' && updatedEvent.streamUrl && (
+              <div>
+                <StreamCard streamUrl={updatedEvent.streamUrl} />
+              </div>
+            )}
             <div>
               <DateCard
                 startDate={new Date(updatedEvent.startDate)}
