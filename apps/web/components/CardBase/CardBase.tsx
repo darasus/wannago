@@ -3,12 +3,13 @@ import {cn} from '../../utils/cn';
 
 type Props = PropsWithChildren & {
   className?: string;
+  innerClassName?: string;
   variant?: 'normal' | 'translucent';
   isBlur?: boolean;
 };
 
 export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
-  {children, className, variant = 'normal', isBlur},
+  {children, className, variant = 'normal', isBlur, innerClassName},
   ref
 ) {
   return (
@@ -22,7 +23,12 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
         className
       )}
     >
-      <div className={cn({'blur-[3px] pointer-events-none': isBlur})}>
+      <div
+        className={cn(
+          {'blur-[3px] pointer-events-none': isBlur},
+          innerClassName
+        )}
+      >
         {children}
       </div>
     </div>

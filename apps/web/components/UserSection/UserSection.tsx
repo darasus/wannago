@@ -52,7 +52,7 @@ export function UserSection() {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute right-0 z-10 mt-3 max-w-sm">
-                <CardBase className="flex flex-col gap-y-4">
+                <CardBase innerClassName="flex flex-col gap-y-4">
                   <Button variant="neutral" as="a" href="/me">
                     Settings
                   </Button>
