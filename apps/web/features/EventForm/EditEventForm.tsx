@@ -139,7 +139,10 @@ export function EditEventForm({event}: Props) {
             )}
             {type === 'online' && updatedEvent.streamUrl && (
               <div>
-                <StreamCard streamUrl={updatedEvent.streamUrl} />
+                <StreamCard
+                  eventId={event.id}
+                  streamUrl={updatedEvent.streamUrl}
+                />
               </div>
             )}
             <div>

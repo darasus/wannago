@@ -202,18 +202,20 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
                 </CardBase>
               );
             })}
-            <CardBase className="flex gap-x-2">
-              <Button onClick={onCancelClick} variant="neutral">
-                Cancel
-              </Button>
-              <Button
-                isLoading={isSubmitting}
-                disabled={isSubmitting}
-                type="submit"
-                data-testid="event-form-submit-button"
-              >
-                {isEdit ? 'Save' : 'Save as draft'}
-              </Button>
+            <CardBase>
+              <div className="flex gap-x-2">
+                <Button onClick={onCancelClick} variant="neutral">
+                  Cancel
+                </Button>
+                <Button
+                  isLoading={isSubmitting}
+                  disabled={isSubmitting}
+                  type="submit"
+                  data-testid="event-form-submit-button"
+                >
+                  {isEdit ? 'Save' : 'Save as draft'}
+                </Button>
+              </div>
             </CardBase>
           </div>
         </form>
