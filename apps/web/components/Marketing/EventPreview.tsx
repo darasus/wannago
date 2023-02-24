@@ -24,7 +24,7 @@ function Event() {
     {
       el: (
         <LocationCard
-          address={event.address}
+          address={event.address!}
           longitude={event.longitude!}
           latitude={event.latitude!}
           onGetDirectionsClick={() => {}}

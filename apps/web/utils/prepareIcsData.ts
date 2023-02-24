@@ -22,7 +22,7 @@ export function prepareIcsData(event: Event): EventAttributes {
       Number(format(event.endDate, 'K')),
       Number(format(event.endDate, 'm')),
     ],
-    location: event.address,
+    ...(event.address ? {location: event.address} : {}),
     url: `${getBaseUrl()}/e/${event.shortId}`,
   };
 

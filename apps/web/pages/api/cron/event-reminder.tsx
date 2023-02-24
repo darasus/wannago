@@ -50,7 +50,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
               htmlString: render(
                 <EventReminder
                   title={event.title}
-                  address={event.address}
+                  address={(event.address || event.streamUrl)!}
                   eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
                   startDate="In few hours"
                 />

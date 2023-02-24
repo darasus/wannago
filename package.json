@@ -9,10 +9,10 @@
   "scripts": {
     "lint": "turbo run lint",
     "generate": "turbo run generate",
-    "build": "turbo run build",
-    "dev": "turbo run dev --filter web",
-    "start": "turbo run start --filter web",
-    "dev:email": "turbo run dev --filter email",
+    "web:build": "turbo run build --filter web",
+    "web:dev": "turbo run dev --filter web",
+    "web:start": "turbo run start --filter web",
+    "email:dev": "turbo run dev --filter email",
     "test:e2e": "turbo run test:e2e --filter web-e2e",
     "test:e2e:dev": "turbo run test:e2e:dev --filter web-e2e",
     "postinstall": "prisma generate --schema packages/database/prisma/schema.prisma"

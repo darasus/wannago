@@ -41,7 +41,9 @@ export function EventView({
               eventId={event.id}
             />
           )}
-          {event.streamUrl && <StreamCard streamUrl={event.streamUrl} />}
+          {event.streamUrl && (
+            <StreamCard eventId={event.id} streamUrl={event.streamUrl} />
+          )}
         </div>
       </div>
       <div className="flex flex-col gap-y-4 md:col-span-4">
