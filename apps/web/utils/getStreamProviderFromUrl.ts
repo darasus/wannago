@@ -1,8 +1,8 @@
-export type StreamHost = 'youtube' | 'google' | 'twitch';
+export type StreamHost = 'youtube' | 'meet' | 'twitch';
 
 const map: Record<string, StreamHost> = {
   'youtube.com': 'youtube',
-  'google.com': 'google',
+  'meet.google.com': 'meet',
   'twitch.tv': 'twitch',
 };
 

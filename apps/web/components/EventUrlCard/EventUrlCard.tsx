@@ -20,7 +20,7 @@ export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
   const {logEvent} = useAmplitude();
 
   const onCopyUrlClick = () => {
-    logEvent('copy_url_button_clicked', {eventId});
+    logEvent('copy_event_url_button_clicked', {eventId});
     copy();
   };
 

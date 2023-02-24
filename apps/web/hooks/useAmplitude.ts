@@ -5,7 +5,8 @@ import {useCallback} from 'react';
 type EventType =
   | 'get_directions_button_clicked'
   | 'add_to_calendar_button_clicked'
-  | 'copy_url_button_clicked'
+  | 'copy_event_url_button_clicked'
+  | 'copy_stream_url_button_clicked'
   | 'page_viewed'
   | 'user_logged_in'
   | 'user_logged_out'

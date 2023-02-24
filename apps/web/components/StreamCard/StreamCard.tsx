@@ -6,22 +6,33 @@ import {
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
-import {LocationImage} from '../LocationImage/LocationImage';
 import {Text} from '../Text/Text';
+import {Googlemeet, Youtube, Twitch} from '@styled-icons/simple-icons';
+import {VideoCameraIcon} from '@heroicons/react/24/outline';
+import useCopyClipboard from '../../hooks/useCopyClipboard';
+import {useAmplitude} from '../../hooks/useAmplitude';
 
 interface Props {
   streamUrl: string;
-  onStreamUrlClick?: () => void;
+  eventId: string;
 }
 
-const icon: Record<StreamHost, string> = {
-  google: 'https://unpkg.com/simple-icons@v8/icons/google.svg',
-  youtube: 'https://unpkg.com/simple-icons@v8/icons/youtube.svg',
-  twitch: 'https://unpkg.com/simple-icons@v8/icons/twitch.svg',
+const iconMap: Record<StreamHost, JSX.Element> = {
+  meet: <Googlemeet />,
+  youtube: <Youtube />,
+  twitch: <Twitch />,
 };
 
-export function StreamCard({streamUrl, onStreamUrlClick}: Props) {
+export function StreamCard({streamUrl, eventId}: Props) {
+  const [isCopied, copy] = useCopyClipboard(streamUrl);
+  const {logEvent} = useAmplitude();
   const host = getStreamProviderFromUrl(streamUrl);
+  const icon = iconMap[host] || <VideoCameraIcon />;
+
+  const onCopyUrlClick = () => {
+    logEvent('copy_stream_url_button_clicked', {eventId});
+    copy();
+  };
 
   return (
     <CardBase>
@@ -29,16 +40,25 @@ export function StreamCard({streamUrl, onStreamUrlClick}: Props) {
         <Badge color="gray" className="mr-2" size="xs">
           Where
         </Badge>
-        <Button onClick={onStreamUrlClick} variant="link-gray" size="xs">
-          Join streaming
+        <Button
+          onClick={onCopyUrlClick}
+          variant="link-gray"
+          disabled={isCopied}
+          size="xs"
+        >
+          {isCopied ? 'Copied!' : 'Copy url'}
         </Button>
       </div>
-      <Text className="font-bold">{streamUrl}</Text>
-      <div className="mb-2" />
-      <div>
-        <div>
-          <Image src={icon[host]} alt={icon[host]} width={50} height={50} />
-        </div>
+      <div className="flex">
+        <Button
+          variant="neutral"
+          iconLeft={icon}
+          as="a"
+          href={streamUrl}
+          target="_blank"
+        >
+          Join stream
+        </Button>
       </div>
     </CardBase>
   );
