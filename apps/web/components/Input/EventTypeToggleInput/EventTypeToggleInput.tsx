@@ -41,6 +41,7 @@ export const EventTypeToggleInput = forwardRef<HTMLInputElement, Props>(
                     setValue(props?.name as 'streamUrl', option.value);
                     e.preventDefault();
                   }}
+                  data-testid={`grouped-toggle-${option.value}`}
                 >
                   <div
                     className={cn(
