@@ -93,7 +93,7 @@ jobs:
         
         - name: Cypress run
           run: |
-            pnpm build
+            pnpm web:build
             pnpm run-p --race start test:e2e
  
         # - name: Test
