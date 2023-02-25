@@ -46,11 +46,12 @@ const update = protectedProcedure
       description: z.string(),
       startDate: z.date(),
       endDate: z.date(),
-      address: z.string(),
+      address: z.string().nullable(),
       featuredImageSrc: z.string(),
       featuredImageHeight: z.number(),
       featuredImageWidth: z.number(),
       featuredImagePreviewSrc: z.string(),
+      streamUrl: z.string().nullable(),
       maxNumberOfAttendees: z
         .number()
         .or(z.string())
@@ -76,12 +77,17 @@ const update = protectedProcedure
         featuredImageWidth,
         featuredImagePreviewSrc,
         title,
+        streamUrl,
       },
       ctx,
     }) => {
       await authorizeChange({ctx, eventId});
 
-      const response = await ctx.maps.geocode({address});
+      let geocodeResponse = null;
+
+      if (address) {
+        geocodeResponse = await ctx.maps.geocode({address});
+      }
 
       const originalEvent = await ctx.prisma.event.findUnique({
         where: {
@@ -104,8 +110,9 @@ const update = protectedProcedure
           featuredImageHeight,
           featuredImageWidth,
           featuredImagePreviewSrc,
-          longitude: response.results[0].geometry.location.lng,
-          latitude: response.results[0].geometry.location.lat,
+          longitude: geocodeResponse?.results[0].geometry.location.lng,
+          latitude: geocodeResponse?.results[0].geometry.location.lat,
+          streamUrl,
         },
       });
 
@@ -161,7 +168,8 @@ const create = protectedProcedure
       description: z.string(),
       startDate: z.date(),
       endDate: z.date(),
-      address: z.string(),
+      address: z.string().nullable(),
+      streamUrl: z.string().nullable(),
       featuredImageSrc: z.string(),
       featuredImageHeight: z.number(),
       featuredImageWidth: z.number(),
@@ -190,10 +198,15 @@ const create = protectedProcedure
         featuredImagePreviewSrc,
         maxNumberOfAttendees,
         startDate,
+        streamUrl,
       },
       ctx,
     }) => {
-      const response = await ctx.maps.geocode({address});
+      let geocodeResponse = null;
+
+      if (address) {
+        geocodeResponse = await ctx.maps.geocode({address});
+      }
 
       const organization = await ctx.prisma.organization.findFirst({
         where: {
@@ -225,8 +238,9 @@ const create = protectedProcedure
           featuredImageHeight,
           featuredImageWidth,
           featuredImagePreviewSrc,
-          longitude: response.results[0].geometry.location.lng,
-          latitude: response.results[0].geometry.location.lat,
+          streamUrl,
+          longitude: geocodeResponse?.results[0].geometry.location.lng,
+          latitude: geocodeResponse?.results[0].geometry.location.lat,
           organization: {
             connect: {
               id: organization.id,

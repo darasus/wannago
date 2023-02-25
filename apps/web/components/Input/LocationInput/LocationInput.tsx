@@ -57,7 +57,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
               <Combobox.Options
                 as={CardBase}
                 className={cn(
-                  'absolute z-50 mt-1 py-1 px-0 max-h-60 w-full overflow-auto ring-1 ring-black ring-opacity-5 focus:outline-none text-md',
+                  'absolute z-50 mt-1 !p-0 py-1 px-0 max-h-60 w-full overflow-auto ring-1 ring-black ring-opacity-5 focus:outline-none text-md',
                   {
                     hidden:
                       !data?.predictions || data?.predictions.length === 0,
@@ -69,8 +69,8 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
                     key={place.place_id}
                     data-testid="location-input-option"
                     className={({active}) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 list-none ${
-                        active ? 'bg-brand-400 text-gray-800' : 'text-gray-900'
+                      `relative cursor-default select-none py-2 px-4 list-none ${
+                        active ? 'bg-brand-400 text-gray-50' : 'text-gray-700'
                       }`
                     }
                     value={place.description}

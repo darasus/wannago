@@ -10,6 +10,8 @@ import {Input} from '../../components/Input/Input/Input';
 import {LocationInput} from '../../components/Input/LocationInput/LocationInput';
 import {RichTextarea} from '../../components/Input/RichTextarea/RichTextarea';
 import {Form} from './types';
+import {EventTypeToggleInput} from '../../components/Input/EventTypeToggleInput/EventTypeToggleInput';
+import {VideoCameraIcon, BuildingOffice2Icon} from '@heroicons/react/24/solid';
 
 interface Props {
   onSubmit: FormEventHandler;
@@ -22,8 +24,12 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
   const {
     register,
     formState: {isSubmitting, errors},
+    watch,
   } = useFormContext<Form>();
   const startDate = useWatch<Form>({name: 'startDate'});
+  const type = useWatch<Form>({name: 'type'});
+
+  console.log(watch());
 
   const items = [
     {
@@ -84,10 +90,12 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             {...register('endDate', {
               required: {value: true, message: 'End date is required'},
               validate: (value: string) => {
-                return isBefore(new Date(value), new Date(startDate)) ||
-                  isEqual(new Date(value), new Date(startDate))
-                  ? 'End date must be after start date'
-                  : undefined;
+                if (startDate) {
+                  return isBefore(new Date(value), new Date(startDate)) ||
+                    isEqual(new Date(value), new Date(startDate))
+                    ? 'End date must be after start date'
+                    : undefined;
+                }
               },
             })}
           />
@@ -97,16 +105,54 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
     {
       label: 'Where',
       content: (
-        <>
-          <LocationInput
-            label="Event address"
-            data-testid="event-form-location"
-            error={errors.address}
-            {...register('address', {
-              required: {value: true, message: 'Address is required'},
-            })}
+        <div className="flex gap-x-2 items-end">
+          <div className="grow">
+            {type === 'offline' && (
+              <LocationInput
+                label="Address"
+                data-testid="event-form-address"
+                error={errors.address}
+                {...register('address', {
+                  required: {value: true, message: 'Address is required'},
+                })}
+              />
+            )}
+            {type === 'online' && (
+              <Input
+                label="Stream URL"
+                data-testid="event-form-url"
+                error={errors.streamUrl}
+                {...register('streamUrl', {
+                  required: {value: true, message: 'Stream URL is required'},
+                  validate: (value: string | undefined) => {
+                    try {
+                      if (value) {
+                        new URL(value);
+                      }
+                    } catch (error) {
+                      return 'Stream URL is not valid';
+                    }
+                    return undefined;
+                  },
+                })}
+              />
+            )}
+          </div>
+          <EventTypeToggleInput
+            {...register('type')}
+            data-testid="event-form-type"
+            options={[
+              {
+                label: <BuildingOffice2Icon className="h-5 w-5" />,
+                value: 'offline',
+              },
+              {
+                label: <VideoCameraIcon className="h-5 w-5" />,
+                value: 'online',
+              },
+            ]}
           />
-        </>
+        </div>
       ),
     },
     {
@@ -156,18 +202,20 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
                 </CardBase>
               );
             })}
-            <CardBase className="flex gap-x-2">
-              <Button onClick={onCancelClick} variant="neutral">
-                Cancel
-              </Button>
-              <Button
-                isLoading={isSubmitting}
-                disabled={isSubmitting}
-                type="submit"
-                data-testid="event-form-submit-button"
-              >
-                {isEdit ? 'Save' : 'Save as draft'}
-              </Button>
+            <CardBase>
+              <div className="flex gap-x-2">
+                <Button onClick={onCancelClick} variant="neutral">
+                  Cancel
+                </Button>
+                <Button
+                  isLoading={isSubmitting}
+                  disabled={isSubmitting}
+                  type="submit"
+                  data-testid="event-form-submit-button"
+                >
+                  {isEdit ? 'Save' : 'Save as draft'}
+                </Button>
+              </div>
             </CardBase>
           </div>
         </form>

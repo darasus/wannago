@@ -14,6 +14,7 @@ type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> & {
   as?: 'button' | 'label' | 'a';
   htmlFor?: string;
   href?: LinkProps['href'];
+  target?: '_blank';
 };
 
 const button = cva(
@@ -130,6 +131,7 @@ export const Button = forwardRef(function Button(
             (iconLeft &&= (
               <div
                 className={cn(
+                  'flex items-center justify-center',
                   {
                     'h-4 w-4': isXs,
                     'h-5 w-5': isSm,

@@ -31,10 +31,12 @@ function Item({user, hasPlusOne, status}: ItemProps) {
     (hasPlusOne ? ' · +1' : '');
 
   return (
-    <CardBase key={user.id} className="flex items-center">
-      <Text>{label}</Text>
-      <div className="grow" />
-      <EventRegistrationStatusBadge status={status} />
+    <CardBase key={user.id}>
+      <div className="flex items-center">
+        <Text>{label}</Text>
+        <div className="grow" />
+        <EventRegistrationStatusBadge status={status} />
+      </div>
     </CardBase>
   );
 }

@@ -24,11 +24,32 @@ export function AddEventForm() {
   const form = useEventForm();
   const {handleSubmit} = form;
 
-  const onSubmit = handleSubmit(async data => {
+  const onSubmit = handleSubmit(async ({streamUrl, address, type, ...data}) => {
     logEvent('event_create_submitted');
     trackEventCreateConversion();
+
+    let location: {streamUrl: string | null; address: string | null} = {
+      streamUrl: null,
+      address: null,
+    };
+
+    if (streamUrl && type === 'online') {
+      location = {
+        streamUrl,
+        address: null,
+      };
+    }
+
+    if (address && type === 'offline') {
+      location = {
+        address,
+        streamUrl: null,
+      };
+    }
+
     await mutateAsync({
       ...data,
+      ...location,
       startDate: zonedTimeToUtc(
         data.startDate,
         Intl.DateTimeFormat().resolvedOptions().timeZone
