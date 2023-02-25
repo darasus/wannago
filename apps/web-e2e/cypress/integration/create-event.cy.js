@@ -12,7 +12,7 @@ describe('Create event', () => {
     );
     cy.get('[data-testid="event-form-start-date"]').type('2023-06-01T08:30');
     cy.get('[data-testid="event-form-end-date"]').type('2023-06-01T18:30');
-    cy.get('[data-testid="event-form-location"]').type('Paris');
+    cy.get('[data-testid="event-form-address"]').type('Paris');
     cy.get('[data-testid="location-input-option"]').first().click();
     cy.get('[data-testid="event-form-max-attendees"]').type('10');
     cy.get('[data-testid="event-form-submit-button"]').click();
