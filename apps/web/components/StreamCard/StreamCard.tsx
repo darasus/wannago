@@ -6,8 +6,9 @@ import {
 import {Badge} from '../Badge/Badge';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
-import {Text} from '../Text/Text';
-import {Googlemeet, Youtube, Twitch} from '@styled-icons/simple-icons';
+import {Googlemeet} from '@styled-icons/simple-icons/Googlemeet';
+import {Youtube} from '@styled-icons/simple-icons/Youtube';
+import {Twitch} from '@styled-icons/simple-icons/Twitch';
 import {VideoCameraIcon} from '@heroicons/react/24/outline';
 import useCopyClipboard from '../../hooks/useCopyClipboard';
 import {useAmplitude} from '../../hooks/useAmplitude';
@@ -18,9 +19,9 @@ interface Props {
 }
 
 const iconMap: Record<StreamHost, JSX.Element> = {
-  meet: <Googlemeet />,
-  youtube: <Youtube />,
-  twitch: <Twitch />,
+  meet: <Googlemeet className="__simple-icons-svg" />,
+  youtube: <Youtube className="__simple-icons-svg" />,
+  twitch: <Twitch className="__simple-icons-svg" />,
 };
 
 export function StreamCard({streamUrl, eventId}: Props) {

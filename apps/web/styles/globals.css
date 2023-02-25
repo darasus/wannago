@@ -76,3 +76,7 @@ body {
   /* transition: 0.5s; */
   --_p: 100%;
 }
+
+.__simple-icons-svg {
+  display: block !important;
+}
