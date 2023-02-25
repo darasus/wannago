@@ -94,7 +94,7 @@ jobs:
         - name: Cypress run
           run: |
             pnpm web:build
-            pnpm run-p --race start test:e2e
+            pnpm run-p --race web:start test:e2e
  
         # - name: Test
         #   run: pnpm test:e2e
