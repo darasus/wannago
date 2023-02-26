@@ -1,8 +1,6 @@
 import {ArrowDownCircleIcon} from '@heroicons/react/24/solid';
-import {Accordion, Button} from 'ui';
+import {Accordion, Badge, Button, Container} from 'ui';
 import {Input} from '../components/Input/Input/Input';
-import {Text} from 'ui';
-import {TextAnimation} from '../components/TextAnimation/TextAnimation';
 
 const sizes = ['xs', 'sm', 'md', 'lg'] as const;
 
@@ -27,11 +25,11 @@ const items = [
 
 export default function PlaygroundPage() {
   return (
-    <>
-      <div className="flex flex-col gap-y-4 my-4">
+    <Container maxSize="full" className="flex flex-col gap-4">
+      <Section>
         {sizes.map(size => {
           return (
-            <div key={size} className="flex items-center gap-x-4">
+            <div key={size} className="flex items-center gap-4">
               <Button size={size}>Default</Button>
               <Button size={size} variant="primary">
                 Primary
@@ -74,21 +72,42 @@ export default function PlaygroundPage() {
             </div>
           );
         })}
-      </div>
-      <div className="flex flex-col gap-y-4 my-4">
-        <div className="flex items-center gap-x-4">
-          <Input label="Hello" placeholder="Placeholder..." isLoading />
-          {/* <Switch>+1</Switch> */}
-        </div>
-      </div>
-      <div className="flex flex-col p-4">
+      </Section>
+      <Section>
+        <Input label="Hello" placeholder="Placeholder..." isLoading />
+      </Section>
+      <Section>
         <Accordion items={items} />
-      </div>
-      <div className="flex flex-col p-4">
-        <Text className="text-xl">
-          <TextAnimation texts={['private event', 'birthday', 'wedding']} />
-        </Text>
-      </div>
-    </>
+      </Section>
+      <Section>
+        {(['xs', 'sm', 'md', 'lg'] as const).map(size => {
+          return (
+            <div className="flex gap-4">
+              {(
+                [
+                  'gray',
+                  'yellow',
+                  'green',
+                  'indigo',
+                  'purple',
+                  'pink',
+                  'red',
+                ] as const
+              ).map(color => {
+                return (
+                  <Badge size={size} color={color}>
+                    Hello
+                  </Badge>
+                );
+              })}
+            </div>
+          );
+        })}
+      </Section>
+    </Container>
   );
+}
+
+function Section({children}: {children: React.ReactNode}) {
+  return <div className="flex flex-col gap-4">{children}</div>;
 }
