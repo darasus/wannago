@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {getBaseUrl} from '../../../../../apps/web/utils/getBaseUrl';
-import {LogoView} from 'ui';
+import {LogoView} from '../Logo/Logo';
 
 export function PublicEventBranding() {
   const url = getBaseUrl().endsWith('/') ? getBaseUrl() : `${getBaseUrl()}/`;
