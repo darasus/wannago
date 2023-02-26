@@ -1,11 +1,5 @@
 import AppLayout from '../../components/AppLayout/AppLayout';
-import {Container} from 'ui';
-import {Table} from '../../components/Table/Table';
-import {TBody} from '../../components/Table/TBody';
-import {Td} from '../../components/Table/Td';
-import {Th} from '../../components/Table/Th';
-import {THead} from '../../components/Table/THead';
-import {TRow} from '../../components/Table/TRow';
+import {Container, Td, Th, THead, TRow, Table, TBody} from 'ui';
 import {formatDate} from '../../utils/formatDate';
 import {trpc} from '../../utils/trpc';
 

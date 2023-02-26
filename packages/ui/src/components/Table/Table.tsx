@@ -1,5 +1,5 @@
 import {PropsWithChildren} from 'react';
-import {CardBase} from 'ui';
+import {CardBase} from '../CardBase/CardBase';
 
 interface Props extends PropsWithChildren {}
 
