@@ -3,7 +3,7 @@ import Head from 'next/head';
 import AppLayout from '../components/AppLayout/AppLayout';
 import {EventCard} from '../components/EventCard/EventCard';
 import {LoadingEventCard} from '../components/LoadingEventCard/LoadingEventCard';
-import {Container} from '../components/Container/Container';
+import {Container} from 'ui';
 import {trpc} from '../utils/trpc';
 
 export default function ExamplesPage() {

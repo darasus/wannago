@@ -3,7 +3,7 @@ import {useRouter} from 'next/router';
 import {forwardRef} from 'react';
 import {titleFontClassName} from '../../fonts';
 import {Button} from 'ui';
-import {Container} from '../Container/Container';
+import {Container} from 'ui';
 import dynamic from 'next/dynamic';
 import {TextAnimation} from '../TextAnimation/TextAnimation';
 import {cn} from '../../utils/cn';

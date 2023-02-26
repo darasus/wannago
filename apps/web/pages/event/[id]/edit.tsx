@@ -2,7 +2,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EditEventForm} from '../../../features/EventForm/EditEventForm';
-import {Container} from '../../../components/Container/Container';
+import {Container} from 'ui';
 import {trpc} from '../../../utils/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 

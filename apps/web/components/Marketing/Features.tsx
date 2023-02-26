@@ -1,4 +1,4 @@
-import {Container} from '../Container/Container';
+import {Container} from 'ui';
 import {SectionHeader} from './SectionHeader';
 import {
   UserGroupIcon,

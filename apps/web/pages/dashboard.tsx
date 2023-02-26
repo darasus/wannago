@@ -5,7 +5,7 @@ import AppLayout from '../components/AppLayout/AppLayout';
 import {trpc} from '../utils/trpc';
 import {EventCard} from '../components/EventCard/EventCard';
 import Head from 'next/head';
-import {Container} from '../components/Container/Container';
+import {Container} from 'ui';
 import {LoadingEventCard} from '../components/LoadingEventCard/LoadingEventCard';
 import {Button} from 'ui';
 import {withProtected} from '../utils/withAuthProtect';

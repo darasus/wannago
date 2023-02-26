@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {Button} from 'ui';
-import {Container} from '../Container/Container';
+import {Container} from 'ui';
 import {navItems} from '../Header/Header';
 import {Logo} from '../Logo/Logo';
 import {Text} from '../Text/Text';

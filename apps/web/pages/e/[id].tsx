@@ -2,7 +2,7 @@ import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
 import {EventView} from '../../components/EventView/EventView';
-import {Container} from '../../components/Container/Container';
+import {Container} from 'ui';
 import {trpc} from '../../utils/trpc';
 import {Meta} from '../../components/Meta/Meta';
 import {stripHTML} from '../../utils/stripHTML';
