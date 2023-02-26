@@ -1,5 +1,5 @@
-import {Img} from '@react-email/img';
-import {Section} from '@react-email/section';
+import {Img as _Img} from '@react-email/img';
+import {Section as _Section} from '@react-email/section';
 import {Text as _Text} from '@react-email/text';
 import {Link as _Link} from '@react-email/link';
 import {Button as _Button} from '@react-email/button';
@@ -25,7 +25,7 @@ export function Logo() {
   const width = height * ratio;
 
   return (
-    <Img
+    <_Img
       src="https://www.wannago.app/images/logo_dark.png"
       alt="WannaGo logo"
       width={width}
@@ -36,9 +36,9 @@ export function Logo() {
 
 export function Header() {
   return (
-    <Section>
+    <_Section>
       <Logo />
-    </Section>
+    </_Section>
   );
 }
 
@@ -109,15 +109,64 @@ interface ImageProps {
 
 export function Image({imageSrc, alt}: ImageProps) {
   return (
-    <Section
+    <_Section
       style={{
         borderRadius: '20px',
         overflow: 'hidden',
         marginBottom: gutter,
       }}
     >
-      <Img src={imageSrc} alt={alt} style={{display: 'block', width: '100%'}} />
-    </Section>
+      <_Img
+        src={imageSrc}
+        alt={alt}
+        style={{display: 'block', width: '100%'}}
+      />
+    </_Section>
+  );
+}
+
+interface EventInfoProps {
+  title: string;
+  organizerName: string;
+  startDate: string;
+  endDate: string;
+  address: string;
+  streamUrl: string;
+}
+
+export function EventInfo({
+  title,
+  organizerName,
+  startDate,
+  endDate,
+  address,
+  streamUrl,
+}: EventInfoProps) {
+  return (
+    <>
+      <Text>
+        <b>Event:</b> {title}
+      </Text>
+      <Text>
+        <b>Organizer:</b> {organizerName}
+      </Text>
+      <Text>
+        <b>Start:</b> {startDate}
+      </Text>
+      <Text>
+        <b>Утв:</b> {endDate}
+      </Text>
+      {address !== 'none' && (
+        <Text>
+          <b>Address:</b> {address}
+        </Text>
+      )}
+      {streamUrl !== 'none' && (
+        <Text>
+          <b>Stream URL:</b> <Link href={streamUrl}>{streamUrl}</Link>
+        </Text>
+      )}
+    </>
   );
 }
 

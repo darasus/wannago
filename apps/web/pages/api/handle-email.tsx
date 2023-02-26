@@ -86,7 +86,8 @@ export default async function handle(
       htmlString: render(
         <EventSignUp
           title={event.title}
-          address={(event.address || event.streamUrl)!}
+          address={event.address || 'none'}
+          streamUrl={event.streamUrl || 'none'}
           eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
@@ -154,7 +155,8 @@ export default async function handle(
       htmlString: render(
         <EventInvite
           title={event.title}
-          address={(event.address || event.streamUrl)!}
+          address={event.address || 'none'}
+          streamUrl={event.streamUrl || 'none'}
           confirmUrl={url.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}

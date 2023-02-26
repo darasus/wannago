@@ -16,22 +16,25 @@ import {
   Button,
   Footer,
   gutter,
+  EventInfo,
 } from './components';
 
 interface Props {
   title: string;
   startDate: string;
   endDate: string;
-  address: string;
+  address: string | 'none';
+  streamUrl: string | 'none';
   eventUrl: string;
   organizerName: string;
 }
 
 export default function EventSignUp({
   title = 'Event name',
-  address = '2022/12/11 11:3',
-  endDate = '2022/12/11 11:3',
-  startDate = '2022/12/11 11:3',
+  address = 'Paris, France',
+  streamUrl = 'https://meet.google.com/xxx-xxx-xxx',
+  endDate = '2022/12/11 11:30',
+  startDate = '2022/12/11 11:30',
   eventUrl = 'https://www.wannago.app',
   organizerName = 'Organizer Name',
 }: Props) {
@@ -45,18 +48,14 @@ export default function EventSignUp({
             <Title>{`You've signed up to: ${title}`}</Title>
           </Section>
           <Section style={{marginBottom: gutter}}>
-            <Text>
-              <b>Organizer:</b> {organizerName}
-            </Text>
-            <Text>
-              <b>Start:</b> {startDate}
-            </Text>
-            <Text>
-              <b>End:</b> {endDate}
-            </Text>
-            <Text>
-              <b>Address:</b> {address}
-            </Text>
+            <EventInfo
+              organizerName={organizerName}
+              title={title}
+              startDate={startDate}
+              endDate={endDate}
+              address={address}
+              streamUrl={streamUrl}
+            />
           </Section>
           <Section style={buttonContainer}>
             <Button href={eventUrl}>View event</Button>
