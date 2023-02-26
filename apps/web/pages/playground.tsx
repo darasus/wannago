@@ -1,7 +1,7 @@
 import {ArrowDownCircleIcon} from '@heroicons/react/24/solid';
 import {Accordion, Button} from 'ui';
 import {Input} from '../components/Input/Input/Input';
-import {Text} from '../components/Text/Text';
+import {Text} from 'ui';
 import {TextAnimation} from '../components/TextAnimation/TextAnimation';
 
 const sizes = ['xs', 'sm', 'md', 'lg'] as const;

@@ -1,6 +1,6 @@
 import {Badge, Button, CardBase} from 'ui';
 import {LocationImage} from '../LocationImage/LocationImage';
-import {Text} from '../Text/Text';
+import {Text} from 'ui';
 
 interface Props {
   address: string;

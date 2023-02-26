@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {Button, CardBase} from 'ui';
 import {Container} from 'ui';
-import {Text} from '../../../components/Text/Text';
+import {Text} from 'ui';
 import {trpc} from '../../../utils/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {toast} from 'react-hot-toast';

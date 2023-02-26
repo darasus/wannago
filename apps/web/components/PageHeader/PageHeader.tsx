@@ -2,7 +2,7 @@ import {PropsWithChildren} from 'react';
 import {titleFont} from '../../fonts';
 import {cn} from '../../utils/cn';
 import {CardBase} from 'ui';
-import {Text} from '../Text/Text';
+import {Text} from 'ui';
 
 interface Props extends PropsWithChildren {
   title: string;

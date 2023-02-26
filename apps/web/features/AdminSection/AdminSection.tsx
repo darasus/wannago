@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import {Button, CardBase, Badge} from 'ui';
-import {Text} from '../../components/Text/Text';
+import {Text} from 'ui';
 import {Event} from '@prisma/client';
 import {formatTimeago} from '../../utils/formatDate';
 import {useAttendeeCount} from '../../hooks/useAttendeeCount';

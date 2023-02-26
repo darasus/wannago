@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import {formatDate, isSameDay} from '../../utils/formatDate';
 import {getRelativeTime} from '../../utils/getRelativeTime';
 import {Button, Badge, CardBase} from 'ui';
-import {Text} from '../Text/Text';
+import {Text} from 'ui';
 
 interface Props {
   onAddToCalendarClick: () => void;

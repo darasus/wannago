@@ -1,7 +1,7 @@
 import {FormEventHandler} from 'react';
 import {Badge, CardBase} from 'ui';
 import {JoinForm} from '../JoinForm/JoinForm';
-import {Text} from '../Text/Text';
+import {Text} from 'ui';
 import {Tooltip} from '../Tooltip/Tooltip';
 
 interface Props {

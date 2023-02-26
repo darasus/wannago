@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {Button} from 'ui';
 import {Container, CardBase} from 'ui';
-import {Text} from '../../../components/Text/Text';
+import {Text} from 'ui';
 import {trpc} from '../../../utils/trpc';
 import {saveAs} from 'file-saver';
 import {withProtected} from '../../../utils/withAuthProtect';

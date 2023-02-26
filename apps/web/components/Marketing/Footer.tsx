@@ -3,7 +3,7 @@ import {Button} from 'ui';
 import {Container} from 'ui';
 import {navItems} from '../Header/Header';
 import {Logo} from '../Logo/Logo';
-import {Text} from '../Text/Text';
+import {Text} from 'ui';
 
 export function Footer() {
   return (
