@@ -1,8 +1,8 @@
 import {PropsWithChildren} from 'react';
-import {titleFont} from '../../fonts';
-import {cn} from '../../utils/cn';
-import {CardBase} from 'ui';
-import {Text} from 'ui';
+import {titleFont} from '../../../../../apps/web/fonts';
+import {cn} from '../../../../../apps/web/utils/cn';
+import {CardBase} from '../CardBase/CardBase';
+import {Text} from '../Text/Text';
 
 interface Props extends PropsWithChildren {
   title: string;

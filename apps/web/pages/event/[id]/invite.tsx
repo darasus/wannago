@@ -2,14 +2,11 @@ import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
-import {Button, CardBase} from 'ui';
-import {Container} from 'ui';
-import {Text} from 'ui';
+import {Button, CardBase, PageHeader, Container, Text} from 'ui';
 import {trpc} from '../../../utils/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {toast} from 'react-hot-toast';
 import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
-import {PageHeader} from '../../../components/PageHeader/PageHeader';
 import {useConfirmDialog} from '../../../hooks/useConfirmDialog';
 import {AdminInviteButton} from '../../../features/AdminInviteButton/AdminInviteButton';
 
