@@ -1,7 +1,6 @@
-import {Button} from 'ui';
+import {Button, PublicEventBranding} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
 import {useUser} from '@clerk/nextjs';
-import {PublicEventBranding} from '../PublicEventBranding/PublicEventBranding';
 
 interface Props {
   eventId: string;
