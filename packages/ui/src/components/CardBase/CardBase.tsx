@@ -1,5 +1,5 @@
 import {forwardRef, PropsWithChildren} from 'react';
-import {cn} from '../../utils/cn';
+import {cn} from 'browser-utils';
 
 type Props = PropsWithChildren & {
   className?: string;

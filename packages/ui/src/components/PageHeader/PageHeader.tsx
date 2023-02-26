@@ -1,6 +1,6 @@
 import {PropsWithChildren} from 'react';
 import {titleFont} from '../../../../../apps/web/fonts';
-import {cn} from '../../../../../apps/web/utils/cn';
+import {cn} from 'browser-utils';
 import {CardBase} from '../CardBase/CardBase';
 import {Text} from '../Text/Text';
 

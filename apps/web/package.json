@@ -15,6 +15,7 @@
     "client-env": "workspace:*",
     "server-env": "workspace:*",
     "email": "workspace:*",
+    "browser-utils": "workspace:*",
     "ui": "workspace:*"
   }
 }

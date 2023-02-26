@@ -2,7 +2,7 @@ import {InputWrapper} from './InputWrapper';
 import {forwardRef} from 'react';
 import {FieldError} from 'react-hook-form';
 import {Spinner} from 'ui';
-import {cn} from '../../../utils/cn';
+import {cn} from 'browser-utils';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;

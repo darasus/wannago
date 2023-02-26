@@ -1,4 +1,4 @@
-import {cn} from '../../utils/cn';
+import {cn} from 'browser-utils';
 
 interface Props {
   className?: string;

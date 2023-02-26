@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {cn} from '../../../../../apps/web/utils/cn';
+import {cn} from 'browser-utils';
 
 interface Props {
   images: string[];

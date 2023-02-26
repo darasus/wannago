@@ -1,5 +1,5 @@
 import {titleFontClassName} from '../../fonts';
-import {cn} from '../../utils/cn';
+import {cn} from 'browser-utils';
 
 interface Props {
   title: string;

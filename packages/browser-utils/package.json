@@ -1,5 +1,5 @@
 {
-  "name": "ui",
+  "name": "browser-utils",
   "version": "1.0.0",
   "license": "MIT",
   "main": "./index.ts",
@@ -8,7 +8,6 @@
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
-    "browser-utils": "workspace:*"
+    "tsconfig": "workspace:*"
   }
 }

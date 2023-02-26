@@ -1,4 +1,4 @@
-import {cn} from '../../../../../apps/web/utils/cn';
+import {cn} from 'browser-utils';
 
 type Props = React.PropsWithChildren & {className?: string};
 

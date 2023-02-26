@@ -1,4 +1,4 @@
-import {cn} from '../../utils/cn';
+import {cn} from 'browser-utils';
 import {Button} from 'ui';
 import {Container} from 'ui';
 
