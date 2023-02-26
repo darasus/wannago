@@ -65,16 +65,18 @@ interface UserRowProps {
 function UserRow({user, eventId, refetch}: UserRowProps) {
   return (
     <>
-      <CardBase key={user.id} className="flex items-center">
-        <Text>{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
-        <div className="grow" />
-        {user.status && <EventRegistrationStatusBadge status={user.status} />}
-        <InviteButton
-          user={user}
-          eventId={eventId}
-          refetch={refetch}
-          disabled={user.status !== null}
-        />
+      <CardBase key={user.id}>
+        <div className="flex items-center">
+          <Text>{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
+          <div className="grow" />
+          {user.status && <EventRegistrationStatusBadge status={user.status} />}
+          <InviteButton
+            user={user}
+            eventId={eventId}
+            refetch={refetch}
+            disabled={user.status !== null}
+          />
+        </div>
       </CardBase>
     </>
   );
