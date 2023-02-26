@@ -1,6 +1,5 @@
 import {useState} from 'react';
-import {Button} from 'ui';
-import {Modal} from '../components/Modal/Modal';
+import {Button, Modal} from 'ui';
 
 interface Props {
   title: string;
