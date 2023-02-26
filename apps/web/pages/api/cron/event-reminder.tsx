@@ -6,6 +6,7 @@ import {EventReminder} from 'email';
 import {render} from '@react-email/render';
 import {getBaseUrl} from '../../../utils/getBaseUrl';
 import {Postmark} from '../../../lib/postmark';
+import {formatDate} from '../../../utils/formatDate';
 
 const schema = z.object({
   eventId: z.string().uuid(),
@@ -22,6 +23,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         id: body.eventId,
       },
       include: {
+        organization: {
+          include: {
+            users: true,
+          },
+        },
         eventSignUps: {
           where: {
             status: 'REGISTERED',
@@ -50,9 +56,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
               htmlString: render(
                 <EventReminder
                   title={event.title}
-                  address={(event.address || event.streamUrl)!}
+                  address={event.address || 'none'}
+                  streamUrl={event.streamUrl || 'none'}
                   eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
-                  startDate="In few hours"
+                  startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
+                  endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
+                  organizerName={`${event.organization.users[0].firstName} ${event.organization.users[0].lastName}`}
                 />
               ),
             });
