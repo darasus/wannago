@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import {Button, CardBase, Badge} from 'ui';
-import {Text} from 'ui';
+import {Text, Tooltip} from 'ui';
 import {Event} from '@prisma/client';
 import {formatTimeago} from '../../utils/formatDate';
 import {useAttendeeCount} from '../../hooks/useAttendeeCount';
@@ -15,7 +15,6 @@ import {useRemoveEvent} from '../../hooks/useRemoveEvent';
 import {usePublishEvent} from '../../hooks/usePublishEvent';
 import {useUnpublishEvent} from '../../hooks/useUnpublishEvent';
 import {getBaseUrl} from '../../utils/getBaseUrl';
-import {Tooltip} from '../../components/Tooltip/Tooltip';
 import React from 'react';
 import {cn} from '../../utils/cn';
 

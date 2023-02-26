@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import useCopyClipboard from '../../hooks/useCopyClipboard';
-import {Button, Badge, CardBase} from 'ui';
+import {Button, Badge, CardBase, Tooltip} from 'ui';
 import {useAmplitude} from '../../hooks/useAmplitude';
 import {cn} from '../../utils/cn';
-import {Tooltip} from '../Tooltip/Tooltip';
 import {getBaseUrl} from '../../utils/getBaseUrl';
 
 interface Props {

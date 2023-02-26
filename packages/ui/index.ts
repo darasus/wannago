@@ -5,3 +5,4 @@ export {Badge} from './src/components/Badge/Badge';
 export {Container} from './src/components/Container/Container';
 export {CardBase} from './src/components/CardBase/CardBase';
 export {Text} from './src/components/Text/Text';
+export {Tooltip} from './src/components/Tooltip/Tooltip';
