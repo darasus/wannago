@@ -1,8 +1,7 @@
 import {useMemo} from 'react';
 import {formatDate, isSameDay} from '../../utils/formatDate';
 import {getRelativeTime} from '../../utils/getRelativeTime';
-import {Button, Badge} from 'ui';
-import {CardBase} from '../CardBase/CardBase';
+import {Button, Badge, CardBase} from 'ui';
 import {Text} from '../Text/Text';
 
 interface Props {

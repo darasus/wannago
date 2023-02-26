@@ -1,7 +1,7 @@
 import {Fragment} from 'react';
 import {Popover, Transition} from '@headlessui/react';
 import {Logo} from '../Logo/Logo';
-import {CardBase} from '../CardBase/CardBase';
+import {CardBase} from 'ui';
 import {Button} from 'ui';
 import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';

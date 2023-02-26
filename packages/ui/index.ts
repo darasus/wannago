@@ -3,3 +3,4 @@ export {Accordion} from './src/components/Accordion/Accordion';
 export {Button} from './src/components/Button/Button';
 export {Badge} from './src/components/Badge/Badge';
 export {Container} from './src/components/Container/Container';
+export {CardBase} from './src/components/CardBase/CardBase';

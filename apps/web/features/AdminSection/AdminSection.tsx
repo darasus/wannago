@@ -6,9 +6,7 @@ import {
   PauseCircleIcon,
 } from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
-import {Badge} from 'ui';
-import {Button} from 'ui';
-import {CardBase} from '../../components/CardBase/CardBase';
+import {Button, CardBase, Badge} from 'ui';
 import {Text} from '../../components/Text/Text';
 import {Event} from '@prisma/client';
 import {formatTimeago} from '../../utils/formatDate';

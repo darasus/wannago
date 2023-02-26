@@ -2,8 +2,7 @@ import {useClerk, useUser} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import Image from 'next/image';
 import {Fragment} from 'react';
-import {Button} from 'ui';
-import {CardBase} from '../CardBase/CardBase';
+import {Button, CardBase} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
 import {trpc} from '../../utils/trpc';
 

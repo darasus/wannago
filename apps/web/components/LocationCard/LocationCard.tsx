@@ -1,6 +1,4 @@
-import {Badge} from 'ui';
-import {Button} from 'ui';
-import {CardBase} from '../CardBase/CardBase';
+import {Badge, Button, CardBase} from 'ui';
 import {LocationImage} from '../LocationImage/LocationImage';
 import {Text} from '../Text/Text';
 

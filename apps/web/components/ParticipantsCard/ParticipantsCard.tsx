@@ -1,6 +1,5 @@
 import {FormEventHandler} from 'react';
-import {Badge} from 'ui';
-import {CardBase} from '../CardBase/CardBase';
+import {Badge, CardBase} from 'ui';
 import {JoinForm} from '../JoinForm/JoinForm';
 import {Text} from '../Text/Text';
 import {Tooltip} from '../Tooltip/Tooltip';
