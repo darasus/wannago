@@ -1,7 +1,7 @@
 import {forwardRef, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {Form} from '../../../features/EventForm/types';
-import {cn} from '../../../utils/cn';
+import {cn} from 'browser-utils';
 
 interface Option {
   label: JSX.Element | string;

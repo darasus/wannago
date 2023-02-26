@@ -16,7 +16,7 @@ import {usePublishEvent} from '../../hooks/usePublishEvent';
 import {useUnpublishEvent} from '../../hooks/useUnpublishEvent';
 import {getBaseUrl} from '../../utils/getBaseUrl';
 import React from 'react';
-import {cn} from '../../utils/cn';
+import {cn} from 'browser-utils';
 
 interface Props {
   event: Event;

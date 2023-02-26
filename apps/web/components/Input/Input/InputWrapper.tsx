@@ -1,7 +1,7 @@
 import {ExclamationCircleIcon} from '@heroicons/react/24/solid';
 import {PropsWithChildren} from 'react';
 import {FieldError} from 'react-hook-form';
-import {cn} from '../../../utils/cn';
+import {cn} from 'browser-utils';
 
 interface Props extends PropsWithChildren {
   label?: string;

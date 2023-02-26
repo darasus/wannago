@@ -15,7 +15,7 @@ import {pageView} from '../lib/gtag';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {Amplitude} from '../features/Amplitude/Amplitude';
-import {cn} from '../utils/cn';
+import {cn} from 'browser-utils';
 import {env} from 'client-env';
 import {Sentry} from '../features/Sentry/Sentry';
 

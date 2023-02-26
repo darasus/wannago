@@ -6,7 +6,7 @@ import {Button} from 'ui';
 import {Container} from 'ui';
 import dynamic from 'next/dynamic';
 import {TextAnimation} from '../TextAnimation/TextAnimation';
-import {cn} from '../../utils/cn';
+import {cn} from 'browser-utils';
 
 const DynamicSpinningCircle = dynamic(() => import('./SpinningCircle'), {
   ssr: false,
