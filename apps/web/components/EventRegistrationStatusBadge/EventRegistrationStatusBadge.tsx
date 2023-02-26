@@ -1,5 +1,5 @@
 import {EventRegistrationStatus} from '@prisma/client';
-import {Badge} from '../Badge/Badge';
+import {Badge} from 'ui';
 
 interface Props {
   status: EventRegistrationStatus;

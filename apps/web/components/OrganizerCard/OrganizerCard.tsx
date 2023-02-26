@@ -1,5 +1,5 @@
 import {CardBase} from '../CardBase/CardBase';
-import {Badge} from '../Badge/Badge';
+import {Badge} from 'ui';
 import {Text} from '../Text/Text';
 import {User} from '@prisma/client';
 import {Button} from 'ui';

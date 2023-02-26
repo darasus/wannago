@@ -3,7 +3,7 @@ import {
   getStreamProviderFromUrl,
   StreamHost,
 } from '../../utils/getStreamProviderFromUrl';
-import {Badge} from '../Badge/Badge';
+import {Badge} from 'ui';
 import {Button} from 'ui';
 import {CardBase} from '../CardBase/CardBase';
 import {Googlemeet} from '@styled-icons/simple-icons/Googlemeet';
