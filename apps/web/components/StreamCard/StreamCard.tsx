@@ -4,7 +4,7 @@ import {
   StreamHost,
 } from '../../utils/getStreamProviderFromUrl';
 import {Badge} from '../Badge/Badge';
-import {Button} from '../Button/Button';
+import {Button} from 'ui';
 import {CardBase} from '../CardBase/CardBase';
 import {Googlemeet} from '@styled-icons/simple-icons/Googlemeet';
 import {Youtube} from '@styled-icons/simple-icons/Youtube';

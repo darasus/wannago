@@ -1,4 +1,4 @@
-import {Button} from '../Button/Button';
+import {Button} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
 import {useUser} from '@clerk/nextjs';
 import {PublicEventBranding} from '../PublicEventBranding/PublicEventBranding';

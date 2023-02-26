@@ -1,6 +1,6 @@
 import {FeedbackFish} from '@feedback-fish/react';
 import {useState} from 'react';
-import {Button} from '../Button/Button';
+import {Button} from 'ui';
 import {Container} from '../Container/Container';
 import {Accordion} from './Accordion';
 import {SectionHeader} from './SectionHeader';

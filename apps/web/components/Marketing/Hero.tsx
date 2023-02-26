@@ -2,7 +2,7 @@ import {useUser} from '@clerk/nextjs';
 import {useRouter} from 'next/router';
 import {forwardRef} from 'react';
 import {titleFontClassName} from '../../fonts';
-import {Button} from '../Button/Button';
+import {Button} from 'ui';
 import {Container} from '../Container/Container';
 import dynamic from 'next/dynamic';
 import {TextAnimation} from '../TextAnimation/TextAnimation';

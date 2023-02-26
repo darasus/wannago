@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import useCopyClipboard from '../../hooks/useCopyClipboard';
-import {Button} from '../Button/Button';
+import {Button} from 'ui';
 import {CardBase} from '../CardBase/CardBase';
 import {Badge} from '../Badge/Badge';
 import {useAmplitude} from '../../hooks/useAmplitude';

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import {Button} from '../Button/Button';
+import {Button} from 'ui';
 import {Container} from '../Container/Container';
 import {navItems} from '../Header/Header';
 import {Logo} from '../Logo/Logo';

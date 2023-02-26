@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Button} from '../components/Button/Button';
+import {Button} from 'ui';
 import {Modal} from '../components/Modal/Modal';
 
 interface Props {

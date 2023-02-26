@@ -1,5 +1,5 @@
 import {Badge} from '../Badge/Badge';
-import {Button} from '../Button/Button';
+import {Button} from 'ui';
 import {CardBase} from '../CardBase/CardBase';
 import {LocationImage} from '../LocationImage/LocationImage';
 import {Text} from '../Text/Text';

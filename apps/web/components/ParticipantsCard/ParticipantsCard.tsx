@@ -1,5 +1,4 @@
 import {FormEventHandler} from 'react';
-import {cn} from '../../utils/cn';
 import {Badge} from '../Badge/Badge';
 import {CardBase} from '../CardBase/CardBase';
 import {JoinForm} from '../JoinForm/JoinForm';

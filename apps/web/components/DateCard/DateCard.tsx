@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import {formatDate, isSameDay} from '../../utils/formatDate';
 import {getRelativeTime} from '../../utils/getRelativeTime';
 import {Badge} from '../Badge/Badge';
-import {Button} from '../Button/Button';
+import {Button} from 'ui';
 import {CardBase} from '../CardBase/CardBase';
 import {Text} from '../Text/Text';
 

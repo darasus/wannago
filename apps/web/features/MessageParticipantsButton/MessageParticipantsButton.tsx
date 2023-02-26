@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
 import {trpc} from '../../utils/trpc';
-import {Button} from '../../components/Button/Button';
+import {Button} from 'ui';
 import {MessageParticipantsFormModal} from '../../components/MessageParticipantsFormModal/MessageParticipantsFormModal';
 import {useAmplitude} from '../../hooks/useAmplitude';
 import {useEventId} from '../../hooks/useEventId';

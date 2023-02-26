@@ -1,6 +1,5 @@
 import {ArrowDownCircleIcon} from '@heroicons/react/24/solid';
-import {Accordion} from '../components/Accordion/Accordion';
-import {Button} from '../components/Button/Button';
+import {Accordion, Button} from 'ui';
 import {Input} from '../components/Input/Input/Input';
 import {Text} from '../components/Text/Text';
 import {TextAnimation} from '../components/TextAnimation/TextAnimation';

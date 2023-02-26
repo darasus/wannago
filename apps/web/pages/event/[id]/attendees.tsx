@@ -2,7 +2,7 @@ import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import AppLayout from '../../../components/AppLayout/AppLayout';
-import {Button} from '../../../components/Button/Button';
+import {Button} from 'ui';
 import {CardBase} from '../../../components/CardBase/CardBase';
 import {Container} from '../../../components/Container/Container';
 import {Text} from '../../../components/Text/Text';

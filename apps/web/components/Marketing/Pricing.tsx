@@ -1,5 +1,5 @@
 import {cn} from '../../utils/cn';
-import {Button} from '../Button/Button';
+import {Button} from 'ui';
 import {Container} from '../Container/Container';
 
 function SwirlyDoodle({className}: any) {
