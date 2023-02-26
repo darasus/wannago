@@ -1,7 +1,7 @@
 import {InputWrapper} from './InputWrapper';
 import {forwardRef} from 'react';
 import {FieldError} from 'react-hook-form';
-import {Spinner} from '../../Spinner/Spinner';
+import {Spinner} from 'ui';
 import {cn} from '../../../utils/cn';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {

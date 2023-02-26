@@ -5,9 +5,8 @@ import {useMemo} from 'react';
 import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EventView} from '../../../components/EventView/EventView';
-import {Container} from 'ui';
+import {Container, Spinner} from 'ui';
 import {trpc} from '../../../utils/trpc';
-import {Spinner} from '../../../components/Spinner/Spinner';
 import {withProtected} from '../../../utils/withAuthProtect';
 
 function InternalEventPage({

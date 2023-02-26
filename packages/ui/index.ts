@@ -9,3 +9,4 @@ export {Tooltip} from './src/components/Tooltip/Tooltip';
 export {Modal} from './src/components/Modal/Modal';
 export {Logo, LogoView} from './src/components/Logo/Logo';
 export {PageHeader} from './src/components/PageHeader/PageHeader';
+export {Spinner} from './src/components/Spinner/Spinner';

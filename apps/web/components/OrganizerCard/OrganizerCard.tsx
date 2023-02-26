@@ -1,9 +1,6 @@
-import {Badge, CardBase} from 'ui';
-import {Text} from 'ui';
+import {Badge, CardBase, Button, Spinner, Text} from 'ui';
 import {User} from '@prisma/client';
-import {Button} from 'ui';
 import Image from 'next/image';
-import {Spinner} from '../Spinner/Spinner';
 
 interface Props {
   onOpenFormClick: () => void;

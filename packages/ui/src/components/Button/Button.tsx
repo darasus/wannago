@@ -1,7 +1,7 @@
 import Link, {LinkProps} from 'next/link';
 import {ButtonHTMLAttributes, forwardRef, PropsWithChildren} from 'react';
 import {cn} from '../../utils/cn';
-import {Spinner} from '../../../../../apps/web/components/Spinner/Spinner';
+import {Spinner} from '../Spinner/Spinner';
 import {ButtonSize, ButtonVariant} from './types';
 import {cva} from 'class-variance-authority';
 
