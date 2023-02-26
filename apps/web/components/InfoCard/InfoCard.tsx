@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import {CardBase} from '../CardBase/CardBase';
-import {Badge} from '../Badge/Badge';
+import {Badge, CardBase} from 'ui';
 import {cn} from '../../utils/cn';
 import {cloudflareImageLoader} from '../../utils/cloudflareImageLoader';
 import {Event} from '@prisma/client';

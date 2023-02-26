@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import {getBaseUrl} from '../../utils/getBaseUrl';
+import {getBaseUrl} from '../../../../../apps/web/utils/getBaseUrl';
 import {LogoView} from '../Logo/Logo';
 
 export function PublicEventBranding() {

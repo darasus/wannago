@@ -1,5 +1,5 @@
 import AppLayout from '../../components/AppLayout/AppLayout';
-import {Container} from '../../components/Container/Container';
+import {Container} from 'ui';
 import {Table} from '../../components/Table/Table';
 import {TBody} from '../../components/Table/TBody';
 import {Td} from '../../components/Table/Td';

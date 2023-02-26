@@ -1,14 +1,11 @@
 import Link from 'next/link';
-import {Button} from '../Button/Button';
-import {Container} from '../Container/Container';
 import {navItems} from '../Header/Header';
-import {Logo} from '../Logo/Logo';
-import {Text} from '../Text/Text';
+import {Text, Logo, Container, Button} from 'ui';
 
 export function Footer() {
   return (
     <footer>
-      <Container className="m-0 my-0 m-auto">
+      <Container className="my-0 m-auto">
         <div className="flex items-center py-4">
           <Logo href="/" />
           <div className="grow" />

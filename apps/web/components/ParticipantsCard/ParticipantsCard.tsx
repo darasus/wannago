@@ -1,10 +1,7 @@
 import {FormEventHandler} from 'react';
-import {cn} from '../../utils/cn';
-import {Badge} from '../Badge/Badge';
-import {CardBase} from '../CardBase/CardBase';
+import {Badge, CardBase} from 'ui';
 import {JoinForm} from '../JoinForm/JoinForm';
-import {Text} from '../Text/Text';
-import {Tooltip} from '../Tooltip/Tooltip';
+import {Text, Tooltip} from 'ui';
 
 interface Props {
   onSubmit: FormEventHandler;

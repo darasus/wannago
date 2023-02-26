@@ -1,7 +1,7 @@
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
 import type {JoinForm as JoinFormType} from '../../types/forms';
-import {Button} from '../Button/Button';
+import {Button} from 'ui';
 import {Input} from '../Input/Input/Input';
 import {Switch} from '../Input/Switch/Switch';
 

@@ -1,4 +1,4 @@
-import {CardBase} from '../CardBase/CardBase';
+import {CardBase} from 'ui';
 
 export function LoadingEventCard() {
   return (

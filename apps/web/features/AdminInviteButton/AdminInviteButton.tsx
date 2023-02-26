@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Button} from '../../components/Button/Button';
-import {Modal} from '../../components/Modal/Modal';
+import {Button, Modal} from 'ui';
 import {AdminInviteForm} from '../../types/forms';
 import {trpc} from '../../utils/trpc';
 import {useEventId} from '../../hooks/useEventId';

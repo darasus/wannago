@@ -1,6 +1,6 @@
 import {cn} from '../../utils/cn';
-import {Button} from '../Button/Button';
-import {Container} from '../Container/Container';
+import {Button} from 'ui';
+import {Container} from 'ui';
 
 function SwirlyDoodle({className}: any) {
   return (

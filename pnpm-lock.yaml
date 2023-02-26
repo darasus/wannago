@@ -186,12 +186,14 @@ importers:
       email: workspace:*
       eslint-config-custom: workspace:*
       server-env: workspace:*
+      ui: workspace:*
     dependencies:
       client-env: link:../../packages/client-env
       database: link:../../packages/database
       email: link:../../packages/email
       eslint-config-custom: link:../../packages/eslint-config-custom
       server-env: link:../../packages/server-env
+      ui: link:../../packages/ui
 
   apps/web-e2e:
     specifiers:
@@ -277,6 +279,14 @@ importers:
 
   packages/tsconfig:
     specifiers: {}
+
+  packages/ui:
+    specifiers:
+      eslint-config-custom: workspace:*
+      tsconfig: workspace:*
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
 
 packages:
 
@@ -2357,7 +2367,7 @@ packages:
     dependencies:
       pvtsutils: 1.3.2
       pvutils: 1.1.3
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
 
   /assert-plus/1.0.0:
@@ -3308,7 +3318,7 @@ packages:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
     dependencies:
       no-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
 
   /dotenv-cli/6.0.0:
@@ -5184,7 +5194,7 @@ packages:
   /lower-case/2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
 
   /lowercase-keys/3.0.0:
@@ -5489,7 +5499,7 @@ packages:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
 
   /node-abi/3.33.0:

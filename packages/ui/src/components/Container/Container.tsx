@@ -1,5 +1,5 @@
 import {forwardRef, HTMLAttributes, PropsWithChildren} from 'react';
-import {cn} from '../../utils/cn';
+import {cn} from '../../../../../apps/web/utils/cn';
 
 interface Props extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
   maxSize?: 'md' | 'lg' | 'full';

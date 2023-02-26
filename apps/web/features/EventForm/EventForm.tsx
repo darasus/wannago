@@ -1,10 +1,7 @@
 import {isBefore, isEqual} from 'date-fns';
 import {FormEventHandler} from 'react';
 import {useFormContext, useWatch} from 'react-hook-form';
-import {Badge} from '../../components/Badge/Badge';
-import {PageHeader} from '../../components/PageHeader/PageHeader';
-import {Button} from '../../components/Button/Button';
-import {CardBase} from '../../components/CardBase/CardBase';
+import {Badge, Button, CardBase} from 'ui';
 import {FileInput} from '../../components/Input/FileInput/FileInput';
 import {Input} from '../../components/Input/Input/Input';
 import {LocationInput} from '../../components/Input/LocationInput/LocationInput';

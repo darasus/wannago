@@ -1,8 +1,7 @@
 import {UseFormRegister} from 'react-hook-form';
-import {Button} from '../Button/Button';
+import {Button, Modal} from 'ui';
 import {Input} from '../Input/Input/Input';
 import {Textarea} from '../Input/Input/Textarea';
-import {Modal} from '../Modal/Modal';
 
 interface Props {
   isOpen: boolean;

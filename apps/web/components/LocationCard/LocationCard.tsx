@@ -1,8 +1,6 @@
-import {Badge} from '../Badge/Badge';
-import {Button} from '../Button/Button';
-import {CardBase} from '../CardBase/CardBase';
+import {Badge, Button, CardBase} from 'ui';
 import {LocationImage} from '../LocationImage/LocationImage';
-import {Text} from '../Text/Text';
+import {Text} from 'ui';
 
 interface Props {
   address: string;

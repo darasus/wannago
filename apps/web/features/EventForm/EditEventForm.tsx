@@ -10,7 +10,7 @@ import {InfoCard} from '../../components/InfoCard/InfoCard';
 import {OrganizerCard} from '../../components/OrganizerCard/OrganizerCard';
 import {LocationCard} from '../../components/LocationCard/LocationCard';
 import {DateCard} from '../../components/DateCard/DateCard';
-import {PageHeader} from '../../components/PageHeader/PageHeader';
+import {PageHeader} from 'ui';
 import {StreamCard} from '../../components/StreamCard/StreamCard';
 
 interface Props {

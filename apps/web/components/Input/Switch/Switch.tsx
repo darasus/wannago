@@ -1,6 +1,6 @@
 import {PropsWithChildren} from 'react';
 import {Switch as _Switch} from '@headlessui/react';
-import {Text} from '../../Text/Text';
+import {Text} from 'ui';
 import {Control, useController} from 'react-hook-form';
 import {cn} from '../../../utils/cn';
 

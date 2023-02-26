@@ -2,17 +2,15 @@ import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
 import {EventView} from '../../components/EventView/EventView';
-import {Container} from '../../components/Container/Container';
+import {Container, Spinner} from 'ui';
 import {trpc} from '../../utils/trpc';
 import {Meta} from '../../components/Meta/Meta';
 import {stripHTML} from '../../utils/stripHTML';
-import {Spinner} from '../../components/Spinner/Spinner';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {appRouter} from '../../server/routers/_app';
 import {createContext} from '../../server/context';
 import SuperJSON from 'superjson';
 import {useHandleInviteConfirm} from '../../hooks/useHandleInviteConfirm';
-import {formatTimeago, isPast} from '../../utils/formatDate';
 import {getRelativeTime} from '../../utils/getRelativeTime';
 
 function PublicEventPage({
