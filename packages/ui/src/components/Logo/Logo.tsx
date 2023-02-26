@@ -1,5 +1,5 @@
 import Link, {LinkProps} from 'next/link';
-import {logoFont} from '../../fonts';
+import {logoFont} from '../../../../../apps/web/fonts';
 import {cn} from '../../utils/cn';
 
 interface Props extends LinkProps {

@@ -7,3 +7,4 @@ export {CardBase} from './src/components/CardBase/CardBase';
 export {Text} from './src/components/Text/Text';
 export {Tooltip} from './src/components/Tooltip/Tooltip';
 export {Modal} from './src/components/Modal/Modal';
+export {Logo, LogoView} from './src/components/Logo/Logo';
