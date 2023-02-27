@@ -9,7 +9,6 @@ import {random} from '../../utils/random';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 import {getBaseUrl} from 'utils';
-import {getImageMetaData} from '../../utils/getImageMetaData';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))

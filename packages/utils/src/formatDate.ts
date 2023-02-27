@@ -66,3 +66,19 @@ export function isPast(_date: Date, timezone?: string | null) {
 
   return _differenceInSeconds(dLeft, dRight) < 0;
 }
+
+export function getRelativeTime(
+  startDate: Date,
+  endDate: Date,
+  timezone?: string
+) {
+  if (isPast(endDate, timezone)) {
+    return `Ended ${formatTimeago(new Date(endDate), timezone)}`;
+  }
+
+  if (isPast(startDate, timezone)) {
+    return `Started ${formatTimeago(new Date(startDate), timezone)}`;
+  }
+
+  return `${formatTimeago(new Date(startDate), timezone)}`;
+}

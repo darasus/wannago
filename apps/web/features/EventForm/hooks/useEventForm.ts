@@ -1,7 +1,7 @@
 import {Event} from '@prisma/client';
 import {useMemo} from 'react';
 import {useForm} from 'react-hook-form';
-import {formatDate} from '../../../utils/formatDate';
+import {formatDate} from 'utils';
 import {Form} from '../types';
 
 const formatDateForInput = (date: Date | string) => {

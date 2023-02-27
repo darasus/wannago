@@ -9,14 +9,14 @@ import {useRouter} from 'next/router';
 import {Button, CardBase, Badge} from 'ui';
 import {Text, Tooltip} from 'ui';
 import {Event} from '@prisma/client';
-import {formatTimeago} from '../../utils/formatDate';
+import {formatTimeago} from 'utils';
 import {useAttendeeCount} from '../../hooks/useAttendeeCount';
 import {useRemoveEvent} from '../../hooks/useRemoveEvent';
 import {usePublishEvent} from '../../hooks/usePublishEvent';
 import {useUnpublishEvent} from '../../hooks/useUnpublishEvent';
 import {getBaseUrl} from 'utils';
 import React from 'react';
-import {cn} from '../../../../packages/utils';
+import {cn} from 'utils';
 
 interface Props {
   event: Event;

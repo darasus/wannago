@@ -4,7 +4,7 @@ import FormData from 'form-data';
 import formidable from 'formidable';
 import got from 'got';
 import {env} from 'server-env';
-import {getImageMetaData} from '../../utils/getImageMetaData';
+import {getImageMetaData} from 'utils';
 
 export const config = {
   api: {

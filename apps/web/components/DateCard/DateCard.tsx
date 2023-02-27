@@ -1,6 +1,5 @@
 import {useMemo} from 'react';
-import {formatDate, isSameDay} from '../../utils/formatDate';
-import {getRelativeTime} from '../../utils/getRelativeTime';
+import {formatDate, isSameDay, getRelativeTime} from 'utils';
 import {Button, Badge, CardBase} from 'ui';
 import {Text} from 'ui';
 

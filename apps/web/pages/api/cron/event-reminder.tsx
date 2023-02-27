@@ -6,7 +6,7 @@ import {EventReminder} from 'email';
 import {render} from '@react-email/render';
 import {getBaseUrl} from 'utils';
 import {Postmark} from '../../../lib/postmark';
-import {formatDate} from '../../../utils/formatDate';
+import {formatDate} from 'utils';
 
 const schema = z.object({
   eventId: z.string().uuid(),

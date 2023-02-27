@@ -7,7 +7,7 @@ import {InfoCard} from '../InfoCard/InfoCard';
 import {LocationCard} from '../../features/LocationCard/LocationCard';
 import {OrganizerCard} from '../../features/OrganizerCard/OrganizerCard';
 import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard';
-import {isPast} from '../../utils/formatDate';
+import {isPast} from 'utils';
 import {StreamCard} from '../StreamCard/StreamCard';
 
 interface Props {

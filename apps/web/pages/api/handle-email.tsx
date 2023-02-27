@@ -12,7 +12,7 @@ import {
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
 import {Postmark} from '../../lib/postmark';
-import {formatDate} from '../../utils/formatDate';
+import {formatDate} from 'utils';
 import {getBaseUrl} from 'utils';
 
 const postmark = new Postmark();

@@ -1,6 +1,6 @@
 import AppLayout from '../../components/AppLayout/AppLayout';
 import {Container, Td, Th, THead, TRow, Table, TBody} from 'ui';
-import {formatDate} from '../../utils/formatDate';
+import {formatDate} from 'utils';
 import {trpc} from '../../utils/trpc';
 
 export default function AdminPage() {
