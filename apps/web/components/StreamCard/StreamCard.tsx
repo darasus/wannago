@@ -1,8 +1,5 @@
 import Image from 'next/image';
-import {
-  getStreamProviderFromUrl,
-  StreamHost,
-} from '../../utils/getStreamProviderFromUrl';
+import {getStreamProviderFromUrl, StreamHost} from 'utils';
 import {Button, CardBase, Badge} from 'ui';
 import {Googlemeet} from '@styled-icons/simple-icons/Googlemeet';
 import {Youtube} from '@styled-icons/simple-icons/Youtube';

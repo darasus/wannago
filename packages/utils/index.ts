@@ -5,6 +5,14 @@ export {iOS} from './src/iOS';
 export {prepareIcsData} from './src/prepareIcsData';
 export {getBaseUrl} from './src/getBaseUrl';
 export {stripHTML} from './src/stripHTML';
-export {cloudflareImageLoader} from './src/cloudflareImageLoader'
-export {formatDate,isPast,formatTimeago,isSameDay,getRelativeTime} from './src/formatDate'
-export {getImageMetaData} from './src/getImageMetaData'
+export {cloudflareImageLoader} from './src/cloudflareImageLoader';
+export {
+  formatDate,
+  isPast,
+  formatTimeago,
+  isSameDay,
+  getRelativeTime,
+} from './src/formatDate';
+export {getImageMetaData} from './src/getImageMetaData';
+export {getStreamProviderFromUrl} from './src/getStreamProviderFromUrl';
+export type {StreamHost} from './src/getStreamProviderFromUrl';
