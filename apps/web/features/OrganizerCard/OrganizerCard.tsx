@@ -2,7 +2,7 @@ import {Event, User} from '@prisma/client';
 import {useState} from 'react';
 import {ContactFormModal} from '../../components/ContactFormModal/ContactFormModal';
 import {trpc} from '../../utils/trpc';
-import {OrganizerCard as OrganizerCardView} from '../../components/OrganizerCard/OrganizerCard';
+import {OrganizerCard as OrganizerCardView} from 'cards';
 import {useAmplitude} from '../../hooks/useAmplitude';
 import {FormProvider, useForm} from 'react-hook-form';
 import {ContactForm} from '../../types/forms';

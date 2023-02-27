@@ -6,7 +6,7 @@ import {FormProvider} from 'react-hook-form';
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {trpc} from '../../utils/trpc';
 import {useAmplitude} from '../../hooks/useAmplitude';
-import {OrganizerCard} from '../../components/OrganizerCard/OrganizerCard';
+import {OrganizerCard} from 'cards';
 import {LocationCard} from '../../components/LocationCard/LocationCard';
 import {DateCard, InfoCard} from 'cards';
 import {PageHeader} from 'ui';
