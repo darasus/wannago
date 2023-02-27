@@ -1,7 +1,7 @@
 import ky from 'ky';
 import {useCallback, useState} from 'react';
 import {z} from 'zod';
-import {getBaseUrl} from '../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 
 const schema = z.object({
   url: z.string().url(),

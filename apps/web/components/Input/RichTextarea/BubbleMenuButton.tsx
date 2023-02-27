@@ -1,5 +1,5 @@
 import {HTMLAttributes} from 'react';
-import {cn} from 'browser-utils';
+import {cn} from '../../../../../packages/utils';
 
 export function BubbleMenuButton({
   children,

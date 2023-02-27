@@ -1,5 +1,5 @@
 import {PropsWithChildren} from 'react';
-import {cn} from 'browser-utils';
+import {cn} from '../../../../packages/utils';
 
 interface Props extends PropsWithChildren {
   className?: string;

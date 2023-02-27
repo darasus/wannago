@@ -9,6 +9,6 @@
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "browser-utils": "workspace:*"
+    "utils": "workspace:*"
   }
 }

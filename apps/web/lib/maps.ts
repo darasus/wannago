@@ -3,7 +3,7 @@ import {
   GeocodeResponseData,
   PlaceAutocompleteResponseData,
 } from '@googlemaps/google-maps-services-js';
-import {getBaseUrl} from '../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 
 export const googleMaps = new Client();
 

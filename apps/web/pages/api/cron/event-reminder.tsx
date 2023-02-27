@@ -4,7 +4,7 @@ import {prisma} from 'database/prisma';
 import {z} from 'zod';
 import {EventReminder} from 'email';
 import {render} from '@react-email/render';
-import {getBaseUrl} from '../../../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 import {Postmark} from '../../../lib/postmark';
 import {formatDate} from '../../../utils/formatDate';
 

@@ -9,7 +9,7 @@ import {Container} from 'ui';
 import {LoadingEventCard} from '../components/LoadingEventCard/LoadingEventCard';
 import {Button} from 'ui';
 import {withProtected} from '../utils/withAuthProtect';
-import {cn} from 'browser-utils';
+import {cn} from '../../../packages/utils';
 
 function Dashboard() {
   const router = useRouter();

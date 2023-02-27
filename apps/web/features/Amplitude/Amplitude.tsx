@@ -2,7 +2,7 @@ import {useRouter} from 'next/router';
 import {useCallback, useEffect} from 'react';
 import {useAmplitude} from '../../hooks/useAmplitude';
 import {useInitiateAmplitude} from '../../hooks/useInitiateAmplitude';
-import {getBaseUrl} from '../../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 
 function AmplitudeRouteTracker() {
   const router = useRouter();

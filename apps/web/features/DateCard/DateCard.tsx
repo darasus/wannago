@@ -1,10 +1,10 @@
 import {saveAs} from 'file-saver';
 import {createEvent} from 'ics';
 import {Event} from '@prisma/client';
-import {prepareIcsData} from '../../utils/prepareIcsData';
-import {iOS} from '../../utils/iOS';
+import {prepareIcsData} from 'utils';
+import {iOS} from 'utils';
 import {DateCard as DataCardView} from '../../components/DateCard/DateCard';
-import {Android} from '../../utils/Android';
+import {Android} from 'utils';
 import {useAmplitude} from '../../hooks/useAmplitude';
 
 interface Props {

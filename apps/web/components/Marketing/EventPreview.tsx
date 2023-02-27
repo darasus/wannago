@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import {getBaseUrl} from '../../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 import {MockFormProvider} from '../../utils/MockFormProvider';
 import {trpc} from '../../utils/trpc';
 import {DateCard} from '../DateCard/DateCard';

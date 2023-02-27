@@ -14,9 +14,9 @@ import {useAttendeeCount} from '../../hooks/useAttendeeCount';
 import {useRemoveEvent} from '../../hooks/useRemoveEvent';
 import {usePublishEvent} from '../../hooks/usePublishEvent';
 import {useUnpublishEvent} from '../../hooks/useUnpublishEvent';
-import {getBaseUrl} from '../../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 import React from 'react';
-import {cn} from 'browser-utils';
+import {cn} from '../../../../packages/utils';
 
 interface Props {
   event: Event;

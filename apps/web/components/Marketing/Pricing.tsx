@@ -1,4 +1,4 @@
-import {cn} from 'browser-utils';
+import {cn} from '../../../../packages/utils';
 import {Button} from 'ui';
 import {Container} from 'ui';
 

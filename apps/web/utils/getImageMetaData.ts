@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {getBaseUrl} from './getBaseUrl';
+import {getBaseUrl} from 'utils';
 
 export async function getImageMetaData(imageSrc: string) {
   const imageResponse = await fetch(`${getBaseUrl()}/api/image-meta-data`, {
