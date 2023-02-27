@@ -1,5 +1,5 @@
 import {Event} from '@prisma/client';
-import {getBaseUrl} from '../../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 import {DateCard} from '../../features/DateCard/DateCard';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {EventWannaGoArea} from '../EventWannaGoArea/EventWannaGoArea';

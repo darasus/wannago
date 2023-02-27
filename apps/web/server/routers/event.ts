@@ -8,7 +8,7 @@ import {authorizeChange} from '../../utils/getIsMyEvent';
 import {random} from '../../utils/random';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
-import {getBaseUrl} from '../../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 import {getImageMetaData} from '../../utils/getImageMetaData';
 
 const publish = protectedProcedure

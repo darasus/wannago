@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React from 'react';
-import {getBaseUrl} from '../../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 
 interface Props {
   title?: string;

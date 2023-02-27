@@ -1,5 +1,5 @@
 import {memo} from 'react';
-import {cn} from 'browser-utils';
+import {cn} from '../../../../utils';
 
 export interface TooltipProps {
   children: React.ReactNode;

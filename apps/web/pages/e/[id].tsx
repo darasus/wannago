@@ -5,7 +5,7 @@ import {EventView} from '../../components/EventView/EventView';
 import {Container, Spinner} from 'ui';
 import {trpc} from '../../utils/trpc';
 import {Meta} from '../../components/Meta/Meta';
-import {stripHTML} from '../../utils/stripHTML';
+import {stripHTML} from 'utils';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {appRouter} from '../../server/routers/_app';
 import {createContext} from '../../server/context';

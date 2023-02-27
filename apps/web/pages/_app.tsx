@@ -7,7 +7,7 @@ import {clerkAppearance} from '../clerkElements';
 import {trpc} from '../utils/trpc';
 import {ToastBar, Toaster} from 'react-hot-toast';
 import {bodyFont} from '../fonts';
-import {getBaseUrl} from '../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 import {Analytics} from '@vercel/analytics/react';
 import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/24/outline';
 import Script from 'next/script';
@@ -15,7 +15,7 @@ import {pageView} from '../lib/gtag';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {Amplitude} from '../features/Amplitude/Amplitude';
-import {cn} from 'browser-utils';
+import {cn} from '../../../packages/utils';
 import {env} from 'client-env';
 import {Sentry} from '../features/Sentry/Sentry';
 

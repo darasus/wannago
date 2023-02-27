@@ -1,7 +1,7 @@
 import {InputWrapper} from './InputWrapper';
 import {forwardRef} from 'react';
 import {FieldError} from 'react-hook-form';
-import {cn} from 'browser-utils';
+import {cn} from '../../../../../packages/utils';
 
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;

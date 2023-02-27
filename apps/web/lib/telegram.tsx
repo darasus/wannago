@@ -1,4 +1,4 @@
-import {getBaseUrl} from '../utils/getBaseUrl';
+import {getBaseUrl} from 'utils';
 
 export class Telegram {
   async sendMessageToWannaGoChannel({message}: {message: string}) {
