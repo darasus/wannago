@@ -26,8 +26,6 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
   const startDate = useWatch<Form>({name: 'startDate'});
   const type = useWatch<Form>({name: 'type'});
 
-  console.log(watch());
-
   const items = [
     {
       label: 'What',

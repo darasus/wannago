@@ -45,8 +45,6 @@ export default async function handler(req: NextRequest) {
 
   const user = event?.organization?.users[0]!;
 
-  console.log(event?.featuredImageSrc);
-
   return new ImageResponse(
     (
       <div tw="flex w-full h-full p-8" style={{backgroundColor: '#FFE5D9'}}>
