@@ -2,7 +2,7 @@ import {PropsWithChildren} from 'react';
 import {Switch as _Switch} from '@headlessui/react';
 import {Text} from 'ui';
 import {Control, useController} from 'react-hook-form';
-import {cn} from '../../../../../packages/utils';
+import {cn} from 'utils';
 
 type Props = PropsWithChildren & {
   label?: string;

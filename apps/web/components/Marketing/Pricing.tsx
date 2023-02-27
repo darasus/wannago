@@ -1,4 +1,4 @@
-import {cn} from '../../../../packages/utils';
+import {cn} from 'utils';
 import {Button} from 'ui';
 import {Container} from 'ui';
 

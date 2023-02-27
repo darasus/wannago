@@ -1,0 +1,15 @@
+{
+  "name": "cards",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "./index.ts",
+  "scripts": {
+    "lint": "eslint"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "utils": "workspace:*",
+    "ui": "workspace:*"
+  }
+}

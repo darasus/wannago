@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
-import {prisma} from '../../../../../packages/database/prisma';
+import {prisma} from 'database';
 
 const scheme = z.object({
   type: z.enum(['user.deleted']),

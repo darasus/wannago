@@ -2,8 +2,7 @@ import {Event} from '@prisma/client';
 import {isFuture} from 'date-fns';
 import Image from 'next/image';
 import {formatDate} from 'utils';
-import {Badge, CardBase} from 'ui';
-import {Text} from 'ui';
+import {Badge, CardBase, Text} from 'ui';
 import {forwardRef} from 'react';
 
 interface Props {

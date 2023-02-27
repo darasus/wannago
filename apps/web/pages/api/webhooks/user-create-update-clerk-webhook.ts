@@ -1,7 +1,7 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {env} from 'server-env';
 import {z} from 'zod';
-import {prisma} from '../../../../../packages/database/prisma';
+import {prisma} from 'database';
 import {MailQueue} from '../../../lib/mailQueue';
 import {Telegram} from '../../../lib/telegram';
 

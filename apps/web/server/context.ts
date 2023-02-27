@@ -2,7 +2,7 @@ import {User} from '@clerk/nextjs/dist/api';
 import {clerkClient, getAuth} from '@clerk/nextjs/server';
 import {PrismaClient} from '@prisma/client/edge';
 import * as trpc from '@trpc/server';
-import {prisma} from '../../../packages/database/prisma';
+import {prisma} from 'database';
 import {QStash} from '../lib/qStash';
 import {FetchCreateContextFnOptions} from '@trpc/server/adapters/fetch';
 import {NextRequest} from 'next/server';

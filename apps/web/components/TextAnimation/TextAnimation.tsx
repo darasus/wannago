@@ -1,6 +1,6 @@
 import {AnimatePresence, motion} from 'framer-motion';
 import {memo, useEffect, useMemo, useState} from 'react';
-import {cn} from '../../../../packages/utils';
+import {cn} from 'utils';
 
 interface Props {
   texts: string[];

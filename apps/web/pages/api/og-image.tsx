@@ -1,6 +1,6 @@
 import {ImageResponse} from '@vercel/og';
 import {NextRequest} from 'next/server';
-import {prisma} from '../../../../packages/database/prisma';
+import {prisma} from 'database';
 import {ONE_WEEK_IN_SECONDS} from '../../constants';
 
 export const config = {

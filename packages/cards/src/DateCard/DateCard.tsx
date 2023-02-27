@@ -1,7 +1,6 @@
 import {useMemo} from 'react';
 import {formatDate, isSameDay, getRelativeTime} from 'utils';
-import {Button, Badge, CardBase} from 'ui';
-import {Text} from 'ui';
+import {Button, Badge, CardBase, Text} from 'ui';
 
 interface Props {
   onAddToCalendarClick: () => void;

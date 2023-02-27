@@ -5,10 +5,9 @@ import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
 import {authorizeChange} from '../../utils/authorizeChange';
-import {random} from 'utils';
+import {random, getBaseUrl} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
-import {getBaseUrl} from 'utils';
 
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))

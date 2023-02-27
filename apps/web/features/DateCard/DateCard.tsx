@@ -3,7 +3,7 @@ import {createEvent} from 'ics';
 import {Event} from '@prisma/client';
 import {prepareIcsData} from 'utils';
 import {iOS} from 'utils';
-import {DateCard as DataCardView} from '../../components/DateCard/DateCard';
+import {DateCard as DataCardView} from 'cards';
 import {Android} from 'utils';
 import {useAmplitude} from '../../hooks/useAmplitude';
 

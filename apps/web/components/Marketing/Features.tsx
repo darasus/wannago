@@ -10,7 +10,7 @@ import {
 } from '@heroicons/react/24/outline';
 import {SectionContainer} from './SectionContainer';
 import {titleFontClassName} from '../../fonts';
-import {cn} from '../../../../packages/utils';
+import {cn} from 'utils';
 
 const features = [
   {

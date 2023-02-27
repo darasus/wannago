@@ -1,5 +1,5 @@
 import {titleFontClassName} from '../../fonts';
-import {cn} from '../../../../packages/utils';
+import {cn} from 'utils';
 
 interface Props {
   title: string;

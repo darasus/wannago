@@ -181,6 +181,7 @@ importers:
 
   apps/web:
     specifiers:
+      cards: workspace:*
       client-env: workspace:*
       database: workspace:*
       email: workspace:*
@@ -189,6 +190,7 @@ importers:
       ui: workspace:*
       utils: workspace:*
     dependencies:
+      cards: link:../../packages/cards
       client-env: link:../../packages/client-env
       database: link:../../packages/database
       email: link:../../packages/email
@@ -204,6 +206,18 @@ importers:
     devDependencies:
       cypress: 12.3.0
       eslint-config-custom: link:../../packages/eslint-config-custom
+
+  packages/cards:
+    specifiers:
+      eslint-config-custom: workspace:*
+      tsconfig: workspace:*
+      ui: workspace:*
+      utils: workspace:*
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
+      ui: link:../ui
+      utils: link:../utils
 
   packages/client-env:
     specifiers:

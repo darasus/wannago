@@ -3,7 +3,7 @@ import {getBaseUrl} from 'utils';
 import {DateCard} from '../../features/DateCard/DateCard';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {EventWannaGoArea} from '../EventWannaGoArea/EventWannaGoArea';
-import {InfoCard} from '../InfoCard/InfoCard';
+import {InfoCard} from 'cards';
 import {LocationCard} from '../../features/LocationCard/LocationCard';
 import {OrganizerCard} from '../../features/OrganizerCard/OrganizerCard';
 import {ParticipantsCard} from '../../features/ParticipantsCard/ParticipantsCard';

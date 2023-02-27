@@ -5,7 +5,7 @@ import {useRouter} from 'next/router';
 import {useUser} from '@clerk/nextjs';
 import {UserSection} from '../UserSection/UserSection';
 import {FeedbackFish} from '@feedback-fish/react';
-import {cn} from '../../../../packages/utils';
+import {cn} from 'utils';
 
 export const navItems = [
   {label: 'Features', href: `/#features`},

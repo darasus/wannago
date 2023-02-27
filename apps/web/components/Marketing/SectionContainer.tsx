@@ -1,4 +1,4 @@
-import {cn} from '../../../../packages/utils';
+import {cn} from 'utils';
 
 interface Props extends React.PropsWithChildren {
   className?: string;

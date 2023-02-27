@@ -3,13 +3,12 @@ import {PlusCircleIcon} from '@heroicons/react/24/outline';
 import {useRouter} from 'next/router';
 import AppLayout from '../components/AppLayout/AppLayout';
 import {trpc} from '../utils/trpc';
-import {EventCard} from '../components/EventCard/EventCard';
+import {EventCard} from 'cards';
 import Head from 'next/head';
-import {Container} from 'ui';
+import {Container, Button} from 'ui';
 import {LoadingEventCard} from '../components/LoadingEventCard/LoadingEventCard';
-import {Button} from 'ui';
 import {withProtected} from '../utils/withAuthProtect';
-import {cn} from '../../../packages/utils';
+import {cn} from 'utils';
 
 function Dashboard() {
   const router = useRouter();

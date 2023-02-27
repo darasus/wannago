@@ -7,7 +7,7 @@ import {Combobox, Transition} from '@headlessui/react';
 import {CheckIcon} from '@heroicons/react/24/solid';
 import {useDebounce} from '../../../hooks/useDebounce';
 import {CardBase} from 'ui';
-import {cn} from '../../../../../packages/utils';
+import {cn} from 'utils';
 
 type ExtractProps<T> = T extends ComponentType<infer P> ? P : T;
 
