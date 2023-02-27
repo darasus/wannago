@@ -154,7 +154,7 @@ export function EventInfo({
         <b>Start:</b> {startDate}
       </Text>
       <Text>
-        <b>Утв:</b> {endDate}
+        <b>End:</b> {endDate}
       </Text>
       {address !== 'none' && (
         <Text>
