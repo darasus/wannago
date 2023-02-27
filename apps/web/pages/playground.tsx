@@ -34,20 +34,62 @@ export default function PlaygroundPage() {
               <Button size={size} variant="primary">
                 Primary
               </Button>
+              <Button
+                size={size}
+                variant="primary"
+                iconLeft={<ArrowDownCircleIcon />}
+              >
+                Primary with icon
+              </Button>
               <Button size={size} variant="secondary">
                 Secondary
+              </Button>
+              <Button
+                size={size}
+                variant="secondary"
+                iconLeft={<ArrowDownCircleIcon />}
+              >
+                Secondary with icon
               </Button>
               <Button size={size} variant="neutral">
                 Neutral
               </Button>
+              <Button
+                size={size}
+                variant="neutral"
+                iconLeft={<ArrowDownCircleIcon />}
+              >
+                Neutral with icon
+              </Button>
               <Button size={size} variant="link">
                 Link
+              </Button>
+              <Button
+                size={size}
+                variant="link"
+                iconLeft={<ArrowDownCircleIcon />}
+              >
+                Link with icon
               </Button>
               <Button size={size} variant="link-gray">
                 Link gray
               </Button>
+              <Button
+                size={size}
+                variant="link-gray"
+                iconLeft={<ArrowDownCircleIcon />}
+              >
+                Link gray with icon
+              </Button>
               <Button size={size} variant="success">
                 Success
+              </Button>
+              <Button
+                size={size}
+                variant="success"
+                iconLeft={<ArrowDownCircleIcon />}
+              >
+                Success with icon
               </Button>
               <Button size={size} variant="danger">
                 Danger
@@ -64,9 +106,6 @@ export default function PlaygroundPage() {
               </Button>
               <Button size={size} isLoading>
                 Loading
-              </Button>
-              <Button size={size} iconLeft={<ArrowDownCircleIcon />}>
-                With icon
               </Button>
               <Button size={size} iconLeft={<ArrowDownCircleIcon />} />
             </div>

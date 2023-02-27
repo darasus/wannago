@@ -38,7 +38,9 @@ const button = cva(
         success: [
           'text-gray-50 bg-green-600 hover:bg-green-700 focus:ring-green-500',
         ],
-        danger: ['text-gray-50 bg-red-600 hover:bg-red-700 focus:ring-red-500'],
+        danger: [
+          'text-red-500 bg-gray-50 hover:bg-gray-200 focus:ring-brand-500',
+        ],
         neutral: ['bg-gray-50 hover:bg-gray-200 focus:ring-brand-500'],
         link: [],
         'link-gray': [
@@ -87,6 +89,27 @@ const button = cva(
   }
 );
 
+const icon = cva(['text-gray-800'], {
+  variants: {
+    intent: {
+      primary: ['text-gray-50'],
+      secondary: ['text-gray-50'],
+      success: ['text-gray-50'],
+      danger: ['text-red-500'],
+      neutral: [],
+      link: [],
+      'link-gray': ['text-gray-400'],
+    },
+    size: {
+      xs: ['h-4 w-4'],
+      sm: ['h-5 w-5'],
+      md: ['h-6 w-6'],
+      lg: ['h-6 w-6'],
+    },
+  },
+  compoundVariants: [],
+});
+
 export const Button = forwardRef(function Button(
   {
     size = 'md',
@@ -101,7 +124,6 @@ export const Button = forwardRef(function Button(
   }: Props,
   ref: React.Ref<HTMLButtonElement>
 ) {
-  const isNeutral = variant === 'neutral';
   const isXs = size === 'xs';
   const isSm = size === 'sm';
   const isMd = size === 'md';
@@ -122,7 +144,6 @@ export const Button = forwardRef(function Button(
             'h-4 w-4': isXs,
             'h-5 w-5': isSm,
             'h-6 w-6': isMd || isLg,
-            'text-gray-50': !isNeutral,
           })}
         />
       ) : (
@@ -130,16 +151,9 @@ export const Button = forwardRef(function Button(
           {
             (iconLeft &&= (
               <div
-                className={cn(
-                  {
-                    'h-4 w-4': isXs,
-                    'h-5 w-5': isSm,
-                    'h-6 w-6': isMd || isLg,
-                    '!text-gray-50': !isNeutral,
-                  },
-                  {'mr-2': !!children},
-                  'text-gray-800'
-                )}
+                className={cn(icon({intent: variant, size}), {
+                  'mr-2': !!children,
+                })}
               >
                 {iconLeft}
               </div>
