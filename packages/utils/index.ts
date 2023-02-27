@@ -16,3 +16,4 @@ export {
 export {getImageMetaData} from './src/getImageMetaData';
 export {getStreamProviderFromUrl} from './src/getStreamProviderFromUrl';
 export type {StreamHost} from './src/getStreamProviderFromUrl';
+export {random} from './src/random';

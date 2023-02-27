@@ -5,7 +5,7 @@ import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
 import {authorizeChange} from '../../utils/getIsMyEvent';
-import {random} from '../../utils/random';
+import {random} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 import {getBaseUrl} from 'utils';

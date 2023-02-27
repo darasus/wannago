@@ -25,7 +25,8 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "../../packages/utils/src/getStreamProviderFromUrl.ts"
+    "../../packages/utils/src/getStreamProviderFromUrl.ts",
+    "../../packages/utils/src/random.ts"
   ],
   "exclude": ["node_modules"]
 }
