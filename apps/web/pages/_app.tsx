@@ -11,7 +11,7 @@ import {getBaseUrl, cn} from 'utils';
 import {Analytics} from '@vercel/analytics/react';
 import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/24/outline';
 import Script from 'next/script';
-import {pageView} from 'lib';
+import {pageView} from 'lib/src/gtag';
 import {useEffect} from 'react';
 import {useRouter} from 'next/router';
 import {Amplitude} from '../features/Amplitude/Amplitude';
