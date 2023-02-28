@@ -6,7 +6,7 @@ import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import AppLayout from '../../../components/AppLayout/AppLayout';
 import {EventView} from '../../../components/EventView/EventView';
 import {Container, Spinner} from 'ui';
-import {trpc} from '../../../utils/trpc';
+import {trpc} from 'trpc/src/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 
 function InternalEventPage({

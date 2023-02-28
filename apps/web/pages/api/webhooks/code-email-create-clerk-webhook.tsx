@@ -2,7 +2,7 @@ import {render} from '@react-email/render';
 import {LoginCode} from 'email';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
-import {Postmark} from '../../../lib/postmark';
+import {Postmark} from 'lib';
 
 const postmark = new Postmark();
 

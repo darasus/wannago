@@ -1,5 +1,5 @@
 import {TRPCError} from '@trpc/server';
-import {Context} from '../server/context';
+import {Context} from 'trpc';
 
 export async function authorizeChange({
   ctx,

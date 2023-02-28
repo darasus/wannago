@@ -1,10 +1,10 @@
-import {router, protectedProcedure, publicProcedure} from '../trpc';
+import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 import {z} from 'zod';
 import {nanoid} from 'nanoid';
 import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
-import {authorizeChange} from '../../utils/authorizeChange';
+import {authorizeChange} from '../../../../apps/web/utils/authorizeChange';
 import {random, getBaseUrl} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';

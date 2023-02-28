@@ -1,4 +1,4 @@
-import {publicProcedure, router} from '../trpc';
+import {publicProcedure, router} from '../trpcServer';
 import {mailRouter} from './mail';
 import {eventRouter} from './event';
 import {mapsRouter} from './maps';

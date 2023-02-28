@@ -4,7 +4,7 @@ import AppLayout from '../components/AppLayout/AppLayout';
 import {EventCard} from 'cards';
 import {LoadingEventCard} from '../components/LoadingEventCard/LoadingEventCard';
 import {Container} from 'ui';
-import {trpc} from '../utils/trpc';
+import {trpc} from 'trpc/src/trpc';
 
 export default function ExamplesPage() {
   const {isLoading, data} = trpc.event.getExamples.useQuery();

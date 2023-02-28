@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {getBaseUrl} from 'utils';
 import {MockFormProvider} from '../../utils/MockFormProvider';
-import {trpc} from '../../utils/trpc';
+import {trpc} from 'trpc/src/trpc';
 import {DateCard, InfoCard} from 'cards';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {LocationCard} from '../LocationCard/LocationCard';

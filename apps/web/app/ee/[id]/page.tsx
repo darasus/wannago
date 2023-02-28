@@ -1,15 +1,15 @@
 import 'server-only';
-import {trpcClient} from '../../../server/client';
+import {trpcProxyClient} from 'trpc/src/client';
 import {cache, Suspense, use} from 'react';
 
 const getEventByShortId = cache((id: string) => {
-  return trpcClient.event.getByShortId.query({
+  return trpcProxyClient.event.getByShortId.query({
     id,
   });
 });
 
 const getRandomExample = cache(() => {
-  return trpcClient.event.getRandomExample.query();
+  return trpcProxyClient.event.getRandomExample.query();
 });
 
 export const revalidate = 60;

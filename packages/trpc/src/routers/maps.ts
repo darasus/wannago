@@ -1,4 +1,4 @@
-import {router, protectedProcedure} from '../trpc';
+import {router, protectedProcedure} from '../trpcServer';
 import {z} from 'zod';
 
 const searchPlaces = protectedProcedure

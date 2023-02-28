@@ -2,8 +2,8 @@ import {zonedTimeToUtc} from 'date-fns-tz';
 import {useRouter} from 'next/router';
 import {FormProvider} from 'react-hook-form';
 import {useAmplitude} from '../../hooks/useAmplitude';
-import {trackEventCreateConversion} from '../../lib/gtag';
-import {trpc} from '../../utils/trpc';
+import {trackEventCreateConversion} from 'lib';
+import {trpc} from 'trpc/src/trpc';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 

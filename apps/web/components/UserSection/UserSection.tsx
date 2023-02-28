@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {Fragment} from 'react';
 import {Button, CardBase} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
-import {trpc} from '../../utils/trpc';
+import {trpc} from 'trpc/src/trpc';
 
 export function UserSection() {
   const {user, isLoaded} = useUser();

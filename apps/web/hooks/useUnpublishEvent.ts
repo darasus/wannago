@@ -1,5 +1,5 @@
 import {toast} from 'react-hot-toast';
-import {trpc} from '../utils/trpc';
+import {trpc} from 'trpc/src/trpc';
 import {useAmplitude} from './useAmplitude';
 import {useConfirmDialog} from './useConfirmDialog';
 

@@ -16,6 +16,8 @@
     "server-env": "workspace:*",
     "email": "workspace:*",
     "utils": "workspace:*",
+    "lib": "workspace:*",
+    "trpc": "workspace:*",
     "cards": "workspace:*",
     "ui": "workspace:*"
   }

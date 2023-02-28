@@ -3,13 +3,13 @@ import {clerkClient, getAuth} from '@clerk/nextjs/server';
 import {PrismaClient} from '@prisma/client/edge';
 import * as trpc from '@trpc/server';
 import {prisma} from 'database';
-import {QStash} from '../lib/qStash';
+import {QStash} from 'lib/src/qStash';
 import {FetchCreateContextFnOptions} from '@trpc/server/adapters/fetch';
 import {NextRequest} from 'next/server';
-import {Maps} from '../lib/maps';
-import {Telegram} from '../lib/telegram';
-import {Postmark} from '../lib/postmark';
-import {MailQueue} from '../lib/mailQueue';
+import {Maps} from 'lib/src/maps';
+import {Telegram} from 'lib/src/telegram';
+import {Postmark} from 'lib/src/postmark';
+import {MailQueue} from 'lib/src/mailQueue';
 
 interface CreateContextOptions {
   user: User | null;

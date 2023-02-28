@@ -2,8 +2,7 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import {env} from 'server-env';
 import {z} from 'zod';
 import {prisma} from 'database';
-import {MailQueue} from '../../../lib/mailQueue';
-import {Telegram} from '../../../lib/telegram';
+import {MailQueue, Telegram} from 'lib';
 
 const scheme = z.object({
   type: z.enum(['user.created', 'user.updated', 'user.deleted']),

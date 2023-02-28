@@ -52,7 +52,7 @@ export default async function handler(
       id: eventSignUp.id,
     },
     data: {
-      status: 'REGISTERED',
+      status: 'CANCELLED',
     },
   });
 

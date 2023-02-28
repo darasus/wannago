@@ -1,4 +1,4 @@
-import {router, adminProcedure} from '../trpc';
+import {router, adminProcedure} from '../trpcServer';
 
 const getAllRegisteredUsers = adminProcedure.query(async ({ctx}) => {
   const registeredUsers = await ctx.prisma.user.findMany({

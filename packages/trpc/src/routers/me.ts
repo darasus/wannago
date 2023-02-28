@@ -1,4 +1,4 @@
-import {router, protectedProcedure} from '../trpc';
+import {router, protectedProcedure} from '../trpcServer';
 
 const getMyEvents = protectedProcedure.query(async ({ctx}) => {
   return ctx.prisma.event.findMany({

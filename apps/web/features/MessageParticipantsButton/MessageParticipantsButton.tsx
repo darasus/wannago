@@ -2,7 +2,7 @@ import {EnvelopeIcon} from '@heroicons/react/24/solid';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
-import {trpc} from '../../utils/trpc';
+import {trpc} from 'trpc/src/trpc';
 import {Button} from 'ui';
 import {MessageParticipantsFormModal} from '../../components/MessageParticipantsFormModal/MessageParticipantsFormModal';
 import {useAmplitude} from '../../hooks/useAmplitude';

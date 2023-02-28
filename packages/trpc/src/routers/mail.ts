@@ -1,4 +1,4 @@
-import {router, protectedProcedure, publicProcedure} from '../trpc';
+import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 import {z} from 'zod';
 
 const messageEventParticipants = protectedProcedure

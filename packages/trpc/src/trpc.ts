@@ -1,6 +1,6 @@
 import {httpLink, loggerLink} from '@trpc/client';
 import {createTRPCNext} from '@trpc/next';
-import {AppRouter} from '../server/routers/_app';
+import {AppRouter} from './routers/_app';
 import superjson from 'superjson';
 import {getBaseUrl} from 'utils';
 

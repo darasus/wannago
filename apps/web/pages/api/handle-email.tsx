@@ -11,7 +11,7 @@ import {
 } from 'email';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
-import {Postmark} from '../../lib/postmark';
+import {Postmark} from 'lib';
 import {formatDate} from 'utils';
 import {getBaseUrl} from 'utils';
 
@@ -328,6 +328,12 @@ export default async function handle(
         ),
       });
     }
+  }
+
+  if (input.type === EmailType.EventCancelInvite) {
+  }
+
+  if (input.type === EmailType.EventCancelSignUp) {
   }
 
   return res.status(200).json({success: true});

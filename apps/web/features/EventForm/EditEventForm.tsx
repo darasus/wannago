@@ -4,7 +4,7 @@ import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 import {FormProvider} from 'react-hook-form';
 import {zonedTimeToUtc} from 'date-fns-tz';
-import {trpc} from '../../utils/trpc';
+import {trpc} from 'trpc/src/trpc';
 import {useAmplitude} from '../../hooks/useAmplitude';
 import {OrganizerCard} from 'cards';
 import {LocationCard} from '../../components/LocationCard/LocationCard';

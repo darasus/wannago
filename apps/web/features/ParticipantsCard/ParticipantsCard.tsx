@@ -1,7 +1,7 @@
 import {Event} from '@prisma/client';
 import {FormProvider, useForm} from 'react-hook-form';
 import {ParticipantsCard as ParticipantsCardView} from '../../components/ParticipantsCard/ParticipantsCard';
-import {trpc} from '../../utils/trpc';
+import {trpc} from 'trpc/src/trpc';
 import {toast} from 'react-hot-toast';
 import {useAttendeeCount} from '../../hooks/useAttendeeCount';
 import {useAmplitude} from '../../hooks/useAmplitude';
