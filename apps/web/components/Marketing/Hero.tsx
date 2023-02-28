@@ -5,7 +5,7 @@ import {titleFontClassName} from '../../fonts';
 import {Button} from 'ui';
 import {Container} from 'ui';
 import dynamic from 'next/dynamic';
-import {TextAnimation} from '../TextAnimation/TextAnimation';
+import {TextAnimation} from 'ui/src/components/TextAnimation/TextAnimation';
 import {cn} from 'utils';
 
 const DynamicSpinningCircle = dynamic(() => import('./SpinningCircle'), {

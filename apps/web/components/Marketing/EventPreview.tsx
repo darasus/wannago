@@ -3,10 +3,10 @@ import {getBaseUrl} from 'utils';
 import {MockFormProvider} from '../../utils/MockFormProvider';
 import {trpc} from 'trpc/src/trpc';
 import {DateCard, InfoCard} from 'cards';
-import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
-import {LocationCard} from '../LocationCard/LocationCard';
+import {EventUrlCard} from '../../features/EventUrlCard/EventUrlCard';
+import {LocationCard} from 'cards/src/LocationCard/LocationCard';
 import {OrganizerCard as OrganizerCardView} from 'cards';
-import {ParticipantsCard} from '../ParticipantsCard/ParticipantsCard';
+import {ParticipantsCard} from 'cards';
 import {AnimateRender} from './AnimateRender';
 
 function Event() {

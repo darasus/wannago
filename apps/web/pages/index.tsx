@@ -3,7 +3,7 @@ import {Hero} from '../components/Marketing/Hero';
 import {CallToAction} from '../components/Marketing/CallToAction';
 import {Faqs} from '../components/Marketing/Faqs';
 import {Footer} from '../components/Marketing/Footer';
-import AppLayout from '../components/AppLayout/AppLayout';
+import AppLayout from '../features/AppLayout/AppLayout';
 import {Features} from '../components/Marketing/Features';
 
 export default function HomePage() {

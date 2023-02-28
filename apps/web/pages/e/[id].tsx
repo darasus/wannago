@@ -1,7 +1,7 @@
 import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import {useRouter} from 'next/router';
 import {useMemo} from 'react';
-import {EventView} from '../../components/EventView/EventView';
+import {EventView} from '../../features/EventView/EventView';
 import {Container, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {Meta} from '../../components/Meta/Meta';

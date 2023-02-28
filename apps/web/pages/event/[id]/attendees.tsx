@@ -1,12 +1,12 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import AppLayout from '../../../components/AppLayout/AppLayout';
+import AppLayout from '../../../features/AppLayout/AppLayout';
 import {Container, CardBase, Button, Text, PageHeader} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {saveAs} from 'file-saver';
 import {withProtected} from '../../../utils/withAuthProtect';
-import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
+import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {useEventId} from 'hooks';
 import {MessageParticipantsButton} from '../../../features/MessageParticipantsButton/MessageParticipantsButton';
 import {UserPlusIcon, DocumentArrowDownIcon} from '@heroicons/react/24/solid';

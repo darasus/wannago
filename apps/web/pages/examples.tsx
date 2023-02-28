@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Head from 'next/head';
-import AppLayout from '../components/AppLayout/AppLayout';
+import AppLayout from '../features/AppLayout/AppLayout';
 import {EventCard} from 'cards';
-import {LoadingEventCard} from '../components/LoadingEventCard/LoadingEventCard';
+import {LoadingEventCard} from 'cards/src/LoadingEventCard/LoadingEventCard';
 import {Container} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 

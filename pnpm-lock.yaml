@@ -306,12 +306,14 @@ importers:
 
   packages/lib:
     specifiers:
+      client-env: workspace:*
       database: workspace:*
       eslint-config-custom: workspace:*
       server-env: workspace:*
       tsconfig: workspace:*
       utils: workspace:*
     devDependencies:
+      client-env: link:../client-env
       database: link:../database
       eslint-config-custom: link:../eslint-config-custom
       server-env: link:../server-env
@@ -352,10 +354,12 @@ importers:
 
   packages/ui:
     specifiers:
+      client-env: workspace:*
       eslint-config-custom: workspace:*
       tsconfig: workspace:*
       utils: workspace:*
     devDependencies:
+      client-env: link:../client-env
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
       utils: link:../utils

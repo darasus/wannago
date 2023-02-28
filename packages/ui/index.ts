@@ -17,3 +17,6 @@ export {TRow} from './src/components/Table/TRow';
 export {THead} from './src/components/Table/THead';
 export {Th} from './src/components/Table/Th';
 export {Td} from './src/components/Table/Td';
+export {LocationImage} from './src/components/LocationImage/LocationImage';
+export {EventRegistrationStatusBadge} from './src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
+export {TextAnimation} from './src/components/TextAnimation/TextAnimation';

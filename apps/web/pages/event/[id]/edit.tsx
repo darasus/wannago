@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import AppLayout from '../../../components/AppLayout/AppLayout';
+import AppLayout from '../../../features/AppLayout/AppLayout';
 import {EditEventForm} from '../../../features/EventForm/EditEventForm';
 import {Container} from 'ui';
 import {trpc} from 'trpc/src/trpc';

@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import {PlusCircleIcon} from '@heroicons/react/24/outline';
 import {useRouter} from 'next/router';
-import AppLayout from '../components/AppLayout/AppLayout';
+import AppLayout from '../features/AppLayout/AppLayout';
 import {trpc} from 'trpc/src/trpc';
 import {EventCard} from 'cards';
 import Head from 'next/head';
 import {Container, Button} from 'ui';
-import {LoadingEventCard} from '../components/LoadingEventCard/LoadingEventCard';
+import {LoadingEventCard} from 'cards/src/LoadingEventCard/LoadingEventCard';
 import {withProtected} from '../utils/withAuthProtect';
 import {cn} from 'utils';
 

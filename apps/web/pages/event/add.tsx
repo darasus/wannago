@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import AppLayout from '../../components/AppLayout/AppLayout';
+import AppLayout from '../../features/AppLayout/AppLayout';
 import {AddEventForm} from '../../features/EventForm/AddEventForm';
 import {Container, PageHeader} from 'ui';
 import {withProtected} from '../../utils/withAuthProtect';

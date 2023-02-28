@@ -7,10 +7,10 @@ import {zonedTimeToUtc} from 'date-fns-tz';
 import {trpc} from 'trpc/src/trpc';
 import {useAmplitude} from 'hooks';
 import {OrganizerCard} from 'cards';
-import {LocationCard} from '../../components/LocationCard/LocationCard';
+import {LocationCard} from 'cards/src/LocationCard/LocationCard';
 import {DateCard, InfoCard} from 'cards';
 import {PageHeader} from 'ui';
-import {StreamCard} from '../../components/StreamCard/StreamCard';
+import {StreamCard} from '../StreamCard/StreamCard';
 
 interface Props {
   event: Event & {organization: (Organization & {users: User[]}) | null};

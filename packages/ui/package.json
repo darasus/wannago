@@ -9,6 +9,7 @@
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
+    "client-env": "workspace:*",
     "utils": "workspace:*"
   }
 }

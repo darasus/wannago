@@ -1,5 +1,5 @@
 import {Badge, Button, CardBase} from 'ui';
-import {LocationImage} from '../LocationImage/LocationImage';
+import {LocationImage} from 'ui/src/components/LocationImage/LocationImage';
 import {Text} from 'ui';
 
 interface Props {

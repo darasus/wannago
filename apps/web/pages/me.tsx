@@ -1,7 +1,7 @@
 import {UserProfile, useUser} from '@clerk/nextjs';
 import Head from 'next/head';
 import {clerkAppearance} from '../clerkElements';
-import AppLayout from '../components/AppLayout/AppLayout';
+import AppLayout from '../features/AppLayout/AppLayout';
 import {withProtected} from '../utils/withAuthProtect';
 
 function ProfilePage() {

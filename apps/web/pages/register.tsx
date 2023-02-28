@@ -1,6 +1,6 @@
 import {SignUp} from '@clerk/nextjs';
 import Head from 'next/head';
-import AppLayout from '../components/AppLayout/AppLayout';
+import AppLayout from '../features/AppLayout/AppLayout';
 
 export default function RegisterPage() {
   return (

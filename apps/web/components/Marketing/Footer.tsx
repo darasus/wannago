@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import {navItems} from '../Header/Header';
+import {navItems} from '../../features/Header/Header';
 import {Text, Logo, Container, Button} from 'ui';
 
 export function Footer() {
