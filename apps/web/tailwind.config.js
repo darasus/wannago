@@ -11,6 +11,7 @@ module.exports = {
     './hooks/**/*.{js,ts,jsx,tsx}',
     './features/**/*.{js,ts,jsx,tsx}',
     '../../packages/ui/**/*.{js,ts,jsx,tsx}',
+    '../../packages/cards/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
