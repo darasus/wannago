@@ -290,15 +290,19 @@ importers:
 
   packages/hooks:
     specifiers:
+      client-env: workspace:*
       eslint-config-custom: workspace:*
       trpc: workspace:*
       tsconfig: workspace:*
       ui: workspace:*
+      utils: workspace:*
     devDependencies:
+      client-env: link:../client-env
       eslint-config-custom: link:../eslint-config-custom
       trpc: link:../trpc
       tsconfig: link:../tsconfig
       ui: link:../ui
+      utils: link:../utils
 
   packages/lib:
     specifiers:
