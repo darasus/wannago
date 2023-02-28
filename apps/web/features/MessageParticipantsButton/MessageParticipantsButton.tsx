@@ -5,8 +5,8 @@ import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {Button} from 'ui';
 import {MessageParticipantsFormModal} from '../../components/MessageParticipantsFormModal/MessageParticipantsFormModal';
-import {useAmplitude} from '../../hooks/useAmplitude';
-import {useEventId} from '../../hooks/useEventId';
+import {useAmplitude} from 'hooks';
+import {useEventId} from 'hooks';
 
 interface Form {
   subject: string;

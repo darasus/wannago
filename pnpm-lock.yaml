@@ -188,6 +188,7 @@ importers:
       database: workspace:*
       email: workspace:*
       eslint-config-custom: workspace:*
+      hooks: workspace:*
       lib: workspace:*
       server-env: workspace:*
       trpc: workspace:*
@@ -199,6 +200,7 @@ importers:
       database: link:../../packages/database
       email: link:../../packages/email
       eslint-config-custom: link:../../packages/eslint-config-custom
+      hooks: link:../../packages/hooks
       lib: link:../../packages/lib
       server-env: link:../../packages/server-env
       trpc: link:../../packages/trpc
@@ -285,6 +287,18 @@ importers:
       eslint-config-prettier: 8.6.0_eslint@8.35.0
       eslint-config-turbo: 0.0.9_eslint@8.35.0
       eslint-plugin-react: 7.32.2_eslint@8.35.0
+
+  packages/hooks:
+    specifiers:
+      eslint-config-custom: workspace:*
+      trpc: workspace:*
+      tsconfig: workspace:*
+      ui: workspace:*
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      trpc: link:../trpc
+      tsconfig: link:../tsconfig
+      ui: link:../ui
 
   packages/lib:
     specifiers:

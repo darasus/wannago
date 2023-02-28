@@ -5,7 +5,7 @@ import {Form} from '../../../features/EventForm/types';
 import {trpc} from 'trpc/src/trpc';
 import {Combobox, Transition} from '@headlessui/react';
 import {CheckIcon} from '@heroicons/react/24/solid';
-import {useDebounce} from '../../../hooks/useDebounce';
+import {useDebounce} from 'hooks';
 import {CardBase} from 'ui';
 import {cn} from 'utils';
 

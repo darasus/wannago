@@ -5,8 +5,7 @@ import {Googlemeet} from '@styled-icons/simple-icons/Googlemeet';
 import {Youtube} from '@styled-icons/simple-icons/Youtube';
 import {Twitch} from '@styled-icons/simple-icons/Twitch';
 import {VideoCameraIcon} from '@heroicons/react/24/outline';
-import useCopyClipboard from '../../hooks/useCopyClipboard';
-import {useAmplitude} from '../../hooks/useAmplitude';
+import {useCopyClipboard, useAmplitude} from 'hooks';
 
 interface Props {
   streamUrl: string;

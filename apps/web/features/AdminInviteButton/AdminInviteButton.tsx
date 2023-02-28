@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form';
 import {Button, Modal} from 'ui';
 import {AdminInviteForm} from '../../types/forms';
 import {trpc} from 'trpc/src/trpc';
-import {useEventId} from '../../hooks/useEventId';
+import {useEventId} from 'hooks';
 import {toast} from 'react-hot-toast';
 import {Input} from '../../components/Input/Input/Input';
 

@@ -5,7 +5,7 @@ interface Options {
   successDuration?: number;
 }
 
-export default function useCopyClipboard(
+export function useCopyClipboard(
   text: string,
   options?: Options
 ): [boolean, () => void] {

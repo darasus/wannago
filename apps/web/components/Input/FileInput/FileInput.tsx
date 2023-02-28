@@ -1,5 +1,5 @@
 import {ChangeEvent, ComponentProps, forwardRef, useState} from 'react';
-import {useUploadImage} from '../../../hooks/useUploadImage';
+import {useUploadImage} from 'hooks';
 import {Button, Spinner} from 'ui';
 import {Input} from '../Input/Input';
 import {PhotoIcon} from '@heroicons/react/24/outline';

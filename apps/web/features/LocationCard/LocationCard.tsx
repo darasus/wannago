@@ -1,5 +1,5 @@
 import {LocationCard as LocationCardView} from '../../components/LocationCard/LocationCard';
-import {useAmplitude} from '../../hooks/useAmplitude';
+import {useAmplitude} from 'hooks';
 
 interface Props {
   address: string;

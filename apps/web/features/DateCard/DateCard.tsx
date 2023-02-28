@@ -5,7 +5,7 @@ import {prepareIcsData} from 'utils';
 import {iOS} from 'utils';
 import {DateCard as DataCardView} from 'cards';
 import {Android} from 'utils';
-import {useAmplitude} from '../../hooks/useAmplitude';
+import {useAmplitude} from 'hooks';
 
 interface Props {
   event: Event;

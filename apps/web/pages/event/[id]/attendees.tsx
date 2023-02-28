@@ -7,7 +7,7 @@ import {trpc} from 'trpc/src/trpc';
 import {saveAs} from 'file-saver';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
-import {useEventId} from '../../../hooks/useEventId';
+import {useEventId} from 'hooks';
 import {MessageParticipantsButton} from '../../../features/MessageParticipantsButton/MessageParticipantsButton';
 import {UserPlusIcon, DocumentArrowDownIcon} from '@heroicons/react/24/solid';
 

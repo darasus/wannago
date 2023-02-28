@@ -3,10 +3,10 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {ParticipantsCard as ParticipantsCardView} from '../../components/ParticipantsCard/ParticipantsCard';
 import {trpc} from 'trpc/src/trpc';
 import {toast} from 'react-hot-toast';
-import {useAttendeeCount} from '../../hooks/useAttendeeCount';
-import {useAmplitude} from '../../hooks/useAmplitude';
+import {useAttendeeCount} from 'hooks';
+import {useAmplitude} from 'hooks';
 import {JoinForm} from '../../types/forms';
-import {useConfetti} from '../../hooks/useConfetti';
+import {useConfetti} from 'hooks';
 
 interface Props {
   event: Event;

@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {ContactFormModal} from '../../components/ContactFormModal/ContactFormModal';
 import {trpc} from 'trpc/src/trpc';
 import {OrganizerCard as OrganizerCardView} from 'cards';
-import {useAmplitude} from '../../hooks/useAmplitude';
+import {useAmplitude} from 'hooks';
 import {FormProvider, useForm} from 'react-hook-form';
 import {ContactForm} from '../../types/forms';
 import {toast} from 'react-hot-toast';

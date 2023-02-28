@@ -10,7 +10,7 @@ import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {appRouter} from '../../../../packages/trpc/src/routers/_app';
 import {createContext} from 'trpc';
 import SuperJSON from 'superjson';
-import {useHandleInviteConfirm} from '../../hooks/useHandleInviteConfirm';
+import {useHandleInviteConfirm} from 'hooks';
 
 function PublicEventPage({
   timezone,

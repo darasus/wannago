@@ -16,6 +16,7 @@
     "server-env": "workspace:*",
     "email": "workspace:*",
     "utils": "workspace:*",
+    "hooks": "workspace:*",
     "lib": "workspace:*",
     "trpc": "workspace:*",
     "cards": "workspace:*",

@@ -1,7 +1,7 @@
 import create from '@kodingdotninja/use-tailwind-breakpoint';
 import resolveConfig from 'tailwindcss/resolveConfig';
 
-import tailwindConfig from '../tailwind.config.js';
+import tailwindConfig from '../../../apps/web/tailwind.config.js';
 
 const config = resolveConfig(tailwindConfig);
 

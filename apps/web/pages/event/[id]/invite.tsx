@@ -7,7 +7,7 @@ import {trpc} from 'trpc/src/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {toast} from 'react-hot-toast';
 import {EventRegistrationStatusBadge} from '../../../components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
-import {useConfirmDialog} from '../../../hooks/useConfirmDialog';
+import {useConfirmDialog} from 'hooks';
 import {AdminInviteButton} from '../../../features/AdminInviteButton/AdminInviteButton';
 
 interface InviteButtonProps {
