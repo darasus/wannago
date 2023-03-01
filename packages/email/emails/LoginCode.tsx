@@ -39,9 +39,6 @@ export default function LoginCode({code = '123123123'}: Props) {
           <Section style={{marginBottom: gutter}}>
             <Text>To protect your account, do not share this code.</Text>
           </Section>
-          <Hr style={hr} />
-          <Text>Sincerely,</Text>
-          <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />
         </Container>
       </Section>

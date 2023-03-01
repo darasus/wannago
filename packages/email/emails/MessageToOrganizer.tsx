@@ -73,8 +73,6 @@ export default function MessageToOrganizer({
           <Text>
             Simply reply to this email if you want to respond to this message.
           </Text>
-          <Text>Sincerely,</Text>
-          <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />
         </Container>
       </Section>

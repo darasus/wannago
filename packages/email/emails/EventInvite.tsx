@@ -1,6 +1,6 @@
 import {Container} from '@react-email/container';
 import {Head} from '@react-email/head';
-import {Hr} from '@react-email/hr';
+import {Column} from '@react-email/column';
 import {Html} from '@react-email/html';
 import {Section} from '@react-email/section';
 import * as React from 'react';
@@ -45,7 +45,7 @@ export default function EventInvite({
         <Container style={container}>
           <Header />
           <Section>
-            <Title>{`You've been invited to: ${title}`}</Title>
+            <Title>{`You've been invited!`}</Title>
           </Section>
           <Section style={{marginBottom: gutter}}>
             <EventInfo
@@ -57,12 +57,16 @@ export default function EventInvite({
               streamUrl={streamUrl}
             />
           </Section>
-          <Section style={buttonContainer}>
-            <Button href={confirmUrl}>Confirm invite</Button>
+          <Section style={{...buttonContainer, maxWidth: 250}}>
+            <Column>
+              <Button href={confirmUrl}>Confirm</Button>
+            </Column>
+            <Column>
+              <Button variant="secondary" href={confirmUrl}>
+                Cancel
+              </Button>
+            </Column>
           </Section>
-          <Hr style={hr} />
-          <Text>Sincerely,</Text>
-          <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />
         </Container>
       </Section>

@@ -48,9 +48,6 @@ export default function AfterRegisterNoCreatedEventFollowUpEmail({
               {`. We might have already answered your question there.`}
             </Text>
           </Section>
-          <Hr style={hr} />
-          <Text>Sincerely,</Text>
-          <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />
         </Container>
       </Section>

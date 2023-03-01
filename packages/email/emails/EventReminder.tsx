@@ -60,14 +60,11 @@ export default function EventReminder({
           <Section style={buttonContainer}>
             <Button href={eventUrl}>View event</Button>
           </Section>
-          <Hr style={hr} />
           <Text>
             {
               "If you didn't sign up to this event, you can safely ignore this email."
             }
           </Text>
-          <Text>Sincerely,</Text>
-          <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />
         </Container>
       </Section>

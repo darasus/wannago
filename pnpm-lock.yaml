@@ -75,6 +75,7 @@ importers:
       node-telegram-bot-api: ^0.61.0
       npm-run-all: ^4.1.5
       postcss: ^8.4.21
+      prettier: ^2.8.4
       prisma: ^4.10.1
       ramda: ^0.28.0
       react: 18.2.0
@@ -175,6 +176,7 @@ importers:
       eslint-plugin-tailwindcss: 3.9.0_tailwindcss@3.2.7
       npm-run-all: 4.1.5
       postcss: 8.4.21
+      prettier: 2.8.4
       prisma: 4.10.1
       tailwindcss: 3.2.7_aesdjsunmf4wiehhujt67my7tu
       ts-node: 10.9.1_uayvamxqnl5yeiojjysxwopmsy
@@ -187,6 +189,7 @@ importers:
       client-env: workspace:*
       database: workspace:*
       email: workspace:*
+      email-handlers: workspace:*
       eslint-config-custom: workspace:*
       hooks: workspace:*
       lib: workspace:*
@@ -199,6 +202,7 @@ importers:
       client-env: link:../../packages/client-env
       database: link:../../packages/database
       email: link:../../packages/email
+      email-handlers: link:../../packages/email-handlers
       eslint-config-custom: link:../../packages/eslint-config-custom
       hooks: link:../../packages/hooks
       lib: link:../../packages/lib
@@ -246,6 +250,47 @@ importers:
   packages/email:
     specifiers:
       '@react-email/button': ^0.0.6
+      '@react-email/column': ^0.0.6
+      '@react-email/container': ^0.0.7
+      '@react-email/head': ^0.0.4
+      '@react-email/hr': ^0.0.4
+      '@react-email/html': ^0.0.4
+      '@react-email/img': ^0.0.4
+      '@react-email/link': ^0.0.4
+      '@react-email/preview': ^0.0.5
+      '@react-email/row': ^0.0.4
+      '@react-email/section': ^0.0.8
+      '@react-email/text': ^0.0.4
+      database: workspace:*
+      eslint-config-custom: workspace:*
+      lib: workspace:*
+      react-email: 1.7.14
+      tsconfig: workspace:*
+      utils: workspace:*
+    dependencies:
+      '@react-email/button': 0.0.6
+      '@react-email/column': 0.0.6
+      '@react-email/container': 0.0.7
+      '@react-email/head': 0.0.4
+      '@react-email/hr': 0.0.4
+      '@react-email/html': 0.0.4
+      '@react-email/img': 0.0.4
+      '@react-email/link': 0.0.4
+      '@react-email/preview': 0.0.5
+      '@react-email/row': 0.0.4
+      '@react-email/section': 0.0.8
+      '@react-email/text': 0.0.4
+      react-email: 1.7.14
+    devDependencies:
+      database: link:../database
+      eslint-config-custom: link:../eslint-config-custom
+      lib: link:../lib
+      tsconfig: link:../tsconfig
+      utils: link:../utils
+
+  packages/email-handlers:
+    specifiers:
+      '@react-email/button': ^0.0.6
       '@react-email/container': ^0.0.7
       '@react-email/head': ^0.0.4
       '@react-email/hr': ^0.0.4
@@ -255,9 +300,13 @@ importers:
       '@react-email/preview': ^0.0.5
       '@react-email/section': ^0.0.8
       '@react-email/text': ^0.0.4
+      database: workspace:*
+      email: workspace:*
       eslint-config-custom: workspace:*
+      lib: workspace:*
       react-email: 1.7.14
       tsconfig: workspace:*
+      utils: workspace:*
     dependencies:
       '@react-email/button': 0.0.6
       '@react-email/container': 0.0.7
@@ -271,8 +320,12 @@ importers:
       '@react-email/text': 0.0.4
       react-email: 1.7.14
     devDependencies:
+      database: link:../database
+      email: link:../email
       eslint-config-custom: link:../eslint-config-custom
+      lib: link:../lib
       tsconfig: link:../tsconfig
+      utils: link:../utils
 
   packages/eslint-config-custom:
     specifiers:
@@ -1331,6 +1384,13 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@react-email/column/0.0.6:
+    resolution: {integrity: sha512-zbIH1Qs3la5xVg6VqMeWI4GmedQeHuGMwYXVVRPuAFItHGzgexANJ5dABWIPnB7jS3q2o/6wzLg/NwA/8xT68Q==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /@react-email/container/0.0.7:
     resolution: {integrity: sha512-EOrXGnNUQ6mILDMSXCW2ljqqCOOOmcVQqX6QY2eRB+kQR8iDtJN7BMUP58EHkfMsJzt2nnHgoh415eeHZYIa3w==}
     engines: {node: '>=16.0.0'}
@@ -1395,6 +1455,11 @@ packages:
       pretty: 2.0.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@react-email/row/0.0.4:
+    resolution: {integrity: sha512-jo2gfcwx9vMdcSLA0acjX5mrVvLe2OJjXm2BOzrR+Pe7TsreOm5wT6pH8AYcdLDpuKx9uO09C04XHlxaZXMGvw==}
+    engines: {node: '>=16.0.0'}
     dev: false
 
   /@react-email/section/0.0.8:
@@ -5921,6 +5986,12 @@ packages:
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+    dev: true
+
+  /prettier/2.8.4:
+    resolution: {integrity: sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
     dev: true
 
   /pretty-bytes/5.6.0:

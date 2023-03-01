@@ -2,6 +2,7 @@ import {Img as _Img} from '@react-email/img';
 import {Section as _Section} from '@react-email/section';
 import {Text as _Text} from '@react-email/text';
 import {Link as _Link} from '@react-email/link';
+import {Hr as _Hr} from '@react-email/hr';
 import {Button as _Button} from '@react-email/button';
 import React, {PropsWithChildren} from 'react';
 
@@ -63,15 +64,31 @@ export function Link({children, href}: LinkProps) {
 
 interface ButtonProps extends PropsWithChildren {
   href: string;
+  variant?: 'primary' | 'secondary';
+  style?: React.CSSProperties;
 }
 
-export function Button({children, href}: ButtonProps) {
+export function Button({
+  children,
+  href,
+  variant = 'primary',
+  style,
+}: ButtonProps) {
+  const map = {
+    primary: {
+      color: token.light,
+      backgroundColor: token.brand,
+    },
+    secondary: {
+      color: token.dark,
+      backgroundColor: token.light,
+    },
+  };
   return (
     <_Button
       style={{
         fontFamily,
         borderRadius: '100px',
-        color: token.dark,
         fontSize: '15px',
         fontWeight: 'bold',
         textDecoration: 'none',
@@ -81,7 +98,8 @@ export function Button({children, href}: ButtonProps) {
         borderWidth: '1px',
         borderColor: token.dark,
         borderStyle: 'solid',
-        backgroundColor: token.brand,
+        ...map[variant],
+        ...style,
       }}
       href={href}
     >
@@ -92,13 +110,18 @@ export function Button({children, href}: ButtonProps) {
 
 export function Footer() {
   return (
-    <div style={{textAlign: 'center', marginTop: gutter}}>
-      <Text>Powered by WannaGo</Text>
-      <Text>
-        <Link href="https://www.wannago.app">Website</Link> •{' '}
-        <Link href="https://twitter.com/wannagohq">Twitter</Link>
-      </Text>
-    </div>
+    <>
+      <_Hr style={hr} />
+      <Text>Sincerely,</Text>
+      <Link href="https://www.wannago.app">WannaGo Team</Link>
+      <div style={{textAlign: 'center', marginTop: gutter}}>
+        <Text>Powered by WannaGo</Text>
+        <Text>
+          <Link href="https://www.wannago.app">Website</Link> •{' '}
+          <Link href="https://twitter.com/wannagohq">Twitter</Link>
+        </Text>
+      </div>
+    </>
   );
 }
 
@@ -172,8 +195,9 @@ export function EventInfo({
 
 // TODO: fix design token
 const token = {
-  dark: 'rgb(30, 41, 59)',
-  brand: 'rgb(216, 226, 220)',
+  light: '#e2e8f0',
+  dark: '#1f2937',
+  brand: '#973AA8',
 };
 
 export const gutter = 20;
@@ -188,7 +212,7 @@ export const fontFamily =
   '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif';
 
 export const main = {
-  backgroundColor: '#ffffff',
+  backgroundColor: token.light,
 };
 
 export const container = {
@@ -220,8 +244,9 @@ export const buttonContainer = {
 };
 
 export const hr = {
-  borderColor: '#dfe1e4',
+  borderColor: token.dark,
   margin: '30px 0',
+  opacity: 0.2,
 };
 
 export const code = {
