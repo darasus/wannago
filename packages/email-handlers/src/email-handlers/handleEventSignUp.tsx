@@ -57,7 +57,7 @@ export async function handleEventSignUp({
   }
 
   const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-signup`);
-  cancelEventUrl.searchParams.append('eventShortId', event.shortId!);
+  cancelEventUrl.searchParams.append('eventShortId', event.shortId);
   cancelEventUrl.searchParams.append('email', user.email);
 
   await postmark.sendTransactionalEmail({
