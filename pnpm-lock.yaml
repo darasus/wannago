@@ -221,11 +221,12 @@ importers:
       tsconfig: workspace:*
       ui: workspace:*
       utils: workspace:*
+    dependencies:
+      ui: link:../ui
+      utils: link:../utils
     devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
-      ui: link:../ui
-      utils: link:../utils
 
   packages/client-env:
     specifiers:
@@ -283,7 +284,7 @@ importers:
       eslint-plugin-react: latest
     devDependencies:
       eslint: 8.35.0
-      eslint-config-next: 13.2.1_ycpbpc6yetojsgtrx3mwntkhsu
+      eslint-config-next: 13.2.3_ycpbpc6yetojsgtrx3mwntkhsu
       eslint-config-prettier: 8.6.0_eslint@8.35.0
       eslint-config-turbo: 0.0.9_eslint@8.35.0
       eslint-plugin-react: 7.32.2_eslint@8.35.0
@@ -296,13 +297,14 @@ importers:
       tsconfig: workspace:*
       ui: workspace:*
       utils: workspace:*
-    devDependencies:
+    dependencies:
       client-env: link:../client-env
-      eslint-config-custom: link:../eslint-config-custom
       trpc: link:../trpc
-      tsconfig: link:../tsconfig
       ui: link:../ui
       utils: link:../utils
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
 
   packages/lib:
     specifiers:
@@ -312,21 +314,23 @@ importers:
       server-env: workspace:*
       tsconfig: workspace:*
       utils: workspace:*
-    devDependencies:
+    dependencies:
       client-env: link:../client-env
       database: link:../database
-      eslint-config-custom: link:../eslint-config-custom
       server-env: link:../server-env
-      tsconfig: link:../tsconfig
       utils: link:../utils
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
 
   packages/server-env:
     specifiers:
       client-env: workspace:*
       eslint-config-custom: workspace:*
       tsconfig: workspace:*
-    devDependencies:
+    dependencies:
       client-env: link:../client-env
+    devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
 
@@ -341,13 +345,14 @@ importers:
       server-env: workspace:*
       tsconfig: workspace:*
       utils: workspace:*
-    devDependencies:
+    dependencies:
       database: link:../database
-      eslint-config-custom: link:../eslint-config-custom
       lib: link:../lib
       server-env: link:../server-env
-      tsconfig: link:../tsconfig
       utils: link:../utils
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
 
   packages/tsconfig:
     specifiers: {}
@@ -358,19 +363,21 @@ importers:
       eslint-config-custom: workspace:*
       tsconfig: workspace:*
       utils: workspace:*
-    devDependencies:
+    dependencies:
       client-env: link:../client-env
+      utils: link:../utils
+    devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
-      utils: link:../utils
 
   packages/utils:
     specifiers:
       client-env: workspace:*
       eslint-config-custom: workspace:*
       tsconfig: workspace:*
-    devDependencies:
+    dependencies:
       client-env: link:../client-env
+    devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
 
@@ -1115,8 +1122,8 @@ packages:
     resolution: {integrity: sha512-Hq+6QZ6kgmloCg8Kgrix+4F0HtvLqVK3FZAnlAoS0eonaDemHe1Km4kwjSWRE3JNpJNcKxFHF+jsZrYo0SxWoQ==}
     dev: false
 
-  /@next/eslint-plugin-next/13.2.1:
-    resolution: {integrity: sha512-r0i5rcO6SMAZtqiGarUVMr3k256X0R0j6pEkKg4PxqUW+hG0qgMxRVAJsuoRG5OBFkCOlSfWZJ0mP9fQdCcyNg==}
+  /@next/eslint-plugin-next/13.2.3:
+    resolution: {integrity: sha512-QmMPItnU7VeojI1KnuwL9SLFWEwmaNHNlnOGpoTwdLoSiP9sc8KYiAHWEc4/44L+cAdCxcZYvn7frcRNP5l84Q==}
     dependencies:
       glob: 7.1.7
     dev: true
@@ -3690,8 +3697,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  /eslint-config-next/13.2.1_ycpbpc6yetojsgtrx3mwntkhsu:
-    resolution: {integrity: sha512-2GAx7EjSiCzJN6H2L/v1kbYrNiwQxzkyjy6eWSjuhAKt+P6d3nVNHGy9mON8ZcYd72w/M8kyMjm4UB9cvijgrw==}
+  /eslint-config-next/13.2.3_ycpbpc6yetojsgtrx3mwntkhsu:
+    resolution: {integrity: sha512-kPulHiQEHGei9hIaaNGygHRc0UzlWM+3euOmYbxNkd2Nbhci5rrCDeMBMPSV8xgUssphDGmwDHWbk4VZz3rlZQ==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
       typescript: '>=3.3.1'
@@ -3699,7 +3706,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@next/eslint-plugin-next': 13.2.1
+      '@next/eslint-plugin-next': 13.2.3
       '@rushstack/eslint-patch': 1.2.0
       '@typescript-eslint/parser': 5.47.0_ycpbpc6yetojsgtrx3mwntkhsu
       eslint: 8.35.0

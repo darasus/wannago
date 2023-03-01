@@ -6,10 +6,12 @@
   "scripts": {
     "lint": "eslint"
   },
-  "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
+  "dependencies": {
     "utils": "workspace:*",
     "ui": "workspace:*"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
   }
 }
