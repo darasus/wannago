@@ -1,24 +1,15 @@
 import {Container} from '@react-email/container';
 import {Head} from '@react-email/head';
-import {Column} from '@react-email/column';
-import {Row} from '@react-email/row';
 import {Html} from '@react-email/html';
 import {Section} from '@react-email/section';
 import * as React from 'react';
-import {
-  buttonContainer,
-  container,
-  Header,
-  hr,
-  main,
-  Text,
-  Title,
-  Link,
-  Button,
-  Footer,
-  gutter,
-  EventInfo,
-} from './components';
+import {Header} from './components/Header';
+import {buttonContainer, container, main, gutter} from './components/shared';
+import {Button} from './components/Button';
+import {Footer} from './components/Footer';
+import {EventInfo} from './components/EventInfo';
+import {EventDisclaimer} from './components/EventDisclaimer';
+import {Title} from './components/Title';
 
 interface Props {
   title: string;
@@ -63,15 +54,7 @@ export default function EventSignUp({
           <Section style={buttonContainer}>
             <Button href={eventUrl}>View event</Button>
           </Section>
-          <Text>
-            Or you can cancel you sign up by following this{' '}
-            <Link href={cancelEventUrl}>link</Link>.
-          </Text>
-          <Text>
-            {
-              "If you didn't sign up to this event, you can safely ignore this email."
-            }
-          </Text>
+          <EventDisclaimer cancelEventUrl={cancelEventUrl} />
           <Footer />
         </Container>
       </Section>

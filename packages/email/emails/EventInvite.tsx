@@ -1,23 +1,15 @@
 import {Container} from '@react-email/container';
 import {Head} from '@react-email/head';
-import {Column} from '@react-email/column';
 import {Html} from '@react-email/html';
 import {Section} from '@react-email/section';
 import * as React from 'react';
-import {
-  buttonContainer,
-  container,
-  Header,
-  hr,
-  main,
-  Text,
-  Title,
-  Link,
-  Button,
-  Footer,
-  gutter,
-  EventInfo,
-} from './components';
+import {Header} from './components/Header';
+import {buttonContainer, container, main, gutter} from './components/shared';
+import {Button} from './components/Button';
+import {Footer} from './components/Footer';
+import {EventInfo} from './components/EventInfo';
+import {EventDisclaimer} from './components/EventDisclaimer';
+import {Title} from './components/Title';
 
 interface Props {
   title: string;
@@ -25,7 +17,8 @@ interface Props {
   endDate: string;
   address: string | 'none';
   streamUrl: string | 'none';
-  confirmUrl: string;
+  confirmEventUrl: string;
+  cancelEventUrl: string;
   organizerName: string;
 }
 
@@ -35,7 +28,8 @@ export default function EventInvite({
   streamUrl = 'https://meet.google.com/xxx-xxx-xxx',
   endDate = '2022/12/11 11:30',
   startDate = '2022/12/11 11:30',
-  confirmUrl = 'https://www.wannago.app',
+  confirmEventUrl = 'https://www.wannago.app',
+  cancelEventUrl = 'https://www.wannago.app',
   organizerName = 'Organizer Name',
 }: Props) {
   return (
@@ -58,15 +52,9 @@ export default function EventInvite({
             />
           </Section>
           <Section style={{...buttonContainer, maxWidth: 250}}>
-            <Column>
-              <Button href={confirmUrl}>Confirm</Button>
-            </Column>
-            <Column>
-              <Button variant="secondary" href={confirmUrl}>
-                Cancel
-              </Button>
-            </Column>
+            <Button href={confirmEventUrl}>Confirm</Button>
           </Section>
+          <EventDisclaimer cancelEventUrl={cancelEventUrl} />
           <Footer />
         </Container>
       </Section>

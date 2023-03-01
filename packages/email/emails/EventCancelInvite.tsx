@@ -3,17 +3,12 @@ import {Head} from '@react-email/head';
 import {Html} from '@react-email/html';
 import {Section} from '@react-email/section';
 import * as React from 'react';
-import {
-  buttonContainer,
-  container,
-  Header,
-  main,
-  Title,
-  Button,
-  Footer,
-  gutter,
-  EventInfo,
-} from './components';
+import {EventInfo} from './components/EventInfo';
+import {Header} from './components/Header';
+import {buttonContainer, container, main, gutter} from './components/shared';
+import {Footer} from './components/Footer';
+import {Title} from './components/Title';
+import {Button} from './components/Button';
 
 interface Props {
   title: string;

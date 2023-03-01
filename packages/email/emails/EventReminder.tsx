@@ -1,29 +1,22 @@
 import {Container} from '@react-email/container';
 import {Head} from '@react-email/head';
-import {Hr} from '@react-email/hr';
 import {Html} from '@react-email/html';
 import {Section} from '@react-email/section';
 import * as React from 'react';
-import {
-  buttonContainer,
-  container,
-  Header,
-  hr,
-  main,
-  Text,
-  Title,
-  Link,
-  Button,
-  Footer,
-  gutter,
-  EventInfo,
-} from './components';
+import {EventDisclaimer} from './components/EventDisclaimer';
+import {Header} from './components/Header';
+import {buttonContainer, container, main, gutter} from './components/shared';
+import {Button} from './components/Button';
+import {Footer} from './components/Footer';
+import {EventInfo} from './components/EventInfo';
+import {Title} from './components/Title';
 
 interface Props {
   title: string;
   startDate: string;
   endDate: string;
   eventUrl: string;
+  cancelEventUrl: string;
   address: string | 'none';
   streamUrl: string | 'none';
   organizerName: string;
@@ -36,6 +29,7 @@ export default function EventReminder({
   startDate = '2022/12/11 11:30',
   endDate = '2022/12/11 11:30',
   eventUrl = 'https://www.wannago.app',
+  cancelEventUrl = 'https://www.wannago.app',
   organizerName = 'Organizer Name',
 }: Props) {
   return (
@@ -60,11 +54,7 @@ export default function EventReminder({
           <Section style={buttonContainer}>
             <Button href={eventUrl}>View event</Button>
           </Section>
-          <Text>
-            {
-              "If you didn't sign up to this event, you can safely ignore this email."
-            }
-          </Text>
+          <EventDisclaimer cancelEventUrl={cancelEventUrl} />
           <Footer />
         </Container>
       </Section>
