@@ -29,14 +29,14 @@ export async function handleEventCancelSignUp({
     },
   });
 
-  const organizerUser = event.organization?.users[0];
-
   if (!event) {
     throw new TRPCError({
       code: 'NOT_FOUND',
       message: 'Event not found',
     });
   }
+
+  const organizerUser = event.organization?.users[0];
 
   const user = await prisma.user.findUnique({
     where: {id: userId},

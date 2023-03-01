@@ -49,6 +49,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           .filter(signUp => signUp.status === 'REGISTERED')
           .map(signUp => signUp.user)
           .map(user => {
+            const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-signup`);
+            cancelEventUrl.searchParams.append('eventShortId', event.shortId!);
+            cancelEventUrl.searchParams.append('email', user.email);
+
             return postmark.sendTransactionalEmail({
               replyTo: 'WannaGo Team <hi@wannago.app>',
               to: user.email,
@@ -59,6 +63,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                   address={event.address || 'none'}
                   streamUrl={event.streamUrl || 'none'}
                   eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
+                  cancelEventUrl={cancelEventUrl.toString()}
                   startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
                   endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
                   organizerName={`${event.organization.users[0].firstName} ${event.organization.users[0].lastName}`}
