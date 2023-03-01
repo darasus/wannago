@@ -56,10 +56,12 @@ export async function handleEventInvite({
     });
   }
 
-  const url = new URL(`${getBaseUrl()}/api/confirm-invite`);
-
-  url.searchParams.append('eventShortId', event.shortId!);
-  url.searchParams.append('email', user.email);
+  const confirmEventUrl = new URL(`${getBaseUrl()}/api/confirm-invite`);
+  confirmEventUrl.searchParams.append('eventShortId', event.shortId!);
+  confirmEventUrl.searchParams.append('email', user.email);
+  const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-invite`);
+  cancelEventUrl.searchParams.append('eventShortId', event.shortId!);
+  cancelEventUrl.searchParams.append('email', user.email);
 
   await postmark.sendTransactionalEmail({
     replyTo: 'WannaGo Team <hi@wannago.app>',
@@ -70,7 +72,8 @@ export async function handleEventInvite({
         title={event.title}
         address={event.address || 'none'}
         streamUrl={event.streamUrl || 'none'}
-        confirmUrl={url.toString()}
+        confirmEventUrl={confirmEventUrl.toString()}
+        cancelEventUrl={cancelEventUrl.toString()}
         startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
         endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
         organizerName={`${organizerUser.firstName} ${organizerUser.lastName}`}
