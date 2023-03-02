@@ -52,8 +52,6 @@ export async function handleEventCancelInvite({
     });
   }
 
-  const url = new URL(`${getBaseUrl()}/e/${event.shortId}}`);
-
   await postmark.sendTransactionalEmail({
     replyTo: 'WannaGo Team <hi@wannago.app>',
     to: user.email,
@@ -63,7 +61,7 @@ export async function handleEventCancelInvite({
         title={event.title}
         address={event.address || 'none'}
         streamUrl={event.streamUrl || 'none'}
-        eventUrl={url.toString()}
+        eventUrl={`${getBaseUrl()}/e/${event.shortId}}`}
         startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
         endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
         organizerName={`${organizerUser.firstName} ${organizerUser.lastName}`}
