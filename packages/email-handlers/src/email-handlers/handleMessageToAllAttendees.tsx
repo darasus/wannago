@@ -39,6 +39,7 @@ export async function handleMessageToAllAttendees({
   const signUps = await prisma.eventSignUp.findMany({
     where: {
       eventId: eventId,
+      status: 'REGISTERED',
     },
     include: {
       user: true,
