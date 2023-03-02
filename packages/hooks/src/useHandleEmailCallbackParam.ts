@@ -21,31 +21,31 @@ export function useHandleEmailCallbackParam() {
   }, [query]);
 
   useEffect(() => {
-    if (q.confirmInvite === 'true') {
+    if (q?.confirmInvite === 'true') {
       toast.success('You have successfully confirmed your attendance!', {
         duration: 10000,
       });
     }
 
-    if (q.cancelInvite === 'true') {
+    if (q?.cancelInvite === 'true') {
       toast.success('You have successfully cancelled your invite!', {
         duration: 10000,
       });
     }
 
-    if (q.cancelSignUp === 'true') {
+    if (q?.cancelSignUp === 'true') {
       toast.success('You have successfully cancelled your sign up!', {
         duration: 10000,
       });
     }
 
     if (
-      (q.confirmInvite === 'true' ||
-        q.cancelInvite === 'true' ||
-        q.cancelSignUp === 'true') &&
-      q.id
+      (q?.confirmInvite === 'true' ||
+        q?.cancelInvite === 'true' ||
+        q?.cancelSignUp === 'true') &&
+      q?.id
     ) {
-      push(`/e/${q.id}`, undefined, {shallow: true});
+      push(`/e/${q?.id}`, undefined, {shallow: true});
     }
   }, [q, push]);
 }
