@@ -69,7 +69,7 @@ export default async function handler(
   }
 
   const url = new URL(`${getBaseUrl()}//e/${params.eventShortId}`);
-  url.searchParams.append('cancelInvite', 'true');
+  url.searchParams.append('confirmInvite', 'true');
 
   return res.redirect(url.toString());
 }
