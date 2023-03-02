@@ -94,6 +94,7 @@ enum EmailType {
   MessageToOrganizer
   MessageToAllAttendees
   AfterRegisterNoCreatedEventFollowUpEmail
+  OrganizerEventSignUpNotification
 }
 
 model EmailPreference {

@@ -54,7 +54,7 @@ export async function handleEventCancelInvite({
 
   const url = new URL(`${getBaseUrl()}/e/${event.shortId}`);
 
-  await postmark.sendTransactionalEmail({
+  await postmark.sendToTransactionalStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',
     to: user.email,
     subject: `Your invite has been cancelled...`,

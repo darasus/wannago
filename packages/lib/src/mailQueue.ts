@@ -45,7 +45,7 @@ export class MailQueue {
     return this.publish({body, type: EmailType.EventCancelInvite});
   }
 
-  async enqueueQuestionToOrganizerEmail(body: {
+  async enqueueMessageToOrganizerEmail(body: {
     eventId: string;
     organizerEmail: string;
     firstName: string;
@@ -64,6 +64,19 @@ export class MailQueue {
     organizerUserId: string;
   }) {
     return this.publish({body, type: EmailType.MessageToAllAttendees});
+  }
+
+  /**
+   * This is a organizer notification email when new user sign ups to an event
+   */
+  async enqueueOrganizerEventSignUpNotificationEmail(body: {
+    userId: string;
+    eventId: string;
+  }) {
+    return this.publish({
+      body,
+      type: EmailType.OrganizerEventSignUpNotification,
+    });
   }
 
   /**

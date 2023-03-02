@@ -68,7 +68,7 @@ const sendQuestionToOrganizer = publicProcedure
     }
 
     for (const user of event.organization?.users || []) {
-      await ctx.mailQueue.enqueueQuestionToOrganizerEmail({
+      await ctx.mailQueue.enqueueMessageToOrganizerEmail({
         eventId: event.id,
         organizerEmail: user.email,
         firstName: input.firstName,

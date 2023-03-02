@@ -11,6 +11,11 @@ const scheme = z.object({
 
 type Input = z.input<typeof scheme>;
 
+type MessageStream =
+  | 'outbound'
+  | 'broadcast'
+  | 'organizer-event-sign-up-notifi';
+
 export class Postmark {
   private client({
     to,
@@ -18,7 +23,7 @@ export class Postmark {
     subject,
     htmlString,
     messageStream,
-  }: Input & {messageStream: 'outbound' | 'broadcast'}) {
+  }: Input & {messageStream: MessageStream}) {
     return fetch('https://api.postmarkapp.com/email', {
       method: 'POST',
       headers: {
@@ -39,7 +44,7 @@ export class Postmark {
     });
   }
 
-  sendTransactionalEmail({to, subject, htmlString, replyTo}: Input) {
+  sendToTransactionalStream({to, subject, htmlString, replyTo}: Input) {
     return this.client({
       to,
       subject,
@@ -49,7 +54,7 @@ export class Postmark {
     });
   }
 
-  sendBroadcastEmail({to, subject, htmlString, replyTo}: Input) {
+  sendToBroadcastStream({to, subject, htmlString, replyTo}: Input) {
     return this.client({
       to,
       subject,
@@ -58,18 +63,19 @@ export class Postmark {
       messageStream: 'broadcast',
     });
   }
-}
 
-// curl "https://api.postmarkapp.com/email" \
-//   -X POST \
-//   -H "Accept: application/json" \
-//   -H "Content-Type: application/json" \
-//   -H "X-Postmark-Server-Token: server token" \
-//   -d '{
-//   "From": "sender@example.com",
-//   "To": "receiver@example.com",
-//   "Subject": "Postmark test",
-//   "TextBody": "Hello dear Postmark user.",
-//   "HtmlBody": "<html><body><strong>Hello</strong> dear Postmark user.</body></html>",
-//   "MessageStream": "outbound"
-// }'
+  sendToOrganizerEventSignUpNotificationStream({
+    to,
+    subject,
+    htmlString,
+    replyTo,
+  }: Input) {
+    return this.client({
+      to,
+      subject,
+      htmlString,
+      replyTo,
+      messageStream: 'organizer-event-sign-up-notifi',
+    });
+  }
+}

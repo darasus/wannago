@@ -28,3 +28,7 @@ export {
   handleEventCancelSignUp,
   handleEventCancelSignUpInputSchema,
 } from './src/email-handlers/handleEventCancelSignUp';
+export {
+  handleOrganizerEventSignUpNotificationEmail,
+  handleOrganizerEventSignUpNotificationEmailInputSchema,
+} from './src/email-handlers/handleOrganizerEventSignUpNotificationEmail';

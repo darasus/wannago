@@ -53,7 +53,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             cancelEventUrl.searchParams.append('eventShortId', event.shortId!);
             cancelEventUrl.searchParams.append('email', user.email);
 
-            return postmark.sendTransactionalEmail({
+            return postmark.sendToTransactionalStream({
               replyTo: 'WannaGo Team <hi@wannago.app>',
               to: user.email,
               subject: `Your event is coming up! "${event.title}"!`,

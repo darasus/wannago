@@ -71,7 +71,7 @@ export async function handleMessageToAllAttendees({
           ),
         };
 
-        await postmark.sendTransactionalEmail(messageData);
+        await postmark.sendToTransactionalStream(messageData);
       })
   );
 }

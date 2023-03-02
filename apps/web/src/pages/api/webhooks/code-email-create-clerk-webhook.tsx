@@ -28,7 +28,7 @@ export default async function handler(
   const {data, type} = scheme.parse(req.body);
 
   if (type === 'email.created') {
-    await postmark.sendTransactionalEmail({
+    await postmark.sendToTransactionalStream({
       to: data.to_email_address,
       subject: data.subject,
       htmlString: render(<LoginCode code={data.data.otp_code} />),

@@ -15,6 +15,8 @@ import {
   handleEventCancelInviteInputSchema,
   handleEventCancelSignUp,
   handleEventCancelSignUpInputSchema,
+  handleOrganizerEventSignUpNotificationEmail,
+  handleOrganizerEventSignUpNotificationEmailInputSchema,
 } from 'email-handlers';
 import {NextApiRequest, NextApiResponse} from 'next';
 
@@ -63,6 +65,12 @@ export default async function handle(
   if (input.type === EmailType.EventCancelSignUp) {
     await handleEventCancelSignUp(
       handleEventCancelSignUpInputSchema.parse(input)
+    );
+  }
+
+  if (input.type === EmailType.OrganizerEventSignUpNotification) {
+    await handleOrganizerEventSignUpNotificationEmail(
+      handleOrganizerEventSignUpNotificationEmailInputSchema.parse(input)
     );
   }
 

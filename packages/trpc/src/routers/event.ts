@@ -436,10 +436,16 @@ const join = publicProcedure
       });
     }
 
-    await ctx.mailQueue.enqueueEventSignUpEmail({
-      eventId: input.eventId,
-      userId: user.id,
-    });
+    await Promise.all([
+      await ctx.mailQueue.enqueueOrganizerEventSignUpNotificationEmail({
+        eventId: input.eventId,
+        userId: user.id,
+      }),
+      await ctx.mailQueue.enqueueEventSignUpEmail({
+        eventId: input.eventId,
+        userId: user.id,
+      }),
+    ]);
 
     return {success: true};
   });

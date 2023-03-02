@@ -63,7 +63,7 @@ export async function handleEventInvite({
   cancelEventUrl.searchParams.append('eventShortId', event.shortId!);
   cancelEventUrl.searchParams.append('email', user.email);
 
-  await postmark.sendTransactionalEmail({
+  await postmark.sendToTransactionalStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',
     to: user.email,
     subject: `You're invited to: "${event.title}"!`,

@@ -38,7 +38,7 @@ export async function handleMessageToOrganizer({
     });
   }
 
-  await postmark.sendTransactionalEmail({
+  await postmark.sendToTransactionalStream({
     replyTo: `${firstName} ${lastName} <${email}>`,
     to: organizerEmail,
     subject: 'Someone asked you a question on WannaGo',

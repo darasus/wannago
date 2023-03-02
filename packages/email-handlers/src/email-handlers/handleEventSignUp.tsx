@@ -60,7 +60,7 @@ export async function handleEventSignUp({
   cancelEventUrl.searchParams.append('eventShortId', event.shortId);
   cancelEventUrl.searchParams.append('email', user.email);
 
-  await postmark.sendTransactionalEmail({
+  await postmark.sendToTransactionalStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',
     to: user.email,
     subject: `Thanks for signing up for "${event.title}"!`,

@@ -53,7 +53,7 @@ export async function handleAfterRegisterNoCreatedEventFollowUpEmail({
   const hasNoEvents = eventCount === 0;
 
   if (hasNoEvents && user?.firstName) {
-    await postmark.sendBroadcastEmail({
+    await postmark.sendToBroadcastStream({
       replyTo: 'WannaGo Team <hi@wannago.app>',
       to: user.email,
       subject: 'We would love to hear your feedback',
