@@ -6,7 +6,7 @@ export {useConfirmDialog} from './src/useConfirmDialog';
 export {useCopyClipboard} from './src/useCopyClipboard';
 export {useDebounce} from './src/useDebounce';
 export {useEventId} from './src/useEventId';
-export {useHandleInviteConfirm} from './src/useHandleInviteConfirm';
+export {useHandleEmailCallbackParam} from './src/useHandleEmailCallbackParam';
 export {useInitiateAmplitude} from './src/useInitiateAmplitude';
 export {usePublishEvent} from './src/usePublishEvent';
 export {useRemoveEvent} from './src/useRemoveEvent';

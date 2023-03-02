@@ -10,14 +10,14 @@ import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {appRouter} from '../../../../packages/trpc/src/routers/_app';
 import {createContext} from 'trpc';
 import SuperJSON from 'superjson';
-import {useHandleInviteConfirm} from 'hooks';
+import {useHandleEmailCallbackParam} from 'hooks';
 
 function PublicEventPage({
   timezone,
   event,
   relativeTimeString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  useHandleInviteConfirm();
+  useHandleEmailCallbackParam();
   const router = useRouter();
   const {data, isLoading} = trpc.event.getByShortId.useQuery(
     {

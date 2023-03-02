@@ -2,6 +2,7 @@ import {prisma} from 'database';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
 import {MailQueue} from 'lib';
+import {getBaseUrl} from 'utils';
 
 const mailQueue = new MailQueue();
 
@@ -67,5 +68,8 @@ export default async function handler(
     });
   }
 
-  await res.redirect(`/e/${params.eventShortId}?inviteConfirmed=true`);
+  const url = new URL(`${getBaseUrl()}//e/${params.eventShortId}`);
+  url.searchParams.append('cancelInvite', 'true');
+
+  return res.redirect(url.toString());
 }
