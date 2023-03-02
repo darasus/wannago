@@ -380,7 +380,7 @@ const join = publicProcedure
       });
     }
 
-    if (existingSignUp) {
+    if (existingSignUp && existingSignUp.status === 'REGISTERED') {
       throw new TRPCError({
         code: 'BAD_REQUEST',
         message: 'You are already signed up for this event.',
@@ -391,7 +391,7 @@ const join = publicProcedure
       where: {
         eventId: input.eventId,
         status: {
-          in: ['REGISTERED', 'INVITED'],
+          in: ['REGISTERED'],
         },
       },
     });
@@ -406,21 +406,35 @@ const join = publicProcedure
       });
     }
 
-    await ctx.prisma.eventSignUp.create({
-      data: {
-        hasPlusOne: input.hasPlusOne,
-        event: {
-          connect: {
-            id: input.eventId,
+    if (!existingSignUp) {
+      await ctx.prisma.eventSignUp.create({
+        data: {
+          hasPlusOne: input.hasPlusOne,
+          event: {
+            connect: {
+              id: input.eventId,
+            },
+          },
+          user: {
+            connect: {
+              id: user.id,
+            },
           },
         },
-        user: {
-          connect: {
-            id: user.id,
-          },
+      });
+    }
+
+    if (existingSignUp && existingSignUp.status === 'CANCELLED') {
+      await ctx.prisma.eventSignUp.update({
+        where: {
+          id: existingSignUp.id,
         },
-      },
-    });
+        data: {
+          hasPlusOne: input.hasPlusOne,
+          status: 'REGISTERED',
+        },
+      });
+    }
 
     await ctx.mailQueue.enqueueEventSignUpEmail({
       eventId: input.eventId,
