@@ -40,3 +40,4 @@ yarn-error.log*
 .idea
 
 .react-email
+tsconfig.tsbuildinfo

@@ -1,7 +1,7 @@
-import {appRouter} from '../../../../../packages/trpc/src/routers/_app';
 import {createContext} from 'trpc';
 import {NextRequest} from 'next/server';
 import {fetchRequestHandler} from '@trpc/server/adapters/fetch';
+import {appRouter} from 'trpc/src/routers/_app';
 
 export const config = {
   runtime: 'edge',

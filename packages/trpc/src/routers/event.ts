@@ -4,7 +4,7 @@ import {nanoid} from 'nanoid';
 import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
-import {authorizeChange} from '../../../../apps/web/utils/authorizeChange';
+import {authorizeChange} from '../../../../apps/web/src/utils/authorizeChange';
 import {random, getBaseUrl} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';

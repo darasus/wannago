@@ -5,7 +5,7 @@ export const config = {
 };
 
 const fontResponse = fetch(
-  new URL('../../public/paytone-one.ttf', import.meta.url)
+  new URL('../../../public/paytone-one.ttf', import.meta.url)
 ).then(res => res.arrayBuffer());
 
 export default async function handler() {

@@ -7,10 +7,10 @@ import {trpc} from 'trpc/src/trpc';
 import {Meta} from '../../components/Meta/Meta';
 import {stripHTML, getRelativeTime} from 'utils';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
-import {appRouter} from '../../../../packages/trpc/src/routers/_app';
 import {createContext} from 'trpc';
 import SuperJSON from 'superjson';
 import {useHandleEmailCallbackParam} from 'hooks';
+import {appRouter} from 'trpc/src/routers/_app';
 
 function PublicEventPage({
   timezone,

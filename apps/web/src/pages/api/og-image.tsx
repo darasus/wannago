@@ -11,12 +11,12 @@ export default async function handler(req: NextRequest) {
   const {searchParams} = req.nextUrl;
   const eventId = searchParams.get('eventId');
   const [logoFontData, bodyFontData] = await Promise.all([
-    fetch(new URL('../../public/paytone-one.ttf', import.meta.url)).then(res =>
-      res.arrayBuffer()
-    ),
-    fetch(new URL('../../public/dm-serif-display.ttf', import.meta.url)).then(
+    fetch(new URL('../../../public/paytone-one.ttf', import.meta.url)).then(
       res => res.arrayBuffer()
     ),
+    fetch(
+      new URL('../../../public/dm-serif-display.ttf', import.meta.url)
+    ).then(res => res.arrayBuffer()),
   ]);
 
   if (!eventId) {
