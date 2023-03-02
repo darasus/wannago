@@ -4,17 +4,12 @@ import {Hr} from '@react-email/hr';
 import {Html} from '@react-email/html';
 import {Section} from '@react-email/section';
 import * as React from 'react';
-import {
-  container,
-  Header,
-  hr,
-  main,
-  Text,
-  Title,
-  Link,
-  Footer,
-  gutter,
-} from './components';
+import {Header} from './components/Header';
+import {container, hr, main, gutter} from './components/shared';
+import {Text} from './components/Text';
+import {Footer} from './components/Footer';
+import {Title} from './components/Title';
+import {Link} from './components/Link';
 
 interface Props {
   senderName: string;
@@ -73,8 +68,6 @@ export default function MessageToOrganizer({
           <Text>
             Simply reply to this email if you want to respond to this message.
           </Text>
-          <Text>Sincerely,</Text>
-          <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />
         </Container>
       </Section>

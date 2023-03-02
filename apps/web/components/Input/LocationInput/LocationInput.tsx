@@ -1,4 +1,10 @@
-import {ComponentType, forwardRef, Fragment, useState} from 'react';
+import {
+  ComponentProps,
+  ComponentType,
+  forwardRef,
+  Fragment,
+  useState,
+} from 'react';
 import {Input} from '../Input/Input';
 import {useFormContext, useWatch} from 'react-hook-form';
 import {Form} from '../../../features/EventForm/types';

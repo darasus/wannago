@@ -33,12 +33,12 @@ export class MailQueue {
     return this.publish({body, type: EmailType.EventSignUp});
   }
 
-  async enqueueEventCancelSignUpEmail(body: {eventId: string; userId: string}) {
-    return this.publish({body, type: EmailType.EventCancelSignUp});
-  }
-
   async enqueueEventInviteEmail(body: {eventId: string; userId: string}) {
     return this.publish({body, type: EmailType.EventInvite});
+  }
+
+  async enqueueEventCancelSignUpEmail(body: {eventId: string; userId: string}) {
+    return this.publish({body, type: EmailType.EventCancelSignUp});
   }
 
   async enqueueEventCancelInviteEmail(body: {eventId: string; userId: string}) {

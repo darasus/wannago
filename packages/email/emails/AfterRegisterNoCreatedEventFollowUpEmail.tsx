@@ -4,17 +4,12 @@ import {Hr} from '@react-email/hr';
 import {Html} from '@react-email/html';
 import {Section} from '@react-email/section';
 import * as React from 'react';
-import {
-  container,
-  Header,
-  hr,
-  main,
-  Text,
-  Title,
-  Link,
-  Footer,
-  gutter,
-} from './components';
+import {Footer} from './components/Footer';
+import {Header} from './components/Header';
+import {Link} from './components/Link';
+import {container, main, gutter} from './components/shared';
+import {Text} from './components/Text';
+import {Title} from './components/Title';
 
 interface Props {
   firstName: string;
@@ -48,9 +43,6 @@ export default function AfterRegisterNoCreatedEventFollowUpEmail({
               {`. We might have already answered your question there.`}
             </Text>
           </Section>
-          <Hr style={hr} />
-          <Text>Sincerely,</Text>
-          <Link href="https://www.wannago.app">WannaGo Team</Link>
           <Footer />
         </Container>
       </Section>

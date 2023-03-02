@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "database": "workspace:*",
+    "tsconfig": "workspace:*",
     "eslint-config-custom": "workspace:*",
     "client-env": "workspace:*",
     "server-env": "workspace:*",
     "email": "workspace:*",
+    "email-handlers": "workspace:*",
     "utils": "workspace:*",
     "hooks": "workspace:*",
     "lib": "workspace:*",
