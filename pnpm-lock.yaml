@@ -227,11 +227,12 @@ importers:
       tsconfig: workspace:*
       ui: workspace:*
       utils: workspace:*
+    dependencies:
+      ui: link:../ui
+      utils: link:../utils
     devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
-      ui: link:../ui
-      utils: link:../utils
 
   packages/client-env:
     specifiers:
@@ -351,13 +352,14 @@ importers:
       tsconfig: workspace:*
       ui: workspace:*
       utils: workspace:*
-    devDependencies:
+    dependencies:
       client-env: link:../client-env
-      eslint-config-custom: link:../eslint-config-custom
       trpc: link:../trpc
-      tsconfig: link:../tsconfig
       ui: link:../ui
       utils: link:../utils
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
 
   packages/lib:
     specifiers:
@@ -367,21 +369,23 @@ importers:
       server-env: workspace:*
       tsconfig: workspace:*
       utils: workspace:*
-    devDependencies:
+    dependencies:
       client-env: link:../client-env
       database: link:../database
-      eslint-config-custom: link:../eslint-config-custom
       server-env: link:../server-env
-      tsconfig: link:../tsconfig
       utils: link:../utils
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
 
   packages/server-env:
     specifiers:
       client-env: workspace:*
       eslint-config-custom: workspace:*
       tsconfig: workspace:*
-    devDependencies:
+    dependencies:
       client-env: link:../client-env
+    devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
 
@@ -396,13 +400,14 @@ importers:
       server-env: workspace:*
       tsconfig: workspace:*
       utils: workspace:*
-    devDependencies:
+    dependencies:
       database: link:../database
-      eslint-config-custom: link:../eslint-config-custom
       lib: link:../lib
       server-env: link:../server-env
-      tsconfig: link:../tsconfig
       utils: link:../utils
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
 
   packages/tsconfig:
     specifiers: {}
@@ -413,19 +418,21 @@ importers:
       eslint-config-custom: workspace:*
       tsconfig: workspace:*
       utils: workspace:*
-    devDependencies:
+    dependencies:
       client-env: link:../client-env
+      utils: link:../utils
+    devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
-      utils: link:../utils
 
   packages/utils:
     specifiers:
       client-env: workspace:*
       eslint-config-custom: workspace:*
       tsconfig: workspace:*
-    devDependencies:
+    dependencies:
       client-env: link:../client-env
+    devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
 
