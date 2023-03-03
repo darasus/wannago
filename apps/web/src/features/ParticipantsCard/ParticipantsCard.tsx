@@ -32,9 +32,11 @@ export function ParticipantsCard({event}: Props) {
   });
 
   const onSubmit = handleSubmit(async data => {
-    await mutateAsync({eventId: event.id, ...data});
-    await refetch();
-    reset();
+    try {
+      await mutateAsync({eventId: event.id, ...data});
+      await refetch();
+      reset();
+    } catch (error) {}
   });
 
   const numberOfAttendees =
