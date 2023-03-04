@@ -8,12 +8,12 @@ import {EventView} from '../../../features/EventView/EventView';
 import {Container, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
+import {useEventId} from 'hooks';
 
 function InternalEventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const router = useRouter();
-  const eventId = router.query.id as string;
+  const eventId = useEventId();
   const {data, refetch, isLoading} = trpc.event.getById.useQuery(
     {
       eventId,
