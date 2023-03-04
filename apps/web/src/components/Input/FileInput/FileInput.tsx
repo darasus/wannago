@@ -1,32 +1,36 @@
-import {ChangeEvent, ComponentProps, forwardRef, useState} from 'react';
+import {Form} from '../../../features/EventForm/types';
+import {InputWrapper} from '../Input/InputWrapper';
+import NextImage from 'next/image';
+import React, {ComponentProps, forwardRef, useCallback, useState} from 'react';
+import {useDropzone} from 'react-dropzone';
+import {useFormContext} from 'react-hook-form';
+import {Input} from '../Input/Input';
+import {cn} from 'utils';
 import {useUploadImage} from 'hooks';
 import {Button, Spinner} from 'ui';
-import {Input} from '../Input/Input';
-import {PhotoIcon} from '@heroicons/react/24/outline';
-import Image from 'next/image';
-import {useFormContext} from 'react-hook-form';
-import {Form} from '../../../features/EventForm/types';
 
-interface Props extends ComponentProps<typeof Input> {}
+interface Props extends Omit<ComponentProps<typeof Input>, 'accept'> {
+  name: string;
+}
 
 export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
-  props,
+  props: Props,
   ref
 ) {
+  const {name, label, error, ...rest} = props;
   const {
-    formState: {defaultValues},
     setValue,
+    formState: {defaultValues},
+    trigger,
   } = useFormContext<Form>();
   const [imageSrc, setImageSrc] = useState<string | null>(
     defaultValues?.featuredImageSrc || null
   );
-
   const {isLoading, handleFileUpload} = useUploadImage();
 
-  const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      handleFileUpload(file).then(data => {
+  const onDrop = useCallback(
+    (droppedFiles: File[]) => {
+      handleFileUpload(droppedFiles[0]).then(data => {
         if (data) {
           setImageSrc(data.url);
           setValue('featuredImageSrc', data.url);
@@ -34,49 +38,78 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
           setValue('featuredImageWidth', data.width);
           setValue('featuredImagePreviewSrc', data.imageSrcBase64);
         }
+        trigger();
       });
-    }
+    },
+    [handleFileUpload, setValue, trigger]
+  );
+
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({
+    onDrop,
+    accept: {
+      'image/png': ['.png'],
+      'image/jpg': ['.jpg', '.jpeg'],
+      'image/webp': ['.webp'],
+      'image/gif': ['.gif'],
+    },
+  });
+
+  const handleRemoveImage = () => {
+    setImageSrc(null);
+    setValue('featuredImageSrc', '');
   };
 
   return (
-    <div>
-      <Input
-        ref={ref}
-        {...props}
-        type="text"
-        value={imageSrc || ''}
-        inputClassName="hidden"
-      />
-      <Input
-        data-testid="file-input"
-        onChange={handleFileInputChange}
-        type="file"
-        id="button-upload"
-        containerClassName="hidden"
-      />
-      <div className="relative flex justify-center items-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-100 mb-4 text-gray-400 aspect-video overflow-hidden">
-        {!isLoading && !imageSrc && (
-          <div>
-            <PhotoIcon />
-            <span>Image preview</span>
+    <InputWrapper id={props.id} label={props.label} error={error}>
+      <div
+        className={cn(
+          'flex flex-col relative justify-center items-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-100 mb-4 text-gray-400 aspect-video overflow-hidden',
+          'focus:border-gray-500 focus:ring-gray-500',
+          {'bg-gray-200': isDragActive}
+        )}
+      >
+        <div {...getRootProps()} className={cn('h-full w-full')}>
+          <input ref={ref} value={imageSrc || ''} hidden readOnly />
+          <input
+            {...rest}
+            name={name}
+            id={name}
+            multiple={false}
+            {...getInputProps()}
+          />
+
+          <div className="h-full flex flex-col justify-center items-center gap-y-2">
+            <Button variant="neutral" size="sm">
+              Select file
+            </Button>
+            <p className="text-center">or just drop file here...</p>
+          </div>
+        </div>
+        {isLoading && (
+          <div className="absolute top-0 left-0 h-full w-full flex justify-center items-center bg-gray-100">
+            <Spinner />
           </div>
         )}
-        {isLoading && <Spinner />}
         {!isLoading && imageSrc && (
-          <Image
-            data-testid="file-input-image-preview"
-            alt=""
-            src={imageSrc}
-            fill
-            className="object-cover"
-          />
+          <>
+            <NextImage
+              data-testid="file-input-image-preview"
+              alt=""
+              src={imageSrc}
+              fill
+              className="object-cover"
+            />
+            <Button
+              variant="neutral"
+              size="sm"
+              className="absolute bottom-5 right-5 z-50"
+              onClick={handleRemoveImage}
+            >
+              Remove
+            </Button>
+          </>
         )}
       </div>
-      <div className="flex justify-center">
-        <Button as="label" htmlFor="button-upload" variant="neutral">
-          Upload image
-        </Button>
-      </div>
-    </div>
+    </InputWrapper>
   );
 });
