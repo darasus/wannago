@@ -21,23 +21,25 @@ export function InfoCard({event}: Props) {
   return (
     <>
       <CardBase>
-        <div
-          className={cn(
-            'flex items-center overflow-hidden relative justify-center bg-slate-700 rounded-3xl safari-rounded-border-fix mb-4'
-          )}
-        >
-          <Image
-            priority
-            src={featuredImageSrc}
-            alt={title}
-            loader={cloudflareImageLoader}
-            width={featuredImageWidth}
-            height={featuredImageHeight}
-            blurDataURL={featuredImagePreviewSrc}
-            placeholder={'blur'}
-            sizes="320 640 750 1000"
-          />
-        </div>
+        {featuredImageSrc && (
+          <div
+            className={cn(
+              'flex items-center overflow-hidden relative justify-center bg-slate-700 rounded-3xl safari-rounded-border-fix mb-4'
+            )}
+          >
+            <Image
+              priority
+              src={featuredImageSrc}
+              alt={title}
+              loader={cloudflareImageLoader}
+              width={featuredImageWidth}
+              height={featuredImageHeight}
+              blurDataURL={featuredImagePreviewSrc}
+              placeholder={'blur'}
+              sizes="320 640 750 1000"
+            />
+          </div>
+        )}
         <div>
           <div className="mb-2">
             <Badge color="gray" className="mr-2" size="xs">
