@@ -4,12 +4,11 @@ import {PrismaClient} from '@prisma/client/edge';
 import * as trpc from '@trpc/server';
 import {prisma} from 'database';
 import {QStash} from 'lib/src/qStash';
-import {FetchCreateContextFnOptions} from '@trpc/server/adapters/fetch';
-import {NextRequest} from 'next/server';
 import {Maps} from 'lib/src/maps';
 import {Telegram} from 'lib/src/telegram';
 import {Postmark} from 'lib/src/postmark';
 import {MailQueue} from 'lib/src/mailQueue';
+import {type CreateNextContextOptions} from '@trpc/server/adapters/next';
 
 interface CreateContextOptions {
   user: User | null;
@@ -46,13 +45,14 @@ export type Context = trpc.inferAsyncReturnType<typeof createContextInner>;
  * @link https://trpc.io/docs/context
  */
 export async function createContext(
-  opts?: FetchCreateContextFnOptions
+  opts?: CreateNextContextOptions
 ): Promise<Context> {
-  const timezone = opts?.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
+  const timezone =
+    (opts?.req.headers['x-vercel-ip-timezone'] as string) ?? 'UTC';
 
   async function getUser() {
     if (opts?.req) {
-      const {userId} = getAuth(opts?.req as NextRequest);
+      const {userId} = getAuth(opts?.req);
       const user = userId ? await clerkClient.users.getUser(userId) : null;
       return user;
     }
