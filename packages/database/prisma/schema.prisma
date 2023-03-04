@@ -91,6 +91,7 @@ enum EmailType {
   EventCancelSignUp
   EventInvite
   EventCancelInvite
+  EventReminder
   MessageToOrganizer
   MessageToAllAttendees
   AfterRegisterNoCreatedEventFollowUpEmail

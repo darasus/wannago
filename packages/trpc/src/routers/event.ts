@@ -122,9 +122,11 @@ const update = protectedProcedure
         : false;
 
       if (isTimeChanged) {
-        const message = await ctx.qStash.updateEventEmailSchedule({
-          event,
+        const message = await ctx.mailQueue.updateReminderEmail({
+          eventId: event.id,
+          messageId: event.messageId,
           timezone: ctx.timezone,
+          startDate: event.startDate,
         });
 
         if (message?.messageId) {
@@ -247,9 +249,10 @@ const create = protectedProcedure
         },
       });
 
-      const message = await ctx.qStash.createEventEmailSchedule({
+      const message = await ctx.mailQueue.enqueueReminderEmail({
         timezone: ctx.timezone,
-        event,
+        eventId: event.id,
+        startDate: event.startDate,
       });
 
       if (message?.messageId) {

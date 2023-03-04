@@ -1,3 +1,5 @@
+// TODO: this can be removed if no events are in the queue
+
 import {NextApiRequest, NextApiResponse} from 'next';
 import {verifySignature} from '@upstash/qstash/nextjs';
 import {prisma} from 'database/prisma';

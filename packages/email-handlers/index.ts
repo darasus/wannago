@@ -32,3 +32,7 @@ export {
   handleOrganizerEventSignUpNotificationEmail,
   handleOrganizerEventSignUpNotificationEmailInputSchema,
 } from './src/email-handlers/handleOrganizerEventSignUpNotificationEmail';
+export {
+  handleEventReminderEmail,
+  handleEventReminderEmailInputSchema,
+} from './src/email-handlers/handleEventReminderEmail';

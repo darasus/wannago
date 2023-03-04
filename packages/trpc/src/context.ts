@@ -3,7 +3,6 @@ import {clerkClient, getAuth} from '@clerk/nextjs/server';
 import {PrismaClient} from '@prisma/client';
 import * as trpc from '@trpc/server';
 import {prisma} from 'database';
-import {QStash} from 'lib/src/qStash';
 import {Maps} from 'lib/src/maps';
 import {Telegram} from 'lib/src/telegram';
 import {Postmark} from 'lib/src/postmark';
@@ -13,7 +12,6 @@ import {type CreateNextContextOptions} from '@trpc/server/adapters/next';
 interface CreateContextOptions {
   user: User | null;
   prisma: PrismaClient;
-  qStash: QStash;
   maps: Maps;
   timezone: string;
   telegram: Telegram;
@@ -29,7 +27,6 @@ export async function createContextInner(_opts: CreateContextOptions) {
   return {
     user: _opts.user,
     prisma: _opts.prisma,
-    qStash: _opts.qStash,
     maps: _opts.maps,
     timezone: _opts.timezone,
     telegram: _opts.telegram,
@@ -65,7 +62,6 @@ export async function createContext(
   return createContextInner({
     user,
     prisma,
-    qStash: new QStash(),
     maps: new Maps(),
     timezone,
     telegram: new Telegram(),
