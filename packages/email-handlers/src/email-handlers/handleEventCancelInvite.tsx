@@ -1,4 +1,3 @@
-import {EmailType} from '@prisma/client';
 import {render} from '@react-email/render';
 import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';

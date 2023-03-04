@@ -437,11 +437,11 @@ const join = publicProcedure
     }
 
     await Promise.all([
-      await ctx.mailQueue.enqueueOrganizerEventSignUpNotificationEmail({
+      ctx.mailQueue.enqueueOrganizerEventSignUpNotificationEmail({
         eventId: input.eventId,
         userId: user.id,
       }),
-      await ctx.mailQueue.enqueueEventSignUpEmail({
+      ctx.mailQueue.enqueueEventSignUpEmail({
         eventId: input.eventId,
         userId: user.id,
       }),
