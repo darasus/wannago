@@ -21,6 +21,7 @@ export function AddEventForm() {
       }
     },
   });
+  const utils = trpc.useContext();
   const form = useEventForm();
   const {handleSubmit} = form;
 
@@ -58,6 +59,8 @@ export function AddEventForm() {
         data.endDate,
         Intl.DateTimeFormat().resolvedOptions().timeZone
       ),
+    }).then(async res => {
+      await utils.event.getById.prefetch({eventId: res.id});
     });
   });
 
