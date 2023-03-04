@@ -3,23 +3,22 @@ import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
 import {Postmark} from 'lib';
 import {z} from 'zod';
-import {EventCancelInvite} from 'email';
+import {EventCancelSignUp} from 'email';
 import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
 import {formatDate, getBaseUrl} from 'utils';
 
 const postmark = new Postmark();
 
-export const handleEventCancelInviteInputSchema = baseEventHandlerSchema.extend(
-  {
+export const handleEventCancelSignUpEmailInputSchema =
+  baseEventHandlerSchema.extend({
     userId: z.string().uuid(),
     eventId: z.string().uuid(),
-  }
-);
+  });
 
-export async function handleEventCancelInvite({
+export async function handleEventCancelSignUpEmail({
   eventId,
   userId,
-}: z.infer<typeof handleEventCancelInviteInputSchema>) {
+}: z.infer<typeof handleEventCancelSignUpEmailInputSchema>) {
   const event = await prisma.event.findUnique({
     where: {id: eventId},
     include: {
@@ -51,14 +50,14 @@ export async function handleEventCancelInvite({
     });
   }
 
-  const url = new URL(`${getBaseUrl()}/e/${event.shortId}`);
+  const url = new URL(`${getBaseUrl()}/e/${event.shortId}}`);
 
   await postmark.sendToTransactionalStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',
     to: user.email,
-    subject: `Your invite has been cancelled...`,
+    subject: `Your sign up has been cancelled...`,
     htmlString: render(
-      <EventCancelInvite
+      <EventCancelSignUp
         title={event.title}
         address={event.address || 'none'}
         streamUrl={event.streamUrl || 'none'}

@@ -1,33 +1,33 @@
 export {baseEventHandlerSchema} from './src/validation/baseEventHandlerSchema';
 
 export {
-  handleEventSignUp,
-  handleEventSignUpInputSchema,
-} from './src/email-handlers/handleEventSignUp';
+  handleEventSignUpEmail,
+  handleEventSignUpEmailInputSchema,
+} from './src/email-handlers/handleEventSignUpEmail';
 export {
-  handleEventInvite,
-  handleEventInviteInputSchema,
-} from './src/email-handlers/handleEventInvite';
+  handleEventInviteEmail,
+  handleEventInviteEmailInputSchema,
+} from './src/email-handlers/handleEventInviteEmail';
 export {
-  handleMessageToOrganizer,
-  handleMessageToOrganizerInputSchema,
-} from './src/email-handlers/handleMessageToOrganizer';
+  handleMessageToOrganizerEmail,
+  handleMessageToOrganizerEmailInputSchema,
+} from './src/email-handlers/handleMessageToOrganizerEmail';
 export {
-  handleMessageToAllAttendees,
-  handleMessageToAllAttendeesInputSchema,
-} from './src/email-handlers/handleMessageToAllAttendees';
+  handleMessageToAllAttendeesEmail,
+  handleMessageToAllAttendeesEmailInputSchema,
+} from './src/email-handlers/handleMessageToAllAttendeesEmail';
 export {
   handleAfterRegisterNoCreatedEventFollowUpEmail,
   handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema,
 } from './src/email-handlers/handleAfterRegisterNoCreatedEventFollowUpEmail';
 export {
-  handleEventCancelInvite,
-  handleEventCancelInviteInputSchema,
-} from './src/email-handlers/handleEventCancelInvite';
+  handleEventCancelInviteEmail,
+  handleEventCancelInviteEmailInputSchema,
+} from './src/email-handlers/handleEventCancelInviteEmail';
 export {
-  handleEventCancelSignUp,
-  handleEventCancelSignUpInputSchema,
-} from './src/email-handlers/handleEventCancelSignUp';
+  handleEventCancelSignUpEmail,
+  handleEventCancelSignUpEmailInputSchema,
+} from './src/email-handlers/handleEventCancelSignUpEmail';
 export {
   handleOrganizerEventSignUpNotificationEmail,
   handleOrganizerEventSignUpNotificationEmailInputSchema,

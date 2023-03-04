@@ -9,7 +9,7 @@ import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
 
 const postmark = new Postmark();
 
-export const handleMessageToOrganizerInputSchema =
+export const handleMessageToOrganizerEmailInputSchema =
   baseEventHandlerSchema.extend({
     eventId: z.string().uuid(),
     organizerEmail: z.string().email(),
@@ -20,7 +20,7 @@ export const handleMessageToOrganizerInputSchema =
     message: z.string(),
   });
 
-export async function handleMessageToOrganizer({
+export async function handleMessageToOrganizerEmail({
   email,
   eventId,
   firstName,
@@ -28,7 +28,7 @@ export async function handleMessageToOrganizer({
   message,
   organizerEmail,
   subject,
-}: z.infer<typeof handleMessageToOrganizerInputSchema>) {
+}: z.infer<typeof handleMessageToOrganizerEmailInputSchema>) {
   const event = await prisma.event.findUnique({where: {id: eventId}});
 
   if (!event) {

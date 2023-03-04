@@ -1,23 +1,23 @@
-import {render} from '@react-email/render';
+import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
+import {Postmark} from 'lib';
+import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
-import {Postmark} from 'lib';
-import {formatDate, getBaseUrl} from 'utils';
-import {z} from 'zod';
-import {EventInvite} from 'email';
-import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
+import {EventSignUp} from 'email';
+import {render} from '@react-email/render';
+import {getBaseUrl, formatDate} from 'utils';
 
 const postmark = new Postmark();
 
-export const handleEventInviteInputSchema = baseEventHandlerSchema.extend({
+export const handleEventSignUpEmailInputSchema = baseEventHandlerSchema.extend({
   eventId: z.string().uuid(),
   userId: z.string().uuid(),
 });
 
-export async function handleEventInvite({
+export async function handleEventSignUpEmail({
   eventId,
   userId,
-}: z.infer<typeof handleEventInviteInputSchema>) {
+}: z.infer<typeof handleEventSignUpEmailInputSchema>) {
   const event = await prisma.event.findUnique({
     where: {id: eventId},
     include: {
@@ -56,23 +56,20 @@ export async function handleEventInvite({
     });
   }
 
-  const confirmEventUrl = new URL(`${getBaseUrl()}/api/confirm-invite`);
-  confirmEventUrl.searchParams.append('eventShortId', event.shortId!);
-  confirmEventUrl.searchParams.append('email', user.email);
-  const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-invite`);
-  cancelEventUrl.searchParams.append('eventShortId', event.shortId!);
+  const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-signup`);
+  cancelEventUrl.searchParams.append('eventShortId', event.shortId);
   cancelEventUrl.searchParams.append('email', user.email);
 
   await postmark.sendToTransactionalStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',
     to: user.email,
-    subject: `You're invited to: "${event.title}"!`,
+    subject: `Thanks for signing up for "${event.title}"!`,
     htmlString: render(
-      <EventInvite
+      <EventSignUp
         title={event.title}
         address={event.address || 'none'}
         streamUrl={event.streamUrl || 'none'}
-        confirmEventUrl={confirmEventUrl.toString()}
+        eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
         cancelEventUrl={cancelEventUrl.toString()}
         startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
         endDate={formatDate(event.endDate, 'MMMM d, yyyy')}

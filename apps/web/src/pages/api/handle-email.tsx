@@ -1,20 +1,20 @@
 import {EmailType} from '@prisma/client';
 import {
   baseEventHandlerSchema,
-  handleEventSignUp,
-  handleEventSignUpInputSchema,
-  handleEventInvite,
-  handleEventInviteInputSchema,
-  handleMessageToOrganizer,
-  handleMessageToOrganizerInputSchema,
-  handleMessageToAllAttendees,
-  handleMessageToAllAttendeesInputSchema,
+  handleEventSignUpEmail,
+  handleEventSignUpEmailInputSchema,
+  handleEventInviteEmail,
+  handleEventInviteEmailInputSchema,
+  handleMessageToOrganizerEmail,
+  handleMessageToOrganizerEmailInputSchema,
+  handleMessageToAllAttendeesEmail,
+  handleMessageToAllAttendeesEmailInputSchema,
   handleAfterRegisterNoCreatedEventFollowUpEmail,
   handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema,
-  handleEventCancelInvite,
-  handleEventCancelInviteInputSchema,
-  handleEventCancelSignUp,
-  handleEventCancelSignUpInputSchema,
+  handleEventCancelInviteEmail,
+  handleEventCancelInviteEmailInputSchema,
+  handleEventCancelSignUpEmail,
+  handleEventCancelSignUpEmailInputSchema,
   handleOrganizerEventSignUpNotificationEmail,
   handleOrganizerEventSignUpNotificationEmailInputSchema,
   handleEventReminderEmail,
@@ -33,22 +33,26 @@ export default async function handle(
   const input = baseEventHandlerSchema.parse(req.body);
 
   if (input.type === EmailType.EventSignUp) {
-    await handleEventSignUp(handleEventSignUpInputSchema.parse(input));
+    await handleEventSignUpEmail(
+      handleEventSignUpEmailInputSchema.parse(input)
+    );
   }
 
   if (input.type === EmailType.EventInvite) {
-    await handleEventInvite(handleEventInviteInputSchema.parse(input));
+    await handleEventInviteEmail(
+      handleEventInviteEmailInputSchema.parse(input)
+    );
   }
 
   if (input.type === EmailType.MessageToOrganizer) {
-    await handleMessageToOrganizer(
-      handleMessageToOrganizerInputSchema.parse(input)
+    await handleMessageToOrganizerEmail(
+      handleMessageToOrganizerEmailInputSchema.parse(input)
     );
   }
 
   if (input.type === EmailType.MessageToAllAttendees) {
-    await handleMessageToAllAttendees(
-      handleMessageToAllAttendeesInputSchema.parse(input)
+    await handleMessageToAllAttendeesEmail(
+      handleMessageToAllAttendeesEmailInputSchema.parse(input)
     );
   }
 
@@ -59,14 +63,14 @@ export default async function handle(
   }
 
   if (input.type === EmailType.EventCancelInvite) {
-    await handleEventCancelInvite(
-      handleEventCancelInviteInputSchema.parse(input)
+    await handleEventCancelInviteEmail(
+      handleEventCancelInviteEmailInputSchema.parse(input)
     );
   }
 
   if (input.type === EmailType.EventCancelSignUp) {
-    await handleEventCancelSignUp(
-      handleEventCancelSignUpInputSchema.parse(input)
+    await handleEventCancelSignUpEmail(
+      handleEventCancelSignUpEmailInputSchema.parse(input)
     );
   }
 

@@ -2,21 +2,22 @@ import {render} from '@react-email/render';
 import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
 import {Postmark} from 'lib';
-import {z} from 'zod';
-import {EventCancelSignUp} from 'email';
-import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
 import {formatDate, getBaseUrl} from 'utils';
+import {z} from 'zod';
+import {EventInvite} from 'email';
+import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
 
 const postmark = new Postmark();
 
-export const handleEventCancelSignUpInputSchema = baseEventHandlerSchema.extend(
-  {userId: z.string().uuid(), eventId: z.string().uuid()}
-);
+export const handleEventInviteEmailInputSchema = baseEventHandlerSchema.extend({
+  eventId: z.string().uuid(),
+  userId: z.string().uuid(),
+});
 
-export async function handleEventCancelSignUp({
+export async function handleEventInviteEmail({
   eventId,
   userId,
-}: z.infer<typeof handleEventCancelSignUpInputSchema>) {
+}: z.infer<typeof handleEventInviteEmailInputSchema>) {
   const event = await prisma.event.findUnique({
     where: {id: eventId},
     include: {
@@ -30,12 +31,10 @@ export async function handleEventCancelSignUp({
 
   if (!event) {
     throw new TRPCError({
-      code: 'NOT_FOUND',
+      code: 'BAD_REQUEST',
       message: 'Event not found',
     });
   }
-
-  const organizerUser = event.organization?.users[0];
 
   const user = await prisma.user.findUnique({
     where: {id: userId},
@@ -43,23 +42,38 @@ export async function handleEventCancelSignUp({
 
   if (!user) {
     throw new TRPCError({
-      code: 'NOT_FOUND',
+      code: 'BAD_REQUEST',
       message: 'User not found',
     });
   }
 
-  const url = new URL(`${getBaseUrl()}/e/${event.shortId}}`);
+  const organizerUser = event.organization?.users[0];
+
+  if (!organizerUser) {
+    throw new TRPCError({
+      code: 'BAD_REQUEST',
+      message: 'Organizer user not found',
+    });
+  }
+
+  const confirmEventUrl = new URL(`${getBaseUrl()}/api/confirm-invite`);
+  confirmEventUrl.searchParams.append('eventShortId', event.shortId!);
+  confirmEventUrl.searchParams.append('email', user.email);
+  const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-invite`);
+  cancelEventUrl.searchParams.append('eventShortId', event.shortId!);
+  cancelEventUrl.searchParams.append('email', user.email);
 
   await postmark.sendToTransactionalStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',
     to: user.email,
-    subject: `Your sign up has been cancelled...`,
+    subject: `You're invited to: "${event.title}"!`,
     htmlString: render(
-      <EventCancelSignUp
+      <EventInvite
         title={event.title}
         address={event.address || 'none'}
         streamUrl={event.streamUrl || 'none'}
-        eventUrl={url.toString()}
+        confirmEventUrl={confirmEventUrl.toString()}
+        cancelEventUrl={cancelEventUrl.toString()}
         startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
         endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
         organizerName={`${organizerUser.firstName} ${organizerUser.lastName}`}
