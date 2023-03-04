@@ -41,7 +41,7 @@ export function StreamCard({streamUrl, eventId}: Props) {
           disabled={isCopied}
           size="xs"
         >
-          {isCopied ? 'Copied!' : 'Copy url'}
+          {isCopied ? 'Copied!' : 'Copy stream url'}
         </Button>
       </div>
       <div className="flex">
