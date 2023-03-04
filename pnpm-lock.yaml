@@ -394,6 +394,7 @@ importers:
 
   packages/trpc:
     specifiers:
+      client-env: workspace:*
       database: workspace:*
       eslint-config-custom: workspace:*
       lib: workspace:*
@@ -401,6 +402,7 @@ importers:
       tsconfig: workspace:*
       utils: workspace:*
     dependencies:
+      client-env: link:../client-env
       database: link:../database
       lib: link:../lib
       server-env: link:../server-env

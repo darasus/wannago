@@ -84,7 +84,12 @@ const update = protectedProcedure
       let geocodeResponse = null;
 
       if (address) {
-        geocodeResponse = await ctx.maps.geocode({address});
+        geocodeResponse = await ctx.googleMaps.geocode({
+          params: {
+            key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+            address,
+          },
+        });
       }
 
       const originalEvent = await ctx.prisma.event.findUnique({
@@ -108,8 +113,8 @@ const update = protectedProcedure
           featuredImageHeight,
           featuredImageWidth,
           featuredImagePreviewSrc,
-          longitude: geocodeResponse?.results[0].geometry.location.lng,
-          latitude: geocodeResponse?.results[0].geometry.location.lat,
+          longitude: geocodeResponse?.data.results[0].geometry.location.lng,
+          latitude: geocodeResponse?.data.results[0].geometry.location.lat,
           streamUrl,
         },
       });
@@ -205,7 +210,12 @@ const create = protectedProcedure
       let geocodeResponse = null;
 
       if (address) {
-        geocodeResponse = await ctx.maps.geocode({address});
+        geocodeResponse = await ctx.googleMaps.geocode({
+          params: {
+            key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+            address,
+          },
+        });
       }
 
       const organization = await ctx.prisma.organization.findFirst({
@@ -239,8 +249,8 @@ const create = protectedProcedure
           featuredImageWidth,
           featuredImagePreviewSrc,
           streamUrl,
-          longitude: geocodeResponse?.results[0].geometry.location.lng,
-          latitude: geocodeResponse?.results[0].geometry.location.lat,
+          longitude: geocodeResponse?.data.results[0].geometry.location.lng,
+          latitude: geocodeResponse?.data.results[0].geometry.location.lat,
           organization: {
             connect: {
               id: organization.id,

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "server-env": "workspace:*",
+    "client-env": "workspace:*",
     "utils": "workspace:*",
     "lib": "workspace:*",
     "database": "workspace:*"

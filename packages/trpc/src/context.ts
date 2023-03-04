@@ -8,39 +8,32 @@ import {Telegram} from 'lib/src/telegram';
 import {Postmark} from 'lib/src/postmark';
 import {MailQueue} from 'lib/src/mailQueue';
 import {type CreateNextContextOptions} from '@trpc/server/adapters/next';
+import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
 
 interface CreateContextOptions {
   user: User | null;
   prisma: PrismaClient;
-  maps: Maps;
   timezone: string;
   telegram: Telegram;
   postmark: Postmark;
   mailQueue: MailQueue;
+  googleMaps: GoogleMapsClient;
 }
 
-/**
- * Inner function for `createContext` where we create the context.
- * This is useful for testing when we don't want to mock Next.js' request/response
- */
 export async function createContextInner(_opts: CreateContextOptions) {
   return {
     user: _opts.user,
     prisma: _opts.prisma,
-    maps: _opts.maps,
     timezone: _opts.timezone,
     telegram: _opts.telegram,
     postmark: _opts.postmark,
     mailQueue: _opts.mailQueue,
+    googleMaps: _opts.googleMaps,
   };
 }
 
 export type Context = trpc.inferAsyncReturnType<typeof createContextInner>;
 
-/**
- * Creates context for an incoming request
- * @link https://trpc.io/docs/context
- */
 export async function createContext(
   opts?: CreateNextContextOptions
 ): Promise<Context> {
@@ -62,10 +55,10 @@ export async function createContext(
   return createContextInner({
     user,
     prisma,
-    maps: new Maps(),
     timezone,
     telegram: new Telegram(),
     postmark: new Postmark(),
     mailQueue: new MailQueue(),
+    googleMaps: new GoogleMapsClient(),
   });
 }
