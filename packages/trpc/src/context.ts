@@ -1,6 +1,6 @@
 import {User} from '@clerk/nextjs/dist/api';
 import {clerkClient, getAuth} from '@clerk/nextjs/server';
-import {PrismaClient} from '@prisma/client/edge';
+import {PrismaClient} from '@prisma/client';
 import * as trpc from '@trpc/server';
 import {prisma} from 'database';
 import {QStash} from 'lib/src/qStash';
