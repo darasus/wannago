@@ -7,17 +7,19 @@ import {trpc} from 'trpc/src/trpc';
 import {saveAs} from 'file-saver';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
-import {useEventId} from 'hooks';
+import {useConfirmDialog, useEventId} from 'hooks';
 import {MessageParticipantsButton} from '../../../features/MessageParticipantsButton/MessageParticipantsButton';
 import {UserPlusIcon, DocumentArrowDownIcon} from '@heroicons/react/24/solid';
+import {useCallback} from 'react';
 
 interface ItemProps {
   user: User;
   status: EventRegistrationStatus;
   hasPlusOne: boolean | null;
+  refetch: () => void;
 }
 
-function Item({user, hasPlusOne, status}: ItemProps) {
+function Item({user, hasPlusOne, status, refetch}: ItemProps) {
   const label =
     user.firstName +
     ' ' +
@@ -26,21 +28,43 @@ function Item({user, hasPlusOne, status}: ItemProps) {
     user.email +
     (hasPlusOne ? ' · +1' : '');
 
+  const {mutateAsync} = trpc.event.cancelRsvp.useMutation();
+  const eventId = useEventId();
+  const handleCancelClick = useCallback(async () => {
+    await mutateAsync({eventId, userId: user.id}).then(() => refetch());
+  }, [mutateAsync, eventId, user.id, refetch]);
+  const {open, modal} = useConfirmDialog({
+    title: 'Cancel RSVP',
+    description: `Are you sure you want to cancel the RSVP for ${user.firstName} ${user.lastName}?`,
+    onConfirm: handleCancelClick,
+  });
+
   return (
-    <CardBase key={user.id}>
-      <div className="flex items-center">
-        <Text>{label}</Text>
-        <div className="grow" />
-        <EventRegistrationStatusBadge status={status} />
-      </div>
-    </CardBase>
+    <>
+      {modal}
+      <CardBase key={user.id}>
+        <div className="flex items-center">
+          <Text>{label}</Text>
+          <div className="grow" />
+          <EventRegistrationStatusBadge status={status} />
+          <Button
+            size="sm"
+            variant="neutral"
+            onClick={open}
+            disabled={status === 'CANCELLED'}
+          >
+            Cancel
+          </Button>
+        </div>
+      </CardBase>
+    </>
   );
 }
 
 function EventAttendeesPage() {
   const router = useRouter();
   const eventId = useEventId();
-  const {data} = trpc.event.getAttendees.useQuery(
+  const {data, refetch} = trpc.event.getAttendees.useQuery(
     {
       eventId,
     },
@@ -105,6 +129,7 @@ function EventAttendeesPage() {
                 user={signUp.user}
                 hasPlusOne={signUp.hasPlusOne}
                 status={signUp.status}
+                refetch={refetch}
               />
             );
           })}
