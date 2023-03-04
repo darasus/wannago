@@ -76,6 +76,7 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
             id={name}
             multiple={false}
             {...getInputProps()}
+            data-testid="file-input"
           />
 
           <div className="h-full flex flex-col justify-center items-center gap-y-2">

@@ -5,6 +5,7 @@ import formidable from 'formidable';
 import got from 'got';
 import {env} from 'server-env';
 import {getImageMetaData} from 'utils';
+import sharp from 'sharp';
 
 export const config = {
   api: {
@@ -28,8 +29,10 @@ export default async function handler(
     const buffer = fs.readFileSync(file.filepath);
     const payload = new FormData();
 
+    const newBuffer = await sharp(buffer).resize(1200).webp().toBuffer();
+
     payload.append('requireSignedURLs', 'false');
-    payload.append('file', buffer, fileName);
+    payload.append('file', newBuffer, fileName);
 
     try {
       const response = (await got
