@@ -21,7 +21,6 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
   const {
     setValue,
     formState: {defaultValues},
-    trigger,
   } = useFormContext<Form>();
   const [imageSrc, setImageSrc] = useState<string | null>(
     defaultValues?.featuredImageSrc || null
@@ -38,10 +37,9 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
           setValue('featuredImageWidth', data.width);
           setValue('featuredImagePreviewSrc', data.imageSrcBase64);
         }
-        trigger();
       });
     },
-    [handleFileUpload, setValue, trigger]
+    [handleFileUpload, setValue]
   );
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
