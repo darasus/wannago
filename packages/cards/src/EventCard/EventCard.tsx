@@ -1,7 +1,7 @@
 import {Event} from '@prisma/client';
 import {isFuture} from 'date-fns';
 import Image from 'next/image';
-import {formatDate} from 'utils';
+import {cloudflareImageLoader, formatDate} from 'utils';
 import {Badge, CardBase, Text} from 'ui';
 import {forwardRef} from 'react';
 
@@ -14,32 +14,46 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
   ref
 ) {
   const isUpcoming = isFuture(event.startDate);
+  const {
+    featuredImageHeight,
+    featuredImageWidth,
+    featuredImagePreviewSrc,
+    featuredImageSrc,
+    title,
+  } = event;
 
   return (
     <CardBase ref={ref} className="flex flex-col">
-      {event.featuredImageSrc && (
-        <div className="grow overflow-hidden relative justify-center bg-black rounded-3xl aspect-video safari-rounded-border-fix mb-4">
-          <div className="absolute left-4 top-4 z-10">
-            {event.isPublished ? (
-              <Badge color="green" size="xs">
-                Published
-              </Badge>
-            ) : (
-              <Badge color="gray" size="xs">
-                Draft
-              </Badge>
-            )}
+      {featuredImageSrc &&
+        featuredImagePreviewSrc &&
+        featuredImageWidth &&
+        featuredImageHeight && (
+          <div className="grow overflow-hidden relative justify-center bg-black rounded-3xl aspect-video safari-rounded-border-fix mb-4">
+            <div className="absolute left-4 top-4 z-10">
+              {event.isPublished ? (
+                <Badge color="green" size="xs">
+                  Published
+                </Badge>
+              ) : (
+                <Badge color="gray" size="xs">
+                  Draft
+                </Badge>
+              )}
+            </div>
+            <Image
+              src={featuredImageSrc}
+              alt={title}
+              loader={cloudflareImageLoader}
+              // width={featuredImageWidth}
+              // height={featuredImageHeight}
+              blurDataURL={featuredImagePreviewSrc}
+              placeholder={'blur'}
+              sizes="320 640 750 1000"
+              fill
+              style={{objectFit: 'cover'}}
+            />
           </div>
-          <Image
-            src={event.featuredImageSrc}
-            alt=""
-            fill
-            style={{objectFit: 'cover'}}
-            priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        </div>
-      )}
+        )}
       <div>
         <div className="flex items-center">
           <Badge
