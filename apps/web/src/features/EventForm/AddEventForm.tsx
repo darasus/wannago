@@ -59,9 +59,13 @@ export function AddEventForm() {
         data.endDate,
         Intl.DateTimeFormat().resolvedOptions().timeZone
       ),
-    }).then(async res => {
-      await utils.event.getById.prefetch({eventId: res.id});
-    });
+    })
+      .then(async res => {
+        await utils.event.getById.prefetch({eventId: res.id});
+      })
+      .catch(() => {
+        form.trigger();
+      });
   });
 
   return (

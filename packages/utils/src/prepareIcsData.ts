@@ -7,7 +7,7 @@ import {stripHTML} from './stripHTML';
 export function prepareIcsData(event: Event): EventAttributes {
   const icsData: EventAttributes = {
     title: event.title,
-    description: stripHTML(event.description),
+    ...(event.description ? {description: stripHTML(event.description)} : {}),
     start: [
       Number(format(event.startDate, 'yyyy')),
       Number(format(event.startDate, 'M')),

@@ -10,10 +10,18 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   containerClassName?: string;
   error?: FieldError;
   isLoading?: boolean;
+  isOptional?: boolean;
 }
 
 export const Input = forwardRef(function Input(
-  {containerClassName, inputClassName, error, isLoading, ...props}: Props,
+  {
+    containerClassName,
+    inputClassName,
+    error,
+    isLoading,
+    isOptional,
+    ...props
+  }: Props,
   ref: React.Ref<HTMLInputElement>
 ) {
   const hasError = Boolean(error);
@@ -24,6 +32,7 @@ export const Input = forwardRef(function Input(
       error={error}
       id={props.id}
       label={props.label}
+      isOptional={isOptional}
     >
       <input
         data-tooltip-target="tooltip-default"

@@ -12,7 +12,7 @@ type Props = React.PropsWithChildren & {
     | 'purple'
     | 'pink'
     | 'red';
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
 };
 
 export function Badge({
@@ -37,6 +37,7 @@ export function Badge({
           'bg-red-100 text-red-700': color === 'red',
         },
         {
+          'h-4 px-1 text-[10px]': size === 'xxs',
           'h-6 px-2 text-xs': size === 'xs',
           'h-8 px-2 text-sm': size === 'sm',
           'h-11 px-4 text-base': size === 'md',

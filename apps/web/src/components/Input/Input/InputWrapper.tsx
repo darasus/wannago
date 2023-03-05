@@ -1,6 +1,7 @@
 import {ExclamationCircleIcon} from '@heroicons/react/24/solid';
 import {PropsWithChildren} from 'react';
 import {FieldError} from 'react-hook-form';
+import {Badge} from 'ui';
 import {cn} from 'utils';
 
 interface Props extends PropsWithChildren {
@@ -8,6 +9,7 @@ interface Props extends PropsWithChildren {
   containerClassName?: string;
   error?: FieldError;
   id?: string;
+  isOptional?: boolean;
 }
 
 export function InputWrapper({
@@ -16,6 +18,7 @@ export function InputWrapper({
   label,
   id,
   children,
+  isOptional,
 }: Props) {
   const hasError = Boolean(error);
 
@@ -24,9 +27,16 @@ export function InputWrapper({
       {label && (
         <label
           htmlFor={id}
-          className={cn('block text-md text-gray-800 mb-1 ml-2 font-bold')}
+          className={cn(
+            'flex items-center text-md text-gray-800 mb-1 ml-2 font-bold'
+          )}
         >
           {label}
+          {isOptional && (
+            <Badge size="xxs" className="ml-1 mt-[2px]">
+              Optional
+            </Badge>
+          )}
         </label>
       )}
       <div className={cn({'mt-1': !!id})}>

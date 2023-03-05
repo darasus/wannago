@@ -12,17 +12,17 @@ model Event {
   id                      String        @id @default(uuid())
   shortId                 String        @unique
   title                   String        @db.VarChar(255)
-  description             String        @db.LongText()
+  description             String?       @db.LongText()
   startDate               DateTime
   endDate                 DateTime
   isPublished             Boolean       @default(false)
   createdAt               DateTime      @default(now())
   updatedAt               DateTime      @updatedAt
   maxNumberOfAttendees    Int
-  featuredImageSrc        String
-  featuredImageWidth      Int
-  featuredImageHeight     Int
-  featuredImagePreviewSrc String        @db.LongText()
+  featuredImageSrc        String?
+  featuredImageWidth      Int?
+  featuredImageHeight     Int?
+  featuredImagePreviewSrc String?       @db.LongText()
   streamUrl               String?
   address                 String?
   longitude               Float?
