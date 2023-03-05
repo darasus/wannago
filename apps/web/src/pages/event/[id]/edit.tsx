@@ -9,7 +9,7 @@ import {withProtected} from '../../../utils/withAuthProtect';
 function EventEditPage() {
   const router = useRouter();
   const eventId = router.query.id as string;
-  const {data} = trpc.event.getById.useQuery(
+  const {data: event, isLoading} = trpc.event.getById.useQuery(
     {
       eventId,
     },
@@ -18,19 +18,17 @@ function EventEditPage() {
     }
   );
 
-  if (!data) {
-    return null;
-  }
-
   return (
     <>
       <Head>
         <title>{`Edit event | WannaGo`}</title>
       </Head>
-      <AppLayout maxSize="lg">
-        <Container maxSize="lg">
-          <EditEventForm event={data} />
-        </Container>
+      <AppLayout maxSize="lg" isLoading={isLoading}>
+        {event && (
+          <Container maxSize="lg">
+            <EditEventForm event={event} />
+          </Container>
+        )}
       </AppLayout>
     </>
   );

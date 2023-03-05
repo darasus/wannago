@@ -14,7 +14,11 @@ function InternalEventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const eventId = useEventId();
-  const {data, refetch, isLoading} = trpc.event.getById.useQuery(
+  const {
+    data: event,
+    refetch,
+    isLoading,
+  } = trpc.event.getById.useQuery(
     {
       eventId,
     },
@@ -25,38 +29,30 @@ function InternalEventPage({
     [timezone]
   );
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen w-screen">
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (!data) {
-    return null;
-  }
-
   return (
     <>
-      <Head>
-        <title>{`${data.title} | WannaGo`}</title>
-      </Head>
-      <AppLayout maxSize="lg">
-        <Container maxSize="lg">
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-12 lg:col-span-3">
-              <AdminSection
-                event={data}
-                timezone={timezone}
-                refetchEvent={refetch}
-              />
-            </div>
-            <div className="col-span-12 lg:col-span-9">
-              <EventView event={data} timezone={clientTimezone} />
-            </div>
-          </div>
-        </Container>
+      <AppLayout maxSize="lg" isLoading={isLoading}>
+        {event && (
+          <>
+            <Head>
+              <title>{`${event.title} | WannaGo`}</title>
+            </Head>
+            <Container maxSize="lg">
+              <div className="grid grid-cols-12 gap-4">
+                <div className="col-span-12 lg:col-span-3">
+                  <AdminSection
+                    event={event}
+                    timezone={timezone}
+                    refetchEvent={refetch}
+                  />
+                </div>
+                <div className="col-span-12 lg:col-span-9">
+                  <EventView event={event} timezone={clientTimezone} />
+                </div>
+              </div>
+            </Container>
+          </>
+        )}
       </AppLayout>
     </>
   );
