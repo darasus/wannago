@@ -11,13 +11,14 @@ import {Button, Spinner} from 'ui';
 
 interface Props extends Omit<ComponentProps<typeof Input>, 'accept'> {
   name: string;
+  isOptional?: boolean;
 }
 
 export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
   props: Props,
   ref
 ) {
-  const {name, label, error, ...rest} = props;
+  const {name, label, error, isOptional, ...rest} = props;
   const {
     setValue,
     formState: {defaultValues},
@@ -58,7 +59,12 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
   };
 
   return (
-    <InputWrapper id={props.id} label={props.label} error={error}>
+    <InputWrapper
+      id={props.id}
+      label={props.label}
+      error={error}
+      isOptional={isOptional}
+    >
       <div
         className={cn(
           'flex flex-col relative justify-center items-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-100 mb-4 text-gray-400 aspect-video overflow-hidden',

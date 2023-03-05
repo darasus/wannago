@@ -1,14 +1,14 @@
 export interface Form {
   title: string;
-  description: string;
+  description: string | null;
   startDate: string;
   endDate: string;
   address?: string;
   streamUrl?: string;
-  maxNumberOfAttendees: number;
-  featuredImageSrc: string;
-  featuredImageHeight: number;
-  featuredImageWidth: number;
-  featuredImagePreviewSrc: string;
+  maxNumberOfAttendees: number | null;
+  featuredImageSrc: string | null;
+  featuredImageHeight: number | null;
+  featuredImageWidth: number | null;
+  featuredImagePreviewSrc: string | null;
   type: 'online' | 'offline';
 }

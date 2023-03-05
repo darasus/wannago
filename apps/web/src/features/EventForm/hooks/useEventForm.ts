@@ -30,14 +30,14 @@ export function useEventForm(props?: {event?: Event}) {
       endDate: event?.endDate
         ? formatDateForInput(event?.endDate)
         : formatDateForInput(new Date()),
-      description: event?.description,
+      description: event?.description || null,
       address: event?.address || undefined,
       streamUrl: event?.streamUrl || undefined,
       maxNumberOfAttendees: event?.maxNumberOfAttendees || undefined,
-      featuredImageSrc: event?.featuredImageSrc || undefined,
-      featuredImageHeight: event?.featuredImageHeight || undefined,
-      featuredImageWidth: event?.featuredImageWidth || undefined,
-      featuredImagePreviewSrc: event?.featuredImagePreviewSrc || undefined,
+      featuredImageSrc: event?.featuredImageSrc || null,
+      featuredImageHeight: event?.featuredImageHeight || null,
+      featuredImageWidth: event?.featuredImageWidth || null,
+      featuredImagePreviewSrc: event?.featuredImagePreviewSrc || null,
       type,
     },
   });

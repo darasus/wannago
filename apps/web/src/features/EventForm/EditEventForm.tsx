@@ -68,6 +68,8 @@ export function EditEventForm({event}: Props) {
         data.endDate,
         Intl.DateTimeFormat().resolvedOptions().timeZone
       ),
+    }).catch(() => {
+      form.trigger();
     });
   });
 
@@ -97,7 +99,7 @@ export function EditEventForm({event}: Props) {
     streamUrl: streamUrl || null,
     description,
     featuredImageSrc,
-    maxNumberOfAttendees,
+    maxNumberOfAttendees: maxNumberOfAttendees || Infinity,
     startDate: new Date(startDate),
     endDate: new Date(endDate),
     longitude: geolocation?.results[0]?.geometry.location.lng as number,

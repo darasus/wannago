@@ -9,6 +9,30 @@ import {random, getBaseUrl} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 
+const eventInput = z.object({
+  title: z.string(),
+  description: z.string().nullable().default(null),
+  startDate: z.date(),
+  endDate: z.date(),
+  address: z.string().nullable().default(null),
+  streamUrl: z.string().nullable(),
+  featuredImageSrc: z.string().nullable().default(null),
+  featuredImageHeight: z.number().nullable().default(null),
+  featuredImageWidth: z.number().nullable().default(null),
+  featuredImagePreviewSrc: z.string().nullable().default(null),
+  maxNumberOfAttendees: z
+    .number()
+    .or(z.string())
+    .transform((val): number => {
+      if (typeof val === 'number') {
+        return val;
+      }
+      return Number(val);
+    })
+    .nullable()
+    .default(Infinity),
+});
+
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
   .mutation(async ({input, ctx}) => {
@@ -37,30 +61,7 @@ const publish = protectedProcedure
   });
 
 const update = protectedProcedure
-  .input(
-    z.object({
-      eventId: z.string().uuid(),
-      title: z.string(),
-      description: z.string(),
-      startDate: z.date(),
-      endDate: z.date(),
-      address: z.string().nullable(),
-      featuredImageSrc: z.string(),
-      featuredImageHeight: z.number(),
-      featuredImageWidth: z.number(),
-      featuredImagePreviewSrc: z.string(),
-      streamUrl: z.string().nullable(),
-      maxNumberOfAttendees: z
-        .number()
-        .or(z.string())
-        .transform((val): number => {
-          if (typeof val === 'number') {
-            return val;
-          }
-          return Number(val);
-        }),
-    })
-  )
+  .input(eventInput.extend({eventId: z.string().uuid()}))
   .mutation(
     async ({
       input: {
@@ -108,7 +109,7 @@ const update = protectedProcedure
           startDate,
           endDate,
           address: address,
-          maxNumberOfAttendees: maxNumberOfAttendees,
+          maxNumberOfAttendees: maxNumberOfAttendees ?? Infinity,
           featuredImageSrc,
           featuredImageHeight,
           featuredImageWidth,
@@ -167,29 +168,7 @@ const remove = protectedProcedure
   });
 
 const create = protectedProcedure
-  .input(
-    z.object({
-      title: z.string(),
-      description: z.string(),
-      startDate: z.date(),
-      endDate: z.date(),
-      address: z.string().nullable(),
-      streamUrl: z.string().nullable(),
-      featuredImageSrc: z.string(),
-      featuredImageHeight: z.number(),
-      featuredImageWidth: z.number(),
-      featuredImagePreviewSrc: z.string(),
-      maxNumberOfAttendees: z
-        .number()
-        .or(z.string())
-        .transform((val): number => {
-          if (typeof val === 'number') {
-            return val;
-          }
-          return Number(val);
-        }),
-    })
-  )
+  .input(eventInput)
   .mutation(
     async ({
       input: {
@@ -243,7 +222,7 @@ const create = protectedProcedure
           endDate,
           startDate,
           address: address,
-          maxNumberOfAttendees,
+          maxNumberOfAttendees: maxNumberOfAttendees ?? Infinity,
           featuredImageSrc,
           featuredImageHeight,
           featuredImageWidth,

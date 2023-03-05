@@ -16,10 +16,11 @@ interface Props extends HTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: FieldError;
   dataTestId?: string;
+  isOptional?: boolean;
 }
 
 export const RichTextarea = forwardRef<HTMLInputElement, Props>(
-  function RichTextarea({label, error, dataTestId, ...props}, ref) {
+  function RichTextarea({label, error, dataTestId, isOptional, ...props}, ref) {
     const {
       formState: {defaultValues},
       setValue,
@@ -54,7 +55,12 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
             <BubbleMenuButtonGroup editor={editor} />
           </FloatingMenu>
         )}
-        <InputWrapper label={label} error={error} data-testid={dataTestId}>
+        <InputWrapper
+          label={label}
+          error={error}
+          data-testid={dataTestId}
+          isOptional={isOptional}
+        >
           <input ref={ref} {...props} className="hidden" />
           <EditorContent
             data-testid={dataTestId}
