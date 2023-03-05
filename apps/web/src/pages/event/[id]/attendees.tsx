@@ -105,16 +105,18 @@ function EventAttendeesPage() {
               onClick={() => router.push(`/event/${eventId}/invite`)}
               size="sm"
               iconLeft={<UserPlusIcon />}
+              title={'Invite'}
             >
-              Invite
+              <span className="hidden md:block">Invite</span>
             </Button>
             <Button
               variant="neutral"
               onClick={handleDownloadCsvClick}
               size="sm"
               iconLeft={<DocumentArrowDownIcon />}
+              title={'Export CSV'}
             >
-              Export CSV
+              <span className="hidden md:block">Export CSV</span>
             </Button>
           </PageHeader>
           {data.length === 0 && (

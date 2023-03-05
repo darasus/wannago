@@ -53,6 +53,7 @@ const button = cva(
         md: ['text-base'],
         lg: ['text-md'],
       },
+      hasChildren: {yes: ['gap-x-2'], no: []},
     },
     compoundVariants: [
       {
@@ -136,7 +137,10 @@ export const Button = forwardRef(function Button(
       type="button"
       disabled={disabled || isLoading}
       {...props}
-      className={cn(button({intent: variant, size}), className)}
+      className={cn(
+        button({intent: variant, size, hasChildren: !!children ? 'yes' : 'no'}),
+        className
+      )}
     >
       {isLoading ? (
         <Spinner
@@ -150,11 +154,7 @@ export const Button = forwardRef(function Button(
         <>
           {
             (iconLeft &&= (
-              <div
-                className={cn(icon({intent: variant, size}), {
-                  'mr-2': !!children,
-                })}
-              >
+              <div className={cn(icon({intent: variant, size}))}>
                 {iconLeft}
               </div>
             ))

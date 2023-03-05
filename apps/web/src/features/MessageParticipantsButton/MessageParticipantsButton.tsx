@@ -55,8 +55,9 @@ export function MessageParticipantsButton() {
         variant="neutral"
         iconLeft={<EnvelopeIcon />}
         size="sm"
+        title="Message attendees"
       >
-        Message attendees
+        <span className="hidden md:block">Message attendees</span>
       </Button>
     </>
   );
