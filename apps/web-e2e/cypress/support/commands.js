@@ -10,6 +10,8 @@ Cypress.Commands.addAll({
         cy.get('.cl-formButtonPrimary').click();
         cy.get('[name="codeInput-0"]').type('424242');
         cy.get('[data-testid="add-event-button"]');
+        cy.reload();
+        cy.visit('/dashboard');
       }
     });
   },

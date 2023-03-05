@@ -16,7 +16,7 @@ describe('Create event', () => {
     cy.get('[data-testid="event-form-address"]').type('Paris');
     cy.get('[data-testid="location-input-option"]').first().click();
     cy.get('[data-testid="event-form-max-attendees"]').type('10');
-    cy.get('[data-testid="event-form-submit-button"]').click();
+    cy.wait(1000);
     cy.get('[data-testid="file-input-image-preview"]');
     cy.get('[data-testid="event-form-submit-button"]').click();
     cy.get('[data-testid="event-title"]', {timeout: 20000}).should(
@@ -41,7 +41,7 @@ describe('Create event', () => {
     cy.get('[data-testid="grouped-toggle-online"]').click();
     cy.get('[data-testid="event-form-url"]').type('https://meet.google.com');
     cy.get('[data-testid="event-form-max-attendees"]').type('10');
-    cy.get('[data-testid="event-form-submit-button"]').click();
+    cy.wait(1000);
     cy.get('[data-testid="file-input-image-preview"]');
     cy.get('[data-testid="event-form-submit-button"]').click();
     cy.get('[data-testid="event-title"]', {timeout: 20000}).should(
