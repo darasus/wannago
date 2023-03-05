@@ -7,5 +7,6 @@ module.exports = defineConfig({
     supportFile: 'cypress/support/commands.js',
     viewportHeight: 1000,
     viewportWidth: 1240,
+    video: false,
   },
 });
