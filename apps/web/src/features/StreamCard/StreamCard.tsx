@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import {getStreamProviderFromUrl, StreamHost} from 'utils';
-import {Button, CardBase, Badge} from 'ui';
+import {Button, CardBase, Badge, Text} from 'ui';
 import {Googlemeet} from '@styled-icons/simple-icons/Googlemeet';
 import {Youtube} from '@styled-icons/simple-icons/Youtube';
 import {Twitch} from '@styled-icons/simple-icons/Twitch';
@@ -13,16 +13,18 @@ interface Props {
 }
 
 const iconMap: Record<StreamHost, JSX.Element> = {
-  meet: <Googlemeet className="__simple-icons-svg" />,
-  youtube: <Youtube className="__simple-icons-svg" />,
-  twitch: <Twitch className="__simple-icons-svg" />,
+  meet: <Googlemeet className="__simple-icons-svg w-8 h-8" />,
+  youtube: <Youtube className="__simple-icons-svg w-8 h-8" />,
+  twitch: <Twitch className="__simple-icons-svg w-8 h-8" />,
 };
 
 export function StreamCard({streamUrl, eventId}: Props) {
   const [isCopied, copy] = useCopyClipboard(streamUrl);
   const {logEvent} = useAmplitude();
   const host = getStreamProviderFromUrl(streamUrl);
-  const icon = iconMap[host] || <VideoCameraIcon />;
+  const icon = (host && iconMap[host]) || (
+    <VideoCameraIcon className="w-8 h-8" />
+  );
 
   const onCopyUrlClick = () => {
     logEvent('copy_stream_url_button_clicked', {eventId});
@@ -30,7 +32,7 @@ export function StreamCard({streamUrl, eventId}: Props) {
   };
 
   return (
-    <CardBase className="h-full">
+    <CardBase className="h-full" innerClassName="flex flex-col h-full">
       <div className="mb-2">
         <Badge color="gray" className="mr-2" size="xs">
           Where
@@ -44,13 +46,24 @@ export function StreamCard({streamUrl, eventId}: Props) {
           {isCopied ? 'Copied!' : 'Copy stream url'}
         </Button>
       </div>
-      <div className="flex">
+      <div className="flex mb-2">
+        <Text title={streamUrl} className="font-bold truncate">
+          {streamUrl
+            .replace('https://www.', '')
+            .replace('http://', '')
+            .replace('https://', '')}
+        </Text>
+      </div>
+      <div className="flex gap-2 items-center grow">
+        <div className="flex justify-center items-center rounded-full bg-slate-200 aspect-square h-full border-2 border-gray-800 min-h-[70px]">
+          {icon}
+        </div>
         <Button
-          variant="neutral"
-          iconLeft={icon}
+          variant="link"
           as="a"
           href={streamUrl}
           target="_blank"
+          size="sm"
         >
           Join stream
         </Button>

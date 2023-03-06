@@ -37,7 +37,7 @@ export function DateCard({
       <Text className="font-bold">{timeRangeString}</Text>
       <div className="mb-2" />
       <div className="flex grow">
-        <div className="flex flex-col justify-center items-center border-2 border-gray-800 rounded-2xl px-4 py-3 bg-slate-200 aspect-square h-full mr-2">
+        <div className="flex flex-col justify-center items-center border-2 border-gray-800 rounded-2xl min-h-[70px] bg-slate-200 aspect-square h-full mr-2">
           <Text className="text-2xl leading-none font-extrabold">
             {formatDate(new Date(startDate), 'dd', timezone)}
           </Text>
