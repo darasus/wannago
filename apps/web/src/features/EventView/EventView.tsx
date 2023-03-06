@@ -26,10 +26,10 @@ export function EventView({
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="h-full">
+        <div className="items-stretch">
           <OrganizerCard event={event} />
         </div>
-        <div className="h-full">
+        <div className="items-stretch">
           <EventUrlCard
             url={`${getBaseUrl()}/e/${event.shortId}`}
             eventId={event.id}
@@ -41,7 +41,7 @@ export function EventView({
         <InfoCard event={event} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="h-full">
+        <div className="items-stretch">
           {event.address && (
             <LocationCard
               address={event.address}
@@ -54,7 +54,7 @@ export function EventView({
             <StreamCard eventId={event.id} streamUrl={event.streamUrl} />
           )}
         </div>
-        <div className="h-full">
+        <div className="items-stretch">
           <DateCard
             event={event}
             timezone={timezone}
@@ -63,12 +63,12 @@ export function EventView({
         </div>
       </div>
       {!isPast(event.endDate, timezone) && (
-        <div className="h-full">
+        <div className="items-stretch">
           <ParticipantsCard event={event} />
         </div>
       )}
       {isPublic && (
-        <div className="h-full">
+        <div className="items-stretch">
           <EventWannaGoArea eventId={event.id} />
         </div>
       )}

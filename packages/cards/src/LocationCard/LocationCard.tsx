@@ -16,7 +16,7 @@ export function LocationCard({
   onGetDirectionsClick,
 }: Props) {
   return (
-    <CardBase>
+    <CardBase className="h-full">
       <div className="mb-2">
         <Badge color="gray" className="mr-2" size="xs">
           Where
