@@ -47,21 +47,14 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             label="Event description"
             error={errors.description}
             isOptional
-            {...register('description', {
-              // required: {value: true, message: 'Description is required'},
-            })}
+            {...register('description')}
           />
           <FileInput
             data-testid="event-form-image"
             label="Event image"
             error={errors.featuredImageSrc}
             isOptional
-            {...register('featuredImageSrc', {
-              // required: {
-              //   value: true,
-              //   message: 'Featured image is required',
-              // },
-            })}
+            {...register('featuredImageSrc')}
           />
         </>
       ),
@@ -162,21 +155,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             data-testid="event-form-max-attendees"
             error={errors.maxNumberOfAttendees}
             isOptional
-            {...register('maxNumberOfAttendees', {
-              // required: {
-              //   value: true,
-              //   message: 'Max number of attendees is required',
-              // },
-              // min: {
-              //   value: 1,
-              //   message: 'Min number of attendees must be at least 1',
-              // },
-              // max: {
-              //   value: 1_000_000,
-              //   message:
-              //     'Max number of attendees must be not more that 1,000,000',
-              // },
-            })}
+            {...register('maxNumberOfAttendees')}
           />
         </>
       ),

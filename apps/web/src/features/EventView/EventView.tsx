@@ -23,12 +23,12 @@ export function EventView({
   isPublic,
   relativeTimeString,
 }: Props) {
-  const organizer = <OrganizerCard event={event} />;
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-y-4 md:col-span-8">
-        <div className="block md:hidden">{organizer}</div>
+        <div>
+          <OrganizerCard event={event} />
+        </div>
         <div>
           <InfoCard event={event} />
         </div>
@@ -45,9 +45,6 @@ export function EventView({
             <StreamCard eventId={event.id} streamUrl={event.streamUrl} />
           )}
         </div>
-      </div>
-      <div className="flex flex-col gap-y-4 md:col-span-4">
-        <div className="hidden md:block">{organizer}</div>
         <div>
           <DateCard
             event={event}

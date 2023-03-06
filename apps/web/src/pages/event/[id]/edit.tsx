@@ -23,9 +23,9 @@ function EventEditPage() {
       <Head>
         <title>{`Edit event | WannaGo`}</title>
       </Head>
-      <AppLayout maxSize="lg" isLoading={isLoading}>
+      <AppLayout isLoading={isLoading}>
         {event && (
-          <Container maxSize="lg">
+          <Container>
             <EditEventForm event={event} />
           </Container>
         )}

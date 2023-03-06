@@ -51,6 +51,7 @@ export function AddEventForm() {
     await mutateAsync({
       ...data,
       ...location,
+      description: data.description === '<p></p>' ? null : data.description,
       startDate: zonedTimeToUtc(
         data.startDate,
         Intl.DateTimeFormat().resolvedOptions().timeZone

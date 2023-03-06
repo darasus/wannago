@@ -64,7 +64,7 @@ function PublicEventPage({
         imageSrc={`/api/og-image?eventId=${data.id}`}
         shortEventId={data.shortId!}
       />
-      <Container className="md:px-4">
+      <Container maxSize="sm">
         <EventView
           event={data}
           timezone={clientTimezone}

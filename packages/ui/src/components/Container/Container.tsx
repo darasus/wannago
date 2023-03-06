@@ -2,7 +2,7 @@ import {forwardRef, HTMLAttributes, PropsWithChildren} from 'react';
 import {cn} from '../../../../utils';
 
 interface Props extends PropsWithChildren<HTMLAttributes<HTMLDivElement>> {
-  maxSize?: 'md' | 'lg' | 'full';
+  maxSize?: 'sm' | 'md' | 'lg' | 'full';
 }
 
 export const Container = forwardRef<HTMLDivElement, Props>(function Container(
@@ -12,11 +12,16 @@ export const Container = forwardRef<HTMLDivElement, Props>(function Container(
   return (
     <div
       ref={ref}
-      className={cn('mx-auto px-4 my-4', className, {
-        'max-w-5xl': maxSize === 'md',
-        'max-w-7xl': maxSize === 'lg',
-        'max-full': maxSize === 'full',
-      })}
+      className={cn(
+        'mx-auto px-4 my-4',
+        {
+          'max-w-xl': maxSize === 'sm',
+          'max-w-5xl': maxSize === 'md',
+          'max-w-7xl': maxSize === 'lg',
+          'max-full': maxSize === 'full',
+        },
+        className
+      )}
       {...props}
     />
   );

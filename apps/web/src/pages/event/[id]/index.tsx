@@ -31,22 +31,22 @@ function InternalEventPage({
 
   return (
     <>
-      <AppLayout maxSize="lg" isLoading={isLoading}>
+      <AppLayout isLoading={isLoading}>
         {event && (
           <>
             <Head>
               <title>{`${event.title} | WannaGo`}</title>
             </Head>
-            <Container maxSize="lg">
+            <Container>
               <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-12 lg:col-span-3">
+                <div className="col-span-12 lg:col-span-4">
                   <AdminSection
                     event={event}
                     timezone={timezone}
                     refetchEvent={refetch}
                   />
                 </div>
-                <div className="col-span-12 lg:col-span-9">
+                <div className="col-span-12 lg:col-span-8">
                   <EventView event={event} timezone={clientTimezone} />
                 </div>
               </div>

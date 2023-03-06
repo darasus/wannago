@@ -59,6 +59,7 @@ export function EditEventForm({event}: Props) {
     await mutateAsync({
       ...data,
       ...location,
+      description: description === '<p></p>' ? null : description,
       eventId: event.id,
       startDate: zonedTimeToUtc(
         data.startDate,
@@ -97,7 +98,7 @@ export function EditEventForm({event}: Props) {
     title,
     address: address || null,
     streamUrl: streamUrl || null,
-    description,
+    description: description === '<p></p>' ? null : description,
     featuredImageSrc,
     maxNumberOfAttendees: maxNumberOfAttendees || Infinity,
     startDate: new Date(startDate),
@@ -109,14 +110,14 @@ export function EditEventForm({event}: Props) {
   return (
     <FormProvider {...form}>
       <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 md:col-span-4">
+        <div className="col-span-12 md:col-span-6">
           <EventForm
             onSubmit={onSubmit}
             isEdit
             onCancelClick={() => router.push(`/event/${event.id}`)}
           />
         </div>
-        <div className="col-span-8 pointer-events-none hidden md:block">
+        <div className="col-span-6 pointer-events-none hidden md:block">
           <div className="flex flex-col gap-y-4">
             <PageHeader title="Preview" />
             <div>
