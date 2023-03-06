@@ -25,7 +25,11 @@ export function LocationCard({
           Get directions
         </Button>
       </div>
-      <Text className="font-bold">{address}</Text>
+      <div className="flex">
+        <Text title={address} className="font-bold truncate">
+          {address}
+        </Text>
+      </div>
       <div className="mb-2" />
       <div>
         <LocationImage
