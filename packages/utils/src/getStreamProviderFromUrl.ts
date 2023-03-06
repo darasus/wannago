@@ -7,6 +7,10 @@ const map: Record<string, StreamHost> = {
 };
 
 export function getStreamProviderFromUrl(streamUrl: string) {
-  const url = new URL(streamUrl);
-  return map[url.host] || null;
+  try {
+    const url = new URL(streamUrl);
+    return map[url.host] || null;
+  } catch (error) {
+    return null;
+  }
 }
