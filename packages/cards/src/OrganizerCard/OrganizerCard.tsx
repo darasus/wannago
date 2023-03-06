@@ -23,7 +23,7 @@ export function OrganizerCard({isLoading, onOpenFormClick, user}: Props) {
           </Button>
         </div>
         <div className="flex items-center gap-x-2">
-          <div className="flex h-10 w-10 items-center overflow-hidden relative justify-center rounded-full safari-rounded-border-fix">
+          <div className="flex h-10 w-10 items-center overflow-hidden relative justify-center rounded-full safari-rounded-border-fix border-2 border-gray-800">
             {isLoading && (
               <div className="flex items-center justify-center h-full w-full bg-gray-100 rounded-full border border-gray-200">
                 <Spinner className="text-gray-400" />

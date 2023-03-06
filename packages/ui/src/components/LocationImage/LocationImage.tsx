@@ -20,7 +20,7 @@ export function LocationImage({
 
   url.searchParams.set('key', env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
   url.searchParams.set('size', `${width}x${height}`);
-  url.searchParams.set('zoom', '16');
+  url.searchParams.set('zoom', '18');
   url.searchParams.set('maptype', 'roadmap');
   url.searchParams.set('center', address);
   url.searchParams.set('scale', '2');
@@ -32,7 +32,7 @@ export function LocationImage({
   });
 
   return (
-    <div className="rounded-3xl overflow-hidden">
+    <div className="rounded-2xl overflow-hidden border-2 border-gray-200">
       <Image src={url.toString()} alt="" width={width} height={height} />
     </div>
   );

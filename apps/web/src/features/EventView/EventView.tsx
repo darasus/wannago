@@ -25,14 +25,23 @@ export function EventView({
 }: Props) {
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-y-4 md:col-span-8">
-        <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="h-full">
           <OrganizerCard event={event} />
         </div>
-        <div>
-          <InfoCard event={event} />
+        <div className="h-full">
+          <EventUrlCard
+            url={`${getBaseUrl()}/e/${event.shortId}`}
+            eventId={event.id}
+            isPublished={event.isPublished ?? false}
+          />
         </div>
-        <div>
+      </div>
+      <div>
+        <InfoCard event={event} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="h-full">
           {event.address && (
             <LocationCard
               address={event.address}
@@ -45,31 +54,24 @@ export function EventView({
             <StreamCard eventId={event.id} streamUrl={event.streamUrl} />
           )}
         </div>
-        <div>
+        <div className="h-full">
           <DateCard
             event={event}
             timezone={timezone}
             relativeTimeString={relativeTimeString}
           />
         </div>
-        {!isPast(event.endDate, timezone) && (
-          <div>
-            <ParticipantsCard event={event} />
-          </div>
-        )}
-        <div>
-          <EventUrlCard
-            url={`${getBaseUrl()}/e/${event.shortId}`}
-            eventId={event.id}
-            isPublished={event.isPublished ?? false}
-          />
-        </div>
-        {isPublic && (
-          <div>
-            <EventWannaGoArea eventId={event.id} />
-          </div>
-        )}
       </div>
+      {!isPast(event.endDate, timezone) && (
+        <div className="h-full">
+          <ParticipantsCard event={event} />
+        </div>
+      )}
+      {isPublic && (
+        <div className="h-full">
+          <EventWannaGoArea eventId={event.id} />
+        </div>
+      )}
     </div>
   );
 }
