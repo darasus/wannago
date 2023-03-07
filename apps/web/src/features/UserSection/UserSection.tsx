@@ -52,6 +52,9 @@ export function UserSection() {
             >
               <Popover.Panel className="absolute right-0 z-10 mt-3 max-w-sm">
                 <CardBase innerClassName="flex flex-col gap-y-4">
+                  {/* <Button variant="neutral" as="a" href={`/u/${data?.id}`}>
+                    Profile
+                  </Button> */}
                   <Button variant="neutral" as="a" href="/me">
                     Settings
                   </Button>

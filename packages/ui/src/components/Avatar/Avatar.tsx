@@ -1,26 +1,43 @@
 import Image from 'next/image';
-import {cn} from '../../../../utils';
+import {ComponentProps} from 'react';
+import {cloudflareImageLoader, cn} from 'utils';
 
-interface Props {
-  images: string[];
+interface Props extends ComponentProps<typeof Image> {
   className?: string;
+  imageClassName?: string;
+  height?: number;
+  width?: number;
+  src: string;
 }
 
-export function Avatar({images, className}: Props) {
+export function Avatar({
+  src,
+  className,
+  imageClassName,
+  height = 50,
+  width = 50,
+  alt,
+  ...props
+}: Props) {
   return (
-    <div className={cn('isolate flex -space-x-1 overflow-hidden', className)}>
-      {images.map(imageSrc => {
-        return (
-          <Image
-            className="relative z-30 inline-block h-6 w-6 rounded-full ring-2 ring-white"
-            key={imageSrc}
-            src={imageSrc}
-            width={50}
-            height={50}
-            alt=""
-          />
-        );
-      })}
+    <div
+      className={cn(
+        'isolate flex h-10 w-10 -space-x-1 overflow-hidden',
+        className
+      )}
+    >
+      <Image
+        {...props}
+        loader={cloudflareImageLoader}
+        className={cn(
+          'block h-full w-full rounded-full border-2 border-gray-800',
+          imageClassName
+        )}
+        src={src}
+        width={width}
+        height={height}
+        alt={alt}
+      />
     </div>
   );
 }
