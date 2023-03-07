@@ -7,6 +7,7 @@ import {
   ChatBubbleLeftEllipsisIcon,
   EnvelopeOpenIcon,
   EllipsisHorizontalIcon,
+  VideoCameraIcon,
 } from '@heroicons/react/24/outline';
 import {SectionContainer} from './SectionContainer';
 import {titleFontClassName} from '../../fonts';
@@ -19,6 +20,13 @@ const features = [
     description:
       'With WannaGo, you can quickly and easily create a shareable event page with all the details your guests need to know.',
     icon: <CalendarDaysIcon width={25} height={25} />,
+  },
+  {
+    name: 'Live',
+    summary: 'Online and in-person',
+    description:
+      "Whether you're hosting an online event or an in-person event, WannaGo has you covered.",
+    icon: <VideoCameraIcon width={25} height={25} />,
   },
   {
     name: 'Guests',
