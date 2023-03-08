@@ -9,7 +9,15 @@ const map: Record<string, StreamHost> = {
 export function getStreamProviderFromUrl(streamUrl: string) {
   try {
     const url = new URL(streamUrl);
-    return map[url.host] || null;
+    let streamHost: StreamHost | null = null;
+
+    for (const key in map) {
+      if (url.host.includes(key)) {
+        streamHost = map[key];
+        break;
+      }
+    }
+    return streamHost;
   } catch (error) {
     return null;
   }
