@@ -160,6 +160,21 @@ const remove = protectedProcedure
   .mutation(async ({input: {eventId}, ctx}) => {
     await authorizeChange({ctx, eventId});
 
+    const event = await ctx.prisma.event.findUnique({
+      where: {
+        id: eventId,
+      },
+      include: {
+        eventSignUps: true,
+      },
+    });
+
+    await ctx.prisma.eventSignUp.deleteMany({
+      where: {
+        eventId,
+      },
+    });
+
     return ctx.prisma.event.delete({
       where: {
         id: eventId,
