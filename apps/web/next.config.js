@@ -26,6 +26,7 @@ const moduleExports = {
       'imagedelivery.net',
       'images.clerk.dev',
       'gravatar.com',
+      'www.wannago.app',
     ],
   },
   transpilePackages: [

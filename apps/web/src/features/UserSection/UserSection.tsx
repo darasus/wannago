@@ -2,7 +2,7 @@ import {useClerk, useUser} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import Image from 'next/image';
 import {Fragment} from 'react';
-import {Button, CardBase} from 'ui';
+import {Avatar, Button, CardBase} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
 import {trpc} from 'trpc/src/trpc';
 
@@ -27,15 +27,23 @@ export function UserSection() {
               <Button
                 variant="neutral"
                 iconLeft={
-                  <div className="rounded-full overflow-hidden">
-                    <Image
-                      src={user?.profileImageUrl!}
-                      height={24}
-                      width={24}
-                      alt={`Profile pic for ${user?.fullName}`}
+                  user?.profileImageUrl && (
+                    <Avatar
+                      className="h-6 w-6"
+                      src={user?.profileImageUrl}
                       data-testid="user-header-button"
+                      alt={'avatar'}
                     />
-                  </div>
+                  )
+                  // <div className="rounded-full overflow-hidden">
+                  //   <Image
+                  //     src={user?.profileImageUrl!}
+                  //     height={24}
+                  //     width={24}
+                  //     alt={`Profile pic for ${user?.fullName}`}
+                  //     data-testid="user-header-button"
+                  //   />
+                  // </div>
                 }
               >
                 {user?.firstName}

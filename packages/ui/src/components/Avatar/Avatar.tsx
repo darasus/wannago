@@ -22,7 +22,7 @@ export function Avatar({
   return (
     <div
       className={cn(
-        'isolate flex h-10 w-10 -space-x-1 overflow-hidden',
+        'relative isolate flex h-10 w-10 -space-x-1 overflow-hidden aspect-square',
         className
       )}
     >
@@ -33,9 +33,9 @@ export function Avatar({
           'block h-full w-full rounded-full border-2 border-gray-800',
           imageClassName
         )}
+        fill
+        style={{objectFit: 'cover'}}
         src={src}
-        width={width}
-        height={height}
         alt={alt}
       />
     </div>
