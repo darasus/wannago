@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
 import {Avatar, CardBase, Container, Spinner, Text} from 'ui';
+import {EventWannaGoArea} from '../../features/EventWannaGoArea/EventWannaGoArea';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -26,8 +27,12 @@ export default function ProfilePage() {
     );
 
   return (
-    // <AppLayout isLoading={isLoadingUser} maxSize="sm">
     <Container maxSize="sm">
+      {isLoadingUser && (
+        <div className="flex justify-center">
+          <Spinner />
+        </div>
+      )}
       {user && user?.profileImageSrc && (
         <CardBase className="mb-4">
           <div className="flex gap-x-4 items-center">
@@ -61,7 +66,9 @@ export default function ProfilePage() {
           );
         })}
       </div>
+      <div className="mt-4">
+        <EventWannaGoArea />
+      </div>
     </Container>
-    // </AppLayout>
   );
 }

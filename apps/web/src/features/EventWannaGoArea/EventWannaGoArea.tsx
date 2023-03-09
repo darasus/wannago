@@ -3,7 +3,7 @@ import {FeedbackFish} from '@feedback-fish/react';
 import {useUser} from '@clerk/nextjs';
 
 interface Props {
-  eventId: string;
+  eventId?: string;
 }
 
 export function EventWannaGoArea({eventId}: Props) {
@@ -15,7 +15,7 @@ export function EventWannaGoArea({eventId}: Props) {
         <FeedbackFish
           projectId="f843146d960b2f"
           userId={user?.id}
-          metadata={{eventid: eventId}}
+          metadata={{eventid: eventId || ''}}
         >
           <Button variant="link" size="sm">
             Feedback
