@@ -2,7 +2,7 @@ import {EventCard} from 'cards';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
-import {Avatar, CardBase, Container, Spinner, Text} from 'ui';
+import {Avatar, CardBase, Container, PageHeader, Spinner, Text} from 'ui';
 import {EventWannaGoArea} from '../../features/EventWannaGoArea/EventWannaGoArea';
 
 export default function ProfilePage() {
@@ -26,15 +26,18 @@ export default function ProfilePage() {
       }
     );
 
+  if (isLoadingUser) {
+    return (
+      <div className="flex justify-center items-center h-screen w-screen">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
-    <Container maxSize="sm">
-      {isLoadingUser && (
-        <div className="flex justify-center">
-          <Spinner />
-        </div>
-      )}
+    <Container maxSize="sm" className="flex flex-col gap-y-4">
       {user && user?.profileImageSrc && (
-        <CardBase className="mb-4">
+        <CardBase>
           <div className="flex gap-x-4 items-center">
             <Avatar
               className="h-40 w-40"
@@ -53,6 +56,11 @@ export default function ProfilePage() {
           <Spinner />
         </div>
       )}
+      {userEvents && (
+        <div>
+          <PageHeader title="My events" />
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {userEvents?.map(event => {
           return (
@@ -66,9 +74,12 @@ export default function ProfilePage() {
           );
         })}
       </div>
-      <div className="mt-4">
-        <EventWannaGoArea />
-      </div>
+      {userEvents?.length === 0 && (
+        <div className="flex justify-center p-4">
+          <Text>No events yet...</Text>
+        </div>
+      )}
+      <EventWannaGoArea />
     </Container>
   );
 }
