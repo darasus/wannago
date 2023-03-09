@@ -1,7 +1,7 @@
 import {z} from 'zod';
-import {router, protectedProcedure} from '../trpcServer';
+import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 
-const getUserProfileEvents = protectedProcedure
+const getUserProfileEvents = publicProcedure
   .input(z.object({userId: z.string().uuid()}))
   .query(async ({ctx, input}) => {
     return ctx.prisma.event.findMany({
@@ -21,7 +21,7 @@ const getUserProfileEvents = protectedProcedure
     });
   });
 
-const getUserById = protectedProcedure
+const getUserById = publicProcedure
   .input(z.object({userId: z.string().uuid()}))
   .query(async ({ctx, input}) => {
     return ctx.prisma.user.findFirst({
