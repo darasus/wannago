@@ -27,7 +27,6 @@ export default function ExamplesPage() {
                   href={`/e/${event.shortId}`}
                   key={event.id}
                   data-testid="example-event-card"
-                  target={'_blank'}
                 >
                   <EventCard event={event} />
                 </Link>

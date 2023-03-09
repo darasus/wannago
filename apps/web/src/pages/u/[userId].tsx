@@ -53,7 +53,7 @@ export default function ProfilePage() {
           {userEvents?.map(event => {
             return (
               <Link
-                href={`/event/${event.id}`}
+                href={`/e/${event.shortId}`}
                 key={event.id}
                 data-testid="event-card"
               >
