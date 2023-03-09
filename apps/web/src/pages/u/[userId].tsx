@@ -1,19 +1,28 @@
+import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {EventCard} from 'cards';
+import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
+import SuperJSON from 'superjson';
+import {createContext} from 'trpc';
+import {appRouter} from 'trpc/src/routers/_app';
 import {trpc} from 'trpc/src/trpc';
 import {Avatar, CardBase, Container, PageHeader, Spinner, Text} from 'ui';
 import {EventWannaGoArea} from '../../features/EventWannaGoArea/EventWannaGoArea';
 
-export default function ProfilePage() {
+export default function ProfilePage({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const userId = router.query.userId as string;
-  const {data: user, isLoading: isLoadingUser} = trpc.user.getUserById.useQuery(
+  const {data, isLoading: isLoadingUser} = trpc.user.getUserById.useQuery(
     {
       userId,
     },
     {
       enabled: !!userId,
+      initialData: SuperJSON.parse(user),
     }
   );
   const {data: userEvents, isLoading: isLoadingEvents} =
@@ -35,51 +44,82 @@ export default function ProfilePage() {
   }
 
   return (
-    <Container maxSize="sm" className="flex flex-col gap-y-4">
-      {user && user?.profileImageSrc && (
-        <CardBase>
-          <div className="flex gap-x-4 items-center">
-            <Avatar
-              className="h-40 w-40"
-              imageClassName="rounded-3xl"
-              src={user?.profileImageSrc}
-              alt={`avatar`}
-              height={1000}
-              width={1000}
-            />
-            <Text className="text-3xl font-bold">{`${user.firstName} ${user.lastName}`}</Text>
+    <>
+      <Head>
+        <title>{`${data?.firstName} ${data?.lastName} | WannaGo`}</title>
+      </Head>
+      <Container maxSize="sm" className="flex flex-col gap-y-4">
+        {data && data?.profileImageSrc && (
+          <CardBase>
+            <div className="flex gap-x-4 items-center">
+              <Avatar
+                className="h-40 w-40"
+                imageClassName="rounded-3xl"
+                src={data?.profileImageSrc}
+                alt={`avatar`}
+                height={1000}
+                width={1000}
+              />
+              <Text className="text-3xl font-bold">{`${data.firstName} ${data.lastName}`}</Text>
+            </div>
+          </CardBase>
+        )}
+        {isLoadingEvents && (
+          <div className="flex justify-center">
+            <Spinner />
           </div>
-        </CardBase>
-      )}
-      {isLoadingEvents && (
-        <div className="flex justify-center">
-          <Spinner />
+        )}
+        {userEvents && (
+          <div>
+            <PageHeader title="My events" />
+          </div>
+        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {userEvents?.map(event => {
+            return (
+              <Link
+                href={`/e/${event.shortId}`}
+                key={event.id}
+                data-testid="event-card"
+              >
+                <EventCard event={event} />
+              </Link>
+            );
+          })}
         </div>
-      )}
-      {userEvents && (
-        <div>
-          <PageHeader title="My events" />
-        </div>
-      )}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {userEvents?.map(event => {
-          return (
-            <Link
-              href={`/e/${event.shortId}`}
-              key={event.id}
-              data-testid="event-card"
-            >
-              <EventCard event={event} />
-            </Link>
-          );
-        })}
-      </div>
-      {userEvents?.length === 0 && (
-        <div className="flex justify-center p-4">
-          <Text>No events yet...</Text>
-        </div>
-      )}
-      <EventWannaGoArea />
-    </Container>
+        {userEvents?.length === 0 && (
+          <div className="flex justify-center p-4">
+            <Text>No events yet...</Text>
+          </div>
+        )}
+        <EventWannaGoArea />
+      </Container>
+    </>
   );
+}
+
+export async function getServerSideProps({
+  req,
+  res,
+  params,
+}: GetServerSidePropsContext<{userId: string}>) {
+  const ssg = createProxySSGHelpers({
+    router: appRouter,
+    ctx: await createContext(),
+    transformer: SuperJSON,
+  });
+
+  const user = await ssg.user.getUserById.fetch({userId: params?.userId!});
+
+  const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
+  res.setHeader(
+    'Cache-Control',
+    `s-maxage=10, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`
+  );
+
+  return {
+    props: {
+      user: SuperJSON.stringify(user),
+    },
+  };
 }
