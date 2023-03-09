@@ -7,10 +7,11 @@ import {forwardRef} from 'react';
 
 interface Props {
   event: Event;
+  showPublishStatus?: boolean;
 }
 
 export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
-  {event},
+  {event, showPublishStatus = false},
   ref
 ) {
   const isUpcoming = isFuture(event.startDate);
@@ -29,23 +30,23 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
         featuredImageWidth &&
         featuredImageHeight && (
           <div className="grow overflow-hidden relative justify-center bg-black rounded-3xl aspect-video safari-rounded-border-fix mb-4">
-            <div className="absolute left-4 top-4 z-10">
-              {event.isPublished ? (
-                <Badge color="green" size="xs">
-                  Published
-                </Badge>
-              ) : (
-                <Badge color="gray" size="xs">
-                  Draft
-                </Badge>
-              )}
-            </div>
+            {showPublishStatus && (
+              <div className="absolute left-4 top-4 z-10">
+                {event.isPublished ? (
+                  <Badge color="green" size="xs">
+                    Published
+                  </Badge>
+                ) : (
+                  <Badge color="gray" size="xs">
+                    Draft
+                  </Badge>
+                )}
+              </div>
+            )}
             <Image
               src={featuredImageSrc}
               alt={title}
               loader={cloudflareImageLoader}
-              // width={featuredImageWidth}
-              // height={featuredImageHeight}
               blurDataURL={featuredImagePreviewSrc}
               placeholder={'blur'}
               sizes="320 640 750 1000"

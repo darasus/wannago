@@ -2,7 +2,7 @@ import {EventCard} from 'cards';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
-import {Avatar, Container, Spinner, Text} from 'ui';
+import {Avatar, CardBase, Container, Spinner, Text} from 'ui';
 import AppLayout from '../../features/AppLayout/AppLayout';
 
 export default function ProfilePage() {
@@ -27,27 +27,29 @@ export default function ProfilePage() {
     );
 
   return (
-    <AppLayout isLoading={isLoadingUser}>
-      <Container>
+    <AppLayout isLoading={isLoadingUser} maxSize="sm">
+      <Container maxSize="sm">
         {user && user?.profileImageSrc && (
-          <div className="flex flex-col items-center py-10">
-            <Avatar
-              className="h-40 w-40"
-              imageClassName=""
-              src={user?.profileImageSrc}
-              alt={`avatar`}
-              height={1000}
-              width={1000}
-            />
-            <Text className="text-2xl font-bold">{`${user.firstName} ${user.lastName}`}</Text>
-          </div>
+          <CardBase className="mb-4">
+            <div className="flex gap-x-4 items-center">
+              <Avatar
+                className="h-40 w-40"
+                imageClassName="rounded-3xl"
+                src={user?.profileImageSrc}
+                alt={`avatar`}
+                height={1000}
+                width={1000}
+              />
+              <Text className="text-3xl font-bold">{`${user.firstName} ${user.lastName}`}</Text>
+            </div>
+          </CardBase>
         )}
         {isLoadingEvents && (
-          <div>
+          <div className="flex justify-center">
             <Spinner />
           </div>
         )}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {userEvents?.map(event => {
             return (
               <Link

@@ -47,9 +47,9 @@ export function OrganizerCard({isLoading, onOpenFormClick, user}: Props) {
               />
             )}
           </div>
-          <Text title={name} className="font-bold truncate">
+          <Button as={'a'} href={`/u/${user?.id}`} title={name} variant="link">
             {name}
-          </Text>
+          </Button>
         </div>
       </div>
     </CardBase>

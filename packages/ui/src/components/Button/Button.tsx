@@ -19,7 +19,7 @@ type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> & {
 
 const button = cva(
   [
-    'cursor-pointer justify-center shrink-0',
+    'cursor-pointer truncate',
     // base text styles
     'text-gray-800 font-bold',
     // base borders styles
@@ -59,12 +59,12 @@ const button = cva(
       {
         intent: ['primary', 'secondary', 'neutral', 'danger', 'success'],
         class:
-          'inline-flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2',
+          'inline-flex items-center justify-center shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-2',
       },
       {
         intent: ['link', 'link-gray'],
         class:
-          'border-t-0 border-l-0 border-r-0 rounded-none inline-flex items-center border-0 border-b-2 leading-none font-bold',
+          'inline border-t-0 border-l-0 border-r-0 rounded-none border-0 border-b-2 leading-none font-bold',
       },
       {
         intent: ['primary', 'secondary', 'neutral', 'danger', 'success'],

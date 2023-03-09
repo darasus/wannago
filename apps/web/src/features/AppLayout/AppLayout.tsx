@@ -3,7 +3,7 @@ import {Container, Spinner} from 'ui';
 import {Header} from '../Header/Header';
 
 interface Props extends PropsWithChildren {
-  maxSize?: 'md' | 'lg' | 'full';
+  maxSize?: 'sm' | 'md' | 'lg' | 'full';
   isLoading?: boolean;
 }
 
