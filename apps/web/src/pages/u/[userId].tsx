@@ -3,7 +3,6 @@ import Link from 'next/link';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
 import {Avatar, CardBase, Container, Spinner, Text} from 'ui';
-import AppLayout from '../../features/AppLayout/AppLayout';
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -27,42 +26,42 @@ export default function ProfilePage() {
     );
 
   return (
-    <AppLayout isLoading={isLoadingUser} maxSize="sm">
-      <Container maxSize="sm">
-        {user && user?.profileImageSrc && (
-          <CardBase className="mb-4">
-            <div className="flex gap-x-4 items-center">
-              <Avatar
-                className="h-40 w-40"
-                imageClassName="rounded-3xl"
-                src={user?.profileImageSrc}
-                alt={`avatar`}
-                height={1000}
-                width={1000}
-              />
-              <Text className="text-3xl font-bold">{`${user.firstName} ${user.lastName}`}</Text>
-            </div>
-          </CardBase>
-        )}
-        {isLoadingEvents && (
-          <div className="flex justify-center">
-            <Spinner />
+    // <AppLayout isLoading={isLoadingUser} maxSize="sm">
+    <Container maxSize="sm">
+      {user && user?.profileImageSrc && (
+        <CardBase className="mb-4">
+          <div className="flex gap-x-4 items-center">
+            <Avatar
+              className="h-40 w-40"
+              imageClassName="rounded-3xl"
+              src={user?.profileImageSrc}
+              alt={`avatar`}
+              height={1000}
+              width={1000}
+            />
+            <Text className="text-3xl font-bold">{`${user.firstName} ${user.lastName}`}</Text>
           </div>
-        )}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {userEvents?.map(event => {
-            return (
-              <Link
-                href={`/e/${event.shortId}`}
-                key={event.id}
-                data-testid="event-card"
-              >
-                <EventCard event={event} />
-              </Link>
-            );
-          })}
+        </CardBase>
+      )}
+      {isLoadingEvents && (
+        <div className="flex justify-center">
+          <Spinner />
         </div>
-      </Container>
-    </AppLayout>
+      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {userEvents?.map(event => {
+          return (
+            <Link
+              href={`/e/${event.shortId}`}
+              key={event.id}
+              data-testid="event-card"
+            >
+              <EventCard event={event} />
+            </Link>
+          );
+        })}
+      </div>
+    </Container>
+    // </AppLayout>
   );
 }
