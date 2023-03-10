@@ -75,7 +75,7 @@ export function UserSection() {
                     <Button variant="neutral">Feedback</Button>
                   </FeedbackFish>
                   <Button
-                    variant="secondary"
+                    variant="danger"
                     onClick={onSignOutClick}
                     data-testid="logout-button"
                   >
