@@ -23,6 +23,9 @@ export function Footer() {
                 </Button>
               );
             })}
+            <Button href={'/terms'} variant="neutral" size="sm" as="a">
+              Terms
+            </Button>
           </div>
         </div>
         <div className="flex items-center py-4">
