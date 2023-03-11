@@ -1,5 +1,4 @@
 import {withClerkMiddleware} from '@clerk/nextjs/server';
-import {edgeFlagsMiddleware} from '@upstash/edge-flags';
 import {NextResponse} from 'next/server';
 
 export default withClerkMiddleware((req, res) => {
