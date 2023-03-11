@@ -14,16 +14,12 @@ describe('Create event', () => {
     cy.get('[data-testid="event-form-start-date"]').type('2023-06-01T08:30');
     cy.get('[data-testid="event-form-end-date"]').type('2023-06-01T18:30');
     cy.get('[data-testid="event-form-address"]').type('Paris');
-    cy.get('[data-testid="location-input-option"]')
-      .first({timeout: 40000})
-      .click();
+    cy.get('[data-testid="location-input-option"]').first().click();
     cy.get('[data-testid="event-form-max-attendees"]').type('10');
     cy.wait(1000);
-    cy.get('[data-testid="file-input-image-preview"]', {timeout: 40000});
+    cy.get('[data-testid="file-input-image-preview"]');
     cy.get('[data-testid="event-form-submit-button"]').click();
-    cy.get('[data-testid="event-title"]', {timeout: 40000}).should(
-      'be.visible'
-    );
+    cy.get('[data-testid="event-title"]').should('be.visible');
   });
 
   it('Can create online event', () => {
@@ -46,8 +42,6 @@ describe('Create event', () => {
     cy.wait(1000);
     cy.get('[data-testid="file-input-image-preview"]');
     cy.get('[data-testid="event-form-submit-button"]').click();
-    cy.get('[data-testid="event-title"]', {timeout: 40000}).should(
-      'be.visible'
-    );
+    cy.get('[data-testid="event-title"]').should('be.visible');
   });
 });

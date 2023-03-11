@@ -8,5 +8,7 @@ module.exports = defineConfig({
     viewportHeight: 1000,
     viewportWidth: 1240,
     video: false,
+    execTimeout: 60000,
+    taskTimeout: 60000,
   },
 });
