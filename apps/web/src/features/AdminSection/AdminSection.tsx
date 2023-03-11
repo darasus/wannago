@@ -67,7 +67,9 @@ export function AdminSection({event, timezone}: Props) {
       label: 'Attendees',
       value:
         typeof attendeesCount.data?.count === 'number'
-          ? `${attendeesCount.data?.count} of max ${event.maxNumberOfAttendees}`
+          ? event.maxNumberOfAttendees > 0
+            ? `${attendeesCount.data?.count} of max ${event.maxNumberOfAttendees}`
+            : `${attendeesCount.data?.count}`
           : 'Loading...',
     },
     {

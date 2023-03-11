@@ -409,7 +409,8 @@ const join = publicProcedure
 
     if (
       typeof event?.maxNumberOfAttendees === 'number' &&
-      eventSignUpsCount >= event?.maxNumberOfAttendees
+      eventSignUpsCount >= event?.maxNumberOfAttendees &&
+      event?.maxNumberOfAttendees !== 0
     ) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
@@ -689,7 +690,8 @@ const invitePastAttendee = protectedProcedure
 
     if (
       typeof event?.maxNumberOfAttendees === 'number' &&
-      eventSignUpsCount >= event?.maxNumberOfAttendees
+      eventSignUpsCount >= event?.maxNumberOfAttendees &&
+      event?.maxNumberOfAttendees !== 0
     ) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
@@ -778,7 +780,8 @@ const inviteByEmail = publicProcedure
 
     if (
       typeof event?.maxNumberOfAttendees === 'number' &&
-      eventSignUpsCount >= event?.maxNumberOfAttendees
+      eventSignUpsCount >= event?.maxNumberOfAttendees &&
+      event?.maxNumberOfAttendees !== 0
     ) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
