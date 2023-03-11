@@ -30,7 +30,7 @@ if (!_serverEnv.success) {
     ...formatErrors(_serverEnv.error.format())
   );
 
-  throw new Error('Invalid environment variables');
+  throw new Error('Invalid environment variables!');
 }
 
 for (let key of Object.keys(_serverEnv.data)) {
