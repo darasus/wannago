@@ -541,7 +541,9 @@ const getExamples = publicProcedure.query(({ctx}) => {
       organization: {
         users: {
           some: {
-            email: 'hi+example@wannago.app',
+            email: {
+              in: ['idarase+clerk_test@gmail.com', 'hi+example@wannago.app'],
+            },
           },
         },
       },
