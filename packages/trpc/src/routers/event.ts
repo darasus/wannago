@@ -556,10 +556,9 @@ const getRandomExample = publicProcedure.query(async ({ctx}) => {
       organization: {
         users: {
           some: {
-            email:
-              env.NODE_ENV === 'development'
-                ? 'idarase+clerk_test@gmail.com'
-                : 'hi+example@wannago.app',
+            email: {
+              in: ['idarase+clerk_test@gmail.com', 'hi+example@wannago.app'],
+            },
           },
         },
       },
