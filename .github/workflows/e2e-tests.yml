@@ -19,6 +19,7 @@ jobs:
         TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
         VERCEL_ANALYTICS_ID: ${{ secrets.VERCEL_ANALYTICS_ID }}
         VERCEL_WEB_ANALYTICS_ID: ${{ secrets.VERCEL_WEB_ANALYTICS_ID }}
+        VERCEL_ENV: ${{ secrets.VERCEL_ENV }}
         NEXT_PUBLIC_CLERK_FRONTEND_API: ${{ secrets.NEXT_PUBLIC_CLERK_FRONTEND_API }}
         CLERK_API_KEY: ${{ secrets.CLERK_API_KEY }}
         MIGRATE_DATABASE_URL: ${{ secrets.MIGRATE_DATABASE_URL }}
