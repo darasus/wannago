@@ -17,7 +17,8 @@
     "TELEGRAM_CHANNEL_ID",
     "POSTMARK_API_KEY",
     "VERCEL_ENV",
-    "NEXT_PUBLIC_VERCEL_URL"
+    "NEXT_PUBLIC_VERCEL_URL",
+    "NEXT_PUBLIC_VERCEL_ENV"
   ],
   "pipeline": {
     "build": {
