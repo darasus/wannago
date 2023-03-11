@@ -73,7 +73,8 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
               'prose-ul:m-0',
               'prose-li:m-0',
               {
-                'input-focus': editor?.isFocused,
+                '!ring-1 !border-2 !border-gray-500 !ring-gray-500':
+                  editor?.isFocused,
                 'border-gray-300': !error,
                 'border-red-300': error,
                 'border-brand-500 ring-brand-500': editor?.isFocused && !!error,
