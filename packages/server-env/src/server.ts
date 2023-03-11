@@ -29,6 +29,7 @@ if (!_serverEnv.success) {
     '❌ Invalid environment variables:\n',
     ...formatErrors(_serverEnv.error.format())
   );
+
   throw new Error('Invalid environment variables');
 }
 
