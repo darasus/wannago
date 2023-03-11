@@ -128,20 +128,24 @@ const update = protectedProcedure
         : false;
 
       if (isTimeChanged) {
-        const message = await ctx.mailQueue.updateReminderEmail({
-          eventId: event.id,
-          messageId: event.messageId,
-          timezone: ctx.timezone,
-          startDate: event.startDate,
-        });
+        let messageId: string | null = null;
+        try {
+          const message = await ctx.mailQueue.updateReminderEmail({
+            eventId: event.id,
+            messageId: event.messageId,
+            timezone: ctx.timezone,
+            startDate: event.startDate,
+          });
+          messageId = message?.messageId || null;
+        } catch (error) {}
 
-        if (message?.messageId) {
+        if (messageId) {
           event = await ctx.prisma.event.update({
             where: {
               id: eventId,
             },
             data: {
-              messageId: message.messageId,
+              messageId,
             },
           });
         }
@@ -537,7 +541,9 @@ const getExamples = publicProcedure.query(({ctx}) => {
       organization: {
         users: {
           some: {
-            email: 'hi+example@wannago.app',
+            email: {
+              in: ['idarase+clerk_test@gmail.com', 'hi+example@wannago.app'],
+            },
           },
         },
       },
@@ -552,10 +558,9 @@ const getRandomExample = publicProcedure.query(async ({ctx}) => {
       organization: {
         users: {
           some: {
-            email:
-              env.NODE_ENV === 'development'
-                ? 'idarase+clerk_test@gmail.com'
-                : 'hi+example@wannago.app',
+            email: {
+              in: ['idarase+clerk_test@gmail.com', 'hi+example@wannago.app'],
+            },
           },
         },
       },

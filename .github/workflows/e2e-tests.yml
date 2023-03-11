@@ -14,11 +14,13 @@ jobs:
       env:
         CI: true
         NEXT_PUBLIC_BASE_URL: "http://localhost:3000"
+        NEXT_PUBLIC_VERCEL_URL: "http://localhost:3000"
 
         TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
         TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
         VERCEL_ANALYTICS_ID: ${{ secrets.VERCEL_ANALYTICS_ID }}
         VERCEL_WEB_ANALYTICS_ID: ${{ secrets.VERCEL_WEB_ANALYTICS_ID }}
+        VERCEL_ENV: ${{ secrets.VERCEL_ENV }}
         NEXT_PUBLIC_CLERK_FRONTEND_API: ${{ secrets.NEXT_PUBLIC_CLERK_FRONTEND_API }}
         CLERK_API_KEY: ${{ secrets.CLERK_API_KEY }}
         MIGRATE_DATABASE_URL: ${{ secrets.MIGRATE_DATABASE_URL }}
