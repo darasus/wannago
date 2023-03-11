@@ -14,6 +14,7 @@ jobs:
       env:
         CI: true
         NEXT_PUBLIC_BASE_URL: "http://localhost:3000"
+        NEXT_PUBLIC_VERCEL_URL: "http://localhost:3000"
 
         TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
         TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
