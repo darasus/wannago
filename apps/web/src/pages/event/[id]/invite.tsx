@@ -1,8 +1,7 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import AppLayout from '../../../features/AppLayout/AppLayout';
-import {Button, CardBase, PageHeader, Container, Text} from 'ui';
+import {Button, CardBase, PageHeader, Container, Text, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {toast} from 'react-hot-toast';
@@ -85,15 +84,19 @@ function UserRow({user, eventId, refetch}: UserRowProps) {
 function EventAttendeesPage() {
   const router = useRouter();
   const eventId = router.query.id as string;
-  const {data, refetch} = trpc.event.getAllEventsAttendees.useQuery(
+  const {data, refetch, isLoading} = trpc.event.getAllEventsAttendees.useQuery(
     {eventId},
     {
       enabled: !!eventId,
     }
   );
 
-  if (!data) {
-    return null;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center p-4">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -101,28 +104,26 @@ function EventAttendeesPage() {
       <Head>
         <title>{`Attendees | WannaGo`}</title>
       </Head>
-      <AppLayout>
-        <Container className="flex flex-col gap-y-4">
-          <PageHeader title={'Invite'}>
-            <AdminInviteButton refetch={refetch} />
-          </PageHeader>
-          {data.length === 0 && (
-            <div className="text-center">
-              <Text>{`You don't have users to invite yet...`}</Text>
-            </div>
-          )}
-          {data?.map(user => {
-            return (
-              <UserRow
-                key={user.id}
-                user={user}
-                eventId={eventId}
-                refetch={refetch}
-              />
-            );
-          })}
-        </Container>
-      </AppLayout>
+      <Container className="flex flex-col gap-y-4">
+        <PageHeader title={'Invite'}>
+          <AdminInviteButton refetch={refetch} />
+        </PageHeader>
+        {data?.length === 0 && (
+          <div className="text-center">
+            <Text>{`You don't have users to invite yet...`}</Text>
+          </div>
+        )}
+        {data?.map(user => {
+          return (
+            <UserRow
+              key={user.id}
+              user={user}
+              eventId={eventId}
+              refetch={refetch}
+            />
+          );
+        })}
+      </Container>
     </>
   );
 }

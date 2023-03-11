@@ -3,12 +3,12 @@ import {Hero} from '../components/Marketing/Hero';
 import {CallToAction} from '../components/Marketing/CallToAction';
 import {Faqs} from '../components/Marketing/Faqs';
 import {Footer} from '../components/Marketing/Footer';
-import AppLayout from '../features/AppLayout/AppLayout';
 import {Features} from '../components/Marketing/Features';
+import {withDashboardRedirectIfSignedIn} from '../utils/withDashboardRedirectIfSignedIn';
 
-export default function HomePage() {
+function HomePage() {
   return (
-    <AppLayout>
+    <>
       <Head>
         <title>WannaGo</title>
       </Head>
@@ -25,6 +25,8 @@ export default function HomePage() {
       <Faqs />
       <div className="h-0.5 bg-gray-800" />
       <Footer />
-    </AppLayout>
+    </>
   );
 }
+
+export default withDashboardRedirectIfSignedIn(HomePage);

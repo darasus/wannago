@@ -17,6 +17,7 @@ import {useRouter} from 'next/router';
 import {Amplitude} from '../features/Amplitude/Amplitude';
 import {env} from 'client-env';
 import {Sentry} from '../features/Sentry/Sentry';
+import {AppLayout} from '../features/AppLayout/AppLayout';
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter();
@@ -104,7 +105,9 @@ function MyApp({Component, pageProps}: AppProps) {
               </ToastBar>
             )}
           </Toaster>
-          <Component {...pageProps} />
+          <AppLayout>
+            <Component {...pageProps} />
+          </AppLayout>
         </ClerkProvider>
       </div>
       <Analytics />

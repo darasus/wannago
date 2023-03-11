@@ -36,33 +36,21 @@ function MobileNavIcon({open}: any) {
   );
 }
 
-function isPublicRoute(pathname: string) {
-  return (
-    pathname === '/' ||
-    pathname.startsWith('/examples') ||
-    pathname.startsWith('/e/') ||
-    pathname.startsWith('/login') ||
-    pathname.startsWith('/register')
-  );
-}
-
 export function Header() {
-  const router = useRouter();
-  const isPublic = isPublicRoute(router.pathname);
   const {isSignedIn} = useUser();
-  const showUserProfile = !isPublic && isSignedIn;
-  const showFeedback = isPublic;
-  const showDashboardLink = isSignedIn && isPublic;
-  const showAuthButtons = isPublic && !isSignedIn;
-  const showMobileMenu = !isSignedIn || isPublic;
+  const showUserProfile = isSignedIn;
+  const showFeedback = !isSignedIn;
+  const showAuthButtons = !isSignedIn;
+  const showMobileMenu = !isSignedIn;
+  const showDesktopHomeNav = !isSignedIn;
 
   return (
     <header>
       <CardBase>
         <nav className="relative flex justify-between">
           <div className="flex items-center">
-            <Logo href={isPublic ? '/' : '/dashboard'} className="mr-8" />
-            {isPublic && (
+            <Logo href={isSignedIn ? '/dashboard' : '/'} className="mr-8" />
+            {showDesktopHomeNav && (
               <div className="hidden md:flex gap-x-5 md:gap-x-4">
                 {navItems.map((item, i) => (
                   <Button
@@ -89,19 +77,6 @@ export function Header() {
               </div>
             )}
             {showUserProfile && <UserSection />}
-            {showDashboardLink && (
-              <>
-                <Button
-                  as="a"
-                  href="/dashboard"
-                  variant="secondary"
-                  size="sm"
-                  data-testid="dashboard-button"
-                >
-                  Dashboard
-                </Button>
-              </>
-            )}
             {showAuthButtons && (
               <>
                 <Button
@@ -204,21 +179,6 @@ export function Header() {
                                   Register
                                 </Popover.Button>
                               </>
-                            )}
-                            {showDashboardLink && (
-                              <Popover.Button
-                                as={(props: any) => (
-                                  <Button
-                                    {...props}
-                                    as="a"
-                                    variant="primary"
-                                    data-testid="mobile-dashboard-button"
-                                    href={'/dashboard'}
-                                  />
-                                )}
-                              >
-                                Dashboard
-                              </Popover.Button>
                             )}
                           </div>
                         </CardBase>

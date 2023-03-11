@@ -1,9 +1,7 @@
 import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import Head from 'next/head';
-import {useRouter} from 'next/router';
 import {useMemo} from 'react';
 import {AdminSection} from '../../../features/AdminSection/AdminSection';
-import AppLayout from '../../../features/AppLayout/AppLayout';
 import {EventView} from '../../../features/EventView/EventView';
 import {Container, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
@@ -29,31 +27,37 @@ function InternalEventPage({
     [timezone]
   );
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center p-4">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <>
-      <AppLayout isLoading={isLoading}>
-        {event && (
-          <>
-            <Head>
-              <title>{`${event.title} | WannaGo`}</title>
-            </Head>
-            <Container>
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-12 lg:col-span-4">
-                  <AdminSection
-                    event={event}
-                    timezone={timezone}
-                    refetchEvent={refetch}
-                  />
-                </div>
-                <div className="col-span-12 lg:col-span-8">
-                  <EventView event={event} timezone={clientTimezone} />
-                </div>
+      {event && (
+        <>
+          <Head>
+            <title>{`${event.title} | WannaGo`}</title>
+          </Head>
+          <Container>
+            <div className="grid grid-cols-12 gap-4">
+              <div className="col-span-12 lg:col-span-4">
+                <AdminSection
+                  event={event}
+                  timezone={timezone}
+                  refetchEvent={refetch}
+                />
               </div>
-            </Container>
-          </>
-        )}
-      </AppLayout>
+              <div className="col-span-12 lg:col-span-8">
+                <EventView event={event} timezone={clientTimezone} />
+              </div>
+            </div>
+          </Container>
+        </>
+      )}
     </>
   );
 }

@@ -1,18 +1,18 @@
 import {SignIn} from '@clerk/nextjs';
 import Head from 'next/head';
-import AppLayout from '../features/AppLayout/AppLayout';
+import {withDashboardRedirectIfSignedIn} from '../utils/withDashboardRedirectIfSignedIn';
 
-export default function LoginPage() {
+function LoginPage() {
   return (
     <>
       <Head>
         <title>Login | WannaGo</title>
       </Head>
-      <AppLayout>
-        <div className="flex justify-center">
-          <SignIn redirectUrl={'/dashboard'} signUpUrl={'/register'} />
-        </div>
-      </AppLayout>
+      <div className="flex justify-center">
+        <SignIn redirectUrl={'/dashboard'} signUpUrl={'/register'} />
+      </div>
     </>
   );
 }
+
+export default withDashboardRedirectIfSignedIn(LoginPage);

@@ -59,25 +59,41 @@ export function UserSection() {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute right-0 z-10 mt-3 max-w-sm">
-                <CardBase innerClassName="flex flex-col gap-y-4">
-                  <Button variant="neutral" as="a" href={`/u/${data?.id}`}>
+                <CardBase innerClassName="flex flex-col gap-y-2">
+                  <Button
+                    variant="neutral"
+                    as="a"
+                    href={`/dashboard`}
+                    size="xs"
+                  >
+                    Dashboard
+                  </Button>
+                  <Button
+                    variant="neutral"
+                    as="a"
+                    href={`/u/${data?.id}`}
+                    size="xs"
+                  >
                     Profile
                   </Button>
-                  <Button variant="neutral" as="a" href="/me">
+                  <Button variant="neutral" as="a" href="/me" size="xs">
                     Settings
                   </Button>
                   {showAdminLink && (
-                    <Button variant="neutral" as="a" href="/admin">
+                    <Button variant="neutral" as="a" href="/admin" size="xs">
                       Admin
                     </Button>
                   )}
                   <FeedbackFish projectId="f843146d960b2f" userId={user?.id}>
-                    <Button variant="neutral">Feedback</Button>
+                    <Button variant="neutral" size="xs">
+                      Feedback
+                    </Button>
                   </FeedbackFish>
                   <Button
                     variant="danger"
                     onClick={onSignOutClick}
                     data-testid="logout-button"
+                    size="xs"
                   >
                     Logout
                   </Button>

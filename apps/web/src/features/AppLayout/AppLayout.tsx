@@ -3,19 +3,14 @@ import {Container, Spinner} from 'ui';
 import {Header} from '../Header/Header';
 
 interface Props extends PropsWithChildren {
-  maxSize?: 'sm' | 'md' | 'lg' | 'full';
   isLoading?: boolean;
 }
 
-export default function AppLayout({
-  children,
-  isLoading,
-  maxSize = 'md',
-}: Props) {
+export function AppLayout({children, isLoading}: Props) {
   return (
     <div>
       <div className="relative z-20">
-        <Container maxSize={maxSize}>
+        <Container maxSize={'full'}>
           <Header />
         </Container>
       </div>
