@@ -6,7 +6,6 @@ import {useUser} from '@clerk/nextjs';
 import {UserSection} from '../UserSection/UserSection';
 import {FeedbackFish} from '@feedback-fish/react';
 import {cn} from 'utils';
-import {useFeatureFlag} from 'hooks';
 
 export const navItems = [
   {label: 'Features', href: `/#features`},
@@ -56,7 +55,6 @@ export function Header() {
   const showDashboardLink = isSignedIn && isPublic;
   const showAuthButtons = isPublic && !isSignedIn;
   const showMobileMenu = !isSignedIn || isPublic;
-  const {} = useFeatureFlag('test_feature');
 
   return (
     <header>

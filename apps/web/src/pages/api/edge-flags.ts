@@ -5,7 +5,7 @@ export default createEdgeHandler({
   maxAge: 60,
   redisUrl: env.UPSTASH_REDIS_REST_URL,
   redisToken: env.UPSTASH_REDIS_REST_TOKEN,
-  environment: process.env.VERCEL_ENV as any,
+  environment: env.VERCEL_ENV,
 });
 
 export const config = {

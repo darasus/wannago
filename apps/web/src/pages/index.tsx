@@ -8,11 +8,9 @@ import {Features} from '../components/Marketing/Features';
 import {useFeatureFlag} from 'hooks';
 
 export default function HomePage() {
-  const {isEnabled} = useFeatureFlag({feature: 'test_feature'});
+  const {isEnabled} = useFeatureFlag('test_feature');
 
   console.log({isEnabled});
-
-  console.log('hi');
 
   return (
     <AppLayout>
