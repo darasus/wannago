@@ -12,3 +12,4 @@ export {usePublishEvent} from './src/usePublishEvent';
 export {useRemoveEvent} from './src/useRemoveEvent';
 export {useUnpublishEvent} from './src/useUnpublishEvent';
 export {useUploadImage} from './src/useUploadImage';
+export {useFeatureFlag} from './src/useFeatureFlag';

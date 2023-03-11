@@ -9,4 +9,5 @@ export const serverSchema = z.object({
   POSTMARK_API_KEY: z.string(),
   TELEGRAM_CHAT_BOT_TOKEN: z.string(),
   TELEGRAM_CHANNEL_ID: z.string(),
+  VERCEL_ENV: z.enum(['development', 'preview', 'production']),
 });

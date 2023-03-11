@@ -5,8 +5,13 @@ import {Faqs} from '../components/Marketing/Faqs';
 import {Footer} from '../components/Marketing/Footer';
 import AppLayout from '../features/AppLayout/AppLayout';
 import {Features} from '../components/Marketing/Features';
+import {useFeatureFlag} from 'hooks';
 
 export default function HomePage() {
+  const {isEnabled} = useFeatureFlag('test_feature');
+
+  console.log({isEnabled});
+
   return (
     <AppLayout>
       <Head>
