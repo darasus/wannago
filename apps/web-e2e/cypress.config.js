@@ -10,5 +10,9 @@ module.exports = defineConfig({
     video: false,
     execTimeout: 60000,
     taskTimeout: 60000,
+    defaultCommandTimeout: 60000,
+    requestTimeout: 60000,
+    pageLoadTimeout: 60000,
+    requestTimeout: 60000,
   },
 });
