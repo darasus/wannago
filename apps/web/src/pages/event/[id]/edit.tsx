@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import AppLayout from '../../../features/AppLayout/AppLayout';
 import {EditEventForm} from '../../../features/EventForm/EditEventForm';
-import {Container} from 'ui';
+import {Container, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 
@@ -18,18 +17,24 @@ function EventEditPage() {
     }
   );
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center p-4">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <>
       <Head>
         <title>{`Edit event | WannaGo`}</title>
       </Head>
-      <AppLayout isLoading={isLoading}>
-        {event && (
-          <Container>
-            <EditEventForm event={event} />
-          </Container>
-        )}
-      </AppLayout>
+      {event && (
+        <Container>
+          <EditEventForm event={event} />
+        </Container>
+      )}
     </>
   );
 }

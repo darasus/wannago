@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import {PlusCircleIcon} from '@heroicons/react/24/outline';
 import {useRouter} from 'next/router';
-import AppLayout from '../features/AppLayout/AppLayout';
 import {trpc} from 'trpc/src/trpc';
 import {EventCard} from 'cards';
 import Head from 'next/head';
@@ -20,46 +19,42 @@ function Dashboard() {
       <Head>
         <title>Dashboard | WannaGo</title>
       </Head>
-      <AppLayout>
-        <Container className="md:px-4">
-          <Button
-            onClick={() => router.push('/event/add')}
-            className={cn(
-              'flex justify-center items-center w-full h-full p-4 mb-4'
-            )}
-            iconLeft={<PlusCircleIcon />}
-            data-testid="add-event-button"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {isLoading &&
-              Array.from({length: 3}).map((_, i) => (
-                <LoadingEventCard key={i} />
-              ))}
-            {data?.map(event => {
-              return (
-                <Link
-                  href={`/event/${event.id}`}
-                  key={event.id}
-                  data-testid="event-card"
-                >
-                  <EventCard event={event} />
-                </Link>
-              );
-            })}
-          </div>
-          {haveNoEvents && (
-            <div className="text-center">
-              <span className="text-5xl">🤷</span>
-              <div />
-              <span className="text-lg font-medium">
-                {
-                  'It looks empty here, start by clicking on "+" button to create your first event.'
-                }
-              </span>
-            </div>
+      <Container className="md:px-4">
+        <Button
+          onClick={() => router.push('/event/add')}
+          className={cn(
+            'flex justify-center items-center w-full h-full p-4 mb-4'
           )}
-        </Container>
-      </AppLayout>
+          iconLeft={<PlusCircleIcon />}
+          data-testid="add-event-button"
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {isLoading &&
+            Array.from({length: 3}).map((_, i) => <LoadingEventCard key={i} />)}
+          {data?.map(event => {
+            return (
+              <Link
+                href={`/event/${event.id}`}
+                key={event.id}
+                data-testid="event-card"
+              >
+                <EventCard event={event} />
+              </Link>
+            );
+          })}
+        </div>
+        {haveNoEvents && (
+          <div className="text-center">
+            <span className="text-5xl">🤷</span>
+            <div />
+            <span className="text-lg font-medium">
+              {
+                'It looks empty here, start by clicking on "+" button to create your first event.'
+              }
+            </span>
+          </div>
+        )}
+      </Container>
     </>
   );
 }

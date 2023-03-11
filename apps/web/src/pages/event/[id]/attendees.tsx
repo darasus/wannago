@@ -1,8 +1,7 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import AppLayout from '../../../features/AppLayout/AppLayout';
-import {Container, CardBase, Button, Text, PageHeader} from 'ui';
+import {Container, CardBase, Button, Text, PageHeader, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {saveAs} from 'file-saver';
 import {withProtected} from '../../../utils/withAuthProtect';
@@ -87,52 +86,58 @@ function EventAttendeesPage() {
     saveAs(blob, 'file.csv');
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center p-4">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <>
       <Head>
         <title>{`Attendees | WannaGo`}</title>
       </Head>
-      <AppLayout isLoading={isLoading}>
-        <Container className="flex flex-col gap-y-4">
-          <PageHeader title={'Attendees'}>
-            <MessageParticipantsButton />
-            <Button
-              variant="neutral"
-              onClick={() => router.push(`/event/${eventId}/invite`)}
-              size="sm"
-              iconLeft={<UserPlusIcon />}
-              title={'Invite'}
-            >
-              <span className="hidden md:block">Invite</span>
-            </Button>
-            <Button
-              variant="neutral"
-              onClick={handleDownloadCsvClick}
-              size="sm"
-              iconLeft={<DocumentArrowDownIcon />}
-              title={'Export CSV'}
-            >
-              <span className="hidden md:block">Export CSV</span>
-            </Button>
-          </PageHeader>
-          {data?.length === 0 && (
-            <div className="text-center">
-              <Text>No attendees yet...</Text>
-            </div>
-          )}
-          {data?.map(signUp => {
-            return (
-              <Item
-                key={signUp.user.id}
-                user={signUp.user}
-                hasPlusOne={signUp.hasPlusOne}
-                status={signUp.status}
-                refetch={refetch}
-              />
-            );
-          })}
-        </Container>
-      </AppLayout>
+      <Container className="flex flex-col gap-y-4">
+        <PageHeader title={'Attendees'}>
+          <MessageParticipantsButton />
+          <Button
+            variant="neutral"
+            onClick={() => router.push(`/event/${eventId}/invite`)}
+            size="sm"
+            iconLeft={<UserPlusIcon />}
+            title={'Invite'}
+          >
+            <span className="hidden md:block">Invite</span>
+          </Button>
+          <Button
+            variant="neutral"
+            onClick={handleDownloadCsvClick}
+            size="sm"
+            iconLeft={<DocumentArrowDownIcon />}
+            title={'Export CSV'}
+          >
+            <span className="hidden md:block">Export CSV</span>
+          </Button>
+        </PageHeader>
+        {data?.length === 0 && (
+          <div className="text-center">
+            <Text>No attendees yet...</Text>
+          </div>
+        )}
+        {data?.map(signUp => {
+          return (
+            <Item
+              key={signUp.user.id}
+              user={signUp.user}
+              hasPlusOne={signUp.hasPlusOne}
+              status={signUp.status}
+              refetch={refetch}
+            />
+          );
+        })}
+      </Container>
     </>
   );
 }
