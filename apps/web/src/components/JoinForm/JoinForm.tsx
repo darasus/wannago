@@ -39,6 +39,7 @@ export function JoinForm({onSubmit}: Props) {
         </div>
         <div className="col-span-8">
           <Input
+            type="email"
             placeholder="Email"
             {...register('email', {
               required: 'Email is required',
