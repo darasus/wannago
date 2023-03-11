@@ -9,7 +9,6 @@ import {createContext} from 'trpc';
 import {appRouter} from 'trpc/src/routers/_app';
 import {trpc} from 'trpc/src/trpc';
 import {Avatar, CardBase, Container, PageHeader, Spinner, Text} from 'ui';
-import {EventWannaGoArea} from '../../features/EventWannaGoArea/EventWannaGoArea';
 
 export default function ProfilePage({
   user,
@@ -92,7 +91,6 @@ export default function ProfilePage({
             <Text>No events yet...</Text>
           </div>
         )}
-        <EventWannaGoArea />
       </Container>
     </>
   );

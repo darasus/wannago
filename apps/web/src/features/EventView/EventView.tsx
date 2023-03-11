@@ -2,7 +2,6 @@ import {Event} from '@prisma/client';
 import {getBaseUrl} from 'utils';
 import {DateCard} from '../DateCard/DateCard';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
-import {EventWannaGoArea} from '../EventWannaGoArea/EventWannaGoArea';
 import {InfoCard} from 'cards';
 import {LocationCard} from '../LocationCard/LocationCard';
 import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
@@ -65,11 +64,6 @@ export function EventView({
       {!isPast(event.endDate, timezone) && (
         <div className="items-stretch">
           <ParticipantsCard event={event} />
-        </div>
-      )}
-      {isPublic && (
-        <div className="items-stretch">
-          <EventWannaGoArea eventId={event.id} />
         </div>
       )}
     </div>
