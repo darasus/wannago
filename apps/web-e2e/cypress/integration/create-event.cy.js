@@ -19,7 +19,7 @@ describe('Create event', () => {
       .click();
     cy.get('[data-testid="event-form-max-attendees"]').type('10');
     cy.wait(1000);
-    cy.get('[data-testid="file-input-image-preview"]').timeout(40000);
+    cy.get('[data-testid="file-input-image-preview"]', {timeout: 40000});
     cy.get('[data-testid="event-form-submit-button"]').click();
     cy.get('[data-testid="event-title"]', {timeout: 40000}).should(
       'be.visible'
