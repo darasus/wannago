@@ -9,7 +9,6 @@ import {Features} from '../components/Marketing/Features';
 export default function HomePage() {
   return (
     <AppLayout>
-      <div>this is preview!</div>
       <Head>
         <title>WannaGo</title>
       </Head>
