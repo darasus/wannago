@@ -31,7 +31,7 @@ function Dashboard() {
       <Head>
         <title>Dashboard | WannaGo</title>
       </Head>
-      <Container className="flex flex-col gap-y-4 md:px-4">
+      <Container maxSize="sm" className="flex flex-col gap-y-4 md:px-4">
         <PageHeader title="My events">
           <FormProvider {...form}>
             <div className="flex items-center gap-x-2">
@@ -60,7 +60,7 @@ function Dashboard() {
         )}
         {!isGettingCards && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex flex-col gap-y-4">
               {data?.map(event => {
                 return (
                   <Link

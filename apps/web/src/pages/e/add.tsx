@@ -9,7 +9,7 @@ function EventAddPage() {
       <Head>
         <title>Add event | WannaGo</title>
       </Head>
-      <Container className="md:px-4">
+      <Container maxSize="sm" className="md:px-4">
         <PageHeader title="Create new event" className="mb-4" />
         <AddEventForm />
       </Container>
