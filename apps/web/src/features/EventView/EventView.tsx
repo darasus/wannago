@@ -8,6 +8,8 @@ import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
 import {ParticipantsCard} from '../ParticipantsCard/ParticipantsCard';
 import {isPast} from 'utils';
 import {StreamCard} from '../StreamCard/StreamCard';
+import {SignUpCard} from '../SignUpCard/SignUpCard';
+import {Text} from 'ui';
 
 interface Props {
   event: Event;
@@ -61,11 +63,14 @@ export function EventView({
           />
         </div>
       </div>
-      {!isPast(event.endDate, timezone) && (
+      {/* {!isPast(event.endDate, timezone) && (
         <div className="items-stretch">
           <ParticipantsCard event={event} />
         </div>
-      )}
+      )} */}
+      {/* <div className="items-stretch"> */}
+      <SignUpCard event={event} />
+      {/* </div> */}
     </div>
   );
 }
