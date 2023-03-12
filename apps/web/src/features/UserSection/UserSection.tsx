@@ -1,16 +1,15 @@
 import {useClerk, useUser} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
-import Image from 'next/image';
 import {Fragment} from 'react';
 import {Avatar, Button, CardBase} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
-import {trpc} from 'trpc/src/trpc';
+import {useMe} from 'hooks';
 
 export function UserSection() {
   const {user, isLoaded} = useUser();
   const {signOut} = useClerk();
-  const {data} = trpc.me.me.useQuery();
-  const showAdminLink = data?.type === 'ADMIN';
+  const me = useMe();
+  const showAdminLink = me.data?.type === 'ADMIN';
 
   const onSignOutClick = async () => {
     await signOut();
@@ -27,23 +26,12 @@ export function UserSection() {
               <Button
                 variant="neutral"
                 iconLeft={
-                  user?.profileImageUrl && (
-                    <Avatar
-                      className="h-6 w-6"
-                      src={user?.profileImageUrl}
-                      data-testid="user-header-button"
-                      alt={'avatar'}
-                    />
-                  )
-                  // <div className="rounded-full overflow-hidden">
-                  //   <Image
-                  //     src={user?.profileImageUrl!}
-                  //     height={24}
-                  //     width={24}
-                  //     alt={`Profile pic for ${user?.fullName}`}
-                  //     data-testid="user-header-button"
-                  //   />
-                  // </div>
+                  <Avatar
+                    className="h-6 w-6"
+                    src={user?.profileImageUrl}
+                    data-testid="user-header-button"
+                    alt={'avatar'}
+                  />
                 }
               >
                 {user?.firstName}
@@ -71,7 +59,7 @@ export function UserSection() {
                   <Button
                     variant="neutral"
                     as="a"
-                    href={`/u/${data?.id}`}
+                    href={`/u/${me.data?.id}`}
                     size="xs"
                   >
                     Profile

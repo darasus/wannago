@@ -1,4 +1,4 @@
-import {RedirectToSignIn} from '@clerk/nextjs';
+import {RedirectToSignIn, useAuth} from '@clerk/nextjs';
 import {Event} from '@prisma/client';
 import {SignUpCard as _SignUpCard} from 'cards';
 import {useAmplitude, useAttendeeCount, useConfetti} from 'hooks';
@@ -21,18 +21,14 @@ export function SignUpCard({event}: Props) {
   const {confetti} = useConfetti();
   const {logEvent} = useAmplitude();
   const [isOpen, setIsOpen] = useState(false);
-  const {data: me} = trpc.me.me.useQuery(undefined, {
-    useErrorBoundary: false,
-    suspense: false,
-  });
-  const signUp = trpc.event.getSignUp.useQuery(
+  const {isSignedIn} = useAuth();
+  const signUp = trpc.event.getMySignUp.useQuery(
     {eventId: event.id},
     {
-      useErrorBoundary: false,
-      suspense: false,
+      enabled: isSignedIn,
     }
   );
-  const join = trpc.event.join.useMutation({
+  const joinEvent = trpc.event.joinEvent.useMutation({
     onError(error) {
       toast.error(error.message);
     },
@@ -44,7 +40,7 @@ export function SignUpCard({event}: Props) {
       confetti();
     },
   });
-  const cancelRsvp = trpc.event.cancelRsvp.useMutation({
+  const cancelEvent = trpc.event.cancelEvent.useMutation({
     onError(error) {
       toast.error(error.message);
     },
@@ -61,18 +57,14 @@ export function SignUpCard({event}: Props) {
   });
 
   const onJoinSubmit = form.handleSubmit(async data => {
-    if (!me) {
+    if (!isSignedIn) {
       setIsOpen(true);
       return;
     }
 
     try {
-      await join.mutateAsync({
+      await joinEvent.mutateAsync({
         eventId: event.id,
-        ...data,
-        email: me?.email,
-        firstName: me?.firstName,
-        lastName: me?.lastName,
         hasPlusOne: data.hasPlusOne,
       });
       await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
@@ -80,15 +72,14 @@ export function SignUpCard({event}: Props) {
   });
 
   const onCancelSubmit = form.handleSubmit(async () => {
-    if (!me) {
+    if (!isSignedIn) {
       setIsOpen(true);
       return;
     }
 
     try {
-      await cancelRsvp.mutateAsync({
+      await cancelEvent.mutateAsync({
         eventId: event.id,
-        userId: me.id,
       });
       await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
     } catch (error) {}

@@ -338,35 +338,24 @@ const getOrganizer = publicProcedure
     });
   });
 
-const join = publicProcedure
+const joinEvent = protectedProcedure
   .input(
     z.object({
       eventId: z.string(),
-      email: z.string().email('Is not valid email'),
-      firstName: z.string(),
-      lastName: z.string(),
       hasPlusOne: z.boolean(),
     })
   )
   .mutation(async ({input, ctx}) => {
-    let user: User | null = null;
-    user = await ctx.prisma.user.findUnique({
+    const user = await ctx.prisma.user.findUnique({
       where: {
-        email: input.email,
+        email: ctx.user.emailAddresses[0].emailAddress,
       },
     });
 
     if (!user) {
-      user = await ctx.prisma.user.create({
-        data: {
-          email: input.email,
-          firstName: input.firstName,
-          lastName: input.lastName,
-          externalId: null,
-          organization: {
-            create: {},
-          },
-        },
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'User not found',
       });
     }
 
@@ -462,7 +451,51 @@ const join = publicProcedure
     return {success: true};
   });
 
-const cancelRsvp = protectedProcedure
+const cancelEvent = protectedProcedure
+  .input(
+    z.object({
+      eventId: z.string().uuid(),
+    })
+  )
+  .mutation(async ({input: {eventId}, ctx}) => {
+    const user = await ctx.prisma.user.findFirst({
+      where: {
+        externalId: ctx.user.id,
+      },
+    });
+
+    if (!user) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'User not found',
+      });
+    }
+
+    const signUp = await ctx.prisma.eventSignUp.findFirst({
+      where: {
+        userId: user.id,
+        eventId: eventId,
+      },
+    });
+
+    if (!signUp) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'User is not signed up for this event',
+      });
+    }
+
+    return ctx.prisma.eventSignUp.update({
+      where: {
+        id: signUp.id,
+      },
+      data: {
+        status: 'CANCELLED',
+      },
+    });
+  });
+
+const cancelEventByUserId = protectedProcedure
   .input(
     z.object({
       eventId: z.string().uuid(),
@@ -811,7 +844,7 @@ const inviteByEmail = publicProcedure
     return {success: true};
   });
 
-const getSignUp = protectedProcedure
+const getMySignUp = protectedProcedure
   .input(
     z.object({
       eventId: z.string().uuid(),
@@ -838,8 +871,9 @@ export const eventRouter = router({
   getById,
   getByShortId,
   getOrganizer,
-  join,
-  cancelRsvp,
+  joinEvent,
+  cancelEvent,
+  cancelEventByUserId,
   getNumberOfAttendees,
   getAttendees,
   getExamples,
@@ -847,5 +881,5 @@ export const eventRouter = router({
   getAllEventsAttendees,
   invitePastAttendee,
   inviteByEmail,
-  getSignUp,
+  getMySignUp,
 });

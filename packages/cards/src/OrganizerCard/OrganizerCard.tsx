@@ -10,7 +10,6 @@ interface Props {
 
 export function OrganizerCard({isLoading, onOpenFormClick, user}: Props) {
   const name = user ? `${user?.firstName} ${user?.lastName}` : 'Loading...';
-  console.log('user', user);
 
   return (
     <CardBase>

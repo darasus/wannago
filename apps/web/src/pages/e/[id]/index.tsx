@@ -5,13 +5,13 @@ import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import {EventView} from '../../../features/EventView/EventView';
 import {Container, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
-import {useEventId, useHandleEmailCallbackParam} from 'hooks';
+import {useEventId, useHandleEmailCallbackParam, useMe} from 'hooks';
 
 function InternalEventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   useHandleEmailCallbackParam();
-  const me = trpc.me.me.useQuery();
+  const me = useMe();
   const eventId = useEventId();
   const {
     data: event,
