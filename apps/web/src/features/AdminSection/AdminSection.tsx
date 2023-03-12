@@ -118,7 +118,7 @@ export function AdminSection({event, timezone}: Props) {
             <Button
               variant="neutral"
               iconLeft={<PencilIcon />}
-              onClick={() => router.push(`/event/${event.id}/edit`)}
+              onClick={() => router.push(`/e/${event.shortId}/edit`)}
               size="sm"
             >
               Edit
@@ -126,7 +126,7 @@ export function AdminSection({event, timezone}: Props) {
             <Button
               variant="neutral"
               iconLeft={<UsersIcon />}
-              onClick={() => router.push(`/event/${event.id}/attendees`)}
+              onClick={() => router.push(`/e/${event.shortId}/attendees`)}
               size="sm"
             >
               Attendees

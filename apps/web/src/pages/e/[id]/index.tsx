@@ -5,23 +5,25 @@ import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import {EventView} from '../../../features/EventView/EventView';
 import {Container, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
-import {withProtected} from '../../../utils/withAuthProtect';
-import {useEventId} from 'hooks';
+import {useEventId, useHandleEmailCallbackParam} from 'hooks';
 
 function InternalEventPage({
   timezone,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  useHandleEmailCallbackParam();
+  const me = trpc.me.me.useQuery();
   const eventId = useEventId();
   const {
     data: event,
     refetch,
     isLoading,
-  } = trpc.event.getById.useQuery(
+  } = trpc.event.getByShortId.useQuery(
     {
-      eventId,
+      id: eventId,
     },
     {enabled: !!eventId}
   );
+  const isMyEvent = event?.organizationId === me.data?.organizationId;
   const clientTimezone = useMemo(
     () => timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
     [timezone]
@@ -42,20 +44,27 @@ function InternalEventPage({
           <Head>
             <title>{`${event.title} | WannaGo`}</title>
           </Head>
-          <Container>
-            <div className="grid grid-cols-12 gap-4">
-              <div className="col-span-12 lg:col-span-4">
-                <AdminSection
-                  event={event}
-                  timezone={timezone}
-                  refetchEvent={refetch}
-                />
+          {isMyEvent && (
+            <Container>
+              <div className="grid grid-cols-12 gap-4">
+                <div className="col-span-12 lg:col-span-4">
+                  <AdminSection
+                    event={event}
+                    timezone={timezone}
+                    refetchEvent={refetch}
+                  />
+                </div>
+                <div className="col-span-12 lg:col-span-8">
+                  <EventView event={event} timezone={clientTimezone} />
+                </div>
               </div>
-              <div className="col-span-12 lg:col-span-8">
-                <EventView event={event} timezone={clientTimezone} />
-              </div>
-            </div>
-          </Container>
+            </Container>
+          )}
+          {!isMyEvent && (
+            <Container maxSize="sm">
+              <EventView event={event} timezone={clientTimezone} />
+            </Container>
+          )}
         </>
       )}
     </>
@@ -75,4 +84,4 @@ export async function getServerSideProps({
   };
 }
 
-export default withProtected(InternalEventPage);
+export default InternalEventPage;

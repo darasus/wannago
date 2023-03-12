@@ -42,7 +42,7 @@ function AdminPage() {
                       <>
                         <a
                           className="underline"
-                          href={`/event/${event.id}`}
+                          href={`/e/${event.shortId}`}
                           rel="noreferrer"
                         >
                           {label}

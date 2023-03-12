@@ -104,7 +104,7 @@ function EventAttendeesPage() {
           <MessageParticipantsButton />
           <Button
             variant="neutral"
-            onClick={() => router.push(`/event/${eventId}/invite`)}
+            onClick={() => router.push(`/e/${eventId}/invite`)}
             size="sm"
             iconLeft={<UserPlusIcon />}
             title={'Invite'}

@@ -17,7 +17,7 @@ export function AddEventForm() {
         eventId: data?.id,
       });
       if (data?.id) {
-        push(`/event/${data.id}`);
+        push(`/e/${data.shortId}`);
       }
     },
   });

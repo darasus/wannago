@@ -37,7 +37,7 @@ function Dashboard() {
             <div className="flex items-center gap-x-2">
               <Button
                 size="md"
-                onClick={() => router.push('/event/add')}
+                onClick={() => router.push('/e/add')}
                 iconLeft={<PlusCircleIcon />}
                 data-testid="add-event-button"
               >
@@ -64,7 +64,7 @@ function Dashboard() {
               {data?.map(event => {
                 return (
                   <Link
-                    href={`/event/${event.id}`}
+                    href={`/e/${event.shortId}`}
                     key={event.id}
                     data-testid="event-card"
                   >
