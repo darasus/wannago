@@ -48,8 +48,8 @@ export function Header() {
     <header>
       <CardBase>
         <nav className="relative flex justify-between">
-          <div className="flex items-center">
-            <Logo href={isSignedIn ? '/dashboard' : '/'} className="mr-8" />
+          <div className="flex items-center gap-x-8">
+            <Logo href={isSignedIn ? '/dashboard' : '/'} />
             {showDesktopHomeNav && (
               <div className="hidden md:flex gap-x-5 md:gap-x-4">
                 {navItems.map((item, i) => (
