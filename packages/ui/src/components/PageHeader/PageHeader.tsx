@@ -11,7 +11,7 @@ interface Props extends PropsWithChildren {
 export function PageHeader({title, children, className}: Props) {
   return (
     <CardBase className={className}>
-      <div className="flex items-center">
+      <div className="flex items-center flex-col md:flex-row gap-y-2 md:gap-0">
         <h1 className={cn(titleFont.className, 'text-2xl')}>{title}</h1>
         <div className="grow" />
         <div className="flex gap-x-2">{children}</div>

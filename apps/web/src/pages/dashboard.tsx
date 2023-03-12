@@ -41,7 +41,7 @@ function Dashboard() {
                 iconLeft={<PlusCircleIcon />}
                 data-testid="add-event-button"
               >
-                Create event
+                <span className="hidden md:inline">Create event</span>
               </Button>
               <Toggle
                 name="eventType"
