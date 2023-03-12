@@ -7,13 +7,13 @@ import {withProtected} from '../../../utils/withAuthProtect';
 
 function EventEditPage() {
   const router = useRouter();
-  const eventId = router.query.id as string;
-  const {data: event, isLoading} = trpc.event.getById.useQuery(
+  const shortId = router.query.id as string;
+  const {data: event, isLoading} = trpc.event.getByShortId.useQuery(
     {
-      eventId,
+      id: shortId,
     },
     {
-      enabled: !!eventId,
+      enabled: !!shortId,
     }
   );
 

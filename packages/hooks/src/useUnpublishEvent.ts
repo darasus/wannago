@@ -2,6 +2,7 @@ import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {useAmplitude} from './useAmplitude';
 import {useConfirmDialog} from './useConfirmDialog';
+import {useEventId} from './useEventId';
 
 interface Props {
   eventId: string;
@@ -9,13 +10,17 @@ interface Props {
 
 export function useUnpublishEvent({eventId}: Props) {
   const {logEvent} = useAmplitude();
+  const shortId = useEventId();
   const {mutateAsync, isLoading} = trpc.event.publish.useMutation({
     onSuccess: () => {
       toast.success(`Event is successfully unpublished!`);
     },
   });
 
-  const {refetch} = trpc.event.getById.useQuery({eventId}, {enabled: false});
+  const {refetch} = trpc.event.getByShortId.useQuery(
+    {id: shortId},
+    {enabled: false}
+  );
 
   const {modal, open} = useConfirmDialog({
     title: 'Are you sure you want to unpublish event?',
