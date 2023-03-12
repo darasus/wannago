@@ -4,19 +4,26 @@ import {Button, CardBase, Text, Tooltip} from 'ui';
 import {Switch} from '../../../../apps/web/src/components/Input/Switch/Switch';
 
 interface Props {
-  onSubmit: FormEventHandler;
+  onJoinSubmit: FormEventHandler;
+  onCancelSubmit: FormEventHandler;
   numberOfAttendees: number;
   isPublished: boolean;
+  amSignedUp: boolean;
 }
 
 interface EventSignUpForm {
   hasPlusOne: boolean;
 }
 
-export function SignUpCard({isPublished, numberOfAttendees, onSubmit}: Props) {
+export function SignUpCard({
+  isPublished,
+  numberOfAttendees,
+  onJoinSubmit,
+  onCancelSubmit,
+  amSignedUp,
+}: Props) {
   const {
-    register,
-    formState: {errors, isSubmitting, defaultValues},
+    formState: {defaultValues, isSubmitting},
     control,
   } = useFormContext<EventSignUpForm>();
 
@@ -29,24 +36,35 @@ export function SignUpCard({isPublished, numberOfAttendees, onSubmit}: Props) {
     ? undefined
     : 'To enable sign-ups, please publish the event first.';
 
+  const action = amSignedUp ? (
+    <form className="flex items-center gap-x-4" onSubmit={onCancelSubmit}>
+      <Button type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
+        Cancel
+      </Button>
+    </form>
+  ) : (
+    <form className="flex items-center gap-x-4" onSubmit={onJoinSubmit}>
+      <Switch
+        name="hasPlusOne"
+        control={control}
+        defaultValue={defaultValues?.hasPlusOne || false}
+      >
+        Bring +1
+      </Switch>
+      <Button type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
+        Attend
+      </Button>
+    </form>
+  );
+
   return (
     <Tooltip text={tooltipText}>
       <CardBase>
-        <form onSubmit={onSubmit}>
-          <div className="flex items-center">
-            <div className="flex items-center grow gap-x-2">
-              <Button type="submit">Attend</Button>
-              <Switch
-                name="hasPlusOne"
-                control={control}
-                defaultValue={defaultValues?.hasPlusOne || false}
-              >
-                Bring +1
-              </Switch>
-            </div>
-            <Text className="text-gray-400">{numberOfAttendeesLabel}</Text>
-          </div>
-        </form>
+        <div className="flex items-center">
+          <Text className="text-gray-400">{numberOfAttendeesLabel}</Text>
+          <div className="grow" />
+          <div className="flex items-center">{action}</div>
+        </div>
       </CardBase>
     </Tooltip>
   );

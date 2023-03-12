@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {router, protectedProcedure} from '../trpcServer';
+import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 
 const getMyEvents = protectedProcedure
   .input(

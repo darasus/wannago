@@ -470,8 +470,6 @@ const cancelRsvp = protectedProcedure
     })
   )
   .mutation(async ({input: {eventId, userId}, ctx}) => {
-    await authorizeChange({ctx, eventId});
-
     const signUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
         userId: userId,
@@ -813,6 +811,25 @@ const inviteByEmail = publicProcedure
     return {success: true};
   });
 
+const getSignUp = protectedProcedure
+  .input(
+    z.object({
+      eventId: z.string().uuid(),
+    })
+  )
+  .query(async ({ctx, input}) => {
+    const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
+      where: {
+        user: {
+          externalId: ctx.user?.id,
+        },
+        eventId: input.eventId,
+      },
+    });
+
+    return eventSignUp;
+  });
+
 export const eventRouter = router({
   create,
   remove,
@@ -830,4 +847,5 @@ export const eventRouter = router({
   getAllEventsAttendees,
   invitePastAttendee,
   inviteByEmail,
+  getSignUp,
 });
