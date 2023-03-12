@@ -25,14 +25,14 @@ export function SignUpCard({event}: Props) {
     useErrorBoundary: false,
     suspense: false,
   });
-  const {data: signUp, refetch: refetchSignUp} = trpc.event.getSignUp.useQuery(
+  const signUp = trpc.event.getSignUp.useQuery(
     {eventId: event.id},
     {
       useErrorBoundary: false,
       suspense: false,
     }
   );
-  const {mutateAsync: join} = trpc.event.join.useMutation({
+  const join = trpc.event.join.useMutation({
     onError(error) {
       toast.error(error.message);
     },
@@ -44,23 +44,21 @@ export function SignUpCard({event}: Props) {
       confetti();
     },
   });
-  const {mutateAsync: cancel} = trpc.event.cancelRsvp.useMutation({
+  const cancelRsvp = trpc.event.cancelRsvp.useMutation({
     onError(error) {
       toast.error(error.message);
     },
     onSuccess: () => {
-      // logEvent('', {
-      //   eventId: event.id,
-      // });
+      logEvent('event_sign_up_cancel_submitted', {
+        eventId: event.id,
+      });
       toast.success('Cancelled! Check your email for more details!');
     },
   });
   const form = useForm<EventSignUpForm>();
-  const {data: attendeeCount, refetch: refetchAttendeeCount} = useAttendeeCount(
-    {
-      eventId: event.id,
-    }
-  );
+  const attendeeCount = useAttendeeCount({
+    eventId: event.id,
+  });
 
   const onJoinSubmit = form.handleSubmit(async data => {
     if (!me) {
@@ -69,7 +67,7 @@ export function SignUpCard({event}: Props) {
     }
 
     try {
-      await join({
+      await join.mutateAsync({
         eventId: event.id,
         ...data,
         email: me?.email,
@@ -77,35 +75,29 @@ export function SignUpCard({event}: Props) {
         lastName: me?.lastName,
         hasPlusOne: data.hasPlusOne,
       });
-      await Promise.all([
-        refetchSignUp(),
-        // refetchEvent(),
-        refetchAttendeeCount(),
-      ]);
+      await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
     } catch (error) {}
   });
 
-  const onCancelSubmit = form.handleSubmit(async data => {
+  const onCancelSubmit = form.handleSubmit(async () => {
     if (!me) {
       setIsOpen(true);
       return;
     }
 
     try {
-      await cancel({
+      await cancelRsvp.mutateAsync({
         eventId: event.id,
         userId: me.id,
       });
-      await Promise.all([
-        refetchSignUp(),
-        // refetchEvent(),
-        refetchAttendeeCount(),
-      ]);
+      await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
     } catch (error) {}
   });
 
   const amSignedUp = Boolean(
-    signUp && (signUp?.status === 'INVITED' || signUp?.status === 'REGISTERED')
+    !signUp ||
+      signUp?.data?.status === 'INVITED' ||
+      signUp?.data?.status === 'REGISTERED'
   );
 
   return (
@@ -120,7 +112,7 @@ export function SignUpCard({event}: Props) {
             onJoinSubmit={onJoinSubmit}
             onCancelSubmit={onCancelSubmit}
             isPublished={event.isPublished}
-            numberOfAttendees={attendeeCount?.count ?? 0}
+            numberOfAttendees={attendeeCount?.data?.count ?? 0}
           />
         </FormProvider>
       </Container>

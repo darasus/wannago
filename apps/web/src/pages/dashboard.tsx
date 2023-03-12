@@ -5,9 +5,7 @@ import {trpc} from 'trpc/src/trpc';
 import {EventCard} from 'cards';
 import Head from 'next/head';
 import {Container, Button, PageHeader, Toggle, Spinner} from 'ui';
-import {LoadingEventCard} from 'cards/src/LoadingEventCard/LoadingEventCard';
 import {withProtected} from '../utils/withAuthProtect';
-import {cn} from 'utils';
 import {FormProvider, useForm} from 'react-hook-form';
 
 interface Form {
@@ -26,7 +24,6 @@ function Dashboard() {
     eventType,
   });
   const haveNoEvents = data?.length === 0;
-
   const isGettingCards = isLoading || isFetching;
 
   return (

@@ -18,6 +18,7 @@ type EventType =
   | 'event_published'
   | 'event_unpublished'
   | 'event_sign_up_submitted'
+  | 'event_sign_up_cancel_submitted'
   | 'event_message_to_organizer_submitted'
   | 'event_message_to_attendees_submitted';
 
