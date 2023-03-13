@@ -48,21 +48,23 @@ export default function ProfilePage({
         <title>{`${data?.firstName} ${data?.lastName} | WannaGo`}</title>
       </Head>
       <Container maxSize="sm" className="flex flex-col gap-y-4">
-        {data && data?.profileImageSrc && (
-          <CardBase>
-            <div className="flex gap-x-4 items-center">
-              <Avatar
-                className="h-40 w-40"
-                imageClassName="rounded-3xl"
-                src={data?.profileImageSrc}
-                alt={`avatar`}
-                height={1000}
-                width={1000}
-              />
-              <Text className="text-3xl font-bold">{`${data.firstName} ${data.lastName}`}</Text>
-            </div>
-          </CardBase>
-        )}
+        <CardBase>
+          <div className="flex flex-col md:flex-row gap-4 items-center">
+            <Avatar
+              className="shrink-0 h-40 w-40"
+              imageClassName="rounded-3xl"
+              src={data?.profileImageSrc}
+              alt={`avatar`}
+              height={1000}
+              width={1000}
+            />
+            {data && (
+              <div className="flex max-w-full">
+                <Text className="text-3xl font-bold truncate">{`${data.firstName} ${data.lastName}`}</Text>
+              </div>
+            )}
+          </div>
+        </CardBase>
         {isLoadingEvents && (
           <div className="flex justify-center">
             <Spinner />

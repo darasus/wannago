@@ -27,7 +27,7 @@ function Item({user, hasPlusOne, status, refetch}: ItemProps) {
     user.email +
     (hasPlusOne ? ' · +1' : '');
 
-  const {mutateAsync} = trpc.event.cancelRsvp.useMutation();
+  const {mutateAsync} = trpc.event.cancelEventByUserId.useMutation();
   const eventId = useEventId();
   const handleCancelClick = useCallback(async () => {
     await mutateAsync({eventId, userId: user.id}).then(() => refetch());
