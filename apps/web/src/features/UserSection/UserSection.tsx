@@ -56,7 +56,7 @@ export function UserSection() {
                     variant="neutral"
                     as="a"
                     href={`/dashboard`}
-                    size="xs"
+                    size="sm"
                   >
                     Dashboard
                   </Button>
@@ -64,20 +64,20 @@ export function UserSection() {
                     variant="neutral"
                     as="a"
                     href={`/u/${me.data?.id}`}
-                    size="xs"
+                    size="sm"
                   >
                     Profile
                   </Button>
-                  <Button variant="neutral" as="a" href="/me" size="xs">
+                  <Button variant="neutral" as="a" href="/me" size="sm">
                     Settings
                   </Button>
                   {showAdminLink && (
-                    <Button variant="neutral" as="a" href="/admin" size="xs">
+                    <Button variant="neutral" as="a" href="/admin" size="sm">
                       Admin
                     </Button>
                   )}
                   <FeedbackFish projectId="f843146d960b2f" userId={user?.id}>
-                    <Button variant="neutral" size="xs">
+                    <Button variant="neutral" size="sm">
                       Feedback
                     </Button>
                   </FeedbackFish>
@@ -85,7 +85,7 @@ export function UserSection() {
                     variant="danger"
                     onClick={onSignOutClick}
                     data-testid="logout-button"
-                    size="xs"
+                    size="sm"
                   >
                     Logout
                   </Button>
