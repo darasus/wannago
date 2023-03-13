@@ -53,7 +53,11 @@ export default function ProfilePage({
             <Avatar
               className="shrink-0 h-40 w-40"
               imageClassName="rounded-3xl"
-              src={data?.profileImageSrc}
+              src={
+                data?.profileImageSrc?.includes('gravatar')
+                  ? undefined
+                  : data?.profileImageSrc
+              }
               alt={`avatar`}
               height={1000}
               width={1000}
