@@ -18,6 +18,14 @@ import {Amplitude} from '../features/Amplitude/Amplitude';
 import {env} from 'client-env';
 import {Sentry} from '../features/Sentry/Sentry';
 import {AppLayout} from '../features/AppLayout/AppLayout';
+import {AnimatePresence, motion} from 'framer-motion';
+
+const spring = {
+  type: 'spring',
+  damping: 20,
+  stiffness: 100,
+  when: 'afterChildren',
+};
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter();
@@ -106,7 +114,17 @@ function MyApp({Component, pageProps}: AppProps) {
             )}
           </Toaster>
           <AppLayout>
-            <Component {...pageProps} />
+            <AnimatePresence mode="wait">
+              <motion.div
+                transition={spring}
+                key={router.pathname}
+                initial={{y: 10, opacity: 0}}
+                animate={{y: 0, opacity: 1}}
+                exit={{y: 10, opacity: 0}}
+              >
+                <Component {...pageProps} />
+              </motion.div>
+            </AnimatePresence>
           </AppLayout>
         </ClerkProvider>
       </div>
