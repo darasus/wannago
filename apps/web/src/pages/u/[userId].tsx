@@ -79,7 +79,7 @@ export default function ProfilePage({
             <PageHeader title="My events" />
           </div>
         )}
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4">
           {userEvents?.map(event => {
             return (
               <Link
