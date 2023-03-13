@@ -79,7 +79,7 @@ function Dashboard() {
               })}
             </motion.div>
           )}
-          {haveNoEvents && (
+          {!isGettingCards && haveNoEvents && (
             <motion.div
               initial={{opacity: 0}}
               animate={{opacity: 1}}
