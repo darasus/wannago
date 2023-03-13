@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import {ComponentProps} from 'react';
 import {cloudflareImageLoader, cn} from 'utils';
-import {UserIcon} from '@heroicons/react/24/outline';
+import {UserIcon} from '@heroicons/react/24/solid';
 
 interface Props extends Omit<ComponentProps<typeof Image>, 'src'> {
   className?: string;
@@ -42,7 +42,7 @@ export function Avatar({
         />
       ) : (
         <div className="flex items-center justify-center h-full w-full border-2 border-gray-800 rounded-full bg-slate-200">
-          <UserIcon className="h-5 w-5" />
+          <UserIcon className="h-2/3 w-2/4" />
         </div>
       )}
     </div>

@@ -28,7 +28,11 @@ export function UserSection() {
                 iconLeft={
                   <Avatar
                     className="h-6 w-6"
-                    src={user?.profileImageUrl}
+                    src={
+                      user?.profileImageUrl.includes('gravatar')
+                        ? undefined
+                        : user?.profileImageUrl
+                    }
                     data-testid="user-header-button"
                     alt={'avatar'}
                   />

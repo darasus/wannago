@@ -2,7 +2,7 @@ import Link from 'next/link';
 import {useCopyClipboard, useAmplitude} from 'hooks';
 import {Button, Badge, CardBase, Tooltip} from 'ui';
 import {getBaseUrl, cn} from 'utils';
-import {LinkIcon} from '@heroicons/react/24/outline';
+import {LinkIcon} from '@heroicons/react/24/solid';
 
 interface Props {
   url: string;
