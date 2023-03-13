@@ -4,10 +4,11 @@ import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
 import {EventCard} from 'cards';
 import Head from 'next/head';
-import {Container, Button, PageHeader, Toggle, Spinner} from 'ui';
+import {Container, Button, PageHeader, Toggle, LoadingBlock} from 'ui';
 import {withProtected} from '../utils/withAuthProtect';
 import {FormProvider, useForm} from 'react-hook-form';
 import {useGlobalLoading} from 'hooks';
+import {AnimatePresence, motion} from 'framer-motion';
 
 interface Form {
   eventType: 'attending' | 'organizing';
@@ -56,14 +57,15 @@ function Dashboard() {
             </div>
           </FormProvider>
         </PageHeader>
-        {isGettingCards && (
-          <div className="flex justify-center p-4">
-            <Spinner />
-          </div>
-        )}
-        {!isGettingCards && (
-          <>
-            <div className="flex flex-col gap-y-4">
+        <AnimatePresence mode="wait">
+          {isGettingCards && <LoadingBlock />}
+          {!isGettingCards && (
+            <motion.div
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+              className="flex flex-col gap-y-4"
+            >
               {data?.map(event => {
                 return (
                   <Link
@@ -75,22 +77,25 @@ function Dashboard() {
                   </Link>
                 );
               })}
-            </div>
-            <>
-              {haveNoEvents && (
-                <div className="text-center">
-                  <span className="text-5xl">🤷</span>
-                  <div />
-                  <span className="text-lg font-medium">
-                    {
-                      'It looks empty here, start by clicking on "+" button to create your first event.'
-                    }
-                  </span>
-                </div>
-              )}
-            </>
-          </>
-        )}
+            </motion.div>
+          )}
+          {haveNoEvents && (
+            <motion.div
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+              className="text-center"
+            >
+              <span className="text-5xl">🤷</span>
+              <div />
+              <span className="text-lg font-medium">
+                {
+                  'It looks empty here, start by clicking on "+" button to create your first event.'
+                }
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Container>
     </>
   );

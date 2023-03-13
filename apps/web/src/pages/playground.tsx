@@ -1,5 +1,5 @@
 import {ArrowDownCircleIcon} from '@heroicons/react/24/solid';
-import {Accordion, Badge, Button, Container} from 'ui';
+import {Accordion, Badge, Button, Container, LoadingWave} from 'ui';
 import {Input} from '../components/Input/Input/Input';
 
 const sizes = ['xs', 'sm', 'md', 'lg'] as const;
@@ -142,6 +142,9 @@ export default function PlaygroundPage() {
             </div>
           );
         })}
+      </Section>
+      <Section>
+        <LoadingWave />
       </Section>
     </Container>
   );
