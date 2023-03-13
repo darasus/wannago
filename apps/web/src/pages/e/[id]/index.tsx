@@ -19,7 +19,7 @@ function InternalEventPage({
     isLoading,
   } = trpc.event.getByShortId.useQuery(
     {
-      id: eventId,
+      id: eventId!,
     },
     {enabled: !!eventId}
   );

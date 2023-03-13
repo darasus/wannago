@@ -19,8 +19,8 @@ export function usePublishEvent({eventId}: Props) {
     },
   });
   const {refetch} = trpc.event.getByShortId.useQuery(
-    {id: shortId},
-    {enabled: false}
+    {id: shortId!},
+    {enabled: !!shortId}
   );
 
   const {modal, open} = useConfirmDialog({

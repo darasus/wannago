@@ -5,9 +5,7 @@ export function useEventId() {
   const eventId = router.query.id;
 
   if (typeof eventId === 'undefined') {
-    throw new Error(
-      'useEventId must be used with routes with event id segment'
-    );
+    return null;
   }
 
   if (typeof eventId === 'string') {

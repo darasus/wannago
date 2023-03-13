@@ -30,7 +30,9 @@ function Item({user, hasPlusOne, status, refetch}: ItemProps) {
   const {mutateAsync} = trpc.event.cancelEventByUserId.useMutation();
   const eventId = useEventId();
   const handleCancelClick = useCallback(async () => {
-    await mutateAsync({eventId, userId: user.id}).then(() => refetch());
+    if (eventId) {
+      await mutateAsync({eventId, userId: user.id}).then(() => refetch());
+    }
   }, [mutateAsync, eventId, user.id, refetch]);
   const {open, modal} = useConfirmDialog({
     title: 'Cancel RSVP',
@@ -65,7 +67,7 @@ function EventAttendeesPage() {
   const eventId = useEventId();
   const {data, refetch, isLoading} = trpc.event.getAttendees.useQuery(
     {
-      eventId,
+      eventId: eventId!,
     },
     {
       enabled: !!eventId,
