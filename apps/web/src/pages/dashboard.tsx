@@ -7,6 +7,7 @@ import Head from 'next/head';
 import {Container, Button, PageHeader, Toggle, Spinner} from 'ui';
 import {withProtected} from '../utils/withAuthProtect';
 import {FormProvider, useForm} from 'react-hook-form';
+import {useGlobalLoading} from 'hooks';
 
 interface Form {
   eventType: 'attending' | 'organizing';
@@ -25,6 +26,8 @@ function Dashboard() {
   });
   const haveNoEvents = data?.length === 0;
   const isGettingCards = isLoading || isFetching;
+
+  useGlobalLoading(isGettingCards);
 
   return (
     <>
