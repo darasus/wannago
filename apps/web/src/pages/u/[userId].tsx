@@ -59,7 +59,7 @@ export default function ProfilePage({
               width={1000}
             />
             {data && (
-              <div className="flex max-w-full">
+              <div className="flex max-w-full overflow-hidden">
                 <Text className="text-3xl font-bold truncate">{`${data.firstName} ${data.lastName}`}</Text>
               </div>
             )}
