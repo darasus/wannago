@@ -10,17 +10,9 @@ import {SignUpCard} from '../SignUpCard/SignUpCard';
 
 interface Props {
   event: Event;
-  timezone?: string;
-  isPublic?: boolean;
-  relativeTimeString?: string;
 }
 
-export function EventView({
-  event,
-  timezone,
-  isPublic,
-  relativeTimeString,
-}: Props) {
+export function EventView({event}: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -53,11 +45,7 @@ export function EventView({
           )}
         </div>
         <div className="items-stretch">
-          <DateCard
-            event={event}
-            timezone={timezone}
-            relativeTimeString={relativeTimeString}
-          />
+          <DateCard event={event} />
         </div>
       </div>
       <SignUpCard event={event} />

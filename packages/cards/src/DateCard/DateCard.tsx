@@ -6,23 +6,15 @@ interface Props {
   onAddToCalendarClick: () => void;
   startDate: Date;
   endDate: Date;
-  timezone?: string;
-  relativeTimeString?: string;
 }
 
-export function DateCard({
-  endDate,
-  startDate,
-  timezone,
-  onAddToCalendarClick,
-  relativeTimeString,
-}: Props) {
+export function DateCard({endDate, startDate, onAddToCalendarClick}: Props) {
   const relativeTime = useMemo(
-    () => getRelativeTime(startDate, endDate, timezone),
-    [startDate, endDate, timezone]
+    () => getRelativeTime(startDate, endDate),
+    [startDate, endDate]
   );
 
-  const timeRangeString = getTimeRangeString(startDate, endDate, timezone);
+  const timeRangeString = getTimeRangeString(startDate, endDate);
 
   return (
     <CardBase className="h-full" innerClassName="flex flex-col h-full">
@@ -39,21 +31,19 @@ export function DateCard({
       <div className="flex grow">
         <div className="flex flex-col justify-center items-center border-2 border-gray-800 rounded-2xl min-h-[70px] bg-slate-200 aspect-square h-full mr-2">
           <Text className="text-2xl leading-none font-extrabold">
-            {formatDate(new Date(startDate), 'dd', timezone)}
+            {formatDate(new Date(startDate), 'dd')}
           </Text>
           <div />
           <Text className="uppercase text-xs leading-none font-bold">
-            {formatDate(new Date(startDate), 'MMM', timezone)}
+            {formatDate(new Date(startDate), 'MMM')}
           </Text>
         </div>
         <div className="flex flex-col justify-center grow">
           <Text className="font-bold capitalize">
-            {formatDate(new Date(startDate), 'EEE, MMMM dd, yyyy', timezone)}
+            {formatDate(new Date(startDate), 'EEE, MMMM dd, yyyy')}
           </Text>{' '}
           <div />
-          <Text className="text-gray-500">
-            {relativeTimeString || relativeTime}
-          </Text>
+          <Text className="text-gray-500">{relativeTime}</Text>
         </div>
       </div>
     </CardBase>

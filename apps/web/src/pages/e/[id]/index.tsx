@@ -7,9 +7,7 @@ import {Container, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {useEventId, useHandleEmailCallbackParam, useMe} from 'hooks';
 
-function InternalEventPage({
-  timezone,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function EventPage() {
   useHandleEmailCallbackParam();
   const me = useMe();
   const eventId = useEventId();
@@ -24,10 +22,6 @@ function InternalEventPage({
     {enabled: !!eventId}
   );
   const isMyEvent = event?.organizationId === me.data?.organizationId;
-  const clientTimezone = useMemo(
-    () => timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
-    [timezone]
-  );
 
   if (isLoading) {
     return (
@@ -48,21 +42,17 @@ function InternalEventPage({
             <Container>
               <div className="grid grid-cols-12 gap-4">
                 <div className="col-span-12 lg:col-span-4">
-                  <AdminSection
-                    event={event}
-                    timezone={timezone}
-                    refetchEvent={refetch}
-                  />
+                  <AdminSection event={event} refetchEvent={refetch} />
                 </div>
                 <div className="col-span-12 lg:col-span-8">
-                  <EventView event={event} timezone={clientTimezone} />
+                  <EventView event={event} />
                 </div>
               </div>
             </Container>
           )}
           {!isMyEvent && (
             <Container maxSize="sm">
-              <EventView event={event} timezone={clientTimezone} />
+              <EventView event={event} />
             </Container>
           )}
         </>
@@ -70,18 +60,3 @@ function InternalEventPage({
     </>
   );
 }
-
-export async function getServerSideProps({
-  req,
-  res,
-}: GetServerSidePropsContext) {
-  const timezone = req.headers['x-vercel-ip-timezone'] as string | undefined;
-
-  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate=59');
-
-  return {
-    props: {timezone: timezone || null},
-  };
-}
-
-export default InternalEventPage;
