@@ -66,7 +66,10 @@ function Dashboard() {
                   key={event.id}
                   data-testid="event-card"
                 >
-                  <EventCard event={event} />
+                  <EventCard
+                    event={event}
+                    showPublishStatus={eventType === 'organizing'}
+                  />
                 </Link>
               );
             })}
