@@ -29,7 +29,7 @@ export function SignUpCard({
 
   const numberOfAttendeesLabel =
     typeof numberOfAttendees === 'number'
-      ? `${numberOfAttendees} people attending`
+      ? `${numberOfAttendees} attending`
       : 'Loading...';
 
   const tooltipText = isPublished
@@ -43,14 +43,18 @@ export function SignUpCard({
       </Button>
     </form>
   ) : (
-    <form className="flex items-center gap-x-4" onSubmit={onJoinSubmit}>
-      <Switch
-        name="hasPlusOne"
-        control={control}
-        defaultValue={defaultValues?.hasPlusOne || false}
-      >
-        Bring +1
-      </Switch>
+    <form className="flex items-center gap-x-4 w-full" onSubmit={onJoinSubmit}>
+      <div>
+        <Switch
+          name="hasPlusOne"
+          control={control}
+          defaultValue={defaultValues?.hasPlusOne || false}
+        >
+          <span>
+            <span className="hidden md:inline">Bring </span>+1
+          </span>
+        </Switch>
+      </div>
       <Button type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
         Attend
       </Button>
@@ -60,9 +64,10 @@ export function SignUpCard({
   return (
     <Tooltip text={tooltipText}>
       <CardBase>
-        <div className="flex items-center">
-          <Text className="text-gray-400">{numberOfAttendeesLabel}</Text>
-          <div className="grow" />
+        <div className="flex items-center gap-x-2">
+          <div className="grow">
+            <Text className="text-gray-400">{numberOfAttendeesLabel}</Text>
+          </div>
           <div className="flex items-center">{action}</div>
         </div>
       </CardBase>

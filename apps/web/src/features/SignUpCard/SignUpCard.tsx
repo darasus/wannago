@@ -1,7 +1,12 @@
 import {RedirectToSignIn, useAuth} from '@clerk/nextjs';
 import {Event} from '@prisma/client';
 import {SignUpCard as _SignUpCard} from 'cards';
-import {useAmplitude, useAttendeeCount, useConfetti} from 'hooks';
+import {
+  useAmplitude,
+  useAttendeeCount,
+  useConfetti,
+  useConfirmDialog,
+} from 'hooks';
 import {useState} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
@@ -51,6 +56,16 @@ export function SignUpCard({event}: Props) {
       toast.success('Cancelled! Check your email for more details!');
     },
   });
+  const {modal: cancelModal, open: openCancelModal} = useConfirmDialog({
+    title: 'Confirm cancellation',
+    description: 'Are you sure you want to cancel your attendance?',
+    onConfirm: async () => {
+      await cancelEvent.mutateAsync({
+        eventId: event.id,
+      });
+      await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
+    },
+  });
   const form = useForm<EventSignUpForm>();
   const attendeeCount = useAttendeeCount({
     eventId: event.id,
@@ -77,12 +92,7 @@ export function SignUpCard({event}: Props) {
       return;
     }
 
-    try {
-      await cancelEvent.mutateAsync({
-        eventId: event.id,
-      });
-      await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
-    } catch (error) {}
+    openCancelModal();
   });
 
   const amSignedUp = Boolean(
@@ -93,6 +103,7 @@ export function SignUpCard({event}: Props) {
 
   return (
     <>
+      {cancelModal}
       {isOpen && (
         <RedirectToSignIn redirectUrl={`${getBaseUrl()}/e/${event.shortId}`} />
       )}
