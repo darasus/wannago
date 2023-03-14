@@ -1,18 +1,11 @@
-import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {EventCard} from 'cards';
-import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
-import SuperJSON from 'superjson';
-import {createContext} from 'trpc';
-import {appRouter} from 'trpc/src/routers/_app';
 import {trpc} from 'trpc/src/trpc';
-import {Avatar, CardBase, Container, PageHeader, Spinner, Text} from 'ui';
+import {Avatar, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
 
-export default function ProfilePage({
-  user,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function ProfilePage() {
   const router = useRouter();
   const userId = router.query.userId as string;
   const {data, isLoading: isLoadingUser} = trpc.user.getUserById.useQuery(
@@ -21,7 +14,6 @@ export default function ProfilePage({
     },
     {
       enabled: !!userId,
-      initialData: SuperJSON.parse(user),
     }
   );
   const {data: userEvents, isLoading: isLoadingEvents} =
@@ -35,11 +27,7 @@ export default function ProfilePage({
     );
 
   if (isLoadingUser) {
-    return (
-      <div className="flex justify-center items-center h-screen w-screen">
-        <Spinner />
-      </div>
-    );
+    return <LoadingBlock />;
   }
 
   return (
@@ -69,30 +57,28 @@ export default function ProfilePage({
             )}
           </div>
         </CardBase>
-        {isLoadingEvents && (
-          <div className="flex justify-center">
-            <Spinner />
-          </div>
-        )}
+        {isLoadingEvents && <LoadingBlock />}
         {userEvents && (
           <div>
             <PageHeader title="My events" />
           </div>
         )}
-        <div className="flex flex-col gap-4">
-          {userEvents?.map(event => {
-            return (
-              <Link
-                href={`/e/${event.shortId}`}
-                key={event.id}
-                data-testid="event-card"
-              >
-                <EventCard event={event} />
-              </Link>
-            );
-          })}
-        </div>
-        {userEvents?.length === 0 && (
+        {userEvents && userEvents?.length > 0 && (
+          <div className="flex flex-col gap-4">
+            {userEvents.map(event => {
+              return (
+                <Link
+                  href={`/e/${event.shortId}`}
+                  key={event.id}
+                  data-testid="event-card"
+                >
+                  <EventCard event={event} />
+                </Link>
+              );
+            })}
+          </div>
+        )}
+        {!isLoadingEvents && userEvents?.length === 0 && (
           <div className="flex justify-center p-4">
             <Text>No events yet...</Text>
           </div>
@@ -100,30 +86,4 @@ export default function ProfilePage({
       </Container>
     </>
   );
-}
-
-export async function getServerSideProps({
-  req,
-  res,
-  params,
-}: GetServerSidePropsContext<{userId: string}>) {
-  const ssg = createProxySSGHelpers({
-    router: appRouter,
-    ctx: await createContext(),
-    transformer: SuperJSON,
-  });
-
-  const user = await ssg.user.getUserById.fetch({userId: params?.userId!});
-
-  const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
-  res.setHeader(
-    'Cache-Control',
-    `s-maxage=10, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`
-  );
-
-  return {
-    props: {
-      user: SuperJSON.stringify(user),
-    },
-  };
 }

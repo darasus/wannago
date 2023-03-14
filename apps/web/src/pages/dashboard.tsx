@@ -8,7 +8,6 @@ import {Container, Button, PageHeader, Toggle, LoadingBlock} from 'ui';
 import {withProtected} from '../utils/withAuthProtect';
 import {FormProvider, useForm} from 'react-hook-form';
 import {useGlobalLoading} from 'hooks';
-import {AnimatePresence, motion} from 'framer-motion';
 
 interface Form {
   eventType: 'attending' | 'organizing';
@@ -57,45 +56,33 @@ function Dashboard() {
             </div>
           </FormProvider>
         </PageHeader>
-        <AnimatePresence mode="wait">
-          {isGettingCards && <LoadingBlock />}
-          {!isGettingCards && (
-            <motion.div
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-              className="flex flex-col gap-y-4"
-            >
-              {data?.map(event => {
-                return (
-                  <Link
-                    href={`/e/${event.shortId}`}
-                    key={event.id}
-                    data-testid="event-card"
-                  >
-                    <EventCard event={event} />
-                  </Link>
-                );
-              })}
-            </motion.div>
-          )}
-          {!isGettingCards && haveNoEvents && (
-            <motion.div
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-              className="text-center"
-            >
-              <span className="text-5xl">🤷</span>
-              <div />
-              <span className="text-lg font-medium">
-                {
-                  'It looks empty here, start by clicking on "+" button to create your first event.'
-                }
-              </span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {isGettingCards && <LoadingBlock />}
+        {!isGettingCards && (
+          <div className="flex flex-col gap-y-4">
+            {data?.map(event => {
+              return (
+                <Link
+                  href={`/e/${event.shortId}`}
+                  key={event.id}
+                  data-testid="event-card"
+                >
+                  <EventCard event={event} />
+                </Link>
+              );
+            })}
+          </div>
+        )}
+        {!isGettingCards && haveNoEvents && (
+          <div className="text-center">
+            <span className="text-5xl">🤷</span>
+            <div />
+            <span className="text-lg font-medium">
+              {
+                'It looks empty here, start by clicking on "+" button to create your first event.'
+              }
+            </span>
+          </div>
+        )}
       </Container>
     </>
   );

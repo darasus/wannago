@@ -14,21 +14,23 @@ export function LoadingWave({className = 'h-5 w-5'}: Props) {
   }, []);
 
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="80px"
-      height="60px"
-      viewBox="5 0 80 60"
-      className="loading-wave stroke-gray-800"
-    >
-      <path
-        ref={ref}
-        id="wave"
-        fill="none"
-        strokeWidth="2"
-        strokeLinecap="round"
-      ></path>
-    </svg>
+    <div className="flex justify-center items-center overflow-hidden h-[30px] w-[80px]">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="80px"
+        height="60px"
+        viewBox="5 0 80 60"
+        className="loading-wave stroke-gray-800"
+      >
+        <path
+          ref={ref}
+          id="wave"
+          fill="none"
+          strokeWidth="2"
+          strokeLinecap="round"
+        ></path>
+      </svg>
+    </div>
   );
 }
 

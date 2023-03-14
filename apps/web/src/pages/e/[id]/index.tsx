@@ -3,7 +3,7 @@ import Head from 'next/head';
 import {useMemo} from 'react';
 import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import {EventView} from '../../../features/EventView/EventView';
-import {Container, Spinner} from 'ui';
+import {Container, LoadingBlock, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {useEventId, useHandleEmailCallbackParam, useMe} from 'hooks';
 
@@ -24,11 +24,7 @@ export default function EventPage() {
   const isMyEvent = event?.organizationId === me.data?.organizationId;
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center p-4">
-        <Spinner />
-      </div>
-    );
+    return <LoadingBlock />;
   }
 
   return (
