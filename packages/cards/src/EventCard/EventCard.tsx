@@ -44,6 +44,7 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
               </div>
             )}
             <Image
+              className="bg-cover bg-center"
               src={featuredImageSrc}
               alt={title}
               loader={cloudflareImageLoader}
@@ -51,7 +52,14 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
               placeholder={'blur'}
               sizes="320 640 750 1000"
               fill
-              style={{objectFit: 'cover'}}
+              style={{
+                objectFit:
+                  featuredImageHeight > featuredImageWidth ||
+                  featuredImageHeight === featuredImageWidth
+                    ? 'contain'
+                    : 'cover',
+                backgroundImage: 'url(' + featuredImagePreviewSrc + ')',
+              }}
             />
           </div>
         )}
