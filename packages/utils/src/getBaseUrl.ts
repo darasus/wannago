@@ -3,7 +3,7 @@ export const getBaseUrl = () => {
     return `https://www.wannago.app`;
   }
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'development') {
     return `http://localhost:3000`;
   }
 
