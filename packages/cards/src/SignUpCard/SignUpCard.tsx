@@ -9,6 +9,7 @@ interface Props {
   numberOfAttendees: number;
   isPublished: boolean;
   amSignedUp: boolean;
+  isBlur?: boolean;
 }
 
 interface EventSignUpForm {
@@ -63,7 +64,7 @@ export function SignUpCard({
 
   return (
     <Tooltip text={tooltipText}>
-      <CardBase>
+      <CardBase isBlur={!isPublished}>
         <div className="flex items-center gap-x-2">
           <div className="grow">
             <Text className="text-gray-400">{numberOfAttendeesLabel}</Text>
