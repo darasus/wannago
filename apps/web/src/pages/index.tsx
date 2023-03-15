@@ -4,7 +4,6 @@ import {CallToAction} from '../components/Marketing/CallToAction';
 import {Faqs} from '../components/Marketing/Faqs';
 import {Footer} from '../components/Marketing/Footer';
 import {Features} from '../components/Marketing/Features';
-import {withDashboardRedirectIfSignedIn} from '../utils/withDashboardRedirectIfSignedIn';
 
 function HomePage() {
   return (
@@ -29,4 +28,4 @@ function HomePage() {
   );
 }
 
-export default withDashboardRedirectIfSignedIn(HomePage);
+export default HomePage;

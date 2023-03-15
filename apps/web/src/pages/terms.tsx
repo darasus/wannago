@@ -1,5 +1,4 @@
 import {Container, PageHeader, Text} from 'ui';
-import {withDashboardRedirectIfSignedIn} from '../utils/withDashboardRedirectIfSignedIn';
 
 function TermsPage() {
   return (
@@ -115,4 +114,4 @@ function TermsPage() {
   );
 }
 
-export default withDashboardRedirectIfSignedIn(TermsPage);
+export default TermsPage;

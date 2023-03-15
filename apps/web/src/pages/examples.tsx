@@ -4,7 +4,6 @@ import {EventCard} from 'cards';
 import {LoadingEventCard} from 'cards/src/LoadingEventCard/LoadingEventCard';
 import {Container} from 'ui';
 import {trpc} from 'trpc/src/trpc';
-import {withDashboardRedirectIfSignedIn} from '../utils/withDashboardRedirectIfSignedIn';
 
 function ExamplesPage() {
   const {isLoading, data} = trpc.event.getExamples.useQuery();
@@ -35,4 +34,4 @@ function ExamplesPage() {
   );
 }
 
-export default withDashboardRedirectIfSignedIn(ExamplesPage);
+export default ExamplesPage;
