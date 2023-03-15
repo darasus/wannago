@@ -1,7 +1,15 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {Button, CardBase, PageHeader, Container, Text, Spinner} from 'ui';
+import {
+  Button,
+  CardBase,
+  PageHeader,
+  Container,
+  Text,
+  Spinner,
+  LoadingBlock,
+} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 import {toast} from 'react-hot-toast';
@@ -92,11 +100,7 @@ function EventAttendeesPage() {
   );
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center p-4">
-        <Spinner />
-      </div>
-    );
+    return <LoadingBlock />;
   }
 
   return (
