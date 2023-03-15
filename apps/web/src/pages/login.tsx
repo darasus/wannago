@@ -1,6 +1,5 @@
 import {SignIn} from '@clerk/nextjs';
 import Head from 'next/head';
-import {withDashboardRedirectIfSignedIn} from '../utils/withDashboardRedirectIfSignedIn';
 
 function LoginPage() {
   return (
@@ -15,4 +14,4 @@ function LoginPage() {
   );
 }
 
-export default withDashboardRedirectIfSignedIn(LoginPage);
+export default LoginPage;

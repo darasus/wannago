@@ -12,7 +12,7 @@ export function withDashboardRedirectIfSignedIn(
 
     useEffect(() => {
       if (isSignedIn) {
-        router.push('/dashboard');
+        router.push('/dashboard', undefined, {unstable_skipClientCache: true});
       }
     }, [isSignedIn, router]);
 

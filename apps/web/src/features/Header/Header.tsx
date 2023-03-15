@@ -6,6 +6,7 @@ import {useUser} from '@clerk/nextjs';
 import {UserSection} from '../UserSection/UserSection';
 import {FeedbackFish} from '@feedback-fish/react';
 import {cn} from 'utils';
+import {useLoading} from 'hooks';
 
 export const navItems = [
   {label: 'Features', href: `/#features`},
@@ -44,9 +45,19 @@ export function Header() {
   const showMobileMenu = !isSignedIn;
   const showDesktopHomeNav = !isSignedIn;
 
+  const {enabled} = useLoading();
+
   return (
     <header>
-      <CardBase>
+      <CardBase
+      // className="relative overflow-hidden"
+      >
+        {/* <div
+          className={cn(
+            'absolute top-0 bottom-0 left-0 right-0 header-loading opacity-0',
+            {'opacity-100': enabled}
+          )}
+        /> */}
         <nav className="relative flex justify-between">
           <div className="flex items-center gap-x-8">
             <Logo href={isSignedIn ? '/dashboard' : '/'} />

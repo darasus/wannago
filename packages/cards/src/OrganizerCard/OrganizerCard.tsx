@@ -1,6 +1,5 @@
 import {Badge, CardBase, Button, Spinner, Text, Avatar} from 'ui';
 import {User} from '@prisma/client';
-import Image from 'next/image';
 
 interface Props {
   onOpenFormClick: () => void;
@@ -29,23 +28,11 @@ export function OrganizerCard({isLoading, onOpenFormClick, user}: Props) {
                 <Spinner className="text-gray-400" />
               </div>
             )}
-            {user?.profileImageSrc ? (
-              <Avatar
-                className="h-10 w-10"
-                src={user?.profileImageSrc}
-                alt="avatar"
-              />
-            ) : (
-              <Image
-                src={
-                  'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
-                }
-                alt=""
-                fill
-                style={{objectFit: 'cover'}}
-                priority
-              />
-            )}
+            <Avatar
+              className="h-10 w-10"
+              src={user?.profileImageSrc}
+              alt="avatar"
+            />
           </div>
           <Button as={'a'} href={`/u/${user?.id}`} title={name} variant="link">
             {name}

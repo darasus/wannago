@@ -1,13 +1,14 @@
 import Image from 'next/image';
 import {ComponentProps} from 'react';
 import {cloudflareImageLoader, cn} from 'utils';
+import {UserIcon} from '@heroicons/react/24/solid';
 
-interface Props extends ComponentProps<typeof Image> {
+interface Props extends Omit<ComponentProps<typeof Image>, 'src'> {
   className?: string;
   imageClassName?: string;
   height?: number;
   width?: number;
-  src: string;
+  src?: string | null;
 }
 
 export function Avatar({
@@ -26,18 +27,24 @@ export function Avatar({
         className
       )}
     >
-      <Image
-        {...props}
-        loader={cloudflareImageLoader}
-        className={cn(
-          'block h-full w-full rounded-full border-2 border-gray-800',
-          imageClassName
-        )}
-        fill
-        style={{objectFit: 'cover'}}
-        src={src}
-        alt={alt}
-      />
+      {src ? (
+        <Image
+          {...props}
+          loader={cloudflareImageLoader}
+          className={cn(
+            'block h-full w-full rounded-full border-2 border-gray-800',
+            imageClassName
+          )}
+          fill
+          style={{objectFit: 'cover'}}
+          src={src}
+          alt={alt}
+        />
+      ) : (
+        <div className="flex items-center justify-center h-full w-full border-2 border-gray-800 rounded-full bg-slate-200">
+          <UserIcon className="h-2/3 w-2/4" />
+        </div>
+      )}
     </div>
   );
 }

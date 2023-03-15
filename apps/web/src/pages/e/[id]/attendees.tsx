@@ -1,7 +1,15 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {Container, CardBase, Button, Text, PageHeader, Spinner} from 'ui';
+import {
+  Container,
+  CardBase,
+  Button,
+  Text,
+  PageHeader,
+  Spinner,
+  LoadingBlock,
+} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {saveAs} from 'file-saver';
 import {withProtected} from '../../../utils/withAuthProtect';
@@ -27,10 +35,12 @@ function Item({user, hasPlusOne, status, refetch}: ItemProps) {
     user.email +
     (hasPlusOne ? ' · +1' : '');
 
-  const {mutateAsync} = trpc.event.cancelRsvp.useMutation();
+  const {mutateAsync} = trpc.event.cancelEventByUserId.useMutation();
   const eventId = useEventId();
   const handleCancelClick = useCallback(async () => {
-    await mutateAsync({eventId, userId: user.id}).then(() => refetch());
+    if (eventId) {
+      await mutateAsync({eventId, userId: user.id}).then(() => refetch());
+    }
   }, [mutateAsync, eventId, user.id, refetch]);
   const {open, modal} = useConfirmDialog({
     title: 'Cancel RSVP',
@@ -65,7 +75,7 @@ function EventAttendeesPage() {
   const eventId = useEventId();
   const {data, refetch, isLoading} = trpc.event.getAttendees.useQuery(
     {
-      eventId,
+      eventId: eventId!,
     },
     {
       enabled: !!eventId,
@@ -87,11 +97,7 @@ function EventAttendeesPage() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center p-4">
-        <Spinner />
-      </div>
-    );
+    return <LoadingBlock />;
   }
 
   return (
@@ -104,7 +110,7 @@ function EventAttendeesPage() {
           <MessageParticipantsButton />
           <Button
             variant="neutral"
-            onClick={() => router.push(`/event/${eventId}/invite`)}
+            onClick={() => router.push(`/e/${eventId}/invite`)}
             size="sm"
             iconLeft={<UserPlusIcon />}
             title={'Invite'}

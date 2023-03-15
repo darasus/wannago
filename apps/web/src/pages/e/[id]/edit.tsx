@@ -1,28 +1,24 @@
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {EditEventForm} from '../../../features/EventForm/EditEventForm';
-import {Container, Spinner} from 'ui';
+import {Container, LoadingBlock, Spinner} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {withProtected} from '../../../utils/withAuthProtect';
 
 function EventEditPage() {
   const router = useRouter();
-  const eventId = router.query.id as string;
-  const {data: event, isLoading} = trpc.event.getById.useQuery(
+  const shortId = router.query.id as string;
+  const {data: event, isLoading} = trpc.event.getByShortId.useQuery(
     {
-      eventId,
+      id: shortId,
     },
     {
-      enabled: !!eventId,
+      enabled: !!shortId,
     }
   );
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center p-4">
-        <Spinner />
-      </div>
-    );
+    return <LoadingBlock />;
   }
 
   return (

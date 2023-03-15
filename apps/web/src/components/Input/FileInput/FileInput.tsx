@@ -97,13 +97,15 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
         )}
         {!isLoading && imageSrc && (
           <>
-            <NextImage
-              data-testid="file-input-image-preview"
-              alt=""
-              src={imageSrc}
-              fill
-              className="object-cover"
-            />
+            <div className="flex items-center justify-center absolute w-full h-full bg-gray-100">
+              <NextImage
+                data-testid="file-input-image-preview"
+                alt=""
+                src={imageSrc}
+                fill
+                style={{objectFit: 'contain'}}
+              />
+            </div>
             <Button
               variant="neutral"
               size="sm"

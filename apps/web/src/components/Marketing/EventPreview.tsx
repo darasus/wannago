@@ -48,7 +48,6 @@ function Event() {
         <DateCard
           endDate={event.endDate}
           startDate={event.startDate}
-          timezone={undefined}
           onAddToCalendarClick={() => {}}
         />
       ),

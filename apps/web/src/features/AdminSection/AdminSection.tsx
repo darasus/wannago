@@ -20,11 +20,10 @@ import {cn} from 'utils';
 
 interface Props {
   event: Event;
-  timezone?: string | null;
   refetchEvent: () => void;
 }
 
-export function AdminSection({event, timezone}: Props) {
+export function AdminSection({event}: Props) {
   const router = useRouter();
   const attendeesCount = useAttendeeCount({eventId: event.id});
   const {modal: removeEventModal, onRemoveClick} = useRemoveEvent({
@@ -57,11 +56,11 @@ export function AdminSection({event, timezone}: Props) {
     },
     {
       label: 'Created',
-      value: formatTimeago(event.createdAt, timezone),
+      value: formatTimeago(event.createdAt),
     },
     {
       label: 'Updated',
-      value: formatTimeago(event.updatedAt, timezone),
+      value: formatTimeago(event.updatedAt),
     },
     {
       label: 'Attendees',
@@ -118,7 +117,7 @@ export function AdminSection({event, timezone}: Props) {
             <Button
               variant="neutral"
               iconLeft={<PencilIcon />}
-              onClick={() => router.push(`/event/${event.id}/edit`)}
+              onClick={() => router.push(`/e/${event.shortId}/edit`)}
               size="sm"
             >
               Edit
@@ -126,7 +125,7 @@ export function AdminSection({event, timezone}: Props) {
             <Button
               variant="neutral"
               iconLeft={<UsersIcon />}
-              onClick={() => router.push(`/event/${event.id}/attendees`)}
+              onClick={() => router.push(`/e/${event.shortId}/attendees`)}
               size="sm"
             >
               Attendees

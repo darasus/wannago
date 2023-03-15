@@ -4,46 +4,79 @@ import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
 import {EventCard} from 'cards';
 import Head from 'next/head';
-import {Container, Button} from 'ui';
-import {LoadingEventCard} from 'cards/src/LoadingEventCard/LoadingEventCard';
+import {Container, Button, PageHeader, Toggle, LoadingBlock} from 'ui';
 import {withProtected} from '../utils/withAuthProtect';
-import {cn} from 'utils';
+import {FormProvider, useForm} from 'react-hook-form';
+import {useGlobalLoading} from 'hooks';
+
+interface Form {
+  eventType: 'attending' | 'organizing' | 'all';
+}
 
 function Dashboard() {
   const router = useRouter();
-  const {data, isLoading} = trpc.me.getMyEvents.useQuery();
+  const form = useForm<Form>({
+    defaultValues: {
+      eventType: 'all',
+    },
+  });
+  const eventType = form.watch('eventType');
+  const {data, isLoading, isFetching} = trpc.me.getMyEvents.useQuery({
+    eventType,
+  });
   const haveNoEvents = data?.length === 0;
+  const isGettingCards = isLoading || isFetching;
+
+  useGlobalLoading(isGettingCards);
 
   return (
     <>
       <Head>
         <title>Dashboard | WannaGo</title>
       </Head>
-      <Container className="md:px-4">
-        <Button
-          onClick={() => router.push('/event/add')}
-          className={cn(
-            'flex justify-center items-center w-full h-full p-4 mb-4'
-          )}
-          iconLeft={<PlusCircleIcon />}
-          data-testid="add-event-button"
-        />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {isLoading &&
-            Array.from({length: 3}).map((_, i) => <LoadingEventCard key={i} />)}
-          {data?.map(event => {
-            return (
-              <Link
-                href={`/event/${event.id}`}
-                key={event.id}
-                data-testid="event-card"
+      <Container maxSize="sm" className="flex flex-col gap-y-4 md:px-4">
+        <PageHeader title="My events">
+          <FormProvider {...form}>
+            <div className="flex items-center gap-x-2">
+              <Button
+                size="md"
+                onClick={() => router.push('/e/add')}
+                iconLeft={<PlusCircleIcon />}
+                data-testid="add-event-button"
               >
-                <EventCard event={event} />
-              </Link>
-            );
-          })}
-        </div>
-        {haveNoEvents && (
+                <span className="hidden md:inline">Create event</span>
+              </Button>
+              <Toggle
+                name="eventType"
+                options={[
+                  {label: 'All', value: 'all'},
+                  {label: 'Attending', value: 'attending'},
+                  {label: 'Organizing', value: 'organizing'},
+                ]}
+              />
+            </div>
+          </FormProvider>
+        </PageHeader>
+        {isGettingCards && <LoadingBlock />}
+        {!isGettingCards && (
+          <div className="flex flex-col gap-y-4">
+            {data?.map(event => {
+              return (
+                <Link
+                  href={`/e/${event.shortId}`}
+                  key={event.id}
+                  data-testid="event-card"
+                >
+                  <EventCard
+                    event={event}
+                    showPublishStatus={eventType === 'organizing'}
+                  />
+                </Link>
+              );
+            })}
+          </div>
+        )}
+        {!isGettingCards && haveNoEvents && (
           <div className="text-center">
             <span className="text-5xl">🤷</span>
             <div />

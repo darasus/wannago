@@ -12,7 +12,6 @@
     "module": "esnext",
     "noEmit": true,
     "resolveJsonModule": true,
-    "target": "es5",
-    "plugins": [{"name": "next"}]
+    "target": "es5"
   }
 }

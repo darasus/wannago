@@ -9,11 +9,9 @@ import {useAmplitude} from 'hooks';
 
 interface Props {
   event: Event;
-  timezone?: string;
-  relativeTimeString?: string;
 }
 
-export function DateCard({event, timezone, relativeTimeString}: Props) {
+export function DateCard({event}: Props) {
   const {logEvent} = useAmplitude();
   const handleCalendarClick = () => {
     logEvent('add_to_calendar_button_clicked', {
@@ -32,8 +30,6 @@ export function DateCard({event, timezone, relativeTimeString}: Props) {
       startDate={event.startDate}
       endDate={event.endDate}
       onAddToCalendarClick={handleCalendarClick}
-      timezone={timezone}
-      relativeTimeString={relativeTimeString}
     />
   );
 }

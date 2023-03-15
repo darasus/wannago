@@ -63,7 +63,7 @@ export async function handleOrganizerEventSignUpNotificationEmail({
     htmlString: render(
       <OrganizerEventSignUpNotification
         eventTitle={event.title}
-        eventAttendeesUrl={`${getBaseUrl()}/event/${event.id}/attendees`}
+        eventAttendeesUrl={`${getBaseUrl()}/e/${event.shortId}/attendees`}
         userFullName={`${user.firstName} ${user.lastName}`}
       />
     ),

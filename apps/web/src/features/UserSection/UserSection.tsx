@@ -1,16 +1,15 @@
 import {useClerk, useUser} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
-import Image from 'next/image';
 import {Fragment} from 'react';
 import {Avatar, Button, CardBase} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
-import {trpc} from 'trpc/src/trpc';
+import {useMe} from 'hooks';
 
 export function UserSection() {
   const {user, isLoaded} = useUser();
   const {signOut} = useClerk();
-  const {data} = trpc.me.me.useQuery();
-  const showAdminLink = data?.type === 'ADMIN';
+  const me = useMe();
+  const showAdminLink = me.data?.type === 'ADMIN';
 
   const onSignOutClick = async () => {
     await signOut();
@@ -27,23 +26,16 @@ export function UserSection() {
               <Button
                 variant="neutral"
                 iconLeft={
-                  user?.profileImageUrl && (
-                    <Avatar
-                      className="h-6 w-6"
-                      src={user?.profileImageUrl}
-                      data-testid="user-header-button"
-                      alt={'avatar'}
-                    />
-                  )
-                  // <div className="rounded-full overflow-hidden">
-                  //   <Image
-                  //     src={user?.profileImageUrl!}
-                  //     height={24}
-                  //     width={24}
-                  //     alt={`Profile pic for ${user?.fullName}`}
-                  //     data-testid="user-header-button"
-                  //   />
-                  // </div>
+                  <Avatar
+                    className="h-6 w-6"
+                    src={
+                      user?.profileImageUrl.includes('gravatar')
+                        ? undefined
+                        : user?.profileImageUrl
+                    }
+                    data-testid="user-header-button"
+                    alt={'avatar'}
+                  />
                 }
               >
                 {user?.firstName}
@@ -64,28 +56,28 @@ export function UserSection() {
                     variant="neutral"
                     as="a"
                     href={`/dashboard`}
-                    size="xs"
+                    size="sm"
                   >
                     Dashboard
                   </Button>
                   <Button
                     variant="neutral"
                     as="a"
-                    href={`/u/${data?.id}`}
-                    size="xs"
+                    href={`/u/${me.data?.id}`}
+                    size="sm"
                   >
                     Profile
                   </Button>
-                  <Button variant="neutral" as="a" href="/me" size="xs">
+                  <Button variant="neutral" as="a" href="/me" size="sm">
                     Settings
                   </Button>
                   {showAdminLink && (
-                    <Button variant="neutral" as="a" href="/admin" size="xs">
+                    <Button variant="neutral" as="a" href="/admin" size="sm">
                       Admin
                     </Button>
                   )}
                   <FeedbackFish projectId="f843146d960b2f" userId={user?.id}>
-                    <Button variant="neutral" size="xs">
+                    <Button variant="neutral" size="sm">
                       Feedback
                     </Button>
                   </FeedbackFish>
@@ -93,7 +85,7 @@ export function UserSection() {
                     variant="danger"
                     onClick={onSignOutClick}
                     data-testid="logout-button"
-                    size="xs"
+                    size="sm"
                   >
                     Logout
                   </Button>

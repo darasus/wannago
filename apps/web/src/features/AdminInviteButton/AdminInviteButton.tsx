@@ -30,9 +30,11 @@ export function AdminInviteButton({refetch}: Props) {
   });
 
   const onSubmit = handleSubmit(async data => {
-    await mutateAsync({...data, eventId});
-    await refetch();
-    reset();
+    if (eventId) {
+      await mutateAsync({...data, eventId});
+      await refetch();
+      reset();
+    }
   });
 
   return (

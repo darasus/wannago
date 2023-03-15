@@ -5,23 +5,14 @@ import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
 import {InfoCard} from 'cards';
 import {LocationCard} from '../LocationCard/LocationCard';
 import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
-import {ParticipantsCard} from '../ParticipantsCard/ParticipantsCard';
-import {isPast} from 'utils';
 import {StreamCard} from '../StreamCard/StreamCard';
+import {SignUpCard} from '../SignUpCard/SignUpCard';
 
 interface Props {
   event: Event;
-  timezone?: string;
-  isPublic?: boolean;
-  relativeTimeString?: string;
 }
 
-export function EventView({
-  event,
-  timezone,
-  isPublic,
-  relativeTimeString,
-}: Props) {
+export function EventView({event}: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -54,18 +45,10 @@ export function EventView({
           )}
         </div>
         <div className="items-stretch">
-          <DateCard
-            event={event}
-            timezone={timezone}
-            relativeTimeString={relativeTimeString}
-          />
+          <DateCard event={event} />
         </div>
       </div>
-      {!isPast(event.endDate, timezone) && (
-        <div className="items-stretch">
-          <ParticipantsCard event={event} />
-        </div>
-      )}
+      <SignUpCard event={event} />
     </div>
   );
 }

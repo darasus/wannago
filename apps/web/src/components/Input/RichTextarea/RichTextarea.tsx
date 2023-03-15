@@ -39,7 +39,7 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
         {editor && (
           <BubbleMenu
             className="isolate inline-flex rounded-md shadow-sm"
-            tippyOptions={{duration: 100}}
+            tippyOptions={{duration: 100, placement: 'top'}}
             editor={editor}
           >
             <BubbleMenuButtonGroup editor={editor} />
@@ -49,7 +49,7 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
         {editor && (
           <FloatingMenu
             className=""
-            tippyOptions={{duration: 100}}
+            tippyOptions={{duration: 100, placement: 'top'}}
             editor={editor}
           >
             <BubbleMenuButtonGroup editor={editor} />

@@ -2,11 +2,9 @@ import {PropsWithChildren} from 'react';
 import {Container, Spinner} from 'ui';
 import {Header} from '../Header/Header';
 
-interface Props extends PropsWithChildren {
-  isLoading?: boolean;
-}
+interface Props extends PropsWithChildren {}
 
-export function AppLayout({children, isLoading}: Props) {
+export function AppLayout({children}: Props) {
   return (
     <div>
       <div className="relative z-20">
@@ -14,16 +12,9 @@ export function AppLayout({children, isLoading}: Props) {
           <Header />
         </Container>
       </div>
-      {isLoading && (
-        <div className="flex justify-center py-2">
-          <Spinner />
-        </div>
-      )}
-      {!isLoading && (
-        <div>
-          <div>{children}</div>
-        </div>
-      )}
+      <div>
+        <div>{children}</div>
+      </div>
     </div>
   );
 }

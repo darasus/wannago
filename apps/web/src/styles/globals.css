@@ -66,3 +66,44 @@ body {
 .__simple-icons-svg {
   display: block !important;
 }
+
+.header-loading {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgb(255 255 255 / var(--tw-bg-opacity)),
+    rgb(255 255 255 / var(--tw-bg-opacity)) 20px,
+    rgb(226 232 240 / var(--tw-bg-opacity)) 20px,
+    rgb(226 232 240 / var(--tw-bg-opacity)) 40px
+  );
+
+  transition: opacity 0.25s;
+
+  /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
+  animation: gradient 10s linear infinite;
+  background-size: 200% 100%;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+#wave {
+  stroke-dasharray: 0 16 101 16;
+  animation: moveTheWave 2400ms linear infinite;
+}
+
+@keyframes moveTheWave {
+  0% {
+    stroke-dashoffset: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    stroke-dashoffset: -133;
+    transform: translate3d(-90px, 0, 0);
+  }
+}

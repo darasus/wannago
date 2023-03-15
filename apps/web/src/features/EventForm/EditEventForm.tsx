@@ -25,7 +25,7 @@ export function EditEventForm({event}: Props) {
       logEvent('event_updated', {
         eventId: data?.id,
       });
-      push(`/event/${data.id}`);
+      push(`/e/${data.shortId}`);
     },
   });
   const form = useEventForm({
@@ -114,7 +114,7 @@ export function EditEventForm({event}: Props) {
           <EventForm
             onSubmit={onSubmit}
             isEdit
-            onCancelClick={() => router.push(`/event/${event.id}`)}
+            onCancelClick={() => router.push(`/e/${event.shortId}`)}
           />
         </div>
         <div className="col-span-6 pointer-events-none hidden md:block">

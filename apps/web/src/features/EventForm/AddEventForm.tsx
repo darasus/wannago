@@ -17,7 +17,7 @@ export function AddEventForm() {
         eventId: data?.id,
       });
       if (data?.id) {
-        push(`/event/${data.id}`);
+        push(`/e/${data.shortId}`);
       }
     },
   });
@@ -62,7 +62,7 @@ export function AddEventForm() {
       ),
     })
       .then(async res => {
-        await utils.event.getById.prefetch({eventId: res.id});
+        await utils.event.getByShortId.prefetch({id: res.shortId});
       })
       .catch(() => {
         form.trigger();

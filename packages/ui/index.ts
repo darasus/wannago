@@ -20,3 +20,6 @@ export {Td} from './src/components/Table/Td';
 export {LocationImage} from './src/components/LocationImage/LocationImage';
 export {EventRegistrationStatusBadge} from './src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 export {TextAnimation} from './src/components/TextAnimation/TextAnimation';
+export {Toggle} from './src/components/Toggle/Toggle';
+export {LoadingWave} from './src/components/LoadingWave/LoadingWave';
+export {LoadingBlock} from './src/components/LoadingBlock/LoadingBlock';
