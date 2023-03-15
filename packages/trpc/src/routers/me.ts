@@ -18,9 +18,9 @@ const getMyEvents = protectedProcedure.query(async ({ctx}) => {
 });
 
 const me = protectedProcedure.query(async ({ctx}) => {
-  return ctx.prisma.user.findUnique({
+  return ctx.prisma.user.findFirst({
     where: {
-      email: ctx.user?.emailAddresses[0].emailAddress,
+      externalId: ctx.user?.id,
     },
   });
 });

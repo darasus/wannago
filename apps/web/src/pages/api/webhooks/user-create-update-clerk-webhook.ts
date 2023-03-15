@@ -11,9 +11,16 @@ const scheme = z.object({
     first_name: z.string(),
     last_name: z.string(),
     profile_image_url: z.string(),
+    primary_email_address_id: z.string(),
     email_addresses: z.array(
       z.object({
+        id: z.string(),
         email_address: z.string(),
+        verification: z
+          .object({
+            status: z.enum(['verified']),
+          })
+          .nullable(),
       })
     ),
   }),
@@ -38,7 +45,7 @@ export default async function handler(
 
     const user = await prisma.user.findFirst({
       where: {
-        email: data.email_addresses[0].email_address,
+        externalId: data.id,
       },
     });
 
@@ -98,13 +105,20 @@ export default async function handler(
         externalId: data.id,
       },
     });
+
+    const email = data.email_addresses.find(
+      e =>
+        e.verification?.status === 'verified' &&
+        e.id === data.primary_email_address_id
+    );
+
     if (user) {
       await prisma.user.update({
         where: {
           id: user.id,
         },
         data: {
-          email: data.email_addresses[0].email_address,
+          email: email?.email_address,
           firstName: data.first_name,
           lastName: data.last_name,
           profileImageSrc: data.profile_image_url,
