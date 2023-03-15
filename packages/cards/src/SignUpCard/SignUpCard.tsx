@@ -1,6 +1,6 @@
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
-import {Button, CardBase, Text, Tooltip} from 'ui';
+import {Badge, Button, CardBase, Text, Tooltip} from 'ui';
 import {Switch} from '../../../../apps/web/src/components/Input/Switch/Switch';
 
 interface Props {
@@ -39,9 +39,18 @@ export function SignUpCard({
 
   const action = amSignedUp ? (
     <form className="flex items-center gap-x-4" onSubmit={onCancelSubmit}>
-      <Button type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
-        Cancel
-      </Button>
+      <div className="flex items-center gap-x-2">
+        <Badge size="xs" color="green">{`You're signed up!`}</Badge>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          isLoading={isSubmitting}
+          variant="neutral"
+          size="sm"
+        >
+          Cancel
+        </Button>
+      </div>
     </form>
   ) : (
     <form className="flex items-center gap-x-4 w-full" onSubmit={onJoinSubmit}>
@@ -56,7 +65,12 @@ export function SignUpCard({
           </span>
         </Switch>
       </div>
-      <Button type="submit" disabled={isSubmitting} isLoading={isSubmitting}>
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        isLoading={isSubmitting}
+        size="sm"
+      >
         Attend
       </Button>
     </form>
