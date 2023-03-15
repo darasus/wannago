@@ -10,14 +10,14 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {useGlobalLoading} from 'hooks';
 
 interface Form {
-  eventType: 'attending' | 'organizing';
+  eventType: 'attending' | 'organizing' | 'all';
 }
 
 function Dashboard() {
   const router = useRouter();
   const form = useForm<Form>({
     defaultValues: {
-      eventType: 'attending',
+      eventType: 'all',
     },
   });
   const eventType = form.watch('eventType');
@@ -49,6 +49,7 @@ function Dashboard() {
               <Toggle
                 name="eventType"
                 options={[
+                  {label: 'All', value: 'all'},
                   {label: 'Attending', value: 'attending'},
                   {label: 'Organizing', value: 'organizing'},
                 ]}
