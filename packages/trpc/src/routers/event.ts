@@ -625,10 +625,23 @@ const getRandomExample = publicProcedure.query(async ({ctx}) => {
 const getAllEventsAttendees = protectedProcedure
   .input(
     z.object({
-      eventId: z.string().uuid(),
+      eventShortId: z.string(),
     })
   )
   .query(async ({ctx, input}) => {
+    const event = await ctx.prisma.event.findFirst({
+      where: {
+        shortId: input.eventShortId,
+      },
+    });
+
+    if (!event) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Event not found',
+      });
+    }
+
     const organization = await ctx.prisma.organization.findFirst({
       where: {
         users: {
@@ -666,7 +679,7 @@ const getAllEventsAttendees = protectedProcedure
         };
       }
 
-      if (eventSignUp.eventId === input.eventId) {
+      if (eventSignUp.eventId === event.id) {
         userMap[eventSignUp.userId].status = eventSignUp.status;
       }
     }
@@ -678,13 +691,13 @@ const invitePastAttendee = protectedProcedure
   .input(
     z.object({
       userId: z.string().uuid(),
-      eventId: z.string().uuid(),
+      eventShortId: z.string(),
     })
   )
   .mutation(async ({ctx, input}) => {
-    const event = await ctx.prisma.event.findUnique({
+    const event = await ctx.prisma.event.findFirst({
       where: {
-        id: input.eventId,
+        shortId: input.eventShortId,
       },
     });
 
@@ -698,7 +711,7 @@ const invitePastAttendee = protectedProcedure
     const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
         userId: input.userId,
-        eventId: input.eventId,
+        eventId: event.id,
       },
     });
 
@@ -725,7 +738,7 @@ const invitePastAttendee = protectedProcedure
 
     const eventSignUpsCount = await ctx.prisma.eventSignUp.count({
       where: {
-        eventId: input.eventId,
+        eventId: event.id,
         status: {
           in: ['REGISTERED', 'INVITED'],
         },
@@ -746,13 +759,13 @@ const invitePastAttendee = protectedProcedure
     const invite = await ctx.prisma.eventSignUp.create({
       data: {
         status: 'INVITED',
-        eventId: input.eventId,
+        eventId: event.id,
         userId: input.userId,
       },
     });
 
     await ctx.mailQueue.enqueueEventInviteEmail({
-      eventId: input.eventId,
+      eventId: event.id,
       userId: input.userId,
     });
 

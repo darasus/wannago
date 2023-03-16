@@ -18,7 +18,7 @@ import {useConfirmDialog} from 'hooks';
 import {AdminInviteButton} from '../../../features/AdminInviteButton/AdminInviteButton';
 
 interface InviteButtonProps {
-  eventId: string;
+  eventShortId: string;
   user: User;
   refetch?: () => Promise<any>;
   disabled?: boolean;
@@ -27,7 +27,7 @@ interface InviteButtonProps {
 export function InviteButton({
   refetch,
   user,
-  eventId,
+  eventShortId,
   disabled,
 }: InviteButtonProps) {
   const {mutateAsync, isLoading} = trpc.event.invitePastAttendee.useMutation({
@@ -43,7 +43,7 @@ export function InviteButton({
     title: `Invite ${user.firstName} ${user.lastName}?`,
     description: `Are you sure you want to invite ${user.firstName} ${user.lastName} to the event? We will send invitation to this email address: ${user.email}`,
     onConfirm: async () => {
-      await mutateAsync({userId: user.id, eventId});
+      await mutateAsync({userId: user.id, eventShortId});
     },
   });
 
@@ -65,11 +65,11 @@ export function InviteButton({
 
 interface UserRowProps {
   user: User & {status: EventRegistrationStatus | null};
-  eventId: string;
+  eventShortId: string;
   refetch: () => Promise<any>;
 }
 
-function UserRow({user, eventId, refetch}: UserRowProps) {
+function UserRow({user, eventShortId, refetch}: UserRowProps) {
   return (
     <>
       <CardBase key={user.id}>
@@ -79,7 +79,7 @@ function UserRow({user, eventId, refetch}: UserRowProps) {
           {user.status && <EventRegistrationStatusBadge status={user.status} />}
           <InviteButton
             user={user}
-            eventId={eventId}
+            eventShortId={eventShortId}
             refetch={refetch}
             disabled={user.status !== null}
           />
@@ -91,11 +91,11 @@ function UserRow({user, eventId, refetch}: UserRowProps) {
 
 function EventAttendeesPage() {
   const router = useRouter();
-  const eventId = router.query.id as string;
+  const eventShortId = router.query.id as string;
   const {data, refetch, isLoading} = trpc.event.getAllEventsAttendees.useQuery(
-    {eventId},
+    {eventShortId: eventShortId!},
     {
-      enabled: !!eventId,
+      enabled: !!eventShortId,
     }
   );
 
@@ -122,7 +122,7 @@ function EventAttendeesPage() {
             <UserRow
               key={user.id}
               user={user}
-              eventId={eventId}
+              eventShortId={eventShortId}
               refetch={refetch}
             />
           );
