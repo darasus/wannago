@@ -30,92 +30,97 @@ export function EmailSettingsCard() {
               Add email
             </Button>
           </div>
-          {user?.emailAddresses.sort().map(email => {
-            const getColor = () => {
-              if (!email.verification.status) {
+          <div className="flex flex-col divide-y">
+            {user?.emailAddresses.sort().map(email => {
+              const getColor = () => {
+                if (!email.verification.status) {
+                  return 'gray';
+                }
+
+                if (email.verification.status === 'verified') {
+                  return 'green';
+                }
+
                 return 'gray';
-              }
+              };
 
-              if (email.verification.status === 'verified') {
-                return 'green';
-              }
+              const getLabel = () => {
+                if (user.primaryEmailAddressId === email.id) {
+                  return 'primary';
+                }
 
-              return 'gray';
-            };
+                if (!email.verification.status) {
+                  return 'unverified';
+                }
 
-            const getLabel = () => {
-              if (user.primaryEmailAddressId === email.id) {
-                return 'primary';
-              }
+                if (email.verification.status) {
+                  return email.verification.status;
+                }
 
-              if (!email.verification.status) {
-                return 'unverified';
-              }
+                return 'unknown';
+              };
 
-              if (email.verification.status) {
-                return email.verification.status;
-              }
+              const handleRemove = async () => {
+                await email.destroy();
+              };
 
-              return 'unknown';
-            };
+              const handleMakePrimary = async () => {
+                await user.update({primaryEmailAddressId: email.id});
+              };
 
-            const handleRemove = async () => {
-              await email.destroy();
-            };
+              const isPrimary = user.primaryEmailAddressId === email.id;
+              const isVerified = email.verification.status === 'verified';
 
-            const handleMakePrimary = async () => {
-              await user.update({primaryEmailAddressId: email.id});
-            };
-
-            const isPrimary = user.primaryEmailAddressId === email.id;
-            const isVerified = email.verification.status === 'verified';
-
-            return (
-              <div key={email.id} className="flex items-center gap-x-2">
-                <div className="grow truncate">
-                  <Text title={email.emailAddress} className="truncate">
-                    {email.emailAddress}
-                  </Text>
-                </div>
-                <div className="flex gap-2 shrink-0">
-                  <Badge size="xs" color={getColor()}>
-                    {getLabel()}
-                  </Badge>
-                  {!isVerified && (
-                    <Button
-                      size="xs"
-                      onClick={() => {
-                        setIsOTPModalVisible(true);
-                      }}
-                      disabled={isPrimary}
-                    >
-                      Verify
-                    </Button>
-                  )}
-                  {!isPrimary && (
-                    <>
+              return (
+                <div
+                  key={email.id}
+                  className="flex flex-col md:flex-row md:items-center gap-x-2 py-2 first:pt-0 last:pb-0"
+                >
+                  <div className="grow truncate">
+                    <Text title={email.emailAddress} className="truncate">
+                      {email.emailAddress}
+                    </Text>
+                  </div>
+                  <div className="flex gap-2 items-start shrink-0">
+                    <Badge size="xs" color={getColor()}>
+                      {getLabel()}
+                    </Badge>
+                    {!isVerified && (
                       <Button
                         size="xs"
-                        variant="neutral"
-                        onClick={handleMakePrimary}
+                        onClick={() => {
+                          setIsOTPModalVisible(true);
+                        }}
                         disabled={isPrimary}
                       >
-                        Make primary
+                        Verify
                       </Button>
-                      <Button
-                        size="xs"
-                        variant="danger"
-                        onClick={handleRemove}
-                        disabled={isPrimary}
-                      >
-                        Delete
-                      </Button>
-                    </>
-                  )}
+                    )}
+                    {!isPrimary && (
+                      <>
+                        <Button
+                          size="xs"
+                          variant="neutral"
+                          onClick={handleMakePrimary}
+                          disabled={isPrimary}
+                        >
+                          Make primary
+                        </Button>
+                        <Button
+                          size="xs"
+                          variant="danger"
+                          onClick={handleRemove}
+                          disabled={isPrimary}
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </CardBase>
