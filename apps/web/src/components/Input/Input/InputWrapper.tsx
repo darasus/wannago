@@ -1,11 +1,12 @@
 import {ExclamationCircleIcon} from '@heroicons/react/24/solid';
 import {PropsWithChildren} from 'react';
 import {FieldError} from 'react-hook-form';
-import {Badge} from 'ui';
+import {Badge, Text} from 'ui';
 import {cn} from 'utils';
 
 interface Props extends PropsWithChildren {
   label?: string;
+  description?: string;
   containerClassName?: string;
   error?: FieldError;
   id?: string;
@@ -19,25 +20,31 @@ export function InputWrapper({
   id,
   children,
   isOptional,
+  description,
 }: Props) {
   const hasError = Boolean(error);
 
   return (
-    <div className={cn(containerClassName)}>
+    <div className={cn('flex flex-col gap-1', containerClassName)}>
       {label && (
-        <label
-          htmlFor={id}
-          className={cn(
-            'flex items-center text-md text-gray-800 mb-1 ml-2 font-bold'
+        <div>
+          <label
+            htmlFor={id}
+            className={cn(
+              'flex items-center text-md text-gray-800 ml-2 font-bold'
+            )}
+          >
+            {label}
+            {isOptional && (
+              <Badge size="xxs" className="ml-1 mt-[2px]">
+                Optional
+              </Badge>
+            )}
+          </label>
+          {description && (
+            <Text className="text-gray-400 text-sm ml-2">{description}</Text>
           )}
-        >
-          {label}
-          {isOptional && (
-            <Badge size="xxs" className="ml-1 mt-[2px]">
-              Optional
-            </Badge>
-          )}
-        </label>
+        </div>
       )}
       <div className={cn({'mt-1': !!id})}>
         <div className="relative">

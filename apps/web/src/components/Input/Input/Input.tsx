@@ -6,6 +6,7 @@ import {cn} from 'utils';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  description?: string;
   inputClassName?: string;
   containerClassName?: string;
   error?: FieldError;
@@ -32,6 +33,7 @@ export const Input = forwardRef(function Input(
       error={error}
       id={props.id}
       label={props.label}
+      description={props.description}
       isOptional={isOptional}
     >
       <input
