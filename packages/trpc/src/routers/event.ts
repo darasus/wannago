@@ -341,14 +341,14 @@ const getOrganizer = publicProcedure
 const joinEvent = protectedProcedure
   .input(
     z.object({
-      eventId: z.string(),
+      eventId: z.string().uuid(),
       hasPlusOne: z.boolean(),
     })
   )
   .mutation(async ({input, ctx}) => {
-    const user = await ctx.prisma.user.findUnique({
+    const user = await ctx.prisma.user.findFirst({
       where: {
-        email: ctx.user.emailAddresses[0].emailAddress,
+        externalId: ctx.user.id,
       },
     });
 
