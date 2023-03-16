@@ -775,14 +775,27 @@ const invitePastAttendee = protectedProcedure
 const inviteByEmail = publicProcedure
   .input(
     z.object({
-      eventId: z.string(),
+      eventShortId: z.string(),
       email: z.string().email('Is not valid email'),
       firstName: z.string(),
       lastName: z.string(),
     })
   )
   .mutation(async ({input, ctx}) => {
-    await authorizeChange({ctx, eventId: input.eventId});
+    const event = await ctx.prisma.event.findFirst({
+      where: {
+        shortId: input.eventShortId,
+      },
+    });
+
+    if (!event) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Event not found',
+      });
+    }
+
+    await authorizeChange({ctx, eventId: event.id});
 
     let user: User | null = null;
 
@@ -808,7 +821,7 @@ const inviteByEmail = publicProcedure
 
     const existingSignUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
-        eventId: input.eventId,
+        eventId: event.id,
         userId: user.id,
       },
     });
@@ -820,15 +833,9 @@ const inviteByEmail = publicProcedure
       });
     }
 
-    const event = await ctx.prisma.event.findUnique({
-      where: {
-        id: input.eventId,
-      },
-    });
-
     const eventSignUpsCount = await ctx.prisma.eventSignUp.count({
       where: {
-        eventId: input.eventId,
+        eventId: event.id,
         status: {
           in: ['REGISTERED', 'INVITED'],
         },
@@ -850,7 +857,7 @@ const inviteByEmail = publicProcedure
       data: {
         event: {
           connect: {
-            id: input.eventId,
+            id: event.id,
           },
         },
         status: 'INVITED',
@@ -863,7 +870,7 @@ const inviteByEmail = publicProcedure
     });
 
     await ctx.mailQueue.enqueueEventInviteEmail({
-      eventId: input.eventId,
+      eventId: event.id,
       userId: user.id,
     });
 
