@@ -4,15 +4,15 @@ import {z} from 'zod';
 const messageEventParticipants = protectedProcedure
   .input(
     z.object({
-      eventId: z.string().uuid(),
+      eventShortId: z.string(),
       subject: z.string(),
       message: z.string(),
     })
   )
   .mutation(async ({input, ctx}) => {
-    const event = await ctx.prisma.event.findUnique({
+    const event = await ctx.prisma.event.findFirst({
       where: {
-        id: input.eventId,
+        shortId: input.eventShortId,
       },
     });
 
@@ -31,7 +31,7 @@ const messageEventParticipants = protectedProcedure
     }
 
     await ctx.mailQueue.enqueueMessageToAllAttendeesEmail({
-      eventId: input.eventId,
+      eventId: event.id,
       subject: input.subject,
       message: input.message,
       organizerUserId: organizerUser.id,

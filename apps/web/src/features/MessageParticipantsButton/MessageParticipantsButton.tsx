@@ -14,7 +14,7 @@ interface Form {
 }
 
 export function MessageParticipantsButton() {
-  const eventId = useEventId();
+  const {eventShortId} = useEventId();
   const {logEvent} = useAmplitude();
   const [isOpen, setIsOpen] = useState(false);
   const {
@@ -30,15 +30,15 @@ export function MessageParticipantsButton() {
   };
 
   const handleOnSubmit = handleSubmit(async data => {
-    if (eventId) {
-      await messageToUsers.mutateAsync({eventId, ...data});
+    if (eventShortId) {
+      await messageToUsers.mutateAsync({eventShortId, ...data});
       toast.success('Message is sent!', {
         duration: 10000,
       });
       setIsOpen(false);
       reset();
       logEvent('event_message_to_attendees_submitted', {
-        eventId,
+        eventId: eventShortId,
       });
     }
   });

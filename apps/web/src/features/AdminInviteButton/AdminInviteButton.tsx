@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function AdminInviteButton({refetch}: Props) {
-  const eventShortId = useEventId();
+  const {eventShortId} = useEventId();
   const [on, set] = useState(false);
   const {
     handleSubmit,

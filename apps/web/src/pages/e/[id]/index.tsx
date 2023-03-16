@@ -10,16 +10,16 @@ import {useEventId, useHandleEmailCallbackParam, useMe} from 'hooks';
 export default function EventPage() {
   useHandleEmailCallbackParam();
   const me = useMe();
-  const eventId = useEventId();
+  const {eventShortId} = useEventId();
   const {
     data: event,
     refetch,
     isLoading,
   } = trpc.event.getByShortId.useQuery(
     {
-      id: eventId!,
+      id: eventShortId!,
     },
-    {enabled: !!eventId}
+    {enabled: !!eventShortId}
   );
   const isMyEvent = event?.organizationId === me.data?.organizationId;
 

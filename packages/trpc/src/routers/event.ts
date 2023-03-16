@@ -498,15 +498,17 @@ const cancelEvent = protectedProcedure
 const cancelEventByUserId = protectedProcedure
   .input(
     z.object({
-      eventId: z.string().uuid(),
+      eventShortId: z.string(),
       userId: z.string().uuid(),
     })
   )
-  .mutation(async ({input: {eventId, userId}, ctx}) => {
+  .mutation(async ({input: {eventShortId, userId}, ctx}) => {
     const signUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
         userId: userId,
-        eventId: eventId,
+        event: {
+          shortId: eventShortId,
+        },
       },
     });
 

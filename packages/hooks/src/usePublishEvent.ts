@@ -12,15 +12,15 @@ interface Props {
 export function usePublishEvent({eventId}: Props) {
   const {confetti} = useConfetti();
   const {logEvent} = useAmplitude();
-  const shortId = useEventId();
+  const {eventShortId} = useEventId();
   const {mutateAsync, isLoading} = trpc.event.publish.useMutation({
     onSuccess: () => {
       toast.success(`Event is successfully published!`);
     },
   });
   const {refetch} = trpc.event.getByShortId.useQuery(
-    {id: shortId!},
-    {enabled: !!shortId}
+    {id: eventShortId!},
+    {enabled: !!eventShortId}
   );
 
   const {modal, open} = useConfirmDialog({

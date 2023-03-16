@@ -36,12 +36,12 @@ function Item({user, hasPlusOne, status, refetch}: ItemProps) {
     (hasPlusOne ? ' · +1' : '');
 
   const {mutateAsync} = trpc.event.cancelEventByUserId.useMutation();
-  const eventId = useEventId();
+  const {eventShortId} = useEventId();
   const handleCancelClick = useCallback(async () => {
-    if (eventId) {
-      await mutateAsync({eventId, userId: user.id}).then(() => refetch());
+    if (eventShortId) {
+      await mutateAsync({eventShortId, userId: user.id}).then(() => refetch());
     }
-  }, [mutateAsync, eventId, user.id, refetch]);
+  }, [mutateAsync, eventShortId, user.id, refetch]);
   const {open, modal} = useConfirmDialog({
     title: 'Cancel RSVP',
     description: `Are you sure you want to cancel the RSVP for ${user.firstName} ${user.lastName}?`,
@@ -72,7 +72,7 @@ function Item({user, hasPlusOne, status, refetch}: ItemProps) {
 
 function EventAttendeesPage() {
   const router = useRouter();
-  const eventShortId = useEventId();
+  const {eventShortId} = useEventId();
   const {data, refetch, isLoading} = trpc.event.getAttendees.useQuery(
     {
       eventShortId: eventShortId!,

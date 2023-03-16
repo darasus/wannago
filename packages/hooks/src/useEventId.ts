@@ -1,16 +1,18 @@
 import {useRouter} from 'next/router';
 
-export function useEventId() {
+export const useEventId = (): {eventShortId: string | null} => {
   const router = useRouter();
   const eventId = router.query.id;
 
   if (typeof eventId === 'undefined') {
-    return null;
+    return {
+      eventShortId: null,
+    };
   }
 
   if (typeof eventId === 'string') {
-    return eventId;
+    return {eventShortId: eventId};
   }
 
-  return eventId.join();
-}
+  return {eventShortId: eventId.join()};
+};

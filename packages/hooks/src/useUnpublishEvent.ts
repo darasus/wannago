@@ -10,7 +10,7 @@ interface Props {
 
 export function useUnpublishEvent({eventId}: Props) {
   const {logEvent} = useAmplitude();
-  const shortId = useEventId();
+  const {eventShortId} = useEventId();
   const {mutateAsync, isLoading} = trpc.event.publish.useMutation({
     onSuccess: () => {
       toast.success(`Event is successfully unpublished!`);
@@ -18,8 +18,8 @@ export function useUnpublishEvent({eventId}: Props) {
   });
 
   const {refetch} = trpc.event.getByShortId.useQuery(
-    {id: shortId!},
-    {enabled: !!shortId}
+    {id: eventShortId!},
+    {enabled: !!eventShortId}
   );
 
   const {modal, open} = useConfirmDialog({
