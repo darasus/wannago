@@ -1,18 +1,27 @@
-import {UserProfile, useUser} from '@clerk/nextjs';
+import {useUser} from '@clerk/nextjs';
 import Head from 'next/head';
-import {clerkAppearance} from '../clerkElements';
+import {Container, PageHeader} from 'ui';
+import {EmailSettingsCard} from '../features/UserSettings/EmailSettingsCard';
+import {NameSettingsCard} from '../features/UserSettings/NameSettingsCard';
+import {ProfilePictureSettingsCard} from '../features/UserSettings/ProfilePictureSettingsCard';
 import {withProtected} from '../utils/withAuthProtect';
 
 function ProfilePage() {
   const {user} = useUser();
+
   return (
     <>
       <Head>
         <title>{`${user?.fullName} | WannaGo`}</title>
       </Head>
-      <div className="flex justify-center">
-        <UserProfile appearance={clerkAppearance} />
-      </div>
+      <Container maxSize="sm">
+        <div className="flex flex-col gap-y-4">
+          <PageHeader title="Settings" />
+          <NameSettingsCard />
+          <ProfilePictureSettingsCard />
+          <EmailSettingsCard />
+        </div>
+      </Container>
     </>
   );
 }

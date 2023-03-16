@@ -88,6 +88,7 @@
     "zustand": "^4.3.6"
   },
   "devDependencies": {
+    "@clerk/types": "^3.31.0",
     "@types/file-saver": "^2.0.5",
     "@types/formidable": "^2.0.5",
     "@types/gtag.js": "^0.0.12",
