@@ -72,13 +72,13 @@ function Item({user, hasPlusOne, status, refetch}: ItemProps) {
 
 function EventAttendeesPage() {
   const router = useRouter();
-  const eventId = useEventId();
+  const eventShortId = useEventId();
   const {data, refetch, isLoading} = trpc.event.getAttendees.useQuery(
     {
-      eventId: eventId!,
+      eventShortId: eventShortId!,
     },
     {
-      enabled: !!eventId,
+      enabled: !!eventShortId,
     }
   );
 
@@ -110,7 +110,7 @@ function EventAttendeesPage() {
           <MessageParticipantsButton />
           <Button
             variant="neutral"
-            onClick={() => router.push(`/e/${eventId}/invite`)}
+            onClick={() => router.push(`/e/${eventShortId}/invite`)}
             size="sm"
             iconLeft={<UserPlusIcon />}
             title={'Invite'}

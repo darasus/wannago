@@ -549,13 +549,26 @@ const getNumberOfAttendees = publicProcedure
   });
 
 const getAttendees = protectedProcedure
-  .input(z.object({eventId: z.string().uuid()}))
-  .query(async ({input: {eventId}, ctx}) => {
-    await authorizeChange({ctx, eventId});
+  .input(z.object({eventShortId: z.string()}))
+  .query(async ({input, ctx}) => {
+    const event = await ctx.prisma.event.findFirst({
+      where: {
+        shortId: input.eventShortId,
+      },
+    });
+
+    if (!event) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Event not found',
+      });
+    }
+
+    await authorizeChange({ctx, eventId: event.id});
 
     return ctx.prisma.eventSignUp.findMany({
       where: {
-        eventId,
+        eventId: event.id,
       },
       include: {
         user: true,
