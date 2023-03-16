@@ -9,7 +9,7 @@ interface UserForm {
   email: string;
 }
 
-export function NameFormCard() {
+export function NameSettingsCard() {
   const {user} = useUser();
   const form = useForm<UserForm>({
     defaultValues: {
