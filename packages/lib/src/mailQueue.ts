@@ -20,15 +20,17 @@ export class MailQueue {
     delay?: number;
     body: {[key: string]: string};
   }) {
-    return this.queue.publishJSON({
-      body: {
-        ...body,
-        type,
-      },
-      retries: 5,
-      url: `https://www.wannago.app/api/handle-email`,
-      delay,
-    });
+    if (env.VERCEL_ENV === 'production') {
+      return this.queue.publishJSON({
+        body: {
+          ...body,
+          type,
+        },
+        retries: 5,
+        url: `https://www.wannago.app/api/handle-email`,
+        delay,
+      });
+    }
   }
 
   async enqueueEventSignUpEmail(body: {eventId: string; userId: string}) {
