@@ -53,7 +53,7 @@ export function SignUpCard({event}: Props) {
       logEvent('event_sign_up_cancel_submitted', {
         eventId: event.id,
       });
-      toast.success('Cancelled! Check your email for more details!');
+      toast.success('Event is cancelled!');
     },
   });
   const {modal: cancelModal, open: openCancelModal} = useConfirmDialog({

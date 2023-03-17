@@ -40,13 +40,18 @@ export function SignUpCard({
   const action = amSignedUp ? (
     <form className="flex items-center gap-x-4" onSubmit={onCancelSubmit}>
       <div className="flex items-center gap-x-2">
-        <Badge size="xs" color="green">{`You're signed up!`}</Badge>
+        <Badge
+          size="xs"
+          color="green"
+          data-testid="event-signup-success-label"
+        >{`You're signed up!`}</Badge>
         <Button
           type="submit"
           disabled={isSubmitting}
           isLoading={isSubmitting}
           variant="neutral"
           size="sm"
+          data-testid="cancel-signup-button"
         >
           Cancel
         </Button>
@@ -70,6 +75,7 @@ export function SignUpCard({
         disabled={isSubmitting}
         isLoading={isSubmitting}
         size="sm"
+        data-testid="attend-button"
       >
         Attend
       </Button>

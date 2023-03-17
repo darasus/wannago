@@ -24,7 +24,7 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
   } = event;
 
   return (
-    <CardBase ref={ref} className="flex flex-col">
+    <CardBase ref={ref} className="flex flex-col" data-testid="event-card">
       {featuredImageSrc &&
         featuredImagePreviewSrc &&
         featuredImageWidth &&

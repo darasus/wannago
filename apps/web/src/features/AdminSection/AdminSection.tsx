@@ -48,11 +48,13 @@ export function AdminSection({event}: Props) {
     label: string;
     value: JSX.Element | string;
     badgeColor?: 'green' | 'yellow';
+    dataTestId?: string;
   }[] = [
     {
       label: 'Status',
       value: event.isPublished ? 'Published' : 'Draft',
       badgeColor: event.isPublished ? 'green' : 'yellow',
+      dataTestId: 'event-status-label',
     },
     {
       label: 'Created',
@@ -106,7 +108,11 @@ export function AdminSection({event}: Props) {
               return (
                 <div key={i} className="flex items-center gap-x-1">
                   <Text className="text-xs">{`${v.label}:`}</Text>
-                  <Badge color={v.badgeColor} size="xs">
+                  <Badge
+                    color={v.badgeColor}
+                    size="xs"
+                    data-testid={v?.dataTestId}
+                  >
                     {v.value}
                   </Badge>
                 </div>
@@ -119,6 +125,7 @@ export function AdminSection({event}: Props) {
               iconLeft={<PencilIcon />}
               onClick={() => router.push(`/e/${event.shortId}/edit`)}
               size="sm"
+              data-testid="edit-event-button"
             >
               Edit
             </Button>
@@ -127,6 +134,7 @@ export function AdminSection({event}: Props) {
               iconLeft={<UsersIcon />}
               onClick={() => router.push(`/e/${event.shortId}/attendees`)}
               size="sm"
+              data-testid="event-attendees-button"
             >
               Attendees
             </Button>
@@ -136,6 +144,7 @@ export function AdminSection({event}: Props) {
                 iconLeft={<PauseCircleIcon />}
                 onClick={() => onUnpublishClick()}
                 size="sm"
+                data-testid="unpublish-event-button"
               >
                 Unpublish
               </Button>
@@ -146,6 +155,7 @@ export function AdminSection({event}: Props) {
                 iconLeft={<PlayCircleIcon />}
                 onClick={() => onPublishClick()}
                 size="sm"
+                data-testid="publish-event-button"
               >
                 Publish
               </Button>
@@ -155,6 +165,7 @@ export function AdminSection({event}: Props) {
               iconLeft={<TrashIcon />}
               onClick={onRemoveClick}
               size="sm"
+              data-testid="delete-event-button"
             >
               Delete event
             </Button>

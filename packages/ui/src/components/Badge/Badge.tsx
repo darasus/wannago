@@ -20,9 +20,11 @@ export function Badge({
   className,
   color = 'gray',
   size = 'md',
+  ...props
 }: Props) {
   return (
     <span
+      {...props}
       className={cn(
         'inline-flex items-center rounded-full text-sm font-bold shrink-0',
         className,

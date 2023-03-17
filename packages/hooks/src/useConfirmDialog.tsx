@@ -24,10 +24,19 @@ export function useConfirmDialog({title, description, onConfirm}: Props) {
     <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title={title}>
       <div className="mb-4">{description}</div>
       <div className="flex gap-x-2">
-        <Button variant="neutral" onClick={() => setIsOpen(false)}>
+        <Button
+          variant="neutral"
+          onClick={() => setIsOpen(false)}
+          data-testid="confirm-dialog-cancel-button"
+        >
           Cancel
         </Button>
-        <Button variant="danger" onClick={onSubmit} isLoading={isLoading}>
+        <Button
+          variant="danger"
+          onClick={onSubmit}
+          isLoading={isLoading}
+          data-testid="confirm-dialog-confirm-button"
+        >
           Confirm
         </Button>
       </div>
