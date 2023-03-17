@@ -3,7 +3,6 @@ import {clerkClient, getAuth} from '@clerk/nextjs/server';
 import {PrismaClient} from '@prisma/client';
 import * as trpc from '@trpc/server';
 import {prisma} from 'database';
-import {Maps} from 'lib/src/maps';
 import {Telegram} from 'lib/src/telegram';
 import {Postmark} from 'lib/src/postmark';
 import {MailQueue} from 'lib/src/mailQueue';
