@@ -22,7 +22,7 @@ export function UserSection() {
       <Popover className="relative">
         {() => (
           <>
-            <Popover.Button as="div">
+            <Popover.Button as="div" data-testid="header-user-section-button">
               <Button
                 variant="neutral"
                 iconLeft={
@@ -65,6 +65,7 @@ export function UserSection() {
                     as="a"
                     href={`/u/${me.data?.id}`}
                     size="sm"
+                    data-testid="profile-button"
                   >
                     Profile
                   </Button>

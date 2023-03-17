@@ -52,7 +52,10 @@ export default function ProfilePage() {
             />
             {data && (
               <div className="flex max-w-full overflow-hidden">
-                <Text className="text-3xl font-bold truncate">{`${data.firstName} ${data.lastName}`}</Text>
+                <Text
+                  className="text-3xl font-bold truncate"
+                  data-testid="user-profile-name"
+                >{`${data.firstName} ${data.lastName}`}</Text>
               </div>
             )}
           </div>

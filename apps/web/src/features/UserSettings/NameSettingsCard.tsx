@@ -35,6 +35,7 @@ export function NameSettingsCard() {
               type="text"
               label="First name"
               {...form.register('firstName')}
+              data-testid="first-name-input"
             />
           </div>
           <div>
@@ -42,10 +43,15 @@ export function NameSettingsCard() {
               type="text"
               label="Last name"
               {...form.register('lastName')}
+              data-testid="last-name-input"
             />
           </div>
           <div>
-            <Button type="submit" disabled={form.formState.isSubmitting}>
+            <Button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              data-testid="name-settings-submit-button"
+            >
               Save
             </Button>
           </div>
