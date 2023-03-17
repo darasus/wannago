@@ -45,7 +45,7 @@ const publish = protectedProcedure
       },
     });
 
-    if (result.isPublished && env.NODE_ENV !== 'development') {
+    if (result.isPublished && env.VERCEL_ENV === 'production') {
       await ctx.telegram
         .sendMessageToWannaGoChannel({
           message: `${ctx.user.firstName} ${
