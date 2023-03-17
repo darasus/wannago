@@ -17,9 +17,7 @@ const getMyEvents = protectedProcedure
           eventSignUps: {
             some: {
               user: {
-                email: {
-                  in: ctx.user?.emailAddresses.map(e => e.emailAddress),
-                },
+                externalId: ctx.user?.id,
               },
             },
           },
