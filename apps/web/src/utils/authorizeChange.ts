@@ -10,7 +10,7 @@ export async function authorizeChange({
 }) {
   const user = await ctx.prisma.user.findFirst({
     where: {
-      externalId: ctx.user?.id,
+      externalId: ctx.auth?.userId,
     },
     include: {
       organization: {

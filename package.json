@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^1.9.1",
+    "@clerk/clerk-sdk-node": "^4.7.14",
     "@clerk/nextjs": "^4.11.7",
     "@feedback-fish/react": "^1.2.1",
     "@googlemaps/google-maps-services-js": "^3.3.27",
