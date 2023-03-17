@@ -6,11 +6,9 @@ Cypress.Commands.addAll({
         cy.get('[data-testid="dashboard-button"]');
       } else {
         cy.get('[data-testid="login-button"]').click();
-        cy.get('#identifier-field').type(
-          'idarase+automation+clerk_test@gmail.com'
-        );
+        cy.get('#identifier-field').type(Cypress.env('user_email'));
         cy.get('.cl-formButtonPrimary').click();
-        cy.get('[name="codeInput-0"]').type('424242');
+        cy.get('[name="codeInput-0"]').type(Cypress.env('otp'));
         cy.get('[data-testid="add-event-button"]');
         cy.reload();
         cy.visit('/dashboard');

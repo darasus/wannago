@@ -34,6 +34,7 @@ export function AdminInviteButton({refetch}: Props) {
       await mutateAsync({...data, eventShortId});
       await refetch();
       reset();
+      set(false);
     }
   });
 
@@ -49,6 +50,7 @@ export function AdminInviteButton({refetch}: Props) {
                   required: 'First name is required',
                 })}
                 error={errors.firstName}
+                data-testid="invite-by-email-first-name-input"
               />
             </div>
             <div className="col-span-6">
@@ -58,6 +60,7 @@ export function AdminInviteButton({refetch}: Props) {
                   required: 'Last name is required',
                 })}
                 error={errors.lastName}
+                data-testid="invite-by-email-last-name-input"
               />
             </div>
             <div className="col-span-8">
@@ -67,17 +70,28 @@ export function AdminInviteButton({refetch}: Props) {
                   required: 'Email is required',
                 })}
                 error={errors.email}
+                data-testid="invite-by-email-email-input"
               />
             </div>
             <div className="col-span-4">
-              <Button type="submit" isLoading={isSubmitting} className="w-full">
+              <Button
+                type="submit"
+                isLoading={isSubmitting}
+                className="w-full"
+                data-testid="invite-by-email-submit-button"
+              >
                 Invite
               </Button>
             </div>
           </div>
         </form>
       </Modal>
-      <Button size="sm" variant="neutral" onClick={() => set(true)}>
+      <Button
+        size="sm"
+        variant="neutral"
+        onClick={() => set(true)}
+        data-testid="invite-by-email-open-modal-button"
+      >
         Invite by email
       </Button>
     </>

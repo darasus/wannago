@@ -9,11 +9,12 @@ type Props = PropsWithChildren & {
 };
 
 export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
-  {children, className, variant = 'normal', isBlur, innerClassName},
+  {children, className, variant = 'normal', isBlur, innerClassName, ...props},
   ref
 ) {
   return (
     <div
+      {...props}
       ref={ref}
       className={cn(
         'p-6 rounded-3xl border-2',

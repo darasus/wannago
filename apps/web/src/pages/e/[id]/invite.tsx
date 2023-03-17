@@ -56,6 +56,7 @@ export function InviteButton({
         variant="neutral"
         size="sm"
         disabled={disabled}
+        data-testid="invite-by-email-button"
       >
         Invite
       </Button>
@@ -72,7 +73,7 @@ interface UserRowProps {
 function UserRow({user, eventShortId, refetch}: UserRowProps) {
   return (
     <>
-      <CardBase key={user.id}>
+      <CardBase key={user.id} data-testid="invitee-card">
         <div className="flex items-center">
           <Text>{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
           <div className="grow" />

@@ -51,7 +51,7 @@ function Item({user, hasPlusOne, status, refetch}: ItemProps) {
   return (
     <>
       {modal}
-      <CardBase key={user.id}>
+      <CardBase key={user.id} data-testid="invitee-card">
         <div className="flex items-center">
           <Text>{label}</Text>
           <div className="grow" />
@@ -114,6 +114,7 @@ function EventAttendeesPage() {
             size="sm"
             iconLeft={<UserPlusIcon />}
             title={'Invite'}
+            data-testid="invite-button"
           >
             <span className="hidden md:block">Invite</span>
           </Button>
@@ -123,6 +124,7 @@ function EventAttendeesPage() {
             size="sm"
             iconLeft={<DocumentArrowDownIcon />}
             title={'Export CSV'}
+            data-testid="export-csv-button"
           >
             <span className="hidden md:block">Export CSV</span>
           </Button>
