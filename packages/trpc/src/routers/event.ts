@@ -348,7 +348,16 @@ const joinEvent = protectedProcedure
   .mutation(async ({input, ctx}) => {
     const user = await ctx.prisma.user.findFirst({
       where: {
-        externalId: ctx.user.id,
+        OR: [
+          {
+            externalId: ctx.user.id,
+          },
+          {
+            email: {
+              in: ctx.user.emailAddresses.map(email => email.emailAddress),
+            },
+          },
+        ],
       },
     });
 
@@ -889,7 +898,16 @@ const getMySignUp = protectedProcedure
     const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
         user: {
-          externalId: ctx.user?.id,
+          OR: [
+            {
+              externalId: ctx.user?.id,
+            },
+            {
+              email: {
+                in: ctx.user?.emailAddresses.map(email => email.emailAddress),
+              },
+            },
+          ],
         },
         eventId: input.eventId,
       },
