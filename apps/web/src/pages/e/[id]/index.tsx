@@ -10,6 +10,8 @@ import {appRouter} from 'trpc/src/routers/_app';
 import {createContext} from 'trpc';
 import SuperJSON from 'superjson';
 import {ONE_WEEK_IN_SECONDS} from '../../../constants';
+import {Meta} from '../../../components/Meta/Meta';
+import {stripHTML} from 'utils';
 
 export default function EventPage() {
   useHandleEmailCallbackParam();
@@ -35,9 +37,15 @@ export default function EventPage() {
     <>
       {event && (
         <>
-          <Head>
-            <title>{`${event.title} | WannaGo`}</title>
-          </Head>
+          <Meta
+            title={event.title}
+            description={`${stripHTML(event?.description || '').slice(
+              0,
+              100
+            )}...`}
+            imageSrc={`/api/og-image?eventId=${event.shortId}`}
+            shortEventId={event.shortId!}
+          />
           {isMyEvent && (
             <Container>
               <div className="grid grid-cols-12 gap-4">
