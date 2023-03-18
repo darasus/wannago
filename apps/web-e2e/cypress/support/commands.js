@@ -8,7 +8,8 @@ Cypress.Commands.addAll({
         cy.get('[data-testid="login-button"]').click();
         cy.get('#identifier-field').type(Cypress.env('user_email'));
         cy.get('.cl-formButtonPrimary').click();
-        cy.get('[name="codeInput-0"]').type(Cypress.env('otp'));
+        cy.wait(500);
+        cy.get('[name="codeInput-0"]').type(Cypress.env('otp'), {delay: 50});
         cy.get('[data-testid="add-event-button"]');
         cy.reload();
         cy.visit('/dashboard');
