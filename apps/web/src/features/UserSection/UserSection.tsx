@@ -1,7 +1,7 @@
 import {useClerk} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
-import {Avatar, Button, CardBase} from 'ui';
+import {Avatar, Badge, Button, CardBase} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
 import {useMe} from 'hooks';
 
@@ -68,7 +68,19 @@ export function UserSection() {
                   >
                     Profile
                   </Button>
-                  <Button variant="neutral" as="a" href="/me" size="sm">
+                  <Button
+                    variant="neutral"
+                    as="a"
+                    href={`/team`}
+                    size="sm"
+                    data-testid="team-button"
+                  >
+                    Team{' '}
+                    <Badge color="green" size="xxs">
+                      PRO
+                    </Badge>
+                  </Button>
+                  <Button variant="neutral" as="a" href="/settings" size="sm">
                     Settings
                   </Button>
                   {showAdminLink && (
@@ -76,14 +88,6 @@ export function UserSection() {
                       Admin
                     </Button>
                   )}
-                  <FeedbackFish
-                    projectId="f843146d960b2f"
-                    userId={me?.externalId || undefined}
-                  >
-                    <Button variant="neutral" size="sm">
-                      Feedback
-                    </Button>
-                  </FeedbackFish>
                   <Button
                     variant="danger"
                     onClick={onSignOutClick}
@@ -92,6 +96,14 @@ export function UserSection() {
                   >
                     Logout
                   </Button>
+                  <FeedbackFish
+                    projectId="f843146d960b2f"
+                    userId={me?.externalId || undefined}
+                  >
+                    <Button variant="neutral" size="sm">
+                      Feedback
+                    </Button>
+                  </FeedbackFish>
                 </CardBase>
               </Popover.Panel>
             </Transition>
