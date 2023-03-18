@@ -1,5 +1,4 @@
 import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
-import Head from 'next/head';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import {EventView} from '../../../features/EventView/EventView';
@@ -11,7 +10,7 @@ import {createContext} from 'trpc';
 import SuperJSON from 'superjson';
 import {ONE_WEEK_IN_SECONDS} from '../../../constants';
 import {Meta} from '../../../components/Meta/Meta';
-import {stripHTML} from 'utils';
+import {createOGImageEventUrl, stripHTML} from 'utils';
 
 export default function EventPage() {
   useHandleEmailCallbackParam();
@@ -33,6 +32,8 @@ export default function EventPage() {
     return <LoadingBlock />;
   }
 
+  const user = event?.organization.users[0];
+
   return (
     <>
       {event && (
@@ -43,7 +44,16 @@ export default function EventPage() {
               0,
               100
             )}...`}
-            imageSrc={`/api/og-image?eventId=${event.shortId}`}
+            imageSrc={
+              event.featuredImageSrc &&
+              user?.profileImageSrc &&
+              createOGImageEventUrl({
+                title: event.title,
+                organizerName: `${user?.firstName} ${user?.lastName}`,
+                eventImageUrl: event.featuredImageSrc,
+                organizerProfileImageUrl: user?.profileImageSrc,
+              })
+            }
             shortEventId={event.shortId!}
           />
           {isMyEvent && (
