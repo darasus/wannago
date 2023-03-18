@@ -9,7 +9,7 @@ export const config = {
 
 export default async function handler(req: NextRequest) {
   const {searchParams} = req.nextUrl;
-  const eventId = searchParams.get('eventId');
+  const shortId = searchParams.get('eventId');
   const [logoFontData, bodyFontData] = await Promise.all([
     fetch(new URL('../../../public/paytone-one.ttf', import.meta.url)).then(
       res => res.arrayBuffer()
@@ -19,13 +19,13 @@ export default async function handler(req: NextRequest) {
     ).then(res => res.arrayBuffer()),
   ]);
 
-  if (!eventId) {
+  if (!shortId) {
     throw new Error('Missing eventId');
   }
 
-  const event = await prisma.event.findUnique({
+  const event = await prisma.event.findFirst({
     where: {
-      id: eventId,
+      shortId,
     },
     include: {
       organization: {
