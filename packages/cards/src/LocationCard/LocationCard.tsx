@@ -36,8 +36,6 @@ export function LocationCard({
           address={address}
           longitude={longitude}
           latitude={latitude}
-          width={1200}
-          height={200}
         />
       </div>
     </CardBase>
