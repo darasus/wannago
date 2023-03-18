@@ -1,7 +1,5 @@
 import {createContext} from 'trpc';
-import {NextRequest} from 'next/server';
-import {fetchRequestHandler} from '@trpc/server/adapters/fetch';
-import {AppRouter, appRouter} from 'trpc/src/routers/_app';
+import {appRouter} from 'trpc/src/routers/_app';
 import {createNextApiHandler} from '@trpc/server/adapters/next';
 
 export default createNextApiHandler({
