@@ -9,18 +9,14 @@ interface Props {
   latitude: number;
 }
 
-export function LocationImage({
-  width = 500,
-  height = 500,
-  address,
-  longitude,
-  latitude,
-}: Props) {
+export function LocationImage({address, longitude, latitude}: Props) {
+  const width = 480;
+  const height = 150;
   const url = new URL('https://maps.googleapis.com/maps/api/staticmap');
 
   url.searchParams.set('key', env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
   url.searchParams.set('size', `${width}x${height}`);
-  url.searchParams.set('zoom', '18');
+  url.searchParams.set('zoom', '17');
   url.searchParams.set('maptype', 'roadmap');
   url.searchParams.set('center', address);
   url.searchParams.set('scale', '2');
@@ -33,7 +29,7 @@ export function LocationImage({
 
   return (
     <div className="rounded-2xl overflow-hidden border-2 border-gray-200">
-      <Image src={url.toString()} alt="" width={width} height={height} />
+      <Image src={url.toString()} alt={address} width={width} height={height} />
     </div>
   );
 }
