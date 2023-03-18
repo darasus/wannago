@@ -1,6 +1,5 @@
 import {ImageResponse} from '@vercel/og';
 import {NextRequest} from 'next/server';
-import {prisma} from 'database';
 import {ONE_WEEK_IN_SECONDS} from '../../constants';
 
 export const config = {
@@ -9,7 +8,11 @@ export const config = {
 
 export default async function handler(req: NextRequest) {
   const {searchParams} = req.nextUrl;
-  const shortId = searchParams.get('eventId');
+  const title = searchParams.get('title');
+  const organizerName = searchParams.get('organizerName');
+  const eventImageUrl = searchParams.get('eventImageUrl');
+  const organizerProfileImageUrl = searchParams.get('organizerProfileImageUrl');
+
   const [logoFontData, bodyFontData] = await Promise.all([
     fetch(new URL('../../../public/paytone-one.ttf', import.meta.url)).then(
       res => res.arrayBuffer()
@@ -19,31 +22,12 @@ export default async function handler(req: NextRequest) {
     ).then(res => res.arrayBuffer()),
   ]);
 
-  if (!shortId) {
-    throw new Error('Missing eventId');
-  }
-
-  const event = await prisma.event.findFirst({
-    where: {
-      shortId,
-    },
-    include: {
-      organization: {
-        include: {
-          users: true,
-        },
-      },
-    },
-  });
-
   const maxTitleLength = 100;
 
-  const title =
-    event?.title && event?.title.length > maxTitleLength
-      ? `${event?.title.slice(0, maxTitleLength)}...`
-      : event?.title;
-
-  const user = event?.organization?.users[0]!;
+  const formattedTitle =
+    title && title.length > maxTitleLength
+      ? `${title.slice(0, maxTitleLength)}...`
+      : title;
 
   return new ImageResponse(
     (
@@ -61,7 +45,7 @@ export default async function handler(req: NextRequest) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               tw="w-full h-full"
-              src={event?.featuredImageSrc!}
+              src={decodeURIComponent(atob(eventImageUrl!))}
               style={{objectFit: 'cover'}}
               alt=""
             />
@@ -79,17 +63,15 @@ export default async function handler(req: NextRequest) {
                   <img
                     width={70}
                     height={70}
-                    src={user.profileImageSrc!}
+                    src={decodeURIComponent(atob(organizerProfileImageUrl!))}
                     alt="Profile Image"
                   />
                 </div>
-                <span
-                  style={{fontSize: 50}}
-                >{`${user.firstName} ${user.lastName}`}</span>
+                <span style={{fontSize: 50}}>{organizerName}</span>
               </div>
               <div tw="flex flex-col max-w-[600px]">
                 <span tw="max-w-full leading-[60px]" style={{fontSize: 70}}>
-                  {title}
+                  {formattedTitle}
                 </span>
               </div>
             </div>
