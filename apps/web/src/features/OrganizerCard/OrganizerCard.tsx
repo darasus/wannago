@@ -14,22 +14,13 @@ interface Props {
 
 export function OrganizerCard({event}: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const {data, isLoading} = trpc.event.getOrganizer.useQuery(
-    {
-      eventId: event.id,
-    },
-    {
-      initialData: event.organization?.users?.[0],
-    }
-  );
+  const {logEvent} = useAmplitude();
+  const sendEmail = trpc.mail.sendQuestionToOrganizer.useMutation();
+  const form = useForm<ContactForm>();
 
   const onOpenFormClick = () => {
     setIsOpen(true);
   };
-
-  const {logEvent} = useAmplitude();
-  const sendEmail = trpc.mail.sendQuestionToOrganizer.useMutation();
-  const form = useForm<ContactForm>();
 
   const onSubmit = form.handleSubmit(async data => {
     await sendEmail.mutateAsync({...data, eventId: event.id});
@@ -45,8 +36,7 @@ export function OrganizerCard({event}: Props) {
   return (
     <>
       <OrganizerCardView
-        isLoading={isLoading}
-        user={data || null}
+        user={event.organization?.users?.[0]!}
         onOpenFormClick={onOpenFormClick}
       />
       <FormProvider {...form}>
