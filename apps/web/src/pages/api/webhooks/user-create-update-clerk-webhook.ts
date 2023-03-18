@@ -45,7 +45,16 @@ export default async function handler(
 
     const user = await prisma.user.findFirst({
       where: {
-        externalId: data.id,
+        OR: [
+          {
+            externalId: data.id,
+          },
+          {
+            email: {
+              in: data.email_addresses.map(e => e.email_address),
+            },
+          },
+        ],
       },
     });
 
