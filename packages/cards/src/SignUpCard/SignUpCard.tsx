@@ -10,6 +10,7 @@ interface Props {
   isPublished: boolean;
   amSignedUp: boolean;
   isBlur?: boolean;
+  isLoading?: boolean;
 }
 
 interface EventSignUpForm {
@@ -22,6 +23,7 @@ export function SignUpCard({
   onJoinSubmit,
   onCancelSubmit,
   amSignedUp,
+  isLoading,
 }: Props) {
   const {
     formState: {defaultValues, isSubmitting},
@@ -84,7 +86,7 @@ export function SignUpCard({
 
   return (
     <Tooltip text={tooltipText}>
-      <CardBase isBlur={!isPublished}>
+      <CardBase isBlur={!isPublished} isLoading={isLoading}>
         <div className="flex items-center gap-x-2">
           <div className="grow">
             <Text className="text-gray-400">{numberOfAttendeesLabel}</Text>

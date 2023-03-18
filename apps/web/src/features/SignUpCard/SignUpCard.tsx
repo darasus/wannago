@@ -107,7 +107,7 @@ export function SignUpCard({event}: Props) {
       {isOpen && (
         <RedirectToSignIn redirectUrl={`${getBaseUrl()}/e/${event.shortId}`} />
       )}
-      <Container className="sticky bottom-4 w-full p-0 m-0">
+      <Container className="sticky z-10 bottom-4 w-full p-0 m-0">
         <FormProvider {...form}>
           <_SignUpCard
             amSignedUp={amSignedUp}
@@ -115,6 +115,7 @@ export function SignUpCard({event}: Props) {
             onCancelSubmit={onCancelSubmit}
             isPublished={event.isPublished}
             numberOfAttendees={attendeeCount?.data?.count ?? 0}
+            isLoading={signUp.isLoading}
           />
         </FormProvider>
       </Container>
