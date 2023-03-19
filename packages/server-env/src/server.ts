@@ -22,6 +22,7 @@ const _serverEnv = serverSchema.safeParse({
   TELEGRAM_CHAT_BOT_TOKEN: process.env.TELEGRAM_CHAT_BOT_TOKEN,
   TELEGRAM_CHANNEL_ID: process.env.TELEGRAM_CHANNEL_ID,
   VERCEL_ENV: process.env.VERCEL_ENV,
+  CLERK_API_KEY: process.env.CLERK_API_KEY,
 });
 
 if (!_serverEnv.success) {

@@ -1,6 +1,7 @@
 import {forwardRef, PropsWithChildren} from 'react';
 import {cn} from '../../../../utils';
 import {LoadingBlock} from '../LoadingBlock/LoadingBlock';
+import {Text} from '../Text/Text';
 
 type Props = PropsWithChildren & {
   className?: string;
@@ -8,6 +9,8 @@ type Props = PropsWithChildren & {
   variant?: 'normal' | 'translucent';
   isBlur?: boolean;
   isLoading?: boolean;
+  title?: string;
+  titleChildren?: React.ReactNode;
 };
 
 export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
@@ -18,6 +21,8 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
     isBlur,
     innerClassName,
     isLoading,
+    title,
+    titleChildren = null,
     ...props
   },
   ref
@@ -35,6 +40,12 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
         className
       )}
     >
+      {title && (
+        <div className="flex items-center mb-2 gap-x-2">
+          <Text className="font-bold">{title}</Text>
+          {titleChildren}
+        </div>
+      )}
       <div
         className={cn(
           'relative z-10',

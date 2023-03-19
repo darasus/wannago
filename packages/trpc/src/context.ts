@@ -30,6 +30,7 @@ export async function createContextInner(_opts: CreateContextOptions) {
     postmark: _opts.postmark,
     mailQueue: _opts.mailQueue,
     googleMaps: _opts.googleMaps,
+    clerk: _opts.clerk,
   };
 }
 
