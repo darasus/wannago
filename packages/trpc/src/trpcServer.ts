@@ -23,28 +23,25 @@ const t = initTRPC.context<Context>().create({
 export const middleware = t.middleware;
 
 const isAuthenticated = middleware(({next, ctx}) => {
-  if (!ctx.user) {
+  if (!ctx.auth?.userId) {
     throw new TRPCError({code: 'UNAUTHORIZED', message: 'Not authenticated'});
   }
+
   return next({
-    ctx: {
-      user: ctx.user,
-    },
+    ctx: {auth: ctx.auth},
   });
 });
 
 const isAdmin = middleware(async ({next, ctx}) => {
   const user = await ctx.prisma.user.findFirst({
     where: {
-      externalId: ctx.user?.id,
+      externalId: ctx.auth?.userId,
     },
   });
 
   if (user?.type === UserType.ADMIN) {
     return next({
-      ctx: {
-        user: ctx.user,
-      },
+      ctx: {auth: ctx.auth},
     });
   }
 

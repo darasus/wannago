@@ -46,13 +46,17 @@ const publish = protectedProcedure
     });
 
     if (result.isPublished && env.VERCEL_ENV === 'production') {
+      const user = await ctx.prisma.user.findFirst({
+        where: {
+          externalId: ctx.auth.userId,
+        },
+      });
+
       await ctx.telegram
         .sendMessageToWannaGoChannel({
-          message: `${ctx.user.firstName} ${
-            ctx.user.lastName
-          } published event "${result.title}" ${getBaseUrl()}/e/${
-            result.shortId
-          }`,
+          message: `${user?.firstName} ${user?.lastName} published event "${
+            result.title
+          }" ${getBaseUrl()}/e/${result.shortId}`,
         })
         .catch(console.error);
     }
@@ -220,7 +224,7 @@ const create = protectedProcedure
         where: {
           users: {
             some: {
-              externalId: ctx.user?.id,
+              externalId: ctx.auth.userId,
             },
           },
         },
@@ -346,15 +350,17 @@ const joinEvent = protectedProcedure
     })
   )
   .mutation(async ({input, ctx}) => {
+    const clerkUser = await ctx.clerk.users.getUser(ctx.auth.userId);
+
     const user = await ctx.prisma.user.findFirst({
       where: {
         OR: [
           {
-            externalId: ctx.user.id,
+            externalId: ctx.auth.userId,
           },
           {
             email: {
-              in: ctx.user.emailAddresses.map(email => email.emailAddress),
+              in: clerkUser.emailAddresses.map(email => email.emailAddress),
             },
           },
         ],
@@ -469,7 +475,7 @@ const cancelEvent = protectedProcedure
   .mutation(async ({input: {eventId}, ctx}) => {
     const user = await ctx.prisma.user.findFirst({
       where: {
-        externalId: ctx.user.id,
+        externalId: ctx.auth.userId,
       },
     });
 
@@ -657,7 +663,7 @@ const getAllEventsAttendees = protectedProcedure
       where: {
         users: {
           some: {
-            externalId: ctx.user.id,
+            externalId: ctx.auth.userId,
           },
         },
       },
@@ -895,16 +901,18 @@ const getMySignUp = protectedProcedure
     })
   )
   .query(async ({ctx, input}) => {
+    const clerkUser = await ctx.clerk.users.getUser(ctx.auth.userId);
+
     const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
         user: {
           OR: [
             {
-              externalId: ctx.user?.id,
+              externalId: ctx.auth.userId,
             },
             {
               email: {
-                in: ctx.user?.emailAddresses.map(email => email.emailAddress),
+                in: clerkUser?.emailAddresses.map(email => email.emailAddress),
               },
             },
           ],

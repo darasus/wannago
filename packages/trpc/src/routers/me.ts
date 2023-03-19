@@ -17,7 +17,7 @@ const getMyEvents = protectedProcedure
           eventSignUps: {
             some: {
               user: {
-                externalId: ctx.user?.id,
+                externalId: ctx.auth.userId,
               },
             },
           },
@@ -34,7 +34,7 @@ const getMyEvents = protectedProcedure
           organization: {
             users: {
               some: {
-                externalId: ctx.user?.id,
+                externalId: ctx.auth.userId,
               },
             },
           },
@@ -43,6 +43,10 @@ const getMyEvents = protectedProcedure
     }
 
     if (input.eventType === 'all') {
+      const emailAddresses = await ctx.clerk.users
+        .getUser(ctx.auth.userId)
+        .then(res => res.emailAddresses.map(e => e.emailAddress));
+
       return ctx.prisma.event.findMany({
         orderBy: {
           createdAt: 'desc',
@@ -53,7 +57,7 @@ const getMyEvents = protectedProcedure
               organization: {
                 users: {
                   some: {
-                    externalId: ctx.user?.id,
+                    externalId: ctx.auth.userId,
                   },
                 },
               },
@@ -63,7 +67,7 @@ const getMyEvents = protectedProcedure
                 some: {
                   user: {
                     email: {
-                      in: ctx.user?.emailAddresses.map(e => e.emailAddress),
+                      in: emailAddresses,
                     },
                   },
                 },
@@ -80,7 +84,7 @@ const getMyEvents = protectedProcedure
 const me = protectedProcedure.query(async ({ctx}) => {
   return ctx.prisma.user.findFirst({
     where: {
-      externalId: ctx.user?.id,
+      externalId: ctx.auth.userId,
     },
   });
 });

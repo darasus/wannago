@@ -18,7 +18,7 @@ const messageEventParticipants = protectedProcedure
 
     const organizerUser = await ctx.prisma.user.findFirst({
       where: {
-        externalId: ctx.user.id,
+        externalId: ctx.auth.userId,
       },
     });
 
