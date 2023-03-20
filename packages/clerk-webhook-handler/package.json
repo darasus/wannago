@@ -1,0 +1,19 @@
+{
+  "name": "clerk-webhook-handler",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "./index.ts",
+  "scripts": {
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "database": "workspace:*",
+    "server-env": "workspace:*",
+    "email": "workspace:*",
+    "lib": "workspace:*"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  }
+}
