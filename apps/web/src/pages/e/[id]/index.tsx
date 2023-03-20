@@ -32,7 +32,7 @@ export default function EventPage() {
     return <LoadingBlock />;
   }
 
-  const user = event?.organization.users[0];
+  const user = event?.organization?.users[0];
 
   return (
     <>

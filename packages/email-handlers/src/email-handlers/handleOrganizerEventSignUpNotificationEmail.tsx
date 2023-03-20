@@ -54,11 +54,12 @@ export async function handleOrganizerEventSignUpNotificationEmail({
     });
   }
 
-  const organizerUser = event.organization.users[0];
+  const organizerUser = event.organization?.users[0];
 
   await postmark.sendToOrganizerEventSignUpNotificationStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',
-    to: organizerUser.email,
+    //TODO: '' should not be allowed
+    to: organizerUser?.email || '',
     subject: 'Your event has new sign up!',
     htmlString: render(
       <OrganizerEventSignUpNotification

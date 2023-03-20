@@ -71,7 +71,7 @@ export async function handleEventReminderEmail({
               cancelEventUrl={cancelEventUrl.toString()}
               startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
               endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-              organizerName={`${event.organization.users[0].firstName} ${event.organization.users[0].lastName}`}
+              organizerName={`${event.organization?.users[0].firstName} ${event.organization?.users[0].lastName}`}
             />
           ),
         });
