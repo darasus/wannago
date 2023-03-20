@@ -12,22 +12,17 @@ import {useCallback, useEffect, useState} from 'react';
 import {toast} from 'react-hot-toast';
 
 export function useOrg() {
+  const [isOrg, setIsOrg] = useState(false);
   const [members, setMembers] = useState<OrganizationMembershipResource[]>([]);
   const [invitations, setInvitations] = useState<
     OrganizationInvitationResource[]
   >([]);
-  const {organization} = useOrganization({
-    invitationList: {
-      limit: 100,
-      offset: 0,
-    },
-    membershipList: {
-      limit: 100,
-      offset: 0,
-    },
-  });
+  const {organization: org} = useOrganization();
+  const {organizationList} = useOrganizationList();
   const {createOrganization} = useOrganizations();
-  const {setActive} = useOrganizationList();
+  const isTeamSession = Boolean(org);
+  const organization = organizationList?.[0]?.organization;
+  const hasTeam = Boolean(organization);
 
   useEffect(() => {
     organization?.getMemberships().then(res => {
@@ -46,11 +41,8 @@ export function useOrg() {
       await result?.setLogo?.({
         file,
       });
-      await setActive?.({
-        organization: result?.id,
-      });
     },
-    [createOrganization, setActive]
+    [createOrganization]
   );
 
   const removeOrg = useCallback(async () => {
@@ -81,8 +73,10 @@ export function useOrg() {
     org: organization,
     createOrg,
     removeOrg,
-    members,
     addMember,
+    members,
     invitations,
+    isTeamSession,
+    hasTeam,
   };
 }

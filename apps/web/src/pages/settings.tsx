@@ -1,4 +1,4 @@
-import {useUser} from '@clerk/nextjs';
+import {OrganizationSwitcher, useUser} from '@clerk/nextjs';
 import Head from 'next/head';
 import {Container, PageHeader, Text} from 'ui';
 import {EmailSettingsCard} from '../features/UserSettings/EmailSettingsCard';
@@ -20,6 +20,7 @@ function ProfilePage() {
           <NameSettingsCard />
           <ProfilePictureSettingsCard />
           <EmailSettingsCard />
+          <OrganizationSwitcher />
         </div>
       </Container>
     </>

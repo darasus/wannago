@@ -1,7 +1,6 @@
 import {useConfirmDialog, useOrg} from 'hooks';
-import Image from 'next/image';
 import {useState} from 'react';
-import {Avatar, Button, CardBase, Modal, Text} from 'ui';
+import {Avatar, Button, CardBase, Text} from 'ui';
 import {CreateMemberModal} from './CreateMemberModal';
 import {TeamMember} from './TeamMember';
 

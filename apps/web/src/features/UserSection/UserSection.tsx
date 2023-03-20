@@ -3,11 +3,13 @@ import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
 import {Avatar, Badge, Button, CardBase} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
-import {useMe} from 'hooks';
+import {useMe, useOrg, useToggleSession} from 'hooks';
 
 export function UserSection() {
   const {signOut} = useClerk();
-  const {me} = useMe();
+  const {me, isPersonalSession} = useMe();
+  const {org, isTeamSession, hasTeam} = useOrg();
+  const {isTogglingSession, toggleSession} = useToggleSession();
   const showAdminLink = me?.type === 'ADMIN';
 
   const onSignOutClick = async () => {
@@ -15,6 +17,30 @@ export function UserSection() {
   };
 
   if (!me) return null;
+
+  const getName = () => {
+    if (isTeamSession) {
+      return org?.name;
+    }
+
+    return me?.firstName;
+  };
+
+  const getImage = () => {
+    if (isTeamSession) {
+      return org?.logoUrl;
+    }
+
+    if (me?.profileImageSrc?.includes('gravatar')) {
+      return null;
+    }
+
+    return me?.profileImageSrc;
+  };
+
+  const label = isPersonalSession
+    ? `Use as ${org?.name}`
+    : `Use as ${me.firstName}`;
 
   return (
     <div>
@@ -27,17 +53,13 @@ export function UserSection() {
                 iconLeft={
                   <Avatar
                     className="h-6 w-6"
-                    src={
-                      me?.profileImageSrc?.includes('gravatar')
-                        ? undefined
-                        : me?.profileImageSrc
-                    }
+                    src={getImage()}
                     data-testid="user-header-button"
                     alt={'avatar'}
                   />
                 }
               >
-                {me?.firstName}
+                {getName()}
               </Button>
             </Popover.Button>
             <Transition
@@ -50,7 +72,17 @@ export function UserSection() {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute right-0 mt-3 max-w-sm">
-                <CardBase innerClassName="flex flex-col gap-y-2">
+                <CardBase innerClassName="flex flex-col gap-y-2 w-40">
+                  {hasTeam && (
+                    <Button
+                      onClick={toggleSession}
+                      isLoading={isTogglingSession}
+                      size="sm"
+                      variant="neutral"
+                    >
+                      {label}
+                    </Button>
+                  )}
                   <Button
                     variant="neutral"
                     as="a"

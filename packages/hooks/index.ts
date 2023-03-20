@@ -16,3 +16,4 @@ export {useFeatureFlag} from './src/useFeatureFlag';
 export {useMe} from './src/useMe';
 export {useOrg} from './src/useOrg';
 export {useGlobalLoading, useLoading} from './src/useGlobalLoading';
+export {useToggleSession} from './src/useToggleSession';
