@@ -14,7 +14,7 @@ import {createOGImageEventUrl, stripHTML} from 'utils';
 
 export default function EventPage() {
   useHandleEmailCallbackParam();
-  const me = useMe();
+  const {me} = useMe();
   const {eventShortId} = useEventId();
   const {
     data: event,
@@ -26,7 +26,7 @@ export default function EventPage() {
     },
     {enabled: !!eventShortId}
   );
-  const isMyEvent = event?.organizationId === me.data?.organizationId;
+  const isMyEvent = event?.organizationId === me?.organizationId;
 
   if (isLoading) {
     return <LoadingBlock />;

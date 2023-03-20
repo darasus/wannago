@@ -1,4 +1,5 @@
 import {useAuth} from '@clerk/nextjs';
+import {useMe} from 'hooks';
 import {NextComponentType} from 'next';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
@@ -8,15 +9,15 @@ export function withDashboardRedirectIfSignedIn(
 ) {
   return function Render(props: any) {
     const router = useRouter();
-    const {isSignedIn} = useAuth();
+    const {auth} = useMe();
 
     useEffect(() => {
-      if (isSignedIn) {
+      if (auth.isSignedIn) {
         router.push('/dashboard', undefined, {unstable_skipClientCache: true});
       }
-    }, [isSignedIn, router]);
+    }, [auth, router]);
 
-    if (isSignedIn) return null;
+    if (auth.isSignedIn) return null;
 
     return <Component {...props} />;
   };

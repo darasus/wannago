@@ -1,4 +1,4 @@
-import {useUser} from '@clerk/nextjs';
+import {useMe} from 'hooks';
 import {useForm} from 'react-hook-form';
 import {Button, CardBase} from 'ui';
 import {Input} from '../../components/Input/Input/Input';
@@ -10,17 +10,17 @@ interface UserForm {
 }
 
 export function NameSettingsCard() {
-  const {user} = useUser();
+  const {clerkMe} = useMe();
   const form = useForm<UserForm>({
     defaultValues: {
-      firstName: user?.firstName!,
-      lastName: user?.lastName!,
-      email: user?.primaryEmailAddress?.emailAddress!,
+      firstName: clerkMe?.firstName!,
+      lastName: clerkMe?.lastName!,
+      email: clerkMe?.primaryEmailAddress?.emailAddress!,
     },
   });
 
   const onSubmit = form.handleSubmit(async data => {
-    await user?.update({
+    await clerkMe?.update({
       firstName: data.firstName,
       lastName: data.lastName,
     });

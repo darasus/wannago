@@ -21,7 +21,7 @@ function Dashboard() {
     },
   });
   const eventType = form.watch('eventType');
-  const {data, isLoading, isFetching} = trpc.me.getMyEvents.useQuery({
+  const {data, isLoading, isFetching} = trpc.user.getMyEvents.useQuery({
     eventType,
   });
   const haveNoEvents = data?.length === 0;

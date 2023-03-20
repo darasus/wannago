@@ -1,5 +1,5 @@
-import {useUser} from '@clerk/nextjs';
 import {EmailAddressResource} from '@clerk/types';
+import {useMe} from 'hooks';
 import {useRef} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
@@ -25,14 +25,14 @@ export function AddEmailModal({
   isCodeFormOpen,
   isEmailFormOpen,
 }: Props) {
-  const {user} = useUser();
+  const {clerkMe} = useMe();
   const emailForm = useForm<EmailForm>();
   const codeForm = useForm<CodeForm>();
   const emailCreateAttemptRef = useRef<EmailAddressResource | null>(null);
 
   const onEmailSubmit = emailForm.handleSubmit(async data => {
     try {
-      const emailCreateAttempt = await user?.createEmailAddress({
+      const emailCreateAttempt = await clerkMe?.createEmailAddress({
         email: data.email,
       });
       await emailCreateAttempt?.prepareVerification({strategy: 'email_code'});
