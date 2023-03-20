@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
+    "hooks": "workspace:*",
     "tsconfig": "workspace:*"
   }
 }

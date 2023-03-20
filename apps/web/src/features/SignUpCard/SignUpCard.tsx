@@ -1,4 +1,4 @@
-import {RedirectToSignIn, useAuth} from '@clerk/nextjs';
+import {RedirectToSignIn} from '@clerk/nextjs';
 import {Event} from '@prisma/client';
 import {SignUpCard as _SignUpCard} from 'cards';
 import {
@@ -6,6 +6,7 @@ import {
   useAttendeeCount,
   useConfetti,
   useConfirmDialog,
+  useMe,
 } from 'hooks';
 import {useState} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
@@ -26,11 +27,11 @@ export function SignUpCard({event}: Props) {
   const {confetti} = useConfetti();
   const {logEvent} = useAmplitude();
   const [isOpen, setIsOpen] = useState(false);
-  const {isSignedIn} = useAuth();
+  const {auth} = useMe();
   const signUp = trpc.event.getMySignUp.useQuery(
     {eventId: event.id},
     {
-      enabled: isSignedIn,
+      enabled: auth.isSignedIn,
     }
   );
   const joinEvent = trpc.event.joinEvent.useMutation({
@@ -72,7 +73,7 @@ export function SignUpCard({event}: Props) {
   });
 
   const onJoinSubmit = form.handleSubmit(async data => {
-    if (!isSignedIn) {
+    if (!auth.isSignedIn) {
       setIsOpen(true);
       return;
     }
@@ -87,7 +88,7 @@ export function SignUpCard({event}: Props) {
   });
 
   const onCancelSubmit = form.handleSubmit(async () => {
-    if (!isSignedIn) {
+    if (!auth.isSignedIn) {
       setIsOpen(true);
       return;
     }

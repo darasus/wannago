@@ -2,9 +2,14 @@ import {useAuth} from '@clerk/nextjs';
 import {trpc} from 'trpc/src/trpc';
 
 export function useMe() {
-  const {isSignedIn} = useAuth();
+  const auth = useAuth();
+  const {userId, isSignedIn} = auth;
 
-  return trpc.me.me.useQuery(undefined, {
+  const {data} = trpc.me.me.useQuery(undefined, {
     enabled: !!isSignedIn,
   });
+
+  const me = data || null;
+
+  return {me, auth};
 }

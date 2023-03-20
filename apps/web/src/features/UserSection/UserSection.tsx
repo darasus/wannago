@@ -8,8 +8,8 @@ import {useMe} from 'hooks';
 export function UserSection() {
   const {user, isLoaded} = useUser();
   const {signOut} = useClerk();
-  const me = useMe();
-  const showAdminLink = me.data?.type === 'ADMIN';
+  const {me} = useMe();
+  const showAdminLink = me?.type === 'ADMIN';
 
   const onSignOutClick = async () => {
     await signOut();
@@ -63,7 +63,7 @@ export function UserSection() {
                   <Button
                     variant="neutral"
                     as="a"
-                    href={`/u/${me.data?.id}`}
+                    href={`/u/${me?.id}`}
                     size="sm"
                     data-testid="profile-button"
                   >
