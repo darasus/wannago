@@ -4,21 +4,21 @@ import {useDropzone} from 'react-dropzone';
 import {cn} from 'utils';
 import {Button, CardBase, Spinner} from 'ui';
 import {InputWrapper} from '../../components/Input/Input/InputWrapper';
-import {useUser} from '@clerk/nextjs';
 import {toast} from 'react-hot-toast';
 import {captureException} from '@sentry/nextjs';
+import {useMe} from 'hooks';
 
 export function ProfilePictureSettingsCard() {
-  const {user} = useUser();
+  const {clerkMe} = useMe();
   const [isLoading, setIsLoading] = useState(false);
-  const hasImage = user?.profileImageUrl.includes('gravatar') ? false : true;
+  const hasImage = clerkMe?.profileImageUrl.includes('gravatar') ? false : true;
 
   const onDrop = useCallback(
     async (droppedFiles: File[]) => {
       try {
         setIsLoading(true);
         const file = droppedFiles[0];
-        await user?.setProfileImage({file});
+        await clerkMe?.setProfileImage({file});
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -26,7 +26,7 @@ export function ProfilePictureSettingsCard() {
         captureException(error);
       }
     },
-    [user]
+    [clerkMe]
   );
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
@@ -40,8 +40,8 @@ export function ProfilePictureSettingsCard() {
   });
 
   const handleRemoveImage = useCallback(async () => {
-    await user?.setProfileImage({file: null});
-  }, [user]);
+    await clerkMe?.setProfileImage({file: null});
+  }, [clerkMe]);
 
   return (
     <CardBase>
@@ -72,13 +72,13 @@ export function ProfilePictureSettingsCard() {
               <Spinner />
             </div>
           )}
-          {!isLoading && hasImage && user?.profileImageUrl && (
+          {!isLoading && hasImage && clerkMe?.profileImageUrl && (
             <>
               <div className="flex items-center justify-center absolute w-full h-full bg-gray-100">
                 <NextImage
                   data-testid="file-input-image-preview"
                   alt=""
-                  src={user?.profileImageUrl}
+                  src={clerkMe?.profileImageUrl}
                   fill
                   style={{objectFit: 'contain'}}
                 />

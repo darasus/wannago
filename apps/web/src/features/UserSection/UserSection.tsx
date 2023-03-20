@@ -1,4 +1,4 @@
-import {useClerk, useUser} from '@clerk/nextjs';
+import {useClerk} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
 import {Avatar, Button, CardBase} from 'ui';
@@ -6,7 +6,6 @@ import {FeedbackFish} from '@feedback-fish/react';
 import {useMe} from 'hooks';
 
 export function UserSection() {
-  const {user, isLoaded} = useUser();
   const {signOut} = useClerk();
   const {me} = useMe();
   const showAdminLink = me?.type === 'ADMIN';
@@ -15,7 +14,7 @@ export function UserSection() {
     await signOut();
   };
 
-  if (!isLoaded) return null;
+  if (!me) return null;
 
   return (
     <div>
@@ -29,16 +28,16 @@ export function UserSection() {
                   <Avatar
                     className="h-6 w-6"
                     src={
-                      user?.profileImageUrl.includes('gravatar')
+                      me?.profileImageSrc?.includes('gravatar')
                         ? undefined
-                        : user?.profileImageUrl
+                        : me?.profileImageSrc
                     }
                     data-testid="user-header-button"
                     alt={'avatar'}
                   />
                 }
               >
-                {user?.firstName}
+                {me?.firstName}
               </Button>
             </Popover.Button>
             <Transition
@@ -77,7 +76,10 @@ export function UserSection() {
                       Admin
                     </Button>
                   )}
-                  <FeedbackFish projectId="f843146d960b2f" userId={user?.id}>
+                  <FeedbackFish
+                    projectId="f843146d960b2f"
+                    userId={me?.externalId || undefined}
+                  >
                     <Button variant="neutral" size="sm">
                       Feedback
                     </Button>

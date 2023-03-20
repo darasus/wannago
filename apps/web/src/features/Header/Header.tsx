@@ -1,12 +1,10 @@
 import {Fragment} from 'react';
 import {Popover, Transition} from '@headlessui/react';
 import {Button, CardBase, Logo} from 'ui';
-import {useRouter} from 'next/router';
-import {useUser} from '@clerk/nextjs';
 import {UserSection} from '../UserSection/UserSection';
 import {FeedbackFish} from '@feedback-fish/react';
 import {cn} from 'utils';
-import {useLoading} from 'hooks';
+import {useLoading, useMe} from 'hooks';
 
 export const navItems = [
   {label: 'Features', href: `/#features`},
@@ -38,12 +36,12 @@ function MobileNavIcon({open}: any) {
 }
 
 export function Header() {
-  const {isSignedIn} = useUser();
-  const showUserProfile = isSignedIn;
-  const showFeedback = !isSignedIn;
-  const showAuthButtons = !isSignedIn;
-  const showMobileMenu = !isSignedIn;
-  const showDesktopHomeNav = !isSignedIn;
+  const {auth} = useMe();
+  const showUserProfile = auth.isSignedIn;
+  const showFeedback = !auth.isSignedIn;
+  const showAuthButtons = !auth.isSignedIn;
+  const showMobileMenu = !auth.isSignedIn;
+  const showDesktopHomeNav = !auth.isSignedIn;
 
   const {enabled} = useLoading();
 
@@ -60,7 +58,7 @@ export function Header() {
         /> */}
         <nav className="relative flex justify-between">
           <div className="flex items-center gap-x-8">
-            <Logo href={isSignedIn ? '/dashboard' : '/'} />
+            <Logo href={auth.isSignedIn ? '/dashboard' : '/'} />
             {showDesktopHomeNav && (
               <div className="hidden md:flex gap-x-5 md:gap-x-4">
                 {navItems.map((item, i) => (

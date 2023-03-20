@@ -1,19 +1,17 @@
 import {useEffect, useState} from 'react';
 import {setContext} from '@sentry/nextjs';
-import {useUser} from '@clerk/nextjs';
+import {useMe} from 'hooks';
 
 export function Sentry() {
-  const {user} = useUser();
-  const [isUserIdAdded, setIsUserIdAdded] = useState(false);
+  const {auth} = useMe();
 
   useEffect(() => {
-    if (!isUserIdAdded && user?.id) {
+    if (auth?.userId) {
       setContext('user', {
-        userId: user.id,
+        userId: auth?.userId,
       });
-      setIsUserIdAdded(true);
     }
-  }, [isUserIdAdded, user?.id]);
+  }, [auth?.userId]);
 
   return null;
 }

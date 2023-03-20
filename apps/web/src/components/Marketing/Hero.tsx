@@ -1,4 +1,3 @@
-import {useUser} from '@clerk/nextjs';
 import {useRouter} from 'next/router';
 import {forwardRef} from 'react';
 import {titleFontClassName} from '../../fonts';
@@ -7,6 +6,7 @@ import {Container} from 'ui';
 import dynamic from 'next/dynamic';
 import {TextAnimation} from 'ui/src/components/TextAnimation/TextAnimation';
 import {cn} from 'utils';
+import {useMe} from 'hooks';
 
 const DynamicSpinningCircle = dynamic(() => import('./SpinningCircle'), {
   ssr: false,
@@ -20,7 +20,7 @@ export const Hero = forwardRef(function Hero(
   _,
   ref: React.Ref<HTMLDivElement>
 ) {
-  const {isSignedIn} = useUser();
+  const {auth} = useMe();
   const router = useRouter();
 
   return (
@@ -74,7 +74,7 @@ export const Hero = forwardRef(function Hero(
           <Button
             className="pointer-events-auto"
             size="lg"
-            onClick={() => router.push(isSignedIn ? '/e/add' : '/login')}
+            onClick={() => router.push(auth.isSignedIn ? '/e/add' : '/login')}
           >
             Create your first event
           </Button>

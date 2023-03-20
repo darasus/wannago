@@ -1,4 +1,4 @@
-import {useUser} from '@clerk/nextjs';
+import {useMe} from 'hooks';
 import Head from 'next/head';
 import {Container, PageHeader} from 'ui';
 import {EmailSettingsCard} from '../features/UserSettings/EmailSettingsCard';
@@ -7,12 +7,12 @@ import {ProfilePictureSettingsCard} from '../features/UserSettings/ProfilePictur
 import {withProtected} from '../utils/withAuthProtect';
 
 function ProfilePage() {
-  const {user} = useUser();
+  const {clerkMe} = useMe();
 
   return (
     <>
       <Head>
-        <title>{`${user?.fullName} | WannaGo`}</title>
+        <title>{`${clerkMe?.fullName} | WannaGo`}</title>
       </Head>
       <Container maxSize="sm">
         <div className="flex flex-col gap-y-4">

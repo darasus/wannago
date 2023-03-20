@@ -1,20 +1,20 @@
 import {Button} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
-import {useUser} from '@clerk/nextjs';
+import {useMe} from 'hooks';
 
 interface Props {
   eventId?: string;
 }
 
 export function EventWannaGoArea({eventId}: Props) {
-  const {user} = useUser();
+  const {auth} = useMe();
 
   return (
     <div className="flex flex-col items-center">
       <div className="mb-4">
         <FeedbackFish
           projectId="f843146d960b2f"
-          userId={user?.id}
+          userId={auth?.userId || undefined}
           metadata={{eventid: eventId || ''}}
         >
           <Button variant="link" size="sm">

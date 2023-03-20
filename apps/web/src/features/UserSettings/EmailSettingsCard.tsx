@@ -1,10 +1,10 @@
-import {useUser} from '@clerk/nextjs';
+import {useMe} from 'hooks';
 import {useState} from 'react';
 import {Badge, Button, CardBase, Text} from 'ui';
 import {AddEmailModal} from './AddEmailModal';
 
 export function EmailSettingsCard() {
-  const {user} = useUser();
+  const {clerkMe} = useMe();
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const [isOTPModalVisible, setIsOTPModalVisible] = useState(false);
 
@@ -31,7 +31,7 @@ export function EmailSettingsCard() {
             </Button>
           </div>
           <div className="flex flex-col divide-y">
-            {user?.emailAddresses.sort().map(email => {
+            {clerkMe?.emailAddresses.sort().map(email => {
               const getColor = () => {
                 if (!email.verification.status) {
                   return 'gray';
@@ -45,7 +45,7 @@ export function EmailSettingsCard() {
               };
 
               const getLabel = () => {
-                if (user.primaryEmailAddressId === email.id) {
+                if (clerkMe.primaryEmailAddressId === email.id) {
                   return 'primary';
                 }
 
@@ -65,10 +65,10 @@ export function EmailSettingsCard() {
               };
 
               const handleMakePrimary = async () => {
-                await user.update({primaryEmailAddressId: email.id});
+                await clerkMe.update({primaryEmailAddressId: email.id});
               };
 
-              const isPrimary = user.primaryEmailAddressId === email.id;
+              const isPrimary = clerkMe.primaryEmailAddressId === email.id;
               const isVerified = email.verification.status === 'verified';
 
               return (
