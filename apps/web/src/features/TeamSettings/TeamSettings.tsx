@@ -1,4 +1,4 @@
-import {useOrg} from 'hooks';
+import {useConfirmDialog, useOrg} from 'hooks';
 import Image from 'next/image';
 import {useState} from 'react';
 import {Avatar, Button, CardBase, Modal, Text} from 'ui';
@@ -9,6 +9,13 @@ export function TeamSettings() {
   const {org, removeOrg, members, invitations} = useOrg();
   const [isAddMemberDialogModalOpen, setIsAddMemberDialogModalOpen] =
     useState(false);
+  const {modal, open} = useConfirmDialog({
+    title: 'Are you sure you want to remove your team?',
+    description: 'This will remove your team and all its members',
+    async onConfirm() {
+      await removeOrg();
+    },
+  });
 
   if (!org) {
     return null;
@@ -16,6 +23,7 @@ export function TeamSettings() {
 
   return (
     <>
+      {modal}
       <CreateMemberModal
         isOpen={isAddMemberDialogModalOpen}
         onClose={() => setIsAddMemberDialogModalOpen(false)}
@@ -36,7 +44,7 @@ export function TeamSettings() {
                 <div className="grow">
                   <Text>{org.name}</Text>
                 </div>
-                <Button variant="danger" size="xs" onClick={removeOrg}>
+                <Button variant="danger" size="xs" onClick={open}>
                   remove
                 </Button>
               </div>
