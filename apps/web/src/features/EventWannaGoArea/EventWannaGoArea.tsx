@@ -1,4 +1,4 @@
-import {Button, PublicEventBranding} from 'ui';
+import {Button} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
 import {useUser} from '@clerk/nextjs';
 
@@ -21,9 +21,6 @@ export function EventWannaGoArea({eventId}: Props) {
             Feedback
           </Button>
         </FeedbackFish>
-      </div>
-      <div>
-        <PublicEventBranding />
       </div>
     </div>
   );

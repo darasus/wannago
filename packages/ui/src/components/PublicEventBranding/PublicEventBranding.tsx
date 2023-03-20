@@ -1,13 +1,9 @@
 import Link from 'next/link';
 import {getBaseUrl} from 'utils';
-import {useMe} from 'hooks';
 import {LogoView} from '../Logo/Logo';
 
 export function PublicEventBranding() {
-  const {auth} = useMe();
   const url = getBaseUrl().endsWith('/') ? getBaseUrl() : `${getBaseUrl()}/`;
-
-  if (auth.userId) return null;
 
   return (
     <Link
