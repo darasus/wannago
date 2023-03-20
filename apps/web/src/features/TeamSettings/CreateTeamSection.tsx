@@ -1,10 +1,12 @@
 import {useOrg} from 'hooks';
-import {useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import {Button, CardBase, Text} from 'ui';
+import {ImageInput} from '../../components/Input/Input/ImageInput';
 import {Input} from '../../components/Input/Input/Input';
 
 interface Form {
   name: string;
+  file: File;
 }
 
 export function CreateTeamSection() {
@@ -12,21 +14,36 @@ export function CreateTeamSection() {
   const form = useForm<Form>();
 
   const handleSubmit = form.handleSubmit(async data => {
-    await createOrg({name: data.name});
+    await createOrg(data);
+    form.reset();
   });
 
   if (!org) {
     return (
       <CardBase>
-        <div>
+        <div className="mb-4">
           <Text className="font-bold">Create team</Text>
-          <div>{`You don't have any orgs yet`}</div>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-2">
-            <Input type="text" {...form.register('name')} label="Team name" />
+          <div className="flex flex-col gap-4">
+            <Input type="text" {...form.register('name')} label="Name" />
+            <Controller
+              name="file"
+              control={form.control}
+              render={({field, formState}) => {
+                return (
+                  <ImageInput
+                    onChange={file => {
+                      field.onChange(file);
+                    }}
+                  />
+                );
+              }}
+            />
             <div>
-              <Button type="submit">Create org</Button>
+              <Button type="submit" isLoading={form.formState.isSubmitting}>
+                Create
+              </Button>
             </div>
           </div>
         </form>
@@ -36,3 +53,5 @@ export function CreateTeamSection() {
 
   return null;
 }
+
+// create description text explaining why you need to create a team

@@ -1,4 +1,3 @@
-import {OrganizationProfile} from '@clerk/nextjs';
 import Head from 'next/head';
 import {Container, PageHeader} from 'ui';
 import {CreateTeamSection} from '../features/TeamSettings/CreateTeamSection';
@@ -16,7 +15,7 @@ function TeamPage() {
           <PageHeader title="Team settings" />
           <CreateTeamSection />
           <TeamSettings />
-          <OrganizationProfile />
+          {/* <OrganizationProfile /> */}
         </div>
       </Container>
     </>

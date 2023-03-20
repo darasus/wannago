@@ -31,7 +31,7 @@ export function InputWrapper({
           <label
             htmlFor={id}
             className={cn(
-              'flex items-center text-md text-gray-800 ml-2 font-bold'
+              'flex items-center text-md text-gray-800 ml-4 font-bold'
             )}
           >
             {label}

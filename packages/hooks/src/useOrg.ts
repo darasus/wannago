@@ -3,13 +3,20 @@ import {
   useOrganizationList,
   useOrganizations,
 } from '@clerk/nextjs';
-import {MembershipRole, OrganizationMembershipResource} from '@clerk/types';
+import {
+  MembershipRole,
+  OrganizationInvitationResource,
+  OrganizationMembershipResource,
+} from '@clerk/types';
 import {useCallback, useEffect, useState} from 'react';
 import {toast} from 'react-hot-toast';
 
 export function useOrg() {
   const [members, setMembers] = useState<OrganizationMembershipResource[]>([]);
-  const {organization, membership} = useOrganization({
+  const [invitations, setInvitations] = useState<
+    OrganizationInvitationResource[]
+  >([]);
+  const {organization} = useOrganization({
     invitationList: {
       limit: 100,
       offset: 0,
@@ -26,12 +33,18 @@ export function useOrg() {
     organization?.getMemberships().then(res => {
       setMembers(res);
     });
+    organization?.getPendingInvitations().then(res => {
+      setInvitations(res);
+    });
   }, [organization]);
 
   const createOrg = useCallback(
-    async ({name}: {name: string}) => {
+    async ({name, file}: {name: string; file: File}) => {
       const result = await createOrganization?.({
         name,
+      });
+      await result?.setLogo?.({
+        file,
       });
       await setActive?.({
         organization: result?.id,
@@ -64,5 +77,12 @@ export function useOrg() {
     [organization]
   );
 
-  return {org: organization, createOrg, removeOrg, members, addMember};
+  return {
+    org: organization,
+    createOrg,
+    removeOrg,
+    members,
+    addMember,
+    invitations,
+  };
 }
