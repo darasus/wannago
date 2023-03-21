@@ -10,6 +10,7 @@
     "vercel-build": "npx prisma generate && next build"
   },
   "dependencies": {
+    "clerk-webhook-handler": "workspace:*",
     "database": "workspace:*",
     "tsconfig": "workspace:*",
     "eslint-config-custom": "workspace:*",
