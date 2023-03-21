@@ -54,9 +54,13 @@ model User {
 }
 
 model Organization {
-  id     String  @id @default(uuid())
-  users  User[]  @relation(name: "UserOrganization")
-  events Event[] @relation(name: "EventOrganization")
+  id         String  @id @default(uuid())
+  externalId String?
+  users      User[]  @relation(name: "UserOrganization")
+  events     Event[] @relation(name: "EventOrganization")
+  name       String? @db.VarChar(255)
+  logoSrc    String?
+  isActive   Boolean @default(false)
 }
 
 model EventSignUp {

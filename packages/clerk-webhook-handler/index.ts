@@ -1,3 +1,4 @@
 export {baseScheme} from './src/validation';
-export {handleEmailCreate} from './src/email';
-export {handleUserCreate, handleUserDelete, handleUserUpdate} from './src/user';
+export {email} from './src/email';
+export {user} from './src/user';
+export {organization} from './src/organization';

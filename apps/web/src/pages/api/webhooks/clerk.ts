@@ -1,11 +1,5 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import {
-  baseScheme,
-  handleEmailCreate,
-  handleUserCreate,
-  handleUserDelete,
-  handleUserUpdate,
-} from 'clerk-webhook-handler';
+import {baseScheme, organization, user, email} from 'clerk-webhook-handler';
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,16 +12,25 @@ export default async function handler(
   const input = baseScheme.parse(req.body);
 
   if (input.type === 'user.created') {
-    await handleUserCreate(input);
+    await user.created(input);
   }
   if (input.type === 'user.updated') {
-    await handleUserUpdate(input);
+    await user.updated(input);
   }
   if (input.type === 'user.deleted') {
-    await handleUserDelete(input);
+    await user.deleted(input);
   }
   if (input.type === 'email.created') {
-    await handleEmailCreate(input);
+    await email.created(input);
+  }
+  if (input.type === 'organization.created') {
+    await organization.created(input);
+  }
+  if (input.type === 'organization.updated') {
+    await organization.updated(input);
+  }
+  if (input.type === 'organization.deleted') {
+    await organization.deleted(input);
   }
 
   return res.status(200).json({success: true});
