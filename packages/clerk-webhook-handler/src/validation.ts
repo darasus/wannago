@@ -94,7 +94,7 @@ export const organization = {
       id: z.string(),
       name: z.string(),
       object: z.enum(['organization']),
-      logo_url: z.string().url(),
+      logo_url: z.string().url().nullable(),
       created_by: z.string(),
     }),
   }),

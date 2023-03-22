@@ -14,6 +14,6 @@ export {useUnpublishEvent} from './src/useUnpublishEvent';
 export {useUploadImage} from './src/useUploadImage';
 export {useFeatureFlag} from './src/useFeatureFlag';
 export {useMe} from './src/useMe';
-export {useOrg} from './src/useOrg';
+export {useCurrentOrganization} from './src/useCurrentOrganization';
 export {useGlobalLoading, useLoading} from './src/useGlobalLoading';
 export {useToggleSession} from './src/useToggleSession';

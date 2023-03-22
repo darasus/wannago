@@ -22,6 +22,8 @@ export const organization = {
       });
     }
 
+    console.log('prisma.organization.update', data.id);
+
     await prisma.organization.update({
       where: {
         id: user.organization.id,

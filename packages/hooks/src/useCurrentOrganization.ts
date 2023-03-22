@@ -10,9 +10,9 @@ import {
 } from '@clerk/types';
 import {useCallback, useEffect, useState} from 'react';
 import {toast} from 'react-hot-toast';
+import {trpc} from 'trpc/src/trpc';
 
-export function useOrg() {
-  const [isOrg, setIsOrg] = useState(false);
+export function useCurrentOrganization() {
   const [members, setMembers] = useState<OrganizationMembershipResource[]>([]);
   const [invitations, setInvitations] = useState<
     OrganizationInvitationResource[]
@@ -20,18 +20,27 @@ export function useOrg() {
   const {organization: org} = useOrganization();
   const {organizationList} = useOrganizationList();
   const {createOrganization} = useOrganizations();
-  const isTeamSession = Boolean(org);
-  const organization = organizationList?.[0]?.organization;
-  const hasTeam = Boolean(organization);
+  const isOrganizationSession = Boolean(org);
+  const clerkOrganization = organizationList?.[0]?.organization;
+  console.log('clerkOrganization?.id', clerkOrganization?.id);
+  const hasTeam = Boolean(clerkOrganization);
+  const organization = trpc.organization.getOrganizationByExternalId.useQuery(
+    {
+      externalId: clerkOrganization?.id!,
+    },
+    {
+      enabled: Boolean(clerkOrganization?.id),
+    }
+  );
 
   useEffect(() => {
-    organization?.getMemberships().then(res => {
+    clerkOrganization?.getMemberships().then(res => {
       setMembers(res);
     });
-    organization?.getPendingInvitations().then(res => {
+    clerkOrganization?.getPendingInvitations().then(res => {
       setInvitations(res);
     });
-  }, [organization]);
+  }, [clerkOrganization]);
 
   const createOrg = useCallback(
     async ({name, file}: {name: string; file: File}) => {
@@ -47,7 +56,7 @@ export function useOrg() {
 
   const removeOrg = useCallback(async () => {
     try {
-      await organization?.destroy();
+      await clerkOrganization?.destroy();
     } catch (error: any) {
       if (error.errors?.length > 0) {
         error.errors?.forEach((e: any) => {
@@ -57,26 +66,27 @@ export function useOrg() {
         toast.error('Something went wrong');
       }
     }
-  }, [organization]);
+  }, [clerkOrganization]);
 
   const addMember = useCallback(
     ({email, role}: {email: string; role: MembershipRole}) => {
-      organization?.inviteMember({
+      clerkOrganization?.inviteMember({
         role,
         emailAddress: email,
       });
     },
-    [organization]
+    [clerkOrganization]
   );
 
   return {
-    org: organization,
+    organization,
+    clerkOrganization,
     createOrg,
     removeOrg,
     addMember,
     members,
     invitations,
-    isTeamSession,
+    isOrganizationSession,
     hasTeam,
   };
 }

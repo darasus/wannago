@@ -6,22 +6,23 @@ import {PublicProfile} from '../../features/PublicProfile/PublicProfile';
 
 export default function ProfilePage() {
   const router = useRouter();
-  const userId = router.query.userId as string;
-  const {data, isLoading: isLoadingUser} = trpc.user.getUserById.useQuery(
-    {
-      userId,
-    },
-    {
-      enabled: !!userId,
-    }
-  );
-  const {data: userEvents, isLoading: isLoadingEvents} =
-    trpc.user.getUserProfileEvents.useQuery(
+  const organizationId = router.query.userId as string;
+  const {data, isLoading: isLoadingUser} =
+    trpc.organization.getOrganizationById.useQuery(
       {
-        userId,
+        organizationId,
       },
       {
-        enabled: !!userId,
+        enabled: Boolean(organizationId),
+      }
+    );
+  const {data: userEvents, isLoading: isLoadingEvents} =
+    trpc.organization.getOrganizationProfileEvents.useQuery(
+      {
+        organizationId,
+      },
+      {
+        enabled: Boolean(organizationId),
       }
     );
 
@@ -32,12 +33,12 @@ export default function ProfilePage() {
   return (
     <>
       <Head>
-        <title>{`${data?.firstName} ${data?.lastName} | WannaGo`}</title>
+        <title>{`${data?.name} | WannaGo`}</title>
       </Head>
       <PublicProfile
         events={userEvents || []}
-        name={`${data?.firstName} ${data?.lastName}`}
-        profileImageSrc={data?.profileImageSrc}
+        name={data?.name || ''}
+        profileImageSrc={data?.logoSrc}
         isLoadingEvents={isLoadingEvents}
       />
     </>

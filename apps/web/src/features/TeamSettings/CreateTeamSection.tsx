@@ -1,4 +1,4 @@
-import {useOrg} from 'hooks';
+import {useCurrentOrganization} from 'hooks';
 import {Controller, useForm} from 'react-hook-form';
 import {Button, CardBase, Text} from 'ui';
 import {ImageInput} from '../../components/Input/Input/ImageInput';
@@ -10,7 +10,7 @@ interface Form {
 }
 
 export function CreateTeamSection() {
-  const {org, createOrg} = useOrg();
+  const {clerkOrganization, createOrg} = useCurrentOrganization();
   const form = useForm<Form>();
 
   const handleSubmit = form.handleSubmit(async data => {
@@ -18,7 +18,7 @@ export function CreateTeamSection() {
     form.reset();
   });
 
-  if (!org) {
+  if (!clerkOrganization) {
     return (
       <CardBase>
         <div className="mb-4">

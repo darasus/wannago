@@ -4,6 +4,7 @@ import {eventRouter} from './event';
 import {mapsRouter} from './maps';
 import {adminRouter} from './admin';
 import {userRouter} from './user';
+import {organizationRouter} from './organization';
 
 export const appRouter = router({
   healthcheck: publicProcedure.query(() => 'yay!'),
@@ -12,6 +13,7 @@ export const appRouter = router({
   mail: mailRouter,
   admin: adminRouter,
   user: userRouter,
+  organization: organizationRouter,
 });
 
 export type AppRouter = typeof appRouter;

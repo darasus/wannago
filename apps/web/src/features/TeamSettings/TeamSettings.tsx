@@ -1,11 +1,12 @@
-import {useConfirmDialog, useOrg} from 'hooks';
+import {useConfirmDialog, useCurrentOrganization} from 'hooks';
 import {useState} from 'react';
 import {Avatar, Button, CardBase, Text} from 'ui';
 import {CreateMemberModal} from './CreateMemberModal';
 import {TeamMember} from './TeamMember';
 
 export function TeamSettings() {
-  const {org, removeOrg, members, invitations} = useOrg();
+  const {clerkOrganization, removeOrg, members, invitations} =
+    useCurrentOrganization();
   const [isAddMemberDialogModalOpen, setIsAddMemberDialogModalOpen] =
     useState(false);
   const {modal, open} = useConfirmDialog({
@@ -16,7 +17,7 @@ export function TeamSettings() {
     },
   });
 
-  if (!org) {
+  if (!clerkOrganization) {
     return null;
   }
 
@@ -32,16 +33,16 @@ export function TeamSettings() {
           <div>
             <div>
               <div className="flex items-center gap-x-2">
-                {org?.logoUrl && (
+                {clerkOrganization?.logoUrl && (
                   <Avatar
                     className="h-10 w-10"
-                    src={org?.logoUrl}
-                    alt={org.name}
+                    src={clerkOrganization?.logoUrl}
+                    alt={clerkOrganization.name}
                     style={{objectFit: 'cover'}}
                   />
                 )}
                 <div className="grow">
-                  <Text>{org.name}</Text>
+                  <Text>{clerkOrganization.name}</Text>
                 </div>
                 <Button variant="danger" size="xs" onClick={open}>
                   remove

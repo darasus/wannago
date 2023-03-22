@@ -3,12 +3,13 @@ import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
 import {Avatar, Badge, Button, CardBase} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
-import {useMe, useOrg, useToggleSession} from 'hooks';
+import {useMe, useCurrentOrganization, useToggleSession} from 'hooks';
 
 export function UserSection() {
   const {signOut} = useClerk();
   const {me, isPersonalSession} = useMe();
-  const {org, isTeamSession, hasTeam} = useOrg();
+  const {clerkOrganization, isOrganizationSession, hasTeam, organization} =
+    useCurrentOrganization();
   const {isTogglingSession, toggleSession} = useToggleSession();
   const showAdminLink = me?.type === 'ADMIN';
 
@@ -19,16 +20,16 @@ export function UserSection() {
   if (!me) return null;
 
   const getName = () => {
-    if (isTeamSession) {
-      return org?.name;
+    if (isOrganizationSession) {
+      return clerkOrganization?.name;
     }
 
     return me?.firstName;
   };
 
   const getImage = () => {
-    if (isTeamSession) {
-      return org?.logoUrl;
+    if (isOrganizationSession) {
+      return clerkOrganization?.logoUrl;
     }
 
     if (me?.profileImageSrc?.includes('gravatar')) {
@@ -39,7 +40,7 @@ export function UserSection() {
   };
 
   const label = isPersonalSession
-    ? `Use as ${org?.name}`
+    ? `Use as ${clerkOrganization?.name}`
     : `Use as ${me.firstName}`;
 
   return (
@@ -94,7 +95,11 @@ export function UserSection() {
                   <Button
                     variant="neutral"
                     as="a"
-                    href={`/u/${me?.id}`}
+                    href={
+                      isPersonalSession
+                        ? `/u/${me?.id}`
+                        : `/o/${organization?.data?.id}`
+                    }
                     size="sm"
                     data-testid="profile-button"
                   >

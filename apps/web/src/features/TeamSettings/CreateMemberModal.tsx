@@ -1,4 +1,4 @@
-import {useOrg} from 'hooks';
+import {useCurrentOrganization} from 'hooks';
 import {useForm} from 'react-hook-form';
 import {Button, Modal} from 'ui';
 import {Input} from '../../components/Input/Input/Input';
@@ -13,7 +13,7 @@ interface Form {
 }
 
 export function CreateMemberModal({isOpen, onClose}: Props) {
-  const {addMember} = useOrg();
+  const {addMember} = useCurrentOrganization();
   const form = useForm<Form>();
 
   const handleSubmit = form.handleSubmit(async data => {
