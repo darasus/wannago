@@ -22,7 +22,6 @@ export function useCurrentOrganization() {
   const {createOrganization} = useOrganizations();
   const isOrganizationSession = Boolean(org);
   const clerkOrganization = organizationList?.[0]?.organization;
-  console.log('clerkOrganization?.id', clerkOrganization?.id);
   const hasTeam = Boolean(clerkOrganization);
   const organization = trpc.organization.getOrganizationByExternalId.useQuery(
     {
