@@ -17,9 +17,9 @@ export default function ProfilePage() {
       }
     );
   const {data: userEvents, isLoading: isLoadingEvents} =
-    trpc.organization.getPublicOrganizationEvents.useQuery(
+    trpc.event.getPublicEvents.useQuery(
       {
-        organizationId,
+        id: organizationId,
       },
       {
         enabled: Boolean(organizationId),

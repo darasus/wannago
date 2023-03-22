@@ -2,16 +2,6 @@ import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
 import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 
-const getPublicOrganizationEvents = publicProcedure
-  .input(z.object({organizationId: z.string().uuid()}))
-  .query(async ({ctx, input}) => {
-    return ctx.actions.getEvents({
-      id: input.organizationId,
-      eventType: 'organizing',
-      isPublished: true,
-    });
-  });
-
 const getOrganizationById = publicProcedure
   .input(z.object({organizationId: z.string().uuid()}))
   .query(async ({ctx, input}) => {
@@ -32,22 +22,7 @@ const getOrganizationByExternalId = publicProcedure
     });
   });
 
-const getMyOrganizationEvents = protectedProcedure
-  .input(
-    z.object({
-      organizationId: z.string().uuid(),
-    })
-  )
-  .query(async ({ctx, input}) => {
-    return ctx.actions.getEvents({
-      id: input.organizationId,
-      eventType: 'organizing',
-    });
-  });
-
 export const organizationRouter = router({
-  getMyOrganizationEvents,
   getOrganizationById,
-  getPublicOrganizationEvents,
   getOrganizationByExternalId,
 });

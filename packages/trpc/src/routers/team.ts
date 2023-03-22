@@ -24,7 +24,7 @@ const inviteTeamMember = protectedProcedure
 
     const result = await ctx.clerk.organizations.createOrganizationInvitation({
       emailAddress: input.email,
-      inviterUserId: ctx.user.id,
+      inviterUserId: ctx.auth.userId,
       organizationId: '',
       role: 'admin',
     });
