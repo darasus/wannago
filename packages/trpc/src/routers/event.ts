@@ -191,7 +191,7 @@ const remove = protectedProcedure
   });
 
 const create = protectedProcedure
-  .input(eventInput)
+  .input(eventInput.extend({authorId: z.string().uuid()}))
   .mutation(
     async ({
       input: {
@@ -206,6 +206,7 @@ const create = protectedProcedure
         maxNumberOfAttendees,
         startDate,
         streamUrl,
+        authorId,
       },
       ctx,
     }) => {
@@ -220,22 +221,10 @@ const create = protectedProcedure
         });
       }
 
-      const organization = await ctx.prisma.organization.findFirst({
-        where: {
-          users: {
-            some: {
-              externalId: ctx.auth.userId,
-            },
-          },
-        },
-      });
-
-      if (!organization) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'No organization found',
-        });
-      }
+      const [user, organization] = await Promise.all([
+        ctx.actions.getUserById({id: authorId}),
+        ctx.actions.getOrganizationById({id: authorId}),
+      ]);
 
       let event = await ctx.prisma.event.create({
         data: {
@@ -253,11 +242,10 @@ const create = protectedProcedure
           streamUrl,
           longitude: geocodeResponse?.data.results[0].geometry.location.lng,
           latitude: geocodeResponse?.data.results[0].geometry.location.lat,
-          organization: {
-            connect: {
-              id: organization.id,
-            },
-          },
+          ...(organization?.id
+            ? {organization: {connect: {id: organization.id}}}
+            : {}),
+          ...(user?.id ? {user: {connect: {id: user.id}}} : {}),
         },
       });
 
@@ -322,6 +310,7 @@ const getByShortId = publicProcedure
             users: true,
           },
         },
+        user: true,
       },
     });
   });

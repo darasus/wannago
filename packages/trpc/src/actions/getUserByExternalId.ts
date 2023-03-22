@@ -14,13 +14,6 @@ export function getUserByExternalId(ctx: ActionContext) {
       },
     });
 
-    if (!user) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'User not found',
-      });
-    }
-
     return user;
   };
 }

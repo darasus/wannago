@@ -18,3 +18,4 @@ export {useCurrentOrganization} from './src/useCurrentOrganization';
 export {useGlobalLoading, useLoading} from './src/useGlobalLoading';
 export {useToggleSession} from './src/useToggleSession';
 export {useMyEventsQuery} from './src/useMyEventsQuery';
+export {useCurrentAuthorId} from './src/useCurrentAuthorId';

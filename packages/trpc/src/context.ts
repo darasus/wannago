@@ -10,11 +10,15 @@ import {SignedInAuthObject, SignedOutAuthObject} from '@clerk/clerk-sdk-node';
 import {getEvents} from './actions/getEvents';
 import {getUserByExternalId} from './actions/getUserByExternalId';
 import {getUserById} from './actions/getUserById';
+import {getOrganizationById} from './actions/getOrganizationById';
+import {getOrganizationByExternalId} from './actions/getOrganizationByExternalId';
 
 type Actions = {
   getEvents: ReturnType<typeof getEvents>;
   getUserByExternalId: ReturnType<typeof getUserByExternalId>;
   getUserById: ReturnType<typeof getUserById>;
+  getOrganizationById: ReturnType<typeof getOrganizationById>;
+  getOrganizationByExternalId: ReturnType<typeof getOrganizationByExternalId>;
 };
 
 interface CreateInnerContextOptions {
@@ -76,6 +80,8 @@ export async function createContext(
       getEvents: getEvents(innerContext),
       getUserByExternalId: getUserByExternalId(innerContext),
       getUserById: getUserById(innerContext),
+      getOrganizationByExternalId: getOrganizationByExternalId(innerContext),
+      getOrganizationById: getOrganizationById(innerContext),
     },
   };
 }

@@ -1,5 +1,5 @@
-import {Event, User} from '@prisma/client';
-import {useState} from 'react';
+import {Event, Organization, User} from '@prisma/client';
+import {useCallback, useState} from 'react';
 import {ContactFormModal} from '../../components/ContactFormModal/ContactFormModal';
 import {trpc} from 'trpc/src/trpc';
 import {OrganizerCard as OrganizerCardView} from 'cards';
@@ -7,9 +7,10 @@ import {useAmplitude} from 'hooks';
 import {FormProvider, useForm} from 'react-hook-form';
 import {ContactForm} from '../../types/forms';
 import {toast} from 'react-hot-toast';
+import invariant from 'invariant';
 
 interface Props {
-  event: Event & {organization?: {users?: User[]}};
+  event: Event & {organization?: Organization & {users?: User[]}; user?: User};
 }
 
 export function OrganizerCard({event}: Props) {
@@ -33,10 +34,48 @@ export function OrganizerCard({event}: Props) {
     });
   });
 
+  const getOrganizerInfo = useCallback(() => {
+    if (event.organization?.isActive) {
+      invariant(event.organization.name, 'Organization is required');
+      invariant(event.organization?.logoSrc, 'Organization is required');
+      invariant(event.organization.logoSrc, 'Profile picture is required');
+      return {
+        name: event.organization.name,
+        profileImageSrc: event.organization.logoSrc,
+        profilePath: `/o/${event.organization.id}`,
+      };
+    }
+
+    if (event.user) {
+      invariant(event.user.profileImageSrc, 'Profile picture is required');
+      return {
+        name: `${event.user.firstName} ${event.user.lastName}`,
+        profileImageSrc: event.user.profileImageSrc,
+        profilePath: `/u/${event.user.id}`,
+      };
+    }
+
+    if (event.organization?.users?.[0]) {
+      const user = event.organization.users[0];
+      invariant(user.profileImageSrc, 'Profile picture is required');
+      return {
+        name: `${user.firstName} ${user.lastName}`,
+        profileImageSrc: user.profileImageSrc,
+        profilePath: `/u/${user.id}`,
+      };
+    }
+
+    return {name: '', profileImageSrc: '', profilePath: ''};
+  }, [event]);
+
+  const {name, profileImageSrc, profilePath} = getOrganizerInfo();
+
   return (
     <>
       <OrganizerCardView
-        user={event.organization?.users?.[0]!}
+        name={name}
+        profileImageSrc={profileImageSrc}
+        profilePath={profilePath}
         onOpenFormClick={onOpenFormClick}
       />
       <FormProvider {...form}>
