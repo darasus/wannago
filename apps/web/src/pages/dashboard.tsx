@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import {PlusCircleIcon} from '@heroicons/react/24/outline';
+import {PlusIcon} from '@heroicons/react/24/outline';
 import {useRouter} from 'next/router';
 import {EventCard} from 'cards';
 import Head from 'next/head';
@@ -36,7 +36,7 @@ function Dashboard() {
               <Button
                 size="md"
                 onClick={() => router.push('/e/add')}
-                iconLeft={<PlusCircleIcon />}
+                iconLeft={<PlusIcon />}
                 data-testid="add-event-button"
               >
                 <span className="hidden md:inline">Create event</span>

@@ -105,18 +105,6 @@ export function UserSection() {
                   >
                     Profile
                   </Button>
-                  <Button
-                    variant="neutral"
-                    as="a"
-                    href={`/team`}
-                    size="sm"
-                    data-testid="team-button"
-                  >
-                    Team{' '}
-                    <Badge color="green" size="xxs">
-                      PRO
-                    </Badge>
-                  </Button>
                   <Button variant="neutral" as="a" href="/settings" size="sm">
                     Settings
                   </Button>
