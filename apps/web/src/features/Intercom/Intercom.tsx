@@ -7,7 +7,7 @@ export function Intercom() {
 
   useEffect(() => {
     if (auth?.userId) {
-      (window as any)?.Intercom('update', {
+      (window as any)?.Intercom?.('update', {
         email: me?.email,
         created_at: 1234567890,
         name: `${me?.firstName} ${me?.lastName}`,

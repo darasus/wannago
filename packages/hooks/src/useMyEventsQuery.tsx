@@ -15,6 +15,10 @@ export function useMyEventsQuery({eventType}: Props) {
       id: isPersonalSession ? me?.id! : organization.data?.id!,
       eventType,
     },
-    {enabled: Boolean(me?.id || organization.data?.id)}
+    {
+      enabled: isPersonalSession
+        ? Boolean(me?.id)
+        : Boolean(organization.data?.id),
+    }
   );
 }
