@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import {useCallback, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
+import {FieldError} from 'react-hook-form';
 import {Button} from 'ui';
 import {cn} from 'utils';
 import {InputWrapper} from './InputWrapper';
@@ -8,9 +9,10 @@ import {InputWrapper} from './InputWrapper';
 interface Props {
   onChange: (file: File | null) => void;
   defaultValue?: string | null;
+  error?: FieldError;
 }
 
-export function ImageInput({onChange, defaultValue}: Props) {
+export function ImageInput({onChange, defaultValue, error}: Props) {
   const [imageSrc, setImageSrc] = useState<string | null>(defaultValue || null);
 
   const onDrop = useCallback(
@@ -45,7 +47,7 @@ export function ImageInput({onChange, defaultValue}: Props) {
   }, [onChange]);
 
   return (
-    <InputWrapper label="Profile picture">
+    <InputWrapper label="Profile picture" error={error}>
       <div
         className={cn(
           'flex flex-col relative justify-center items-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-100 text-gray-400 aspect-video overflow-hidden',
