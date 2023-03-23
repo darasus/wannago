@@ -18,6 +18,8 @@ import {Amplitude} from '../features/Amplitude/Amplitude';
 import {env} from 'client-env';
 import {Sentry} from '../features/Sentry/Sentry';
 import {AppLayout} from '../features/AppLayout/AppLayout';
+import {Button} from 'ui';
+import {Intercom} from '../features/Intercom/Intercom';
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter();
@@ -53,6 +55,17 @@ function MyApp({Component, pageProps}: AppProps) {
           gtag('config', '${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
         `}
       </Script>
+      <Script
+        id="intercom"
+        strategy="afterInteractive"
+        src="https://widget.intercom.io/widget/iafdg58b"
+        onLoad={() => {
+          (window as any)?.Intercom('boot', {
+            api_base: 'https://api-iam.intercom.io',
+            app_id: 'iafdg58b',
+          });
+        }}
+      />
       <div className={cn(bodyFont.className)}>
         <ClerkProvider
           {...pageProps}
@@ -61,6 +74,7 @@ function MyApp({Component, pageProps}: AppProps) {
         >
           <Amplitude />
           <Sentry />
+          <Intercom />
           <Toaster>
             {t => (
               <ToastBar

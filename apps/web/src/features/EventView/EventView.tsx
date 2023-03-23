@@ -27,6 +27,9 @@ export function EventView({event}: Props) {
           />
         </div>
       </div>
+      <div className="sticky top-4 z-50">
+        <SignUpCard event={event} />
+      </div>
       <div>
         <InfoCard event={event} />
       </div>
@@ -48,7 +51,6 @@ export function EventView({event}: Props) {
           <DateCard event={event} />
         </div>
       </div>
-      <SignUpCard event={event} />
     </div>
   );
 }

@@ -108,7 +108,7 @@ export function SignUpCard({event}: Props) {
       {isOpen && (
         <RedirectToSignIn redirectUrl={`${getBaseUrl()}/e/${event.shortId}`} />
       )}
-      <Container className="sticky z-10 bottom-4 w-full p-0 m-0">
+      <Container className="w-full p-0 m-0">
         <FormProvider {...form}>
           <_SignUpCard
             amSignedUp={amSignedUp}
