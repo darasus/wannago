@@ -31,6 +31,9 @@ export function EditEventForm({event}: Props) {
   const form = useEventForm({
     event,
   });
+  const organizer = trpc.event.getOrganizer.useQuery({
+    eventShortId: event.shortId,
+  });
 
   const {handleSubmit, watch} = form;
 
@@ -122,7 +125,9 @@ export function EditEventForm({event}: Props) {
             <PageHeader title="Preview" />
             <div>
               <OrganizerCard
-                user={event.organization?.users[0]!}
+                name={organizer.data?.name || 'Loading...'}
+                profileImageSrc={organizer.data?.profileImageSrc}
+                profilePath={organizer.data?.profilePath}
                 onOpenFormClick={() => {}}
               />
             </div>

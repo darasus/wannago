@@ -35,8 +35,9 @@ function Event() {
       el: (
         <MockFormProvider>
           <OrganizerCardView
-            user={event.organization?.users[0]}
-            isLoading={false}
+            name={`${event.organization?.users[0].firstName} ${event.organization?.users[0].lastName}`}
+            profileImageSrc={event.organization?.users[0].profileImageSrc}
+            profilePath={''}
             onOpenFormClick={() => {}}
           />
         </MockFormProvider>
