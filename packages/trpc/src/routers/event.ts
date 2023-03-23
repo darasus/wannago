@@ -5,7 +5,7 @@ import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
 import {authorizeChange} from '../../../../apps/web/src/utils/authorizeChange';
-import {random, getBaseUrl} from 'utils';
+import {random, getBaseUrl, isUser, isOrganization} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 
@@ -316,19 +316,44 @@ const getByShortId = publicProcedure
   });
 
 const getOrganizer = publicProcedure
-  .input(z.object({eventId: z.string().uuid()}))
+  .input(z.object({eventShortId: z.string()}))
   .query(async ({input, ctx}) => {
-    return ctx.prisma.user.findFirst({
-      where: {
-        organization: {
-          events: {
-            some: {
-              id: input.eventId,
-            },
-          },
-        },
-      },
+    const organizer = await ctx.actions.getOrganizerByEventId({
+      id: input.eventShortId,
     });
+
+    if (isUser(organizer)) {
+      return {
+        id: organizer.id,
+        name: `${organizer.firstName} ${organizer.lastName}`,
+        profileImageSrc: organizer.profileImageSrc,
+        profilePath: `/u/${organizer.id}`,
+      };
+    }
+
+    if (isOrganization(organizer)) {
+      if (organizer?.isActive) {
+        return {
+          id: organizer.id,
+          name: organizer.name,
+          profileImageSrc: organizer.logoSrc,
+          profilePath: `/o/${organizer.id}`,
+        };
+      }
+
+      if (organizer.users?.[0]) {
+        const user = organizer.users[0];
+
+        return {
+          id: user.id,
+          name: `${user.firstName} ${user.lastName}`,
+          profileImageSrc: user.profileImageSrc,
+          profilePath: `/u/${user.id}`,
+        };
+      }
+    }
+
+    return null;
   });
 
 const joinEvent = protectedProcedure

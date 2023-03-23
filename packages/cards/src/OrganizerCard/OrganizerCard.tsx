@@ -4,8 +4,8 @@ import {User} from '@prisma/client';
 interface Props {
   onOpenFormClick: () => void;
   name: string;
-  profileImageSrc: string;
-  profilePath: string;
+  profileImageSrc: string | undefined | null;
+  profilePath: string | undefined;
 }
 
 export function OrganizerCard({

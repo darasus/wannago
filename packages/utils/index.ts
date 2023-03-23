@@ -18,3 +18,5 @@ export {getStreamProviderFromUrl} from './src/getStreamProviderFromUrl';
 export type {StreamHost} from './src/getStreamProviderFromUrl';
 export {random} from './src/random';
 export {createOGImageEventUrl} from './src/createOGImageEventUrl';
+export {isUser} from './src/isUser';
+export {isOrganization} from './src/isOrganization';

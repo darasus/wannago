@@ -12,6 +12,8 @@ import {getUserByExternalId} from './actions/getUserByExternalId';
 import {getUserById} from './actions/getUserById';
 import {getOrganizationById} from './actions/getOrganizationById';
 import {getOrganizationByExternalId} from './actions/getOrganizationByExternalId';
+import {getEvent} from './actions/getEvent';
+import {getOrganizerByEventId} from './actions/getOrganizerByEventId';
 
 type Actions = {
   getEvents: ReturnType<typeof getEvents>;
@@ -19,6 +21,8 @@ type Actions = {
   getUserById: ReturnType<typeof getUserById>;
   getOrganizationById: ReturnType<typeof getOrganizationById>;
   getOrganizationByExternalId: ReturnType<typeof getOrganizationByExternalId>;
+  getEvent: ReturnType<typeof getEvent>;
+  getOrganizerByEventId: ReturnType<typeof getOrganizerByEventId>;
 };
 
 interface CreateInnerContextOptions {
@@ -82,6 +86,8 @@ export async function createContext(
       getUserById: getUserById(innerContext),
       getOrganizationByExternalId: getOrganizationByExternalId(innerContext),
       getOrganizationById: getOrganizationById(innerContext),
+      getEvent: getEvent(innerContext),
+      getOrganizerByEventId: getOrganizerByEventId(innerContext),
     },
   };
 }
