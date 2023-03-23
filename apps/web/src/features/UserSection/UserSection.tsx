@@ -18,7 +18,7 @@ export function UserSection() {
 
   return (
     <div>
-      <Popover className="relative">
+      <Popover className="relative z-50">
         {() => (
           <>
             <Popover.Button as="div" data-testid="header-user-section-button">
@@ -49,7 +49,7 @@ export function UserSection() {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute right-0 z-10 mt-3 max-w-sm">
+              <Popover.Panel className="absolute right-0 mt-3 max-w-sm">
                 <CardBase innerClassName="flex flex-col gap-y-2">
                   <Button
                     variant="neutral"

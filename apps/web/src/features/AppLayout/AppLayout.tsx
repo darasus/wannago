@@ -7,12 +7,12 @@ interface Props extends PropsWithChildren {}
 export function AppLayout({children}: Props) {
   return (
     <div>
-      <div className="relative z-20">
+      <div className="relative z-50">
         <Container maxSize={'full'}>
           <Header />
         </Container>
       </div>
-      <div>
+      <div className="relative">
         <div>{children}</div>
       </div>
     </div>
