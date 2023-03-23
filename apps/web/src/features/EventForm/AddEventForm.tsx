@@ -6,7 +6,7 @@ import {trackEventCreateConversion} from 'lib/src/gtag';
 import {trpc} from 'trpc/src/trpc';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
-import invariant from 'invariant';
+import {invariant} from 'utils';
 
 export function AddEventForm() {
   const {logEvent} = useAmplitude();
@@ -50,7 +50,7 @@ export function AddEventForm() {
       };
     }
 
-    invariant(typeof authorId === 'string', 'Author ID is required');
+    invariant(authorId);
 
     await mutateAsync({
       authorId,

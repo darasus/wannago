@@ -40,7 +40,6 @@ importers:
       '@types/file-saver': ^2.0.5
       '@types/formidable': ^2.0.5
       '@types/gtag.js': ^0.0.12
-      '@types/invariant': ^2.2.35
       '@types/lodash.debounce': ^4.0.7
       '@types/ms': ^0.7.31
       '@types/node': ^18.14.1
@@ -69,7 +68,6 @@ importers:
       got: ^12.5.3
       ics: ^2.44.0
       image-size: ^1.0.2
-      invariant: ^2.2.4
       js-confetti: ^0.11.0
       ky: ^0.32.2
       lodash.debounce: ^4.0.8
@@ -148,7 +146,6 @@ importers:
       got: 12.5.3
       ics: 2.44.0
       image-size: 1.0.2
-      invariant: 2.2.4
       js-confetti: 0.11.0
       ky: 0.32.2
       lodash.debounce: 4.0.8
@@ -174,7 +171,6 @@ importers:
       '@types/file-saver': 2.0.5
       '@types/formidable': 2.0.5
       '@types/gtag.js': 0.0.12
-      '@types/invariant': 2.2.35
       '@types/lodash.debounce': 4.0.7
       '@types/ms': 0.7.31
       '@types/node': 18.14.1
@@ -2453,10 +2449,6 @@ packages:
   /@types/http-cache-semantics/4.0.1:
     resolution: {integrity: sha512-SZs7ekbP8CN0txVG2xVRH6EgKmEm31BOxA07vkFaETzZz1xh+cbt8BcI0slpymvwhx5dlFnQG2rTlPVQn+iRPQ==}
     dev: false
-
-  /@types/invariant/2.2.35:
-    resolution: {integrity: sha512-DxX1V9P8zdJPYQat1gHyY0xj3efl8gnMVjiM9iCY6y27lj+PoQWkgjt8jDqmovPqULkKVpKRg8J36iQiA+EtEg==}
-    dev: true
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
@@ -5020,12 +5012,6 @@ packages:
   /interpret/1.4.0:
     resolution: {integrity: sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==}
     engines: {node: '>= 0.10'}
-    dev: false
-
-  /invariant/2.2.4:
-    resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
-    dependencies:
-      loose-envify: 1.4.0
     dev: false
 
   /is-array-buffer/3.0.1:
