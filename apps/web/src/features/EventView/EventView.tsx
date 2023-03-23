@@ -15,6 +15,9 @@ interface Props {
 export function EventView({event}: Props) {
   return (
     <div className="flex flex-col gap-4">
+      <div className="sticky top-4 z-20">
+        <SignUpCard event={event} />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="items-stretch">
           <OrganizerCard event={event} />
@@ -26,9 +29,6 @@ export function EventView({event}: Props) {
             isPublished={event.isPublished ?? false}
           />
         </div>
-      </div>
-      <div className="sticky top-4 z-20">
-        <SignUpCard event={event} />
       </div>
       <div>
         <InfoCard event={event} />
