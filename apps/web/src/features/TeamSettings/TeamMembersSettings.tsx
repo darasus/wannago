@@ -1,10 +1,10 @@
 import {useConfirmDialog, useCurrentOrganization} from 'hooks';
 import {useState} from 'react';
-import {Avatar, Button, CardBase, Text} from 'ui';
+import {Button, CardBase} from 'ui';
 import {CreateMemberModal} from './CreateMemberModal';
 import {TeamMember} from './TeamMember';
 
-export function TeamSettings() {
+export function TeamMembersSettings() {
   const {clerkOrganization, removeOrg, members, invitations} =
     useCurrentOrganization();
   const [isAddMemberDialogModalOpen, setIsAddMemberDialogModalOpen] =
@@ -29,28 +29,6 @@ export function TeamSettings() {
         onClose={() => setIsAddMemberDialogModalOpen(false)}
       />
       <div className="flex flex-col gap-4">
-        <CardBase title="Team">
-          <div>
-            <div>
-              <div className="flex items-center gap-x-2">
-                {clerkOrganization?.logoUrl && (
-                  <Avatar
-                    className="h-10 w-10"
-                    src={clerkOrganization?.logoUrl}
-                    alt={clerkOrganization.name}
-                    style={{objectFit: 'cover'}}
-                  />
-                )}
-                <div className="grow">
-                  <Text>{clerkOrganization.name}</Text>
-                </div>
-                <Button variant="danger" size="xs" onClick={open}>
-                  remove
-                </Button>
-              </div>
-            </div>
-          </div>
-        </CardBase>
         <CardBase
           title={'Team members'}
           titleChildren={

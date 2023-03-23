@@ -1,20 +1,20 @@
-import {OrganizationSwitcher, useUser} from '@clerk/nextjs';
 import Head from 'next/head';
 import {FormProvider, useForm} from 'react-hook-form';
 import {Container, PageHeader, Text, Toggle} from 'ui';
-import {CreateTeamSection} from '../features/TeamSettings/CreateTeamSection';
-import {TeamSettings} from '../features/TeamSettings/TeamSettings';
+import {TeamProfileForm} from '../features/TeamSettings/TeamProfileForm';
+import {TeamMembersSettings} from '../features/TeamSettings/TeamMembersSettings';
 import {EmailSettingsCard} from '../features/UserSettings/EmailSettingsCard';
 import {NameSettingsCard} from '../features/UserSettings/NameSettingsCard';
 import {ProfilePictureSettingsCard} from '../features/UserSettings/ProfilePictureSettingsCard';
 import {withProtected} from '../utils/withAuthProtect';
+import {useMe} from 'hooks';
 
 interface Form {
   settingsType: 'personal' | 'team';
 }
 
 function ProfilePage() {
-  const {user} = useUser();
+  const {clerkMe} = useMe();
   const form = useForm<Form>({
     defaultValues: {
       settingsType: 'personal',
@@ -25,7 +25,7 @@ function ProfilePage() {
   return (
     <>
       <Head>
-        <title>{`${user?.fullName} | WannaGo`}</title>
+        <title>{`${clerkMe?.fullName} | WannaGo`}</title>
       </Head>
       <Container maxSize="sm">
         <div className="flex flex-col gap-y-4">
@@ -45,13 +45,12 @@ function ProfilePage() {
               <NameSettingsCard />
               <ProfilePictureSettingsCard />
               <EmailSettingsCard />
-              <OrganizationSwitcher />
             </>
           )}
           {settingsType === 'team' && (
             <>
-              <CreateTeamSection />
-              <TeamSettings />
+              <TeamProfileForm />
+              <TeamMembersSettings />
             </>
           )}
         </div>

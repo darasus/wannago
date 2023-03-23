@@ -7,10 +7,11 @@ import {InputWrapper} from './InputWrapper';
 
 interface Props {
   onChange: (file: File | null) => void;
+  defaultValue?: string | null;
 }
 
-export function ImageInput({onChange}: Props) {
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
+export function ImageInput({onChange, defaultValue}: Props) {
+  const [imageSrc, setImageSrc] = useState<string | null>(defaultValue || null);
 
   const onDrop = useCallback(
     async (droppedFiles: File[]) => {
