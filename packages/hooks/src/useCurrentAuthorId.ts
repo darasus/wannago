@@ -1,9 +1,14 @@
+import {useSessionQuery} from './session/useSessionQuery';
 import {useCurrentOrganization} from './useCurrentOrganization';
-import {useMe} from './useMe';
+import {useMyUser} from './user/useMyUser';
 
 export function useCurrentAuthorId() {
-  const {isPersonalSession, me} = useMe();
+  const user = useMyUser();
+  const session = useSessionQuery();
   const {organization} = useCurrentOrganization();
 
-  return {authorId: isPersonalSession ? me?.id : organization?.data?.id};
+  return {
+    authorId:
+      session.data === 'organization' ? organization?.data?.id : user.data?.id,
+  };
 }

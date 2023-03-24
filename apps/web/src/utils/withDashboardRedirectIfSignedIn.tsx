@@ -9,7 +9,7 @@ export function withDashboardRedirectIfSignedIn(
 ) {
   return function Render(props: any) {
     const router = useRouter();
-    const {auth} = useMe();
+    const auth = useAuth();
 
     useEffect(() => {
       if (auth.isSignedIn) {

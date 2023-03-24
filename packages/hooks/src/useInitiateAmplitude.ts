@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import {init} from '@amplitude/analytics-browser';
 import {env} from 'client-env';
-import {useMe} from './useMe';
+import {useAuth} from '@clerk/nextjs';
 
 export function useInitiateAmplitude() {
-  const {auth} = useMe();
+  const auth = useAuth();
   const [isInitiated, setInitiated] = useState(false);
 
   useEffect(() => {

@@ -1,10 +1,10 @@
-import {GetServerSidePropsContext, InferGetServerSidePropsType} from 'next';
+import {GetServerSidePropsContext} from 'next';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import {EventView} from '../../../features/EventView/EventView';
-import {Container, LoadingBlock, Spinner} from 'ui';
+import {Container, LoadingBlock} from 'ui';
 import {trpc} from 'trpc/src/trpc';
-import {useEventId, useHandleEmailCallbackParam, useMe} from 'hooks';
+import {useEventId, useHandleEmailCallbackParam, useMe, useMyUser} from 'hooks';
 import {appRouter} from 'trpc/src/routers/_app';
 import {createContext} from 'trpc';
 import SuperJSON from 'superjson';
@@ -14,7 +14,7 @@ import {createOGImageEventUrl, stripHTML} from 'utils';
 
 export default function EventPage() {
   useHandleEmailCallbackParam();
-  const {me} = useMe();
+  const user = useMyUser();
   const {eventShortId} = useEventId();
   const {
     data: event,
@@ -26,13 +26,11 @@ export default function EventPage() {
     },
     {enabled: !!eventShortId}
   );
-  const isMyEvent = event?.organizationId === me?.organizationId;
+  const isMyEvent = event?.organizationId === user.data?.organizationId;
 
   if (isLoading) {
     return <LoadingBlock />;
   }
-
-  const user = event?.organization?.users[0];
 
   return (
     <>
@@ -46,12 +44,12 @@ export default function EventPage() {
             )}...`}
             imageSrc={
               event.featuredImageSrc &&
-              user?.profileImageSrc &&
+              user.data?.profileImageSrc &&
               createOGImageEventUrl({
                 title: event.title,
-                organizerName: `${user?.firstName} ${user?.lastName}`,
+                organizerName: `${user.data?.firstName} ${user.data?.lastName}`,
                 eventImageUrl: event.featuredImageSrc,
-                organizerProfileImageUrl: user?.profileImageSrc,
+                organizerProfileImageUrl: user.data?.profileImageSrc,
               })
             }
             shortEventId={event.shortId!}
