@@ -29,7 +29,6 @@ export const organization = {
       data: {
         name: data.name,
         logoSrc: data.logo_url,
-        isActive: true,
         externalId: data.id,
       },
     });
@@ -60,7 +59,6 @@ export const organization = {
       data: {
         name: data.name,
         logoSrc: data.logo_url,
-        isActive: true,
         externalId: data.id,
       },
     });
@@ -88,7 +86,6 @@ export const organization = {
       data: {
         name: null,
         logoSrc: null,
-        isActive: false,
         externalId: null,
       },
     });

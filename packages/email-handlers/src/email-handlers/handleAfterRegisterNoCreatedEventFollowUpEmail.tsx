@@ -39,7 +39,6 @@ export async function handleAfterRegisterNoCreatedEventFollowUpEmail({
     where: {
       userId: user.id,
       emailType: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
-      isActive: false,
     },
   });
 

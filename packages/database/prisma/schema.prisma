@@ -67,8 +67,6 @@ model Organization {
   email      String?
   logoSrc    String?
   disabled   Boolean @default(false)
-  // TODO: isActive is legacy, remove once production migration is done
-  isActive   Boolean @default(false)
 }
 
 model EventSignUp {
