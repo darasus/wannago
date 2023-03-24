@@ -8,8 +8,10 @@ import {
   useMyOrganizationQuery,
   useMyUserQuery,
 } from 'hooks';
+import {useRouter} from 'next/router';
 
 export function UserSection() {
+  const router = useRouter();
   const {signOut} = useAuth();
   const user = useMyUserQuery();
   const organization = useMyOrganizationQuery();
@@ -23,6 +25,7 @@ export function UserSection() {
     } else {
       setSession.mutate({userType: 'organization'});
     }
+    router.push('/dashboard');
   };
 
   const showAdminLink = false;

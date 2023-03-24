@@ -17,7 +17,7 @@ export function useMyEventsQuery({eventType}: Props) {
 
   return trpc.event.getMyEvents.useQuery(
     {
-      id,
+      organizerId: id,
       eventType,
     },
     {

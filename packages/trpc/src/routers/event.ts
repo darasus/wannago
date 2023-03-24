@@ -946,13 +946,13 @@ const getPublicEvents = publicProcedure
 const getMyEvents = protectedProcedure
   .input(
     z.object({
-      id: z.string().uuid(),
+      organizerId: z.string().uuid(),
       eventType: z.enum(['attending', 'organizing', 'all']),
     })
   )
   .query(async ({ctx, input}) => {
     return ctx.actions.getEvents({
-      id: input.id,
+      id: input.organizerId,
       eventType: input.eventType,
     });
   });

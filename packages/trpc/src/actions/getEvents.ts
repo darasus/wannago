@@ -49,7 +49,6 @@ export function getEvents(ctx: ActionContext) {
         },
       },
     ];
-
     const events = await ctx.prisma.event.findMany({
       orderBy: {
         startDate: 'desc',
