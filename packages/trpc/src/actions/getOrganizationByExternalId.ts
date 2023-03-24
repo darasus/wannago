@@ -11,6 +11,7 @@ export function getOrganizationByExternalId(ctx: ActionContext) {
     const organization = await ctx.prisma.organization.findFirst({
       where: {
         externalId: input.externalId,
+        disabled: false,
       },
     });
 

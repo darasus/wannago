@@ -1,19 +1,21 @@
 import Head from 'next/head';
 import {FormProvider, useForm} from 'react-hook-form';
-import {Container, PageHeader, Text, Toggle} from 'ui';
+import {Container, LoadingBlock, PageHeader, Text, Toggle} from 'ui';
 import {TeamProfileForm} from '../features/TeamSettings/TeamProfileForm';
 import {TeamMembersSettings} from '../features/TeamSettings/TeamMembersSettings';
 import {EmailSettingsCard} from '../features/UserSettings/EmailSettingsCard';
 import {NameSettingsCard} from '../features/UserSettings/NameSettingsCard';
 import {ProfilePictureSettingsCard} from '../features/UserSettings/ProfilePictureSettingsCard';
 import {withProtected} from '../utils/withAuthProtect';
-import {useMe} from 'hooks';
+import {useMe, useMyOrganizationQuery} from 'hooks';
 
 interface Form {
   settingsType: 'personal' | 'team';
 }
 
 function ProfilePage() {
+  // INFO: just prefetching
+  useMyOrganizationQuery();
   const {clerkMe} = useMe();
   const form = useForm<Form>({
     defaultValues: {

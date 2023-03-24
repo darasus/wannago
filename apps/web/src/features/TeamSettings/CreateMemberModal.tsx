@@ -1,4 +1,4 @@
-import {useCurrentOrganization} from 'hooks';
+import {useAddOrganizationMemberMutation, useMyOrganizationQuery} from 'hooks';
 import {useForm} from 'react-hook-form';
 import {Button, Modal} from 'ui';
 import {Input} from '../../components/Input/Input/Input';
@@ -13,12 +13,18 @@ interface Form {
 }
 
 export function CreateMemberModal({isOpen, onClose}: Props) {
-  const {addMember} = useCurrentOrganization();
+  const organization = useMyOrganizationQuery();
+  const addOrganizationMember = useAddOrganizationMemberMutation();
   const form = useForm<Form>();
 
   const handleSubmit = form.handleSubmit(async data => {
-    await addMember({email: data.email, role: 'admin'});
-    onClose();
+    if (organization.data?.id) {
+      await addOrganizationMember.mutateAsync({
+        userEmail: data.email,
+        organizationId: organization.data.id,
+      });
+      onClose();
+    }
   });
 
   return (

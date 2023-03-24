@@ -6,12 +6,15 @@ const validation = z.object({
   id: z.string().uuid(),
 });
 
-export function getOrganizationById(ctx: ActionContext) {
+export function getOrganizationWithMembersByOrganizationId(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
     const organization = await ctx.prisma.organization.findFirst({
       where: {
         id: input.id,
         disabled: false,
+      },
+      include: {
+        users: true,
       },
     });
 

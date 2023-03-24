@@ -3,18 +3,17 @@ import {z} from 'zod';
 import {ActionContext} from '../context';
 
 const validation = z.object({
-  id: z.string().uuid(),
+  email: z.string().email(),
 });
 
-export function getOrganizationById(ctx: ActionContext) {
+export function getUserByEmail(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
-    const organization = await ctx.prisma.organization.findFirst({
+    const user = await ctx.prisma.user.findUnique({
       where: {
-        id: input.id,
-        disabled: false,
+        email: input.email,
       },
     });
 
-    return organization;
+    return user;
   };
 }

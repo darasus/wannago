@@ -1,55 +1,38 @@
+import {User} from '@prisma/client';
 import {
-  OrganizationInvitationResource,
-  OrganizationMembershipResource,
-} from '@clerk/types';
-import {useCallback, useState} from 'react';
-import {toast} from 'react-hot-toast';
+  useMyOrganizationQuery,
+  useRemoveOrganizationMemberMutation,
+} from 'hooks';
+import {useCallback} from 'react';
 import {Badge, Button, Text} from 'ui';
 
 interface Props {
-  member: OrganizationMembershipResource | OrganizationInvitationResource;
+  member: User;
 }
 
 export function TeamMember({member}: Props) {
-  const [isLoading, setIsLoading] = useState(false);
-  const handleRemove = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      if ('destroy' in member) {
-        await member.destroy();
-      }
-      if ('revoke' in member) {
-        await member.revoke();
-      }
-    } catch (error: any) {
-      if (error.errors?.length > 0) {
-        error.errors?.forEach((e: any) => {
-          toast.error(e?.longMessage || 'Something went wrong');
-        });
-      } else {
-        toast.error('Something went wrong');
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }, [member]);
+  const organization = useMyOrganizationQuery();
+  const removeOrganizationMember = useRemoveOrganizationMemberMutation();
 
-  const name =
-    'publicUserData' in member &&
-    `${member.publicUserData.firstName} ${member.publicUserData.lastName}`;
-  const email = 'emailAddress' in member && member.emailAddress;
-  const status = 'status' in member && member.status;
+  const handleRemove = useCallback(async () => {
+    if (organization.data?.id) {
+      removeOrganizationMember.mutate({
+        userId: member.id,
+        organizationId: organization.data.id,
+      });
+    }
+  }, [member, removeOrganizationMember, organization.data?.id]);
 
   return (
     <div className="flex gap-2 items-center">
-      <Text className="text-sm">{name || email}</Text>
-      <Badge size="xs">{status || member.role}</Badge>
+      <Text className="text-sm">{`${member.firstName} ${member.lastName}`}</Text>
+      <Badge size="xs">Admin</Badge>
       <Button
         variant="danger"
         size="xs"
         onClick={handleRemove}
-        disabled={isLoading}
-        isLoading={isLoading}
+        disabled={removeOrganizationMember.isLoading}
+        isLoading={removeOrganizationMember.isLoading}
       >
         Remove
       </Button>

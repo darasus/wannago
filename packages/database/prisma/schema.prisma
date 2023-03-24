@@ -47,12 +47,13 @@ model User {
   firstName        String
   lastName         String
   profileImageSrc  String?
-  organization     Organization      @relation(name: "UserOrganization", fields: [organizationId], references: [id])
-  organizationId   String
+  organization     Organization?     @relation(name: "UserOrganization", fields: [organizationId], references: [id])
+  organizationId   String?
   eventSignUps     EventSignUp[]     @relation(name: "EventSignUpUser")
   type             UserType          @default(USER)
   emailPreferences EmailPreference[] @relation(name: "EmailPreference")
   events           Event[]           @relation(name: "EventUser")
+  disabled         Boolean           @default(false)
 
   @@index([organizationId])
 }
@@ -64,6 +65,8 @@ model Organization {
   events     Event[] @relation(name: "EventOrganization")
   name       String? @db.VarChar(255)
   logoSrc    String?
+  disabled   Boolean @default(false)
+  // TODO: isActive is legacy, remove once production migration is done
   isActive   Boolean @default(false)
 }
 

@@ -1,29 +1,19 @@
-import {useConfirmDialog, useCurrentOrganization} from 'hooks';
+import {useMyOrganizationMembersQuery, useMyOrganizationQuery} from 'hooks';
 import {useState} from 'react';
 import {Button, CardBase} from 'ui';
 import {CreateMemberModal} from './CreateMemberModal';
 import {TeamMember} from './TeamMember';
 
 export function TeamMembersSettings() {
-  const {clerkOrganization, removeOrg, members, invitations} =
-    useCurrentOrganization();
+  const organization = useMyOrganizationQuery();
   const [isAddMemberDialogModalOpen, setIsAddMemberDialogModalOpen] =
     useState(false);
-  const {modal, open} = useConfirmDialog({
-    title: 'Are you sure you want to remove your team?',
-    description: 'This will remove your team and all its members',
-    async onConfirm() {
-      await removeOrg();
-    },
-  });
+  const members = useMyOrganizationMembersQuery();
 
-  if (!clerkOrganization) {
-    return null;
-  }
+  if (!organization.data) return null;
 
   return (
     <>
-      {modal}
       <CreateMemberModal
         isOpen={isAddMemberDialogModalOpen}
         onClose={() => setIsAddMemberDialogModalOpen(false)}
@@ -41,17 +31,10 @@ export function TeamMembersSettings() {
             </Button>
           }
         >
-          <div>
-            <div>
-              <div className="flex flex-col gap-y-2">
-                {members.map(member => {
-                  return <TeamMember key={member.id} member={member} />;
-                })}
-                {invitations.map(member => {
-                  return <TeamMember key={member.id} member={member} />;
-                })}
-              </div>
-            </div>
+          <div className="flex flex-col gap-y-2">
+            {members.data?.map(member => {
+              return <TeamMember key={member.id} member={member} />;
+            })}
           </div>
         </CardBase>
       </div>

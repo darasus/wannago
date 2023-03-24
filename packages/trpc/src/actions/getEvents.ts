@@ -20,11 +20,13 @@ export function getEvents(ctx: ActionContext) {
       },
       {
         organization: {
+          disabled: false,
           id,
         },
       },
       {
         organization: {
+          disabled: false,
           isActive: {
             not: true,
           },

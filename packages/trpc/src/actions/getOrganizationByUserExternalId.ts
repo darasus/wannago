@@ -1,17 +1,20 @@
-import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
 import {ActionContext} from '../context';
 
 const validation = z.object({
-  id: z.string().uuid(),
+  externalId: z.string().uuid(),
 });
 
-export function getOrganizationById(ctx: ActionContext) {
+export function getOrganizationByUserExternalId(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
     const organization = await ctx.prisma.organization.findFirst({
       where: {
-        id: input.id,
         disabled: false,
+        users: {
+          some: {
+            externalId: input.externalId,
+          },
+        },
       },
     });
 
