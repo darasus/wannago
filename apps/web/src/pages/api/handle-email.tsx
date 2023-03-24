@@ -1,4 +1,3 @@
-import {EmailType} from '@prisma/client';
 import {
   baseEventHandlerSchema,
   handleEventSignUpEmail,
@@ -21,6 +20,7 @@ import {
   handleEventReminderEmailInputSchema,
 } from 'email-handlers';
 import {NextApiRequest, NextApiResponse} from 'next';
+import {EmailType} from '../../types/EmailType';
 
 export default async function handle(
   req: NextApiRequest,

@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {EmailType} from '@prisma/client';
+import {EmailType} from '../../../../apps/web/src/types/EmailType';
 
 export const baseEventHandlerSchema = z
   .object({

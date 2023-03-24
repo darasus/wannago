@@ -1,4 +1,3 @@
-import {EmailType} from '@prisma/client';
 import {render} from '@react-email/render';
 import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
@@ -33,21 +32,6 @@ export async function handleAfterRegisterNoCreatedEventFollowUpEmail({
       organizationId: user.organizationId,
     },
   });
-
-  // TODO: remove these email preferences
-  const forbidden = await prisma.emailPreference.findFirst({
-    where: {
-      userId: user.id,
-      emailType: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
-    },
-  });
-
-  if (forbidden) {
-    throw new TRPCError({
-      code: 'NOT_FOUND',
-      message: 'Email type is forbidden',
-    });
-  }
 
   const hasNoEvents = eventCount === 0;
 

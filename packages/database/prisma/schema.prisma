@@ -94,15 +94,3 @@ enum UserType {
   ADMIN
   USER
 }
-
-enum EmailType {
-  EventSignUp
-  EventCancelSignUp
-  EventInvite
-  EventCancelInvite
-  EventReminder
-  MessageToOrganizer
-  MessageToAllAttendees
-  AfterRegisterNoCreatedEventFollowUpEmail
-  OrganizerEventSignUpNotification
-}

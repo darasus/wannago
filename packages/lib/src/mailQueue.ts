@@ -1,8 +1,8 @@
-import {EmailType} from '@prisma/client';
 import {Client} from '@upstash/qstash';
 import {differenceInSeconds, sub} from 'date-fns';
 import {utcToZonedTime} from 'date-fns-tz';
 import {env} from 'server-env';
+import {EmailType} from '../../../apps/web/src/types/EmailType';
 
 const REMINDER_PERIOD_IN_SECONDS = 60 * 60 * 3;
 

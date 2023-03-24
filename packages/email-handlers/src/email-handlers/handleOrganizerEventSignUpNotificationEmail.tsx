@@ -1,13 +1,9 @@
-import {EmailType} from '@prisma/client';
 import {render} from '@react-email/render';
 import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
 import {Postmark} from 'lib';
 import {z} from 'zod';
-import {
-  AfterRegisterNoCreatedEventFollowUpEmail,
-  OrganizerEventSignUpNotification,
-} from 'email';
+import {OrganizerEventSignUpNotification} from 'email';
 import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
 import {getBaseUrl} from 'utils';
 
