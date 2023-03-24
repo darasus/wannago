@@ -26,7 +26,8 @@ export default function EventPage() {
     },
     {enabled: !!eventShortId}
   );
-  const isMyEvent = event?.organizationId === user.data?.organizationId;
+  const isMyEvent =
+    event?.userId && user.data?.id && event?.userId === user.data?.id;
 
   if (isLoading) {
     return <LoadingBlock />;
