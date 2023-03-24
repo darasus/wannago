@@ -60,7 +60,7 @@ function MyApp({Component, pageProps}: AppProps) {
         strategy="afterInteractive"
         src="https://widget.intercom.io/widget/iafdg58b"
         onLoad={() => {
-          (window as any)?.Intercom('boot', {
+          (window as any)?.Intercom?.('boot', {
             api_base: 'https://api-iam.intercom.io',
             app_id: 'iafdg58b',
           });

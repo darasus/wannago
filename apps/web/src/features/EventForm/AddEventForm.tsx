@@ -1,14 +1,16 @@
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {useRouter} from 'next/router';
 import {FormProvider} from 'react-hook-form';
-import {useAmplitude} from 'hooks';
+import {useAmplitude, useCurrentAuthorId} from 'hooks';
 import {trackEventCreateConversion} from 'lib/src/gtag';
 import {trpc} from 'trpc/src/trpc';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
+import {invariant} from 'utils';
 
 export function AddEventForm() {
   const {logEvent} = useAmplitude();
+  const {authorId} = useCurrentAuthorId();
   const router = useRouter();
   const {push} = useRouter();
   const {mutateAsync} = trpc.event.create.useMutation({
@@ -48,7 +50,10 @@ export function AddEventForm() {
       };
     }
 
+    invariant(authorId);
+
     await mutateAsync({
+      authorId,
       ...data,
       ...location,
       description: data.description === '<p></p>' ? null : data.description,

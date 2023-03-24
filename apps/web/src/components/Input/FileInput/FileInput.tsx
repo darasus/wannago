@@ -1,4 +1,3 @@
-import {Form} from '../../../features/EventForm/types';
 import {InputWrapper} from '../Input/InputWrapper';
 import NextImage from 'next/image';
 import React, {ComponentProps, forwardRef, useCallback, useState} from 'react';
@@ -22,9 +21,12 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
   const {
     setValue,
     formState: {defaultValues},
-  } = useFormContext<Form>();
+  } = useFormContext();
   const [imageSrc, setImageSrc] = useState<string | null>(
-    defaultValues?.featuredImageSrc || null
+    defaultValues?.profileImageSrc ||
+      defaultValues?.featuredImageSrc ||
+      defaultValues?.logoSrc ||
+      null
   );
   const {isLoading, handleFileUpload} = useUploadImage();
 
@@ -33,14 +35,14 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
       handleFileUpload(droppedFiles[0]).then(data => {
         if (data) {
           setImageSrc(data.url);
-          setValue('featuredImageSrc', data.url);
+          setValue(props.name, data.url);
           setValue('featuredImageHeight', data.height);
           setValue('featuredImageWidth', data.width);
           setValue('featuredImagePreviewSrc', data.imageSrcBase64);
         }
       });
     },
-    [handleFileUpload, setValue]
+    [handleFileUpload, setValue, props.name]
   );
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({
@@ -67,7 +69,7 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
     >
       <div
         className={cn(
-          'flex flex-col relative justify-center items-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-100 mb-4 text-gray-400 aspect-video overflow-hidden',
+          'flex flex-col relative justify-center items-center border-2 border-dashed border-gray-300 rounded-3xl bg-gray-100 text-gray-400 aspect-video overflow-hidden',
           'focus:border-gray-500 focus:ring-gray-500',
           {'bg-gray-200': isDragActive}
         )}

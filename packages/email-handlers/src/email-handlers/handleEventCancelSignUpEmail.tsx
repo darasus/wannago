@@ -64,7 +64,7 @@ export async function handleEventCancelSignUpEmail({
         eventUrl={url.toString()}
         startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
         endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-        organizerName={`${organizerUser.firstName} ${organizerUser.lastName}`}
+        organizerName={`${organizerUser?.firstName} ${organizerUser?.lastName}`}
       />
     ),
   });

@@ -6,7 +6,7 @@ import {Container} from 'ui';
 import dynamic from 'next/dynamic';
 import {TextAnimation} from 'ui/src/components/TextAnimation/TextAnimation';
 import {cn} from 'utils';
-import {useMe} from 'hooks';
+import {useAuth} from '@clerk/nextjs';
 
 const DynamicSpinningCircle = dynamic(() => import('./SpinningCircle'), {
   ssr: false,
@@ -20,7 +20,7 @@ export const Hero = forwardRef(function Hero(
   _,
   ref: React.Ref<HTMLDivElement>
 ) {
-  const {auth} = useMe();
+  const auth = useAuth();
   const router = useRouter();
 
   return (

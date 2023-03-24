@@ -4,7 +4,7 @@ import {Button, CardBase, Logo} from 'ui';
 import {UserSection} from '../UserSection/UserSection';
 import {FeedbackFish} from '@feedback-fish/react';
 import {cn} from 'utils';
-import {useLoading, useMe} from 'hooks';
+import {useAuth} from '@clerk/nextjs';
 
 export const navItems = [
   {label: 'Features', href: `/#features`},
@@ -36,14 +36,12 @@ function MobileNavIcon({open}: any) {
 }
 
 export function Header() {
-  const {auth} = useMe();
+  const auth = useAuth();
   const showUserProfile = auth.isSignedIn;
   const showFeedback = !auth.isSignedIn;
   const showAuthButtons = !auth.isSignedIn;
   const showMobileMenu = !auth.isSignedIn;
   const showDesktopHomeNav = !auth.isSignedIn;
-
-  const {enabled} = useLoading();
 
   return (
     <header>

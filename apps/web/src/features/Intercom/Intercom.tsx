@@ -1,20 +1,26 @@
 import {useEffect} from 'react';
-import {useMe} from 'hooks';
+import {useMyUserQuery} from 'hooks';
+import {useAuth} from '@clerk/nextjs';
 
 export function Intercom() {
-  const {auth} = useMe();
-  const {me} = useMe();
+  const auth = useAuth();
+  const user = useMyUserQuery();
 
   useEffect(() => {
     if (auth?.userId) {
-      (window as any)?.Intercom('update', {
-        email: me?.email,
+      (window as any)?.Intercom?.('update', {
+        email: user.data?.email,
         created_at: 1234567890,
-        name: `${me?.firstName} ${me?.lastName}`,
+        name: `${user.data?.firstName} ${user.data?.lastName}`,
         user_id: auth?.userId,
       });
     }
-  }, [auth?.userId, me?.email, me?.firstName, me?.lastName]);
+  }, [
+    auth?.userId,
+    user.data?.email,
+    user.data?.firstName,
+    user.data?.lastName,
+  ]);
 
   return null;
 }

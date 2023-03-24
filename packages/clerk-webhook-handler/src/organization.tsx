@@ -24,7 +24,7 @@ export const organization = {
 
     await prisma.organization.update({
       where: {
-        id: user.organization.id,
+        id: user.organization?.id,
       },
       data: {
         name: data.name,
@@ -55,7 +55,7 @@ export const organization = {
 
     await prisma.organization.update({
       where: {
-        id: user.organization.id,
+        id: user.organization?.id,
       },
       data: {
         name: data.name,

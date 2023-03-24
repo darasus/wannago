@@ -1,13 +1,13 @@
 import {Button} from 'ui';
 import {FeedbackFish} from '@feedback-fish/react';
-import {useMe} from 'hooks';
+import {useAuth} from '@clerk/nextjs';
 
 interface Props {
   eventId?: string;
 }
 
 export function EventWannaGoArea({eventId}: Props) {
-  const {auth} = useMe();
+  const auth = useAuth();
 
   return (
     <div className="flex flex-col items-center">

@@ -95,7 +95,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
     {
       label: 'Where',
       content: (
-        <div className="flex gap-x-2 items-end">
+        <div className="flex gap-x-2 items-end relative">
           <div className="grow">
             {type === 'offline' && (
               <LocationInput

@@ -3,13 +3,17 @@ import {User} from '@prisma/client';
 
 interface Props {
   onOpenFormClick: () => void;
-  isLoading?: boolean;
-  user: User | null;
+  name: string;
+  profileImageSrc: string | undefined | null;
+  profilePath: string | undefined;
 }
 
-export function OrganizerCard({isLoading, onOpenFormClick, user}: Props) {
-  const name = user ? `${user?.firstName} ${user?.lastName}` : 'Loading...';
-
+export function OrganizerCard({
+  onOpenFormClick,
+  name,
+  profileImageSrc,
+  profilePath,
+}: Props) {
   return (
     <CardBase>
       <div>
@@ -23,18 +27,9 @@ export function OrganizerCard({isLoading, onOpenFormClick, user}: Props) {
         </div>
         <div className="flex items-center gap-x-2">
           <div className="flex shrink-0  items-center overflow-hidden relative justify-center rounded-full safari-rounded-border-fix">
-            {isLoading && (
-              <div className="flex items-center justify-center h-full w-full bg-gray-100 rounded-full border border-gray-200">
-                <Spinner className="text-gray-400" />
-              </div>
-            )}
-            <Avatar
-              className="h-10 w-10"
-              src={user?.profileImageSrc}
-              alt="avatar"
-            />
+            <Avatar className="h-10 w-10" src={profileImageSrc} alt="avatar" />
           </div>
-          <Button as={'a'} href={`/u/${user?.id}`} title={name} variant="link">
+          <Button as={'a'} href={profilePath} title={name} variant="link">
             {name}
           </Button>
         </div>

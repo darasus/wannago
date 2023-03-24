@@ -1,20 +1,62 @@
-import {useClerk} from '@clerk/nextjs';
+import {useAuth} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
 import {Avatar, Button, CardBase} from 'ui';
-import {FeedbackFish} from '@feedback-fish/react';
-import {useMe} from 'hooks';
+import {
+  useSessionQuery,
+  useSetSessionMutation,
+  useMyOrganizationQuery,
+  useMyUserQuery,
+} from 'hooks';
+import {useRouter} from 'next/router';
 
 export function UserSection() {
-  const {signOut} = useClerk();
-  const {me} = useMe();
-  const showAdminLink = me?.type === 'ADMIN';
+  const router = useRouter();
+  const {signOut} = useAuth();
+  const user = useMyUserQuery();
+  const organization = useMyOrganizationQuery();
+  const session = useSessionQuery();
+  const setSession = useSetSessionMutation();
+  const isOrganization = session.data === 'organization';
+
+  const toggleSession = () => {
+    if (isOrganization) {
+      setSession.mutate({userType: 'user'});
+    } else {
+      setSession.mutate({userType: 'organization'});
+    }
+    router.push('/dashboard');
+  };
+
+  const showAdminLink = false;
 
   const onSignOutClick = async () => {
     await signOut();
   };
 
-  if (!me) return null;
+  const getName = () => {
+    if (isOrganization) {
+      return organization.data?.name;
+    }
+
+    return user.data?.firstName;
+  };
+
+  const getImage = () => {
+    if (isOrganization) {
+      return organization.data?.logoSrc;
+    }
+
+    if (user.data?.profileImageSrc?.includes('gravatar')) {
+      return null;
+    }
+
+    return user.data?.profileImageSrc;
+  };
+
+  const label = isOrganization
+    ? `Use as ${user.data?.firstName}`
+    : `Use as ${organization?.data?.name}`;
 
   return (
     <div>
@@ -27,17 +69,13 @@ export function UserSection() {
                 iconLeft={
                   <Avatar
                     className="h-6 w-6"
-                    src={
-                      me?.profileImageSrc?.includes('gravatar')
-                        ? undefined
-                        : me?.profileImageSrc
-                    }
+                    src={getImage()}
                     data-testid="user-header-button"
                     alt={'avatar'}
                   />
                 }
               >
-                {me?.firstName}
+                {getName()}
               </Button>
             </Popover.Button>
             <Transition
@@ -50,7 +88,17 @@ export function UserSection() {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute right-0 mt-3 max-w-sm">
-                <CardBase innerClassName="flex flex-col gap-y-2">
+                <CardBase innerClassName="flex flex-col gap-y-2 w-40">
+                  {Boolean(organization.data) && (
+                    <Button
+                      onClick={toggleSession}
+                      isLoading={setSession.isLoading}
+                      size="sm"
+                      variant="neutral"
+                    >
+                      {label}
+                    </Button>
+                  )}
                   <Button
                     variant="neutral"
                     as="a"
@@ -62,13 +110,17 @@ export function UserSection() {
                   <Button
                     variant="neutral"
                     as="a"
-                    href={`/u/${me?.id}`}
+                    href={
+                      isOrganization
+                        ? `/o/${organization?.data?.id}`
+                        : `/u/${user.data?.id}`
+                    }
                     size="sm"
                     data-testid="profile-button"
                   >
                     Profile
                   </Button>
-                  <Button variant="neutral" as="a" href="/me" size="sm">
+                  <Button variant="neutral" as="a" href="/settings" size="sm">
                     Settings
                   </Button>
                   {showAdminLink && (
@@ -76,14 +128,6 @@ export function UserSection() {
                       Admin
                     </Button>
                   )}
-                  <FeedbackFish
-                    projectId="f843146d960b2f"
-                    userId={me?.externalId || undefined}
-                  >
-                    <Button variant="neutral" size="sm">
-                      Feedback
-                    </Button>
-                  </FeedbackFish>
                   <Button
                     variant="danger"
                     onClick={onSignOutClick}

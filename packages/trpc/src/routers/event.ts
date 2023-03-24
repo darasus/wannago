@@ -5,7 +5,7 @@ import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
 import {authorizeChange} from '../../../../apps/web/src/utils/authorizeChange';
-import {random, getBaseUrl} from 'utils';
+import {random, getBaseUrl, isUser, isOrganization, invariant} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 
@@ -191,7 +191,7 @@ const remove = protectedProcedure
   });
 
 const create = protectedProcedure
-  .input(eventInput)
+  .input(eventInput.extend({authorId: z.string().uuid()}))
   .mutation(
     async ({
       input: {
@@ -206,6 +206,7 @@ const create = protectedProcedure
         maxNumberOfAttendees,
         startDate,
         streamUrl,
+        authorId,
       },
       ctx,
     }) => {
@@ -220,22 +221,10 @@ const create = protectedProcedure
         });
       }
 
-      const organization = await ctx.prisma.organization.findFirst({
-        where: {
-          users: {
-            some: {
-              externalId: ctx.auth.userId,
-            },
-          },
-        },
-      });
-
-      if (!organization) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'No organization found',
-        });
-      }
+      const [user, organization] = await Promise.all([
+        ctx.actions.getUserById({id: authorId}),
+        ctx.actions.getOrganizationById({id: authorId}),
+      ]);
 
       let event = await ctx.prisma.event.create({
         data: {
@@ -253,11 +242,10 @@ const create = protectedProcedure
           streamUrl,
           longitude: geocodeResponse?.data.results[0].geometry.location.lng,
           latitude: geocodeResponse?.data.results[0].geometry.location.lat,
-          organization: {
-            connect: {
-              id: organization.id,
-            },
-          },
+          ...(organization?.id
+            ? {organization: {connect: {id: organization.id}}}
+            : {}),
+          ...(user?.id ? {user: {connect: {id: user.id}}} : {}),
         },
       });
 
@@ -322,24 +310,45 @@ const getByShortId = publicProcedure
             users: true,
           },
         },
+        user: true,
       },
     });
   });
 
 const getOrganizer = publicProcedure
-  .input(z.object({eventId: z.string().uuid()}))
+  .input(z.object({eventShortId: z.string()}))
   .query(async ({input, ctx}) => {
-    return ctx.prisma.user.findFirst({
-      where: {
-        organization: {
-          events: {
-            some: {
-              id: input.eventId,
-            },
-          },
-        },
-      },
+    const organizer = await ctx.actions.getOrganizerByEventId({
+      id: input.eventShortId,
     });
+
+    invariant(
+      organizer,
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Organizer not found',
+      })
+    );
+
+    if (isUser(organizer)) {
+      return {
+        id: organizer.id,
+        name: `${organizer.firstName} ${organizer.lastName}`,
+        profileImageSrc: organizer.profileImageSrc,
+        profilePath: `/u/${organizer.id}`,
+      };
+    }
+
+    if (isOrganization(organizer)) {
+      return {
+        id: organizer.id,
+        name: organizer.name,
+        profileImageSrc: organizer.logoSrc,
+        profilePath: `/o/${organizer.id}`,
+      };
+    }
+
+    return null;
   });
 
 const joinEvent = protectedProcedure
@@ -924,6 +933,30 @@ const getMySignUp = protectedProcedure
     return eventSignUp;
   });
 
+const getPublicEvents = publicProcedure
+  .input(z.object({id: z.string().uuid()}))
+  .query(async ({ctx, input}) => {
+    return ctx.actions.getEvents({
+      id: input.id,
+      isPublished: true,
+      eventType: 'organizing',
+    });
+  });
+
+const getMyEvents = protectedProcedure
+  .input(
+    z.object({
+      organizerId: z.string().uuid(),
+      eventType: z.enum(['attending', 'organizing', 'all']),
+    })
+  )
+  .query(async ({ctx, input}) => {
+    return ctx.actions.getEvents({
+      id: input.organizerId,
+      eventType: input.eventType,
+    });
+  });
+
 export const eventRouter = router({
   create,
   remove,
@@ -943,4 +976,6 @@ export const eventRouter = router({
   invitePastAttendee,
   inviteByEmail,
   getMySignUp,
+  getPublicEvents,
+  getMyEvents,
 });

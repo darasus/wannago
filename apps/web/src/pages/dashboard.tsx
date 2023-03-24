@@ -1,13 +1,12 @@
 import Link from 'next/link';
-import {PlusCircleIcon} from '@heroicons/react/24/outline';
+import {PlusIcon} from '@heroicons/react/24/outline';
 import {useRouter} from 'next/router';
-import {trpc} from 'trpc/src/trpc';
 import {EventCard} from 'cards';
 import Head from 'next/head';
 import {Container, Button, PageHeader, Toggle, LoadingBlock} from 'ui';
 import {withProtected} from '../utils/withAuthProtect';
 import {FormProvider, useForm} from 'react-hook-form';
-import {useGlobalLoading} from 'hooks';
+import {useMyEventsQuery} from 'hooks';
 
 interface Form {
   eventType: 'attending' | 'organizing' | 'all';
@@ -21,13 +20,9 @@ function Dashboard() {
     },
   });
   const eventType = form.watch('eventType');
-  const {data, isLoading, isFetching} = trpc.user.getMyEvents.useQuery({
-    eventType,
-  });
+  const {data, isLoading, isFetching} = useMyEventsQuery({eventType});
   const haveNoEvents = data?.length === 0;
   const isGettingCards = isLoading || isFetching;
-
-  useGlobalLoading(isGettingCards);
 
   return (
     <>
@@ -41,7 +36,7 @@ function Dashboard() {
               <Button
                 size="md"
                 onClick={() => router.push('/e/add')}
-                iconLeft={<PlusCircleIcon />}
+                iconLeft={<PlusIcon />}
                 data-testid="add-event-button"
               >
                 <span className="hidden md:inline">Create event</span>

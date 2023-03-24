@@ -1,4 +1,4 @@
-import {Event, User} from '@prisma/client';
+import {Event} from '@prisma/client';
 import {useState} from 'react';
 import {ContactFormModal} from '../../components/ContactFormModal/ContactFormModal';
 import {trpc} from 'trpc/src/trpc';
@@ -9,7 +9,7 @@ import {ContactForm} from '../../types/forms';
 import {toast} from 'react-hot-toast';
 
 interface Props {
-  event: Event & {organization?: {users?: User[]}};
+  event: Event;
 }
 
 export function OrganizerCard({event}: Props) {
@@ -17,6 +17,9 @@ export function OrganizerCard({event}: Props) {
   const {logEvent} = useAmplitude();
   const sendEmail = trpc.mail.sendQuestionToOrganizer.useMutation();
   const form = useForm<ContactForm>();
+  const organizer = trpc.event.getOrganizer.useQuery({
+    eventShortId: event.shortId,
+  });
 
   const onOpenFormClick = () => {
     setIsOpen(true);
@@ -36,7 +39,9 @@ export function OrganizerCard({event}: Props) {
   return (
     <>
       <OrganizerCardView
-        user={event.organization?.users?.[0]!}
+        name={organizer.data?.name || 'Loading...'}
+        profileImageSrc={organizer.data?.profileImageSrc}
+        profilePath={organizer.data?.profilePath || ''}
         onOpenFormClick={onOpenFormClick}
       />
       <FormProvider {...form}>

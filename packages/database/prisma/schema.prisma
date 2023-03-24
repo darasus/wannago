@@ -27,12 +27,15 @@ model Event {
   address                 String?
   longitude               Float?
   latitude                Float?
-  organization            Organization  @relation(name: "EventOrganization", fields: [organizationId], references: [id])
-  organizationId          String
+  organization            Organization? @relation(name: "EventOrganization", fields: [organizationId], references: [id])
+  organizationId          String?
+  user                    User?         @relation(name: "EventUser", fields: [userId], references: [id])
+  userId                  String?
   messageId               String?
   eventSignUps            EventSignUp[] @relation(name: "EventSignUps")
 
   @@index([organizationId])
+  @@index([userId])
 }
 
 model User {
@@ -44,11 +47,13 @@ model User {
   firstName        String
   lastName         String
   profileImageSrc  String?
-  organization     Organization      @relation(name: "UserOrganization", fields: [organizationId], references: [id])
-  organizationId   String
+  organization     Organization?     @relation(name: "UserOrganization", fields: [organizationId], references: [id])
+  organizationId   String?
   eventSignUps     EventSignUp[]     @relation(name: "EventSignUpUser")
   type             UserType          @default(USER)
   emailPreferences EmailPreference[] @relation(name: "EmailPreference")
+  events           Event[]           @relation(name: "EventUser")
+  disabled         Boolean           @default(false)
 
   @@index([organizationId])
 }
@@ -59,7 +64,10 @@ model Organization {
   users      User[]  @relation(name: "UserOrganization")
   events     Event[] @relation(name: "EventOrganization")
   name       String? @db.VarChar(255)
+  email      String?
   logoSrc    String?
+  disabled   Boolean @default(false)
+  // TODO: isActive is legacy, remove once production migration is done
   isActive   Boolean @default(false)
 }
 
