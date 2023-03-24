@@ -39,21 +39,20 @@ model Event {
 }
 
 model User {
-  id               String            @id @default(uuid())
-  email            String            @unique
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @default(now()) @updatedAt
-  externalId       String?
-  firstName        String
-  lastName         String
-  profileImageSrc  String?
-  organization     Organization?     @relation(name: "UserOrganization", fields: [organizationId], references: [id])
-  organizationId   String?
-  eventSignUps     EventSignUp[]     @relation(name: "EventSignUpUser")
-  type             UserType          @default(USER)
-  emailPreferences EmailPreference[] @relation(name: "EmailPreference")
-  events           Event[]           @relation(name: "EventUser")
-  disabled         Boolean           @default(false)
+  id              String        @id @default(uuid())
+  email           String        @unique
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @default(now()) @updatedAt
+  externalId      String?
+  firstName       String
+  lastName        String
+  profileImageSrc String?
+  organization    Organization? @relation(name: "UserOrganization", fields: [organizationId], references: [id])
+  organizationId  String?
+  eventSignUps    EventSignUp[] @relation(name: "EventSignUpUser")
+  type            UserType      @default(USER)
+  events          Event[]       @relation(name: "EventUser")
+  disabled        Boolean       @default(false)
 
   @@index([organizationId])
 }
@@ -107,24 +106,3 @@ enum EmailType {
   AfterRegisterNoCreatedEventFollowUpEmail
   OrganizerEventSignUpNotification
 }
-
-model EmailPreference {
-  id        String    @id @default(uuid())
-  emailType EmailType
-  User      User      @relation(name: "EmailPreference", fields: [userId], references: [id])
-  userId    String
-  isActive  Boolean   @default(true)
-
-  @@index([userId])
-}
-
-// model Image {
-//   id             String   @id @default(uuid())
-//   src            String
-//   imageSrcBase64 String   @db.LongText()
-//   width          Int
-//   height         Int
-//   createdAt      DateTime @default(now())
-//   updatedAt      DateTime @updatedAt
-//   events         Event[]  @relation(name: "FeaturedImage")
-// }
