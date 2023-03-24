@@ -12,7 +12,12 @@ export default createNextApiHandler({
   },
   responseMeta({paths, type, errors}) {
     const shouldCache =
-      paths && paths.every(path => path.includes('getRandomExample'));
+      paths &&
+      paths.every(
+        path =>
+          path.includes('event.getRandomExample') ||
+          path.includes('event.getOrganizer')
+      );
     const allOk = errors.length === 0;
     const isQuery = type === 'query';
 
