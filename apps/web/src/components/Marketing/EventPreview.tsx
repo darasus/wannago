@@ -13,7 +13,7 @@ function Event() {
   const {data: event} = trpc.event.getRandomExample.useQuery();
 
   if (!event) return null;
-  if (!event.organization?.users[0]) return null;
+  if (!event.user) return null;
 
   const elements = [
     {
@@ -35,8 +35,8 @@ function Event() {
       el: (
         <MockFormProvider>
           <OrganizerCardView
-            name={`${event.organization?.users[0].firstName} ${event.organization?.users[0].lastName}`}
-            profileImageSrc={event.organization?.users[0].profileImageSrc}
+            name={`${event.user.firstName} ${event.user.lastName}`}
+            profileImageSrc={event.user.profileImageSrc}
             profilePath={''}
             onOpenFormClick={() => {}}
           />

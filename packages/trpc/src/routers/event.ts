@@ -628,6 +628,9 @@ const getRandomExample = publicProcedure.query(async ({ctx}) => {
         },
       },
     },
+    include: {
+      user: true,
+    },
   });
 
   return random(events);
