@@ -1,7 +1,7 @@
 import {useAuth} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
-import {Avatar, Button, CardBase} from 'ui';
+import {Avatar, Button, CardBase, LoadingBlock} from 'ui';
 import {
   useSessionQuery,
   useSetSessionMutation,
@@ -57,6 +57,10 @@ export function UserSection() {
   const label = isOrganization
     ? `Use as ${user.data?.firstName}`
     : `Use as ${organization?.data?.name}`;
+
+  if (user.isLoading && !user.data) {
+    return <LoadingBlock />;
+  }
 
   return (
     <div>
