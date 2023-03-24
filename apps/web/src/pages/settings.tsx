@@ -35,7 +35,7 @@ function ProfilePage() {
       <Container maxSize="sm">
         <div className="flex flex-col gap-y-4">
           <PageHeader title="Settings">
-            <FormProvider {...form}>
+            {/* <FormProvider {...form}>
               <Toggle
                 name="settingsType"
                 options={[
@@ -43,10 +43,10 @@ function ProfilePage() {
                   {label: 'Team', value: 'team'},
                 ]}
               />
-            </FormProvider>
+            </FormProvider> */}
           </PageHeader>
           {settingsType === 'personal' && <UserSettings />}
-          {settingsType === 'team' && <TeamSettings />}
+          {/* {settingsType === 'team' && <TeamSettings />} */}
         </div>
       </Container>
     </>
