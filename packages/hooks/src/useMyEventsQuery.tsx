@@ -1,14 +1,14 @@
 import {trpc} from 'trpc/src/trpc';
 import {useSessionQuery} from './session/useSessionQuery';
 import {useCurrentOrganization} from './useCurrentOrganization';
-import {useMyUser} from './user/useMyUser';
+import {useMyUserQuery} from './user/useMyUserQuery';
 
 interface Props {
   eventType: 'attending' | 'organizing' | 'all';
 }
 
 export function useMyEventsQuery({eventType}: Props) {
-  const user = useMyUser();
+  const user = useMyUserQuery();
   const session = useSessionQuery();
   const {organization} = useCurrentOrganization();
 

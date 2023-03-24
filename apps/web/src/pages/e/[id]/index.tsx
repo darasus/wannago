@@ -4,7 +4,7 @@ import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import {EventView} from '../../../features/EventView/EventView';
 import {Container, LoadingBlock} from 'ui';
 import {trpc} from 'trpc/src/trpc';
-import {useEventId, useHandleEmailCallbackParam, useMe, useMyUser} from 'hooks';
+import {useEventId, useHandleEmailCallbackParam, useMyUserQuery} from 'hooks';
 import {appRouter} from 'trpc/src/routers/_app';
 import {createContext} from 'trpc';
 import SuperJSON from 'superjson';
@@ -14,7 +14,7 @@ import {createOGImageEventUrl, stripHTML} from 'utils';
 
 export default function EventPage() {
   useHandleEmailCallbackParam();
-  const user = useMyUser();
+  const user = useMyUserQuery();
   const {eventShortId} = useEventId();
   const {
     data: event,

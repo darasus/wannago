@@ -1,28 +1,32 @@
 import Head from 'next/head';
 import {FormProvider, useForm} from 'react-hook-form';
-import {Container, PageHeader, Toggle} from 'ui';
+import {Container, LoadingBlock, PageHeader, Toggle} from 'ui';
 import {TeamProfileForm} from '../features/TeamSettings/TeamProfileForm';
 import {TeamMembersSettings} from '../features/TeamSettings/TeamMembersSettings';
-import {EmailSettingsCard} from '../features/UserSettings/EmailSettingsCard';
-import {NameSettingsCard} from '../features/UserSettings/NameSettingsCard';
-import {ProfilePictureSettingsCard} from '../features/UserSettings/ProfilePictureSettingsCard';
+import {UserSettings} from '../features/UserSettings/UserSettings';
 import {withProtected} from '../utils/withAuthProtect';
-import {useMyOrganizationQuery, useMyUser} from 'hooks';
+import {useMyOrganizationQuery, useMyUserQuery} from 'hooks';
 
 interface Form {
   settingsType: 'personal' | 'team';
 }
 
 function ProfilePage() {
-  // INFO: just prefetching
-  useMyOrganizationQuery();
-  const user = useMyUser();
+  const organization = useMyOrganizationQuery();
+  const user = useMyUserQuery();
   const form = useForm<Form>({
     defaultValues: {
       settingsType: 'personal',
     },
   });
   const settingsType = form.watch('settingsType');
+
+  if (
+    (user.isLoading || organization.isLoading) &&
+    (!user.data || !organization.data)
+  ) {
+    return <LoadingBlock />;
+  }
 
   return (
     <>
@@ -44,9 +48,7 @@ function ProfilePage() {
           </PageHeader>
           {settingsType === 'personal' && (
             <>
-              <NameSettingsCard />
-              <ProfilePictureSettingsCard />
-              <EmailSettingsCard />
+              <UserSettings />
             </>
           )}
           {settingsType === 'team' && (

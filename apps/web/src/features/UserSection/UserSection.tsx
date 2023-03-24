@@ -6,12 +6,12 @@ import {
   useSessionQuery,
   useSetSessionMutation,
   useMyOrganizationQuery,
-  useMyUser,
+  useMyUserQuery,
 } from 'hooks';
 
 export function UserSection() {
   const {signOut} = useAuth();
-  const user = useMyUser();
+  const user = useMyUserQuery();
   const organization = useMyOrganizationQuery();
   const session = useSessionQuery();
   const setSession = useSetSessionMutation();

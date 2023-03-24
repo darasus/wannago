@@ -46,7 +46,8 @@ export const Input = forwardRef(function Input(
           {
             ['border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500 pr-10']:
               hasError,
-          }
+          },
+          {'opacity-50': props.disabled}
         )}
         {...props}
         ref={ref}

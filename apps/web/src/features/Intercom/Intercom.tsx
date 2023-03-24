@@ -1,10 +1,10 @@
 import {useEffect} from 'react';
-import {useMyUser} from 'hooks';
+import {useMyUserQuery} from 'hooks';
 import {useAuth} from '@clerk/nextjs';
 
 export function Intercom() {
   const auth = useAuth();
-  const user = useMyUser();
+  const user = useMyUserQuery();
 
   useEffect(() => {
     if (auth?.userId) {

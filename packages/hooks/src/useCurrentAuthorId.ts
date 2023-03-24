@@ -1,9 +1,9 @@
 import {useSessionQuery} from './session/useSessionQuery';
 import {useCurrentOrganization} from './useCurrentOrganization';
-import {useMyUser} from './user/useMyUser';
+import {useMyUserQuery} from './user/useMyUserQuery';
 
 export function useCurrentAuthorId() {
-  const user = useMyUser();
+  const user = useMyUserQuery();
   const session = useSessionQuery();
   const {organization} = useCurrentOrganization();
 

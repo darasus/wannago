@@ -21,10 +21,12 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
   const {
     setValue,
     formState: {defaultValues},
-    resetField,
   } = useFormContext();
   const [imageSrc, setImageSrc] = useState<string | null>(
-    defaultValues?.featuredImageSrc || defaultValues?.logoSrc || null
+    defaultValues?.profileImageSrc ||
+      defaultValues?.featuredImageSrc ||
+      defaultValues?.logoSrc ||
+      null
   );
   const {isLoading, handleFileUpload} = useUploadImage();
 

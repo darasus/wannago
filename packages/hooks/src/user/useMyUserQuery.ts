@@ -1,7 +1,7 @@
 import {useAuth} from '@clerk/nextjs';
 import {trpc} from 'trpc/src/trpc';
 
-export const useMyUser = () => {
+export const useMyUserQuery = () => {
   const auth = useAuth();
 
   return trpc.user.me.useQuery(undefined, {

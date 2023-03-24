@@ -28,4 +28,5 @@ export {useAddOrganizationMemberMutation} from './src/organization/useAddOrganiz
 export {useRemoveOrganizationMemberMutation} from './src/organization/useRemoveOrganizationMemberMutation';
 export {useSessionQuery} from './src/session/useSessionQuery';
 export {useSetSessionMutation} from './src/session/useSetSessionMutation';
-export {useMyUser} from './src/user/useMyUser';
+export {useMyUserQuery} from './src/user/useMyUserQuery';
+export {useUpdateUserMutation} from './src/user/useUpdateUserMutation';
