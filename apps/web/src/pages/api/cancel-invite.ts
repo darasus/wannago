@@ -34,11 +34,7 @@ export default async function handler(
       user: true,
       event: {
         include: {
-          organization: {
-            include: {
-              users: true,
-            },
-          },
+          user: true,
         },
       },
     },
@@ -57,11 +53,7 @@ export default async function handler(
     },
   });
 
-  if (
-    eventSignUp?.user &&
-    eventSignUp.event.organization?.users &&
-    eventSignUp.event.organization?.users?.length > 0
-  ) {
+  if (eventSignUp?.user) {
     await mailQueue.enqueueEventCancelInviteEmail({
       eventId: eventSignUp.event.id,
       userId: eventSignUp.user.id,

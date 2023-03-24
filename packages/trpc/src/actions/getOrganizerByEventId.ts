@@ -20,11 +20,7 @@ export function getOrganizerByEventId(ctx: ActionContext) {
       },
       include: {
         user: true,
-        organization: {
-          include: {
-            users: true,
-          },
-        },
+        organization: true,
       },
     });
 
@@ -37,10 +33,6 @@ export function getOrganizerByEventId(ctx: ActionContext) {
 
     if (event.user) {
       return event.user;
-    }
-
-    if (event.organization && event.organization?.disabled) {
-      return event.organization.users[0];
     }
 
     return event.organization;

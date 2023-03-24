@@ -39,11 +39,7 @@ export async function handleOrganizerEventSignUpNotificationEmail({
       id: eventId,
     },
     include: {
-      organization: {
-        include: {
-          users: true,
-        },
-      },
+      user: true,
     },
   });
 
@@ -54,7 +50,7 @@ export async function handleOrganizerEventSignUpNotificationEmail({
     });
   }
 
-  const organizerUser = event.organization?.users[0];
+  const organizerUser = event.user;
 
   await postmark.sendToOrganizerEventSignUpNotificationStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',

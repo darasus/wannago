@@ -25,11 +25,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         id: body.eventId,
       },
       include: {
-        organization: {
-          include: {
-            users: true,
-          },
-        },
+        user: true,
         eventSignUps: {
           where: {
             status: 'REGISTERED',
@@ -68,7 +64,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                   cancelEventUrl={cancelEventUrl.toString()}
                   startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
                   endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-                  organizerName={`${event.organization?.users[0].firstName} ${event.organization?.users[0].lastName}`}
+                  organizerName={`${event.user?.firstName} ${event.user?.lastName}`}
                 />
               ),
             });

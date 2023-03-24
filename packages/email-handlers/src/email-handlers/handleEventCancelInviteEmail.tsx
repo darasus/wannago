@@ -22,11 +22,7 @@ export async function handleEventCancelInviteEmail({
   const event = await prisma.event.findUnique({
     where: {id: eventId},
     include: {
-      organization: {
-        include: {
-          users: true,
-        },
-      },
+      user: true,
     },
   });
 
@@ -37,7 +33,7 @@ export async function handleEventCancelInviteEmail({
     });
   }
 
-  const organizerUser = event.organization?.users[0];
+  const organizerUser = event.user;
 
   const user = await prisma.user.findUnique({
     where: {id: userId},

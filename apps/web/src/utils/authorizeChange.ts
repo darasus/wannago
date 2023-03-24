@@ -13,17 +13,11 @@ export async function authorizeChange({
       externalId: ctx.auth?.userId,
     },
     include: {
-      organization: {
-        include: {
-          events: true,
-        },
-      },
+      events: true,
     },
   });
 
-  const isMyEvent = user?.organization?.events.some(
-    event => event.id === eventId
-  );
+  const isMyEvent = user?.events.some(event => event.id === eventId);
 
   const isAdmin = user?.type === 'ADMIN';
 

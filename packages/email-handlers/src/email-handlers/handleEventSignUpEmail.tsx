@@ -21,11 +21,7 @@ export async function handleEventSignUpEmail({
   const event = await prisma.event.findUnique({
     where: {id: eventId},
     include: {
-      organization: {
-        include: {
-          users: true,
-        },
-      },
+      user: true,
     },
   });
 
@@ -47,7 +43,7 @@ export async function handleEventSignUpEmail({
     });
   }
 
-  const organizerUser = event.organization?.users[0];
+  const organizerUser = event.user;
 
   if (!organizerUser) {
     throw new TRPCError({

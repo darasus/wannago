@@ -69,11 +69,6 @@ export default async function handler(
           firstName: data.first_name,
           lastName: data.last_name,
           profileImageSrc: data.profile_image_url,
-          organization: {
-            connect: {
-              id: organization.id,
-            },
-          },
         },
       });
     } else {
@@ -84,11 +79,6 @@ export default async function handler(
           firstName: data.first_name,
           lastName: data.last_name,
           profileImageSrc: data.profile_image_url,
-          organization: {
-            connect: {
-              id: organization.id,
-            },
-          },
         },
       });
 

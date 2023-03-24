@@ -9,10 +9,6 @@ export const user = {
   created: async (input: validation.Input) => {
     const {data} = validation.user.created.parse(input);
 
-    const organization = await prisma.organization.create({
-      data: {},
-    });
-
     const user = await prisma.user.findFirst({
       where: {
         OR: [
@@ -39,11 +35,6 @@ export const user = {
           firstName: data.first_name,
           lastName: data.last_name,
           profileImageSrc: data.profile_image_url,
-          organization: {
-            connect: {
-              id: organization.id,
-            },
-          },
         },
       });
     } else {
@@ -54,11 +45,6 @@ export const user = {
           firstName: data.first_name,
           lastName: data.last_name,
           profileImageSrc: data.profile_image_url,
-          organization: {
-            connect: {
-              id: organization.id,
-            },
-          },
         },
       });
 

@@ -31,7 +31,7 @@ function AdminPage() {
                 <Td>{user.email}</Td>
                 <Td>{user.externalId}</Td>
                 <Td>
-                  {user.organization?.events.map(event => {
+                  {user.events.map(event => {
                     const status = event.isPublished ? 'published' : 'draft';
                     const signUpCount = event.isPublished
                       ? event.eventSignUps.length

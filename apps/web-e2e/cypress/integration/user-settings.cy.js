@@ -4,12 +4,12 @@ describe('user-settings', () => {
     const lastName = 'Doe' + Math.random();
 
     cy.login();
-    cy.visit('/me');
+    cy.visit('/settings');
     cy.get('[data-testid="first-name-input"]').clear();
     cy.get('[data-testid="first-name-input"]').type(firstName);
     cy.get('[data-testid="last-name-input"]').clear();
     cy.get('[data-testid="last-name-input"]').type(lastName);
-    cy.get('[data-testid="name-settings-submit-button"]').click();
+    cy.get('[data-testid="user-settings-submit-button"]').click();
     cy.wait(10000);
     cy.get('[data-testid="header-user-section-button"]').click();
     cy.get('[data-testid="profile-button"]').click();

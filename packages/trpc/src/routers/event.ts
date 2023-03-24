@@ -284,11 +284,7 @@ const getById = protectedProcedure
         id: eventId,
       },
       include: {
-        organization: {
-          include: {
-            users: true,
-          },
-        },
+        user: true,
       },
     });
   });
@@ -656,20 +652,21 @@ const getAllEventsAttendees = protectedProcedure
       });
     }
 
-    const organization = await ctx.prisma.organization.findFirst({
+    const user = await ctx.prisma.user.findFirst({
       where: {
-        users: {
-          some: {
-            externalId: ctx.auth.userId,
-          },
-        },
+        externalId: ctx.auth.userId,
       },
     });
+
+    invariant(
+      user,
+      new TRPCError({code: 'NOT_FOUND', message: 'User not found'})
+    );
 
     const eventSignUps = await ctx.prisma.eventSignUp.findMany({
       where: {
         event: {
-          organizationId: organization?.id,
+          userId: user.id,
         },
       },
       include: {
@@ -786,7 +783,7 @@ const invitePastAttendee = protectedProcedure
     return invite;
   });
 
-const inviteByEmail = publicProcedure
+const inviteByEmail = protectedProcedure
   .input(
     z.object({
       eventShortId: z.string(),
@@ -826,9 +823,6 @@ const inviteByEmail = publicProcedure
           firstName: input.firstName,
           lastName: input.lastName,
           externalId: null,
-          organization: {
-            create: {},
-          },
         },
       });
     }

@@ -22,11 +22,7 @@ export async function handleEventReminderEmail({
       id: eventId,
     },
     include: {
-      organization: {
-        include: {
-          users: true,
-        },
-      },
+      user: true,
       eventSignUps: {
         where: {
           status: 'REGISTERED',
@@ -71,7 +67,7 @@ export async function handleEventReminderEmail({
               cancelEventUrl={cancelEventUrl.toString()}
               startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
               endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-              organizerName={`${event.organization?.users[0].firstName} ${event.organization?.users[0].lastName}`}
+              organizerName={`${event.user?.firstName} ${event.user?.lastName}`}
             />
           ),
         });

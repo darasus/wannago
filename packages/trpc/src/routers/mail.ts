@@ -1,5 +1,6 @@
 import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 import {z} from 'zod';
+import {TRPCError} from '@trpc/server';
 
 const messageEventParticipants = protectedProcedure
   .input(
@@ -55,29 +56,26 @@ const sendQuestionToOrganizer = publicProcedure
         id: input.eventId,
       },
       include: {
-        organization: {
-          include: {
-            users: true,
-          },
-        },
+        user: true,
       },
     });
 
-    if (!event) {
-      throw new Error('Event not found!');
-    }
-
-    for (const user of event.organization?.users || []) {
-      await ctx.mailQueue.enqueueMessageToOrganizerEmail({
-        eventId: event.id,
-        organizerEmail: user.email,
-        firstName: input.firstName,
-        lastName: input.lastName,
-        email: input.email,
-        message: input.message,
-        subject: input.subject,
+    if (!event || !event.user) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Event or user not found',
       });
     }
+
+    await ctx.mailQueue.enqueueMessageToOrganizerEmail({
+      eventId: event.id,
+      organizerEmail: event.user?.email,
+      firstName: input.firstName,
+      lastName: input.lastName,
+      email: input.email,
+      message: input.message,
+      subject: input.subject,
+    });
 
     return {status: 'ok'};
   });
