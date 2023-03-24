@@ -64,6 +64,7 @@ model Organization {
   users      User[]  @relation(name: "UserOrganization")
   events     Event[] @relation(name: "EventOrganization")
   name       String? @db.VarChar(255)
+  email      String?
   logoSrc    String?
   disabled   Boolean @default(false)
   // TODO: isActive is legacy, remove once production migration is done

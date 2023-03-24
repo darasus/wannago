@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import {FormProvider, useForm} from 'react-hook-form';
 import {Container, LoadingBlock, PageHeader, Toggle} from 'ui';
-import {TeamProfileForm} from '../features/TeamSettings/TeamProfileForm';
-import {TeamMembersSettings} from '../features/TeamSettings/TeamMembersSettings';
+import {TeamSettings} from '../features/TeamSettings/TeamSettings';
 import {UserSettings} from '../features/UserSettings/UserSettings';
 import {withProtected} from '../utils/withAuthProtect';
 import {useMyOrganizationQuery, useMyUserQuery} from 'hooks';
@@ -46,17 +45,8 @@ function ProfilePage() {
               />
             </FormProvider>
           </PageHeader>
-          {settingsType === 'personal' && (
-            <>
-              <UserSettings />
-            </>
-          )}
-          {settingsType === 'team' && (
-            <>
-              <TeamProfileForm />
-              <TeamMembersSettings />
-            </>
-          )}
+          {settingsType === 'personal' && <UserSettings />}
+          {settingsType === 'team' && <TeamSettings />}
         </div>
       </Container>
     </>

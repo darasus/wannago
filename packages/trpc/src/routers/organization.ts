@@ -8,6 +8,7 @@ const create = protectedProcedure
     z.object({
       name: z.string(),
       logoSrc: z.string().url(),
+      email: z.string().email(),
     })
   )
   .mutation(async ({ctx, input}) => {
@@ -30,6 +31,7 @@ const create = protectedProcedure
           name: input.name,
           logoSrc: input.logoSrc,
           disabled: false,
+          email: input.email,
           users: {
             connect: {
               id: user.id,
@@ -46,6 +48,7 @@ const create = protectedProcedure
           name: input.name,
           logoSrc: input.logoSrc,
           disabled: false,
+          email: input.email,
         },
       });
     }

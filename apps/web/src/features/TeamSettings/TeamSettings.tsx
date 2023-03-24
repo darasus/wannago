@@ -9,15 +9,17 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {Button, CardBase, Text} from 'ui';
 import {FileInput} from '../../components/Input/FileInput/FileInput';
 import {Input} from '../../components/Input/Input/Input';
+import {TeamMembersSettings} from './TeamMembersSettings';
 
-//TODO: create description text explaining why you need to create a team
+// TODO: create description text explaining why you need to create a team
 
 interface Form {
   name: string | null;
   logoSrc: string | null;
+  email: string | null;
 }
 
-export function TeamProfileForm() {
+export function TeamSettings() {
   const organization = useMyOrganizationQuery();
   const createOrganization = useCreateOrganizationMutation();
   const removeOrganization = useRemoveOrganizationMutation();
@@ -25,14 +27,15 @@ export function TeamProfileForm() {
     defaultValues: {
       name: organization.data?.name || null,
       logoSrc: organization.data?.logoSrc || null,
+      email: organization.data?.email || null,
     },
   });
 
   const handleSubmit = form.handleSubmit(async data => {
-    const {name, logoSrc} = data;
+    const {name, logoSrc, email} = data;
 
-    if (name && logoSrc) {
-      await createOrganization.mutateAsync({logoSrc, name});
+    if (name && logoSrc && email) {
+      await createOrganization.mutateAsync({logoSrc, name, email});
     }
   });
 
@@ -69,6 +72,17 @@ export function TeamProfileForm() {
                 error={form.formState.errors.name}
                 label="Name"
               />
+              <Input
+                type="email"
+                {...form.register('email', {
+                  required: {
+                    value: true,
+                    message: 'Email is required',
+                  },
+                })}
+                error={form.formState.errors.email}
+                label="Email"
+              />
               <FileInput
                 {...form.register('logoSrc', {
                   required: {
@@ -90,6 +104,7 @@ export function TeamProfileForm() {
           </FormProvider>
         </form>
       </CardBase>
+      <TeamMembersSettings />
     </>
   );
 }
