@@ -5,7 +5,7 @@ import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
 import {authorizeChange} from '../../../../apps/web/src/utils/authorizeChange';
-import {random, getBaseUrl, isUser, isOrganization} from 'utils';
+import {random, getBaseUrl, isUser, isOrganization, invariant} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 
@@ -322,6 +322,14 @@ const getOrganizer = publicProcedure
       id: input.eventShortId,
     });
 
+    invariant(
+      organizer,
+      new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Organizer not found',
+      })
+    );
+
     if (isUser(organizer)) {
       return {
         id: organizer.id,
@@ -332,25 +340,12 @@ const getOrganizer = publicProcedure
     }
 
     if (isOrganization(organizer)) {
-      if (organizer?.isActive) {
-        return {
-          id: organizer.id,
-          name: organizer.name,
-          profileImageSrc: organizer.logoSrc,
-          profilePath: `/o/${organizer.id}`,
-        };
-      }
-
-      if (organizer.users?.[0]) {
-        const user = organizer.users[0];
-
-        return {
-          id: user.id,
-          name: `${user.firstName} ${user.lastName}`,
-          profileImageSrc: user.profileImageSrc,
-          profilePath: `/u/${user.id}`,
-        };
-      }
+      return {
+        id: organizer.id,
+        name: organizer.name,
+        profileImageSrc: organizer.logoSrc,
+        profilePath: `/o/${organizer.id}`,
+      };
     }
 
     return null;

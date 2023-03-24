@@ -39,10 +39,10 @@ export function getOrganizerByEventId(ctx: ActionContext) {
       return event.user;
     }
 
-    if (event.organization && !event.organization?.isActive) {
+    if (event.organization && event.organization?.disabled) {
       return event.organization.users[0];
     }
 
-    return omit(['user'], event.organization) as Organization & {users: User[]};
+    return event.organization;
   };
 }
