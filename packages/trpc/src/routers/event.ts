@@ -609,13 +609,9 @@ const getExamples = publicProcedure.query(({ctx}) => {
   return ctx.prisma.event.findMany({
     where: {
       isPublished: true,
-      organization: {
-        users: {
-          some: {
-            email: {
-              in: ['idarase+clerk_test@gmail.com', 'hi+example@wannago.app'],
-            },
-          },
+      user: {
+        email: {
+          in: ['idarase+clerk_test@gmail.com', 'hi+example@wannago.app'],
         },
       },
     },
