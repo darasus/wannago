@@ -15,9 +15,10 @@ export function UserSection() {
   const organization = useMyOrganizationQuery();
   const session = useSessionQuery();
   const setSession = useSetSessionMutation();
+  const isOrganization = session.data === 'organization';
 
   const toggleSession = () => {
-    if (session.data === 'organization') {
+    if (isOrganization) {
       setSession.mutate({userType: 'user'});
     } else {
       setSession.mutate({userType: 'organization'});
@@ -31,7 +32,7 @@ export function UserSection() {
   };
 
   const getName = () => {
-    if (session.data === 'organization') {
+    if (isOrganization) {
       return organization.data?.name;
     }
 
@@ -39,7 +40,7 @@ export function UserSection() {
   };
 
   const getImage = () => {
-    if (session.data === 'organization') {
+    if (isOrganization) {
       return organization.data?.logoSrc;
     }
 
@@ -50,10 +51,9 @@ export function UserSection() {
     return user.data?.profileImageSrc;
   };
 
-  const label =
-    session.data === 'organization'
-      ? `Use as ${organization?.data?.name}`
-      : `Use as ${user.data?.firstName}`;
+  const label = isOrganization
+    ? `Use as ${user.data?.firstName}`
+    : `Use as ${organization?.data?.name}`;
 
   return (
     <div>
@@ -108,9 +108,9 @@ export function UserSection() {
                     variant="neutral"
                     as="a"
                     href={
-                      session.data === 'user'
-                        ? `/u/${user.data?.id}`
-                        : `/o/${organization?.data?.id}`
+                      isOrganization
+                        ? `/o/${organization?.data?.id}`
+                        : `/u/${user.data?.id}`
                     }
                     size="sm"
                     data-testid="profile-button"

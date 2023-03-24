@@ -11,20 +11,17 @@ export function useMyEventsQuery({eventType}: Props) {
   const user = useMyUserQuery();
   const session = useSessionQuery();
   const organization = useMyOrganizationQuery();
+  const organizationId = organization.data?.id!;
+  const userId = user.data?.id!;
+  const id = session.data === 'organization' ? organizationId : userId;
 
   return trpc.event.getMyEvents.useQuery(
     {
-      id:
-        session.data === 'organization'
-          ? organization.data?.id!
-          : user.data?.id!,
+      id,
       eventType,
     },
     {
-      enabled:
-        session.data === 'organization'
-          ? Boolean(organization.data?.id)
-          : Boolean(user.data?.id),
+      enabled: Boolean(id),
     }
   );
 }
