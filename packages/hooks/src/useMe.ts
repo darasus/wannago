@@ -1,9 +1,4 @@
-import {
-  useAuth,
-  useOrganization,
-  useOrganizationList,
-  useUser,
-} from '@clerk/nextjs';
+import {useAuth, useOrganization, useUser} from '@clerk/nextjs';
 import {trpc} from 'trpc/src/trpc';
 
 export function useMe() {

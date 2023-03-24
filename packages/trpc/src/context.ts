@@ -4,6 +4,7 @@ import {prisma} from 'database';
 import {Telegram} from 'lib/src/telegram';
 import {Postmark} from 'lib/src/postmark';
 import {MailQueue} from 'lib/src/mailQueue';
+import {CacheService} from 'lib/src/cache';
 import {type CreateNextContextOptions} from '@trpc/server/adapters/next';
 import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
 import {SignedInAuthObject, SignedOutAuthObject} from '@clerk/clerk-sdk-node';
@@ -46,6 +47,7 @@ interface CreateInnerContextOptions {
   postmark: Postmark;
   mailQueue: MailQueue;
   googleMaps: GoogleMapsClient;
+  cache: CacheService;
 }
 
 interface CreateContextOptions extends CreateInnerContextOptions {
@@ -62,6 +64,7 @@ export async function createContextInner(_opts: CreateInnerContextOptions) {
     postmark: _opts.postmark,
     mailQueue: _opts.mailQueue,
     googleMaps: _opts.googleMaps,
+    cache: _opts.cache,
   };
 }
 
@@ -88,6 +91,7 @@ export async function createContext(
     postmark: new Postmark(),
     mailQueue: new MailQueue(),
     googleMaps: new GoogleMapsClient(),
+    cache: new CacheService(),
   });
 
   return {

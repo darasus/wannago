@@ -1,47 +1,59 @@
-import {useClerk} from '@clerk/nextjs';
+import {useAuth} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
-import {Avatar, Badge, Button, CardBase} from 'ui';
-import {FeedbackFish} from '@feedback-fish/react';
-import {useMe, useCurrentOrganization, useToggleSession} from 'hooks';
+import {Avatar, Button, CardBase} from 'ui';
+import {
+  useSessionQuery,
+  useSetSessionMutation,
+  useMyOrganizationQuery,
+  useMyUser,
+} from 'hooks';
 
 export function UserSection() {
-  const {signOut} = useClerk();
-  const {me, isPersonalSession} = useMe();
-  const {clerkOrganization, isOrganizationSession, hasTeam, organization} =
-    useCurrentOrganization();
-  const {isTogglingSession, toggleSession} = useToggleSession();
-  const showAdminLink = me?.type === 'ADMIN';
+  const {signOut} = useAuth();
+  const user = useMyUser();
+  const organization = useMyOrganizationQuery();
+  const session = useSessionQuery();
+  const setSession = useSetSessionMutation();
+
+  const toggleSession = () => {
+    if (session.data === 'organization') {
+      setSession.mutate({userType: 'user'});
+    } else {
+      setSession.mutate({userType: 'organization'});
+    }
+  };
+
+  const showAdminLink = false;
 
   const onSignOutClick = async () => {
     await signOut();
   };
 
-  if (!me) return null;
-
   const getName = () => {
-    if (isOrganizationSession) {
-      return clerkOrganization?.name;
+    if (session.data === 'organization') {
+      return organization.data?.name;
     }
 
-    return me?.firstName;
+    return user.data?.firstName;
   };
 
   const getImage = () => {
-    if (isOrganizationSession) {
-      return clerkOrganization?.logoUrl;
+    if (session.data === 'organization') {
+      return organization.data?.logoSrc;
     }
 
-    if (me?.profileImageSrc?.includes('gravatar')) {
+    if (user.data?.profileImageSrc?.includes('gravatar')) {
       return null;
     }
 
-    return me?.profileImageSrc;
+    return user.data?.profileImageSrc;
   };
 
-  const label = isPersonalSession
-    ? `Use as ${clerkOrganization?.name}`
-    : `Use as ${me.firstName}`;
+  const label =
+    session.data === 'organization'
+      ? `Use as ${organization?.data?.name}`
+      : `Use as ${user.data?.firstName}`;
 
   return (
     <div>
@@ -74,10 +86,10 @@ export function UserSection() {
             >
               <Popover.Panel className="absolute right-0 mt-3 max-w-sm">
                 <CardBase innerClassName="flex flex-col gap-y-2 w-40">
-                  {hasTeam && (
+                  {Boolean(organization.data) && (
                     <Button
                       onClick={toggleSession}
-                      isLoading={isTogglingSession}
+                      isLoading={setSession.isLoading}
                       size="sm"
                       variant="neutral"
                     >
@@ -96,8 +108,8 @@ export function UserSection() {
                     variant="neutral"
                     as="a"
                     href={
-                      isPersonalSession
-                        ? `/u/${me?.id}`
+                      session.data === 'user'
+                        ? `/u/${user.data?.id}`
                         : `/o/${organization?.data?.id}`
                     }
                     size="sm"
@@ -121,14 +133,6 @@ export function UserSection() {
                   >
                     Logout
                   </Button>
-                  <FeedbackFish
-                    projectId="f843146d960b2f"
-                    userId={me?.externalId || undefined}
-                  >
-                    <Button variant="neutral" size="sm">
-                      Feedback
-                    </Button>
-                  </FeedbackFish>
                 </CardBase>
               </Popover.Panel>
             </Transition>
