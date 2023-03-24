@@ -1,5 +1,4 @@
 import {useAuth} from '@clerk/nextjs';
-import {useMe} from 'hooks';
 import {NextComponentType} from 'next';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
