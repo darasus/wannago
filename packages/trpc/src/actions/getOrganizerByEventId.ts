@@ -1,6 +1,4 @@
-import {Organization, User} from '@prisma/client';
 import {TRPCError} from '@trpc/server';
-import {omit} from 'ramda';
 import {z} from 'zod';
 import {ActionContext} from '../context';
 
@@ -31,10 +29,6 @@ export function getOrganizerByEventId(ctx: ActionContext) {
       });
     }
 
-    if (event.user) {
-      return event.user;
-    }
-
-    return event.organization;
+    return event.user || event.organization;
   };
 }

@@ -28,6 +28,9 @@ export function getEvents(ctx: ActionContext) {
       {
         eventSignUps: {
           some: {
+            status: {
+              in: ['REGISTERED', 'INVITED'],
+            },
             user: {
               id,
             },
