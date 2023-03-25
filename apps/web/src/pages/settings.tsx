@@ -5,17 +5,13 @@ import {TeamSettings} from '../features/TeamSettings/TeamSettings';
 import {UserSettings} from '../features/UserSettings/UserSettings';
 import {withProtected} from '../utils/withAuthProtect';
 import {useFlag, useMyOrganizationQuery, useMyUserQuery} from 'hooks';
-import {useAuth} from '@clerk/nextjs';
 
 interface Form {
   settingsType: 'personal' | 'team';
 }
 
 function SettingsPage() {
-  const auth = useAuth();
-  const organizationFeatureEnabled = useFlag('organization_feature', {
-    user_id: auth.userId ?? '',
-  });
+  const organizationFeatureEnabled = useFlag('organization_feature');
   const organization = useMyOrganizationQuery();
   const user = useMyUserQuery();
   const form = useForm<Form>({

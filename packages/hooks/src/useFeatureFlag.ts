@@ -1,3 +1,4 @@
+import {useAuth} from '@clerk/nextjs';
 import {useEffect, useState} from 'react';
 
 export type UseFlag = {
@@ -28,6 +29,7 @@ export function useFlag(
   flag: string,
   attributes?: Record<string, string | number | boolean>
 ): UseFlag {
+  const auth = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isEnabled, setIsEnabled] = useState<boolean | null>(null);
@@ -46,6 +48,7 @@ export function useFlag(
     try {
       setIsLoading(true);
       const params = new URLSearchParams();
+      params.set('user_id', auth?.userId || '');
 
       attributes ??= {};
       attributes['_flag'] = flag;
@@ -79,6 +82,7 @@ export function useFlag(
 
   useEffect(() => {
     getFlag();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
