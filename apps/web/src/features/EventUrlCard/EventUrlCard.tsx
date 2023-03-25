@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import {useCopyClipboard, useAmplitude} from 'hooks';
 import {Button, Badge, CardBase, Tooltip} from 'ui';
-import {getBaseUrl, cn} from 'utils';
+import {getBaseUrl} from 'utils';
 import {LinkIcon} from '@heroicons/react/24/solid';
 
 interface Props {
@@ -21,9 +21,10 @@ export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
   };
 
   const publicEventUrl = isPublished
-    ? url.replace('https://www.', '').replace('http://', '')
+    ? url.replace('www.', '').replace('http://', '').replace('https://', '')
     : `${getBaseUrl()}/e/abcdef`
-        .replace('https://www.', '')
+        .replace('www.', '')
+        .replace('https://', '')
         .replace('http://', '');
 
   return (
@@ -54,12 +55,9 @@ export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
               <LinkIcon className="h-5 w-5" />
             </div>
           </Link>
-          <Link
-            className={cn('text-gray-800 font-bold hover:underline')}
-            href={url}
-          >
+          <Button variant="link" href={url} as="a">
             {publicEventUrl}
-          </Link>
+          </Button>
         </div>
       </CardBase>
     </Tooltip>
