@@ -7,6 +7,7 @@ import {differenceInSeconds} from 'date-fns';
 import {random, getBaseUrl, isUser, isOrganization, invariant} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
+import {EmailType} from '../../../../apps/web/src/types/EmailType';
 
 const eventInput = z.object({
   title: z.string(),
@@ -457,9 +458,12 @@ const joinEvent = protectedProcedure
     }
 
     await Promise.all([
-      ctx.mailQueue.enqueueOrganizerEventSignUpNotificationEmail({
-        eventId: input.eventId,
-        userId: user.id,
+      ctx.mailQueue.publish({
+        body: {
+          eventId: input.eventId,
+          userId: user.id,
+        },
+        type: EmailType.OrganizerEventSignUpNotification,
       }),
       ctx.mailQueue.enqueueEventSignUpEmail({
         eventId: input.eventId,

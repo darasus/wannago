@@ -12,9 +12,8 @@ const postmark = new Postmark();
 export const handleMessageToOrganizerEmailInputSchema =
   baseEventHandlerSchema.extend({
     eventId: z.string().uuid(),
+    organizerName: z.string(),
     organizerEmail: z.string().email(),
-    firstName: z.string(),
-    lastName: z.string(),
     email: z.string().email(),
     subject: z.string(),
     message: z.string(),
@@ -23,9 +22,8 @@ export const handleMessageToOrganizerEmailInputSchema =
 export async function handleMessageToOrganizerEmail({
   email,
   eventId,
-  firstName,
-  lastName,
   message,
+  organizerName,
   organizerEmail,
   subject,
 }: z.infer<typeof handleMessageToOrganizerEmailInputSchema>) {
@@ -39,7 +37,7 @@ export async function handleMessageToOrganizerEmail({
   }
 
   await postmark.sendToTransactionalStream({
-    replyTo: `${firstName} ${lastName} <${email}>`,
+    replyTo: `${organizerName} <${email}>`,
     to: organizerEmail,
     subject: 'Someone asked you a question on WannaGo',
     htmlString: render(
@@ -48,7 +46,7 @@ export async function handleMessageToOrganizerEmail({
         eventUrl={`${getBaseUrl()}/e/${event?.shortId}`}
         message={message}
         subject={subject}
-        senderName={`${firstName} ${lastName}`}
+        senderName={organizerName}
         senderEmail={email}
       />
     ),

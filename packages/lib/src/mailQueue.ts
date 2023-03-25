@@ -11,14 +11,14 @@ export class MailQueue {
     token: env.QSTASH_TOKEN!,
   });
 
-  private publish({
+  publish({
     type,
     delay,
     body,
   }: {
     type: EmailType;
-    delay?: number;
     body: {[key: string]: string};
+    delay?: number;
   }) {
     if (env.VERCEL_ENV === 'production') {
       return this.queue.publishJSON({
@@ -49,56 +49,6 @@ export class MailQueue {
     return this.publish({body, type: EmailType.EventCancelInvite});
   }
 
-  async enqueueMessageToOrganizerEmail(body: {
-    eventId: string;
-    organizerEmail: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    message: string;
-    subject: string;
-  }) {
-    return this.publish({body, type: EmailType.MessageToOrganizer});
-  }
-
-  async enqueueMessageToAllAttendeesEmail(body: {
-    subject: string;
-    message: string;
-    eventId: string;
-    organizerUserId: string;
-  }) {
-    return this.publish({body, type: EmailType.MessageToAllAttendees});
-  }
-
-  /**
-   * This is a organizer notification email when new user sign ups to an event
-   */
-  async enqueueOrganizerEventSignUpNotificationEmail(body: {
-    userId: string;
-    eventId: string;
-  }) {
-    return this.publish({
-      body,
-      type: EmailType.OrganizerEventSignUpNotification,
-    });
-  }
-
-  /**
-   * This is a follow up email to the organizer if they have not created an event in 2 days
-   */
-  async enqueueAfterRegisterNoCreatedEventFollowUpEmail(body: {
-    userId: string;
-  }) {
-    return this.publish({
-      body,
-      type: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
-      delay: 60 * 60 * 24 * 2,
-    });
-  }
-
-  /**
-   * This is a reminder email for upcoming events
-   */
   async enqueueReminderEmail(body: {
     eventId: string;
     startDate: Date;
