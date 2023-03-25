@@ -19,6 +19,7 @@ import {getOrganizationByUserId} from './actions/getOrganizationByUserId';
 import {getOrganizationByUserExternalId} from './actions/getOrganizationByUserExternalId';
 import {getUserByEmail} from './actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizationWithMembersByOrganizationId';
+import {canModifyEvent} from './actions/canModifyEvent';
 
 type Actions = {
   getEvents: ReturnType<typeof getEvents>;
@@ -36,6 +37,7 @@ type Actions = {
   getOrganizationByUserExternalId: ReturnType<
     typeof getOrganizationByUserExternalId
   >;
+  canModifyEvent: ReturnType<typeof canModifyEvent>;
 };
 
 interface CreateInnerContextOptions {
@@ -110,6 +112,7 @@ export async function createContext(
         getOrganizationWithMembersByOrganizationId(innerContext),
       getOrganizationByUserExternalId:
         getOrganizationByUserExternalId(innerContext),
+      canModifyEvent: canModifyEvent(innerContext),
     },
   };
 }

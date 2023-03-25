@@ -3,8 +3,13 @@ import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import {EventView} from '../../../features/EventView/EventView';
 import {Container, LoadingBlock} from 'ui';
-import {trpc} from 'trpc/src/trpc';
-import {useEventId, useHandleEmailCallbackParam, useMyUserQuery} from 'hooks';
+import {
+  useEventId,
+  useEventQuery,
+  useHandleEmailCallbackParam,
+  useIsMyEvent,
+  useMyUserQuery,
+} from 'hooks';
 import {appRouter} from 'trpc/src/routers/_app';
 import {createContext} from 'trpc';
 import SuperJSON from 'superjson';
@@ -16,20 +21,12 @@ export default function EventPage() {
   useHandleEmailCallbackParam();
   const user = useMyUserQuery();
   const {eventShortId} = useEventId();
-  const {
-    data: event,
-    refetch,
-    isLoading,
-  } = trpc.event.getByShortId.useQuery(
-    {
-      id: eventShortId!,
-    },
-    {enabled: !!eventShortId}
-  );
-  const isMyEvent =
-    event?.userId && user.data?.id && event?.userId === user.data?.id;
+  const event = useEventQuery({eventShortId});
+  const isMyEvent = useIsMyEvent({eventShortId});
 
-  if (isLoading) {
+  console.log({isMyEvent});
+
+  if (event.isLoading) {
     return <LoadingBlock />;
   }
 
@@ -38,38 +35,41 @@ export default function EventPage() {
       {event && (
         <>
           <Meta
-            title={event.title}
-            description={`${stripHTML(event?.description || '').slice(
+            title={event.data?.title}
+            description={`${stripHTML(event.data?.description || '').slice(
               0,
               100
             )}...`}
             imageSrc={
-              event.featuredImageSrc &&
+              event.data?.featuredImageSrc &&
               user.data?.profileImageSrc &&
               createOGImageEventUrl({
-                title: event.title,
+                title: event.data.title,
                 organizerName: `${user.data?.firstName} ${user.data?.lastName}`,
-                eventImageUrl: event.featuredImageSrc,
+                eventImageUrl: event.data.featuredImageSrc,
                 organizerProfileImageUrl: user.data?.profileImageSrc,
               })
             }
-            shortEventId={event.shortId!}
+            shortEventId={event.data?.shortId}
           />
-          {isMyEvent && (
+          {isMyEvent && event.data && (
             <Container>
               <div className="grid grid-cols-12 gap-4">
                 <div className="col-span-12 lg:col-span-4">
-                  <AdminSection event={event} refetchEvent={refetch} />
+                  <AdminSection
+                    event={event.data}
+                    refetchEvent={event.refetch}
+                  />
                 </div>
                 <div className="col-span-12 lg:col-span-8">
-                  <EventView event={event} />
+                  <EventView event={event.data} />
                 </div>
               </div>
             </Container>
           )}
-          {!isMyEvent && (
+          {!isMyEvent && event.data && (
             <Container maxSize="sm">
-              <EventView event={event} />
+              <EventView event={event.data} />
             </Container>
           )}
         </>

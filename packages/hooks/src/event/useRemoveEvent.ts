@@ -1,8 +1,8 @@
 import {useRouter} from 'next/router';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
-import {useAmplitude} from './useAmplitude';
-import {useConfirmDialog} from './useConfirmDialog';
+import {useAmplitude} from '../useAmplitude';
+import {useConfirmDialog} from '../useConfirmDialog';
 
 interface Props {
   eventId: string;
