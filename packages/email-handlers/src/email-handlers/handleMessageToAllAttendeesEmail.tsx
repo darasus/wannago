@@ -2,7 +2,7 @@ import {render} from '@react-email/render';
 import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
 import {Postmark} from 'lib';
-import {getBaseUrl} from 'utils';
+import {getBaseUrl, isUser} from 'utils';
 import {z} from 'zod';
 import {MessageToAttendees} from 'email';
 import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
@@ -23,16 +23,29 @@ export async function handleMessageToAllAttendeesEmail({
   organizerUserId,
   subject,
 }: z.infer<typeof handleMessageToAllAttendeesEmailInputSchema>) {
-  const event = await prisma.event.findUnique({where: {id: eventId}});
-
-  const organizerUser = await prisma.user.findUnique({
-    where: {id: organizerUserId},
+  const event = await prisma.event.findFirst({
+    where: {
+      id: eventId,
+    },
+    include: {
+      user: true,
+      organization: true,
+    },
   });
 
-  if (!organizerUser) {
+  if (!event) {
     throw new TRPCError({
-      code: 'BAD_REQUEST',
-      message: 'Organizer user not found',
+      code: 'NOT_FOUND',
+      message: 'Event not found',
+    });
+  }
+
+  const organizer = event.user || event.organization;
+
+  if (!organizer) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'Organizer not found',
     });
   }
 
@@ -53,12 +66,16 @@ export async function handleMessageToAllAttendeesEmail({
     });
   }
 
+  const name = isUser(organizer)
+    ? `${organizer.firstName} ${organizer.lastName}`
+    : organizer.name;
+
   await Promise.all(
     signUps
       .map(signUp => signUp.user)
       .map(async user => {
         const messageData = {
-          replyTo: `${organizerUser.firstName} ${organizerUser.lastName} <${organizerUser.email}>`,
+          replyTo: `${name} <${organizer.email}>`,
           to: user.email,
           subject: `Message from event organizer: "${event.title}"`,
           htmlString: render(

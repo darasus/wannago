@@ -2,6 +2,7 @@ import {prisma} from 'database';
 import * as validation from './validation';
 import {MailQueue, Telegram} from 'lib';
 import {env} from 'server-env';
+import {EmailType} from '../../../apps/web/src/types/EmailType';
 
 const mailQueue = new MailQueue();
 
@@ -58,8 +59,12 @@ export const user = {
           .catch(console.error);
       }
 
-      await mailQueue.enqueueAfterRegisterNoCreatedEventFollowUpEmail({
-        userId: user.id,
+      await mailQueue.publish({
+        body: {
+          userId: user.id,
+        },
+        type: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
+        delay: 60 * 60 * 24 * 2,
       });
     }
   },

@@ -5,7 +5,7 @@ import {Postmark} from 'lib';
 import {z} from 'zod';
 import {OrganizerEventSignUpNotification} from 'email';
 import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
-import {getBaseUrl} from 'utils';
+import {getBaseUrl, isUser} from 'utils';
 
 const postmark = new Postmark();
 
@@ -36,6 +36,7 @@ export async function handleOrganizerEventSignUpNotificationEmail({
     },
     include: {
       user: true,
+      organization: true,
     },
   });
 
@@ -46,7 +47,14 @@ export async function handleOrganizerEventSignUpNotificationEmail({
     });
   }
 
-  const organizerUser = event.user;
+  const organizerUser = event.user || event.organization;
+
+  if (!organizerUser) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'Organizer not found',
+    });
+  }
 
   await postmark.sendToOrganizerEventSignUpNotificationStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',

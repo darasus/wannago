@@ -3,6 +3,7 @@ import {env} from 'server-env';
 import {z} from 'zod';
 import {prisma} from 'database';
 import {MailQueue, Telegram} from 'lib';
+import {EmailType} from '../../../types/EmailType';
 
 const scheme = z.object({
   type: z.enum(['user.created', 'user.updated', 'user.deleted']),
@@ -92,8 +93,12 @@ export default async function handler(
           .catch(console.error);
       }
 
-      await mailQueue.enqueueAfterRegisterNoCreatedEventFollowUpEmail({
-        userId: user.id,
+      await mailQueue.publish({
+        body: {
+          userId: user.id,
+        },
+        type: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
+        delay: 60 * 60 * 24 * 2,
       });
     }
   }

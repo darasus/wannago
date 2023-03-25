@@ -1,6 +1,7 @@
 import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
+import {EmailType} from '../../../../apps/web/src/types/EmailType';
 
 const messageEventParticipants = protectedProcedure
   .input(
@@ -15,27 +16,36 @@ const messageEventParticipants = protectedProcedure
       where: {
         shortId: input.eventShortId,
       },
-    });
-
-    const organizerUser = await ctx.prisma.user.findFirst({
-      where: {
-        externalId: ctx.auth.userId,
+      include: {
+        user: true,
+        organization: true,
       },
     });
 
     if (!event) {
-      throw new Error('Event not found!');
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Event not found',
+      });
     }
 
-    if (!organizerUser) {
-      throw new Error('Organizer not found!');
+    const organizer = event.user || event.organization;
+
+    if (!organizer) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Organizer not found',
+      });
     }
 
-    await ctx.mailQueue.enqueueMessageToAllAttendeesEmail({
-      eventId: event.id,
-      subject: input.subject,
-      message: input.message,
-      organizerUserId: organizerUser.id,
+    await ctx.mailQueue.publish({
+      body: {
+        eventId: event.id,
+        subject: input.subject,
+        message: input.message,
+        organizerUserId: organizer.id,
+      },
+      type: EmailType.MessageToAllAttendees,
     });
   });
 
@@ -67,14 +77,16 @@ const sendQuestionToOrganizer = publicProcedure
       });
     }
 
-    await ctx.mailQueue.enqueueMessageToOrganizerEmail({
-      eventId: event.id,
-      organizerEmail: event.user?.email,
-      firstName: input.firstName,
-      lastName: input.lastName,
-      email: input.email,
-      message: input.message,
-      subject: input.subject,
+    await ctx.mailQueue.publish({
+      body: {
+        eventId: event.id,
+        organizerName: `${input.firstName} ${input.lastName}`,
+        organizerEmail: event.user?.email,
+        email: input.email,
+        message: input.message,
+        subject: input.subject,
+      },
+      type: EmailType.MessageToOrganizer,
     });
 
     return {status: 'ok'};
