@@ -1,4 +1,8 @@
-import {clerkClient, getAuth, createClerkClient} from '@clerk/nextjs/server';
+import {
+  clerkClient as clerk,
+  getAuth,
+  createClerkClient,
+} from '@clerk/nextjs/server';
 import {PrismaClient} from '@prisma/client';
 import {prisma} from 'database';
 import {Telegram} from 'lib/src/telegram';
@@ -21,23 +25,23 @@ import {getUserByEmail} from './actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizationWithMembersByOrganizationId';
 import {canModifyEvent} from './actions/canModifyEvent';
 
+const actions = {
+  getEvents,
+  getUserByExternalId,
+  getUserById,
+  getOrganizationById,
+  getOrganizationByExternalId,
+  getEvent,
+  getOrganizerByEventId,
+  getOrganizationByUserId,
+  getOrganizationByUserExternalId,
+  getUserByEmail,
+  getOrganizationWithMembersByOrganizationId,
+  canModifyEvent,
+} as const;
+
 type Actions = {
-  getEvents: ReturnType<typeof getEvents>;
-  getUserByExternalId: ReturnType<typeof getUserByExternalId>;
-  getUserById: ReturnType<typeof getUserById>;
-  getUserByEmail: ReturnType<typeof getUserByEmail>;
-  getOrganizationById: ReturnType<typeof getOrganizationById>;
-  getOrganizationByExternalId: ReturnType<typeof getOrganizationByExternalId>;
-  getEvent: ReturnType<typeof getEvent>;
-  getOrganizerByEventId: ReturnType<typeof getOrganizerByEventId>;
-  getOrganizationByUserId: ReturnType<typeof getOrganizationByUserId>;
-  getOrganizationWithMembersByOrganizationId: ReturnType<
-    typeof getOrganizationWithMembersByOrganizationId
-  >;
-  getOrganizationByUserExternalId: ReturnType<
-    typeof getOrganizationByUserExternalId
-  >;
-  canModifyEvent: ReturnType<typeof canModifyEvent>;
+  [K in keyof typeof actions]: ReturnType<(typeof actions)[K]>;
 };
 
 interface CreateInnerContextOptions {
@@ -86,7 +90,7 @@ export async function createContext(
 
   const innerContext: CreateInnerContextOptions = await createContextInner({
     auth,
-    clerk: clerkClient,
+    clerk,
     prisma,
     timezone,
     telegram: new Telegram(),
@@ -98,21 +102,8 @@ export async function createContext(
 
   return {
     ...innerContext,
-    actions: {
-      getUserByExternalId: getUserByExternalId(innerContext),
-      getUserById: getUserById(innerContext),
-      getUserByEmail: getUserByEmail(innerContext),
-      getEvents: getEvents(innerContext),
-      getOrganizationByExternalId: getOrganizationByExternalId(innerContext),
-      getOrganizationById: getOrganizationById(innerContext),
-      getEvent: getEvent(innerContext),
-      getOrganizerByEventId: getOrganizerByEventId(innerContext),
-      getOrganizationByUserId: getOrganizationByUserId(innerContext),
-      getOrganizationWithMembersByOrganizationId:
-        getOrganizationWithMembersByOrganizationId(innerContext),
-      getOrganizationByUserExternalId:
-        getOrganizationByUserExternalId(innerContext),
-      canModifyEvent: canModifyEvent(innerContext),
-    },
+    actions: Object.values(actions).reduce<Actions>((acc, action) => {
+      return {...acc, [action.name]: action(innerContext)};
+    }, {} as Actions),
   };
 }
