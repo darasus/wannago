@@ -44,7 +44,7 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
     return (
       <div>
         <Combobox value={selected} onChange={setSelected}>
-          <div className="relative">
+          <div>
             <div>
               <Combobox.Input
                 ref={ref}

@@ -48,7 +48,6 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
       )}
       <div
         className={cn(
-          'relative z-10',
           {'blur-[3px] pointer-events-none': isBlur},
           innerClassName
         )}
