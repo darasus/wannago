@@ -4,14 +4,18 @@ import {Container, LoadingBlock, PageHeader, Toggle} from 'ui';
 import {TeamSettings} from '../features/TeamSettings/TeamSettings';
 import {UserSettings} from '../features/UserSettings/UserSettings';
 import {withProtected} from '../utils/withAuthProtect';
-import {useFeatureFlag, useMyOrganizationQuery, useMyUserQuery} from 'hooks';
+import {useFlag, useMyOrganizationQuery, useMyUserQuery} from 'hooks';
+import {useAuth} from '@clerk/nextjs';
 
 interface Form {
   settingsType: 'personal' | 'team';
 }
 
-function ProfilePage() {
-  const organizationFeatureEnabled = useFeatureFlag('organization_feature');
+function SettingsPage() {
+  const auth = useAuth();
+  const organizationFeatureEnabled = useFlag('organization_feature', {
+    user_id: auth.userId ?? '',
+  });
   const organization = useMyOrganizationQuery();
   const user = useMyUserQuery();
   const form = useForm<Form>({
@@ -56,4 +60,4 @@ function ProfilePage() {
   );
 }
 
-export default withProtected(ProfilePage);
+export default withProtected(SettingsPage);

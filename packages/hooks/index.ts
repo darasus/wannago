@@ -8,7 +8,7 @@ export {useDebounce} from './src/useDebounce';
 export {useHandleEmailCallbackParam} from './src/useHandleEmailCallbackParam';
 export {useInitiateAmplitude} from './src/useInitiateAmplitude';
 export {useUploadImage} from './src/useUploadImage';
-export {useFeatureFlag} from './src/useFeatureFlag';
+export {useFlag} from './src/useFeatureFlag';
 export {useGlobalLoading, useLoading} from './src/useGlobalLoading';
 export {useCurrentAuthorId} from './src/useCurrentAuthorId';
 export {useFileFromUrl} from './src/useFileFromUrl';
