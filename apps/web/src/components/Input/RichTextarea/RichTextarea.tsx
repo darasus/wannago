@@ -1,3 +1,4 @@
+import Link from '@tiptap/extension-link';
 import {
   BubbleMenu,
   EditorContent,
@@ -27,7 +28,12 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
     } = useFormContext<Form>();
 
     const editor = useEditor({
-      extensions: [StarterKit],
+      extensions: [
+        StarterKit,
+        Link.configure({
+          openOnClick: false,
+        }),
+      ],
       content: defaultValues?.description || '',
       onUpdate: ({editor}) => {
         setValue('description', editor?.getHTML());
