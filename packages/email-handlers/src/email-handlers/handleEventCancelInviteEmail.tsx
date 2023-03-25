@@ -5,7 +5,7 @@ import {Postmark} from 'lib';
 import {z} from 'zod';
 import {EventCancelInvite} from 'email';
 import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
-import {formatDate, getBaseUrl} from 'utils';
+import {formatDate, getBaseUrl, isUser} from 'utils';
 
 const postmark = new Postmark();
 
@@ -23,6 +23,7 @@ export async function handleEventCancelInviteEmail({
     where: {id: eventId},
     include: {
       user: true,
+      organization: true,
     },
   });
 
@@ -33,7 +34,14 @@ export async function handleEventCancelInviteEmail({
     });
   }
 
-  const organizerUser = event.user;
+  const organizerUser = event.user || event.organization;
+
+  if (!organizerUser) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'Organizer not found',
+    });
+  }
 
   const user = await prisma.user.findUnique({
     where: {id: userId},
@@ -47,6 +55,9 @@ export async function handleEventCancelInviteEmail({
   }
 
   const url = new URL(`${getBaseUrl()}/e/${event.shortId}`);
+  const organizerName = isUser(organizerUser)
+    ? `${organizerUser.firstName} ${organizerUser.lastName}`
+    : `${organizerUser.name}`;
 
   await postmark.sendToTransactionalStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',
@@ -60,7 +71,7 @@ export async function handleEventCancelInviteEmail({
         eventUrl={url.toString()}
         startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
         endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-        organizerName={`${organizerUser?.firstName} ${organizerUser?.lastName}`}
+        organizerName={organizerName || ''}
       />
     ),
   });

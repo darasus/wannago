@@ -3,9 +3,9 @@ import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
 import {Postmark} from 'lib';
 import {z} from 'zod';
-import {EventCancelInvite, EventReminder} from 'email';
+import {EventReminder} from 'email';
 import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
-import {formatDate, getBaseUrl} from 'utils';
+import {formatDate, getBaseUrl, isUser} from 'utils';
 
 const postmark = new Postmark();
 
@@ -23,6 +23,7 @@ export async function handleEventReminderEmail({
     },
     include: {
       user: true,
+      organization: true,
       eventSignUps: {
         where: {
           status: 'REGISTERED',
@@ -44,6 +45,19 @@ export async function handleEventReminderEmail({
   if (!event.isPublished) {
     return null;
   }
+
+  const organizerUser = event.user || event.organization;
+
+  if (!organizerUser) {
+    throw new TRPCError({
+      code: 'NOT_FOUND',
+      message: 'Organizer not found',
+    });
+  }
+
+  const organizerName = isUser(organizerUser)
+    ? `${organizerUser.firstName} ${organizerUser.lastName}`
+    : `${organizerUser.name}`;
 
   await Promise.all(
     event.eventSignUps
@@ -67,7 +81,7 @@ export async function handleEventReminderEmail({
               cancelEventUrl={cancelEventUrl.toString()}
               startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
               endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-              organizerName={`${event.user?.firstName} ${event.user?.lastName}`}
+              organizerName={organizerName}
             />
           ),
         });

@@ -2,7 +2,7 @@ import {render} from '@react-email/render';
 import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
 import {Postmark} from 'lib';
-import {formatDate, getBaseUrl} from 'utils';
+import {formatDate, getBaseUrl, isUser} from 'utils';
 import {z} from 'zod';
 import {EventInvite} from 'email';
 import {baseEventHandlerSchema} from '../validation/baseEventHandlerSchema';
@@ -22,6 +22,7 @@ export async function handleEventInviteEmail({
     where: {id: eventId},
     include: {
       user: true,
+      organization: true,
     },
   });
 
@@ -43,12 +44,12 @@ export async function handleEventInviteEmail({
     });
   }
 
-  const organizerUser = event.user;
+  const organizerUser = event.user || event.organization;
 
   if (!organizerUser) {
     throw new TRPCError({
-      code: 'BAD_REQUEST',
-      message: 'Organizer user not found',
+      code: 'NOT_FOUND',
+      message: 'Organizer not found',
     });
   }
 
@@ -58,6 +59,10 @@ export async function handleEventInviteEmail({
   const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-invite`);
   cancelEventUrl.searchParams.append('eventShortId', event.shortId!);
   cancelEventUrl.searchParams.append('email', user.email);
+
+  const organizerName = isUser(organizerUser)
+    ? `${organizerUser.firstName} ${organizerUser.lastName}`
+    : `${organizerUser.name}`;
 
   await postmark.sendToTransactionalStream({
     replyTo: 'WannaGo Team <hi@wannago.app>',
@@ -72,7 +77,7 @@ export async function handleEventInviteEmail({
         cancelEventUrl={cancelEventUrl.toString()}
         startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
         endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-        organizerName={`${organizerUser?.firstName} ${organizerUser?.lastName}`}
+        organizerName={organizerName}
       />
     ),
   });
