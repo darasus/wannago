@@ -4,7 +4,6 @@ import {nanoid} from 'nanoid';
 import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
-import {authorizeChange} from '../../../../apps/web/src/utils/authorizeChange';
 import {random, getBaseUrl, isUser, isOrganization, invariant} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
@@ -36,7 +35,7 @@ const eventInput = z.object({
 const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
   .mutation(async ({input, ctx}) => {
-    await authorizeChange({ctx, eventId: input.eventId});
+    await ctx.actions.canModifyEvent({eventId: input.eventId});
 
     const result = await ctx.prisma.event.update({
       where: {id: input.eventId},
@@ -84,7 +83,7 @@ const update = protectedProcedure
       },
       ctx,
     }) => {
-      await authorizeChange({ctx, eventId});
+      await ctx.actions.canModifyEvent({eventId});
 
       let geocodeResponse = null;
 
@@ -166,7 +165,7 @@ const remove = protectedProcedure
     })
   )
   .mutation(async ({input: {eventId}, ctx}) => {
-    await authorizeChange({ctx, eventId});
+    await ctx.actions.canModifyEvent({eventId});
 
     const event = await ctx.prisma.event.findUnique({
       where: {
@@ -277,7 +276,7 @@ const getById = protectedProcedure
     })
   )
   .query(async ({input: {eventId}, ctx}) => {
-    await authorizeChange({ctx, eventId});
+    await ctx.actions.canModifyEvent({eventId});
 
     return ctx.prisma.event.findFirst({
       where: {
@@ -586,7 +585,7 @@ const getAttendees = protectedProcedure
       });
     }
 
-    await authorizeChange({ctx, eventId: event.id});
+    await ctx.actions.canModifyEvent({eventId: event.id});
 
     return ctx.prisma.eventSignUp.findMany({
       where: {
@@ -806,7 +805,7 @@ const inviteByEmail = protectedProcedure
       });
     }
 
-    await authorizeChange({ctx, eventId: event.id});
+    await ctx.actions.canModifyEvent({eventId: event.id});
 
     let user: User | null = null;
 

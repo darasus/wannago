@@ -1,7 +1,7 @@
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
-import {useAmplitude} from './useAmplitude';
-import {useConfirmDialog} from './useConfirmDialog';
+import {useAmplitude} from '../useAmplitude';
+import {useConfirmDialog} from '../useConfirmDialog';
 import {useEventId} from './useEventId';
 
 interface Props {

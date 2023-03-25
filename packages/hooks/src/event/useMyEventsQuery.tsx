@@ -1,7 +1,7 @@
 import {trpc} from 'trpc/src/trpc';
-import {useMyOrganizationQuery} from './organization/useMyOrganizationQuery';
-import {useSessionQuery} from './session/useSessionQuery';
-import {useMyUserQuery} from './user/useMyUserQuery';
+import {useMyOrganizationQuery} from '../organization/useMyOrganizationQuery';
+import {useSessionQuery} from '../session/useSessionQuery';
+import {useMyUserQuery} from '../user/useMyUserQuery';
 
 interface Props {
   eventType: 'attending' | 'organizing' | 'all';
