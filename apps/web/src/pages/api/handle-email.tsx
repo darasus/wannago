@@ -1,25 +1,18 @@
-import {
-  baseEventHandlerSchema,
-  handleEventSignUpEmail,
-  handleEventSignUpEmailInputSchema,
-  handleEventInviteEmail,
-  handleEventInviteEmailInputSchema,
-  handleMessageToOrganizerEmail,
-  handleMessageToOrganizerEmailInputSchema,
-  handleMessageToAllAttendeesEmail,
-  handleMessageToAllAttendeesEmailInputSchema,
-  handleAfterRegisterNoCreatedEventFollowUpEmail,
-  handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema,
-  handleEventCancelInviteEmail,
-  handleEventCancelInviteEmailInputSchema,
-  handleEventCancelSignUpEmail,
-  handleEventCancelSignUpEmailInputSchema,
-  handleOrganizerEventSignUpNotificationEmail,
-  handleOrganizerEventSignUpNotificationEmailInputSchema,
-  handleEventReminderEmail,
-  handleEventReminderEmailInputSchema,
-} from 'email-handlers';
 import {NextApiRequest, NextApiResponse} from 'next';
+import {createContext} from 'trpc/src/context';
+import {
+  emailHandlerRouter,
+  baseEventHandlerSchema,
+  handleEventSignUpEmailInputSchema,
+  handleEventInviteEmailInputSchema,
+  handleMessageToOrganizerEmailInputSchema,
+  handleMessageToAllAttendeesEmailInputSchema,
+  handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema,
+  handleEventCancelInviteEmailInputSchema,
+  handleEventCancelSignUpEmailInputSchema,
+  handleOrganizerEventSignUpNotificationEmailInputSchema,
+  handleEventReminderEmailInputSchema,
+} from 'trpc/src/routers/emailHandler';
 import {EmailType} from '../../types/EmailType';
 
 export default async function handle(
@@ -30,58 +23,61 @@ export default async function handle(
     res.status(405).json({error: 'Method Not Allowed'});
   }
 
+  const ctx = await createContext({req, res});
+  const caller = emailHandlerRouter.createCaller(ctx);
+
   const input = baseEventHandlerSchema.parse(req.body);
 
   if (input.type === EmailType.EventSignUp) {
-    await handleEventSignUpEmail(
+    await caller.handleEventSignUpEmail(
       handleEventSignUpEmailInputSchema.parse(input)
     );
   }
 
   if (input.type === EmailType.EventInvite) {
-    await handleEventInviteEmail(
+    await caller.handleEventInviteEmail(
       handleEventInviteEmailInputSchema.parse(input)
     );
   }
 
   if (input.type === EmailType.MessageToOrganizer) {
-    await handleMessageToOrganizerEmail(
+    await caller.handleMessageToOrganizerEmail(
       handleMessageToOrganizerEmailInputSchema.parse(input)
     );
   }
 
   if (input.type === EmailType.MessageToAllAttendees) {
-    await handleMessageToAllAttendeesEmail(
+    await caller.handleMessageToAllAttendeesEmail(
       handleMessageToAllAttendeesEmailInputSchema.parse(input)
     );
   }
 
   if (input.type === EmailType.AfterRegisterNoCreatedEventFollowUpEmail) {
-    await handleAfterRegisterNoCreatedEventFollowUpEmail(
+    await caller.handleAfterRegisterNoCreatedEventFollowUpEmail(
       handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema.parse(input)
     );
   }
 
   if (input.type === EmailType.EventCancelInvite) {
-    await handleEventCancelInviteEmail(
+    await caller.handleEventCancelInviteEmail(
       handleEventCancelInviteEmailInputSchema.parse(input)
     );
   }
 
   if (input.type === EmailType.EventCancelSignUp) {
-    await handleEventCancelSignUpEmail(
+    await caller.handleEventCancelSignUpEmail(
       handleEventCancelSignUpEmailInputSchema.parse(input)
     );
   }
 
   if (input.type === EmailType.OrganizerEventSignUpNotification) {
-    await handleOrganizerEventSignUpNotificationEmail(
+    await caller.handleOrganizerEventSignUpNotificationEmail(
       handleOrganizerEventSignUpNotificationEmailInputSchema.parse(input)
     );
   }
 
   if (input.type === EmailType.EventReminder) {
-    await handleEventReminderEmail(
+    await caller.handleEventReminderEmail(
       handleEventReminderEmailInputSchema.parse(input)
     );
   }

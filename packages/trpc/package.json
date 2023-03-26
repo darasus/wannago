@@ -10,6 +10,8 @@
     "server-env": "workspace:*",
     "client-env": "workspace:*",
     "utils": "workspace:*",
+    "error": "workspace:*",
+    "email": "workspace:*",
     "lib": "workspace:*",
     "database": "workspace:*"
   },

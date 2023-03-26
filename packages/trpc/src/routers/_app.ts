@@ -6,6 +6,7 @@ import {adminRouter} from './admin';
 import {userRouter} from './user';
 import {organizationRouter} from './organization';
 import {sessionRouter} from './session';
+import {createContext} from '../context';
 
 export const appRouter = router({
   healthcheck: publicProcedure.query(() => 'yay!'),

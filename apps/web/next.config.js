@@ -34,7 +34,6 @@ const moduleExports = {
     'client-env',
     'server-env',
     'email',
-    'email-handlers',
     'utils',
     'hooks',
     'lib',
