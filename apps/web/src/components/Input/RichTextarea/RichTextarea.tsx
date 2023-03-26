@@ -19,11 +19,20 @@ interface Props extends HTMLAttributes<HTMLInputElement> {
   error?: FieldError;
   dataTestId?: string;
   isOptional?: boolean;
+  isGenerating?: boolean;
 }
 
 export const RichTextarea = forwardRef<HTMLInputElement, Props>(
   function RichTextarea(
-    {label, error, dataTestId, isOptional, labelChildren, ...props},
+    {
+      label,
+      error,
+      dataTestId,
+      isOptional,
+      labelChildren,
+      isGenerating,
+      ...props
+    },
     ref
   ) {
     const {
@@ -49,7 +58,9 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
     });
 
     useEffect(() => {
-      editor?.commands.setContent(value);
+      if (isGenerating) {
+        editor?.commands.setContent(value);
+      }
     }, [value]);
 
     return (

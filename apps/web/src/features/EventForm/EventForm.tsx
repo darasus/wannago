@@ -63,6 +63,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             label="Event description"
             error={errors.description}
             isOptional
+            isGenerating={isLoading}
             labelChildren={
               <Button
                 size="xs"
