@@ -23,15 +23,6 @@ export default async function handler(
   if (input.type === 'email.created') {
     await email.created(input);
   }
-  if (input.type === 'organization.created') {
-    await organization.created(input);
-  }
-  if (input.type === 'organization.updated') {
-    await organization.updated(input);
-  }
-  if (input.type === 'organization.deleted') {
-    await organization.deleted(input);
-  }
 
   return res.status(200).json({success: true});
 }

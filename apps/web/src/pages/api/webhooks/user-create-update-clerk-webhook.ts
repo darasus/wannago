@@ -40,10 +40,6 @@ export default async function handler(
   const {data, type} = scheme.parse(req.body);
 
   if (type === 'user.created') {
-    const organization = await prisma.organization.create({
-      data: {},
-    });
-
     const user = await prisma.user.findFirst({
       where: {
         OR: [

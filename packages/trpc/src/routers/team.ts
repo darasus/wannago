@@ -22,12 +22,14 @@ const inviteTeamMember = protectedProcedure
       });
     }
 
-    const result = await ctx.clerk.organizations.createOrganizationInvitation({
+    await ctx.clerk.organizations.createOrganizationInvitation({
       emailAddress: input.email,
       inviterUserId: ctx.auth.userId,
       organizationId: '',
       role: 'admin',
     });
+
+    return {success: true};
   });
 
 export const teamRouter = router({

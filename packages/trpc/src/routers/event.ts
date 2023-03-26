@@ -8,6 +8,7 @@ import {random, getBaseUrl, isUser, isOrganization, invariant} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 import {EmailType} from '../../../../apps/web/src/types/EmailType';
+import {userNotFoundError} from 'error';
 
 const eventInput = z.object({
   title: z.string(),
@@ -355,29 +356,13 @@ const joinEvent = protectedProcedure
     })
   )
   .mutation(async ({input, ctx}) => {
-    const clerkUser = await ctx.clerk.users.getUser(ctx.auth.userId);
-
     const user = await ctx.prisma.user.findFirst({
       where: {
-        OR: [
-          {
-            externalId: ctx.auth.userId,
-          },
-          {
-            email: {
-              in: clerkUser.emailAddresses.map(email => email.emailAddress),
-            },
-          },
-        ],
+        externalId: ctx.auth.userId,
       },
     });
 
-    if (!user) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'User not found',
-      });
-    }
+    invariant(user, userNotFoundError);
 
     const [existingSignUp, event] = await Promise.all([
       ctx.prisma.eventSignUp.findFirst({
@@ -895,21 +880,10 @@ const getMySignUp = protectedProcedure
     })
   )
   .query(async ({ctx, input}) => {
-    const clerkUser = await ctx.clerk.users.getUser(ctx.auth.userId);
-
     const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
         user: {
-          OR: [
-            {
-              externalId: ctx.auth.userId,
-            },
-            {
-              email: {
-                in: clerkUser?.emailAddresses.map(email => email.emailAddress),
-              },
-            },
-          ],
+          externalId: ctx.auth.userId,
         },
         eventId: input.eventId,
       },
