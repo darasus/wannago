@@ -111,11 +111,9 @@ const handleEventInviteEmail = publicProcedure
 
     invariant(organizer, organizerNotFoundError);
 
-    const confirmEventUrl = new URL(`${getBaseUrl()}/api/confirm-invite`);
-    confirmEventUrl.searchParams.append('eventShortId', event.shortId!);
-    confirmEventUrl.searchParams.append('email', user.email);
+    const eventUrl = new URL(`${getBaseUrl()}/e/${event.shortId}`);
     const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-invite`);
-    cancelEventUrl.searchParams.append('eventShortId', event.shortId!);
+    cancelEventUrl.searchParams.append('eventShortId', event.shortId);
     cancelEventUrl.searchParams.append('email', user.email);
 
     const organizerName = isUser(organizer)
@@ -131,7 +129,7 @@ const handleEventInviteEmail = publicProcedure
           title={event.title}
           address={event.address || 'none'}
           streamUrl={event.streamUrl || 'none'}
-          confirmEventUrl={confirmEventUrl.toString()}
+          eventUrl={eventUrl.toString()}
           cancelEventUrl={cancelEventUrl.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
@@ -487,13 +485,13 @@ const handleEventReminderEmail = publicProcedure
         .map(signUp => signUp.user)
         .map(user => {
           const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-signup`);
-          cancelEventUrl.searchParams.append('eventShortId', event.shortId!);
+          cancelEventUrl.searchParams.append('eventShortId', event.shortId);
           cancelEventUrl.searchParams.append('email', user.email);
 
           return ctx.postmark.sendToTransactionalStream({
             replyTo: 'WannaGo Team <hi@wannago.app>',
             to: user.email,
-            subject: `Your event is coming up! "${event.title}"!`,
+            subject: `Your event is coming up "${event.title}"!`,
             htmlString: render(
               <EventReminder
                 title={event.title}

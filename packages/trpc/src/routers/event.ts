@@ -430,7 +430,11 @@ const joinEvent = protectedProcedure
       });
     }
 
-    if (existingSignUp && existingSignUp.status === 'CANCELLED') {
+    if (
+      existingSignUp &&
+      (existingSignUp.status === 'CANCELLED' ||
+        existingSignUp.status === 'INVITED')
+    ) {
       await ctx.prisma.eventSignUp.update({
         where: {
           id: existingSignUp.id,

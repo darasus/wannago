@@ -95,11 +95,8 @@ export function SignUpCard({event}: Props) {
     openCancelModal();
   });
 
-  const amSignedUp = Boolean(
-    !signUp ||
-      signUp?.data?.status === 'INVITED' ||
-      signUp?.data?.status === 'REGISTERED'
-  );
+  const amSignedUp = Boolean(signUp && signUp.data?.status === 'REGISTERED');
+  const amInvited = Boolean(signUp && signUp.data?.status === 'INVITED');
 
   return (
     <>
@@ -111,6 +108,7 @@ export function SignUpCard({event}: Props) {
         <FormProvider {...form}>
           <_SignUpCard
             amSignedUp={amSignedUp}
+            amInvited={amInvited}
             onJoinSubmit={onJoinSubmit}
             onCancelSubmit={onCancelSubmit}
             isPublished={event.isPublished}

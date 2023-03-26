@@ -17,7 +17,7 @@ interface Props {
   endDate: string;
   address: string | 'none';
   streamUrl: string | 'none';
-  confirmEventUrl: string;
+  eventUrl: string;
   cancelEventUrl: string;
   organizerName: string;
 }
@@ -28,7 +28,7 @@ export default function EventInvite({
   streamUrl = 'https://meet.google.com/xxx-xxx-xxx',
   endDate = '2022/12/11 11:30',
   startDate = '2022/12/11 11:30',
-  confirmEventUrl = 'https://www.wannago.app',
+  eventUrl = 'https://www.wannago.app',
   cancelEventUrl = 'https://www.wannago.app',
   organizerName = 'Organizer Name',
 }: Props) {
@@ -52,7 +52,7 @@ export default function EventInvite({
             />
           </Section>
           <Section style={{...buttonContainer, maxWidth: 250}}>
-            <Button href={confirmEventUrl}>Confirm</Button>
+            <Button href={eventUrl}>Confirm</Button>
           </Section>
           <EventDisclaimer cancelEventUrl={cancelEventUrl} />
           <Footer />

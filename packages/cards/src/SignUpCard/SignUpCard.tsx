@@ -9,6 +9,7 @@ interface Props {
   numberOfAttendees: number;
   isPublished: boolean;
   amSignedUp: boolean;
+  amInvited: boolean;
   isBlur?: boolean;
   isLoading?: boolean;
 }
@@ -23,6 +24,7 @@ export function SignUpCard({
   onJoinSubmit,
   onCancelSubmit,
   amSignedUp,
+  amInvited,
   isLoading,
 }: Props) {
   const {
@@ -39,50 +41,82 @@ export function SignUpCard({
     ? undefined
     : 'To enable sign-ups, please publish the event first.';
 
-  const action = amSignedUp ? (
-    <form className="flex items-center gap-x-4" onSubmit={onCancelSubmit}>
-      <div className="flex items-center gap-x-2">
-        <Badge
-          size="xs"
-          color="green"
-          data-testid="event-signup-success-label"
-        >{`You're signed up!`}</Badge>
+  const getLabel = () => {
+    if (amSignedUp) {
+      return (
+        <form className="flex items-center gap-x-4" onSubmit={onCancelSubmit}>
+          <div className="flex items-center gap-x-2">
+            <Badge
+              size="xs"
+              color="green"
+              data-testid="event-signup-success-label"
+            >{`You're signed up!`}</Badge>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              isLoading={isSubmitting}
+              variant="neutral"
+              size="sm"
+              data-testid="cancel-signup-button"
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      );
+    }
+    if (amInvited) {
+      return (
+        <form className="flex items-center gap-x-4" onSubmit={onJoinSubmit}>
+          <div className="flex items-center gap-x-2">
+            <Badge
+              size="xs"
+              color="yellow"
+              data-testid="event-signup-success-label"
+            >{`You're invited!`}</Badge>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              isLoading={isSubmitting}
+              variant="neutral"
+              size="sm"
+              data-testid="cancel-signup-button"
+            >
+              Accept invite
+            </Button>
+          </div>
+        </form>
+      );
+    }
+
+    return (
+      <form
+        className="flex items-center gap-x-4 w-full"
+        onSubmit={onJoinSubmit}
+      >
+        <div>
+          <Switch
+            name="hasPlusOne"
+            control={control}
+            defaultValue={defaultValues?.hasPlusOne || false}
+          >
+            <span>
+              <span className="hidden md:inline">Bring </span>+1
+            </span>
+          </Switch>
+        </div>
         <Button
           type="submit"
           disabled={isSubmitting}
           isLoading={isSubmitting}
-          variant="neutral"
           size="sm"
-          data-testid="cancel-signup-button"
+          data-testid="attend-button"
         >
-          Cancel
+          Attend
         </Button>
-      </div>
-    </form>
-  ) : (
-    <form className="flex items-center gap-x-4 w-full" onSubmit={onJoinSubmit}>
-      <div>
-        <Switch
-          name="hasPlusOne"
-          control={control}
-          defaultValue={defaultValues?.hasPlusOne || false}
-        >
-          <span>
-            <span className="hidden md:inline">Bring </span>+1
-          </span>
-        </Switch>
-      </div>
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        isLoading={isSubmitting}
-        size="sm"
-        data-testid="attend-button"
-      >
-        Attend
-      </Button>
-    </form>
-  );
+      </form>
+    );
+  };
 
   return (
     <Tooltip text={tooltipText}>
@@ -91,7 +125,7 @@ export function SignUpCard({
           <div className="grow">
             <Text className="text-gray-400">{numberOfAttendeesLabel}</Text>
           </div>
-          <div className="flex items-center">{action}</div>
+          <div className="flex items-center">{getLabel()}</div>
         </div>
       </CardBase>
     </Tooltip>
