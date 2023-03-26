@@ -31,3 +31,6 @@ export {usePublishEvent} from './src/event/usePublishEvent';
 export {useRemoveEvent} from './src/event/useRemoveEvent';
 export {useEventQuery} from './src/event/useEventQuery';
 export {useIsMyEvent} from './src/event/useIsMyEvent';
+
+// ai
+export {useGenerateEventDescription} from './src/useGenerateEventDescription';
