@@ -11,7 +11,6 @@ interface Props extends PropsWithChildren {
   error?: FieldError;
   id?: string;
   isOptional?: boolean;
-  titleChildren?: React.ReactNode;
 }
 
 export function InputWrapper({
@@ -22,14 +21,13 @@ export function InputWrapper({
   children,
   isOptional,
   description,
-  titleChildren,
 }: Props) {
   const hasError = Boolean(error);
 
   return (
     <div className={cn('flex flex-col gap-1', containerClassName)}>
       {label && (
-        <div className="flex items-center">
+        <div>
           <label
             htmlFor={id}
             className={cn(
@@ -46,7 +44,6 @@ export function InputWrapper({
           {description && (
             <Text className="text-gray-400 text-sm ml-2">{description}</Text>
           )}
-          {titleChildren}
         </div>
       )}
       <div className={cn({'mt-1': !!id})}>
