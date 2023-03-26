@@ -22,25 +22,60 @@ export function ContactFormModal({isOpen, onClose, onSubmit}: Props) {
       <form onSubmit={onSubmit}>
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-6">
-            <Input {...register('firstName')} placeholder="First name" />
+            <Input
+              type="text"
+              {...register('firstName', {
+                required: {
+                  value: true,
+                  message: 'First name is required',
+                },
+              })}
+              placeholder="First name"
+            />
           </div>
           <div className="col-span-6">
-            <Input {...register('lastName')} placeholder="Last name" />
+            <Input
+              type="text"
+              {...register('lastName', {
+                required: {
+                  value: true,
+                  message: 'Last name is required',
+                },
+              })}
+              placeholder="Last name"
+            />
           </div>
           <div className="col-span-12">
-            <Input {...register('email')} placeholder="Email" />
+            <Input
+              type="email"
+              {...register('email', {
+                required: {
+                  value: true,
+                  message: 'Email is required',
+                },
+              })}
+              placeholder="Email"
+            />
           </div>
           <div className="col-span-12">
-            <Input {...register('subject')} placeholder="Subject" />
+            <Input type="text" {...register('subject')} placeholder="Subject" />
           </div>
           <div className="col-span-12">
-            <Textarea {...register('message')} placeholder="Message" />
+            <Textarea
+              {...register('message', {
+                required: {
+                  value: true,
+                  message: 'Message is required',
+                },
+              })}
+              placeholder="Message"
+            />
           </div>
           <div className="col-span-12 flex gap-x-2">
             <Button onClick={onClose} variant="neutral">
               Cancel
             </Button>
-            <Button type="submit" isLoading={isSubmitting}>
+            <Button type="submit" variant="success" isLoading={isSubmitting}>
               Send
             </Button>
           </div>
