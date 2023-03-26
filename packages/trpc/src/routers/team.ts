@@ -1,4 +1,6 @@
 import {TRPCError} from '@trpc/server';
+import {userNotFoundError} from 'error';
+import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure, router} from '../trpcServer';
 
@@ -15,12 +17,7 @@ const inviteTeamMember = protectedProcedure
       },
     });
 
-    if (!user) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'User not found',
-      });
-    }
+    invariant(user, userNotFoundError);
 
     await ctx.clerk.organizations.createOrganizationInvitation({
       emailAddress: input.email,

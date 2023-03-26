@@ -19,3 +19,8 @@ export const eventNotFoundError = new TRPCError({
   code: 'NOT_FOUND',
   message: 'Event not found',
 });
+
+export const forbiddenError = new TRPCError({
+  code: 'FORBIDDEN',
+  message: 'Not allowed to perform this action',
+});

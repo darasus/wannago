@@ -8,7 +8,7 @@ import {random, getBaseUrl, isUser, isOrganization, invariant} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 import {EmailType} from '../../../../apps/web/src/types/EmailType';
-import {userNotFoundError} from 'error';
+import {eventNotFoundError, userNotFoundError} from 'error';
 
 const eventInput = z.object({
   title: z.string(),
@@ -476,12 +476,7 @@ const cancelEvent = protectedProcedure
       },
     });
 
-    if (!user) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'User not found',
-      });
-    }
+    invariant(user, userNotFoundError);
 
     const signUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
@@ -571,12 +566,7 @@ const getAttendees = protectedProcedure
       },
     });
 
-    if (!event) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Event not found',
-      });
-    }
+    invariant(event, eventNotFoundError);
 
     await ctx.actions.canModifyEvent({eventId: event.id});
 
@@ -637,12 +627,7 @@ const getAllEventsAttendees = protectedProcedure
       },
     });
 
-    if (!event) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Event not found',
-      });
-    }
+    invariant(event, eventNotFoundError);
 
     const user = await ctx.prisma.user.findFirst({
       where: {
@@ -704,12 +689,7 @@ const invitePastAttendee = protectedProcedure
       },
     });
 
-    if (!event) {
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Event not found',
-      });
-    }
+    invariant(event, eventNotFoundError);
 
     const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
       where: {
@@ -791,12 +771,7 @@ const inviteByEmail = protectedProcedure
       },
     });
 
-    if (!event) {
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Event not found',
-      });
-    }
+    invariant(event, eventNotFoundError);
 
     await ctx.actions.canModifyEvent({eventId: event.id});
 

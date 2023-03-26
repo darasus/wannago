@@ -2,6 +2,12 @@ import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
 import {EmailType} from '../../../../apps/web/src/types/EmailType';
+import {invariant} from 'utils';
+import {
+  eventNotFoundError,
+  organizerNotFoundError,
+  userNotFoundError,
+} from 'error';
 
 const messageEventParticipants = protectedProcedure
   .input(
@@ -22,21 +28,11 @@ const messageEventParticipants = protectedProcedure
       },
     });
 
-    if (!event) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Event not found',
-      });
-    }
+    invariant(event, eventNotFoundError);
 
     const organizer = event.user || event.organization;
 
-    if (!organizer) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Organizer not found',
-      });
-    }
+    invariant(organizer, organizerNotFoundError);
 
     await ctx.mailQueue.publish({
       body: {
@@ -70,12 +66,8 @@ const sendQuestionToOrganizer = publicProcedure
       },
     });
 
-    if (!event || !event.user) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Event or user not found',
-      });
-    }
+    invariant(event, eventNotFoundError);
+    invariant(event.user, userNotFoundError);
 
     await ctx.mailQueue.publish({
       body: {
