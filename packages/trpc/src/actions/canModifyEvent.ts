@@ -1,4 +1,6 @@
 import {TRPCError} from '@trpc/server';
+import {forbiddenError} from 'error';
+import {invariant} from 'utils';
 import {z} from 'zod';
 import {ActionContext} from '../context';
 
@@ -36,23 +38,11 @@ export function canModifyEvent(ctx: ActionContext) {
     const organizationId = user?.organization?.id;
     const eventOrganizationId = event?.organization?.id;
 
-    if (!userId && !organizationId) {
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: 'Not authorized',
-      });
-    }
+    invariant(userId || organizationId, forbiddenError);
 
     const isMyEvent =
       userId === eventUserId || organizationId === eventOrganizationId;
 
-    if (isMyEvent) {
-      return;
-    }
-
-    throw new TRPCError({
-      code: 'FORBIDDEN',
-      message: 'Not authorized',
-    });
+    invariant(isMyEvent, forbiddenError);
   };
 }

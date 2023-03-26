@@ -10,6 +10,8 @@
     "database": "workspace:*",
     "server-env": "workspace:*",
     "email": "workspace:*",
+    "utils": "workspace:*",
+    "error": "workspace:*",
     "lib": "workspace:*"
   },
   "devDependencies": {

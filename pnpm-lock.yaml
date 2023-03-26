@@ -248,15 +248,19 @@ importers:
     specifiers:
       database: workspace:*
       email: workspace:*
+      error: workspace:*
       eslint-config-custom: workspace:*
       lib: workspace:*
       server-env: workspace:*
       tsconfig: workspace:*
+      utils: workspace:*
     dependencies:
       database: link:../database
       email: link:../email
+      error: link:../error
       lib: link:../lib
       server-env: link:../server-env
+      utils: link:../utils
     devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig

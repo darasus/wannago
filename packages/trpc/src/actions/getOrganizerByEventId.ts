@@ -1,4 +1,6 @@
 import {TRPCError} from '@trpc/server';
+import {eventNotFoundError} from 'error';
+import {invariant} from 'utils';
 import {z} from 'zod';
 import {ActionContext} from '../context';
 
@@ -22,12 +24,7 @@ export function getOrganizerByEventId(ctx: ActionContext) {
       },
     });
 
-    if (!event) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Event not found',
-      });
-    }
+    invariant(event, eventNotFoundError);
 
     return event.user || event.organization;
   };

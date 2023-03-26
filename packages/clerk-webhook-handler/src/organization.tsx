@@ -1,6 +1,8 @@
 import * as validation from './validation';
 import {prisma} from 'database';
 import {TRPCError} from '@trpc/server';
+import {invariant} from 'utils';
+import {organizationNotFoundError, userNotFoundError} from 'error';
 
 export const organization = {
   created: async (input: validation.Input) => {
@@ -15,12 +17,7 @@ export const organization = {
       },
     });
 
-    if (!user) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'User not found',
-      });
-    }
+    invariant(user, userNotFoundError);
 
     await prisma.organization.update({
       where: {
@@ -45,12 +42,7 @@ export const organization = {
       },
     });
 
-    if (!user) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'User not found',
-      });
-    }
+    invariant(user, userNotFoundError);
 
     await prisma.organization.update({
       where: {
@@ -72,12 +64,7 @@ export const organization = {
       },
     });
 
-    if (!organization) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Organization not found',
-      });
-    }
+    invariant(organization, organizationNotFoundError);
 
     await prisma.organization.update({
       where: {
