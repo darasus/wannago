@@ -3,10 +3,10 @@ import {Button} from 'ui';
 
 interface Props {
   editor: Editor;
-  pre?: React.ReactNode;
+  additionalEditorMenu?: React.ReactNode;
 }
 
-export function EditorMenu({editor, pre}: Props) {
+export function EditorMenu({editor, additionalEditorMenu}: Props) {
   const items = [
     {
       onClick: () => editor.chain().focus().toggleHeading({level: 1}).run(),
@@ -42,7 +42,7 @@ export function EditorMenu({editor, pre}: Props) {
 
   return (
     <div className="flex gap-1 flex-wrap">
-      {pre}
+      {additionalEditorMenu}
       {items.map(item => {
         return (
           <Button

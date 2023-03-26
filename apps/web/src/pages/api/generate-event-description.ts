@@ -1,25 +1,4 @@
-// import {OpenAI} from 'lib';
-// import {NextApiRequest, NextApiResponse} from 'next';
-
 import {OpenAIStream, OpenAIStreamPayload} from 'lib/src/OpenAI';
-
-// const openai = new OpenAI();
-
-// export default async function handle(
-//   req: NextApiRequest,
-//   res: NextApiResponse
-// ) {
-//   try {
-//     const result = await openai.generateDescription(
-//       'Javascript developer conference 2023'
-//     );
-
-//     return res.json(result.data);
-//   } catch (error: any) {
-//     console.log(error.response);
-//     return res.json({success: false});
-//   }
-// }
 
 export const config = {
   runtime: 'edge',

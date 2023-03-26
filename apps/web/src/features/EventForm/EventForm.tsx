@@ -64,7 +64,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             error={errors.description}
             isOptional
             isGenerating={isLoading}
-            labelChildren={
+            additionalEditorMenu={
               <Button
                 size="xs"
                 onClick={onClickGenerate}

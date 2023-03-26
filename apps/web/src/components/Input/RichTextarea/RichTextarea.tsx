@@ -15,7 +15,7 @@ import {EditorMenu} from './EditorMenu';
 
 interface Props extends HTMLAttributes<HTMLInputElement> {
   label?: string;
-  labelChildren?: React.ReactNode;
+  additionalEditorMenu?: React.ReactNode;
   error?: FieldError;
   dataTestId?: string;
   isOptional?: boolean;
@@ -29,7 +29,7 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
       error,
       dataTestId,
       isOptional,
-      labelChildren,
+      additionalEditorMenu,
       isGenerating,
       ...props
     },
@@ -85,7 +85,12 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
               }
             )}
           >
-            {editor && <EditorMenu editor={editor} pre={labelChildren} />}
+            {editor && (
+              <EditorMenu
+                editor={editor}
+                additionalEditorMenu={additionalEditorMenu}
+              />
+            )}
             <EditorContent
               data-testid={dataTestId}
               className={cn(
