@@ -41,7 +41,7 @@ export function EditorMenu({editor, pre}: Props) {
   ];
 
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1 flex-wrap">
       {pre}
       {items.map(item => {
         return (
