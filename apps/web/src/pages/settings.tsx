@@ -4,7 +4,7 @@ import {Container, LoadingBlock, PageHeader, Toggle} from 'ui';
 import {TeamSettings} from '../features/TeamSettings/TeamSettings';
 import {UserSettings} from '../features/UserSettings/UserSettings';
 import {withProtected} from '../utils/withAuthProtect';
-import {useFlag, useMyOrganizationQuery, useMyUserQuery} from 'hooks';
+import {useMyOrganizationQuery, useMyUserQuery} from 'hooks';
 
 interface Form {
   settingsType: 'personal' | 'team';
