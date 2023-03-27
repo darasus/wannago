@@ -3,11 +3,12 @@ import {initTRPC, TRPCError} from '@trpc/server';
 import superjson from 'superjson';
 import {ZodError} from 'zod';
 import {UserType} from '@prisma/client';
+import {captureException} from '@sentry/nextjs';
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
-  errorFormatter({shape, error}) {
-    return {
+  errorFormatter({shape, error, ctx, path, input, type}) {
+    const e = {
       ...shape,
       data: {
         ...shape.data,
@@ -17,6 +18,25 @@ const t = initTRPC.context<Context>().create({
             : null,
       },
     };
+
+    captureException(error, scope => {
+      scope.setUser({
+        id: ctx?.auth?.userId || undefined,
+      });
+      if (path) {
+        scope.setContext('path', {path});
+      }
+      if (input) {
+        scope.setContext('input', {input});
+      }
+      if (type) {
+        scope.setContext('type', {type});
+      }
+
+      return scope;
+    });
+
+    return e;
   },
 });
 
