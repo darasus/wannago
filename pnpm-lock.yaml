@@ -8,7 +8,6 @@ importers:
       '@clerk/clerk-sdk-node': ^4.7.14
       '@clerk/nextjs': ^4.11.7
       '@clerk/types': ^3.31.0
-      '@feedback-fish/react': ^1.2.1
       '@googlemaps/google-maps-services-js': ^3.3.27
       '@headlessui/react': 1.7.4
       '@heroicons/react': ^2.0.16
@@ -102,7 +101,6 @@ importers:
       '@amplitude/analytics-browser': 1.9.1
       '@clerk/clerk-sdk-node': 4.7.14
       '@clerk/nextjs': 4.11.7_ld2jel3hspngo3u5lti2kgl2sq
-      '@feedback-fish/react': 1.2.1_react@18.2.0
       '@googlemaps/google-maps-services-js': 3.3.27
       '@headlessui/react': 1.7.4_biqbaboplfbrettd7655fr4n2y
       '@heroicons/react': 2.0.16_react@18.2.0
@@ -1063,15 +1061,6 @@ packages:
     resolution: {integrity: sha512-lxJ9R5ygVm8ZWgYdUweoq5ownDlJ4upvoWmO4eLxBYHdMo+vZ/Rx0EN6MbKWDJOSUGrqJy2Gt+Dyv/VKml0fjg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
-
-  /@feedback-fish/react/1.2.1_react@18.2.0:
-    resolution: {integrity: sha512-4YFD2hE93xBIT/Ko0x0l6UB0OyaxJcWKLGrnznsUVoLE5Q9vB8I1LEbMySYyuvbU9ul3yM3FjGkVZhYVPdwEyA==}
-    engines: {node: '>=10.16.0'}
-    peerDependencies:
-      react: ^16.8.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@googlemaps/google-maps-services-js/3.3.27:
     resolution: {integrity: sha512-0MDcoqiLMzu4xPExrcm17fx89ZH5RgCg4J3pBokJURCzmF1XAIqNGO5zipcXl5QZOp+zhcrqC3Rl2k7rdd9p/Q==}

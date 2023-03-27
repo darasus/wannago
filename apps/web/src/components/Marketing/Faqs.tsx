@@ -1,4 +1,3 @@
-import {FeedbackFish} from '@feedback-fish/react';
 import {useState} from 'react';
 import {Button} from 'ui';
 import {Container} from 'ui';
@@ -94,13 +93,9 @@ export function Faqs() {
           title="FAQs"
           description={
             <>
-              {"If you can't find what you're looking for, send us a "}
-              <FeedbackFish projectId="f843146d960b2f">
-                <Button variant="link" className="text-xl">
-                  feedback
-                </Button>
-              </FeedbackFish>
-              {" and we'll try to respond as soon as possible."}
+              {
+                "If you can't find what you're looking for, send us a feedback and we'll try to respond as soon as possible."
+              }
             </>
           }
         />

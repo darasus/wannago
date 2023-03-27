@@ -2,7 +2,6 @@ import {Fragment} from 'react';
 import {Popover, Transition} from '@headlessui/react';
 import {Button, CardBase, Logo} from 'ui';
 import {UserSection} from '../UserSection/UserSection';
-import {FeedbackFish} from '@feedback-fish/react';
 import {cn} from 'utils';
 import {useAuth} from '@clerk/nextjs';
 
@@ -38,7 +37,6 @@ function MobileNavIcon({open}: any) {
 export function Header() {
   const auth = useAuth();
   const showUserProfile = auth.isSignedIn;
-  const showFeedback = !auth.isSignedIn;
   const showAuthButtons = !auth.isSignedIn;
   const showMobileMenu = !auth.isSignedIn;
   const showDesktopHomeNav = !auth.isSignedIn;
@@ -74,15 +72,6 @@ export function Header() {
             )}
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-4">
-            {showFeedback && (
-              <div className="hidden md:block">
-                <FeedbackFish projectId="f843146d960b2f">
-                  <Button variant="neutral" size="sm">
-                    Feedback
-                  </Button>
-                </FeedbackFish>
-              </div>
-            )}
             {showUserProfile && <UserSection />}
             {showAuthButtons && (
               <>
@@ -149,11 +138,6 @@ export function Header() {
                                 </Popover.Button>
                               </Fragment>
                             ))}
-                            <div>
-                              <FeedbackFish projectId="f843146d960b2f">
-                                <Button variant="neutral">Feedback</Button>
-                              </FeedbackFish>
-                            </div>
                           </div>
                           <hr className="my-4 border-gray-300/40" />
                           <div className="flex gap-4">
