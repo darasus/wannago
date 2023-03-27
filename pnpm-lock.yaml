@@ -200,12 +200,14 @@ importers:
       client-env: workspace:*
       database: workspace:*
       email: workspace:*
+      email-input-validation: workspace:*
       eslint-config-custom: workspace:*
       hooks: workspace:*
       lib: workspace:*
       server-env: workspace:*
       trpc: workspace:*
       tsconfig: workspace:*
+      types: workspace:*
       ui: workspace:*
       utils: workspace:*
     dependencies:
@@ -214,12 +216,14 @@ importers:
       client-env: link:../../packages/client-env
       database: link:../../packages/database
       email: link:../../packages/email
+      email-input-validation: link:../../packages/email-input-validation
       eslint-config-custom: link:../../packages/eslint-config-custom
       hooks: link:../../packages/hooks
       lib: link:../../packages/lib
       server-env: link:../../packages/server-env
       trpc: link:../../packages/trpc
       tsconfig: link:../../packages/tsconfig
+      types: link:../../packages/types
       ui: link:../../packages/ui
       utils: link:../../packages/utils
 
@@ -250,18 +254,22 @@ importers:
     specifiers:
       database: workspace:*
       email: workspace:*
+      email-input-validation: workspace:*
       error: workspace:*
       eslint-config-custom: workspace:*
       lib: workspace:*
       server-env: workspace:*
       tsconfig: workspace:*
+      types: workspace:*
       utils: workspace:*
     dependencies:
       database: link:../database
       email: link:../email
+      email-input-validation: link:../email-input-validation
       error: link:../error
       lib: link:../lib
       server-env: link:../server-env
+      types: link:../types
       utils: link:../utils
     devDependencies:
       eslint-config-custom: link:../eslint-config-custom
@@ -324,6 +332,17 @@ importers:
       tsconfig: link:../tsconfig
       utils: link:../utils
 
+  packages/email-input-validation:
+    specifiers:
+      eslint-config-custom: workspace:*
+      tsconfig: workspace:*
+      types: workspace:*
+    dependencies:
+      types: link:../types
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
+
   packages/error:
     specifiers:
       eslint-config-custom: workspace:*
@@ -370,11 +389,13 @@ importers:
       eslint-config-custom: workspace:*
       server-env: workspace:*
       tsconfig: workspace:*
+      types: workspace:*
       utils: workspace:*
     dependencies:
       client-env: link:../client-env
       database: link:../database
       server-env: link:../server-env
+      types: link:../types
       utils: link:../utils
     devDependencies:
       eslint-config-custom: link:../eslint-config-custom
@@ -399,19 +420,23 @@ importers:
       client-env: workspace:*
       database: workspace:*
       email: workspace:*
+      email-input-validation: workspace:*
       error: workspace:*
       eslint-config-custom: workspace:*
       lib: workspace:*
       server-env: workspace:*
       tsconfig: workspace:*
+      types: workspace:*
       utils: workspace:*
     dependencies:
       client-env: link:../client-env
       database: link:../database
       email: link:../email
+      email-input-validation: link:../email-input-validation
       error: link:../error
       lib: link:../lib
       server-env: link:../server-env
+      types: link:../types
       utils: link:../utils
     devDependencies:
       eslint-config-custom: link:../eslint-config-custom
@@ -419,6 +444,14 @@ importers:
 
   packages/tsconfig:
     specifiers: {}
+
+  packages/types:
+    specifiers:
+      eslint-config-custom: workspace:*
+      tsconfig: workspace:*
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
 
   packages/ui:
     specifiers:

@@ -1,18 +1,12 @@
 {
-  "name": "lib",
+  "name": "types",
   "version": "1.0.0",
   "license": "MIT",
   "main": "./index.ts",
   "scripts": {
     "lint": "eslint"
   },
-  "dependencies": {
-    "server-env": "workspace:*",
-    "client-env": "workspace:*",
-    "database": "workspace:*",
-    "types": "workspace:*",
-    "utils": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"

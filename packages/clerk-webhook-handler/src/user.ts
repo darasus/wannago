@@ -2,7 +2,9 @@ import {prisma} from 'database';
 import * as validation from './validation';
 import {MailQueue, Telegram} from 'lib';
 import {env} from 'server-env';
-import {EmailType} from '../../../apps/web/src/types/EmailType';
+import {EmailType} from 'types';
+import {z} from 'zod';
+import {handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema} from 'email-input-validation';
 
 const mailQueue = new MailQueue();
 
@@ -60,8 +62,10 @@ export const user = {
       await mailQueue.publish({
         body: {
           userId: user.id,
-        },
-        type: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
+          type: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
+        } satisfies z.infer<
+          typeof handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema
+        >,
         delay: 60 * 60 * 24 * 2,
       });
     }

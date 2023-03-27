@@ -11,6 +11,8 @@
     "server-env": "workspace:*",
     "email": "workspace:*",
     "utils": "workspace:*",
+    "types": "workspace:*",
+    "email-input-validation": "workspace:*",
     "error": "workspace:*",
     "lib": "workspace:*"
   },

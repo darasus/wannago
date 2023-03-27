@@ -9,8 +9,10 @@
   "dependencies": {
     "server-env": "workspace:*",
     "client-env": "workspace:*",
+    "email-input-validation": "workspace:*",
     "utils": "workspace:*",
     "error": "workspace:*",
+    "types": "workspace:*",
     "email": "workspace:*",
     "lib": "workspace:*",
     "database": "workspace:*"

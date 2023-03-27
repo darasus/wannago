@@ -1,7 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {createContext} from 'trpc/src/context';
 import {
-  emailHandlerRouter,
   baseEventHandlerSchema,
   handleEventSignUpEmailInputSchema,
   handleEventInviteEmailInputSchema,
@@ -12,8 +11,9 @@ import {
   handleEventCancelSignUpEmailInputSchema,
   handleOrganizerEventSignUpNotificationEmailInputSchema,
   handleEventReminderEmailInputSchema,
-} from 'trpc/src/routers/emailHandler';
-import {EmailType} from '../../types/EmailType';
+} from 'email-input-validation';
+import {emailHandlerRouter} from 'trpc/src/routers/emailHandler';
+import {EmailType} from 'types';
 
 export default async function handle(
   req: NextApiRequest,

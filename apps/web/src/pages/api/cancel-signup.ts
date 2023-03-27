@@ -3,6 +3,8 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
 import {MailQueue} from 'lib';
 import {getBaseUrl} from 'utils';
+import {EmailType} from 'types';
+import {handleEventCancelSignUpEmailInputSchema} from 'email-input-validation';
 
 const mailQueue = new MailQueue();
 
@@ -54,9 +56,12 @@ export default async function handler(
   });
 
   if (eventSignUp?.user) {
-    await mailQueue.enqueueEventCancelSignUpEmail({
-      eventId: eventSignUp.event.id,
-      userId: eventSignUp.user.id,
+    await mailQueue.publish({
+      body: {
+        eventId: eventSignUp.event.id,
+        userId: eventSignUp.user.id,
+        type: EmailType.EventCancelSignUp,
+      } satisfies z.infer<typeof handleEventCancelSignUpEmailInputSchema>,
     });
   }
 

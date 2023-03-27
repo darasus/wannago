@@ -1,13 +1,13 @@
 import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
-import {EmailType} from '../../../../apps/web/src/types/EmailType';
-import {invariant, isUser} from 'utils';
+import {EmailType} from 'types';
+import {invariant} from 'utils';
+import {eventNotFoundError, organizerNotFoundError} from 'error';
 import {
-  eventNotFoundError,
-  organizerNotFoundError,
-  userNotFoundError,
-} from 'error';
+  handleMessageToAllAttendeesEmailInputSchema,
+  handleMessageToOrganizerEmailInputSchema,
+} from 'email-input-validation';
 
 const messageEventParticipants = protectedProcedure
   .input(
@@ -39,9 +39,9 @@ const messageEventParticipants = protectedProcedure
         eventId: event.id,
         subject: input.subject,
         message: input.message,
-        organizerUserId: organizer.id,
-      },
-      type: EmailType.MessageToAllAttendees,
+        organizerId: organizer.id,
+        type: EmailType.MessageToAllAttendees,
+      } satisfies z.infer<typeof handleMessageToAllAttendeesEmailInputSchema>,
     });
   });
 
@@ -89,8 +89,8 @@ const sendQuestionToOrganizer = publicProcedure
         email: input.email,
         message: input.message,
         subject: input.subject,
-      },
-      type: EmailType.MessageToOrganizer,
+        type: EmailType.MessageToOrganizer,
+      } satisfies z.infer<typeof handleMessageToOrganizerEmailInputSchema>,
     });
 
     return {status: 'ok'};

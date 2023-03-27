@@ -16,6 +16,8 @@
     "eslint-config-custom": "workspace:*",
     "client-env": "workspace:*",
     "server-env": "workspace:*",
+    "types": "workspace:*",
+    "email-input-validation": "workspace:*",
     "email": "workspace:*",
     "utils": "workspace:*",
     "hooks": "workspace:*",

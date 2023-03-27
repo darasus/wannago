@@ -13,23 +13,22 @@ import {
   OrganizerEventSignUpNotification,
   EventReminder,
 } from 'email';
-import {EmailType} from '../../../../apps/web/src/types/EmailType';
 import {
   eventNotFoundError,
   organizerNotFoundError,
   userNotFoundError,
 } from 'error';
-
-export const baseEventHandlerSchema = z
-  .object({
-    type: z.nativeEnum(EmailType),
-  })
-  .passthrough();
-
-export const handleEventSignUpEmailInputSchema = baseEventHandlerSchema.extend({
-  eventId: z.string().uuid(),
-  userId: z.string().uuid(),
-});
+import {
+  handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema,
+  handleEventCancelInviteEmailInputSchema,
+  handleEventCancelSignUpEmailInputSchema,
+  handleEventInviteEmailInputSchema,
+  handleEventReminderEmailInputSchema,
+  handleEventSignUpEmailInputSchema,
+  handleMessageToAllAttendeesEmailInputSchema,
+  handleMessageToOrganizerEmailInputSchema,
+  handleOrganizerEventSignUpNotificationEmailInputSchema,
+} from 'email-input-validation';
 
 const handleEventSignUpEmail = publicProcedure
   .input(handleEventSignUpEmailInputSchema)
@@ -82,11 +81,6 @@ const handleEventSignUpEmail = publicProcedure
 
     return {success: true};
   });
-
-export const handleEventInviteEmailInputSchema = baseEventHandlerSchema.extend({
-  eventId: z.string().uuid(),
-  userId: z.string().uuid(),
-});
 
 const handleEventInviteEmail = publicProcedure
   .input(handleEventInviteEmailInputSchema)
@@ -141,16 +135,6 @@ const handleEventInviteEmail = publicProcedure
     return {success: true};
   });
 
-export const handleMessageToOrganizerEmailInputSchema =
-  baseEventHandlerSchema.extend({
-    eventId: z.string().uuid(),
-    senderName: z.string(),
-    organizerEmail: z.string().email(),
-    email: z.string().email(),
-    subject: z.string(),
-    message: z.string(),
-  });
-
 const handleMessageToOrganizerEmail = publicProcedure
   .input(handleMessageToOrganizerEmailInputSchema)
   .mutation(async ({ctx, input}) => {
@@ -177,14 +161,6 @@ const handleMessageToOrganizerEmail = publicProcedure
     });
 
     return {success: true};
-  });
-
-export const handleMessageToAllAttendeesEmailInputSchema =
-  baseEventHandlerSchema.extend({
-    subject: z.string(),
-    message: z.string(),
-    eventId: z.string().uuid(),
-    organizerId: z.string().uuid(),
   });
 
 const handleMessageToAllAttendeesEmail = publicProcedure
@@ -245,11 +221,6 @@ const handleMessageToAllAttendeesEmail = publicProcedure
     return {success: true};
   });
 
-export const handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema =
-  baseEventHandlerSchema.extend({
-    userId: z.string().uuid(),
-  });
-
 const handleAfterRegisterNoCreatedEventFollowUpEmail = publicProcedure
   .input(handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema)
   .mutation(async ({ctx, input}) => {
@@ -281,12 +252,6 @@ const handleAfterRegisterNoCreatedEventFollowUpEmail = publicProcedure
     }
 
     return {success: true};
-  });
-
-export const handleEventCancelInviteEmailInputSchema =
-  baseEventHandlerSchema.extend({
-    userId: z.string().uuid(),
-    eventId: z.string().uuid(),
   });
 
 const handleEventCancelInviteEmail = publicProcedure
@@ -337,12 +302,6 @@ const handleEventCancelInviteEmail = publicProcedure
     return {success: true};
   });
 
-export const handleEventCancelSignUpEmailInputSchema =
-  baseEventHandlerSchema.extend({
-    userId: z.string().uuid(),
-    eventId: z.string().uuid(),
-  });
-
 const handleEventCancelSignUpEmail = publicProcedure
   .input(handleEventCancelSignUpEmailInputSchema)
   .mutation(async ({ctx, input}) => {
@@ -391,12 +350,6 @@ const handleEventCancelSignUpEmail = publicProcedure
     return {success: true};
   });
 
-export const handleOrganizerEventSignUpNotificationEmailInputSchema =
-  baseEventHandlerSchema.extend({
-    userId: z.string().uuid(),
-    eventId: z.string().uuid(),
-  });
-
 const handleOrganizerEventSignUpNotificationEmail = publicProcedure
   .input(handleOrganizerEventSignUpNotificationEmailInputSchema)
   .mutation(async ({ctx, input}) => {
@@ -437,11 +390,6 @@ const handleOrganizerEventSignUpNotificationEmail = publicProcedure
     });
 
     return {success: true};
-  });
-
-export const handleEventReminderEmailInputSchema =
-  baseEventHandlerSchema.extend({
-    eventId: z.string().uuid(),
   });
 
 const handleEventReminderEmail = publicProcedure

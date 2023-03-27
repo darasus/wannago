@@ -7,8 +7,13 @@ import {differenceInSeconds} from 'date-fns';
 import {random, getBaseUrl, isUser, isOrganization, invariant} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
-import {EmailType} from '../../../../apps/web/src/types/EmailType';
+import {EmailType} from 'types';
 import {eventNotFoundError, userNotFoundError} from 'error';
+import {
+  handleEventInviteEmailInputSchema,
+  handleEventSignUpEmailInputSchema,
+  handleOrganizerEventSignUpNotificationEmailInputSchema,
+} from 'email-input-validation';
 
 const eventInput = z.object({
   title: z.string(),
@@ -451,12 +456,17 @@ const joinEvent = protectedProcedure
         body: {
           eventId: input.eventId,
           userId: user.id,
-        },
-        type: EmailType.OrganizerEventSignUpNotification,
+          type: EmailType.OrganizerEventSignUpNotification,
+        } satisfies z.infer<
+          typeof handleOrganizerEventSignUpNotificationEmailInputSchema
+        >,
       }),
-      ctx.mailQueue.enqueueEventSignUpEmail({
-        eventId: input.eventId,
-        userId: user.id,
+      ctx.mailQueue.publish({
+        body: {
+          eventId: input.eventId,
+          userId: user.id,
+          type: EmailType.EventSignUp,
+        } satisfies z.infer<typeof handleEventSignUpEmailInputSchema>,
       }),
     ]);
 
@@ -747,9 +757,12 @@ const invitePastAttendee = protectedProcedure
       },
     });
 
-    await ctx.mailQueue.enqueueEventInviteEmail({
-      eventId: event.id,
-      userId: input.userId,
+    await ctx.mailQueue.publish({
+      body: {
+        eventId: event.id,
+        userId: input.userId,
+        type: EmailType.EventInvite,
+      } satisfies z.infer<typeof handleEventInviteEmailInputSchema>,
     });
 
     return invite;
@@ -844,9 +857,12 @@ const inviteByEmail = protectedProcedure
       },
     });
 
-    await ctx.mailQueue.enqueueEventInviteEmail({
-      eventId: event.id,
-      userId: user.id,
+    await ctx.mailQueue.publish({
+      body: {
+        eventId: event.id,
+        userId: user.id,
+        type: EmailType.EventInvite,
+      } satisfies z.infer<typeof handleEventInviteEmailInputSchema>,
     });
 
     return {success: true};
