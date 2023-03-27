@@ -1,6 +1,6 @@
 import {useMyOrganizationMembersQuery, useMyOrganizationQuery} from 'hooks';
 import {useState} from 'react';
-import {Button, CardBase} from 'ui';
+import {Button, CardBase, LoadingBlock} from 'ui';
 import {CreateMemberModal} from './CreateMemberModal';
 import {TeamMember} from './TeamMember';
 
@@ -31,6 +31,7 @@ export function TeamMembersSettings() {
             </Button>
           }
         >
+          {members.isLoading && <LoadingBlock />}
           <div className="flex flex-col gap-y-2">
             {members.data?.map(member => {
               return <TeamMember key={member.id} member={member} />;
