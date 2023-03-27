@@ -72,11 +72,11 @@ export function ContactFormModal({isOpen, onClose, onSubmit}: Props) {
             />
           </div>
           <div className="col-span-12 flex gap-x-2">
+            <Button type="submit" isLoading={isSubmitting}>
+              Send
+            </Button>
             <Button onClick={onClose} variant="neutral">
               Cancel
-            </Button>
-            <Button type="submit" variant="success" isLoading={isSubmitting}>
-              Send
             </Button>
           </div>
         </div>
