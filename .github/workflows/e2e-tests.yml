@@ -44,7 +44,7 @@ jobs:
         TELEGRAM_CHAT_BOT_TOKEN: ${{ secrets.TELEGRAM_CHAT_BOT_TOKEN }}
         TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
         POSTMARK_API_KEY: ${{ secrets.POSTMARK_API_KEY }}
-
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
  
       steps:
         # - uses: actions/cache@v3
