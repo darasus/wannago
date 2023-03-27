@@ -209,9 +209,6 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             })}
             <CardBase>
               <div className="flex gap-x-2">
-                <Button onClick={onCancelClick} variant="neutral">
-                  Cancel
-                </Button>
                 <Button
                   isLoading={isSubmitting}
                   disabled={isSubmitting}
@@ -219,6 +216,9 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
                   data-testid="event-form-submit-button"
                 >
                   {isEdit ? 'Save' : 'Save as draft'}
+                </Button>
+                <Button onClick={onCancelClick} variant="neutral">
+                  Cancel
                 </Button>
               </div>
             </CardBase>
