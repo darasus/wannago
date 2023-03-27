@@ -179,7 +179,7 @@ const removeOrganizationMember = protectedProcedure
       },
       data: {
         organization: {
-          delete: true,
+          disconnect: true,
         },
       },
     });

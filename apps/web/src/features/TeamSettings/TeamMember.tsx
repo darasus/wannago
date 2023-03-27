@@ -1,5 +1,6 @@
 import {User} from '@prisma/client';
 import {
+  useConfirmDialog,
   useMyOrganizationQuery,
   useRemoveOrganizationMemberMutation,
 } from 'hooks';
@@ -13,7 +14,6 @@ interface Props {
 export function TeamMember({member}: Props) {
   const organization = useMyOrganizationQuery();
   const removeOrganizationMember = useRemoveOrganizationMemberMutation();
-
   const handleRemove = useCallback(async () => {
     if (organization.data?.id) {
       removeOrganizationMember.mutate({
@@ -22,20 +22,30 @@ export function TeamMember({member}: Props) {
       });
     }
   }, [member, removeOrganizationMember, organization.data?.id]);
+  const {modal, open} = useConfirmDialog({
+    title: 'Are you sure you want to remove team member?',
+    description: `This team member will no longer be able to access you team's events`,
+    onConfirm: async () => {
+      await handleRemove();
+    },
+  });
 
   return (
-    <div className="flex gap-2 items-center">
-      <Text className="text-sm">{`${member.firstName} ${member.lastName}`}</Text>
-      <Badge size="xs">Admin</Badge>
-      <Button
-        variant="danger"
-        size="xs"
-        onClick={handleRemove}
-        disabled={removeOrganizationMember.isLoading}
-        isLoading={removeOrganizationMember.isLoading}
-      >
-        Remove
-      </Button>
-    </div>
+    <>
+      {modal}
+      <div className="flex gap-2 items-center">
+        <Text className="text-sm">{`${member.firstName} ${member.lastName}`}</Text>
+        <Badge size="xs">Admin</Badge>
+        <Button
+          variant="danger"
+          size="xs"
+          onClick={open}
+          disabled={removeOrganizationMember.isLoading}
+          isLoading={removeOrganizationMember.isLoading}
+        >
+          Remove
+        </Button>
+      </div>
+    </>
   );
 }

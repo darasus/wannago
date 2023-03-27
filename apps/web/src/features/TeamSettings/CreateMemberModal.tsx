@@ -33,7 +33,9 @@ export function CreateMemberModal({isOpen, onClose}: Props) {
         <div className="flex flex-col gap-2">
           <Input type="email" {...form.register('email')} label="Email" />
           <div>
-            <Button type="submit">Add</Button>
+            <Button type="submit" isLoading={form.formState.isSubmitting}>
+              Add
+            </Button>
           </div>
         </div>
       </form>
