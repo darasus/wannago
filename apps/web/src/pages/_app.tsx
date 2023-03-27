@@ -18,7 +18,6 @@ import {Amplitude} from '../features/Amplitude/Amplitude';
 import {env} from 'client-env';
 import {Sentry} from '../features/Sentry/Sentry';
 import {AppLayout} from '../features/AppLayout/AppLayout';
-import {Button} from 'ui';
 import {Intercom} from '../features/Intercom/Intercom';
 
 function MyApp({Component, pageProps}: AppProps) {
@@ -42,39 +41,60 @@ function MyApp({Component, pageProps}: AppProps) {
         <link rel="shortcut icon" href={`${getBaseUrl()}/api/favicon`} />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', '${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
+      {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+          onLoad={() => {
+            (window as any).dataLayer = (window as any).dataLayer || [];
+            (window as any).dataLayer.push(['js', new Date()]);
+            (window as any).dataLayer.push([
+              'config',
+              env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
+            ]);
+          }}
+        />
+      )}
+      {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
+        <Script
+          id="intercom"
+          strategy="afterInteractive"
+          src="https://widget.intercom.io/widget/iafdg58b"
+          onLoad={() => {
+            (window as any)?.Intercom?.('boot', {
+              api_base: 'https://api-iam.intercom.io',
+              app_id: 'iafdg58b',
+            });
+          }}
+        />
+      )}
+      {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
+        <Script id="hotjar" strategy="afterInteractive">
+          {`
+          (function(h,o,t,j,a,r){
+              h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+              h._hjSettings={hjid:3424755,hjsv:6};
+              a=o.getElementsByTagName('head')[0];
+              r=o.createElement('script');r.async=1;
+              r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+              a.appendChild(r);
+          })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
         `}
-      </Script>
-      <Script
-        id="intercom"
-        strategy="afterInteractive"
-        src="https://widget.intercom.io/widget/iafdg58b"
-        onLoad={() => {
-          (window as any)?.Intercom?.('boot', {
-            api_base: 'https://api-iam.intercom.io',
-            app_id: 'iafdg58b',
-          });
-        }}
-      />
+        </Script>
+      )}
       <div className={cn(bodyFont.className)}>
         <ClerkProvider
           {...pageProps}
           appearance={clerkAppearance}
           supportEmail="hi@wannago.app"
         >
-          <Amplitude />
-          <Sentry />
-          <Intercom />
+          {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
+            <>
+              <Amplitude />
+              <Sentry />
+              <Intercom />
+            </>
+          )}
           <Toaster>
             {t => (
               <ToastBar
@@ -124,7 +144,7 @@ function MyApp({Component, pageProps}: AppProps) {
           </AppLayout>
         </ClerkProvider>
       </div>
-      <Analytics />
+      {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && <Analytics />}
     </>
   );
 }
