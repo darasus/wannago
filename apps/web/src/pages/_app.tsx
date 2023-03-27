@@ -42,18 +42,20 @@ function MyApp({Component, pageProps}: AppProps) {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
       {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
-          onLoad={() => {
-            (window as any).dataLayer = (window as any).dataLayer || [];
-            (window as any).dataLayer.push(['js', new Date()]);
-            (window as any).dataLayer.push([
-              'config',
-              env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
-            ]);
-          }}
-        />
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
+            `}
+          </Script>
+        </>
       )}
       {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
         <Script
