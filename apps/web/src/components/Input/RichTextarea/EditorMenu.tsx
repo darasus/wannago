@@ -46,6 +46,7 @@ export function EditorMenu({editor, additionalEditorMenu}: Props) {
       {items.map(item => {
         return (
           <Button
+            key={item.label}
             size="xs"
             onClick={item.onClick}
             variant={item.isActive ? 'primary' : 'neutral'}
