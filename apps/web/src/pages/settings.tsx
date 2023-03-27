@@ -11,7 +11,6 @@ interface Form {
 }
 
 function SettingsPage() {
-  const organizationFeatureEnabled = useFlag('organization_feature');
   const organization = useMyOrganizationQuery();
   const user = useMyUserQuery();
   const form = useForm<Form>({
@@ -36,17 +35,15 @@ function SettingsPage() {
       <Container maxSize="sm">
         <div className="flex flex-col gap-y-4">
           <PageHeader title="Settings">
-            {organizationFeatureEnabled.isEnabled && (
-              <FormProvider {...form}>
-                <Toggle
-                  name="settingsType"
-                  options={[
-                    {label: 'Personal', value: 'personal'},
-                    {label: 'Team', value: 'team'},
-                  ]}
-                />
-              </FormProvider>
-            )}
+            <FormProvider {...form}>
+              <Toggle
+                name="settingsType"
+                options={[
+                  {label: 'Personal', value: 'personal'},
+                  {label: 'Team', value: 'team'},
+                ]}
+              />
+            </FormProvider>
           </PageHeader>
           {settingsType === 'personal' && <UserSettings />}
           {settingsType === 'team' && <TeamSettings />}
