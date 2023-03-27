@@ -13,7 +13,7 @@ import {
 import {appRouter} from 'trpc/src/routers/_app';
 import {createContext} from 'trpc';
 import SuperJSON from 'superjson';
-import {ONE_WEEK_IN_SECONDS} from '../../../constants';
+import {ONE_WEEK_IN_SECONDS} from 'const';
 import {Meta} from '../../../components/Meta/Meta';
 import {createOGImageEventUrl, stripHTML} from 'utils';
 

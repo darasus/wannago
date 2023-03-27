@@ -1,6 +1,6 @@
 import {ImageResponse} from '@vercel/og';
 import {NextRequest} from 'next/server';
-import {ONE_WEEK_IN_SECONDS} from '../../constants';
+import {ONE_WEEK_IN_SECONDS} from 'const';
 
 export const config = {
   runtime: 'edge',

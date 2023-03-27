@@ -1,6 +1,5 @@
 import {differenceInSeconds, sub} from 'date-fns';
-
-const REMINDER_PERIOD_IN_SECONDS = 60 * 60 * 3;
+import {REMINDER_PERIOD_IN_SECONDS} from 'const';
 
 export function createDelay({startDate}: {startDate: Date}) {
   const now = new Date();

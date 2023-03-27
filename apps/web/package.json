@@ -12,6 +12,7 @@
   "dependencies": {
     "clerk-webhook-handler": "workspace:*",
     "database": "workspace:*",
+    "const": "workspace:*",
     "tsconfig": "workspace:*",
     "eslint-config-custom": "workspace:*",
     "client-env": "workspace:*",

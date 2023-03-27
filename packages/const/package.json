@@ -1,15 +1,12 @@
 {
-  "name": "utils",
+  "name": "const",
   "version": "1.0.0",
   "license": "MIT",
   "main": "./index.ts",
   "scripts": {
     "lint": "eslint"
   },
-  "dependencies": {
-    "client-env": "workspace:*",
-    "const": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"

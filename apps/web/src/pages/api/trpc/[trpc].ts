@@ -1,6 +1,7 @@
 import {createContext} from 'trpc';
 import {appRouter} from 'trpc/src/routers/_app';
 import {createNextApiHandler} from '@trpc/server/adapters/next';
+import {ONE_WEEK_IN_SECONDS} from 'const';
 
 export default createNextApiHandler({
   router: appRouter,
@@ -22,8 +23,6 @@ export default createNextApiHandler({
     const isQuery = type === 'query';
 
     if (shouldCache && allOk && isQuery) {
-      const ONE_WEEK_IN_SECONDS = 60 * 60 * 24 * 7;
-
       return {
         headers: {
           'Cache-Control': `s-maxage=60, stale-while-revalidate=${ONE_WEEK_IN_SECONDS}`,

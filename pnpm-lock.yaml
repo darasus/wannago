@@ -198,6 +198,7 @@ importers:
       cards: workspace:*
       clerk-webhook-handler: workspace:*
       client-env: workspace:*
+      const: workspace:*
       database: workspace:*
       email: workspace:*
       email-input-validation: workspace:*
@@ -214,6 +215,7 @@ importers:
       cards: link:../../packages/cards
       clerk-webhook-handler: link:../../packages/clerk-webhook-handler
       client-env: link:../../packages/client-env
+      const: link:../../packages/const
       database: link:../../packages/database
       email: link:../../packages/email
       email-input-validation: link:../../packages/email-input-validation
@@ -276,6 +278,14 @@ importers:
       tsconfig: link:../tsconfig
 
   packages/client-env:
+    specifiers:
+      eslint-config-custom: workspace:*
+      tsconfig: workspace:*
+    devDependencies:
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
+
+  packages/const:
     specifiers:
       eslint-config-custom: workspace:*
       tsconfig: workspace:*
@@ -469,10 +479,12 @@ importers:
   packages/utils:
     specifiers:
       client-env: workspace:*
+      const: workspace:*
       eslint-config-custom: workspace:*
       tsconfig: workspace:*
     dependencies:
       client-env: link:../client-env
+      const: link:../const
     devDependencies:
       eslint-config-custom: link:../eslint-config-custom
       tsconfig: link:../tsconfig
