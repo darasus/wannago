@@ -10,5 +10,6 @@ export const serverSchema = z.object({
   TELEGRAM_CHAT_BOT_TOKEN: z.string(),
   TELEGRAM_CHANNEL_ID: z.string(),
   CLERK_API_KEY: z.string(),
+  OPENAI_API_KEY: z.string(),
   VERCEL_ENV: z.enum(['development', 'preview', 'production']),
 });

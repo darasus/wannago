@@ -53,9 +53,19 @@ const button = cva(
         md: ['text-base'],
         lg: ['text-md'],
       },
-      hasChildren: {yes: ['gap-x-2'], no: []},
+      hasChildren: {yes: [], no: []},
     },
     compoundVariants: [
+      {
+        hasChildren: 'yes',
+        size: 'xs',
+        class: 'gap-x-1',
+      },
+      {
+        hasChildren: 'yes',
+        size: ['sm', 'md', 'lg'],
+        class: 'gap-x-2',
+      },
       {
         intent: ['primary', 'secondary', 'neutral', 'danger', 'success'],
         class:

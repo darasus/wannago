@@ -6,32 +6,49 @@ import {
   useEditor,
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import {forwardRef, HTMLAttributes} from 'react';
+import {forwardRef, HTMLAttributes, useEffect} from 'react';
 import {FieldError, useFormContext} from 'react-hook-form';
 import {cn} from 'utils';
 import {Form} from '../../../features/EventForm/types';
 import {InputWrapper} from '../Input/InputWrapper';
-import {BubbleMenuButtonGroup} from './BubbleMenuButtonGroup';
+import {EditorMenu} from './EditorMenu';
 
 interface Props extends HTMLAttributes<HTMLInputElement> {
   label?: string;
+  additionalEditorMenu?: React.ReactNode;
   error?: FieldError;
   dataTestId?: string;
   isOptional?: boolean;
+  isGenerating?: boolean;
 }
 
 export const RichTextarea = forwardRef<HTMLInputElement, Props>(
-  function RichTextarea({label, error, dataTestId, isOptional, ...props}, ref) {
+  function RichTextarea(
+    {
+      label,
+      error,
+      dataTestId,
+      isOptional,
+      additionalEditorMenu,
+      isGenerating,
+      ...props
+    },
+    ref
+  ) {
     const {
       formState: {defaultValues},
       setValue,
+      watch,
     } = useFormContext<Form>();
+
+    const value = watch('description');
 
     const editor = useEditor({
       extensions: [
         StarterKit,
         Link.configure({
           openOnClick: false,
+          protocols: ['http', 'https', 'mailto'],
         }),
       ],
       content: defaultValues?.description || '',
@@ -40,27 +57,14 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
       },
     });
 
+    useEffect(() => {
+      if (isGenerating) {
+        editor?.commands.setContent(value);
+      }
+    }, [value]);
+
     return (
       <>
-        {editor && (
-          <BubbleMenu
-            className="isolate inline-flex rounded-md shadow-sm"
-            tippyOptions={{duration: 100, placement: 'top'}}
-            editor={editor}
-          >
-            <BubbleMenuButtonGroup editor={editor} />
-          </BubbleMenu>
-        )}
-
-        {editor && (
-          <FloatingMenu
-            className=""
-            tippyOptions={{duration: 100, placement: 'top'}}
-            editor={editor}
-          >
-            <BubbleMenuButtonGroup editor={editor} />
-          </FloatingMenu>
-        )}
         <InputWrapper
           label={label}
           error={error}
@@ -68,16 +72,9 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
           isOptional={isOptional}
         >
           <input ref={ref} {...props} className="hidden" />
-          <EditorContent
-            data-testid={dataTestId}
+          <div
             className={cn(
-              'border-2 rounded-3xl py-2 px-3 max-w-full',
-              'prose',
-              'text-md',
-              'prose-h1:m-0 prose-h2:m-0 prose-h3:m-0',
-              'prose-p:m-0',
-              'prose-ul:m-0',
-              'prose-li:m-0',
+              'flex flex-col border-2 gap-y-2 rounded-3xl py-2 px-3 max-w-full',
               {
                 '!ring-1 !border-2 !border-gray-500 !ring-gray-500':
                   editor?.isFocused,
@@ -87,11 +84,30 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
                 'border-red-500 ring-red-500': editor?.isFocused && error,
               }
             )}
-            editor={editor}
-            onSubmit={e => {
-              e.preventDefault();
-            }}
-          />
+          >
+            {editor && (
+              <EditorMenu
+                editor={editor}
+                additionalEditorMenu={additionalEditorMenu}
+              />
+            )}
+            <EditorContent
+              data-testid={dataTestId}
+              className={cn(
+                'border-none',
+                'prose',
+                'text-md',
+                'prose-h1:m-0 prose-h2:m-0 prose-h3:m-0',
+                'prose-p:m-0',
+                'prose-ul:m-0',
+                'prose-li:m-0'
+              )}
+              editor={editor}
+              onSubmit={e => {
+                e.preventDefault();
+              }}
+            />
+          </div>
         </InputWrapper>
       </>
     );

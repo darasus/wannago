@@ -1,5 +1,5 @@
 import {isBefore, isEqual} from 'date-fns';
-import {FormEventHandler} from 'react';
+import {FormEventHandler, useEffect} from 'react';
 import {useFormContext, useWatch} from 'react-hook-form';
 import {Badge, Button, CardBase} from 'ui';
 import {FileInput} from '../../components/Input/FileInput/FileInput';
@@ -8,7 +8,12 @@ import {LocationInput} from '../../components/Input/LocationInput/LocationInput'
 import {RichTextarea} from '../../components/Input/RichTextarea/RichTextarea';
 import {Form} from './types';
 import {EventTypeToggleInput} from '../../components/Input/EventTypeToggleInput/EventTypeToggleInput';
-import {VideoCameraIcon, BuildingOffice2Icon} from '@heroicons/react/24/solid';
+import {
+  VideoCameraIcon,
+  BuildingOffice2Icon,
+  SparklesIcon,
+} from '@heroicons/react/24/solid';
+import {useGenerateEventDescription} from 'hooks';
 
 interface Props {
   onSubmit: FormEventHandler;
@@ -22,9 +27,20 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
     register,
     formState: {isSubmitting, errors},
     watch,
+    setValue,
   } = useFormContext<Form>();
   const startDate = useWatch<Form>({name: 'startDate'});
   const type = useWatch<Form>({name: 'type'});
+  const {generate, generatedOutput, isLoading} = useGenerateEventDescription();
+  const title = watch('title');
+
+  const onClickGenerate = () => {
+    generate(title);
+  };
+
+  useEffect(() => {
+    setValue('description', generatedOutput);
+  }, [generatedOutput, setValue]);
 
   const items = [
     {
@@ -47,6 +63,18 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             label="Event description"
             error={errors.description}
             isOptional
+            isGenerating={isLoading}
+            additionalEditorMenu={
+              <Button
+                size="xs"
+                onClick={onClickGenerate}
+                iconLeft={<SparklesIcon />}
+                disabled={!title || title.length < 10}
+                isLoading={isLoading}
+              >
+                Generate
+              </Button>
+            }
             {...register('description')}
           />
           <FileInput
