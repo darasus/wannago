@@ -40,7 +40,11 @@ export function OrganizerCard({event}: Props) {
     <>
       <OrganizerCardView
         name={organizer.data?.name || 'Loading...'}
-        profileImageSrc={organizer.data?.profileImageSrc}
+        profileImageSrc={
+          organizer.data?.profileImageSrc?.includes('gravatar')
+            ? null
+            : organizer.data?.profileImageSrc
+        }
         profilePath={organizer.data?.profilePath || ''}
         onOpenFormClick={onOpenFormClick}
       />
