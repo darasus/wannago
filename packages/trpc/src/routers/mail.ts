@@ -2,7 +2,7 @@ import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
 import {EmailType} from '../../../../apps/web/src/types/EmailType';
-import {invariant} from 'utils';
+import {invariant, isUser} from 'utils';
 import {
   eventNotFoundError,
   organizerNotFoundError,
@@ -57,6 +57,12 @@ const sendQuestionToOrganizer = publicProcedure
     })
   )
   .mutation(async ({input, ctx}) => {
+    const organizer = await ctx.actions.getOrganizerByEventId({
+      id: input.eventId,
+    });
+
+    invariant(organizer, organizerNotFoundError);
+
     const event = await ctx.prisma.event.findUnique({
       where: {
         id: input.eventId,
@@ -67,13 +73,19 @@ const sendQuestionToOrganizer = publicProcedure
     });
 
     invariant(event, eventNotFoundError);
-    invariant(event.user, userNotFoundError);
+    invariant(
+      organizer.email,
+      new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Organizer has no email',
+      })
+    );
 
     await ctx.mailQueue.publish({
       body: {
         eventId: event.id,
-        organizerName: `${input.firstName} ${input.lastName}`,
-        organizerEmail: event.user?.email,
+        senderName: `${input.firstName} ${input.lastName}`,
+        organizerEmail: organizer.email,
         email: input.email,
         message: input.message,
         subject: input.subject,

@@ -144,7 +144,7 @@ const handleEventInviteEmail = publicProcedure
 export const handleMessageToOrganizerEmailInputSchema =
   baseEventHandlerSchema.extend({
     eventId: z.string().uuid(),
-    organizerName: z.string(),
+    senderName: z.string(),
     organizerEmail: z.string().email(),
     email: z.string().email(),
     subject: z.string(),
@@ -161,7 +161,7 @@ const handleMessageToOrganizerEmail = publicProcedure
     invariant(event, eventNotFoundError);
 
     await ctx.postmark.sendToTransactionalStream({
-      replyTo: `${input.organizerName} <${input.email}>`,
+      replyTo: `${input.senderName} <${input.email}>`,
       to: input.organizerEmail,
       subject: 'Someone asked you a question on WannaGo',
       htmlString: render(
@@ -170,7 +170,7 @@ const handleMessageToOrganizerEmail = publicProcedure
           eventUrl={`${getBaseUrl()}/e/${event?.shortId}`}
           message={input.message}
           subject={input.subject}
-          senderName={input.organizerName}
+          senderName={input.senderName}
           senderEmail={input.email}
         />
       ),
