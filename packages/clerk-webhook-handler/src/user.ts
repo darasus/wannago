@@ -59,7 +59,7 @@ export const user = {
           .catch(console.error);
       }
 
-      await mailQueue.publish({
+      await mailQueue.addMessage({
         body: {
           userId: user.id,
           type: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,

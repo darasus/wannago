@@ -4,13 +4,22 @@ import {nanoid} from 'nanoid';
 import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
 import {differenceInSeconds} from 'date-fns';
-import {random, getBaseUrl, isUser, isOrganization, invariant} from 'utils';
+import {
+  random,
+  getBaseUrl,
+  isUser,
+  isOrganization,
+  invariant,
+  canCreateReminder,
+  createDelay,
+} from 'utils';
 import {env} from 'server-env';
 import {utcToZonedTime} from 'date-fns-tz';
 import {EmailType} from 'types';
 import {eventNotFoundError, userNotFoundError} from 'error';
 import {
   handleEventInviteEmailInputSchema,
+  handleEventReminderEmailInputSchema,
   handleEventSignUpEmailInputSchema,
   handleOrganizerEventSignUpNotificationEmailInputSchema,
 } from 'email-input-validation';
@@ -130,35 +139,21 @@ const update = protectedProcedure
         },
       });
 
-      const isTimeChanged = originalEvent?.startDate
-        ? differenceInSeconds(
-            utcToZonedTime(startDate, ctx.timezone),
-            utcToZonedTime(originalEvent.startDate, ctx.timezone)
-          ) !== 0
-        : false;
+      const {messageId} = await ctx.actions.updateEventReminder({
+        eventId,
+        startDate: event.startDate,
+        oldMessageId: originalEvent?.messageId,
+      });
 
-      if (isTimeChanged) {
-        let messageId: string | null = null;
-        try {
-          const message = await ctx.mailQueue.updateReminderEmail({
-            eventId: event.id,
-            messageId: event.messageId,
-            timezone: ctx.timezone,
-            startDate: event.startDate,
-          });
-          messageId = message?.messageId || null;
-        } catch (error) {}
-
-        if (messageId) {
-          event = await ctx.prisma.event.update({
-            where: {
-              id: eventId,
-            },
-            data: {
-              messageId,
-            },
-          });
-        }
+      if (messageId) {
+        event = await ctx.prisma.event.update({
+          where: {
+            id: eventId,
+          },
+          data: {
+            messageId,
+          },
+        });
       }
 
       return event;
@@ -255,19 +250,18 @@ const create = protectedProcedure
         },
       });
 
-      const message = await ctx.mailQueue.enqueueReminderEmail({
-        timezone: ctx.timezone,
+      const {messageId} = await ctx.actions.createEventReminder({
         eventId: event.id,
         startDate: event.startDate,
       });
 
-      if (message?.messageId) {
+      if (messageId) {
         event = await ctx.prisma.event.update({
           where: {
             id: event.id,
           },
           data: {
-            messageId: message.messageId,
+            messageId,
           },
         });
       }
@@ -452,7 +446,7 @@ const joinEvent = protectedProcedure
     }
 
     await Promise.all([
-      ctx.mailQueue.publish({
+      ctx.mailQueue.addMessage({
         body: {
           eventId: input.eventId,
           userId: user.id,
@@ -461,7 +455,7 @@ const joinEvent = protectedProcedure
           typeof handleOrganizerEventSignUpNotificationEmailInputSchema
         >,
       }),
-      ctx.mailQueue.publish({
+      ctx.mailQueue.addMessage({
         body: {
           eventId: input.eventId,
           userId: user.id,
@@ -757,7 +751,7 @@ const invitePastAttendee = protectedProcedure
       },
     });
 
-    await ctx.mailQueue.publish({
+    await ctx.mailQueue.addMessage({
       body: {
         eventId: event.id,
         userId: input.userId,
@@ -857,7 +851,7 @@ const inviteByEmail = protectedProcedure
       },
     });
 
-    await ctx.mailQueue.publish({
+    await ctx.mailQueue.addMessage({
       body: {
         eventId: event.id,
         userId: user.id,

@@ -24,6 +24,8 @@ import {getOrganizationByUserExternalId} from './actions/getOrganizationByUserEx
 import {getUserByEmail} from './actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizationWithMembersByOrganizationId';
 import {canModifyEvent} from './actions/canModifyEvent';
+import {updateEventReminder} from './actions/updateEventReminder';
+import {createEventReminder} from './actions/createEventReminder';
 
 const actions = {
   getEvents,
@@ -38,6 +40,8 @@ const actions = {
   getUserByEmail,
   getOrganizationWithMembersByOrganizationId,
   canModifyEvent,
+  updateEventReminder,
+  createEventReminder,
 } as const;
 
 type Actions = {

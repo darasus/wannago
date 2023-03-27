@@ -34,7 +34,7 @@ const messageEventParticipants = protectedProcedure
 
     invariant(organizer, organizerNotFoundError);
 
-    await ctx.mailQueue.publish({
+    await ctx.mailQueue.addMessage({
       body: {
         eventId: event.id,
         subject: input.subject,
@@ -81,7 +81,7 @@ const sendQuestionToOrganizer = publicProcedure
       })
     );
 
-    await ctx.mailQueue.publish({
+    await ctx.mailQueue.addMessage({
       body: {
         eventId: event.id,
         senderName: `${input.firstName} ${input.lastName}`,

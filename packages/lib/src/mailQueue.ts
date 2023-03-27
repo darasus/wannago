@@ -15,7 +15,7 @@ export class MailQueue {
     token: env.QSTASH_TOKEN!,
   });
 
-  publish({
+  addMessage({
     body,
     delay,
   }: {
@@ -32,46 +32,9 @@ export class MailQueue {
     }
   }
 
-  async enqueueReminderEmail(body: {
-    eventId: string;
-    startDate: Date;
-    timezone: string;
-  }) {
-    const {eventId, startDate, timezone} = body;
-    if (!canCreateReminder(startDate, timezone)) {
-      return null;
-    }
-
-    return this.publish({
-      body: {
-        eventId,
-        type: EmailType.EventReminder,
-      },
-      delay: createDelay({startDate}),
+  removeMessage({messageId}: {messageId: string}) {
+    return this.queue.messages.delete({
+      id: messageId,
     });
-  }
-
-  async updateReminderEmail({
-    messageId,
-    timezone,
-    startDate,
-    eventId,
-  }: {
-    eventId: string;
-    messageId: string | undefined | null;
-    timezone: string;
-    startDate: Date;
-  }) {
-    if (messageId) {
-      await this.queue.messages.delete({
-        id: messageId,
-      });
-    }
-
-    if (!canCreateReminder(startDate, timezone)) {
-      return null;
-    }
-
-    return this.enqueueReminderEmail({eventId, timezone, startDate});
   }
 }

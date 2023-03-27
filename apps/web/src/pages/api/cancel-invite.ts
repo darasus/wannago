@@ -56,7 +56,7 @@ export default async function handler(
   });
 
   if (eventSignUp?.user) {
-    await mailQueue.publish({
+    await mailQueue.addMessage({
       body: {
         eventId: eventSignUp.event.id,
         userId: eventSignUp.user.id,
