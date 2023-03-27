@@ -39,7 +39,9 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
   };
 
   useEffect(() => {
-    setValue('description', generatedOutput);
+    if (generatedOutput) {
+      setValue('description', generatedOutput);
+    }
   }, [generatedOutput, setValue]);
 
   const items = [
