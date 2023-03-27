@@ -35,7 +35,6 @@ export const user = {
           email: data.email_addresses[0].email_address,
           firstName: data.first_name,
           lastName: data.last_name,
-          profileImageSrc: data.profile_image_url,
         },
       });
     } else {
@@ -45,7 +44,6 @@ export const user = {
           email: data.email_addresses[0].email_address,
           firstName: data.first_name,
           lastName: data.last_name,
-          profileImageSrc: data.profile_image_url,
         },
       });
 
@@ -91,7 +89,6 @@ export const user = {
           email: email?.email_address,
           firstName: data.first_name,
           lastName: data.last_name,
-          profileImageSrc: data.profile_image_url,
         },
       });
     }
