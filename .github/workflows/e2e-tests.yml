@@ -45,6 +45,7 @@ jobs:
         TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
         POSTMARK_API_KEY: ${{ secrets.POSTMARK_API_KEY }}
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        NEXT_PUBLIC_VERCEL_ENV: ${{ secrets.NEXT_PUBLIC_VERCEL_ENV }}
  
       steps:
         # - uses: actions/cache@v3
