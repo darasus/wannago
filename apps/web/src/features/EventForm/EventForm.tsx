@@ -185,6 +185,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             data-testid="event-form-max-attendees"
             error={errors.maxNumberOfAttendees}
             isOptional
+            placeholder='Leave empty for "unlimited"'
             {...register('maxNumberOfAttendees')}
           />
         </>
