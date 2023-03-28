@@ -33,11 +33,11 @@ export function MessageParticipantsFormModal({
             <Textarea {...register('message')} placeholder="Message" />
           </div>
           <div className="flex justify-start gap-x-2">
-            <Button onClick={onClose} variant="neutral">
-              Cancel
-            </Button>
             <Button isLoading={isSubmitting} type="submit">
               Send
+            </Button>
+            <Button onClick={onClose} variant="neutral">
+              Cancel
             </Button>
           </div>
         </div>
