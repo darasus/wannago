@@ -62,7 +62,8 @@ export function InfoCard({event}: Props) {
                   'prose',
                   'prose-h1:text-gray-900 prose-h2:text-gray-900 prose-h3:text-gray-900 prose-h4:text-gray-900 prose-h5:text-gray-900 prose-h6:text-gray-900',
                   'prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-pre:rounded-md prose-pre:text-gray-900',
-                  'prose-a:text-brand-700'
+                  'prose-a:text-brand-700',
+                  'prose-p:break-words'
                 )}
               >
                 <div

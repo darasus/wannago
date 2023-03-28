@@ -90,7 +90,6 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
             <EditorContent
               data-testid={dataTestId}
               className={cn(
-                'break-words',
                 'border-none',
                 'prose',
                 'text-md',
