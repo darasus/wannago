@@ -44,9 +44,9 @@ export function TeamSettings() {
       await removeOrganization.mutateAsync({
         organizationId: organization.data.id,
       });
-      form.resetField('name');
-      form.resetField('email');
-      form.resetField('logoSrc');
+      form.setValue('name', null);
+      form.setValue('email', null);
+      form.setValue('logoSrc', null);
     }
   }, [removeOrganization, form, organization?.data?.id]);
 

@@ -9,10 +9,10 @@ describe('Team', () => {
         cy.get('[data-testid="team-settings-remove-button"]').click();
         cy.get('[data-testid="confirm-dialog-confirm-button"]').click();
         cy.get('[data-testid="toast-success"]');
-        cy.wait(3000);
         cy.get('[data-testid="team-settings-form-input-name"]').should(
           'be.empty'
         );
+        cy.get('[data-testid="toast-success"]').should('be.visible');
       }
     });
 
@@ -24,8 +24,8 @@ describe('Team', () => {
       'cypress/support/logo.png',
       {force: true}
     );
-    cy.wait(1000);
     cy.get('[data-testid="file-input-image-preview"]');
     cy.get('[data-testid="team-settings-form-input-submit-button"]').click();
+    cy.get('[data-testid="toast-success"]').should('be.visible');
   });
 });
