@@ -44,7 +44,9 @@ export function TeamSettings() {
       await removeOrganization.mutateAsync({
         organizationId: organization.data.id,
       });
-      form.reset();
+      form.setValue('name', null);
+      form.setValue('email', null);
+      form.setValue('logoSrc', null);
     }
   }, [removeOrganization, form, organization?.data?.id]);
 
@@ -71,6 +73,7 @@ export function TeamSettings() {
                 })}
                 error={form.formState.errors.name}
                 label="Name"
+                data-testid="team-settings-form-input-name"
               />
               <Input
                 type="email"
@@ -82,6 +85,7 @@ export function TeamSettings() {
                 })}
                 error={form.formState.errors.email}
                 label="Email"
+                data-testid="team-settings-form-input-email"
               />
               <FileInput
                 {...form.register('logoSrc', {
@@ -93,12 +97,22 @@ export function TeamSettings() {
                 error={form.formState.errors.logoSrc}
               />
               <div className="flex gap-2">
-                <Button type="submit" isLoading={form.formState.isSubmitting}>
+                <Button
+                  type="submit"
+                  isLoading={form.formState.isSubmitting}
+                  data-testid="team-settings-form-input-submit-button"
+                >
                   Save
                 </Button>
-                <Button onClick={open} variant="danger">
-                  Delete
-                </Button>
+                {organization.data && (
+                  <Button
+                    onClick={open}
+                    variant="danger"
+                    data-testid="team-settings-remove-button"
+                  >
+                    Delete
+                  </Button>
+                )}
               </div>
             </div>
           </FormProvider>

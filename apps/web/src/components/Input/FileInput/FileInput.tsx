@@ -1,6 +1,12 @@
 import {InputWrapper} from '../Input/InputWrapper';
 import NextImage from 'next/image';
-import React, {ComponentProps, forwardRef, useCallback, useState} from 'react';
+import React, {
+  ComponentProps,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import {useDropzone} from 'react-dropzone';
 import {useFormContext} from 'react-hook-form';
 import {Input} from '../Input/Input';
@@ -21,6 +27,7 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
   const {
     setValue,
     formState: {defaultValues},
+    watch,
   } = useFormContext();
   const [imageSrc, setImageSrc] = useState<string | null>(
     defaultValues?.profileImageSrc ||
@@ -29,6 +36,13 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
       null
   );
   const {isLoading, handleFileUpload} = useUploadImage();
+  const formStateImageSrc = watch(props.name);
+
+  useEffect(() => {
+    if (!formStateImageSrc) {
+      setImageSrc(null);
+    }
+  }, [formStateImageSrc]);
 
   const onDrop = useCallback(
     (droppedFiles: File[]) => {
