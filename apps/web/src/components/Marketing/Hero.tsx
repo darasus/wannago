@@ -74,7 +74,9 @@ export const Hero = forwardRef(function Hero(
           <Button
             className="pointer-events-auto"
             size="lg"
-            onClick={() => router.push(auth.isSignedIn ? '/e/add' : '/login')}
+            onClick={() =>
+              router.push(auth.isSignedIn ? '/e/add' : '/register')
+            }
           >
             Create your first event
           </Button>
