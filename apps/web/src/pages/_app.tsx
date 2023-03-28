@@ -112,6 +112,9 @@ function MyApp({Component, pageProps}: AppProps) {
                     className={cn(
                       'p-4 flex items-center max-w-md w-full border-2 border-gray-800 bg-white rounded-3xl'
                     )}
+                    data-testid={
+                      t.type === 'success' ? 'toast-success' : 'toast-success'
+                    }
                   >
                     <div
                       className={cn(

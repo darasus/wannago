@@ -58,6 +58,7 @@ export function MessageParticipantsButton() {
         iconLeft={<EnvelopeIcon />}
         size="sm"
         title="Message attendees"
+        data-testid="message-attendees-button"
       >
         <span className="hidden md:block">Message attendees</span>
       </Button>

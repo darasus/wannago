@@ -27,13 +27,25 @@ export function MessageParticipantsFormModal({
       <form onSubmit={onSubmit}>
         <div className="flex flex-col gap-y-4">
           <div>
-            <Input {...register('subject')} placeholder="Subject" />
+            <Input
+              {...register('subject')}
+              placeholder="Subject"
+              data-testid="message-attendees-input-subject"
+            />
           </div>
           <div>
-            <Textarea {...register('message')} placeholder="Message" />
+            <Textarea
+              {...register('message')}
+              placeholder="Message"
+              data-testid="message-attendees-input-message"
+            />
           </div>
           <div className="flex justify-start gap-x-2">
-            <Button isLoading={isSubmitting} type="submit">
+            <Button
+              isLoading={isSubmitting}
+              type="submit"
+              data-testid="message-attendees-form-submit"
+            >
               Send
             </Button>
             <Button onClick={onClose} variant="neutral">
