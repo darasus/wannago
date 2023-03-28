@@ -1,10 +1,5 @@
 import Link from '@tiptap/extension-link';
-import {
-  BubbleMenu,
-  EditorContent,
-  FloatingMenu,
-  useEditor,
-} from '@tiptap/react';
+import {EditorContent, useEditor} from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import {forwardRef, HTMLAttributes, useEffect} from 'react';
 import {FieldError, useFormContext} from 'react-hook-form';
@@ -61,6 +56,7 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
       if (isGenerating) {
         editor?.commands.setContent(value);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     return (
@@ -94,6 +90,7 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
             <EditorContent
               data-testid={dataTestId}
               className={cn(
+                'break-words',
                 'border-none',
                 'prose',
                 'text-md',
