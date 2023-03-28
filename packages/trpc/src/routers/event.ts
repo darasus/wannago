@@ -869,16 +869,22 @@ const getMySignUp = protectedProcedure
     })
   )
   .query(async ({ctx, input}) => {
-    const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
+    const event = await ctx.prisma.event.findUnique({
       where: {
-        user: {
-          externalId: ctx.auth.userId,
+        id: input.eventId,
+      },
+      include: {
+        eventSignUps: {
+          where: {
+            user: {
+              externalId: ctx.auth.userId,
+            },
+          },
         },
-        eventId: input.eventId,
       },
     });
 
-    return eventSignUp;
+    return event?.eventSignUps[0];
   });
 
 const getPublicEvents = publicProcedure
