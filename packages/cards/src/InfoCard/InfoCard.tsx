@@ -51,7 +51,10 @@ export function InfoCard({event}: Props) {
             </Badge>
             {/* <Button variant="link">Share</Button> */}
           </div>
-          <h1 className="text-3xl font-bold" data-testid="event-title">
+          <h1
+            className="text-3xl font-bold break-words"
+            data-testid="event-title"
+          >
             {title}
           </h1>
           {description && (
