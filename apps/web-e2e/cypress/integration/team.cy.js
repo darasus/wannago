@@ -8,13 +8,14 @@ describe('Team', () => {
       if (doc.querySelector('[data-testid="team-settings-remove-button"]')) {
         cy.get('[data-testid="team-settings-remove-button"]').click();
         cy.get('[data-testid="confirm-dialog-confirm-button"]').click();
-        cy.get('[data-testid="toast-success"]');
+        cy.get('[data-testid="toast-success"]').should('be.visible');
         cy.get('[data-testid="team-settings-form-input-name"]').should(
           'be.empty'
         );
-        cy.get('[data-testid="toast-success"]').should('be.visible');
       }
     });
+
+    cy.wait(1000);
 
     cy.get('[data-testid="team-settings-form-input-name"]').type('Test team');
     cy.get('[data-testid="team-settings-form-input-email"]').type(
