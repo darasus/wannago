@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import {Hero} from '../components/Marketing/Hero';
 import {CallToAction} from '../components/Marketing/CallToAction';
+import {Pricing} from '../components/Marketing/Pricing';
 import {Faqs} from '../components/Marketing/Faqs';
 import {Footer} from '../components/Marketing/Footer';
 import {Features} from '../components/Marketing/Features';
@@ -20,7 +21,8 @@ function HomePage() {
       <CallToAction />
       <div className="h-0.5 bg-gray-800" />
       {/* <Testimonials /> */}
-      {/* <Pricing /> */}
+      <Pricing />
+      <div className="h-0.5 bg-gray-800" />
       <Faqs />
       <div className="h-0.5 bg-gray-800" />
       <Footer />

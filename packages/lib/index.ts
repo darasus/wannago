@@ -4,4 +4,4 @@ export {MailQueue} from './src/mailQueue';
 export {Maps, googleMaps} from './src/maps';
 export {Postmark} from './src/postmark';
 export {Telegram} from './src/telegram';
-// export {OpenAI} from './src/OpenAI';
+export {Stripe} from './src/stripe';

@@ -9,3 +9,5 @@ export enum EmailType {
   AfterRegisterNoCreatedEventFollowUpEmail = 'AfterRegisterNoCreatedEventFollowUpEmail',
   OrganizerEventSignUpNotification = 'OrganizerEventSignUpNotification',
 }
+
+export type PricingPlan = 'starter' | 'pro';

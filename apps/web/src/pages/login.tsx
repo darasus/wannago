@@ -2,17 +2,14 @@ import {useSignIn} from '@clerk/nextjs';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
-import {
-  FormProvider,
-  useForm,
-  useFormContext,
-  UseFormReturn,
-} from 'react-hook-form';
+import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {Button, CardBase, Container, LoadingBlock, Text} from 'ui';
-import {cn} from 'utils';
+import {cn, getPaymentLinkUrl, sleep} from 'utils';
 import {Input} from '../components/Input/Input/Input';
 import {titleFont} from '../fonts';
 import type {ClerkAPIError} from '@clerk/types';
+import {PricingPlan} from 'types';
+import {useMyUserQuery} from 'hooks';
 
 interface TEmailForm {
   email: string;
@@ -27,18 +24,30 @@ export interface APIResponseError {
 }
 
 function LoginPage() {
-  const {setSession, isLoaded} = useSignIn();
   const router = useRouter();
+  const me = useMyUserQuery();
+  const plan = router.query.plan as PricingPlan | undefined;
+  const {setSession, isLoaded} = useSignIn();
   const [step, setStep] = useState<'email' | 'code'>('email');
   const emailForm = useForm<TEmailForm>();
   const codeForm = useForm<TCodeForm>({
     mode: 'onSubmit',
   });
 
-  const handleOnDone = async (createdSessionId: string) => {
+  const redirectUrl =
+    plan === 'pro'
+      ? getPaymentLinkUrl({email: emailForm.watch('email')})
+      : '/dashboard';
+
+  const handleOnDone = async (createdSessionId: string): Promise<any> => {
     await setSession?.(createdSessionId);
 
-    router.push('/dashboard');
+    if (!me.data?.id) {
+      await sleep(1000);
+      return handleOnDone(createdSessionId);
+    }
+
+    router.push(redirectUrl);
   };
 
   return (
@@ -71,7 +80,7 @@ function LoginPage() {
             )}
           </CardBase>
           <Text className="text-center">- OR -</Text>
-          <Button as="a" href="/register">
+          <Button as="a" href={`/register${plan === 'pro' ? '?plan=pro' : ''}`}>
             Create account
           </Button>
         </div>
@@ -160,7 +169,7 @@ function CodeForm({onDone, email}: CodeFormProps) {
         signInAttempt?.status === 'complete' &&
         signInAttempt?.createdSessionId
       ) {
-        onDone(signInAttempt?.createdSessionId);
+        await onDone(signInAttempt?.createdSessionId);
       }
     } catch (error: any) {
       form.setError('code', {

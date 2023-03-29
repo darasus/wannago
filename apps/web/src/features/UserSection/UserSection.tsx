@@ -128,7 +128,12 @@ export function UserSection() {
                   >
                     Profile
                   </Button>
-                  <Button variant="neutral" as="a" href="/settings" size="sm">
+                  <Button
+                    variant="neutral"
+                    as="a"
+                    href="/settings/personal"
+                    size="sm"
+                  >
                     Settings
                   </Button>
                   {showAdminLink && (

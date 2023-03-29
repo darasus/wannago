@@ -87,7 +87,7 @@ export function Faqs() {
   const [isExpanded, setIsExpanded] = useState<false | number>(false);
 
   return (
-    <SectionContainer id="faq" className="bg-white">
+    <SectionContainer id="faq">
       <Container className="grid md:grid-cols-2 items-center gap-x-8 relative my-0">
         <SectionHeader
           title="FAQs"
