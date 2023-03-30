@@ -3,7 +3,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Button, CardBase, Container, Text} from 'ui';
+import {Button, CardBase, Container, LoadingBlock, Text} from 'ui';
 import {cn} from 'utils';
 import {Input} from '../components/Input/Input/Input';
 import {titleFont} from '../fonts';
@@ -14,7 +14,7 @@ export interface APIResponseError {
 }
 
 function RegisterPage() {
-  const {setSession} = useSignUp();
+  const {setSession, isLoaded} = useSignUp();
   const router = useRouter();
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
 
@@ -23,7 +23,7 @@ function RegisterPage() {
     await new Promise(resolve => {
       setTimeout(() => {
         resolve(true);
-      }, 2000);
+      }, 4000);
     });
 
     router.push('/dashboard');
@@ -32,18 +32,22 @@ function RegisterPage() {
   return (
     <>
       <Head>
-        <title>Register | WannaGo</title>
+        <title>Sign up | WannaGo</title>
       </Head>
       <Container maxSize="xs" className="py-4">
         <div className="flex flex-col items-center gap-4">
-          <Text className={cn('text-4xl', titleFont.className)}>
-            Create account
-          </Text>
+          <Text className={cn('text-4xl', titleFont.className)}>Sign up</Text>
           <CardBase className="w-full">
-            {step === 'user_info' && (
-              <UserForm goToNextStep={() => setStep('code')} />
+            {isLoaded ? (
+              <>
+                {step === 'user_info' && (
+                  <UserForm goToNextStep={() => setStep('code')} />
+                )}
+                {step === 'code' && <CodeForm onDone={handleOnDone} />}
+              </>
+            ) : (
+              <LoadingBlock />
             )}
-            {step === 'code' && <CodeForm onDone={handleOnDone} />}
           </CardBase>
         </div>
       </Container>
@@ -68,15 +72,26 @@ function UserForm({goToNextStep}: UserFormProps) {
   const form = useForm<TUserForm>({mode: 'onSubmit'});
 
   const submit = form.handleSubmit(async data => {
-    const signUpAttempt = await signUp?.create({
-      emailAddress: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-    });
-    await signUpAttempt?.prepareEmailAddressVerification({
-      strategy: 'email_code',
-    });
-    goToNextStep();
+    try {
+      const signUpAttempt = await signUp?.create({
+        emailAddress: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      });
+      await signUpAttempt?.prepareEmailAddressVerification({
+        strategy: 'email_code',
+      });
+      goToNextStep();
+    } catch (error: any) {
+      const e = error as APIResponseError;
+
+      if (e.errors[0].meta?.paramName === 'email_address') {
+        form.setError('email', {
+          type: 'manual',
+          message: parseError(e),
+        });
+      }
+    }
   });
 
   useEffect(() => {
@@ -97,6 +112,7 @@ function UserForm({goToNextStep}: UserFormProps) {
               },
             })}
             error={form.formState.errors.firstName}
+            autoComplete="given-name"
           />
           <Input
             type="text"
@@ -108,6 +124,7 @@ function UserForm({goToNextStep}: UserFormProps) {
               },
             })}
             error={form.formState.errors.lastName}
+            autoComplete="family-name"
           />
         </div>
         <Input
@@ -120,6 +137,7 @@ function UserForm({goToNextStep}: UserFormProps) {
             },
           })}
           error={form.formState.errors.email}
+          autoComplete="email"
         />
         <Button type="submit" isLoading={form.formState.isSubmitting}>
           Submit
@@ -205,6 +223,7 @@ function CodeForm({onDone}: CodeFormProps) {
           })}
           error={form.formState.errors.code}
           onPaste={async () => await form.trigger('code')}
+          autoComplete="off"
         />
 
         <Button type="submit" isLoading={form.formState.isSubmitting}>
