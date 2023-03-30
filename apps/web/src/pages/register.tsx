@@ -1,4 +1,4 @@
-import {SignUp, useSignUp} from '@clerk/nextjs';
+import {useSignUp} from '@clerk/nextjs';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
@@ -7,6 +7,11 @@ import {Button, CardBase, Container, Text} from 'ui';
 import {cn} from 'utils';
 import {Input} from '../components/Input/Input/Input';
 import {titleFont} from '../fonts';
+import type {ClerkAPIError} from '@clerk/types';
+
+export interface APIResponseError {
+  errors: ClerkAPIError[];
+}
 
 function RegisterPage() {
   const {setSession} = useSignUp();
@@ -60,7 +65,7 @@ interface UserFormProps {
 
 function UserForm({goToNextStep}: UserFormProps) {
   const {signUp} = useSignUp();
-  const form = useForm<TUserForm>({});
+  const form = useForm<TUserForm>({mode: 'onSubmit'});
 
   const submit = form.handleSubmit(async data => {
     const signUpAttempt = await signUp?.create({
@@ -134,19 +139,28 @@ interface TCodeForm {
 
 function CodeForm({onDone}: CodeFormProps) {
   const {signUp} = useSignUp();
-  const form = useForm<TCodeForm>({});
+  const form = useForm<TCodeForm>({
+    mode: 'onSubmit',
+  });
 
   const submit = form.handleSubmit(async data => {
-    const signUpAttempt = await signUp?.attemptEmailAddressVerification({
-      code: data.code,
-    });
+    try {
+      const signUpAttempt = await signUp?.attemptEmailAddressVerification({
+        code: data.code,
+      });
 
-    if (
-      signUpAttempt?.verifications.emailAddress.status === 'verified' &&
-      signUpAttempt.status === 'complete' &&
-      signUpAttempt.createdSessionId
-    ) {
-      await onDone(signUpAttempt.createdSessionId);
+      if (
+        signUpAttempt?.verifications.emailAddress.status === 'verified' &&
+        signUpAttempt.status === 'complete' &&
+        signUpAttempt.createdSessionId
+      ) {
+        await onDone(signUpAttempt.createdSessionId);
+      }
+    } catch (error: any) {
+      form.setError('code', {
+        type: 'manual',
+        message: parseError(error as APIResponseError),
+      });
     }
   });
 
@@ -154,19 +168,40 @@ function CodeForm({onDone}: CodeFormProps) {
     form.setFocus('code');
   }, []);
 
+  console.log(form.formState.errors);
+
   return (
     <form onSubmit={submit}>
       <div className="flex flex-col gap-4">
         <Input
-          type="number"
+          type="text"
           label="Code"
           {...form.register('code', {
             required: {
               value: true,
               message: 'Code is required',
             },
-            maxLength: 6,
-            minLength: 6,
+            validate: value => {
+              try {
+                const n = Number(value);
+
+                if (typeof n === 'number' && !isNaN(n)) {
+                  return true;
+                } else {
+                  return 'Code must be a number';
+                }
+              } catch (error) {
+                return 'Code must be a number';
+              }
+            },
+            maxLength: {
+              value: 6,
+              message: 'Code must be 6 characters long',
+            },
+            minLength: {
+              value: 6,
+              message: 'Code must be 6 characters long',
+            },
           })}
           error={form.formState.errors.code}
           onPaste={async () => await form.trigger('code')}
@@ -178,4 +213,16 @@ function CodeForm({onDone}: CodeFormProps) {
       </div>
     </form>
   );
+}
+
+export function parseError(err: APIResponseError): string {
+  if (!err) {
+    return '';
+  }
+
+  if (err.errors) {
+    return err.errors[0].longMessage || '';
+  }
+
+  throw err;
 }
