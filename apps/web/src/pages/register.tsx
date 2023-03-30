@@ -135,6 +135,7 @@ function UserForm({goToNextStep}: UserFormProps) {
             })}
             error={form.formState.errors.firstName}
             autoComplete="given-name"
+            data-testid="register-first-name-input"
           />
           <Input
             type="text"
@@ -147,6 +148,7 @@ function UserForm({goToNextStep}: UserFormProps) {
             })}
             error={form.formState.errors.lastName}
             autoComplete="family-name"
+            data-testid="register-last-name-input"
           />
         </div>
         <Input
@@ -160,8 +162,13 @@ function UserForm({goToNextStep}: UserFormProps) {
           })}
           error={form.formState.errors.email}
           autoComplete="email"
+          data-testid="register-email-input"
         />
-        <Button type="submit" isLoading={form.formState.isSubmitting}>
+        <Button
+          type="submit"
+          isLoading={form.formState.isSubmitting}
+          data-testid="register-user-info-form-submit"
+        >
           Submit
         </Button>
       </div>
@@ -241,9 +248,14 @@ function CodeForm({onDone, email}: CodeFormProps) {
           error={form.formState.errors.code}
           onPaste={async () => await form.trigger('code')}
           autoComplete="off"
+          data-testid="register-code-input"
         />
 
-        <Button type="submit" isLoading={form.formState.isSubmitting}>
+        <Button
+          type="submit"
+          isLoading={form.formState.isSubmitting}
+          data-testid="register-code-form-submit"
+        >
           Submit
         </Button>
       </div>
