@@ -2,12 +2,22 @@ import {useSignUp} from '@clerk/nextjs';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
-import {useForm} from 'react-hook-form';
+import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {Button, CardBase, Container, LoadingBlock, Text} from 'ui';
 import {cn} from 'utils';
 import {Input} from '../components/Input/Input/Input';
 import {titleFont} from '../fonts';
 import type {ClerkAPIError} from '@clerk/types';
+
+interface CodeForm {
+  code: string;
+}
+
+interface UserInfoForm {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
 
 export interface APIResponseError {
   errors: ClerkAPIError[];
@@ -17,6 +27,8 @@ function RegisterPage() {
   const {setSession, isLoaded} = useSignUp();
   const router = useRouter();
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
+  const userInfoForm = useForm<UserInfoForm>({mode: 'onSubmit'});
+  const codeForm = useForm<CodeForm>({mode: 'onSubmit'});
 
   const handleOnDone = async (createdSessionId: string) => {
     await setSession?.(createdSessionId);
@@ -36,19 +48,34 @@ function RegisterPage() {
       </Head>
       <Container maxSize="xs" className="py-4">
         <div className="flex flex-col items-center gap-4">
-          <Text className={cn('text-4xl', titleFont.className)}>Sign up</Text>
+          <Text className={cn('text-4xl', titleFont.className)}>
+            Create account
+          </Text>
           <CardBase className="w-full">
             {isLoaded ? (
               <>
                 {step === 'user_info' && (
-                  <UserForm goToNextStep={() => setStep('code')} />
+                  <FormProvider {...userInfoForm}>
+                    <UserForm goToNextStep={() => setStep('code')} />
+                  </FormProvider>
                 )}
-                {step === 'code' && <CodeForm onDone={handleOnDone} />}
+                {step === 'code' && (
+                  <FormProvider {...codeForm}>
+                    <CodeForm
+                      onDone={handleOnDone}
+                      email={userInfoForm.watch('email')}
+                    />
+                  </FormProvider>
+                )}
               </>
             ) : (
               <LoadingBlock />
             )}
           </CardBase>
+          <Text className="text-center">- OR -</Text>
+          <Button as="a" href="/login">
+            Login
+          </Button>
         </div>
       </Container>
     </>
@@ -57,19 +84,13 @@ function RegisterPage() {
 
 export default RegisterPage;
 
-interface TUserForm {
-  email: string;
-  firstName: string;
-  lastName: string;
-}
-
 interface UserFormProps {
   goToNextStep: () => void;
 }
 
 function UserForm({goToNextStep}: UserFormProps) {
   const {signUp} = useSignUp();
-  const form = useForm<TUserForm>({mode: 'onSubmit'});
+  const form = useFormContext<UserInfoForm>();
 
   const submit = form.handleSubmit(async data => {
     try {
@@ -149,18 +170,13 @@ function UserForm({goToNextStep}: UserFormProps) {
 }
 
 interface CodeFormProps {
+  email: string;
   onDone: (createdSessionId: string) => Promise<void>;
 }
 
-interface TCodeForm {
-  code: string;
-}
-
-function CodeForm({onDone}: CodeFormProps) {
+function CodeForm({onDone, email}: CodeFormProps) {
   const {signUp} = useSignUp();
-  const form = useForm<TCodeForm>({
-    mode: 'onSubmit',
-  });
+  const form = useFormContext<CodeForm>();
 
   const submit = form.handleSubmit(async data => {
     try {
@@ -193,6 +209,7 @@ function CodeForm({onDone}: CodeFormProps) {
       <div className="flex flex-col gap-4">
         <Input
           type="text"
+          description={`Enter the code sent to ${email}`}
           label="Code"
           {...form.register('code', {
             required: {
