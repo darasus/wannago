@@ -26,12 +26,14 @@ export interface APIResponseError {
   errors: ClerkAPIError[];
 }
 
-function RegisterPage() {
+function LoginPage() {
   const {setSession, isLoaded} = useSignIn();
   const router = useRouter();
   const [step, setStep] = useState<'email' | 'code'>('email');
-  const emailForm = useForm<TEmailForm>({mode: 'onSubmit'});
-  const codeForm = useForm<TCodeForm>({mode: 'onSubmit'});
+  const emailForm = useForm<TEmailForm>();
+  const codeForm = useForm<TCodeForm>({
+    mode: 'all',
+  });
 
   const handleOnDone = async (createdSessionId: string) => {
     await setSession?.(createdSessionId);
@@ -78,7 +80,7 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default LoginPage;
 
 interface EmailFormProps {
   goToNextStep: () => void;
