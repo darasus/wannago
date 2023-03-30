@@ -6,13 +6,14 @@ Cypress.Commands.addAll({
         cy.get('[data-testid="dashboard-button"]');
       } else {
         cy.get('[data-testid="login-button"]').click();
-        cy.get('#identifier-field').type(Cypress.env('user_email'));
-        cy.get('.cl-formButtonPrimary').click();
-        cy.wait(500);
-        cy.get('[name="codeInput-0"]').type(Cypress.env('otp'), {delay: 50});
+        cy.get('[data-testid="login-email-input"]').type(
+          Cypress.env('user_email')
+        );
+        cy.get('[data-testid="login-email-form-submit"]').click();
+        cy.get('[data-testid="login-code-input"]').type(Cypress.env('otp'));
+        cy.get('[data-testid="login-code-form-submit"]').click();
         cy.get('[data-testid="add-event-button"]');
-        cy.reload();
-        cy.visit('/dashboard');
+        cy.get('[data-testid="header-user-section-button"]').contains('John');
       }
     });
   },
