@@ -126,8 +126,13 @@ function EmailForm({goToNextStep}: EmailFormProps) {
           })}
           error={form.formState.errors.email}
           autoComplete="email"
+          data-testid="login-email-input"
         />
-        <Button type="submit" isLoading={form.formState.isSubmitting}>
+        <Button
+          type="submit"
+          isLoading={form.formState.isSubmitting}
+          data-testid="login-email-form-submit"
+        >
           Submit
         </Button>
       </div>
@@ -207,9 +212,14 @@ function CodeForm({onDone, email}: CodeFormProps) {
           error={form.formState.errors.code}
           onPaste={async () => await form.trigger('code')}
           autoComplete="off"
+          data-testid="login-code-input"
         />
 
-        <Button type="submit" isLoading={form.formState.isSubmitting}>
+        <Button
+          type="submit"
+          isLoading={form.formState.isSubmitting}
+          data-testid="login-code-form-submit"
+        >
           Submit
         </Button>
       </div>
