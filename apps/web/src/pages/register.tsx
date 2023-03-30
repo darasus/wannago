@@ -96,6 +96,7 @@ function UserForm({goToNextStep}: UserFormProps) {
 
   useEffect(() => {
     form.setFocus('firstName');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -184,9 +185,8 @@ function CodeForm({onDone}: CodeFormProps) {
 
   useEffect(() => {
     form.setFocus('code');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(form.formState.errors);
 
   return (
     <form onSubmit={submit}>
