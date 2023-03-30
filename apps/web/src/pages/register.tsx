@@ -1,7 +1,7 @@
 import {SignUp, useSignUp} from '@clerk/nextjs';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Button, CardBase, Container, Text} from 'ui';
 import {cn} from 'utils';
@@ -74,6 +74,10 @@ function UserForm({goToNextStep}: UserFormProps) {
     goToNextStep();
   });
 
+  useEffect(() => {
+    form.setFocus('firstName');
+  }, []);
+
   return (
     <form onSubmit={submit}>
       <div className="flex flex-col gap-4">
@@ -145,6 +149,10 @@ function CodeForm({onDone}: CodeFormProps) {
       await onDone(signUpAttempt.createdSessionId);
     }
   });
+
+  useEffect(() => {
+    form.setFocus('code');
+  }, []);
 
   return (
     <form onSubmit={submit}>
