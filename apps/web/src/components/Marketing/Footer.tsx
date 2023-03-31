@@ -23,9 +23,6 @@ export function Footer() {
                 </Button>
               );
             })}
-            <Button href={'/terms'} variant="neutral" size="sm" as="a">
-              Terms
-            </Button>
           </div>
         </div>
         <div className="flex items-center py-4">
@@ -33,6 +30,10 @@ export function Footer() {
             <Text className="text-sm">
               WannaGo &copy; {new Date().getFullYear()} ·{' '}
             </Text>
+            <Link href="/terms" className="text-sm underline">
+              Terms & Conditions
+            </Link>{' '}
+            ·{' '}
             <span>
               <Text className="text-sm">
                 Designed and developed in Amsterdam{' '}
