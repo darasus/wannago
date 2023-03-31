@@ -4,10 +4,11 @@ import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
 import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {Button, CardBase, Container, LoadingBlock, Text} from 'ui';
-import {cn} from 'utils';
+import {cn, sleep} from 'utils';
 import {Input} from '../components/Input/Input/Input';
 import {titleFont} from '../fonts';
 import type {ClerkAPIError} from '@clerk/types';
+import {useMyUserQuery} from 'hooks';
 
 interface CodeForm {
   code: string;
@@ -24,19 +25,21 @@ export interface APIResponseError {
 }
 
 function RegisterPage() {
+  const me = useMyUserQuery();
   const {setSession, isLoaded} = useSignUp();
   const router = useRouter();
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
   const userInfoForm = useForm<UserInfoForm>();
   const codeForm = useForm<CodeForm>({mode: 'all'});
 
-  const handleOnDone = async (createdSessionId: string) => {
+  const handleOnDone = async (createdSessionId: string): Promise<any> => {
     await setSession?.(createdSessionId);
-    await new Promise(resolve => {
-      setTimeout(() => {
-        resolve(true);
-      }, 4000);
-    });
+
+    if (!me.data?.id) {
+      await sleep(1000);
+      await me.refetch();
+      return handleOnDone(createdSessionId);
+    }
 
     router.push('/dashboard');
   };

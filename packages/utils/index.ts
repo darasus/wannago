@@ -23,3 +23,4 @@ export {isOrganization} from './src/isOrganization';
 export {invariant} from './src/invariant';
 export {canCreateReminder} from './src/canCreateReminder';
 export {createDelay} from './src/createDelay';
+export {sleep} from './src/sleep';
