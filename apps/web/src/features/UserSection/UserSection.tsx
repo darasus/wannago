@@ -9,6 +9,7 @@ import {
   useMyUserQuery,
 } from 'hooks';
 import {useRouter} from 'next/router';
+import {trpc} from 'trpc/src/trpc';
 
 export function UserSection() {
   const router = useRouter();
@@ -18,6 +19,7 @@ export function UserSection() {
   const session = useSessionQuery();
   const setSession = useSetSessionMutation();
   const isOrganization = session.data === 'organization';
+  const utils = trpc.useContext();
 
   const toggleSession = () => {
     if (isOrganization) {
@@ -32,6 +34,8 @@ export function UserSection() {
 
   const onSignOutClick = async () => {
     await signOut();
+    await utils.invalidate();
+    router.push('/');
   };
 
   const getName = () => {
