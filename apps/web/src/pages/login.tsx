@@ -32,7 +32,7 @@ function LoginPage() {
   const [step, setStep] = useState<'email' | 'code'>('email');
   const emailForm = useForm<TEmailForm>();
   const codeForm = useForm<TCodeForm>({
-    mode: 'all',
+    mode: 'onSubmit',
   });
 
   const handleOnDone = async (createdSessionId: string) => {
@@ -179,16 +179,20 @@ function CodeForm({onDone, email}: CodeFormProps) {
     <form onSubmit={submit}>
       <div className="flex flex-col gap-4">
         <Input
-          type="text"
+          type="number"
           description={`Enter the code sent to ${email}`}
           label="Code"
           {...form.register('code', {
-            required: {
-              value: true,
-              message: 'Code is required',
-            },
             validate: value => {
               try {
+                if (!value) return 'Code is required';
+
+                if (typeof value === 'string') {
+                  const length = value.length;
+                  if (length > 6 || length < 6) {
+                    return 'Code must be 6 characters long';
+                  }
+                }
                 const n = Number(value);
 
                 if (typeof n === 'number' && !isNaN(n)) {
@@ -200,17 +204,8 @@ function CodeForm({onDone, email}: CodeFormProps) {
                 return 'Code must be a number';
               }
             },
-            maxLength: {
-              value: 6,
-              message: 'Code must be 6 characters long',
-            },
-            minLength: {
-              value: 6,
-              message: 'Code must be 6 characters long',
-            },
           })}
           error={form.formState.errors.code}
-          onPaste={async () => await form.trigger('code')}
           autoComplete="off"
           data-testid="login-code-input"
         />

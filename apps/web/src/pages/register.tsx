@@ -30,7 +30,7 @@ function RegisterPage() {
   const router = useRouter();
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
   const userInfoForm = useForm<UserInfoForm>();
-  const codeForm = useForm<CodeForm>({mode: 'all'});
+  const codeForm = useForm<CodeForm>({mode: 'onSubmit'});
 
   const handleOnDone = async (createdSessionId: string): Promise<any> => {
     await setSession?.(createdSessionId);
@@ -222,12 +222,16 @@ function CodeForm({onDone, email}: CodeFormProps) {
           description={`Enter the code sent to ${email}`}
           label="Code"
           {...form.register('code', {
-            required: {
-              value: true,
-              message: 'Code is required',
-            },
             validate: value => {
               try {
+                if (!value) return 'Code is required';
+
+                if (typeof value === 'string') {
+                  const length = value.length;
+                  if (length > 6 || length < 6) {
+                    return 'Code must be 6 characters long';
+                  }
+                }
                 const n = Number(value);
 
                 if (typeof n === 'number' && !isNaN(n)) {
@@ -239,17 +243,8 @@ function CodeForm({onDone, email}: CodeFormProps) {
                 return 'Code must be a number';
               }
             },
-            maxLength: {
-              value: 6,
-              message: 'Code must be 6 characters long',
-            },
-            minLength: {
-              value: 6,
-              message: 'Code must be 6 characters long',
-            },
           })}
           error={form.formState.errors.code}
-          onPaste={async () => await form.trigger('code')}
           autoComplete="off"
           data-testid="register-code-input"
         />
