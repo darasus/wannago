@@ -30,7 +30,7 @@ function RegisterPage() {
   const router = useRouter();
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
   const userInfoForm = useForm<UserInfoForm>();
-  const codeForm = useForm<CodeForm>({mode: 'onSubmit'});
+  const codeForm = useForm<CodeForm>({mode: 'all'});
 
   const handleOnDone = async (createdSessionId: string): Promise<any> => {
     await setSession?.(createdSessionId);
