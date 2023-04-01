@@ -897,7 +897,7 @@ const getPublicEvents = publicProcedure
     });
   });
 
-const getMyEvents = protectedProcedure
+const getMyEvents = publicProcedure
   .input(
     z.object({
       organizerId: z.string().uuid(),
@@ -905,6 +905,10 @@ const getMyEvents = protectedProcedure
     })
   )
   .query(async ({ctx, input}) => {
+    if (!ctx.auth?.userId) {
+      return null;
+    }
+
     return ctx.actions.getEvents({
       id: input.organizerId,
       eventType: input.eventType,

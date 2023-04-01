@@ -74,12 +74,14 @@ const getOrganizationByExternalId = publicProcedure
     });
   });
 
-const getMyOrganization = protectedProcedure.query(async ({ctx}) => {
-  const organization = await ctx.actions.getOrganizationByUserExternalId({
+const getMyOrganization = publicProcedure.query(async ({ctx}) => {
+  if (!ctx.auth?.userId) {
+    return null;
+  }
+
+  return ctx.actions.getOrganizationByUserExternalId({
     externalId: ctx.auth.userId,
   });
-
-  return organization;
 });
 
 const remove = protectedProcedure

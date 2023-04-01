@@ -1,15 +1,11 @@
 import {useSignIn} from '@clerk/nextjs';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {useEffect, useState} from 'react';
-import {
-  FormProvider,
-  useForm,
-  useFormContext,
-  UseFormReturn,
-} from 'react-hook-form';
+import {useCallback, useEffect, useState} from 'react';
+import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {Button, CardBase, Container, LoadingBlock, Text} from 'ui';
-import {cn} from 'utils';
+import {cn, sleep} from 'utils';
+import {useMyUserQuery} from 'hooks';
 import {Input} from '../components/Input/Input/Input';
 import {titleFont} from '../fonts';
 import type {ClerkAPIError} from '@clerk/types';
@@ -27,6 +23,7 @@ export interface APIResponseError {
 }
 
 function LoginPage() {
+  const me = useMyUserQuery();
   const {setSession, isLoaded} = useSignIn();
   const router = useRouter();
   const [step, setStep] = useState<'email' | 'code'>('email');
@@ -35,11 +32,24 @@ function LoginPage() {
     mode: 'onSubmit',
   });
 
-  const handleOnDone = async (createdSessionId: string) => {
-    await setSession?.(createdSessionId);
+  const ready = useCallback(async (): Promise<any> => {
+    const {data} = await me.refetch();
 
-    router.push('/dashboard');
-  };
+    if (!data?.id) {
+      await sleep(1000);
+      return ready();
+    }
+  }, [me]);
+
+  const handleOnDone = useCallback(
+    async (createdSessionId: string) => {
+      await setSession?.(createdSessionId);
+      await ready();
+
+      router.push('/dashboard');
+    },
+    [ready, router, setSession]
+  );
 
   return (
     <>

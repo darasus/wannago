@@ -9,7 +9,11 @@ const getUserById = publicProcedure
     });
   });
 
-const me = protectedProcedure.query(async ({ctx}) => {
+const me = publicProcedure.query(async ({ctx}) => {
+  if (!ctx.auth?.userId) {
+    return null;
+  }
+
   return ctx.actions.getUserByExternalId({
     externalId: ctx.auth.userId,
   });

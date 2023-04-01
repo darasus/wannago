@@ -35,7 +35,6 @@ export function UserSection() {
   const onSignOutClick = async () => {
     await signOut();
     await utils.invalidate();
-    router.push('/');
   };
 
   const getName = () => {
