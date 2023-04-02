@@ -2,6 +2,14 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import {buffer} from 'micro';
 import {Stripe} from 'lib';
 import Cors from 'micro-cors';
+import {createContext} from 'trpc/src/context';
+import {stripeWebhookHandlerRouter} from 'trpc/src/routers/stripeWebhookHandler';
+import {
+  baseEventHandlerSchema,
+  handleCustomerSubscriptionCreatedInputSchema,
+  handleCustomerSubscriptionDeletedInputSchema,
+  handleCustomerSubscriptionUpdatedInputSchema,
+} from 'stripe-webhook-input-validation';
 import * as s from 'stripe';
 
 const cors = Cors({
@@ -18,39 +26,35 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({error: 'Method Not Allowed'});
   }
+
   const stripe = new Stripe();
   const buf = await buffer(req);
   const sig = req.headers['stripe-signature'] as string;
-
-  let event;
+  const ctx = await createContext({req, res});
+  const caller = stripeWebhookHandlerRouter.createCaller(ctx);
 
   try {
-    event = stripe.constructEvent(buf.toString(), sig);
+    const event = stripe.constructEvent(buf.toString(), sig);
+    const input = baseEventHandlerSchema.parse(event);
+
+    if (input.type === 'customer.subscription.updated') {
+      console.log(JSON.stringify(event, null, 2));
+      await caller.handleCustomerSubscriptionUpdated(
+        handleCustomerSubscriptionUpdatedInputSchema.parse(event)
+      );
+    }
+
+    if (input.type === 'customer.subscription.deleted') {
+      await caller.handleCustomerSubscriptionDeleted(
+        handleCustomerSubscriptionDeletedInputSchema.parse(event)
+      );
+    }
+
+    return res.status(200).json({success: true});
   } catch (err: any) {
+    console.log(err);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
-
-  if (event.type === 'payment_intent.succeeded') {
-    const paymentIntent = event.data.object as s.Stripe.PaymentIntent;
-    console.log(`💰 PaymentIntent status: ${paymentIntent.status}`);
-  } else if (event.type === 'payment_intent.payment_failed') {
-    const paymentIntent = event.data.object as s.Stripe.PaymentIntent;
-    console.log(
-      `❌ Payment failed: ${paymentIntent.last_payment_error?.message}`
-    );
-  } else if (event.type === 'charge.succeeded') {
-    const charge = event.data.object as s.Stripe.Charge;
-    console.log(JSON.stringify(event, null, 2));
-    console.log(`💵 Charge id: ${charge.id}`);
-    const account = await stripe.stripe.accounts.retrieve(
-      charge.destination as string
-    );
-    const email = account.individual?.email;
-  } else {
-    console.warn(`🤷‍♀️ Unhandled event type: ${event.type}`);
-  }
-
-  return res.status(200).json({success: true});
 }
 
 export default cors(handler as any);

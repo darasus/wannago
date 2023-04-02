@@ -1,5 +1,4 @@
 import * as s from 'stripe';
-import {getBaseUrl} from 'utils';
 
 export class Stripe {
   stripe = new s.Stripe(
@@ -20,18 +19,15 @@ export class Stripe {
     );
   }
 
-  async createPaymentLink() {
-    return this.stripe.paymentLinks.create({
-      line_items: [
-        {
-          price: 'price_1MqCgxFblQX9XpW1pVO5cfTn',
-          quantity: 1,
-        },
-      ],
-      after_completion: {
-        type: 'redirect',
-        redirect: {url: `${getBaseUrl()}/subscription-success`},
-      },
-    });
+  async getPaymentLink({email}: {email: string}) {
+    const link = await this.stripe.paymentLinks.retrieve(
+      'link_1Mj0ZgFblQX9XpW1QZ2Z2Q2a'
+    );
+
+    const url = new URL(link.url);
+
+    url.searchParams.append('prefilled_email', email);
+
+    return {url: url.toString()};
   }
 }

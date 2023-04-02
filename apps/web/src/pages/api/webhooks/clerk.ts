@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import {baseScheme, organization, user, email} from 'clerk-webhook-handler';
+import {baseScheme, user, email} from 'clerk-webhook-handler';
 
 export default async function handler(
   req: NextApiRequest,

@@ -19,6 +19,7 @@
     "server-env": "workspace:*",
     "types": "workspace:*",
     "email-input-validation": "workspace:*",
+    "stripe-webhook-input-validation": "workspace:*",
     "email": "workspace:*",
     "utils": "workspace:*",
     "hooks": "workspace:*",

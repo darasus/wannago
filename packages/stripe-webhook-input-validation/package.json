@@ -1,5 +1,5 @@
 {
-  "name": "trpc",
+  "name": "stripe-webhook-input-validation",
   "version": "1.0.0",
   "license": "MIT",
   "main": "./index.ts",
@@ -7,16 +7,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "database": "workspace:*",
     "server-env": "workspace:*",
-    "client-env": "workspace:*",
-    "email-input-validation": "workspace:*",
-    "stripe-webhook-input-validation": "workspace:*",
-    "utils": "workspace:*",
-    "error": "workspace:*",
-    "types": "workspace:*",
     "email": "workspace:*",
-    "lib": "workspace:*",
-    "database": "workspace:*"
+    "utils": "workspace:*",
+    "types": "workspace:*",
+    "email-input-validation": "workspace:*",
+    "error": "workspace:*",
+    "lib": "workspace:*"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",

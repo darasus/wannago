@@ -1,4 +1,4 @@
-import {publicProcedure, router} from '../trpcServer';
+import {router} from '../trpcServer';
 import {mailRouter} from './mail';
 import {eventRouter} from './event';
 import {mapsRouter} from './maps';
@@ -6,10 +6,9 @@ import {adminRouter} from './admin';
 import {userRouter} from './user';
 import {organizationRouter} from './organization';
 import {sessionRouter} from './session';
-import {createContext} from '../context';
+import {subscriptionRouter} from './subscription';
 
 export const appRouter = router({
-  healthcheck: publicProcedure.query(() => 'yay!'),
   event: eventRouter,
   maps: mapsRouter,
   mail: mailRouter,
@@ -17,6 +16,7 @@ export const appRouter = router({
   user: userRouter,
   organization: organizationRouter,
   session: sessionRouter,
+  subscription: subscriptionRouter,
 });
 
 export type AppRouter = typeof appRouter;
