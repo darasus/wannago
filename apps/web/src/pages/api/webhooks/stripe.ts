@@ -38,7 +38,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const input = baseEventHandlerSchema.parse(event);
 
     if (input.type === 'customer.subscription.updated') {
-      console.log(JSON.stringify(event, null, 2));
       await caller.handleCustomerSubscriptionUpdated(
         handleCustomerSubscriptionUpdatedInputSchema.parse(event)
       );

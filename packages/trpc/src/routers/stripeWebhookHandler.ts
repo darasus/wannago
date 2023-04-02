@@ -17,8 +17,6 @@ const handleCustomerSubscriptionCreated = publicProcedure
 const handleCustomerSubscriptionUpdated = publicProcedure
   .input(handleCustomerSubscriptionUpdatedInputSchema)
   .query(async ({ctx, input}) => {
-    console.log(JSON.stringify(input, null, 2));
-
     const customer = (await ctx.stripe.stripe.customers.retrieve(
       input.data.object.customer
     )) as s.Stripe.Customer;
@@ -52,8 +50,6 @@ const handleCustomerSubscriptionUpdated = publicProcedure
 const handleCustomerSubscriptionDeleted = publicProcedure
   .input(handleCustomerSubscriptionDeletedInputSchema)
   .query(async ({ctx, input}) => {
-    console.log(JSON.stringify(input, null, 2));
-
     const customer = (await ctx.stripe.stripe.customers.retrieve(
       input.data.object.customer
     )) as s.Stripe.Customer;
