@@ -6,23 +6,23 @@ import {PricingPlan} from './PricingPlan';
 export function Pricing() {
   return (
     <SectionContainer id="features" className="bg-white">
-      <Container className="my-0">
+      <Container maxSize="full" className="my-0">
         <SectionHeader
           title="Simple pricing, for everyone."
           description={`Straightforward pricing without hidden fees.`}
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl m-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 m-auto">
           <PricingPlan
-            name="WannaGo Starter"
+            name="Starter"
             price="$0"
-            description="Great for anyone who is self-employed and just getting started."
-            features={['Up to 100 invites', 'Up to 10 events']}
+            description="Great for anyone running small private events."
+            features={['Up to 50 invites', 'Up to 5 events']}
             featured={false}
             planId="starter"
           />
           <PricingPlan
             featured
-            name="WannaGo Pro"
+            name="Pro"
             planId="pro"
             price="$2.99"
             description="Perfect for small / medium sized businesses."
@@ -30,10 +30,29 @@ export function Pricing() {
               'Unlimited invites',
               'Unlimited attendees',
               'Unlimited events',
-              'Unlimited team members',
               'AI assistant',
               'Many more upcoming features...',
             ]}
+          />
+          <PricingPlan
+            featured
+            name="Business"
+            planId="business"
+            price="$9.99"
+            description="Perfect for enterprise and special needs."
+            features={[
+              'Everything in Pro',
+              'Unlimited team members',
+              'Many more upcoming features...',
+            ]}
+          />
+          <PricingPlan
+            featured
+            name="Enterprise"
+            planId="enterprise"
+            price="Custom"
+            description="Perfect for large organizations with special needs."
+            features={['Everything in Business', 'SSO', 'Custom permissions']}
           />
         </div>
       </Container>

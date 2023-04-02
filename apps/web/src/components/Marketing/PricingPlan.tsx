@@ -9,7 +9,7 @@ interface Props {
   name: string;
   description: string;
   price: string;
-  planId: 'starter' | 'pro';
+  planId: 'starter' | 'pro' | 'business' | 'enterprise';
   features: string[];
 }
 
@@ -72,7 +72,9 @@ export function PricingPlan({
           ))}
         </div>
         <div className="grow mb-6" />
-        <Button onClick={onClick}>Get started</Button>
+        <Button onClick={onClick}>
+          {planId === 'enterprise' ? 'Get in touch' : 'Get started'}
+        </Button>
       </CardBase>
     </>
   );
