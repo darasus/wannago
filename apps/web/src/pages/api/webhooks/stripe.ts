@@ -11,6 +11,7 @@ import {
   handleCustomerSubscriptionUpdatedInputSchema,
 } from 'stripe-webhook-input-validation';
 import * as s from 'stripe';
+import {captureException} from '@sentry/nextjs';
 
 const cors = Cors({
   allowMethods: ['POST', 'HEAD'],
@@ -51,7 +52,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     return res.status(200).json({success: true});
   } catch (err: any) {
-    console.log(err);
+    captureException(err);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 }

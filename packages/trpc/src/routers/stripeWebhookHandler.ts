@@ -35,6 +35,7 @@ const handleCustomerSubscriptionUpdated = publicProcedure
       await ctx.prisma.subscription.create({
         data: {
           type: 'PRO',
+          customer: customer.id,
           user: {
             connect: {
               email: customer.email,

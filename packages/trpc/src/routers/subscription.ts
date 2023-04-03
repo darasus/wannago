@@ -1,9 +1,8 @@
 import {router, protectedProcedure} from '../trpcServer';
-import {z} from 'zod';
 import {userNotFoundError} from 'error';
-import {invariant} from 'utils';
+import {getBaseUrl, invariant} from 'utils';
 
-const createProSubscriptionLink = protectedProcedure.query(
+const getProSubscriptionLink = protectedProcedure.query(
   async ({ctx, input}) => {
     const user = await ctx.actions.getUserByExternalId({
       externalId: ctx.auth.userId,
@@ -11,16 +10,37 @@ const createProSubscriptionLink = protectedProcedure.query(
 
     invariant(user, userNotFoundError);
 
-    const link = await ctx.stripe.stripe.paymentLinks.retrieve(
-      'plink_1MqCoaFblQX9XpW1P2AFD8rP'
-    );
+    const url = new URL(`${getBaseUrl()}/api/create-checkout-session`);
 
-    const url = new URL(link.url);
-    url.searchParams.append('prefilled_email', user.email);
+    url.searchParams.append('plan', 'wannago_pro');
+    url.searchParams.append('customerEmail', user.email);
 
-    return {url: url.toString()};
+    return url.toString();
   }
 );
+
+const getCustomerPortalLink = protectedProcedure.query(async ({ctx, input}) => {
+  const user = await ctx.prisma.user.findFirst({
+    where: {
+      externalId: ctx.auth.userId,
+    },
+    include: {
+      subscription: true,
+    },
+  });
+
+  invariant(user, userNotFoundError);
+
+  const url = new URL(`${getBaseUrl()}/api/create-portal-session`);
+
+  if (!user.subscription?.customer) {
+    return null;
+  }
+
+  url.searchParams.append('customerId', user.subscription?.customer);
+
+  return url.toString();
+});
 
 const getMySubscription = protectedProcedure.query(async ({ctx, input}) => {
   const user = await ctx.prisma.user.findFirst({
@@ -34,19 +54,11 @@ const getMySubscription = protectedProcedure.query(async ({ctx, input}) => {
 
   invariant(user, userNotFoundError);
 
-  const customerPortalUrl = new URL(
-    'https://billing.stripe.com/p/login/test_6oEcP2d7u0XCdgYbII'
-  );
-
-  customerPortalUrl.searchParams.append('prefilled_email', user.email);
-
-  return {
-    subscription: user?.subscription,
-    customerPortalUrl: customerPortalUrl.toString(),
-  };
+  return user.subscription;
 });
 
 export const subscriptionRouter = router({
-  createProSubscriptionLink,
+  getProSubscriptionLink,
+  getCustomerPortalLink,
   getMySubscription,
 });

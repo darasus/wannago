@@ -5,9 +5,9 @@ import {UserSettings} from '../../features/UserSettings/UserSettings';
 import {withProtected} from '../../utils/withAuthProtect';
 import {useMyOrganizationQuery, useMyUserQuery} from 'hooks';
 import {useRouter} from 'next/router';
-import {SubscriptionSettings} from '../../features/SubscriptionSettings/SubscriptionSettings';
+import {UserSubscription} from '../../features/UserSubscription/UserSubscription';
 
-type SettingsPageType = 'personal' | 'team' | 'subscription';
+type SettingsPageType = 'personal' | 'team';
 
 function SettingsPage() {
   const router = useRouter();
@@ -27,7 +27,6 @@ function SettingsPage() {
   const pageHeaderTitle: Record<SettingsPageType, string> = {
     personal: 'Personal settings',
     team: 'Team settings',
-    subscription: 'Subscription settings',
   };
 
   return (
@@ -37,11 +36,7 @@ function SettingsPage() {
       </Head>
       <Container maxSize="sm">
         <div className="flex flex-col gap-y-4">
-          <PageHeader
-            title={
-              setting === 'personal' ? 'Personal settings' : 'Team settings'
-            }
-          >
+          <PageHeader title={pageHeaderTitle[setting]}>
             <div className="flex gap-2">
               <Button
                 onClick={() => router.push('/settings/personal')}
@@ -57,18 +52,15 @@ function SettingsPage() {
               >
                 Team
               </Button>
-              <Button
-                onClick={() => router.push('/settings/subscription')}
-                size="sm"
-                variant={setting === 'subscription' ? 'primary' : 'neutral'}
-              >
-                Subscription
-              </Button>
             </div>
           </PageHeader>
-          {setting === 'personal' && <UserSettings />}
+          {setting === 'personal' && (
+            <div className="flex flex-col gap-4">
+              <UserSettings />
+              <UserSubscription />
+            </div>
+          )}
           {setting === 'team' && <TeamSettings />}
-          {setting === 'subscription' && <SubscriptionSettings />}
         </div>
       </Container>
     </>

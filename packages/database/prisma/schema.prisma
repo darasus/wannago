@@ -119,4 +119,5 @@ model Subscription {
   cancelledAt  DateTime?
   user         User[]
   organization Organization[]
+  customer     String
 }
