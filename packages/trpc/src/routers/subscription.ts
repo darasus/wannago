@@ -1,46 +1,79 @@
 import {router, protectedProcedure} from '../trpcServer';
 import {userNotFoundError} from 'error';
 import {getBaseUrl, invariant} from 'utils';
+import {z} from 'zod';
 
-const getProSubscriptionLink = protectedProcedure.query(
-  async ({ctx, input}) => {
+type ProductPlan = 'wannago_pro' | 'wannago_business';
+
+const callbackPathMap: Record<ProductPlan, string> = {
+  wannago_pro: '/settings/personal',
+  wannago_business: '/settings/team',
+};
+
+const createCheckoutSession = protectedProcedure
+  .input(z.object({plan: z.enum(['wannago_pro'])}))
+  .mutation(async ({ctx, input}) => {
     const user = await ctx.actions.getUserByExternalId({
       externalId: ctx.auth.userId,
     });
 
     invariant(user, userNotFoundError);
 
-    const url = new URL(`${getBaseUrl()}/api/create-checkout-session`);
+    const prices = await ctx.stripe.stripe.prices.list({
+      lookup_keys: [input.plan],
+      expand: ['data.product'],
+    });
 
-    url.searchParams.append('plan', 'wannago_pro');
-    url.searchParams.append('customerEmail', user.email);
+    const callbackPath = callbackPathMap[input.plan];
 
-    return url.toString();
-  }
-);
+    const session = await ctx.stripe.stripe.checkout.sessions.create({
+      customer_email: user.email,
+      billing_address_collection: 'auto',
+      line_items: [
+        {
+          price: prices.data[0].id,
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      // TODO: fix
+      success_url: `${getBaseUrl()}${callbackPath}`,
+      cancel_url: `${getBaseUrl()}${callbackPath}`,
+    });
 
-const getCustomerPortalLink = protectedProcedure.query(async ({ctx, input}) => {
-  const user = await ctx.prisma.user.findFirst({
-    where: {
-      externalId: ctx.auth.userId,
-    },
-    include: {
-      subscription: true,
-    },
+    return session.url;
   });
 
-  invariant(user, userNotFoundError);
+const createCustomerPortalSession = protectedProcedure.mutation(
+  async ({ctx, input}) => {
+    const user = await ctx.prisma.user.findFirst({
+      where: {
+        externalId: ctx.auth.userId,
+      },
+      include: {
+        subscription: true,
+      },
+    });
 
-  const url = new URL(`${getBaseUrl()}/api/create-portal-session`);
+    invariant(user, userNotFoundError);
 
-  if (!user.subscription?.customer) {
-    return null;
+    if (!user.subscription?.customer) return null;
+
+    const customer = await ctx.stripe.stripe.customers.retrieve(
+      user.subscription?.customer
+    );
+
+    const portalSession = await ctx.stripe.stripe.billingPortal.sessions.create(
+      {
+        customer: customer.id,
+        // TODO: fix
+        return_url: `${getBaseUrl()}/settings/personal`,
+      }
+    );
+
+    return portalSession.url;
   }
-
-  url.searchParams.append('customerId', user.subscription?.customer);
-
-  return url.toString();
-});
+);
 
 const getMySubscription = protectedProcedure.query(async ({ctx, input}) => {
   const user = await ctx.prisma.user.findFirst({
@@ -58,7 +91,7 @@ const getMySubscription = protectedProcedure.query(async ({ctx, input}) => {
 });
 
 export const subscriptionRouter = router({
-  getProSubscriptionLink,
-  getCustomerPortalLink,
+  createCheckoutSession,
+  createCustomerPortalSession,
   getMySubscription,
 });

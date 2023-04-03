@@ -1,19 +1,40 @@
+import {captureException} from '@sentry/nextjs';
+import {TRPCClientError} from '@trpc/client';
+import {useRouter} from 'next/router';
+import {useCallback} from 'react';
 import {trpc} from 'trpc/src/trpc';
 import {Badge, Button, CardBase, LoadingBlock, Text} from 'ui';
 
 export function UserSubscription() {
-  const proSubscriptionLink =
-    trpc.subscription.getProSubscriptionLink.useQuery();
-  const customerPortalLink = trpc.subscription.getCustomerPortalLink.useQuery();
+  const router = useRouter();
+  const checkoutSession = trpc.subscription.createCheckoutSession.useMutation();
+  const customerPortalSession =
+    trpc.subscription.createCustomerPortalSession.useMutation();
   const mySubscription = trpc.subscription.getMySubscription.useQuery();
 
   const isPro = mySubscription.data?.type === 'PRO';
 
-  if (
-    mySubscription.isLoading ||
-    customerPortalLink.isLoading ||
-    proSubscriptionLink.isLoading
-  ) {
+  const handleCreateCheckoutSession = useCallback(() => {
+    checkoutSession.mutateAsync({plan: 'wannago_pro'}).then(url => {
+      if (url) {
+        router.push(url);
+      } else {
+        captureException(new TRPCClientError('No checkout session URL'));
+      }
+    });
+  }, [checkoutSession, router]);
+
+  const handleCreatePortalSession = useCallback(() => {
+    customerPortalSession.mutateAsync().then(url => {
+      if (url) {
+        router.push(url);
+      } else {
+        captureException(new TRPCClientError('No portal session URL'));
+      }
+    });
+  }, [customerPortalSession, router]);
+
+  if (mySubscription.isLoading) {
     return (
       <CardBase>
         <LoadingBlock />
@@ -33,18 +54,22 @@ export function UserSubscription() {
               {subscriptionLabel}
             </Badge>
           </div>
-          {isPro && customerPortalLink.data && (
+          {isPro && (
             <Button
-              as="a"
               size="xs"
-              href={customerPortalLink.data}
               variant="neutral"
+              onClick={handleCreatePortalSession}
+              isLoading={customerPortalSession.isLoading}
             >
               Manage
             </Button>
           )}
-          {!isPro && proSubscriptionLink.data && (
-            <Button as="a" href={proSubscriptionLink.data} size="xs">
+          {!isPro && (
+            <Button
+              size="xs"
+              onClick={handleCreateCheckoutSession}
+              isLoading={checkoutSession.isLoading}
+            >
               Upgrade to PRO
             </Button>
           )}
