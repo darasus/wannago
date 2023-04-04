@@ -3,8 +3,7 @@ import {organizationNotFoundError, userNotFoundError} from 'error';
 import {getBaseUrl, invariant} from 'utils';
 import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
-import {get, getAll} from '@vercel/edge-config';
-import {env} from 'server-env';
+import {get} from '@vercel/edge-config';
 
 type ProductPlan = 'wannago_pro' | 'wannago_business';
 
@@ -19,7 +18,7 @@ const priceSchema = z.object({
 });
 
 const getPriceIds = async () => {
-  const response = await get(env.VERCEL_ENV);
+  const response = await get('price_ids');
   return priceSchema.parse(response);
 };
 
