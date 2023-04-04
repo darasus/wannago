@@ -1,19 +1,19 @@
-import {useMyUserQuery, useSubscription} from 'hooks';
+import {useMyOrganizationQuery, useMyUserQuery, useSubscription} from 'hooks';
 import {Badge, Button, CardBase, LoadingBlock, Text} from 'ui';
 
-export function UserSubscription() {
-  const me = useMyUserQuery();
+export function OrganizationSubscription() {
+  const organization = useMyOrganizationQuery();
   const {
     subscription,
     handleCreateCheckoutSession,
     handleCreatePortalSession,
     checkoutSession,
     customerPortalSession,
-  } = useSubscription({type: 'PRO'});
+  } = useSubscription({type: 'BUSINESS'});
   const hasPaidSubscription = Boolean(subscription.data);
   const subscriptionTypeLabel = subscription.data?.type || 'STARTER';
 
-  if (subscription.isLoading || me.isLoading) {
+  if (subscription.isLoading || organization.isLoading) {
     return (
       <CardBase>
         <LoadingBlock />
@@ -26,10 +26,15 @@ export function UserSubscription() {
       <CardBase title="Subscription">
         <div className="flex items-center">
           <div className="flex items-center grow gap-1">
-            <Text>WannaGo</Text>
-            <Badge color={hasPaidSubscription ? 'green' : 'gray'} size="xs">
-              {subscriptionTypeLabel}
-            </Badge>
+            {hasPaidSubscription && (
+              <>
+                <Text>WannaGo</Text>
+                <Badge color={hasPaidSubscription ? 'green' : 'gray'} size="xs">
+                  {subscriptionTypeLabel}
+                </Badge>
+              </>
+            )}
+            {!hasPaidSubscription && <Text>No active subscription</Text>}
           </div>
           <div className="flex gap-2">
             {!hasPaidSubscription && (
@@ -39,10 +44,10 @@ export function UserSubscription() {
                 isLoading={checkoutSession.isLoading}
                 variant="success"
               >
-                Upgrade to PRO
+                Upgrade to BUSINESS
               </Button>
             )}
-            {me.data?.stripeCustomerId && (
+            {organization.data?.stripeCustomerId && (
               <Button
                 size="xs"
                 variant="neutral"

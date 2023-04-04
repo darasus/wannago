@@ -62,16 +62,17 @@ model User {
 }
 
 model Organization {
-  id             String        @id @default(uuid())
-  externalId     String?       @unique()
-  users          User[]        @relation(name: "UserOrganization")
-  events         Event[]       @relation(name: "EventOrganization")
-  name           String?       @db.VarChar(255)
-  email          String?       @unique()
-  logoSrc        String?
-  disabled       Boolean       @default(false)
-  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
-  subscriptionId String?
+  id               String        @id @default(uuid())
+  externalId       String?       @unique()
+  users            User[]        @relation(name: "UserOrganization")
+  events           Event[]       @relation(name: "EventOrganization")
+  name             String?       @db.VarChar(255)
+  email            String?       @unique()
+  logoSrc          String?
+  disabled         Boolean       @default(false)
+  subscription     Subscription? @relation(fields: [subscriptionId], references: [id])
+  subscriptionId   String?
+  stripeCustomerId String?
 
   @@index([externalId])
   @@index([subscriptionId])

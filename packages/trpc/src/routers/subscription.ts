@@ -1,7 +1,10 @@
 import {router, protectedProcedure} from '../trpcServer';
-import {userNotFoundError} from 'error';
+import {organizationNotFoundError, userNotFoundError} from 'error';
 import {getBaseUrl, invariant} from 'utils';
 import {z} from 'zod';
+import {TRPCError} from '@trpc/server';
+import {get, getAll} from '@vercel/edge-config';
+import {env} from 'server-env';
 
 type ProductPlan = 'wannago_pro' | 'wannago_business';
 
@@ -10,29 +13,59 @@ const callbackUrlMap: Record<ProductPlan, string> = {
   wannago_business: `${getBaseUrl()}/settings/team`,
 };
 
+const priceSchema = z.object({
+  wannago_pro: z.string(),
+  wannago_business: z.string(),
+});
+
+const getPriceIds = async () => {
+  const response = await get(env.VERCEL_ENV);
+  return priceSchema.parse(response);
+};
+
 const createCheckoutSession = protectedProcedure
-  .input(z.object({plan: z.enum(['wannago_pro'])}))
+  .input(z.object({plan: z.enum(['wannago_pro', 'wannago_business'])}))
   .mutation(async ({ctx, input}) => {
-    const user = await ctx.actions.getUserByExternalId({
-      externalId: ctx.auth.userId,
-    });
+    let stripeCustomerId: string | undefined;
+    let email: string | undefined;
 
-    invariant(user, userNotFoundError);
+    if (input.plan === 'wannago_pro') {
+      const user = await ctx.actions.getUserByExternalId({
+        externalId: ctx.auth.userId,
+      });
 
-    const prices = await ctx.stripe.stripe.prices.list({
-      lookup_keys: [input.plan],
-      expand: ['data.product'],
-    });
+      invariant(user, userNotFoundError);
+
+      stripeCustomerId = user.stripeCustomerId || undefined;
+      email = user.email;
+    }
+
+    if (input.plan === 'wannago_business') {
+      const organization = await ctx.actions.getOrganizationByUserExternalId({
+        externalId: ctx.auth.userId,
+      });
+
+      invariant(organization, organizationNotFoundError);
+
+      stripeCustomerId = organization.stripeCustomerId || undefined;
+      email = organization.email || undefined;
+    }
+
+    invariant(
+      email,
+      new TRPCError({code: 'BAD_REQUEST', message: 'Email is required'})
+    );
 
     const callbackUrl = callbackUrlMap[input.plan];
+    const prices = await getPriceIds();
 
     const session = await ctx.stripe.stripe.checkout.sessions.create({
-      customer: user.stripeCustomerId || undefined,
-      customer_email: user.stripeCustomerId ? undefined : user.email,
+      customer: stripeCustomerId,
+      customer_email: stripeCustomerId ? undefined : email,
       billing_address_collection: 'auto',
       line_items: [
         {
-          price: prices.data[0].id,
+          price: prices[input.plan],
           quantity: 1,
         },
       ],
@@ -75,20 +108,49 @@ const createCustomerPortalSession = protectedProcedure.mutation(
   }
 );
 
-const getMySubscription = protectedProcedure.query(async ({ctx, input}) => {
-  const user = await ctx.prisma.user.findFirst({
-    where: {
-      externalId: ctx.auth.userId,
-    },
-    include: {
-      subscription: true,
-    },
+const getMySubscription = protectedProcedure
+  .input(
+    z.object({
+      type: z.enum(['PRO', 'BUSINESS']),
+    })
+  )
+  .query(async ({ctx, input}) => {
+    if (input.type === 'PRO') {
+      const user = await ctx.prisma.user.findFirst({
+        where: {
+          externalId: ctx.auth.userId,
+        },
+        include: {
+          subscription: true,
+        },
+      });
+
+      invariant(user, userNotFoundError);
+
+      return user.subscription;
+    }
+
+    if (input.type === 'BUSINESS') {
+      const organization = await ctx.prisma.organization.findFirst({
+        where: {
+          users: {
+            some: {
+              externalId: ctx.auth.userId,
+            },
+          },
+        },
+        include: {
+          subscription: true,
+        },
+      });
+
+      if (!organization) return null;
+
+      return organization.subscription;
+    }
+
+    return null;
   });
-
-  invariant(user, userNotFoundError);
-
-  return user.subscription;
-});
 
 export const subscriptionRouter = router({
   createCheckoutSession,
