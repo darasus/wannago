@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
 import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {Button, CardBase, Container, LoadingBlock, Text} from 'ui';
-import {cn, getPaymentLinkUrl, sleep} from 'utils';
+import {cn, sleep} from 'utils';
 import {Input} from '../components/Input/Input/Input';
 import {titleFont} from '../fonts';
 import type {ClerkAPIError} from '@clerk/types';
@@ -34,11 +34,6 @@ function LoginPage() {
     mode: 'onSubmit',
   });
 
-  const redirectUrl =
-    plan === 'pro'
-      ? getPaymentLinkUrl({email: emailForm.watch('email')})
-      : '/dashboard';
-
   const handleOnDone = async (createdSessionId: string): Promise<any> => {
     await setSession?.(createdSessionId);
 
@@ -47,7 +42,7 @@ function LoginPage() {
       return handleOnDone(createdSessionId);
     }
 
-    router.push(redirectUrl);
+    router.push('/dashboard');
   };
 
   return (
