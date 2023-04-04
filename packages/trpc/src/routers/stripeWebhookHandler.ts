@@ -32,13 +32,22 @@ const handleCustomerSubscriptionUpdated = publicProcedure
     invariant(user, userNotFoundError);
 
     if (input.data.object.status === 'active' && !user.subscriptionId) {
+      if (!user.stripeCustomerId) {
+        await ctx.prisma.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            stripeCustomerId: customer.id,
+          },
+        });
+      }
       await ctx.prisma.subscription.create({
         data: {
           type: 'PRO',
-          customer: customer.id,
           user: {
             connect: {
-              email: customer.email,
+              id: user.id,
             },
           },
         },

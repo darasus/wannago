@@ -1,11 +1,13 @@
 import {captureException} from '@sentry/nextjs';
 import {TRPCClientError} from '@trpc/client';
+import {useMyUserQuery} from 'hooks';
 import {useRouter} from 'next/router';
 import {useCallback} from 'react';
 import {trpc} from 'trpc/src/trpc';
 import {Badge, Button, CardBase, LoadingBlock, Text} from 'ui';
 
 export function UserSubscription() {
+  const me = useMyUserQuery();
   const router = useRouter();
   const checkoutSession = trpc.subscription.createCheckoutSession.useMutation();
   const customerPortalSession =
@@ -34,7 +36,7 @@ export function UserSubscription() {
     });
   }, [customerPortalSession, router]);
 
-  if (mySubscription.isLoading) {
+  if (mySubscription.isLoading || me.isLoading) {
     return (
       <CardBase>
         <LoadingBlock />
@@ -54,25 +56,27 @@ export function UserSubscription() {
               {subscriptionLabel}
             </Badge>
           </div>
-          {isPro && (
-            <Button
-              size="xs"
-              variant="neutral"
-              onClick={handleCreatePortalSession}
-              isLoading={customerPortalSession.isLoading}
-            >
-              Manage
-            </Button>
-          )}
-          {!isPro && (
-            <Button
-              size="xs"
-              onClick={handleCreateCheckoutSession}
-              isLoading={checkoutSession.isLoading}
-            >
-              Upgrade to PRO
-            </Button>
-          )}
+          <div className="flex gap-2">
+            {!isPro && (
+              <Button
+                size="xs"
+                onClick={handleCreateCheckoutSession}
+                isLoading={checkoutSession.isLoading}
+              >
+                Upgrade to PRO
+              </Button>
+            )}
+            {me.data?.stripeCustomerId && (
+              <Button
+                size="xs"
+                variant="neutral"
+                onClick={handleCreatePortalSession}
+                isLoading={customerPortalSession.isLoading}
+              >
+                Manage
+              </Button>
+            )}
+          </div>
         </div>
       </CardBase>
     </>

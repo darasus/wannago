@@ -5,9 +5,9 @@ import {z} from 'zod';
 
 type ProductPlan = 'wannago_pro' | 'wannago_business';
 
-const callbackPathMap: Record<ProductPlan, string> = {
-  wannago_pro: '/settings/personal',
-  wannago_business: '/settings/team',
+const callbackUrlMap: Record<ProductPlan, string> = {
+  wannago_pro: `${getBaseUrl()}/settings/personal`,
+  wannago_business: `${getBaseUrl()}/settings/team`,
 };
 
 const createCheckoutSession = protectedProcedure
@@ -24,10 +24,11 @@ const createCheckoutSession = protectedProcedure
       expand: ['data.product'],
     });
 
-    const callbackPath = callbackPathMap[input.plan];
+    const callbackUrl = callbackUrlMap[input.plan];
 
     const session = await ctx.stripe.stripe.checkout.sessions.create({
-      customer_email: user.email,
+      customer: user.stripeCustomerId || undefined,
+      customer_email: user.stripeCustomerId ? undefined : user.email,
       billing_address_collection: 'auto',
       line_items: [
         {
@@ -36,16 +37,15 @@ const createCheckoutSession = protectedProcedure
         },
       ],
       mode: 'subscription',
-      // TODO: fix
-      success_url: `${getBaseUrl()}${callbackPath}`,
-      cancel_url: `${getBaseUrl()}${callbackPath}`,
+      success_url: callbackUrl,
+      cancel_url: callbackUrl,
     });
 
     return session.url;
   });
 
 const createCustomerPortalSession = protectedProcedure.mutation(
-  async ({ctx, input}) => {
+  async ({ctx}) => {
     const user = await ctx.prisma.user.findFirst({
       where: {
         externalId: ctx.auth.userId,
@@ -57,10 +57,10 @@ const createCustomerPortalSession = protectedProcedure.mutation(
 
     invariant(user, userNotFoundError);
 
-    if (!user.subscription?.customer) return null;
+    if (!user.stripeCustomerId) return null;
 
     const customer = await ctx.stripe.stripe.customers.retrieve(
-      user.subscription?.customer
+      user.stripeCustomerId
     );
 
     const portalSession = await ctx.stripe.stripe.billingPortal.sessions.create(
