@@ -28,6 +28,7 @@ import {canModifyEvent} from './actions/canModifyEvent';
 import {updateEventReminder} from './actions/updateEventReminder';
 import {createEventReminder} from './actions/createEventReminder';
 import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
+import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
 
 const actions = {
   getEvents,
@@ -47,8 +48,14 @@ const actions = {
   getOrganizerByEmail,
 } as const;
 
+const assertions = {assertCanCreateEvent} as const;
+
 type Actions = {
   [K in keyof typeof actions]: ReturnType<(typeof actions)[K]>;
+};
+
+type Assertions = {
+  [K in keyof typeof assertions]: ReturnType<(typeof assertions)[K]>;
 };
 
 interface CreateInnerContextOptions {
@@ -66,6 +73,7 @@ interface CreateInnerContextOptions {
 
 interface CreateContextOptions extends CreateInnerContextOptions {
   actions: Actions;
+  assertions: Assertions;
 }
 
 export async function createContextInner(_opts: CreateInnerContextOptions) {
@@ -84,6 +92,7 @@ export async function createContextInner(_opts: CreateInnerContextOptions) {
 }
 
 export type ActionContext = CreateInnerContextOptions;
+export type AssertionContext = CreateInnerContextOptions;
 export type Context = CreateContextOptions;
 
 export async function createContext(
@@ -115,5 +124,11 @@ export async function createContext(
     actions: Object.values(actions).reduce<Actions>((acc, action) => {
       return {...acc, [action.name]: action(innerContext)};
     }, {} as Actions),
+    assertions: Object.values(assertions).reduce<Assertions>(
+      (acc, assertion) => {
+        return {...acc, [assertion.name]: assertion(innerContext)};
+      },
+      {} as Assertions
+    ),
   };
 }

@@ -7,6 +7,7 @@ import {trpc} from 'trpc/src/trpc';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 import {invariant} from 'utils';
+import {toast} from 'react-hot-toast';
 
 export function AddEventForm() {
   const {logEvent} = useAmplitude();
@@ -21,6 +22,9 @@ export function AddEventForm() {
       if (data?.id) {
         push(`/e/${data.shortId}`);
       }
+    },
+    onError(error) {
+      toast.error(error.message);
     },
   });
   const utils = trpc.useContext();

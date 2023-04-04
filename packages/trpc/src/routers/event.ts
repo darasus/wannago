@@ -3,23 +3,12 @@ import {z} from 'zod';
 import {nanoid} from 'nanoid';
 import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
-import {differenceInSeconds} from 'date-fns';
-import {
-  random,
-  getBaseUrl,
-  isUser,
-  isOrganization,
-  invariant,
-  canCreateReminder,
-  createDelay,
-} from 'utils';
+import {random, getBaseUrl, isUser, isOrganization, invariant} from 'utils';
 import {env} from 'server-env';
-import {utcToZonedTime} from 'date-fns-tz';
 import {EmailType} from 'types';
 import {eventNotFoundError, userNotFoundError} from 'error';
 import {
   handleEventInviteEmailInputSchema,
-  handleEventReminderEmailInputSchema,
   handleEventSignUpEmailInputSchema,
   handleOrganizerEventSignUpNotificationEmailInputSchema,
 } from 'email-input-validation';
@@ -222,10 +211,30 @@ const create = protectedProcedure
         });
       }
 
-      const [user, organization] = await Promise.all([
-        ctx.actions.getUserById({id: authorId}),
-        ctx.actions.getOrganizationById({id: authorId}),
-      ]);
+      const [user, organization, subscription, userEventCount] =
+        await Promise.all([
+          ctx.prisma.user.findFirst({
+            where: {id: authorId},
+          }),
+          ctx.actions.getOrganizationById({id: authorId}),
+          ctx.prisma.subscription.findFirst({
+            where: {
+              id: authorId,
+            },
+          }),
+          ctx.prisma.event.count({
+            where: {
+              userId: authorId,
+            },
+          }),
+        ]);
+
+      ctx.assertions.assertCanCreateEvent({
+        user,
+        organization,
+        subscription,
+        userEventCount,
+      });
 
       let event = await ctx.prisma.event.create({
         data: {

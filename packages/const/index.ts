@@ -8,9 +8,6 @@ type Permissions = {
   maxNumberOfOrganizationEvents: number;
   maxNumberOfPersonalEventAttendees: number;
   maxNumberOfOrganizationEventAttendees: number;
-  canCreateOrganization: boolean;
-  canInviteTeamMembers: boolean;
-  canGenerateDescriptionWithAI: boolean;
 };
 
 export const featureConfig: Record<SubscriptionType, Permissions> = {
@@ -19,26 +16,17 @@ export const featureConfig: Record<SubscriptionType, Permissions> = {
     maxNumberOfOrganizationEvents: 0,
     maxNumberOfPersonalEventAttendees: 50,
     maxNumberOfOrganizationEventAttendees: 0,
-    canCreateOrganization: true,
-    canInviteTeamMembers: false,
-    canGenerateDescriptionWithAI: false,
   },
   PRO: {
     maxNumberOfPersonalEvents: 1_000_000_000_000,
     maxNumberOfOrganizationEvents: 0,
     maxNumberOfPersonalEventAttendees: 1_000_000_000_000,
     maxNumberOfOrganizationEventAttendees: 0,
-    canCreateOrganization: true,
-    canInviteTeamMembers: false,
-    canGenerateDescriptionWithAI: true,
   },
   BUSINESS: {
     maxNumberOfPersonalEvents: 0,
     maxNumberOfOrganizationEvents: 1_000_000_000_000,
     maxNumberOfPersonalEventAttendees: 0,
     maxNumberOfOrganizationEventAttendees: 1_000_000_000_000,
-    canCreateOrganization: true,
-    canInviteTeamMembers: true,
-    canGenerateDescriptionWithAI: true,
   },
 };
