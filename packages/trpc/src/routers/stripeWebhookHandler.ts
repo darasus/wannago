@@ -5,8 +5,8 @@ import {
   handleCustomerSubscriptionDeletedInputSchema,
 } from 'stripe-webhook-input-validation';
 import * as s from 'stripe';
-import {invariant} from 'utils';
-import {userNotFoundError} from 'error';
+import {invariant, isOrganization, isUser} from 'utils';
+import {organizerNotFoundError} from 'error';
 
 const handleCustomerSubscriptionCreated = publicProcedure
   .input(handleCustomerSubscriptionCreatedInputSchema)
@@ -17,42 +17,64 @@ const handleCustomerSubscriptionCreated = publicProcedure
 const handleCustomerSubscriptionUpdated = publicProcedure
   .input(handleCustomerSubscriptionUpdatedInputSchema)
   .query(async ({ctx, input}) => {
+    if (input.data.object.status !== 'active') return {success: true};
+
     const customer = (await ctx.stripe.stripe.customers.retrieve(
       input.data.object.customer
     )) as s.Stripe.Customer;
 
     invariant(customer.email, 'Customer email is required');
 
-    const user = await ctx.prisma.user.findFirst({
-      where: {
-        email: customer.email,
-      },
+    const organizer = await ctx.actions.getOrganizerByEmail({
+      email: customer.email,
     });
 
-    invariant(user, userNotFoundError);
+    invariant(organizer, organizerNotFoundError);
 
-    if (input.data.object.status === 'active' && !user.subscriptionId) {
-      if (!user.stripeCustomerId) {
+    if (!organizer.subscriptionId) {
+      const data = {stripeCustomerId: customer.id};
+
+      if (isUser(organizer)) {
         await ctx.prisma.user.update({
           where: {
-            id: user.id,
+            id: organizer.id,
           },
-          data: {
-            stripeCustomerId: customer.id,
-          },
+          data,
         });
       }
-      await ctx.prisma.subscription.create({
-        data: {
-          type: 'PRO',
-          user: {
-            connect: {
-              id: user.id,
-            },
+      if (isOrganization(organizer)) {
+        await ctx.prisma.organization.update({
+          where: {
+            id: organizer.id,
           },
-        },
-      });
+          data,
+        });
+      }
     }
+
+    await ctx.prisma.subscription.create({
+      data: {
+        type: isUser(organizer) ? 'PRO' : 'BUSINESS',
+        ...(isUser(organizer)
+          ? {
+              user: {
+                connect: {
+                  id: organizer.id,
+                },
+              },
+            }
+          : {}),
+        ...(isOrganization(organizer)
+          ? {
+              organization: {
+                connect: {
+                  id: organizer.id,
+                },
+              },
+            }
+          : {}),
+      },
+    });
 
     return {success: true};
   });
@@ -60,24 +82,24 @@ const handleCustomerSubscriptionUpdated = publicProcedure
 const handleCustomerSubscriptionDeleted = publicProcedure
   .input(handleCustomerSubscriptionDeletedInputSchema)
   .query(async ({ctx, input}) => {
+    if (input.data.object.status !== 'canceled') return {success: true};
+
     const customer = (await ctx.stripe.stripe.customers.retrieve(
       input.data.object.customer
     )) as s.Stripe.Customer;
 
     invariant(customer.email, 'Customer email is required');
 
-    const user = await ctx.prisma.user.findFirst({
-      where: {
-        email: customer.email,
-      },
+    const organizer = await ctx.actions.getOrganizerByEmail({
+      email: customer.email,
     });
 
-    invariant(user, userNotFoundError);
+    invariant(organizer, organizerNotFoundError);
 
-    if (input.data.object.status === 'canceled' && user.subscriptionId) {
+    if (organizer.subscriptionId) {
       await ctx.prisma.subscription.delete({
         where: {
-          id: user.subscriptionId,
+          id: organizer.subscriptionId,
         },
       });
     }

@@ -77,36 +77,56 @@ const createCheckoutSession = protectedProcedure
     return session.url;
   });
 
-const createCustomerPortalSession = protectedProcedure.mutation(
-  async ({ctx}) => {
-    const user = await ctx.prisma.user.findFirst({
-      where: {
+const createCustomerPortalSession = protectedProcedure
+  .input(z.object({plan: z.enum(['wannago_pro', 'wannago_business'])}))
+  .mutation(async ({ctx, input}) => {
+    let stripeCustomerId: string | undefined;
+
+    if (input.plan === 'wannago_pro') {
+      const user = await ctx.prisma.user.findFirst({
+        where: {
+          externalId: ctx.auth.userId,
+        },
+      });
+
+      invariant(user, userNotFoundError);
+
+      stripeCustomerId = user.stripeCustomerId || undefined;
+    }
+
+    if (input.plan === 'wannago_business') {
+      const organization = await ctx.actions.getOrganizationByUserExternalId({
         externalId: ctx.auth.userId,
-      },
-      include: {
-        subscription: true,
-      },
-    });
+      });
 
-    invariant(user, userNotFoundError);
+      invariant(organization, organizationNotFoundError);
 
-    if (!user.stripeCustomerId) return null;
+      stripeCustomerId = organization.stripeCustomerId || undefined;
+    }
+
+    invariant(
+      stripeCustomerId,
+      new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Stripe customer ID is required',
+      })
+    );
 
     const customer = await ctx.stripe.stripe.customers.retrieve(
-      user.stripeCustomerId
+      stripeCustomerId
     );
+
+    const callbackUrl = callbackUrlMap[input.plan];
 
     const portalSession = await ctx.stripe.stripe.billingPortal.sessions.create(
       {
         customer: customer.id,
-        // TODO: fix
-        return_url: `${getBaseUrl()}/settings/personal`,
+        return_url: callbackUrl,
       }
     );
 
     return portalSession.url;
-  }
-);
+  });
 
 const getMySubscription = protectedProcedure
   .input(

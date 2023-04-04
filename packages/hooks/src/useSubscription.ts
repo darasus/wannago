@@ -27,14 +27,16 @@ export function useSubscription({type}: {type: 'PRO' | 'BUSINESS'}) {
   }, [checkoutSession, router, type]);
 
   const handleCreatePortalSession = useCallback(() => {
-    customerPortalSession.mutateAsync().then(url => {
-      if (url) {
-        router.push(url);
-      } else {
-        captureException(new TRPCClientError('No portal session URL'));
-      }
-    });
-  }, [customerPortalSession, router]);
+    customerPortalSession
+      .mutateAsync({plan: subscriptionMap[type]})
+      .then(url => {
+        if (url) {
+          router.push(url);
+        } else {
+          captureException(new TRPCClientError('No portal session URL'));
+        }
+      });
+  }, [customerPortalSession, router, type]);
 
   return {
     subscription,
