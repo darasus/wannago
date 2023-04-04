@@ -9,7 +9,6 @@ import {Input} from '../components/Input/Input/Input';
 import {titleFont} from '../fonts';
 import type {ClerkAPIError} from '@clerk/types';
 import {useMyUserQuery} from 'hooks';
-import {PricingPlan} from 'types';
 
 interface CodeForm {
   code: string;
@@ -32,7 +31,6 @@ function RegisterPage() {
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
   const userInfoForm = useForm<UserInfoForm>();
   const codeForm = useForm<CodeForm>({mode: 'onSubmit'});
-  const plan = router.query.plan as PricingPlan | undefined;
 
   const handleOnDone = async (createdSessionId: string): Promise<any> => {
     await setSession?.(createdSessionId);
@@ -78,7 +76,7 @@ function RegisterPage() {
             )}
           </CardBase>
           <Text className="text-center">- OR -</Text>
-          <Button as="a" href={`/login${plan === 'pro' ? '?plan=pro' : ''}`}>
+          <Button as="a" href="/login">
             Login
           </Button>
         </div>
