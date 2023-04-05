@@ -1,7 +1,7 @@
 describe('Team', () => {
   it('can create team', () => {
     cy.login();
-    cy.visit('/settings');
+    cy.visit('/settings/personal');
     cy.get('[data-testid="grouped-toggle-team"]').click();
 
     cy.document().then(doc => {
