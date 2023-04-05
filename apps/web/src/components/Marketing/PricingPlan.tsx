@@ -1,3 +1,4 @@
+import {useAuth} from '@clerk/nextjs';
 import {CheckCircleIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import {Button, CardBase, Text} from 'ui';
@@ -21,10 +22,22 @@ export function PricingPlan({
   features,
   featured,
 }: Props) {
+  const {isSignedIn} = useAuth();
   const router = useRouter();
 
+  const getRedirectUrl = () => {
+    if (isSignedIn && planId === 'business') {
+      return '/settings/team';
+    }
+    if (isSignedIn && (planId === 'pro' || planId === 'starter')) {
+      return '/settings/personal';
+    }
+
+    return '/register';
+  };
+
   const onClick = () => {
-    router.push(`/register?plan=${planId}`);
+    router.push(getRedirectUrl());
   };
 
   return (
