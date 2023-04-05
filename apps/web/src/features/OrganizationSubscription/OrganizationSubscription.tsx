@@ -1,5 +1,6 @@
 import {useMyOrganizationQuery, useMyUserQuery, useSubscription} from 'hooks';
 import {Badge, Button, CardBase, LoadingBlock, Text} from 'ui';
+import {formatDate} from 'utils';
 
 export function OrganizationSubscription() {
   const organization = useMyOrganizationQuery();
@@ -38,14 +39,24 @@ export function OrganizationSubscription() {
           </div>
           <div className="flex gap-2">
             {!hasPaidSubscription && (
-              <Button
-                size="xs"
-                onClick={handleCreateCheckoutSession}
-                isLoading={checkoutSession.isLoading}
-                variant="success"
-              >
-                Upgrade to BUSINESS
-              </Button>
+              <>
+                <Button
+                  size="xs"
+                  onClick={handleCreateCheckoutSession}
+                  isLoading={checkoutSession.isLoading}
+                  variant="success"
+                >
+                  Upgrade to BUSINESS
+                </Button>
+                {subscription.data?.cancelAt && (
+                  <Badge size="xs">
+                    {`Expires ${formatDate(
+                      subscription.data?.cancelAt,
+                      'd MMM yyyy'
+                    )}`}
+                  </Badge>
+                )}
+              </>
             )}
             {organization.data?.stripeCustomerId && (
               <Button
