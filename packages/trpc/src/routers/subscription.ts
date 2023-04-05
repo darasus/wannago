@@ -64,10 +64,12 @@ const createCheckoutSession = protectedProcedure
     const session = await ctx.stripe.stripe.checkout.sessions.create({
       customer: stripeCustomerId,
       customer_email: stripeCustomerId ? undefined : email,
-      customer_update: {
-        name: 'auto',
-        address: 'auto',
-      },
+      customer_update: stripeCustomerId
+        ? {
+            name: 'auto',
+            address: 'auto',
+          }
+        : undefined,
       billing_address_collection: 'auto',
       line_items: [
         {
