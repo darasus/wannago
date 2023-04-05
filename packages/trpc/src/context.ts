@@ -13,6 +13,7 @@ import {Stripe} from 'lib/src/stripe';
 import {type CreateNextContextOptions} from '@trpc/server/adapters/next';
 import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
 import {SignedInAuthObject, SignedOutAuthObject} from '@clerk/clerk-sdk-node';
+// actions
 import {getEvents} from './actions/getEvents';
 import {getUserByExternalId} from './actions/getUserByExternalId';
 import {getUserById} from './actions/getUserById';
@@ -28,7 +29,9 @@ import {canModifyEvent} from './actions/canModifyEvent';
 import {updateEventReminder} from './actions/updateEventReminder';
 import {createEventReminder} from './actions/createEventReminder';
 import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
+// assertions
 import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
+import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
 
 const actions = {
   getEvents,
@@ -48,7 +51,7 @@ const actions = {
   getOrganizerByEmail,
 } as const;
 
-const assertions = {assertCanCreateEvent} as const;
+const assertions = {assertCanCreateEvent, assertCanJoinEvent} as const;
 
 type Actions = {
   [K in keyof typeof actions]: ReturnType<(typeof actions)[K]>;

@@ -27,13 +27,6 @@ export function assertCanCreateEvent(ctx: AssertionContext) {
       });
     }
 
-    console.log(
-      user &&
-        typeof userEventCount === 'number' &&
-        userEventCount > features.maxNumberOfPersonalEvents &&
-        subscription?.type !== 'PRO'
-    );
-
     if (
       user &&
       typeof userEventCount === 'number' &&
