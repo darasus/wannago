@@ -2,7 +2,7 @@ describe('Team', () => {
   it('can create team', () => {
     cy.login();
     cy.visit('/settings/personal');
-    cy.get('[data-testid="grouped-toggle-team"]').click();
+    cy.get('[data-testid="team-settings-button"]').click();
 
     cy.document().then(doc => {
       if (doc.querySelector('[data-testid="team-settings-remove-button"]')) {

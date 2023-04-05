@@ -11,7 +11,7 @@ type SettingsPageType = 'personal' | 'team';
 
 function SettingsPage() {
   const router = useRouter();
-  const setting = (router.query.setting as string[]).join(
+  const settings = (router.query.settings as string[]).join(
     ''
   ) as SettingsPageType;
   const organization = useMyOrganizationQuery();
@@ -36,31 +36,33 @@ function SettingsPage() {
       </Head>
       <Container maxSize="sm">
         <div className="flex flex-col gap-y-4">
-          <PageHeader title={pageHeaderTitle[setting]}>
+          <PageHeader title={pageHeaderTitle[settings]}>
             <div className="flex gap-2">
               <Button
+                data-testid="personal-settings-button"
                 onClick={() => router.push('/settings/personal')}
                 size="sm"
-                variant={setting === 'personal' ? 'primary' : 'neutral'}
+                variant={settings === 'personal' ? 'primary' : 'neutral'}
               >
                 Personal
               </Button>
               <Button
+                data-testid="team-settings-button"
                 onClick={() => router.push('/settings/team')}
                 size="sm"
-                variant={setting === 'team' ? 'primary' : 'neutral'}
+                variant={settings === 'team' ? 'primary' : 'neutral'}
               >
                 Team
               </Button>
             </div>
           </PageHeader>
-          {setting === 'personal' && (
+          {settings === 'personal' && (
             <div className="flex flex-col gap-4">
               <UserSettings />
               <UserSubscription />
             </div>
           )}
-          {setting === 'team' && <TeamSettings />}
+          {settings === 'team' && <TeamSettings />}
         </div>
       </Container>
     </>
