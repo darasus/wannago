@@ -2,12 +2,13 @@ import {z} from 'zod';
 
 export const baseScheme = z
   .object({
-    type: z.enum([
-      'user.created',
-      'user.updated',
-      'user.deleted',
-      'email.created',
-    ]),
+    type: z.string(),
+    // type: z.enum([
+    //   'user.created',
+    //   'user.updated',
+    //   'user.deleted',
+    //   'email.created',
+    // ]),
   })
   .passthrough();
 
