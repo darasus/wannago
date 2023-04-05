@@ -12,4 +12,6 @@ export const serverSchema = z.object({
   CLERK_API_KEY: z.string(),
   OPENAI_API_KEY: z.string(),
   VERCEL_ENV: z.enum(['development', 'preview', 'production']),
+  STRIPE_API_KEY: z.string(),
+  STRIPE_ENDPOINT_SECRET: z.string(),
 });
