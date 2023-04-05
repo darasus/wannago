@@ -8,7 +8,6 @@ import {trpc} from 'trpc/src/trpc';
 import {ToastBar, Toaster} from 'react-hot-toast';
 import {bodyFont} from '../fonts';
 import {getBaseUrl, cn} from 'utils';
-import {Analytics} from '@vercel/analytics/react';
 import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/24/outline';
 import Script from 'next/script';
 import {pageView} from 'lib/src/gtag';
@@ -149,7 +148,6 @@ function MyApp({Component, pageProps}: AppProps) {
           </AppLayout>
         </ClerkProvider>
       </div>
-      {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && <Analytics />}
     </>
   );
 }

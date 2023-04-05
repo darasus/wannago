@@ -52,7 +52,6 @@
     "@upstash/edge-flags": "^0.1.1",
     "@upstash/qstash": "^0.3.6",
     "@upstash/redis": "^1.20.1",
-    "@vercel/analytics": "^0.1.11",
     "@vercel/edge-config": "^0.1.5",
     "@vercel/og": "^0.0.21",
     "class-variance-authority": "^0.4.0",
