@@ -2,7 +2,7 @@ import {env} from 'server-env';
 import * as s from 'stripe';
 
 export class Stripe {
-  stripe = new s.Stripe(env.STRIPE_API_KEY, {
+  stripe = new s.Stripe(env.STRIPE_API_SECRET, {
     apiVersion: '2022-11-15',
   });
 
