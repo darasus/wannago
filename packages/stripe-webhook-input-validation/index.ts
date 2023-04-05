@@ -51,6 +51,12 @@ export const handleCustomerSubscriptionUpdatedInputSchema =
   baseEventHandlerSchema.extend({
     data: z.object({
       object: z.object({
+        cancel_at: z.number().optional().nullable(),
+        cancellation_details: z
+          .object({
+            reason: z.string().optional().nullable(), //'cancellation_requested',
+          })
+          .optional(),
         status: statusSchema,
         plan: planSchema,
         customer: z.string(),

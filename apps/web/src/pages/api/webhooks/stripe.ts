@@ -6,11 +6,9 @@ import {createContext} from 'trpc/src/context';
 import {stripeWebhookHandlerRouter} from 'trpc/src/routers/stripeWebhookHandler';
 import {
   baseEventHandlerSchema,
-  handleCustomerSubscriptionCreatedInputSchema,
   handleCustomerSubscriptionDeletedInputSchema,
   handleCustomerSubscriptionUpdatedInputSchema,
 } from 'stripe-webhook-input-validation';
-import * as s from 'stripe';
 import {captureException} from '@sentry/nextjs';
 
 const cors = Cors({
@@ -52,6 +50,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     return res.status(200).json({success: true});
   } catch (err: any) {
+    console.log(err);
     captureException(err);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }

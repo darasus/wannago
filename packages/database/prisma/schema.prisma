@@ -116,8 +116,7 @@ model Subscription {
   updatedAt    DateTime         @default(now()) @updatedAt
   type         SubscriptionType
   expiresAt    DateTime?
-  cancelled    Boolean          @default(false)
-  cancelledAt  DateTime?
+  cancelAt     DateTime?
   user         User[]
   organization Organization[]
 }

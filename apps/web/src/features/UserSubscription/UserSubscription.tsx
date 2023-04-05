@@ -1,5 +1,6 @@
 import {useMyUserQuery, useSubscription} from 'hooks';
 import {Badge, Button, CardBase, LoadingBlock, Text} from 'ui';
+import {formatDate} from 'utils';
 
 export function UserSubscription() {
   const me = useMyUserQuery();
@@ -30,17 +31,27 @@ export function UserSubscription() {
             <Badge color={hasPaidSubscription ? 'green' : 'gray'} size="xs">
               {subscriptionTypeLabel}
             </Badge>
+            {subscription.data?.cancelAt && (
+              <Badge size="xs">
+                {`Expires ${formatDate(
+                  subscription.data?.cancelAt,
+                  'd MMM yyyy'
+                )}`}
+              </Badge>
+            )}
           </div>
           <div className="flex gap-2">
             {!hasPaidSubscription && (
-              <Button
-                size="xs"
-                onClick={handleCreateCheckoutSession}
-                isLoading={checkoutSession.isLoading}
-                variant="success"
-              >
-                Upgrade to PRO
-              </Button>
+              <>
+                <Button
+                  size="xs"
+                  onClick={handleCreateCheckoutSession}
+                  isLoading={checkoutSession.isLoading}
+                  variant="success"
+                >
+                  Upgrade to PRO
+                </Button>
+              </>
             )}
             {me.data?.stripeCustomerId && (
               <Button

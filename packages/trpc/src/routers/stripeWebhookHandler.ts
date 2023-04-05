@@ -7,6 +7,7 @@ import {
 import * as s from 'stripe';
 import {invariant, isOrganization, isUser} from 'utils';
 import {organizerNotFoundError} from 'error';
+import {fromUnixTime} from 'date-fns';
 
 const handleCustomerSubscriptionCreated = publicProcedure
   .input(handleCustomerSubscriptionCreatedInputSchema)
@@ -30,6 +31,47 @@ const handleCustomerSubscriptionUpdated = publicProcedure
     });
 
     invariant(organizer, organizerNotFoundError);
+
+    if (
+      input.data.object.cancellation_details?.reason ===
+      'cancellation_requested'
+    ) {
+      const subscription = await ctx.prisma.subscription.findFirst({
+        where: {
+          user: {
+            some: {
+              id: organizer.id,
+            },
+          },
+        },
+      });
+      if (isUser(organizer)) {
+        await ctx.prisma.subscription.update({
+          where: {
+            id: subscription?.id,
+          },
+          data: {
+            cancelAt: input.data.object.cancel_at
+              ? new Date(input.data.object.cancel_at * 1000)
+              : null,
+          },
+        });
+      }
+      if (isOrganization(organizer)) {
+        await ctx.prisma.subscription.update({
+          where: {
+            id: organizer.id,
+          },
+          data: {
+            cancelAt: input.data.object.cancel_at
+              ? new Date(input.data.object.cancel_at * 1000)
+              : null,
+          },
+        });
+      }
+
+      return {success: true};
+    }
 
     if (!organizer.subscriptionId) {
       const data = {stripeCustomerId: customer.id};
