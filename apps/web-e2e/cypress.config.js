@@ -14,6 +14,7 @@ module.exports = defineConfig({
     requestTimeout: 60000,
     pageLoadTimeout: 60000,
     requestTimeout: 60000,
+    retries: 3,
     env: {
       user_email: 'idarase+automation+clerk_test@gmail.com',
       otp: '424242',
