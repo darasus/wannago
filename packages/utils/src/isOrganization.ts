@@ -1,7 +1,7 @@
 import {Organization, User} from '@prisma/client';
 
 export function isOrganization(
-  organizer: User | Organization
+  organizer: User | Organization | null | undefined
 ): organizer is Organization {
   return (organizer as Organization).logoSrc !== undefined;
 }

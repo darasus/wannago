@@ -1,3 +1,4 @@
+import {captureException} from '@sentry/nextjs';
 import {useAddOrganizationMemberMutation, useMyOrganizationQuery} from 'hooks';
 import {useForm} from 'react-hook-form';
 import {Button, Modal} from 'ui';
@@ -19,10 +20,14 @@ export function CreateMemberModal({isOpen, onClose}: Props) {
 
   const handleSubmit = form.handleSubmit(async data => {
     if (organization.data?.id) {
-      await addOrganizationMember.mutateAsync({
-        userEmail: data.email,
-        organizationId: organization.data.id,
-      });
+      await addOrganizationMember
+        .mutateAsync({
+          userEmail: data.email,
+          organizationId: organization.data.id,
+        })
+        .catch(error => {
+          captureException(error);
+        });
       onClose();
     }
   });

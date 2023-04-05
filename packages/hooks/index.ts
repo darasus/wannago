@@ -34,3 +34,6 @@ export {useIsMyEvent} from './src/event/useIsMyEvent';
 
 // ai
 export {useGenerateEventDescription} from './src/useGenerateEventDescription';
+
+// subscription
+export {useSubscription} from './src/useSubscription';

@@ -4,7 +4,7 @@ import {Text, Logo, Container, Button} from 'ui';
 
 export function Footer() {
   return (
-    <footer>
+    <footer className="bg-white">
       <Container className="my-0 m-auto">
         <div className="flex items-center py-4">
           <Logo href="/" />

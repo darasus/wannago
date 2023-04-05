@@ -39,33 +39,43 @@ model Event {
 }
 
 model User {
-  id              String        @id @default(uuid())
-  email           String        @unique
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @default(now()) @updatedAt
-  externalId      String?
-  firstName       String
-  lastName        String
-  profileImageSrc String?
-  organization    Organization? @relation(name: "UserOrganization", fields: [organizationId], references: [id])
-  organizationId  String?
-  eventSignUps    EventSignUp[] @relation(name: "EventSignUpUser")
-  type            UserType      @default(USER)
-  events          Event[]       @relation(name: "EventUser")
-  disabled        Boolean       @default(false)
+  id               String        @id @default(uuid())
+  email            String        @unique
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @default(now()) @updatedAt
+  externalId       String?
+  firstName        String
+  lastName         String
+  profileImageSrc  String?
+  organization     Organization? @relation(name: "UserOrganization", fields: [organizationId], references: [id])
+  organizationId   String?
+  eventSignUps     EventSignUp[] @relation(name: "EventSignUpUser")
+  type             UserType      @default(USER)
+  events           Event[]       @relation(name: "EventUser")
+  disabled         Boolean       @default(false)
+  subscription     Subscription? @relation(fields: [subscriptionId], references: [id])
+  subscriptionId   String?
+  stripeCustomerId String?
 
   @@index([organizationId])
+  @@index([subscriptionId])
 }
 
 model Organization {
-  id         String  @id @default(uuid())
-  externalId String?
-  users      User[]  @relation(name: "UserOrganization")
-  events     Event[] @relation(name: "EventOrganization")
-  name       String? @db.VarChar(255)
-  email      String?
-  logoSrc    String?
-  disabled   Boolean @default(false)
+  id               String        @id @default(uuid())
+  externalId       String?       @unique()
+  users            User[]        @relation(name: "UserOrganization")
+  events           Event[]       @relation(name: "EventOrganization")
+  name             String?       @db.VarChar(255)
+  email            String?       @unique()
+  logoSrc          String?
+  disabled         Boolean       @default(false)
+  subscription     Subscription? @relation(fields: [subscriptionId], references: [id])
+  subscriptionId   String?
+  stripeCustomerId String?
+
+  @@index([externalId])
+  @@index([subscriptionId])
 }
 
 model EventSignUp {
@@ -93,4 +103,21 @@ enum EventRegistrationStatus {
 enum UserType {
   ADMIN
   USER
+}
+
+enum SubscriptionType {
+  PRO
+  BUSINESS
+}
+
+model Subscription {
+  id           String           @id @default(uuid())
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @default(now()) @updatedAt
+  type         SubscriptionType
+  expiresAt    DateTime?
+  cancelled    Boolean          @default(false)
+  cancelledAt  DateTime?
+  user         User[]
+  organization Organization[]
 }

@@ -3,23 +3,12 @@ import {z} from 'zod';
 import {nanoid} from 'nanoid';
 import {TRPCError} from '@trpc/server';
 import {EventRegistrationStatus, User} from '@prisma/client';
-import {differenceInSeconds} from 'date-fns';
-import {
-  random,
-  getBaseUrl,
-  isUser,
-  isOrganization,
-  invariant,
-  canCreateReminder,
-  createDelay,
-} from 'utils';
+import {random, getBaseUrl, isUser, isOrganization, invariant} from 'utils';
 import {env} from 'server-env';
-import {utcToZonedTime} from 'date-fns-tz';
 import {EmailType} from 'types';
 import {eventNotFoundError, userNotFoundError} from 'error';
 import {
   handleEventInviteEmailInputSchema,
-  handleEventReminderEmailInputSchema,
   handleEventSignUpEmailInputSchema,
   handleOrganizerEventSignUpNotificationEmailInputSchema,
 } from 'email-input-validation';
@@ -222,10 +211,45 @@ const create = protectedProcedure
         });
       }
 
-      const [user, organization] = await Promise.all([
-        ctx.actions.getUserById({id: authorId}),
-        ctx.actions.getOrganizationById({id: authorId}),
-      ]);
+      const [user, organization, subscription, userEventCount] =
+        await Promise.all([
+          ctx.prisma.user.findFirst({
+            where: {id: authorId},
+          }),
+          ctx.actions.getOrganizationById({id: authorId}),
+          ctx.prisma.subscription.findFirst({
+            where: {
+              OR: [
+                {
+                  user: {
+                    some: {
+                      id: authorId,
+                    },
+                  },
+                },
+                {
+                  organization: {
+                    some: {
+                      id: authorId,
+                    },
+                  },
+                },
+              ],
+            },
+          }),
+          ctx.prisma.event.count({
+            where: {
+              userId: authorId,
+            },
+          }),
+        ]);
+
+      ctx.assertions.assertCanCreateEvent({
+        user,
+        organization,
+        subscription,
+        userEventCount,
+      });
 
       let event = await ctx.prisma.event.create({
         data: {
@@ -363,7 +387,12 @@ const joinEvent = protectedProcedure
 
     invariant(user, userNotFoundError);
 
-    const [existingSignUp, event] = await Promise.all([
+    const [
+      existingSignUp,
+      event,
+      numberOfRegisteredUsers,
+      numberOfInvitedUsers,
+    ] = await Promise.all([
       ctx.prisma.eventSignUp.findFirst({
         where: {
           eventId: input.eventId,
@@ -374,8 +403,37 @@ const joinEvent = protectedProcedure
         where: {
           id: input.eventId,
         },
+        include: {
+          user: true,
+          organization: true,
+        },
+      }),
+      ctx.prisma.eventSignUp.count({
+        where: {
+          eventId: input.eventId,
+          status: {
+            in: ['REGISTERED'],
+          },
+        },
+      }),
+      ctx.prisma.eventSignUp.count({
+        where: {
+          eventId: input.eventId,
+          status: {
+            in: ['REGISTERED', 'INVITED'],
+          },
+        },
       }),
     ]);
+
+    const subscription = await ctx.prisma.subscription.findFirst({
+      where: {
+        OR: [
+          {user: {some: {id: event?.user?.id}}},
+          {organization: {some: {id: event?.organization?.id}}},
+        ],
+      },
+    });
 
     if (!event?.isPublished) {
       throw new TRPCError({
@@ -391,25 +449,13 @@ const joinEvent = protectedProcedure
       });
     }
 
-    const eventSignUpsCount = await ctx.prisma.eventSignUp.count({
-      where: {
-        eventId: input.eventId,
-        status: {
-          in: ['REGISTERED'],
-        },
-      },
+    ctx.assertions.assertCanJoinEvent({
+      numberOfRegisteredUsers,
+      numberOfInvitedUsers,
+      event,
+      organizer: event.user || event.organization,
+      subscription,
     });
-
-    if (
-      typeof event?.maxNumberOfAttendees === 'number' &&
-      eventSignUpsCount >= event?.maxNumberOfAttendees &&
-      event?.maxNumberOfAttendees !== 0
-    ) {
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Event is full and no longer accepts sign ups.',
-      });
-    }
 
     if (!existingSignUp) {
       await ctx.prisma.eventSignUp.create({

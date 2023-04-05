@@ -30,7 +30,8 @@ export function SignUpCard({event}: Props) {
   const signUp = trpc.event.getMySignUp.useQuery(
     {eventId: event.id},
     {
-      enabled: auth.isSignedIn,
+      enabled: !!auth.isSignedIn,
+      retry: false,
     }
   );
   const joinEvent = trpc.event.joinEvent.useMutation({
