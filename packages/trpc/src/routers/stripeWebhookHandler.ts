@@ -38,11 +38,22 @@ const handleCustomerSubscriptionUpdated = publicProcedure
     ) {
       const subscription = await ctx.prisma.subscription.findFirst({
         where: {
-          user: {
-            some: {
-              id: organizer.id,
+          OR: [
+            {
+              user: {
+                some: {
+                  id: organizer.id,
+                },
+              },
             },
-          },
+            {
+              organization: {
+                some: {
+                  id: organizer.id,
+                },
+              },
+            },
+          ],
         },
       });
       if (isUser(organizer)) {
