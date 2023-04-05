@@ -4,6 +4,7 @@ import {getBaseUrl, invariant} from 'utils';
 import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
 import {get} from '@vercel/edge-config';
+import {env} from 'server-env';
 
 type ProductPlan = 'wannago_pro' | 'wannago_business';
 
@@ -13,12 +14,14 @@ const callbackUrlMap: Record<ProductPlan, string> = {
 };
 
 const priceSchema = z.object({
-  wannago_pro: z.string(),
-  wannago_business: z.string(),
+  price_ids: z.object({
+    wannago_pro: z.string(),
+    wannago_business: z.string(),
+  }),
 });
 
-const getPriceIds = async () => {
-  const response = await get('price_ids');
+const getConfig = async () => {
+  const response = await get(env.VERCEL_ENV);
   return priceSchema.parse(response);
 };
 
@@ -56,7 +59,7 @@ const createCheckoutSession = protectedProcedure
     );
 
     const callbackUrl = callbackUrlMap[input.plan];
-    const prices = await getPriceIds();
+    const config = await getConfig();
 
     const session = await ctx.stripe.stripe.checkout.sessions.create({
       customer: stripeCustomerId,
@@ -68,7 +71,7 @@ const createCheckoutSession = protectedProcedure
       billing_address_collection: 'auto',
       line_items: [
         {
-          price: prices[input.plan],
+          price: config.price_ids[input.plan],
           quantity: 1,
         },
       ],
