@@ -61,6 +61,10 @@ const createCheckoutSession = protectedProcedure
     const session = await ctx.stripe.stripe.checkout.sessions.create({
       customer: stripeCustomerId,
       customer_email: stripeCustomerId ? undefined : email,
+      customer_update: {
+        name: 'auto',
+        address: 'auto',
+      },
       billing_address_collection: 'auto',
       line_items: [
         {
@@ -71,6 +75,9 @@ const createCheckoutSession = protectedProcedure
       mode: 'subscription',
       success_url: callbackUrl,
       cancel_url: callbackUrl,
+      tax_id_collection: {
+        enabled: true,
+      },
     });
 
     return session.url;
