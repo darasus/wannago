@@ -16,7 +16,7 @@ export function Pricing() {
             name="Starter"
             price="$0"
             description="Great for anyone running small private events."
-            features={['Up to 50 invites', 'Up to 5 events']}
+            features={['Up to 5 events', 'Up to 50 attendees']}
             featured={false}
             planId="starter"
           />
@@ -27,9 +27,8 @@ export function Pricing() {
             price="$2.99"
             description="Perfect for small / medium sized businesses."
             features={[
-              'Unlimited invites',
-              'Unlimited attendees',
               'Unlimited events',
+              'Unlimited attendees',
               'AI assistant',
               'Many more upcoming features...',
             ]}
@@ -41,8 +40,10 @@ export function Pricing() {
             price="$9.99"
             description="Perfect for enterprise and special needs."
             features={[
-              'Everything in Pro',
+              'Organization profile',
               'Unlimited team members',
+              'Unlimited events',
+              'Unlimited attendees',
               'Many more upcoming features...',
             ]}
           />
