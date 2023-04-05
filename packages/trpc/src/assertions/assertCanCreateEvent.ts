@@ -1,4 +1,4 @@
-import {Event, Organization, Subscription, User} from '@prisma/client';
+import {Organization, Subscription, User} from '@prisma/client';
 import {TRPCError} from '@trpc/server';
 import {getFeatures} from 'utils';
 import {AssertionContext} from '../context';
