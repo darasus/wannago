@@ -1,4 +1,5 @@
 import {TRPCError} from '@trpc/server';
+import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {router, publicProcedure, protectedProcedure} from '../trpcServer';
@@ -129,13 +130,25 @@ const addOrganizationMember = protectedProcedure
       email: input.userEmail,
     });
 
-    invariant(
-      user,
-      new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'User with this email does not exist.',
-      })
-    );
+    const businessSubscription = await ctx.prisma.subscription.findFirst({
+      where: {
+        organization: {
+          some: {
+            users: {
+              some: {
+                id: user?.id,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    ctx.assertions.assertCanAddOrganizationMember({
+      subscription: businessSubscription,
+    });
+
+    invariant(user, userNotFoundError);
 
     return ctx.prisma.organization.update({
       where: {

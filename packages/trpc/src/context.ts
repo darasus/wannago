@@ -32,6 +32,7 @@ import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
 // assertions
 import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
+import {assertCanAddOrganizationMember} from './assertions/assertCanAddOrganizationMember';
 
 const actions = {
   getEvents,
@@ -51,7 +52,11 @@ const actions = {
   getOrganizerByEmail,
 } as const;
 
-const assertions = {assertCanCreateEvent, assertCanJoinEvent} as const;
+const assertions = {
+  assertCanCreateEvent,
+  assertCanJoinEvent,
+  assertCanAddOrganizationMember,
+} as const;
 
 type Actions = {
   [K in keyof typeof actions]: ReturnType<(typeof actions)[K]>;
