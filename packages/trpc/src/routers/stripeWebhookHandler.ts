@@ -71,7 +71,7 @@ const handleCustomerSubscriptionUpdated = publicProcedure
       if (isOrganization(organizer)) {
         await ctx.prisma.subscription.update({
           where: {
-            id: organizer.id,
+            id: subscription?.id,
           },
           data: {
             cancelAt: input.data.object.cancel_at

@@ -33,6 +33,14 @@ export function OrganizationSubscription() {
                 <Badge color={hasPaidSubscription ? 'green' : 'gray'} size="xs">
                   {subscriptionTypeLabel}
                 </Badge>
+                {subscription.data?.cancelAt && (
+                  <Badge size="xs">
+                    {`Expires ${formatDate(
+                      subscription.data?.cancelAt,
+                      'd MMM yyyy'
+                    )}`}
+                  </Badge>
+                )}
               </>
             )}
             {!hasPaidSubscription && <Text>No active subscription</Text>}
@@ -48,14 +56,6 @@ export function OrganizationSubscription() {
                 >
                   Upgrade to BUSINESS
                 </Button>
-                {subscription.data?.cancelAt && (
-                  <Badge size="xs">
-                    {`Expires ${formatDate(
-                      subscription.data?.cancelAt,
-                      'd MMM yyyy'
-                    )}`}
-                  </Badge>
-                )}
               </>
             )}
             {organization.data?.stripeCustomerId && (
