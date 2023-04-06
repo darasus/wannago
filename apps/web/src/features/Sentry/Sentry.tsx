@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {setContext} from '@sentry/nextjs';
 import {useAuth} from '@clerk/nextjs';
 
