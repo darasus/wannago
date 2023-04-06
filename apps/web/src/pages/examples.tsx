@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import {EventCard} from 'cards';
 import {LoadingEventCard} from 'cards/src/LoadingEventCard/LoadingEventCard';
-import {Container} from 'ui';
+import {Container, PageHeader} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 
 function ExamplesPage() {
@@ -13,7 +13,8 @@ function ExamplesPage() {
       <Head>
         <title>Examples | WannaGo</title>
       </Head>
-      <Container className="md:px-4">
+      <Container className="flex flex-col gap-4">
+        <PageHeader title="Examples" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {isLoading &&
             Array.from({length: 4}).map((_, i) => <LoadingEventCard key={i} />)}

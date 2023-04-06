@@ -4,11 +4,33 @@ import {Button, CardBase, Logo} from 'ui';
 import {UserSection} from '../UserSection/UserSection';
 import {cn} from 'utils';
 import {useAuth} from '@clerk/nextjs';
+import {useRouter} from 'next/router';
+
+const exampleEvents = [
+  '/e/FyThYG',
+  '/e/WC1Fo6',
+  '/e/59AlAn',
+  '/e/0q5ipF',
+  '/e/AfnfDh',
+  '/e/3ggj1Y',
+];
+
+function getIsPublic(pathname: string) {
+  if (pathname === '/') return true;
+  return [
+    '/examples',
+    '/login',
+    '/register',
+    '/terms',
+    ...exampleEvents,
+  ].includes(pathname);
+}
 
 export const navItems = [
   {label: 'Features', href: `/#features`},
   {label: 'FAQ', href: `/#faq`},
   {label: 'Examples', href: `/examples`},
+  {label: 'Pricing', href: `/#pricing`},
 ];
 
 function MobileNavIcon({open}: any) {
@@ -35,11 +57,13 @@ function MobileNavIcon({open}: any) {
 }
 
 export function Header() {
+  const router = useRouter();
   const auth = useAuth();
-  const showUserProfile = auth.isSignedIn;
-  const showAuthButtons = !auth.isSignedIn;
-  const showMobileMenu = !auth.isSignedIn;
-  const showDesktopHomeNav = !auth.isSignedIn;
+  const isPublic = getIsPublic(router.pathname);
+  const showUserProfile = auth.isLoaded && auth.isSignedIn;
+  const showAuthButtons = auth.isLoaded && !auth.isSignedIn;
+  const showMobileMenu = isPublic;
+  const showDesktopHomeNav = isPublic;
 
   return (
     <header>
@@ -69,33 +93,6 @@ export function Header() {
                   </Button>
                 ))}
               </div>
-            )}
-          </div>
-          <div className="flex items-center gap-x-5 md:gap-x-4">
-            {showUserProfile && <UserSection />}
-            {showAuthButtons && (
-              <>
-                <Button
-                  as="a"
-                  href="/login"
-                  className="hidden md:flex"
-                  variant="secondary"
-                  size="sm"
-                  data-testid="login-button"
-                >
-                  <span>Sign in</span>
-                </Button>
-                <Button
-                  as="a"
-                  href={'/register'}
-                  size="sm"
-                  data-testid="register-button"
-                >
-                  <span>
-                    Get started <span className="hidden lg:inline">today</span>
-                  </span>
-                </Button>
-              </>
             )}
             {showMobileMenu && (
               <div className="-mr-1 md:hidden">
@@ -139,10 +136,10 @@ export function Header() {
                               </Fragment>
                             ))}
                           </div>
-                          <hr className="my-4 border-gray-300/40" />
                           <div className="flex gap-4">
                             {showAuthButtons && (
                               <>
+                                <hr className="my-4 border-gray-300/40" />
                                 <Popover.Button
                                   as={(props: any) => (
                                     <Button
@@ -178,6 +175,33 @@ export function Header() {
                   </Transition.Root>
                 </Popover>
               </div>
+            )}
+          </div>
+          <div className="flex items-center gap-x-5 md:gap-x-4">
+            {showUserProfile && <UserSection />}
+            {showAuthButtons && (
+              <>
+                <Button
+                  as="a"
+                  href="/login"
+                  className="hidden md:flex"
+                  variant="secondary"
+                  size="sm"
+                  data-testid="login-button"
+                >
+                  <span>Sign in</span>
+                </Button>
+                <Button
+                  as="a"
+                  href={'/register'}
+                  size="sm"
+                  data-testid="register-button"
+                >
+                  <span>
+                    Get started <span className="hidden lg:inline">today</span>
+                  </span>
+                </Button>
+              </>
             )}
           </div>
         </nav>

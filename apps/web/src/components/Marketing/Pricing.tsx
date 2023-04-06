@@ -5,7 +5,7 @@ import {PricingPlan} from './PricingPlan';
 
 export function Pricing() {
   return (
-    <SectionContainer id="features" className="bg-white">
+    <SectionContainer id="pricing" className="bg-white">
       <Container maxSize="full" className="my-0">
         <SectionHeader
           title="Simple pricing, for everyone."
