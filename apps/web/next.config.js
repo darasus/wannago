@@ -4,7 +4,20 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 const {withSentryConfig} = require('@sentry/nextjs');
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx?$/,
+  options: {
+    // If you use remark-gfm, you'll need to use next.config.mjs
+    // as the package is ESM only
+    // https://github.com/remarkjs/remark-gfm#install
+    remarkPlugins: [],
+    rehypePlugins: [],
+    // If you use `MDXProvider`, uncomment the following line.
+    // providerImportSource: "@mdx-js/react",
+  },
+});
 
+/** @type {import('next').NextConfig} */
 const moduleExports = {
   // Your existing module.exports
 
@@ -18,6 +31,7 @@ const moduleExports = {
     hideSourceMaps: true,
   },
   reactStrictMode: true,
+  pageExtensions: ['tsx', 'mdx'],
   images: {
     domains: [
       'maps.googleapis.com',
@@ -45,13 +59,15 @@ const moduleExports = {
 
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
-module.exports = withSentryConfig(moduleExports, {
-  // Additional config options for the Sentry Webpack plugin. Keep in mind that
-  // the following options are set automatically, and overriding them is not
-  // recommended:
-  //   release, url, org, project, authToken, configFile, stripPrefix,
-  //   urlPrefix, include, ignore
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options.
-  silent: true,
-});
+module.exports = withMDX(
+  withSentryConfig(moduleExports, {
+    // Additional config options for the Sentry Webpack plugin. Keep in mind that
+    // the following options are set automatically, and overriding them is not
+    // recommended:
+    //   release, url, org, project, authToken, configFile, stripPrefix,
+    //   urlPrefix, include, ignore
+    // For all available options, see:
+    // https://github.com/getsentry/sentry-webpack-plugin#options.
+    silent: true,
+  })
+);
