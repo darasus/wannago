@@ -191,16 +191,6 @@ export function Header() {
                 >
                   <span>Sign in</span>
                 </Button>
-                <Button
-                  as="a"
-                  href={'/register'}
-                  size="sm"
-                  data-testid="register-button"
-                >
-                  <span>
-                    Get started <span className="hidden lg:inline">today</span>
-                  </span>
-                </Button>
               </>
             )}
           </div>

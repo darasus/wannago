@@ -1,9 +1,7 @@
 import Link from 'next/link';
-import {PlusIcon} from '@heroicons/react/24/outline';
-import {useRouter} from 'next/router';
 import {EventCard} from 'cards';
 import Head from 'next/head';
-import {Container, Button, PageHeader, Toggle, LoadingBlock} from 'ui';
+import {Container, PageHeader, Toggle, LoadingBlock} from 'ui';
 import {withProtected} from '../utils/withAuthProtect';
 import {FormProvider, useForm} from 'react-hook-form';
 import {useMyEventsQuery} from 'hooks';
@@ -13,7 +11,6 @@ interface Form {
 }
 
 function Dashboard() {
-  const router = useRouter();
   const form = useForm<Form>({
     defaultValues: {
       eventType: 'all',
@@ -33,14 +30,6 @@ function Dashboard() {
         <PageHeader title="My events">
           <FormProvider {...form}>
             <div className="flex items-center gap-x-2">
-              <Button
-                size="md"
-                onClick={() => router.push('/e/add')}
-                iconLeft={<PlusIcon />}
-                data-testid="add-event-button"
-              >
-                <span className="hidden md:inline">Create event</span>
-              </Button>
               <Toggle
                 name="eventType"
                 options={[

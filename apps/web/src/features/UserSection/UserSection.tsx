@@ -10,6 +10,7 @@ import {
 } from 'hooks';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
+import {PlusCircleIcon, PlusIcon} from '@heroicons/react/24/solid';
 
 export function UserSection() {
   const router = useRouter();
@@ -66,7 +67,14 @@ export function UserSection() {
   }
 
   return (
-    <div>
+    <div className="flex gap-2">
+      <Button
+        onClick={() => router.push('/e/add')}
+        iconLeft={<PlusCircleIcon />}
+        data-testid="add-event-button"
+      >
+        <span className="hidden md:inline">Create event</span>
+      </Button>
       <Popover className="relative z-50">
         {() => (
           <>
@@ -82,7 +90,7 @@ export function UserSection() {
                   />
                 }
               >
-                {getName()}
+                <span className="hidden md:inline">{getName()}</span>
               </Button>
             </Popover.Button>
             <Transition
