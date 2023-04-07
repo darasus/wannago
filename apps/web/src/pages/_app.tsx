@@ -3,7 +3,6 @@ import '../styles/globals.css';
 import {AppProps} from 'next/app';
 import {ClerkProvider} from '@clerk/nextjs';
 import Head from 'next/head';
-import {clerkAppearance} from '../clerkElements';
 import {trpc} from 'trpc/src/trpc';
 import {ToastBar, Toaster} from 'react-hot-toast';
 import {bodyFont} from '../fonts';
@@ -84,11 +83,7 @@ function MyApp({Component, pageProps}: AppProps) {
         </Script>
       )}
       <div className={cn(bodyFont.className)}>
-        <ClerkProvider
-          {...pageProps}
-          appearance={clerkAppearance}
-          supportEmail="hi@wannago.app"
-        >
+        <ClerkProvider {...pageProps} supportEmail="hi@wannago.app">
           {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
             <>
               <Amplitude />
