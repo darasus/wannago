@@ -69,8 +69,9 @@ export default function EventPage() {
                   as="a"
                   href={`/e/${event.data.shortId}/manage`}
                   size="md"
+                  variant="secondary"
                 >
-                  Manage
+                  Manage event
                 </Button>
               </motion.div>
             )}

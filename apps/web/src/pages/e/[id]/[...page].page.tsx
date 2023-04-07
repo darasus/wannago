@@ -75,11 +75,11 @@ export default function EventPage() {
                   activeHref={router.asPath}
                   options={[
                     {
-                      label: 'Overview',
+                      label: 'Event overview',
                       href: `/e/${event.data.shortId}/manage`,
                     },
                     {
-                      label: 'Edit',
+                      label: 'Edit event',
                       href: `/e/${event.data.shortId}/edit`,
                     },
                     {
