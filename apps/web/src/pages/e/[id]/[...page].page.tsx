@@ -1,7 +1,7 @@
 import {GetServerSidePropsContext} from 'next';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {AdminSection} from './features/AdminSection/AdminSection';
-import {Button, Container, LoadingBlock, Menu, PageHeader} from 'ui';
+import {Button, Container, LoadingBlock, Menu, PageHeader, Text} from 'ui';
 import {
   useEventId,
   useEventQuery,
@@ -67,7 +67,7 @@ export default function EventPage() {
                 href={`/e/${event.data.shortId}`}
                 as="a"
               >
-                Back
+                <Text truncate>{`Back to "${event.data.title}"`}</Text>
               </Button>
               <PageHeader title="Manage event">
                 <Menu
