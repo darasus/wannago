@@ -1,12 +1,12 @@
-import {Event} from '@prisma/client';
+import {Event, Organization, User} from '@prisma/client';
 import {isFuture} from 'date-fns';
 import Image from 'next/image';
-import {cloudflareImageLoader, formatDate} from 'utils';
-import {Badge, CardBase, Text} from 'ui';
+import {cloudflareImageLoader, formatTimeago} from 'utils';
+import {Avatar, Badge, CardBase, Text} from 'ui';
 import {forwardRef} from 'react';
 
 interface Props {
-  event: Event;
+  event: Event & {user?: User; organization?: Organization};
   showPublishStatus?: boolean;
 }
 
@@ -24,7 +24,7 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
   } = event;
 
   return (
-    <CardBase ref={ref} className="flex flex-col" data-testid="event-card">
+    <CardBase ref={ref} data-testid="event-card">
       {featuredImageSrc &&
         featuredImagePreviewSrc &&
         featuredImageWidth &&
@@ -63,17 +63,28 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
             />
           </div>
         )}
-      <div>
-        <div className="flex items-center">
-          <Badge
-            color={isUpcoming ? 'green' : 'gray'}
-            className="mr-2 mb-1"
-            size="xs"
-          >
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
+            <Avatar
+              className="w-6 h-6"
+              src={event.user?.profileImageSrc || event.organization?.logoSrc}
+              alt={
+                event.user?.firstName ||
+                event.organization?.name ||
+                'User profile'
+              }
+            />
+            <Text className="text-sm">
+              {event.organization?.name ||
+                `${event.user?.firstName} ${event.user?.lastName}`}
+            </Text>
+          </div>
+          <Badge color={isUpcoming ? 'green' : 'gray'} size="xs">
             {isUpcoming ? 'Upcoming' : 'Past'}
           </Badge>
           <Text className="text-sm text-gray-600">
-            {formatDate(event.startDate, 'yyyy/MM/dd HH:mm')}
+            {formatTimeago(event.startDate)}
           </Text>
         </div>
         <div />
