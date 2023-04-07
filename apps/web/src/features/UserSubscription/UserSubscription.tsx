@@ -25,7 +25,7 @@ export function UserSubscription() {
   return (
     <>
       <CardBase title="Subscription">
-        <div className="flex items-center">
+        <div className="flex flex-col md:flex-row md:items-center gap-2">
           <div className="flex items-center grow gap-1">
             <Text>WannaGo</Text>
             <Badge color={hasPaidSubscription ? 'green' : 'gray'} size="xs">
