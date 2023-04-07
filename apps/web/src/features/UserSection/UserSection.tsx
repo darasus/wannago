@@ -103,60 +103,70 @@ export function UserSection() {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute right-0 mt-3 max-w-sm">
-                <CardBase innerClassName="flex flex-col gap-y-2 w-40">
-                  {Boolean(organization.data) && (
-                    <Button
-                      onClick={toggleSession}
-                      isLoading={setSession.isLoading}
-                      size="sm"
-                      variant="neutral"
-                    >
-                      {label}
-                    </Button>
-                  )}
-                  <Button
-                    variant="neutral"
-                    as="a"
-                    href={`/dashboard`}
-                    size="sm"
-                  >
-                    Dashboard
-                  </Button>
-                  <Button
-                    variant="neutral"
-                    as="a"
-                    href={
-                      isOrganization
-                        ? `/o/${organization?.data?.id}`
-                        : `/u/${user.data?.id}`
-                    }
-                    size="sm"
-                    data-testid="profile-button"
-                  >
-                    Profile
-                  </Button>
-                  <Button
-                    variant="neutral"
-                    as="a"
-                    href="/settings/personal"
-                    size="sm"
-                  >
-                    Settings
-                  </Button>
-                  {showAdminLink && (
-                    <Button variant="neutral" as="a" href="/admin" size="sm">
-                      Admin
-                    </Button>
-                  )}
-                  <Button
-                    variant="danger"
-                    onClick={onSignOutClick}
-                    data-testid="logout-button"
-                    size="sm"
-                  >
-                    Logout
-                  </Button>
-                </CardBase>
+                {({close}) => {
+                  return (
+                    <CardBase innerClassName="flex flex-col gap-y-2 w-40">
+                      {Boolean(organization.data) && (
+                        <Button
+                          onClick={() => {
+                            toggleSession();
+                            close();
+                          }}
+                          size="sm"
+                          variant="neutral"
+                        >
+                          {label}
+                        </Button>
+                      )}
+                      <Button
+                        variant="neutral"
+                        size="sm"
+                        onClick={() => {
+                          router.push('/dashboard');
+                          close();
+                        }}
+                      >
+                        Dashboard
+                      </Button>
+                      <Button
+                        variant="neutral"
+                        size="sm"
+                        data-testid="profile-button"
+                        onClick={() => {
+                          router.push(
+                            isOrganization
+                              ? `/o/${organization?.data?.id}`
+                              : `/u/${user.data?.id}`
+                          );
+                          close();
+                        }}
+                      >
+                        Profile
+                      </Button>
+                      <Button
+                        variant="neutral"
+                        size="sm"
+                        onClick={() => {
+                          router.push('/settings/personal');
+                          close();
+                        }}
+                      >
+                        Settings
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          onSignOutClick();
+                          close();
+                        }}
+                        data-testid="logout-button"
+                        size="sm"
+                      >
+                        Logout
+                      </Button>
+                    </CardBase>
+                  );
+                }}
               </Popover.Panel>
             </Transition>
           </>
