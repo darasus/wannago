@@ -10,7 +10,7 @@ import {Input} from '../../../../../../../components/Input/Input/Input';
 export function EventInviteButton() {
   const [on, set] = useState(false);
   const {eventShortId} = useEventId();
-  const {refetch} = trpc.event.getAttendees.useQuery(
+  const {refetch} = trpc.event.getAllEventsAttendees.useQuery(
     {
       eventShortId: eventShortId!,
     },

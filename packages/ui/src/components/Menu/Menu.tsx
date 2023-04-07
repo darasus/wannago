@@ -55,6 +55,7 @@ export function Menu({size = 'md', options, activeHref, testId}: Props) {
                       as="a"
                       href={option.href}
                       onClick={close}
+                      data-testid="select-option-button"
                     >
                       {option.label}
                     </Button>
