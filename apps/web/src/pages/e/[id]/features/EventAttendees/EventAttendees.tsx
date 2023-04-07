@@ -1,12 +1,9 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
-import {useRouter} from 'next/router';
-import {Container, CardBase, Button, Text, PageHeader, LoadingBlock} from 'ui';
+import {CardBase, Button, Text, LoadingBlock} from 'ui';
 import {trpc} from 'trpc/src/trpc';
-import {saveAs} from 'file-saver';
 import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {useConfirmDialog, useEventId} from 'hooks';
-import {UserPlusIcon, DocumentArrowDownIcon} from '@heroicons/react/24/solid';
 import {useCallback} from 'react';
 import {MessageParticipantsButton} from './features/MessageParticipantsButton/MessageParticipantsButton';
 import {ExportAttendeesCSV} from './features/ExportAttendeesCSV/ExportAttendeesCSV';
@@ -43,10 +40,15 @@ function Item({user, hasPlusOne, status, refetch}: ItemProps) {
   return (
     <>
       {modal}
-      <CardBase key={user.id} data-testid="invitee-card">
-        <div className="flex items-center">
-          <Text>{label}</Text>
-          <div className="grow" />
+      <CardBase
+        innerClassName="flex flex-col md:flex-row gap-2"
+        key={user.id}
+        data-testid="invitee-card"
+      >
+        <div className="flex items-center truncate">
+          <Text className="truncate">{label}</Text>
+        </div>
+        <div className="flex gap-2">
           <EventRegistrationStatusBadge status={status} />
           <Button
             size="sm"

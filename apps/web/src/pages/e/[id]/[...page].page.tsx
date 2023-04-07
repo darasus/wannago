@@ -1,7 +1,7 @@
 import {GetServerSidePropsContext} from 'next';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {AdminSection} from './features/AdminSection/AdminSection';
-import {Container, LoadingBlock, Menu, PageHeader} from 'ui';
+import {Button, Container, LoadingBlock, Menu, PageHeader} from 'ui';
 import {
   useEventId,
   useEventQuery,
@@ -19,6 +19,7 @@ import {useRouter} from 'next/router';
 import {EditEventForm} from '../../../features/EventForm/EditEventForm';
 import {EventAttendees} from './features/EventAttendees/EventAttendees';
 import {EventInvite} from './features/EventInvite/EventInvite';
+import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
 
 export default function EventPage() {
   const router = useRouter();
@@ -60,12 +61,15 @@ export default function EventPage() {
           />
           <Container maxSize="sm">
             <div className="flex flex-col gap-4">
-              <PageHeader
-                title="Manage event"
-                back={() => {
-                  router.push(`/e/${event.data?.shortId}`);
-                }}
+              <Button
+                variant="neutral"
+                iconLeft={<ArrowLeftCircleIcon />}
+                href={`/e/${event.data.shortId}`}
+                as="a"
               >
+                Back
+              </Button>
+              <PageHeader title="Manage event">
                 <Menu
                   size="sm"
                   activeHref={router.asPath}

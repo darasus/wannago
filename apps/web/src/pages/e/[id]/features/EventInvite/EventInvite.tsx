@@ -72,10 +72,15 @@ interface UserRowProps {
 function UserRow({user, eventShortId, refetch}: UserRowProps) {
   return (
     <>
-      <CardBase key={user.id} data-testid="invitee-card">
-        <div className="flex items-center">
-          <Text>{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
-          <div className="grow" />
+      <CardBase
+        key={user.id}
+        innerClassName="flex flex-col md:flex-row gap-2"
+        data-testid="invitee-card"
+      >
+        <div className="flex items-center truncate">
+          <Text className="truncate">{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
+        </div>
+        <div className="flex gap-2">
           {user.status && <EventRegistrationStatusBadge status={user.status} />}
           <InviteButton
             user={user}
