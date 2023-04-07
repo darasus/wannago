@@ -65,25 +65,23 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
         )}
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
-            <Avatar
-              className="w-6 h-6"
-              src={event.user?.profileImageSrc || event.organization?.logoSrc}
-              alt={
-                event.user?.firstName ||
-                event.organization?.name ||
-                'User profile'
-              }
-            />
-            <Text className="text-sm">
-              {event.organization?.name ||
-                `${event.user?.firstName} ${event.user?.lastName}`}
-            </Text>
-          </div>
+          <Avatar
+            className="w-6 h-6 -mr-1"
+            src={event.user?.profileImageSrc || event.organization?.logoSrc}
+            alt={
+              event.user?.firstName ||
+              event.organization?.name ||
+              'User profile'
+            }
+          />
+          <Text className="text-sm" truncate>
+            {event.organization?.name ||
+              `${event.user?.firstName} ${event.user?.lastName}`}
+          </Text>
           <Badge color={isUpcoming ? 'green' : 'gray'} size="xs">
             {isUpcoming ? 'Upcoming' : 'Past'}
           </Badge>
-          <Text className="text-sm text-gray-600">
+          <Text className="text-sm text-gray-600 whitespace-nowrap">
             {formatTimeago(event.startDate)}
           </Text>
         </div>
