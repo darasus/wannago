@@ -55,6 +55,15 @@ const moduleExports = {
     'cards',
     'ui',
   ],
+  async redirects() {
+    return [
+      {
+        source: '/dashboard',
+        destination: '/dashboard/all',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 // Make sure adding Sentry options is the last code to run before exporting, to

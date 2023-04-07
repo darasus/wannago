@@ -1,22 +1,18 @@
 import Link from 'next/link';
 import {EventCard} from 'cards';
 import Head from 'next/head';
-import {Container, PageHeader, Toggle, LoadingBlock} from 'ui';
-import {withProtected} from '../utils/withAuthProtect';
-import {FormProvider, useForm} from 'react-hook-form';
+import {Container, PageHeader, Toggle, LoadingBlock, Button} from 'ui';
+import {withProtected} from '../../utils/withAuthProtect';
 import {useMyEventsQuery} from 'hooks';
+import {useRouter} from 'next/router';
+import {z} from 'zod';
+import {capitalize} from 'utils';
 
-interface Form {
-  eventType: 'attending' | 'organizing' | 'all';
-}
+const filterSchema = z.array(z.enum(['attending', 'organizing', 'all']));
 
 function Dashboard() {
-  const form = useForm<Form>({
-    defaultValues: {
-      eventType: 'all',
-    },
-  });
-  const eventType = form.watch('eventType');
+  const router = useRouter();
+  const eventType = filterSchema.parse(router.query.filter)[0];
   const {data, isLoading, isFetching} = useMyEventsQuery({eventType});
   const haveNoEvents = data?.length === 0;
   const isGettingCards = isLoading || isFetching;
@@ -28,18 +24,23 @@ function Dashboard() {
       </Head>
       <Container maxSize="sm" className="flex flex-col gap-y-4 md:px-4">
         <PageHeader title="My events">
-          <FormProvider {...form}>
-            <div className="flex items-center gap-x-2">
-              <Toggle
-                name="eventType"
-                options={[
-                  {label: 'All', value: 'all'},
-                  {label: 'Attending', value: 'attending'},
-                  {label: 'Organizing', value: 'organizing'},
-                ]}
-              />
-            </div>
-          </FormProvider>
+          <div className="flex items-center gap-x-2">
+            {(
+              ['all', 'attending', 'organizing'] satisfies z.infer<
+                typeof filterSchema
+              >
+            ).map(filter => {
+              return (
+                <Button
+                  size="sm"
+                  variant={eventType === filter ? 'primary' : 'neutral'}
+                  onClick={() => router.push(`/dashboard/${filter}`)}
+                >
+                  {capitalize(filter)}
+                </Button>
+              );
+            })}
+          </div>
         </PageHeader>
         {isGettingCards && <LoadingBlock />}
         {!isGettingCards && (
