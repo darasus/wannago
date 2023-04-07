@@ -383,6 +383,14 @@ const joinEvent = protectedProcedure
       where: {
         externalId: ctx.auth.userId,
       },
+      include: {
+        subscription: true,
+        organization: {
+          include: {
+            subscription: true,
+          },
+        },
+      },
     });
 
     invariant(user, userNotFoundError);
@@ -426,15 +434,6 @@ const joinEvent = protectedProcedure
       }),
     ]);
 
-    const subscription = await ctx.prisma.subscription.findFirst({
-      where: {
-        OR: [
-          {user: {some: {id: event?.user?.id}}},
-          {organization: {some: {id: event?.organization?.id}}},
-        ],
-      },
-    });
-
     if (!event?.isPublished) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
@@ -454,7 +453,9 @@ const joinEvent = protectedProcedure
       numberOfInvitedUsers,
       event,
       organizer: event.user || event.organization,
-      subscription,
+      subscription: event.user
+        ? user.subscription
+        : user.organization?.subscription,
     });
 
     if (!existingSignUp) {

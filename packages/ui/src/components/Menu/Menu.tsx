@@ -14,13 +14,19 @@ interface Props {
   activeHref?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg';
   options: Option[];
+  testId?: string;
 }
 
-export function Menu({size = 'md', options, activeHref}: Props) {
+export function Menu({size = 'md', options, activeHref, testId}: Props) {
   return (
     <_Menu as="div" className="relative z-40">
       <div>
-        <_Menu.Button as={Button} size={size} iconLeft={<ChevronDownIcon />}>
+        <_Menu.Button
+          as={Button}
+          size={size}
+          iconLeft={<ChevronDownIcon />}
+          data-testid={testId || 'select-button'}
+        >
           {(activeHref &&
             options.find(option => option.href.startsWith(activeHref))
               ?.label) ||

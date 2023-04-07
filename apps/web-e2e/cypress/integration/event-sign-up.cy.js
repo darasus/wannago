@@ -4,7 +4,7 @@ describe('Event sign up', () => {
     cy.createOfflineEvent();
     cy.publishCurrentEvent();
     cy.get('[data-testid="attend-button"]').click();
-    cy.get('[data-testid="event-status-label"]');
+    cy.get('[data-testid="event-signup-success-label"]');
   });
 
   it('Can cancel sign up to an event', () => {

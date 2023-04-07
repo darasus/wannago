@@ -70,6 +70,7 @@ export default function EventPage() {
                   href={`/e/${event.data.shortId}/manage`}
                   size="md"
                   variant="secondary"
+                  data-testid="manage-event-button"
                 >
                   Manage event
                 </Button>

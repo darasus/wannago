@@ -66,11 +66,13 @@ export default function EventPage() {
                 iconLeft={<ArrowLeftCircleIcon />}
                 href={`/e/${event.data.shortId}`}
                 as="a"
+                data-testid="back-to-event-button"
               >
                 <Text truncate>{`Back to "${event.data.title}"`}</Text>
               </Button>
               <PageHeader title="Manage event">
                 <Menu
+                  testId="manage-event-menu"
                   size="sm"
                   activeHref={router.asPath}
                   options={[
