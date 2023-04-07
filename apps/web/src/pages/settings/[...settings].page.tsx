@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import {Button, Container, LoadingBlock, PageHeader} from 'ui';
-import {TeamSettings} from '../../features/TeamSettings/TeamSettings';
-import {UserSettings} from '../../features/UserSettings/UserSettings';
+import {TeamSettings} from './features/TeamSettings/TeamSettings';
+import {UserSettings} from './features/UserSettings/UserSettings';
 import {withProtected} from '../../utils/withAuthProtect';
 import {useMyOrganizationQuery, useMyUserQuery} from 'hooks';
 import {useRouter} from 'next/router';
-import {UserSubscription} from '../../features/UserSubscription/UserSubscription';
+import {UserSubscription} from './features/UserSubscription/UserSubscription';
 
 type SettingsPageType = 'personal' | 'team';
 

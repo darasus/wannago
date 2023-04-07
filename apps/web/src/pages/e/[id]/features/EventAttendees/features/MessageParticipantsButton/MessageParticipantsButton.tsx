@@ -4,7 +4,7 @@ import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {Button} from 'ui';
-import {MessageParticipantsFormModal} from '../../components/MessageParticipantsFormModal/MessageParticipantsFormModal';
+import {MessageParticipantsFormModal} from './components/MessageParticipantsFormModal/MessageParticipantsFormModal';
 import {useAmplitude} from 'hooks';
 import {useEventId} from 'hooks';
 
@@ -60,7 +60,7 @@ export function MessageParticipantsButton() {
         title="Message attendees"
         data-testid="message-attendees-button"
       >
-        <span className="hidden md:block">Message attendees</span>
+        Message participants
       </Button>
     </>
   );

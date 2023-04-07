@@ -92,14 +92,47 @@ export function AdminSection({event}: Props) {
   ];
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       {removeEventModal}
       {publishModal}
       {unpublishModal}
+      <div className="flex gap-2 items-start">
+        {event.isPublished && (
+          <Button
+            variant="danger"
+            iconLeft={<PauseCircleIcon />}
+            onClick={() => onUnpublishClick()}
+            size="sm"
+            data-testid="unpublish-event-button"
+          >
+            Unpublish
+          </Button>
+        )}
+        {!event.isPublished && (
+          <Button
+            variant="success"
+            iconLeft={<PlayCircleIcon />}
+            onClick={() => onPublishClick()}
+            size="sm"
+            data-testid="publish-event-button"
+          >
+            Publish
+          </Button>
+        )}
+        <Button
+          variant="danger"
+          iconLeft={<TrashIcon />}
+          onClick={onRemoveClick}
+          size="sm"
+          data-testid="delete-event-button"
+        >
+          Delete event
+        </Button>
+      </div>
       <CardBase>
         <div className="flex items-center">
           <Badge color="gray" className="mr-2 mb-2" size="xs">
-            Admin
+            Overview
           </Badge>
         </div>
         <div className="flex flex-col gap-2">
@@ -119,59 +152,8 @@ export function AdminSection({event}: Props) {
               );
             })}
           </div>
-          <div className="flex flex-col gap-2 items-start">
-            <Button
-              variant="neutral"
-              iconLeft={<PencilIcon />}
-              onClick={() => router.push(`/e/${event.shortId}/edit`)}
-              size="sm"
-              data-testid="edit-event-button"
-            >
-              Edit
-            </Button>
-            <Button
-              variant="neutral"
-              iconLeft={<UsersIcon />}
-              onClick={() => router.push(`/e/${event.shortId}/attendees`)}
-              size="sm"
-              data-testid="event-attendees-button"
-            >
-              Attendees
-            </Button>
-            {event.isPublished && (
-              <Button
-                variant="danger"
-                iconLeft={<PauseCircleIcon />}
-                onClick={() => onUnpublishClick()}
-                size="sm"
-                data-testid="unpublish-event-button"
-              >
-                Unpublish
-              </Button>
-            )}
-            {!event.isPublished && (
-              <Button
-                variant="success"
-                iconLeft={<PlayCircleIcon />}
-                onClick={() => onPublishClick()}
-                size="sm"
-                data-testid="publish-event-button"
-              >
-                Publish
-              </Button>
-            )}
-            <Button
-              variant="danger"
-              iconLeft={<TrashIcon />}
-              onClick={onRemoveClick}
-              size="sm"
-              data-testid="delete-event-button"
-            >
-              Delete event
-            </Button>
-          </div>
         </div>
       </CardBase>
-    </>
+    </div>
   );
 }

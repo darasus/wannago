@@ -1,8 +1,7 @@
 import {GetServerSidePropsContext} from 'next';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
-import {AdminSection} from '../../../features/AdminSection/AdminSection';
 import {EventView} from '../../../features/EventView/EventView';
-import {Container, LoadingBlock} from 'ui';
+import {Button, Container, LoadingBlock} from 'ui';
 import {
   useEventId,
   useEventQuery,
@@ -16,6 +15,8 @@ import SuperJSON from 'superjson';
 import {ONE_WEEK_IN_SECONDS} from 'const';
 import {Meta} from '../../../components/Meta/Meta';
 import {createOGImageEventUrl, stripHTML} from 'utils';
+import {AdjustmentsHorizontalIcon} from '@heroicons/react/24/solid';
+import {AnimatePresence, motion} from 'framer-motion';
 
 export default function EventPage() {
   useHandleEmailCallbackParam();
@@ -27,6 +28,8 @@ export default function EventPage() {
   if (event.isLoading) {
     return <LoadingBlock />;
   }
+
+  if (!event.data) return null;
 
   return (
     <>
@@ -50,26 +53,28 @@ export default function EventPage() {
             }
             shortEventId={event.data?.shortId}
           />
-          {isMyEvent && event.data && (
-            <Container>
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-12 lg:col-span-4">
-                  <AdminSection
-                    event={event.data}
-                    refetchEvent={event.refetch}
-                  />
-                </div>
-                <div className="col-span-12 lg:col-span-8">
-                  <EventView event={event.data} />
-                </div>
-              </div>
-            </Container>
-          )}
-          {!isMyEvent && event.data && (
-            <Container maxSize="sm">
-              <EventView event={event.data} />
-            </Container>
-          )}
+          <Container maxSize="sm">
+            <EventView event={event.data} />
+          </Container>
+          <AnimatePresence mode="wait">
+            {isMyEvent && (
+              <motion.div
+                className="fixed bottom-4 left-0 right-0 m-auto w-24"
+                initial={{opacity: 0, y: '200%'}}
+                animate={{opacity: 1, y: '0%'}}
+                exit={{opacity: 0, y: '200%'}}
+              >
+                <Button
+                  iconLeft={<AdjustmentsHorizontalIcon />}
+                  as="a"
+                  href={`/e/${event.data.shortId}/manage`}
+                  size="sm"
+                >
+                  Manage
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </>

@@ -1,17 +1,13 @@
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Button, Modal} from 'ui';
-import {AdminInviteForm} from '../../types/forms';
+import {AdminInviteForm} from '../../../../../../../types/forms';
 import {trpc} from 'trpc/src/trpc';
 import {useEventId} from 'hooks';
 import {toast} from 'react-hot-toast';
-import {Input} from '../../components/Input/Input/Input';
+import {Input} from '../../../../../../../components/Input/Input/Input';
 
-interface Props {
-  refetch: () => Promise<any>;
-}
-
-export function AdminInviteButton({refetch}: Props) {
+export function EventInviteButton() {
   const {eventShortId} = useEventId();
   const [on, set] = useState(false);
   const {
@@ -32,7 +28,7 @@ export function AdminInviteButton({refetch}: Props) {
   const onSubmit = handleSubmit(async data => {
     if (eventShortId) {
       await mutateAsync({...data, eventShortId});
-      await refetch();
+      // await refetch();
       reset();
       set(false);
     }

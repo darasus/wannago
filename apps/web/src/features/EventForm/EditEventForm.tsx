@@ -113,14 +113,14 @@ export function EditEventForm({event}: Props) {
   return (
     <FormProvider {...form}>
       <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 md:col-span-6">
+        <div className="col-span-12 md:col-span-12">
           <EventForm
             onSubmit={onSubmit}
             isEdit
             onCancelClick={() => router.push(`/e/${event.shortId}`)}
           />
         </div>
-        <div className="col-span-6 pointer-events-none hidden md:block">
+        {/* <div className="col-span-6 pointer-events-none hidden md:block">
           <div className="flex flex-col gap-y-4">
             <PageHeader title="Preview" />
             <div>
@@ -160,7 +160,7 @@ export function EditEventForm({event}: Props) {
               />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </FormProvider>
   );

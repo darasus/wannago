@@ -1,23 +1,15 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {
-  Container,
-  CardBase,
-  Button,
-  Text,
-  PageHeader,
-  Spinner,
-  LoadingBlock,
-} from 'ui';
+import {Container, CardBase, Button, Text, PageHeader, LoadingBlock} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {saveAs} from 'file-saver';
-import {withProtected} from '../../../utils/withAuthProtect';
 import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {useConfirmDialog, useEventId} from 'hooks';
-import {MessageParticipantsButton} from '../../../features/MessageParticipantsButton/MessageParticipantsButton';
 import {UserPlusIcon, DocumentArrowDownIcon} from '@heroicons/react/24/solid';
 import {useCallback} from 'react';
+import {MessageParticipantsButton} from './features/MessageParticipantsButton/MessageParticipantsButton';
+import {ExportAttendeesCSV} from './features/ExportAttendeesCSV/ExportAttendeesCSV';
 
 interface ItemProps {
   user: User;
@@ -70,8 +62,7 @@ function Item({user, hasPlusOne, status, refetch}: ItemProps) {
   );
 }
 
-function EventAttendeesPage() {
-  const router = useRouter();
+export function EventAttendees() {
   const {eventShortId} = useEventId();
   const {data, refetch, isLoading} = trpc.event.getAttendees.useQuery(
     {
@@ -82,20 +73,6 @@ function EventAttendeesPage() {
     }
   );
 
-  const handleDownloadCsvClick = () => {
-    const content =
-      'First name,Last name,Email,Plus one,Status\r\n' +
-      data
-        ?.map(signUp => {
-          return `${signUp.user.firstName},${signUp.user.lastName},${
-            signUp.user.email
-          },${signUp.hasPlusOne ? 'Yes' : 'No'},${signUp.status}`;
-        })
-        .join('\r\n')!;
-    const blob = new Blob([content], {type: 'text/csv;charset=utf-8'});
-    saveAs(blob, 'file.csv');
-  };
-
   if (isLoading) {
     return <LoadingBlock />;
   }
@@ -105,30 +82,11 @@ function EventAttendeesPage() {
       <Head>
         <title>{`Attendees | WannaGo`}</title>
       </Head>
-      <Container className="flex flex-col gap-y-4">
-        <PageHeader title={'Attendees'}>
+      <div className="flex flex-col gap-4">
+        <div className="flex gap-2">
           <MessageParticipantsButton />
-          <Button
-            variant="neutral"
-            onClick={() => router.push(`/e/${eventShortId}/invite`)}
-            size="sm"
-            iconLeft={<UserPlusIcon />}
-            title={'Invite'}
-            data-testid="invite-button"
-          >
-            <span className="hidden md:block">Invite</span>
-          </Button>
-          <Button
-            variant="neutral"
-            onClick={handleDownloadCsvClick}
-            size="sm"
-            iconLeft={<DocumentArrowDownIcon />}
-            title={'Export CSV'}
-            data-testid="export-csv-button"
-          >
-            <span className="hidden md:block">Export CSV</span>
-          </Button>
-        </PageHeader>
+          <ExportAttendeesCSV />
+        </div>
         {data?.length === 0 && (
           <div className="text-center">
             <Text>No attendees yet...</Text>
@@ -145,9 +103,7 @@ function EventAttendeesPage() {
             />
           );
         })}
-      </Container>
+      </div>
     </>
   );
 }
-
-export default withProtected(EventAttendeesPage);
