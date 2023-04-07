@@ -67,17 +67,9 @@ export function Header() {
 
   return (
     <header>
-      <CardBase
-      // className="relative overflow-hidden"
-      >
-        {/* <div
-          className={cn(
-            'absolute top-0 bottom-0 left-0 right-0 header-loading opacity-0',
-            {'opacity-100': enabled}
-          )}
-        /> */}
+      <CardBase>
         <nav className="relative flex justify-between">
-          <div className="flex items-center gap-x-8">
+          <div className="flex items-center gap-x-4 md:gap-x-8">
             <Logo href={auth.isSignedIn ? '/dashboard' : '/'} />
             {showDesktopHomeNav && (
               <div className="hidden md:flex gap-x-5 md:gap-x-4">
