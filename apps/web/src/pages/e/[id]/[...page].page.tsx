@@ -68,6 +68,7 @@ export default function EventPage() {
               >
                 <Menu
                   size="sm"
+                  activeHref={router.asPath}
                   options={[
                     {
                       label: 'Overview',

@@ -8,8 +8,16 @@ import {toast} from 'react-hot-toast';
 import {Input} from '../../../../../../../components/Input/Input/Input';
 
 export function EventInviteButton() {
-  const {eventShortId} = useEventId();
   const [on, set] = useState(false);
+  const {eventShortId} = useEventId();
+  const {refetch} = trpc.event.getAttendees.useQuery(
+    {
+      eventShortId: eventShortId!,
+    },
+    {
+      enabled: !!eventShortId,
+    }
+  );
   const {
     handleSubmit,
     reset,
@@ -28,7 +36,7 @@ export function EventInviteButton() {
   const onSubmit = handleSubmit(async data => {
     if (eventShortId) {
       await mutateAsync({...data, eventShortId});
-      // await refetch();
+      await refetch();
       reset();
       set(false);
     }
@@ -59,7 +67,7 @@ export function EventInviteButton() {
                 data-testid="invite-by-email-last-name-input"
               />
             </div>
-            <div className="col-span-8">
+            <div className="col-span-12">
               <Input
                 placeholder="Email"
                 {...register('email', {

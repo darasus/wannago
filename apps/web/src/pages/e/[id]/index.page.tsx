@@ -59,7 +59,7 @@ export default function EventPage() {
           <AnimatePresence mode="wait">
             {isMyEvent && (
               <motion.div
-                className="fixed bottom-4 left-0 right-0 m-auto w-24"
+                className="flex justify-center sticky bottom-4 my-4"
                 initial={{opacity: 0, y: '200%'}}
                 animate={{opacity: 1, y: '0%'}}
                 exit={{opacity: 0, y: '200%'}}
@@ -68,7 +68,7 @@ export default function EventPage() {
                   iconLeft={<AdjustmentsHorizontalIcon />}
                   as="a"
                   href={`/e/${event.data.shortId}/manage`}
-                  size="sm"
+                  size="md"
                 >
                   Manage
                 </Button>

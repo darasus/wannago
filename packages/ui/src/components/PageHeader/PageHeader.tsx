@@ -19,12 +19,15 @@ interface Props extends PropsWithChildren {
 export function PageHeader({title, children, className, back}: Props) {
   return (
     <CardBase className={className}>
-      <div className="flex items-center flex-col md:flex-row gap-y-2 md:gap-0">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center flex-row gap-2">
+        <div className="flex items-center gap-2 md:gap-4">
           {back && (
-            <Button size="xs" iconLeft={<ChevronLeftIcon />} onClick={back}>
-              Back
-            </Button>
+            <Button
+              className="hidden md:visible"
+              size="sm"
+              iconLeft={<ChevronLeftIcon />}
+              onClick={back}
+            />
           )}
           <h1 className={cn(titleFont.className, 'text-2xl')}>{title}</h1>
         </div>

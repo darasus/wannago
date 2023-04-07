@@ -11,18 +11,20 @@ interface Option {
 }
 
 interface Props {
+  activeHref?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg';
   options: Option[];
 }
 
-export function Menu({size = 'md', options}: Props) {
+export function Menu({size = 'md', options, activeHref}: Props) {
   return (
     <_Menu as="div" className="relative z-40">
       <div>
-        <_Menu.Button>
-          <Button size={size} iconLeft={<ChevronDownIcon />}>
-            Options
-          </Button>
+        <_Menu.Button as={Button} size={size} iconLeft={<ChevronDownIcon />}>
+          {(activeHref &&
+            options.find(option => option.href.startsWith(activeHref))
+              ?.label) ||
+            'Select'}
         </_Menu.Button>
       </div>
       <Transition
@@ -37,19 +39,21 @@ export function Menu({size = 'md', options}: Props) {
         <_Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right">
           <CardBase className="p-4" innerClassName="flex flex-col gap-2">
             {options.map(option => (
-              <_Menu.Item>
-                {({active}) => (
-                  <Button
-                    key={option.href}
-                    className="w-full justify-start"
-                    size={size}
-                    variant={active ? 'primary' : 'neutral'}
-                    as="a"
-                    href={option.href}
-                  >
-                    {option.label}
-                  </Button>
-                )}
+              <_Menu.Item key={option.href}>
+                {({close}) => {
+                  return (
+                    <Button
+                      className="w-full justify-start"
+                      size={size}
+                      variant="neutral"
+                      as="a"
+                      href={option.href}
+                      onClick={close}
+                    >
+                      {option.label}
+                    </Button>
+                  );
+                }}
               </_Menu.Item>
             ))}
           </CardBase>
