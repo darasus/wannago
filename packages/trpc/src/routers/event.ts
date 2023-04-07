@@ -643,6 +643,10 @@ const getExamples = publicProcedure.query(({ctx}) => {
         },
       },
     },
+    include: {
+      user: true,
+      organization: true,
+    },
   });
 });
 
