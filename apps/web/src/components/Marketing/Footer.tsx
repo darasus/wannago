@@ -15,7 +15,7 @@ export function Footer() {
                 <Button
                   key={href}
                   href={href}
-                  variant="neutral"
+                  variant="link-gray"
                   size="sm"
                   as="a"
                 >
@@ -32,18 +32,7 @@ export function Footer() {
             </Text>
             <Link href="/terms" className="text-sm underline">
               Terms & Conditions
-            </Link>{' '}
-            ·{' '}
-            <span>
-              <Text className="text-sm">
-                Designed and developed in Amsterdam{' '}
-              </Text>
-              <span className="inline-flex items-center justify-center border border-gray-800 h-[16px] w-[30px] bg-red-500 rounded-[4px] relative -top-[1px]">
-                <span className="inline-flex items-center justify-center bg-gray-800 w-full h-[8px] text-[9px] text-gray-50">
-                  ⤫⤫⤫
-                </span>
-              </span>
-            </span>
+            </Link>
           </div>
           <div className="flex gap-x-6">
             <Link href="https://twitter.com/wannagohq">
