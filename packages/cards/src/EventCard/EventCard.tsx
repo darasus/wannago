@@ -6,7 +6,7 @@ import {Avatar, Badge, CardBase, Text} from 'ui';
 import {forwardRef} from 'react';
 
 interface Props {
-  event: Event & {user?: User; organization?: Organization};
+  event: Event & {user?: User | null; organization?: Organization | null};
   showPublishStatus?: boolean;
 }
 
