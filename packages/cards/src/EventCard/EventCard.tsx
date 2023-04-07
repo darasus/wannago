@@ -25,45 +25,7 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
 
   return (
     <CardBase ref={ref} data-testid="event-card">
-      {featuredImageSrc &&
-        featuredImagePreviewSrc &&
-        featuredImageWidth &&
-        featuredImageHeight && (
-          <div className="grow overflow-hidden relative justify-center bg-black rounded-3xl aspect-video safari-rounded-border-fix mb-4">
-            {showPublishStatus && (
-              <div className="absolute left-4 top-4 z-10">
-                {event.isPublished ? (
-                  <Badge color="green" size="xs">
-                    Published
-                  </Badge>
-                ) : (
-                  <Badge color="gray" size="xs">
-                    Draft
-                  </Badge>
-                )}
-              </div>
-            )}
-            <Image
-              className="bg-cover bg-center"
-              src={featuredImageSrc}
-              alt={title}
-              loader={cloudflareImageLoader}
-              blurDataURL={featuredImagePreviewSrc}
-              placeholder={'blur'}
-              sizes="320 640 750 1000"
-              fill
-              style={{
-                objectFit:
-                  featuredImageHeight > featuredImageWidth ||
-                  featuredImageHeight === featuredImageWidth
-                    ? 'contain'
-                    : 'cover',
-                backgroundImage: 'url(' + featuredImagePreviewSrc + ')',
-              }}
-            />
-          </div>
-        )}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <Avatar
             className="w-6 h-6 -mr-1"
@@ -85,8 +47,47 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
             {formatTimeago(event.startDate)}
           </Text>
         </div>
-        <div />
-        <Text className="text-2xl font-bold line-clamp-2">{event.title}</Text>
+        {featuredImageSrc &&
+          featuredImagePreviewSrc &&
+          featuredImageWidth &&
+          featuredImageHeight && (
+            <div className="grow overflow-hidden relative justify-center bg-black rounded-3xl aspect-video safari-rounded-border-fix">
+              {showPublishStatus && (
+                <div className="absolute left-4 top-4 z-10">
+                  {event.isPublished ? (
+                    <Badge color="green" size="xs">
+                      Published
+                    </Badge>
+                  ) : (
+                    <Badge color="gray" size="xs">
+                      Draft
+                    </Badge>
+                  )}
+                </div>
+              )}
+              <Image
+                className="bg-cover bg-center"
+                src={featuredImageSrc}
+                alt={title}
+                loader={cloudflareImageLoader}
+                blurDataURL={featuredImagePreviewSrc}
+                placeholder={'blur'}
+                sizes="320 640 750 1000"
+                fill
+                style={{
+                  objectFit:
+                    featuredImageHeight > featuredImageWidth ||
+                    featuredImageHeight === featuredImageWidth
+                      ? 'contain'
+                      : 'cover',
+                  backgroundImage: 'url(' + featuredImagePreviewSrc + ')',
+                }}
+              />
+            </div>
+          )}
+        <div>
+          <Text className="text-2xl font-bold line-clamp-2">{event.title}</Text>
+        </div>
       </div>
     </CardBase>
   );
