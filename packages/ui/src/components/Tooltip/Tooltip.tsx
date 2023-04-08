@@ -15,7 +15,7 @@ export const Tooltip: React.FC<TooltipProps> = memo(function Tooltip({
       {text && (
         <span
           className={cn(
-            'pointer-events-none z-50',
+            'pointer-events-none z-[9999]',
             'absolute -top-7 left-1/2 -translate-x-1/2',
             'px-2 py-1',
             'whitespace-nowrap rounded bg-gray-800 text-gray-50 text-xs',
