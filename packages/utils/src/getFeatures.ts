@@ -12,7 +12,7 @@ export const featureConfig: Record<SubscriptionType | 'STARTER', Permissions> =
     STARTER: {
       maxNumberOfPersonalEvents: 5,
       maxNumberOfOrganizationEvents: 0,
-      maxNumberOfPersonalEventAttendees: 1,
+      maxNumberOfPersonalEventAttendees: 50,
       maxNumberOfOrganizationEventAttendees: 0,
     },
     PRO: {
