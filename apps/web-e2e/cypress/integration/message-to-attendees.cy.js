@@ -4,9 +4,8 @@ describe('Message to attendees', () => {
     cy.visit('/dashboard');
     cy.get('[data-testid="event-card"]').first().click();
     cy.get('[data-testid="manage-event-button"]').click();
-    cy.get('[data-testid="manage-event-menu"]').click();
     cy.get('[data-testid="select-option-button"]')
-      .contains('Attendees')
+      .contains('Event attendees')
       .click();
     cy.get('[data-testid="message-attendees-button"]').click();
     cy.get('[data-testid="message-attendees-input-subject"]').type(
