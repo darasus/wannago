@@ -31,7 +31,7 @@ const moduleExports = {
     hideSourceMaps: true,
   },
   reactStrictMode: true,
-  pageExtensions: ['tsx', 'ts', 'mdx'],
+  pageExtensions: ['page.tsx', 'page.ts', 'page.mdx', 'api.ts', 'api.tsx'],
   images: {
     domains: [
       'maps.googleapis.com',

@@ -1,19 +1,23 @@
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Button, Modal} from 'ui';
-import {AdminInviteForm} from '../../types/forms';
+import {AdminInviteForm} from '../../../../../../../types/forms';
 import {trpc} from 'trpc/src/trpc';
 import {useEventId} from 'hooks';
 import {toast} from 'react-hot-toast';
-import {Input} from '../../components/Input/Input/Input';
+import {Input} from '../../../../../../../components/Input/Input/Input';
 
-interface Props {
-  refetch: () => Promise<any>;
-}
-
-export function AdminInviteButton({refetch}: Props) {
-  const {eventShortId} = useEventId();
+export function EventInviteButton() {
   const [on, set] = useState(false);
+  const {eventShortId} = useEventId();
+  const {refetch} = trpc.event.getAllEventsAttendees.useQuery(
+    {
+      eventShortId: eventShortId!,
+    },
+    {
+      enabled: !!eventShortId,
+    }
+  );
   const {
     handleSubmit,
     reset,
@@ -63,7 +67,7 @@ export function AdminInviteButton({refetch}: Props) {
                 data-testid="invite-by-email-last-name-input"
               />
             </div>
-            <div className="col-span-8">
+            <div className="col-span-12">
               <Input
                 placeholder="Email"
                 {...register('email', {

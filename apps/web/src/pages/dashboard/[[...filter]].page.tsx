@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import {EventCard} from 'cards';
 import Head from 'next/head';
-import {Container, PageHeader, Toggle, LoadingBlock, Button} from 'ui';
+import {Container, PageHeader, Toggle, LoadingBlock, Button, Menu} from 'ui';
 import {withProtected} from '../../utils/withAuthProtect';
 import {useMyEventsQuery} from 'hooks';
 import {useRouter} from 'next/router';
@@ -12,7 +12,7 @@ const filterSchema = z.array(z.enum(['attending', 'organizing', 'all']));
 
 function Dashboard() {
   const router = useRouter();
-  const eventType = filterSchema.parse(router.query.filter)[0];
+  const eventType = filterSchema.parse(router.query.filter)[0] || 'all';
   const {data, isLoading, isFetching} = useMyEventsQuery({eventType});
   const haveNoEvents = data?.length === 0;
   const isGettingCards = isLoading || isFetching;
@@ -24,23 +24,24 @@ function Dashboard() {
       </Head>
       <Container maxSize="sm" className="flex flex-col gap-y-4 md:px-4">
         <PageHeader title="My events">
-          <div className="flex items-center gap-x-2">
-            {(
-              ['all', 'attending', 'organizing'] satisfies z.infer<
-                typeof filterSchema
-              >
-            ).map(filter => {
-              return (
-                <Button
-                  size="sm"
-                  variant={eventType === filter ? 'primary' : 'neutral'}
-                  onClick={() => router.push(`/dashboard/${filter}`)}
-                >
-                  {capitalize(filter)}
-                </Button>
-              );
-            })}
-          </div>
+          <Menu
+            activeHref={router.asPath}
+            size="sm"
+            options={[
+              {
+                label: 'All',
+                href: '/dashboard/all',
+              },
+              {
+                label: 'Attending',
+                href: '/dashboard/attending',
+              },
+              {
+                label: 'Organizing',
+                href: '/dashboard/organizing',
+              },
+            ]}
+          />
         </PageHeader>
         {isGettingCards && <LoadingBlock />}
         {!isGettingCards && (

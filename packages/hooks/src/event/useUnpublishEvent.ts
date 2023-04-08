@@ -1,3 +1,4 @@
+import {TRPCClientError} from '@trpc/client';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {useAmplitude} from '../useAmplitude';
@@ -5,7 +6,7 @@ import {useConfirmDialog} from '../useConfirmDialog';
 import {useEventId} from './useEventId';
 
 interface Props {
-  eventId: string;
+  eventId?: string;
 }
 
 export function useUnpublishEvent({eventId}: Props) {
@@ -27,9 +28,13 @@ export function useUnpublishEvent({eventId}: Props) {
     description:
       'This event will not be available to anyone when visiting public link.',
     onConfirm: async () => {
-      await mutateAsync({eventId, isPublished: false});
-      logEvent('event_unpublished', {eventId});
-      await refetch();
+      if (eventId) {
+        await mutateAsync({eventId, isPublished: false});
+        logEvent('event_unpublished', {eventId});
+        await refetch();
+      } else {
+        throw new TRPCClientError('Event ID is not provided');
+      }
     },
   });
 

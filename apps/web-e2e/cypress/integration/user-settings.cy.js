@@ -10,7 +10,6 @@ describe('user-settings', () => {
     cy.get('[data-testid="last-name-input"]').clear();
     cy.get('[data-testid="last-name-input"]').type(lastName);
     cy.get('[data-testid="user-settings-submit-button"]').click();
-    cy.wait(10000);
     cy.get('[data-testid="header-user-section-button"]').click();
     cy.get('[data-testid="profile-button"]').click();
     cy.get('[data-testid="user-profile-name"]').contains(firstName);

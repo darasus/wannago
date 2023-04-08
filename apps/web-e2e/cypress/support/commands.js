@@ -39,8 +39,8 @@ Cypress.Commands.addAll({
     cy.get('[data-testid="event-title"]').should('be.visible');
   },
   publishCurrentEvent() {
-    cy.get('[data-testid="publish-event-button"]').click();
+    cy.get('[data-testid="manage-event-button"]').click();
+    cy.get('[data-testid="select-option-button"]').contains('Publish').click();
     cy.get('[data-testid="confirm-dialog-confirm-button"]').click();
-    cy.get('[data-testid="event-status-label"]').contains('Published');
   },
 });

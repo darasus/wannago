@@ -19,7 +19,6 @@ export function EventRegistrationStatusBadge({status}: Props) {
     <Badge
       size="sm"
       color={statusBadgeMap[status].color}
-      className="mr-4"
       data-testid="sign-up-status-badge"
     >
       {statusBadgeMap[status].label}

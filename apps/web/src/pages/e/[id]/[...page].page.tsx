@@ -1,8 +1,7 @@
 import {GetServerSidePropsContext} from 'next';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
-import {AdminSection} from '../../../features/AdminSection/AdminSection';
-import {EventView} from '../../../features/EventView/EventView';
-import {Container, LoadingBlock} from 'ui';
+import {EventInfo} from './features/EventInfo/EventInfo';
+import {Button, Container, LoadingBlock, Menu, PageHeader, Text} from 'ui';
 import {
   useEventId,
   useEventQuery,
@@ -16,8 +15,16 @@ import SuperJSON from 'superjson';
 import {ONE_WEEK_IN_SECONDS} from 'const';
 import {Meta} from '../../../components/Meta/Meta';
 import {createOGImageEventUrl, stripHTML} from 'utils';
+import {useRouter} from 'next/router';
+import {EditEventForm} from '../../../features/EventForm/EditEventForm';
+import {EventAttendees} from './features/EventAttendees/EventAttendees';
+import {EventInvite} from './features/EventInvite/EventInvite';
+import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
 
 export default function EventPage() {
+  const router = useRouter();
+  const page =
+    typeof router.query.page === 'undefined' ? 'event' : router.query.page[0];
   useHandleEmailCallbackParam();
   const user = useMyUserQuery();
   const {eventShortId} = useEventId();
@@ -27,6 +34,8 @@ export default function EventPage() {
   if (event.isLoading) {
     return <LoadingBlock />;
   }
+
+  if (!isMyEvent.data?.isMyEvent || !event.data) return null;
 
   return (
     <>
@@ -50,26 +59,25 @@ export default function EventPage() {
             }
             shortEventId={event.data?.shortId}
           />
-          {isMyEvent && event.data && (
-            <Container>
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-12 lg:col-span-4">
-                  <AdminSection
-                    event={event.data}
-                    refetchEvent={event.refetch}
-                  />
-                </div>
-                <div className="col-span-12 lg:col-span-8">
-                  <EventView event={event.data} />
-                </div>
+          <Container maxSize="sm">
+            <div className="flex flex-col gap-4">
+              <Button
+                variant="neutral"
+                iconLeft={<ArrowLeftCircleIcon />}
+                href={`/e/${event.data.shortId}`}
+                as="a"
+                data-testid="back-to-event-button"
+              >
+                <Text truncate>{`Back to "${event.data.title}"`}</Text>
+              </Button>
+              <div>
+                {page === 'info' && <EventInfo />}
+                {page === 'edit' && <EditEventForm />}
+                {page === 'attendees' && <EventAttendees />}
+                {page === 'invite' && <EventInvite />}
               </div>
-            </Container>
-          )}
-          {!isMyEvent && event.data && (
-            <Container maxSize="sm">
-              <EventView event={event.data} />
-            </Container>
-          )}
+            </div>
+          </Container>
         </>
       )}
     </>

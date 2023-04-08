@@ -100,7 +100,7 @@ const button = cva(
   }
 );
 
-const icon = cva(['text-gray-800'], {
+const icon = cva(['text-gray-800 shrink-0'], {
   variants: {
     intent: {
       primary: ['text-gray-50'],

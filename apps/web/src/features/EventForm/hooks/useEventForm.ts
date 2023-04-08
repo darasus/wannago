@@ -8,7 +8,7 @@ const formatDateForInput = (date: Date | string) => {
   return formatDate(new Date(date), "yyyy-MM-dd'T'HH:mm");
 };
 
-export function useEventForm(props?: {event?: Event}) {
+export function useEventForm(props?: {event?: Event | null}) {
   const {event} = props || {};
 
   const type = useMemo(() => {

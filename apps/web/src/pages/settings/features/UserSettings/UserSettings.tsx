@@ -3,8 +3,8 @@ import Link from 'next/link';
 import {FormProvider, useForm} from 'react-hook-form';
 import {trpc} from 'trpc/src/trpc';
 import {Button, CardBase, Text} from 'ui';
-import {FileInput} from '../../components/Input/FileInput/FileInput';
-import {Input} from '../../components/Input/Input/Input';
+import {FileInput} from '../../../../components/Input/FileInput/FileInput';
+import {Input} from '../../../../components/Input/Input/Input';
 
 interface UserForm {
   firstName: string;

@@ -11,11 +11,10 @@ import {
   LoadingBlock,
 } from 'ui';
 import {trpc} from 'trpc/src/trpc';
-import {withProtected} from '../../../utils/withAuthProtect';
 import {toast} from 'react-hot-toast';
 import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {useConfirmDialog} from 'hooks';
-import {AdminInviteButton} from '../../../features/AdminInviteButton/AdminInviteButton';
+import {EventInviteButton} from './features/EventInviteButton/EventInviteButton';
 
 interface InviteButtonProps {
   eventShortId: string;
@@ -73,10 +72,15 @@ interface UserRowProps {
 function UserRow({user, eventShortId, refetch}: UserRowProps) {
   return (
     <>
-      <CardBase key={user.id} data-testid="invitee-card">
-        <div className="flex items-center">
-          <Text>{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
-          <div className="grow" />
+      <CardBase
+        key={user.id}
+        innerClassName="flex flex-col md:flex-row gap-2"
+        data-testid="invitee-card"
+      >
+        <div className="flex items-center truncate grow">
+          <Text className="truncate">{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
+        </div>
+        <div className="flex gap-2">
           {user.status && <EventRegistrationStatusBadge status={user.status} />}
           <InviteButton
             user={user}
@@ -90,7 +94,7 @@ function UserRow({user, eventShortId, refetch}: UserRowProps) {
   );
 }
 
-function EventAttendeesPage() {
+export function EventInvite() {
   const router = useRouter();
   const eventShortId = router.query.id as string;
   const {data, refetch, isLoading} = trpc.event.getAllEventsAttendees.useQuery(
@@ -109,10 +113,11 @@ function EventAttendeesPage() {
       <Head>
         <title>{`Attendees | WannaGo`}</title>
       </Head>
-      <Container className="flex flex-col gap-y-4">
-        <PageHeader title={'Invite'}>
-          <AdminInviteButton refetch={refetch} />
-        </PageHeader>
+      <div className="flex flex-col gap-y-4">
+        <PageHeader title="Invite attendees" />
+        <div>
+          <EventInviteButton />
+        </div>
         {data?.length === 0 && (
           <div className="text-center">
             <Text>{`You don't have users to invite yet...`}</Text>
@@ -128,9 +133,7 @@ function EventAttendeesPage() {
             />
           );
         })}
-      </Container>
+      </div>
     </>
   );
 }
-
-export default withProtected(EventAttendeesPage);

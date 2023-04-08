@@ -1,5 +1,5 @@
 describe('Team', () => {
-  it('can create team', () => {
+  it('can update team', () => {
     cy.login();
     cy.visit('/settings/personal');
     cy.get('[data-testid="team-settings-button"]').click();
@@ -18,9 +18,9 @@ describe('Team', () => {
     cy.wait(1000);
 
     cy.get('[data-testid="team-settings-form-input-name"]').type('Test team');
-    cy.get('[data-testid="team-settings-form-input-email"]').type(
-      'email@email.com'
-    );
+    cy.get('[data-testid="team-settings-form-input-email"]')
+      .clear()
+      .type('email@email.com');
     cy.get('[data-testid="file-input"]').selectFile(
       'cypress/support/logo.png',
       {force: true}
