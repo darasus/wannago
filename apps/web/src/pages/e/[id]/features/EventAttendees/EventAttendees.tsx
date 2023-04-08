@@ -1,6 +1,6 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
-import {CardBase, Button, Text, LoadingBlock} from 'ui';
+import {CardBase, Button, Text, LoadingBlock, PageHeader} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {useConfirmDialog, useEventId} from 'hooks';
@@ -85,6 +85,7 @@ export function EventAttendees() {
         <title>{`Attendees | WannaGo`}</title>
       </Head>
       <div className="flex flex-col gap-4">
+        <PageHeader title="Event attendees" />
         <div className="flex gap-2">
           <MessageParticipantsButton />
           <ExportAttendeesCSV />

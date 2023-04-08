@@ -70,31 +70,6 @@ export default function EventPage() {
               >
                 <Text truncate>{`Back to "${event.data.title}"`}</Text>
               </Button>
-              <PageHeader title="Manage event">
-                <Menu
-                  testId="manage-event-menu"
-                  size="sm"
-                  activeHref={router.asPath}
-                  options={[
-                    {
-                      label: 'Event info',
-                      href: `/e/${event.data.shortId}/info`,
-                    },
-                    {
-                      label: 'Edit event',
-                      href: `/e/${event.data.shortId}/edit`,
-                    },
-                    {
-                      label: 'Event attendees',
-                      href: `/e/${event.data.shortId}/attendees`,
-                    },
-                    {
-                      label: 'Invite',
-                      href: `/e/${event.data.shortId}/invite`,
-                    },
-                  ]}
-                />
-              </PageHeader>
               <div>
                 {page === 'info' && <EventInfo />}
                 {page === 'edit' && <EditEventForm />}

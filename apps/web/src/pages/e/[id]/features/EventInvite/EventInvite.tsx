@@ -114,6 +114,7 @@ export function EventInvite() {
         <title>{`Attendees | WannaGo`}</title>
       </Head>
       <div className="flex flex-col gap-y-4">
+        <PageHeader title="Invite attendees" />
         <div>
           <EventInviteButton />
         </div>

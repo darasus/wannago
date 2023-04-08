@@ -5,6 +5,7 @@ import {FormProvider} from 'react-hook-form';
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {trpc} from 'trpc/src/trpc';
 import {useAmplitude, useEventId, useEventQuery} from 'hooks';
+import {PageHeader} from 'ui';
 
 export function EditEventForm() {
   const {eventShortId} = useEventId();
@@ -69,16 +70,19 @@ export function EditEventForm() {
   });
 
   return (
-    <FormProvider {...form}>
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 md:col-span-12">
-          <EventForm
-            onSubmit={onSubmit}
-            isEdit
-            onCancelClick={() => router.push(`/e/${event?.shortId}`)}
-          />
+    <div className="flex flex-col gap-4">
+      <PageHeader title="Edit event" />
+      <FormProvider {...form}>
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-12 md:col-span-12">
+            <EventForm
+              onSubmit={onSubmit}
+              isEdit
+              onCancelClick={() => router.push(`/e/${event?.shortId}`)}
+            />
+          </div>
         </div>
-      </div>
-    </FormProvider>
+      </FormProvider>
+    </div>
   );
 }

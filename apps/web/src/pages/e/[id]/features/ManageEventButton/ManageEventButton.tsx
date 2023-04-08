@@ -63,7 +63,7 @@ export function ManageEventButton() {
         options={[
           {
             label: 'Event overview',
-            href: `/e/${eventShortId}/manage`,
+            href: `/e/${eventShortId}/info`,
           },
           {
             label: 'Edit event',

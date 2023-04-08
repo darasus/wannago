@@ -1,4 +1,4 @@
-import {CardBase, Badge} from 'ui';
+import {CardBase, Badge, PageHeader} from 'ui';
 import {Text, Tooltip} from 'ui';
 import {formatTimeago} from 'utils';
 import {useAttendeeCount, useEventId, useEventQuery} from 'hooks';
@@ -10,6 +10,8 @@ export function EventInfo() {
   const {eventShortId} = useEventId();
   const {data: event} = useEventQuery({eventShortId});
   const attendeesCount = useAttendeeCount({eventId: event?.id});
+
+  console.log({event});
 
   const publicEventUrl = event?.isPublished
     ? `${getBaseUrl()}/e/${event?.shortId}`
@@ -68,6 +70,7 @@ export function EventInfo() {
 
   return (
     <div className="flex flex-col gap-4">
+      <PageHeader title="Event info" />
       <CardBase>
         <div className="flex items-center">
           <Badge color="gray" className="mr-2 mb-2" size="xs">
