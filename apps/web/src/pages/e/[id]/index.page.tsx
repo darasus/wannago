@@ -1,12 +1,11 @@
 import {GetServerSidePropsContext} from 'next';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {EventView} from '../../../features/EventView/EventView';
-import {Button, Container, LoadingBlock} from 'ui';
+import {Container, LoadingBlock} from 'ui';
 import {
   useEventId,
   useEventQuery,
   useHandleEmailCallbackParam,
-  useIsMyEvent,
   useMyUserQuery,
 } from 'hooks';
 import {appRouter} from 'trpc/src/routers/_app';
@@ -15,15 +14,13 @@ import SuperJSON from 'superjson';
 import {ONE_WEEK_IN_SECONDS} from 'const';
 import {Meta} from '../../../components/Meta/Meta';
 import {createOGImageEventUrl, stripHTML} from 'utils';
-import {AdjustmentsHorizontalIcon} from '@heroicons/react/24/solid';
-import {AnimatePresence, motion} from 'framer-motion';
+import {ManageEventButton} from './features/ManageEventButton/ManageEventButton';
 
 export default function EventPage() {
   useHandleEmailCallbackParam();
   const user = useMyUserQuery();
   const {eventShortId} = useEventId();
   const event = useEventQuery({eventShortId});
-  const isMyEvent = useIsMyEvent({eventShortId});
 
   if (event.isLoading) {
     return <LoadingBlock />;
@@ -53,30 +50,10 @@ export default function EventPage() {
             }
             shortEventId={event.data?.shortId}
           />
-          <Container maxSize="sm">
+          <Container className="flex flex-col gap-4" maxSize="sm">
+            <ManageEventButton />
             <EventView event={event.data} />
           </Container>
-          <AnimatePresence mode="wait">
-            {isMyEvent && (
-              <motion.div
-                className="flex justify-center sticky bottom-4 my-4"
-                initial={{opacity: 0, y: '200%'}}
-                animate={{opacity: 1, y: '0%'}}
-                exit={{opacity: 0, y: '200%'}}
-              >
-                <Button
-                  iconLeft={<AdjustmentsHorizontalIcon />}
-                  as="a"
-                  href={`/e/${event.data.shortId}/manage`}
-                  size="md"
-                  variant="secondary"
-                  data-testid="manage-event-button"
-                >
-                  Manage event
-                </Button>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </>
       )}
     </>

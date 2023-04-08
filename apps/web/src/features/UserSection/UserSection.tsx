@@ -72,7 +72,6 @@ export function UserSection() {
         onClick={() => router.push('/e/add')}
         iconLeft={<PlusCircleIcon />}
         data-testid="add-event-button"
-        variant="secondary"
       >
         <span className="hidden md:inline">Create event</span>
       </Button>

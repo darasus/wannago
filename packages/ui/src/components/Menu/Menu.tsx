@@ -1,13 +1,15 @@
 import {Menu as _Menu, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/24/solid';
-import {Fragment} from 'react';
+import {Component, ComponentProps, Fragment, FunctionComponent} from 'react';
 import {Button} from '../Button/Button';
 import {CardBase} from '../CardBase/CardBase';
 
 interface Option {
   label: string;
-  href: string;
+  href?: string;
+  onClick?: () => void;
   iconLeft?: JSX.Element;
+  variant?: 'neutral' | 'danger' | 'primary' | 'secondary' | 'success';
 }
 
 interface Props {
@@ -15,20 +17,21 @@ interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg';
   options: Option[];
   testId?: string;
+  as?: FunctionComponent<ComponentProps<typeof Button>>;
 }
 
-export function Menu({size = 'md', options, activeHref, testId}: Props) {
+export function Menu({size = 'md', options, activeHref, testId, as}: Props) {
   return (
     <_Menu as="div" className="relative z-40">
       <div>
         <_Menu.Button
-          as={Button}
+          as={as || Button}
           size={size}
           iconLeft={<ChevronDownIcon />}
           data-testid={testId || 'select-button'}
         >
           {(activeHref &&
-            options.find(option => option.href.startsWith(activeHref))
+            options.find(option => option.href?.startsWith(activeHref))
               ?.label) ||
             'Select'}
         </_Menu.Button>
@@ -51,10 +54,13 @@ export function Menu({size = 'md', options, activeHref, testId}: Props) {
                     <Button
                       className="w-full justify-start"
                       size={size}
-                      variant="neutral"
-                      as="a"
+                      as={option.href ? 'a' : undefined}
                       href={option.href}
-                      onClick={close}
+                      variant={option?.variant || 'neutral'}
+                      onClick={() => {
+                        option.onClick?.();
+                        close();
+                      }}
                       data-testid="select-option-button"
                     >
                       {option.label}

@@ -1,6 +1,6 @@
 import {GetServerSidePropsContext} from 'next';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
-import {AdminSection} from './features/AdminSection/AdminSection';
+import {EventInfo} from './features/EventInfo/EventInfo';
 import {Button, Container, LoadingBlock, Menu, PageHeader, Text} from 'ui';
 import {
   useEventId,
@@ -96,13 +96,8 @@ export default function EventPage() {
                 />
               </PageHeader>
               <div>
-                {page === 'manage' && (
-                  <AdminSection
-                    event={event.data}
-                    refetchEvent={event.refetch}
-                  />
-                )}
-                {page === 'edit' && <EditEventForm event={event.data} />}
+                {page === 'manage' && <EventInfo />}
+                {page === 'edit' && <EditEventForm />}
                 {page === 'attendees' && <EventAttendees />}
                 {page === 'invite' && <EventInvite />}
               </div>

@@ -4,9 +4,10 @@ import {useAmplitude} from '../useAmplitude';
 import {useConfetti} from '../useConfetti';
 import {useConfirmDialog} from '../useConfirmDialog';
 import {useEventId} from '../event/useEventId';
+import {TRPCClientError} from '@trpc/client';
 
 interface Props {
-  eventId: string;
+  eventId?: string;
 }
 
 export function usePublishEvent({eventId}: Props) {
@@ -28,10 +29,14 @@ export function usePublishEvent({eventId}: Props) {
     description:
       'This event will be available to everyone when visiting public link.',
     onConfirm: async () => {
-      await mutateAsync({eventId, isPublished: true});
-      confetti();
-      logEvent('event_published', {eventId});
-      await refetch();
+      if (eventId) {
+        await mutateAsync({eventId, isPublished: true});
+        confetti();
+        logEvent('event_published', {eventId});
+        await refetch();
+      } else {
+        throw new TRPCClientError('Event ID is not provided');
+      }
     },
   });
 

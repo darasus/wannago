@@ -1,3 +1,4 @@
+import {TRPCClientError} from '@trpc/client';
 import {useRouter} from 'next/router';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
@@ -5,7 +6,7 @@ import {useAmplitude} from '../useAmplitude';
 import {useConfirmDialog} from '../useConfirmDialog';
 
 interface Props {
-  eventId: string;
+  eventId?: string;
 }
 
 export function useRemoveEvent({eventId}: Props) {
@@ -23,8 +24,12 @@ export function useRemoveEvent({eventId}: Props) {
     description:
       'This is irreversible and all event related data will be removed.',
     onConfirm: async () => {
-      await mutateAsync({eventId});
-      logEvent('event_deleted', {eventId});
+      if (eventId) {
+        await mutateAsync({eventId});
+        logEvent('event_deleted', {eventId});
+      } else {
+        throw new TRPCClientError('Event ID is not provided');
+      }
     },
   });
 
