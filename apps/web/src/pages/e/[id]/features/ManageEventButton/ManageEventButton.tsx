@@ -62,7 +62,7 @@ export function ManageEventButton() {
         as={ButtonWIthRef}
         options={[
           {
-            label: 'Event overview',
+            label: 'Event info',
             href: `/e/${eventShortId}/info`,
           },
           {
@@ -74,7 +74,7 @@ export function ManageEventButton() {
             href: `/e/${eventShortId}/attendees`,
           },
           {
-            label: 'Invite',
+            label: 'Invite attendees',
             href: `/e/${eventShortId}/invite`,
           },
           ...(!event.data?.isPublished
