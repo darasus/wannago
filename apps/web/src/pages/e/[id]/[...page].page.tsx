@@ -77,15 +77,15 @@ export default function EventPage() {
                   activeHref={router.asPath}
                   options={[
                     {
-                      label: 'Event overview',
-                      href: `/e/${event.data.shortId}/manage`,
+                      label: 'Event info',
+                      href: `/e/${event.data.shortId}/info`,
                     },
                     {
                       label: 'Edit event',
                       href: `/e/${event.data.shortId}/edit`,
                     },
                     {
-                      label: 'Attendees',
+                      label: 'Event attendees',
                       href: `/e/${event.data.shortId}/attendees`,
                     },
                     {
@@ -96,7 +96,7 @@ export default function EventPage() {
                 />
               </PageHeader>
               <div>
-                {page === 'manage' && <EventInfo />}
+                {page === 'info' && <EventInfo />}
                 {page === 'edit' && <EditEventForm />}
                 {page === 'attendees' && <EventAttendees />}
                 {page === 'invite' && <EventInvite />}

@@ -45,7 +45,7 @@ function Item({user, hasPlusOne, status, refetch}: ItemProps) {
         key={user.id}
         data-testid="invitee-card"
       >
-        <div className="flex items-center truncate">
+        <div className="flex items-center truncate grow">
           <Text className="truncate">{label}</Text>
         </div>
         <div className="flex gap-2">

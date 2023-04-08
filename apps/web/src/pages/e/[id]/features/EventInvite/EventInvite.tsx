@@ -77,7 +77,7 @@ function UserRow({user, eventShortId, refetch}: UserRowProps) {
         innerClassName="flex flex-col md:flex-row gap-2"
         data-testid="invitee-card"
       >
-        <div className="flex items-center truncate">
+        <div className="flex items-center truncate grow">
           <Text className="truncate">{`${user.firstName} ${user.lastName} · ${user.email}`}</Text>
         </div>
         <div className="flex gap-2">

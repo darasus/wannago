@@ -71,7 +71,7 @@ export function EventInfo() {
       <CardBase>
         <div className="flex items-center">
           <Badge color="gray" className="mr-2 mb-2" size="xs">
-            Overview
+            Info
           </Badge>
         </div>
         <div className="flex flex-col gap-2">
