@@ -1,4 +1,4 @@
-import {Container} from 'ui';
+import {CardBase, Container, Text} from 'ui';
 import {SectionHeader} from './SectionHeader';
 import {
   UserGroupIcon,
@@ -15,90 +15,88 @@ import {cn} from 'utils';
 
 const features = [
   {
-    name: 'Events',
-    summary: 'Create event page with ease',
+    summary: 'Create',
     description:
-      'With WannaGo, you can quickly and easily create a shareable event page with all the details your guests need to know.',
-    icon: <CalendarDaysIcon width={25} height={25} />,
+      'Easily create a shareable event page with all the details your guests need to know.',
+    icon: CalendarDaysIcon,
   },
   {
-    name: 'Live',
-    summary: 'Online and in-person',
+    summary: 'Engage',
     description:
-      "Whether you're hosting an online event or an in-person event, WannaGo has you covered.",
-    icon: <VideoCameraIcon width={25} height={25} />,
+      'Streamlined organizer-to-guest engagement through personalized email invitations, event updates, and interactive RSVP.',
+    icon: VideoCameraIcon,
   },
   {
-    name: 'Guests',
-    summary: 'Invite only the guests you want',
+    summary: 'Invite',
     description:
       "Whether it's your friends, family, coworkers or Twitter followers we let you choose who you want to invite.",
-    icon: <UserGroupIcon width={25} height={25} />,
+    icon: UserGroupIcon,
   },
   {
-    name: 'Looks',
-    summary: 'Beautiful event page',
+    summary: 'Attract',
     description:
       'You can upload photo, add relevant details with time and location or dress code and any special instructions all wrapped in a beautiful design.',
-    icon: <BuildingStorefrontIcon width={25} height={25} />,
+    icon: BuildingStorefrontIcon,
   },
   {
-    name: 'Comms',
-    summary: 'Two-way chat',
+    summary: 'Converse',
     description:
       "Send reminders, messages or announcements to your guests to make sure they don't miss out or let them ask questions.",
-    icon: <ChatBubbleLeftEllipsisIcon width={25} height={25} />,
+    icon: ChatBubbleLeftEllipsisIcon,
   },
   {
-    name: 'Invites',
-    summary: 'Simple RSVPs',
-    description:
-      'Keep track of who is attending your event with our easy-to-use RSVP system. You can see at a glance who has confirmed their attendance and who is still on the fence.',
-    icon: <EnvelopeOpenIcon width={25} height={25} />,
+    summary: 'Join',
+    description: `Keep track of who is attending with our easy-to-use RSVPs. See at a glance who has confirmed and who's still on the fence.`,
+    icon: EnvelopeOpenIcon,
   },
   {
-    name: 'Other',
-    summary: 'And much more...',
+    summary: 'More',
     description:
       'Explore WannaGo and let us know how we can improve your experience with us.',
-    icon: <EllipsisHorizontalIcon width={25} height={25} />,
+    icon: EllipsisHorizontalIcon,
   },
 ];
 
 function Feature({feature, className, ...props}: any) {
   return (
-    <div className={cn(className, 'flex flex-col items-center')} {...props}>
+    <CardBase
+      className={cn(
+        className,
+        'flex flex-col items-center overflow-hidden h-full'
+      )}
+      {...props}
+    >
+      <div className="relative z-10 flex flex-col gap-1">
+        <Text className={cn(titleFontClassName, 'font-display text-xl')}>
+          {feature.summary}
+        </Text>
+        <Text className="text-sm text-gray-600">{feature.description}</Text>
+      </div>
       <div
         className={cn(
-          'w-12 h-12 rounded-full bg-brand-100 border-2 border-gray-800 flex items-center justify-center'
+          'absolute top-0 right-0 z-[0]',
+          'w-[200px] h-[200px] flex items-center justify-center',
+          'text-gray-100',
+          'rotate-12'
         )}
       >
-        {feature.icon}
+        <feature.icon w={100} h={100} />
       </div>
-      <h3 className={cn('mt-6 text-sm text-gray-400 uppercase')}>
-        {feature.name}
-      </h3>
-      <p className={cn(titleFontClassName, 'mt-2 font-display text-xl')}>
-        {feature.summary}
-      </p>
-      <p className="mt-4 text-sm text-gray-600 text-center">
-        {feature.description}
-      </p>
-    </div>
+    </CardBase>
   );
 }
 
 export function Features() {
   return (
-    <SectionContainer id="features" className="bg-white">
+    <SectionContainer id="features">
       <Container className="my-0">
         <SectionHeader
           title="Easiest way to invite"
           description="We provide the tools you need to invite your network while you focus on what's important"
         />
-        <div className="grid lg:grid-cols-12 gap-10">
+        <div className="grid lg:grid-cols-12 gap-4 items-stretch">
           {features.map(feature => (
-            <div key={feature.name} className="col-span-4">
+            <div key={feature.summary} className="col-span-4">
               <Feature feature={feature} className="mx-auto max-w-2xl" />
             </div>
           ))}

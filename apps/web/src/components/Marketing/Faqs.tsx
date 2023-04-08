@@ -4,6 +4,7 @@ import {Container} from 'ui';
 import {Accordion} from './Accordion';
 import {SectionHeader} from './SectionHeader';
 import {SectionContainer} from './SectionContainer';
+import Link from 'next/link';
 
 const faqs = [
   {
@@ -11,12 +12,12 @@ const faqs = [
     answer: (
       <span>
         After creating account on wannago.app, simply go to{' '}
-        <Button variant="link" as="a" href="/dashboard">
+        <Link className="underline" href="/dashboard">
           wannago.app/dashboard
-        </Button>{' '}
-        and click on the &quot;+&quot; button. Then enter the details of your
+        </Link>{' '}
+        {`and click on the "+ Create event" button. Then enter the details of your
         event, including the date, time, location, and any other relevant
-        information.
+        information.`}
       </span>
     ),
   },
@@ -30,7 +31,7 @@ const faqs = [
   },
   {
     question: 'Can my guests RSVP on my event page?',
-    answer: `Yes, your guests can RSVP on your event page by filling in name, email address and clicking on "Join" button.`,
+    answer: `Yes, your guests can RSVP on your event page by simply pressing on "Join" button.`,
   },
   {
     question: 'Can I see who is coming to my event?',
@@ -38,15 +39,15 @@ const faqs = [
   },
   {
     question: 'Is there a limit to the number of guests I can invite?',
-    answer: `Currently there is no limit on the number of guests you can invite to your event.`,
+    answer: `Yes there is a limit on the number of guests you can invite to your event, please see pricing for more details.`,
   },
   {
     question: 'Can I add multiple events?',
-    answer: `Currently there is not limit to how many events you can create.`,
+    answer: `Yes there is  limit to how many events you can create for free, please see pricing for more details.`,
   },
   {
     question: 'Is WannaGo completely free?',
-    answer: `Yes. WannaGo is completely free to use right now but we're planning on adding premium features in the future.`,
+    answer: `Yes. WannaGo is completely free to use right now but there are limitations you have to be aware of, please see pricing for more details.`,
   },
   {
     question: 'Can I add photos and videos to my event page?',
@@ -93,9 +94,17 @@ export function Faqs() {
           title="FAQs"
           description={
             <>
-              {
-                "If you can't find what you're looking for, send us a feedback and we'll try to respond as soon as possible."
-              }
+              {`If you can't find what you're looking for, send us a `}
+              <Button
+                className="text-md"
+                variant="link"
+                onClick={() => {
+                  (window as any)?.Intercom?.('showNewMessage');
+                }}
+              >
+                feedback
+              </Button>{' '}
+              {`and we'll try to respond as soon as possible.`}
             </>
           }
         />
