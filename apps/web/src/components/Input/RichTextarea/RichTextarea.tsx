@@ -1,4 +1,5 @@
 import Link from '@tiptap/extension-link';
+import Placeholder from '@tiptap/extension-placeholder';
 import {EditorContent, useEditor} from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import {forwardRef, HTMLAttributes, useEffect} from 'react';
@@ -45,10 +46,17 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
           openOnClick: false,
           protocols: ['http', 'https', 'mailto'],
         }),
+        Placeholder.configure({
+          placeholder: 'Write your description here...',
+        }),
       ],
       content: defaultValues?.description || '',
       onUpdate: ({editor}) => {
-        setValue('description', editor?.getHTML());
+        if (editor?.isEmpty) {
+          setValue('description', '');
+        } else {
+          setValue('description', editor.getHTML());
+        }
       },
     });
 

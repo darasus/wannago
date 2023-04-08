@@ -107,3 +107,11 @@ body {
     transform: translate3d(-90px, 0, 0);
   }
 }
+
+.is-editor-empty::before {
+  @apply text-gray-400;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
