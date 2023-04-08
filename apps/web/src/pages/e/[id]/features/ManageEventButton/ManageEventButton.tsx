@@ -35,7 +35,7 @@ export function ManageEventButton() {
     eventId: event.data?.id,
   });
 
-  if (!isMyEvent) return null;
+  if (!isMyEvent.data?.isMyEvent) return null;
 
   const ButtonWIthRef = forwardRef<HTMLButtonElement, any>(function ButtonRef(
     props,

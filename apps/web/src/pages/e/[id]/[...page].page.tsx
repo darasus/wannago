@@ -35,7 +35,7 @@ export default function EventPage() {
     return <LoadingBlock />;
   }
 
-  if (!isMyEvent || !event.data) return null;
+  if (!isMyEvent.data?.isMyEvent || !event.data) return null;
 
   return (
     <>
