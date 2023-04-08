@@ -6,6 +6,10 @@ import {withProtected} from '../../utils/withAuthProtect';
 function AdminPage() {
   const {data} = trpc.admin.getAllRegisteredUsers.useQuery();
 
+  if (!data) {
+    return null;
+  }
+
   return (
     <Container maxSize="full">
       <Table>
