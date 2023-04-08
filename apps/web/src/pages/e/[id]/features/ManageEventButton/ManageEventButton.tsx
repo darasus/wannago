@@ -1,7 +1,13 @@
 import {
-  AdjustmentsHorizontalIcon,
   ChevronDownIcon,
-} from '@heroicons/react/24/solid';
+  InboxArrowDownIcon,
+  InformationCircleIcon,
+  PencilIcon,
+  RocketLaunchIcon,
+  TrashIcon,
+  UserPlusIcon,
+  UsersIcon,
+} from '@heroicons/react/24/outline';
 import {
   useEventId,
   useEventQuery,
@@ -64,18 +70,22 @@ export function ManageEventButton() {
           {
             label: 'Event info',
             href: `/e/${eventShortId}/info`,
+            iconLeft: <InformationCircleIcon />,
           },
           {
             label: 'Edit event',
             href: `/e/${eventShortId}/edit`,
+            iconLeft: <PencilIcon />,
           },
           {
             label: 'Event attendees',
             href: `/e/${eventShortId}/attendees`,
+            iconLeft: <UsersIcon />,
           },
           {
             label: 'Invite attendees',
             href: `/e/${eventShortId}/invite`,
+            iconLeft: <UserPlusIcon />,
           },
           ...(!event.data?.isPublished
             ? [
@@ -83,6 +93,7 @@ export function ManageEventButton() {
                   label: 'Publish event',
                   onClick: onPublishClick,
                   variant: 'success',
+                  iconLeft: <RocketLaunchIcon />,
                 } as const,
               ]
             : []),
@@ -92,6 +103,7 @@ export function ManageEventButton() {
                   label: 'Unpublish event',
                   onClick: onUnpublishClick,
                   variant: 'danger',
+                  iconLeft: <InboxArrowDownIcon />,
                 } as const,
               ]
             : []),
@@ -100,6 +112,7 @@ export function ManageEventButton() {
             label: 'Remove event',
             onClick: onRemoveClick,
             variant: 'danger',
+            iconLeft: <TrashIcon />,
           },
         ]}
       />

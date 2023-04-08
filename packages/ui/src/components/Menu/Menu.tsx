@@ -62,6 +62,7 @@ export function Menu({size = 'md', options, activeHref, testId, as}: Props) {
                         close();
                       }}
                       data-testid="select-option-button"
+                      iconLeft={option.iconLeft}
                     >
                       {option.label}
                     </Button>
