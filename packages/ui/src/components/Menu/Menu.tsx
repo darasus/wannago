@@ -48,7 +48,7 @@ export function Menu({size = 'md', options, activeHref, testId, as}: Props) {
         <_Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right">
           <CardBase className="p-4" innerClassName="flex flex-col gap-2">
             {options.map(option => (
-              <_Menu.Item key={option.href}>
+              <_Menu.Item key={option.label}>
                 {({close}) => {
                   return (
                     <Button

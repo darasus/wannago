@@ -11,6 +11,7 @@ import {
   useUnpublishEvent,
 } from 'hooks';
 import {useRouter} from 'next/router';
+import {forwardRef} from 'react';
 import {Button, Menu} from 'ui';
 
 export function ManageEventButton() {
@@ -30,6 +31,25 @@ export function ManageEventButton() {
 
   if (!isMyEvent) return null;
 
+  const ButtonWIthRef = forwardRef<HTMLButtonElement, any>(function ButtonRef(
+    props,
+    ref
+  ) {
+    return (
+      <Button
+        {...props}
+        ref={ref}
+        className="w-full"
+        iconLeft={<ChevronDownIcon />}
+        size="md"
+        variant="secondary"
+        data-testid="manage-event-button"
+      >
+        Manage event
+      </Button>
+    );
+  });
+
   return (
     <div className="w-full">
       {removeEventModal}
@@ -39,18 +59,7 @@ export function ManageEventButton() {
         testId="manage-event-menu"
         size="sm"
         activeHref={router.asPath}
-        as={props => (
-          <Button
-            {...props}
-            className="w-full"
-            iconLeft={<ChevronDownIcon />}
-            size="md"
-            variant="secondary"
-            data-testid="manage-event-button"
-          >
-            Manage event
-          </Button>
-        )}
+        as={ButtonWIthRef}
         options={[
           {
             label: 'Event overview',
