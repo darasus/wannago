@@ -1,7 +1,7 @@
 import {GetServerSidePropsContext} from 'next';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {EventInfo} from './features/EventInfo/EventInfo';
-import {Button, Container, LoadingBlock, Menu, PageHeader, Text} from 'ui';
+import {Button, Container, LoadingBlock, Text} from 'ui';
 import {
   useEventId,
   useEventQuery,

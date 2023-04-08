@@ -6,7 +6,7 @@ import {
 } from 'hooks';
 import {useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
-import {Button, CardBase, Text} from 'ui';
+import {Button, CardBase} from 'ui';
 import {FileInput} from '../../../../components/Input/FileInput/FileInput';
 import {Input} from '../../../../components/Input/Input/Input';
 import {OrganizationSubscription} from '../OrganizationSubscription/OrganizationSubscription';

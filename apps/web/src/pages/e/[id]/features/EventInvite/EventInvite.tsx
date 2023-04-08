@@ -1,15 +1,7 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {
-  Button,
-  CardBase,
-  PageHeader,
-  Container,
-  Text,
-  Spinner,
-  LoadingBlock,
-} from 'ui';
+import {Button, CardBase, PageHeader, Text, LoadingBlock} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {toast} from 'react-hot-toast';
 import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';

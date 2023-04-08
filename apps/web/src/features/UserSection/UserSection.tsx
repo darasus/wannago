@@ -10,7 +10,7 @@ import {
 } from 'hooks';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
-import {PlusCircleIcon, PlusIcon} from '@heroicons/react/24/solid';
+import {PlusCircleIcon} from '@heroicons/react/24/solid';
 
 export function UserSection() {
   const router = useRouter();

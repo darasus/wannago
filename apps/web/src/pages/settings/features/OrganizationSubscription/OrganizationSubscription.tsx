@@ -1,4 +1,4 @@
-import {useMyOrganizationQuery, useMyUserQuery, useSubscription} from 'hooks';
+import {useMyOrganizationQuery, useSubscription} from 'hooks';
 import {Badge, Button, CardBase, LoadingBlock, Text} from 'ui';
 import {formatDate} from 'utils';
 

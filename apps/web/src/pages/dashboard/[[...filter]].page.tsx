@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import {EventCard} from 'cards';
 import Head from 'next/head';
-import {Container, PageHeader, Toggle, LoadingBlock, Button, Menu} from 'ui';
+import {Container, PageHeader, LoadingBlock, Menu} from 'ui';
 import {withProtected} from '../../utils/withAuthProtect';
 import {useMyEventsQuery} from 'hooks';
 import {useRouter} from 'next/router';
 import {z} from 'zod';
-import {capitalize} from 'utils';
 
 const filterSchema = z.array(z.enum(['attending', 'organizing', 'all']));
 
