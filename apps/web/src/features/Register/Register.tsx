@@ -24,10 +24,11 @@ export interface APIResponseError {
 }
 
 interface Props {
-  onDone: () => void;
+  onDone?: () => void;
+  onLoginClick?: () => void;
 }
 
-export function Register({onDone}: Props) {
+export function Register({onDone, onLoginClick}: Props) {
   const me = useMyUserQuery();
   const {setSession, isLoaded} = useSignUp();
   const router = useRouter();
@@ -50,6 +51,14 @@ export function Register({onDone}: Props) {
 
     onDone?.();
   };
+
+  const handleLoginClick = useCallback(() => {
+    if (onLoginClick) {
+      onLoginClick();
+    } else {
+      router.push('/login');
+    }
+  }, [router, onLoginClick]);
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -78,7 +87,7 @@ export function Register({onDone}: Props) {
         )}
       </CardBase>
       <Text className="text-center">- OR -</Text>
-      <Button as="a" href="/login" variant="neutral">
+      <Button onClick={handleLoginClick} variant="neutral">
         Login
       </Button>
     </div>

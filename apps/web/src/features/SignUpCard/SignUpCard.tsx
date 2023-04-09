@@ -1,4 +1,4 @@
-import {RedirectToSignIn, useAuth} from '@clerk/nextjs';
+import {useAuth} from '@clerk/nextjs';
 import {Event} from '@prisma/client';
 import {SignUpCard as _SignUpCard} from 'cards';
 import {
@@ -12,7 +12,7 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {Container} from 'ui';
-import {getBaseUrl} from 'utils';
+import {AuthModal} from './features/AuthModal/AuthModal';
 
 interface Props {
   event: Event;
@@ -73,8 +73,12 @@ export function SignUpCard({event}: Props) {
 
   const onJoinSubmit = form.handleSubmit(async data => {
     if (!auth.isSignedIn) {
-      setIsOpen(true);
-      return;
+      const token = await auth.getToken();
+
+      if (!token) {
+        setIsOpen(true);
+        return;
+      }
     }
 
     try {
@@ -87,11 +91,6 @@ export function SignUpCard({event}: Props) {
   });
 
   const onCancelSubmit = form.handleSubmit(async () => {
-    if (!auth.isSignedIn) {
-      setIsOpen(true);
-      return;
-    }
-
     openCancelModal();
   });
 
@@ -102,7 +101,12 @@ export function SignUpCard({event}: Props) {
     <>
       {cancelModal}
       {isOpen && (
-        <RedirectToSignIn redirectUrl={`${getBaseUrl()}/e/${event.shortId}`} />
+        // <RedirectToSignIn redirectUrl={`${getBaseUrl()}/e/${event.shortId}`} />
+        <AuthModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          onDone={onJoinSubmit}
+        />
       )}
       <Container className="w-full p-0 m-0">
         <FormProvider {...form}>

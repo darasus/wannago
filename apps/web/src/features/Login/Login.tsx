@@ -23,12 +23,13 @@ export interface APIResponseError {
 
 interface Props {
   onDone?: () => void;
+  onCreateAccountClick?: () => void;
 }
 
-export function Login({onDone}: Props) {
+export function Login({onDone, onCreateAccountClick}: Props) {
+  const router = useRouter();
   const me = useMyUserQuery();
   const {setSession, isLoaded} = useSignIn();
-  const router = useRouter();
   const [step, setStep] = useState<'email' | 'code'>('email');
   const emailForm = useForm<TEmailForm>();
   const codeForm = useForm<TCodeForm>({
@@ -53,6 +54,14 @@ export function Login({onDone}: Props) {
     },
     [ready, setSession, onDone]
   );
+
+  const handleLoginClick = useCallback(() => {
+    if (onCreateAccountClick) {
+      onCreateAccountClick();
+    } else {
+      router.push('/register');
+    }
+  }, [router, onCreateAccountClick]);
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -79,7 +88,7 @@ export function Login({onDone}: Props) {
         )}
       </CardBase>
       <Text className="text-center">- OR -</Text>
-      <Button as="a" href="/register" variant="neutral">
+      <Button onClick={handleLoginClick} variant="neutral">
         Create account
       </Button>
     </div>
