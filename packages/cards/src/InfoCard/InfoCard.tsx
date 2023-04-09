@@ -59,7 +59,6 @@ export function InfoCard({event}: Props) {
           </h1>
           {description && (
             <>
-              <div />
               <div
                 className={cn(
                   'prose',
