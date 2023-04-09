@@ -1,5 +1,4 @@
 import {publicProcedure, router} from '../trpcServer';
-import {z} from 'zod';
 import {formatDate, getBaseUrl, invariant, isUser} from 'utils';
 import {render} from '@react-email/render';
 import {
