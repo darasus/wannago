@@ -66,7 +66,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             error={errors.description}
             isOptional
             isGenerating={isLoading}
-            placeholder="Write a description for your event..."
+            placeholder={`Type your description here or press "Generate" to let AI do the work for you...`}
             additionalEditorMenu={
               <Button
                 size="xs"

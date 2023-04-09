@@ -47,7 +47,7 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
           protocols: ['http', 'https', 'mailto'],
         }),
         Placeholder.configure({
-          placeholder: 'Write your description here...',
+          placeholder: props.placeholder,
         }),
       ],
       content: defaultValues?.description || '',
@@ -78,7 +78,7 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
           <input ref={ref} {...props} className="hidden" />
           <div
             className={cn(
-              'flex flex-col border-2 gap-y-2 rounded-3xl py-2 px-3 max-w-full',
+              'flex flex-col border-2 gap-y-2 rounded-3xl py-2 px-3 max-w-full min-h-[200px]',
               {
                 '!ring-1 !border-2 !border-gray-500 !ring-gray-500':
                   editor?.isFocused,
