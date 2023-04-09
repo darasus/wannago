@@ -25,7 +25,7 @@ export function Pricing() {
             name="Pro"
             planId="pro"
             price="$2.99"
-            description="Perfect for small / medium sized businesses."
+            description="For individuals that run recurring events."
             features={[
               'Unlimited events',
               'Unlimited attendees',
@@ -38,7 +38,7 @@ export function Pricing() {
             name="Business"
             planId="business"
             price="$9.99"
-            description="Perfect for enterprise and special needs."
+            description="For small and medium sized businesses."
             features={[
               'Organization profile',
               'Unlimited team members',
