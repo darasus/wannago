@@ -194,6 +194,7 @@ interface CodeFormProps {
 function CodeForm({onDone, email}: CodeFormProps) {
   const {signUp} = useSignUp();
   const form = useFormContext<CodeForm>();
+  const code = form.watch('code');
 
   const submit = form.handleSubmit(async data => {
     try {
@@ -220,6 +221,13 @@ function CodeForm({onDone, email}: CodeFormProps) {
     form.setFocus('code');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (code?.length === 6) {
+      submit();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code]);
 
   return (
     <form onSubmit={submit}>
