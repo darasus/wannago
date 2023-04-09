@@ -60,7 +60,7 @@ export function MessageParticipantsButton() {
         title="Message attendees"
         data-testid="message-attendees-button"
       >
-        Message participants
+        Message attendees
       </Button>
     </>
   );
