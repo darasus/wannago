@@ -31,6 +31,7 @@ export function SignUpCard({event}: Props) {
     {eventId: event.id},
     {
       retry: false,
+      enabled: auth.isSignedIn,
     }
   );
   const joinEvent = trpc.event.joinEvent.useMutation({
