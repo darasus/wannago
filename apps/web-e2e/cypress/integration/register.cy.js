@@ -9,7 +9,6 @@ describe('Register', () => {
     cy.get('[data-testid="register-user-info-form-submit"]').click();
 
     cy.get('[data-testid="register-code-input"]').type(Cypress.env('otp'));
-    cy.get('[data-testid="register-code-form-submit"]').click();
     cy.get('[data-testid="add-event-button"]');
     cy.get('[data-testid="header-user-section-button"]').contains('John');
   });
