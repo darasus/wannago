@@ -52,7 +52,7 @@ export default function EventInvite({
             />
           </Section>
           <Section style={{...buttonContainer, maxWidth: 250}}>
-            <Button href={eventUrl}>Confirm</Button>
+            <Button href={eventUrl}>View event</Button>
           </Section>
           <EventDisclaimer cancelEventUrl={cancelEventUrl} />
           <Footer />
