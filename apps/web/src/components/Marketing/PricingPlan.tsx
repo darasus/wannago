@@ -86,7 +86,7 @@ export function PricingPlan({
         </div>
         <div className="grow mb-6" />
         <Button onClick={onClick}>
-          {planId === 'enterprise' ? 'Get in touch' : 'Get started'}
+          {planId === 'enterprise' ? 'Contact sales' : 'Get started'}
         </Button>
       </CardBase>
     </>
