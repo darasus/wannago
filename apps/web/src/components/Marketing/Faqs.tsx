@@ -1,10 +1,12 @@
 import {useState} from 'react';
-import {Button} from 'ui';
+import {Button, CardBase, Text} from 'ui';
 import {Container} from 'ui';
-import {Accordion} from './Accordion';
 import {SectionHeader} from './SectionHeader';
 import {SectionContainer} from './SectionContainer';
 import Link from 'next/link';
+import {cn} from 'utils';
+import {titleFontClassName} from '../../fonts';
+import {AnimatePresence, motion} from 'framer-motion';
 
 const faqs = [
   {
@@ -47,7 +49,7 @@ const faqs = [
   },
   {
     question: 'Is WannaGo completely free?',
-    answer: `Yes. WannaGo is completely free to use right now but there are limitations you have to be aware of, please see pricing for more details.`,
+    answer: `Yes. WannaGo is completely free to use but there are limitations you should be aware of, please see pricing for more details.`,
   },
   {
     question: 'Can I add photos and videos to my event page?',
@@ -84,12 +86,47 @@ const faqs = [
   },
 ];
 
+interface ItemProps {
+  faq: {question: string; answer: JSX.Element | string};
+  isOpen: boolean;
+  toggle: () => void;
+}
+
+function Item({faq, isOpen, toggle}: ItemProps) {
+  return (
+    <CardBase className={cn('overflow-hidden cursor-pointer')} onClick={toggle}>
+      <div className="relative z-10 w-full">
+        <Text className={cn(titleFontClassName, 'font-display text-xl')}>
+          {faq.question}
+        </Text>
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.section
+              key="content"
+              initial="collapsed"
+              animate="open"
+              exit="collapsed"
+              variants={{
+                open: {opacity: 1, height: 'auto'},
+                collapsed: {opacity: 0, height: 0},
+              }}
+              transition={{duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98]}}
+            >
+              <Text className="text-sm text-gray-600">{faq.answer}</Text>
+            </motion.section>
+          )}
+        </AnimatePresence>
+      </div>
+    </CardBase>
+  );
+}
+
 export function Faqs() {
-  const [isExpanded, setIsExpanded] = useState<false | number>(false);
+  const [expanded, setIsExpanded] = useState<false | number>(false);
 
   return (
     <SectionContainer id="faq">
-      <Container className="grid md:grid-cols-2 items-center gap-x-8 relative my-0">
+      <Container>
         <SectionHeader
           title="FAQs"
           description={
@@ -108,16 +145,14 @@ export function Faqs() {
             </>
           }
         />
-        <div className="max-w-xl m-auto">
+        <div className="grid grid-cols-1 gap-2">
           {faqs.map((item, index) => {
             return (
-              <Accordion
+              <Item
                 key={index}
-                index={index}
-                title={item.question}
-                content={item.answer}
-                setExpanded={setIsExpanded}
-                isExpanded={isExpanded}
+                faq={item}
+                isOpen={expanded === index}
+                toggle={() => setIsExpanded(index)}
               />
             );
           })}

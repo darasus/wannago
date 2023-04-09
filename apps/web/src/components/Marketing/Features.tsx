@@ -89,7 +89,7 @@ function Feature({feature, className, ...props}: any) {
 export function Features() {
   return (
     <SectionContainer id="features">
-      <Container className="my-0">
+      <Container>
         <SectionHeader
           title="Easiest way to invite"
           description="We provide the tools you need to invite your network while you focus on what's important"

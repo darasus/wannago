@@ -11,6 +11,7 @@ type Props = PropsWithChildren & {
   isLoading?: boolean;
   title?: string;
   titleChildren?: React.ReactNode;
+  onClick?: () => void;
 };
 
 export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
