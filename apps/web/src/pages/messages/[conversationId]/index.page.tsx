@@ -1,11 +1,17 @@
 import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
+import {useMyOrganizationQuery, useMyUserQuery, useSessionQuery} from 'hooks';
+import Link from 'next/link';
 import {useRouter} from 'next/router';
+import React from 'react';
 import {trpc} from 'trpc/src/trpc';
 import {Button, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
-import {formatDate} from 'utils';
+import {formatDate, getConversationMembers} from 'utils';
 import {MessageInput} from './features/MessageInput/MessageInput';
 
 export default function ConversationPage() {
+  const me = useMyUserQuery();
+  const organization = useMyOrganizationQuery();
+  const session = useSessionQuery();
   const router = useRouter();
   const conversationId = router.query.conversationId as string;
   const conversation = trpc.conversation.getConversationById.useQuery(
@@ -14,21 +20,11 @@ export default function ConversationPage() {
     },
     {enabled: Boolean(conversationId)}
   );
-  const organizations = conversation.data?.organizations || [];
-  const users = conversation.data?.users || [];
 
-  const items = [
-    ...organizations.map(organization => {
-      return {
-        label: organization.name,
-      };
-    }),
-    ...users.map(user => {
-      return {
-        label: user.firstName,
-      };
-    }),
-  ];
+  const conversationMembers = getConversationMembers(
+    conversation.data,
+    session.data === 'user' ? me.data : organization.data
+  );
 
   if (conversation.isLoading) {
     return <LoadingBlock />;
@@ -45,10 +41,16 @@ export default function ConversationPage() {
         Back to conversations
       </Button>
       <PageHeader
-        title={items
-          .map(({label}) => label)
-          .sort()
-          .join(' & ')}
+        title={
+          <>
+            <Text>Conversation with </Text>
+            {conversationMembers.map(({label, href}) => (
+              <Link className="underline" href={href}>
+                {label}
+              </Link>
+            ))}
+          </>
+        }
       />
       <CardBase>
         {conversation.data?.messages.length === 0 && (

@@ -4,7 +4,7 @@ import {cn} from '../../../../utils';
 import {CardBase} from '../CardBase/CardBase';
 
 interface Props extends PropsWithChildren {
-  title: string;
+  title: string | JSX.Element;
   className?: string;
 }
 
