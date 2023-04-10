@@ -26,6 +26,11 @@ export function useCreateConversation() {
       userId: string | null | undefined;
       organizationId: string | null | undefined;
     }) => {
+      if (!me.data?.id && !myOrganization.data?.id) {
+        toast.error('To be able to message anyone you need to login first');
+        return;
+      }
+
       if (me.data?.id === userId) {
         toast.error('You cannot message yourself');
         return;
