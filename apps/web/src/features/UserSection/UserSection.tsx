@@ -31,8 +31,6 @@ export function UserSection() {
     router.push('/dashboard');
   };
 
-  const showAdminLink = false;
-
   const onSignOutClick = async () => {
     await signOut();
     await utils.invalidate();
@@ -152,6 +150,16 @@ export function UserSection() {
                         }}
                       >
                         Settings
+                      </Button>
+                      <Button
+                        variant="neutral"
+                        size="sm"
+                        onClick={() => {
+                          router.push('/messages');
+                          close();
+                        }}
+                      >
+                        Messages
                       </Button>
                       <Button
                         variant="danger"

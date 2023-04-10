@@ -2,6 +2,7 @@ import {Event} from '@prisma/client';
 import {EventCard} from 'cards';
 import Link from 'next/link';
 import {Avatar, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
+import {MessageButton} from '../MessageButton/MessageButton';
 
 interface Props {
   isLoadingEvents?: boolean;
@@ -19,7 +20,7 @@ export function PublicProfile({
   return (
     <>
       <Container maxSize="sm" className="flex flex-col gap-y-4">
-        <CardBase>
+        <CardBase innerClassName="flex flex-col gap-2">
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <Avatar
               className="shrink-0 h-40 w-40"
@@ -37,6 +38,9 @@ export function PublicProfile({
                 {name}
               </Text>
             </div>
+          </div>
+          <div className="flex justify-center md:justify-start">
+            <MessageButton />
           </div>
         </CardBase>
         {isLoadingEvents && <LoadingBlock />}
