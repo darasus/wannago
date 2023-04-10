@@ -1,18 +1,17 @@
-import {Badge, CardBase, Button, Spinner, Text, Avatar} from 'ui';
-import {User} from '@prisma/client';
+import {Badge, CardBase, Button, Avatar} from 'ui';
 
 interface Props {
-  onOpenFormClick: () => void;
   name: string;
   profileImageSrc: string | undefined | null;
   profilePath: string | undefined;
+  action?: React.ReactNode;
 }
 
 export function OrganizerCard({
-  onOpenFormClick,
   name,
   profileImageSrc,
   profilePath,
+  action,
 }: Props) {
   return (
     <CardBase>
@@ -21,9 +20,7 @@ export function OrganizerCard({
           <Badge color="gray" size="xs" className="mr-2">
             Who
           </Badge>
-          <Button onClick={onOpenFormClick} variant="link-gray" size="xs">
-            Message organizer
-          </Button>
+          {action}
         </div>
         <div className="flex items-center gap-x-2">
           <div className="flex shrink-0  items-center overflow-hidden relative justify-center rounded-full safari-rounded-border-fix">

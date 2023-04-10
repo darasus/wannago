@@ -22,6 +22,7 @@ export {useSessionQuery} from './src/session/useSessionQuery';
 export {useSetSessionMutation} from './src/session/useSetSessionMutation';
 export {useMyUserQuery} from './src/user/useMyUserQuery';
 export {useUpdateUserMutation} from './src/user/useUpdateUserMutation';
+export {useCreateConversation} from './src/useCreateConversation';
 
 // event
 export {useEventId} from './src/event/useEventId';
