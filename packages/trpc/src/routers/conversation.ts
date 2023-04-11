@@ -148,7 +148,7 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
     },
   });
 
-  return await ctx.prisma.conversation.findMany({
+  const conversations = await ctx.prisma.conversation.findMany({
     where: {
       ...(activeSessionType === 'user'
         ? {
@@ -178,7 +178,27 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
         },
         take: 1,
       },
+      lastSeen: true,
     },
+  });
+
+  return conversations.map(c => {
+    const lastSeen = c.lastSeen?.find(ls => {
+      if (activeSessionType === 'user') {
+        return ls.userId === user?.id;
+      }
+      if (activeSessionType === 'organization') {
+        return ls.organizationId === user?.organization?.id;
+      }
+
+      return false;
+    });
+    return {
+      ...c,
+      hasUnseenMessages: lastSeen
+        ? isBefore(lastSeen.lastSeen, c.messages[0].createdAt)
+        : undefined,
+    };
   });
 });
 

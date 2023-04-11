@@ -34,7 +34,12 @@ export function Conversations() {
             <Text className="font-bold">
               {conversationMember.map(({label}) => label)}
             </Text>
-            <Text>{c.messages?.[0]?.text}</Text>
+            <div className="flex items-center gap-2">
+              {c.hasUnseenMessages && (
+                <div className="w-3 h-3 rounded-full bg-red-500" />
+              )}
+              <Text>{c.messages?.[0]?.text}</Text>
+            </div>
           </Link>
         );
       })}
