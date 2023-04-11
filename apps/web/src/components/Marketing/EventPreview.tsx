@@ -38,7 +38,6 @@ function Event() {
             name={`${event.user.firstName} ${event.user.lastName}`}
             profileImageSrc={event.user.profileImageSrc}
             profilePath={''}
-            onOpenFormClick={() => {}}
           />
         </MockFormProvider>
       ),
