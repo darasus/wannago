@@ -1,9 +1,9 @@
 import {useCallback} from 'react';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
-import {useMyOrganizationQuery} from './organization/useMyOrganizationQuery';
-import {useSessionQuery} from './session/useSessionQuery';
-import {useMyUserQuery} from './user/useMyUserQuery';
+import {useMyOrganizationQuery} from '../organization/useMyOrganizationQuery';
+import {useSessionQuery} from '../session/useSessionQuery';
+import {useMyUserQuery} from '../user/useMyUserQuery';
 
 export function useCreateConversation() {
   const me = useMyUserQuery();
@@ -35,7 +35,10 @@ export function useCreateConversation() {
         toast.error('You cannot message yourself');
         return;
       }
-      if (myOrganization.data?.id === organizationId) {
+      if (
+        myOrganization.data?.id &&
+        myOrganization.data?.id === organizationId
+      ) {
         toast.error('You cannot message your own organization');
         return;
       }

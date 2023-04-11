@@ -22,7 +22,6 @@ export {useSessionQuery} from './src/session/useSessionQuery';
 export {useSetSessionMutation} from './src/session/useSetSessionMutation';
 export {useMyUserQuery} from './src/user/useMyUserQuery';
 export {useUpdateUserMutation} from './src/user/useUpdateUserMutation';
-export {useCreateConversation} from './src/useCreateConversation';
 
 // event
 export {useEventId} from './src/event/useEventId';
@@ -38,3 +37,8 @@ export {useGenerateEventDescription} from './src/useGenerateEventDescription';
 
 // subscription
 export {useSubscription} from './src/useSubscription';
+
+// conversation
+export {useHasUnseenConversation} from './src/conversation/useHasUnseenConversation';
+export {useMarkConversationAsSeen} from './src/conversation/useMarkConversationAsSeen';
+export {useCreateConversation} from './src/conversation/useCreateConversation';

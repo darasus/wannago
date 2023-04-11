@@ -39,44 +39,46 @@ model Event {
 }
 
 model User {
-  id               String         @id @default(uuid())
-  email            String         @unique
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @default(now()) @updatedAt
+  id               String                 @id @default(uuid())
+  email            String                 @unique
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @default(now()) @updatedAt
   externalId       String?
   firstName        String
   lastName         String
   profileImageSrc  String?
-  organization     Organization?  @relation(name: "UserOrganization", fields: [organizationId], references: [id])
+  organization     Organization?          @relation(name: "UserOrganization", fields: [organizationId], references: [id])
   organizationId   String?
-  eventSignUps     EventSignUp[]  @relation(name: "EventSignUpUser")
-  type             UserType       @default(USER)
-  events           Event[]        @relation(name: "EventUser")
-  disabled         Boolean        @default(false)
-  subscription     Subscription?  @relation(fields: [subscriptionId], references: [id])
+  eventSignUps     EventSignUp[]          @relation(name: "EventSignUpUser")
+  type             UserType               @default(USER)
+  events           Event[]                @relation(name: "EventUser")
+  disabled         Boolean                @default(false)
+  subscription     Subscription?          @relation(fields: [subscriptionId], references: [id])
   subscriptionId   String?
   stripeCustomerId String?
-  messages         Message[]      @relation(name: "UserMessage")
-  conversation     Conversation[] @relation(name: "UserConversation")
+  messages         Message[]              @relation(name: "UserMessage")
+  conversation     Conversation[]         @relation(name: "UserConversation")
+  lastSeens        ConversationLastSeen[] @relation(name: "UserConversationLastSeen")
 
   @@index([organizationId])
   @@index([subscriptionId])
 }
 
 model Organization {
-  id               String         @id @default(uuid())
-  externalId       String?        @unique()
-  users            User[]         @relation(name: "UserOrganization")
-  events           Event[]        @relation(name: "EventOrganization")
-  name             String?        @db.VarChar(255)
-  email            String?        @unique()
+  id               String                 @id @default(uuid())
+  externalId       String?                @unique()
+  users            User[]                 @relation(name: "UserOrganization")
+  events           Event[]                @relation(name: "EventOrganization")
+  name             String?                @db.VarChar(255)
+  email            String?                @unique()
   logoSrc          String?
-  disabled         Boolean        @default(false)
-  subscription     Subscription?  @relation(fields: [subscriptionId], references: [id])
+  disabled         Boolean                @default(false)
+  subscription     Subscription?          @relation(fields: [subscriptionId], references: [id])
   subscriptionId   String?
   stripeCustomerId String?
-  messages         Message[]      @relation(name: "OrganizationMessage")
-  conversation     Conversation[] @relation(name: "OrganizationConversation")
+  messages         Message[]              @relation(name: "OrganizationMessage")
+  conversation     Conversation[]         @relation(name: "OrganizationConversation")
+  lastSeens        ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
 
   @@index([externalId])
   @@index([subscriptionId])
@@ -126,12 +128,13 @@ model Subscription {
 }
 
 model Conversation {
-  id            String         @id @default(uuid())
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @default(now()) @updatedAt
+  id            String                 @id @default(uuid())
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @default(now()) @updatedAt
   messages      Message[]
-  organizations Organization[] @relation(name: "OrganizationConversation")
-  users         User[]         @relation(name: "UserConversation")
+  organizations Organization[]         @relation(name: "OrganizationConversation")
+  users         User[]                 @relation(name: "UserConversation")
+  lastSeen      ConversationLastSeen[]
 }
 
 model Message {
@@ -144,6 +147,21 @@ model Message {
   user           User?         @relation(name: "UserMessage", fields: [userId], references: [id])
   userId         String?
   organization   Organization? @relation(name: "OrganizationMessage", fields: [organizationId], references: [id])
+  organizationId String?
+
+  @@index([conversationId])
+  @@index([userId])
+  @@index([organizationId])
+}
+
+model ConversationLastSeen {
+  id             String        @id @default(uuid())
+  lastSeen       DateTime
+  conversation   Conversation  @relation(fields: [conversationId], references: [id])
+  conversationId String
+  user           User?         @relation(name: "UserConversationLastSeen", fields: [userId], references: [id])
+  userId         String?
+  organization   Organization? @relation(name: "OrganizationConversationLastSeen", fields: [organizationId], references: [id])
   organizationId String?
 
   @@index([conversationId])

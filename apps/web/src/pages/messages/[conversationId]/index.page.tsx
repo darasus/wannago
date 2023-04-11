@@ -1,5 +1,10 @@
 import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
-import {useMyOrganizationQuery, useMyUserQuery, useSessionQuery} from 'hooks';
+import {
+  useMarkConversationAsSeen,
+  useMyOrganizationQuery,
+  useMyUserQuery,
+  useSessionQuery,
+} from 'hooks';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import React from 'react';
@@ -14,11 +19,17 @@ export default function ConversationPage() {
   const session = useSessionQuery();
   const router = useRouter();
   const conversationId = router.query.conversationId as string;
+  const {mutate} = useMarkConversationAsSeen();
   const conversation = trpc.conversation.getConversationById.useQuery(
     {
       conversationId,
     },
-    {enabled: Boolean(conversationId)}
+    {
+      enabled: Boolean(conversationId),
+      onSuccess: () => {
+        mutate({conversationId});
+      },
+    }
   );
 
   const conversationMembers = getConversationMembers(

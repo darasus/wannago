@@ -7,6 +7,7 @@ import {
   useSetSessionMutation,
   useMyOrganizationQuery,
   useMyUserQuery,
+  useHasUnseenConversation,
 } from 'hooks';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
@@ -21,6 +22,7 @@ export function UserSection() {
   const setSession = useSetSessionMutation();
   const isOrganization = session.data === 'organization';
   const utils = trpc.useContext();
+  const hasUnseenConversation = useHasUnseenConversation();
 
   const toggleSession = () => {
     if (isOrganization) {
@@ -87,6 +89,7 @@ export function UserSection() {
                     alt={'avatar'}
                   />
                 }
+                hasNotificationBadge={hasUnseenConversation.data}
               >
                 <span className="hidden md:inline">{getName()}</span>
               </Button>
@@ -158,6 +161,7 @@ export function UserSection() {
                           router.push('/messages');
                           close();
                         }}
+                        hasNotificationBadge={hasUnseenConversation.data}
                       >
                         Messages
                       </Button>
