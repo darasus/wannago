@@ -193,6 +193,7 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
 
       return false;
     });
+
     return {
       ...c,
       hasUnseenMessages: lastSeen

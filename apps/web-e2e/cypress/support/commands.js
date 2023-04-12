@@ -1,14 +1,12 @@
 Cypress.Commands.addAll({
-  login() {
+  login(user = 'user_1_email') {
     cy.visit('/');
     cy.document().then(doc => {
       if (doc.querySelector('[data-testid="dashboard-button"]')) {
         cy.get('[data-testid="dashboard-button"]');
       } else {
         cy.get('[data-testid="login-button"]').click();
-        cy.get('[data-testid="login-email-input"]').type(
-          Cypress.env('user_email')
-        );
+        cy.get('[data-testid="login-email-input"]').type(Cypress.env(user));
         cy.get('[data-testid="login-email-form-submit"]').click();
         cy.get('[data-testid="login-code-input"]').type(Cypress.env('otp'));
         cy.get('[data-testid="add-event-button"]');
