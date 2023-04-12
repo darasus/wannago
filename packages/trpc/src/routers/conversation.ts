@@ -198,7 +198,7 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
       ...c,
       hasUnseenMessages: lastSeen
         ? isBefore(lastSeen.lastSeen, c.messages[0].createdAt)
-        : undefined,
+        : true,
     };
   });
 });
