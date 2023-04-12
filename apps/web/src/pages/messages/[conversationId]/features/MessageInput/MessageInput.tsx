@@ -37,9 +37,14 @@ export function MessageInput() {
             {...form.register('text')}
             placeholder="Type your message here..."
             disabled={form.formState.isSubmitting}
+            data-testid="message-input"
           />
         </div>
-        <Button type="submit" isLoading={form.formState.isSubmitting}>
+        <Button
+          type="submit"
+          isLoading={form.formState.isSubmitting}
+          data-testid="message-form-submit-button"
+        >
           Send
         </Button>
       </div>

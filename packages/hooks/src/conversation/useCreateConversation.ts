@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {useMyOrganizationQuery} from '../organization/useMyOrganizationQuery';
@@ -6,10 +6,11 @@ import {useSessionQuery} from '../session/useSessionQuery';
 import {useMyUserQuery} from '../user/useMyUserQuery';
 
 export function useCreateConversation() {
+  const [isReady, useIsReady] = useState(false);
   const me = useMyUserQuery();
   const myOrganization = useMyOrganizationQuery();
   const session = useSessionQuery();
-  const {mutateAsync, isLoading} =
+  const createConversationMutation =
     trpc.conversation.createConversation.useMutation();
   const organizationIds = [
     session.data === 'organization' && myOrganization.data?.id,
@@ -17,6 +18,12 @@ export function useCreateConversation() {
   const userIds = [session.data === 'user' && me.data?.id].filter(
     Boolean
   ) as string[];
+
+  const isLoading =
+    createConversationMutation.isLoading ||
+    me.isLoading ||
+    myOrganization.isLoading ||
+    session.isLoading;
 
   const createConversation = useCallback(
     ({
@@ -50,13 +57,13 @@ export function useCreateConversation() {
         organizationIds.push(organizationId);
       }
 
-      return mutateAsync({
+      return createConversationMutation.mutateAsync({
         organizationIds,
         userIds,
       });
     },
     [
-      mutateAsync,
+      createConversationMutation,
       organizationIds,
       userIds,
       me.data?.id,

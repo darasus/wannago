@@ -73,7 +73,7 @@ export default function ConversationPage() {
           return (
             <div className="flex items-center" key={message.id}>
               <div className="grow">
-                <Text>
+                <Text data-testid="message-text">
                   <b>{name}:</b> {message.text}
                 </Text>
               </div>

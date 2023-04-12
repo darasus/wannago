@@ -31,6 +31,7 @@ export function MessageButton() {
       onClick={handleOnClick}
       isLoading={isLoading}
       className="w-40"
+      data-testid="message-button"
     >
       Message
     </Button>
