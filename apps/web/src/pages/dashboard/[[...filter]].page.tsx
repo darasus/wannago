@@ -7,7 +7,9 @@ import {useMyEventsQuery} from 'hooks';
 import {useRouter} from 'next/router';
 import {z} from 'zod';
 
-const filterSchema = z.array(z.enum(['attending', 'organizing', 'all']));
+const filterSchema = z.array(
+  z.enum(['attending', 'organizing', 'all', 'following'])
+);
 
 function Dashboard() {
   const router = useRouter();
@@ -34,6 +36,10 @@ function Dashboard() {
               {
                 label: 'Attending',
                 href: '/dashboard/attending',
+              },
+              {
+                label: 'Following',
+                href: '/dashboard/following',
               },
               {
                 label: 'Organizing',
