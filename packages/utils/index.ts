@@ -26,3 +26,4 @@ export {createDelay} from './src/createDelay';
 export {sleep} from './src/sleep';
 export {getFeatures} from './src/getFeatures';
 export {capitalize} from './src/capitalize';
+export {getConversationMembers} from './src/getConversationMembers';

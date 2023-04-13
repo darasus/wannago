@@ -6,7 +6,7 @@ import {PublicProfile} from './features/PublicProfile/PublicProfile';
 
 export default function ProfilePage() {
   const router = useRouter();
-  const organizationId = router.query.userId as string;
+  const organizationId = router.query.organizationId as string;
   const {data, isLoading: isLoadingUser} =
     trpc.organization.getOrganizationById.useQuery(
       {

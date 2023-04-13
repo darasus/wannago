@@ -15,11 +15,13 @@ type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> & {
   htmlFor?: string;
   href?: LinkProps['href'];
   target?: '_blank';
+  hasNotificationBadge?: boolean;
 };
 
 const button = cva(
   [
-    'cursor-pointer truncate',
+    'relative',
+    'cursor-pointer',
     // base text styles
     'text-gray-800 font-bold',
     // base borders styles
@@ -131,6 +133,7 @@ export const Button = forwardRef(function Button(
     isLoading,
     as = 'button',
     disabled,
+    hasNotificationBadge,
     ...props
   }: Props,
   ref: React.Ref<HTMLButtonElement>
@@ -152,6 +155,9 @@ export const Button = forwardRef(function Button(
         className
       )}
     >
+      {hasNotificationBadge && (
+        <div className="w-4 h-4 bg-red-500 rounded-full absolute top-0 right-0 -translate-y-[20%] translate-x-[20%]" />
+      )}
       {isLoading ? (
         <Spinner
           className={cn({
@@ -169,7 +175,7 @@ export const Button = forwardRef(function Button(
               </div>
             ))
           }
-          {children}
+          <span className="truncate">{children}</span>
         </>
       )}
     </Component>

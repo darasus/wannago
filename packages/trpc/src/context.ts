@@ -29,6 +29,7 @@ import {canModifyEvent} from './actions/canModifyEvent';
 import {updateEventReminder} from './actions/updateEventReminder';
 import {createEventReminder} from './actions/createEventReminder';
 import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
+import {getActiveSessionType} from './actions/getActiveSessionType';
 // assertions
 import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
@@ -50,6 +51,7 @@ const actions = {
   updateEventReminder,
   createEventReminder,
   getOrganizerByEmail,
+  getActiveSessionType,
 } as const;
 
 const assertions = {

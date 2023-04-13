@@ -17,10 +17,12 @@ describe('Team', () => {
 
     cy.wait(1000);
 
-    cy.get('[data-testid="team-settings-form-input-name"]').type('Test team');
+    cy.get('[data-testid="team-settings-form-input-name"]').type(
+      'Organization 1'
+    );
     cy.get('[data-testid="team-settings-form-input-email"]')
       .clear()
-      .type('email@email.com');
+      .type(Cypress.env('organization_1_email'));
     cy.get('[data-testid="file-input"]').selectFile(
       'cypress/support/logo.png',
       {force: true}
