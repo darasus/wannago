@@ -151,7 +151,7 @@ const getFollowCounts = publicProcedure
       const [followerCount] = await Promise.all([
         ctx.prisma.follow.count({
           where: {
-            followerUserId: input.userId,
+            followingOrganizationId: input.organizationId,
           },
         }),
       ]);
@@ -191,7 +191,7 @@ const amFollowing = publicProcedure
     invariant(me, userNotFoundError);
 
     if (input.userId) {
-      const follow = await ctx.prisma.follow.count({
+      const follow = await ctx.prisma.follow.findFirst({
         where: {
           followingUserId: input.userId,
           followerUserId: me.id,
@@ -202,19 +202,14 @@ const amFollowing = publicProcedure
     }
 
     if (input.organizationId) {
-      const [followerCount] = await Promise.all([
-        ctx.prisma.follow.count({
-          where: {
-            followingOrganizationId: input.organizationId,
-            followerUserId: me.id,
-          },
-        }),
-      ]);
+      const follow = await ctx.prisma.follow.findFirst({
+        where: {
+          followingOrganizationId: input.organizationId,
+          followerUserId: me.id,
+        },
+      });
 
-      return {
-        followingCount: null,
-        followerCount,
-      };
+      return Boolean(follow);
     }
 
     return null;

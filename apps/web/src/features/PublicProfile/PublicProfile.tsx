@@ -48,16 +48,18 @@ export function PublicProfile({
               <div className="flex gap-2">
                 <div>
                   <Text className="font-bold">
-                    {followCounts.data?.followerCount}
+                    {followCounts.data?.followerCount || 0}
                   </Text>
                   <Text className=""> followers</Text>
                 </div>
-                <div>
-                  <Text className="font-bold">
-                    {followCounts.data?.followingCount}
-                  </Text>
-                  <Text> following</Text>
-                </div>
+                {userId && (
+                  <div>
+                    <Text className="font-bold">
+                      {followCounts.data?.followingCount || 0}
+                    </Text>
+                    <Text> following</Text>
+                  </div>
+                )}
               </div>
             </div>
           </div>
