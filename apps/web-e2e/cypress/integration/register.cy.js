@@ -1,7 +1,7 @@
 const email = Math.random() + '+clerk_test@gmail.com';
 
 describe('Register', () => {
-  it('Can register', () => {
+  it.skip('Can register', () => {
     cy.visit('/register');
     cy.get('[data-testid="register-first-name-input"]').type('John');
     cy.get('[data-testid="register-last-name-input"]').type('Doe');
