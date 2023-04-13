@@ -21,7 +21,7 @@ export function FollowButton() {
         onClick={handleUnfollow}
         isLoading={isLoading}
         className="w-40"
-        data-testid="message-button"
+        data-testid="unfollow-button"
       >
         Unfollow
       </Button>
@@ -36,7 +36,7 @@ export function FollowButton() {
       onClick={handleFollow}
       isLoading={isLoading}
       className="w-40"
-      data-testid="message-button"
+      data-testid="follow-button"
     >
       Follow
     </Button>
