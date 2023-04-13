@@ -2,7 +2,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
 import {LoadingBlock} from 'ui';
-import {PublicProfile} from './features/PublicProfile/PublicProfile';
+import {PublicProfile} from '../../features/PublicProfile/PublicProfile';
 
 export default function ProfilePage() {
   const router = useRouter();

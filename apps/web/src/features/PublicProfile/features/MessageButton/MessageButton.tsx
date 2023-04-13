@@ -1,15 +1,9 @@
 import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
-import {
-  useCreateConversation,
-  useMyOrganizationQuery,
-  useMyUserQuery,
-} from 'hooks';
+import {useCreateConversation} from 'hooks';
 import {useRouter} from 'next/router';
 import {Button} from 'ui';
 
 export function MessageButton() {
-  const me = useMyUserQuery();
-  const myOrganization = useMyOrganizationQuery();
   const router = useRouter();
   const organizationId = router.query.organizationId as string;
   const userId = router.query.userId as string;
@@ -25,7 +19,7 @@ export function MessageButton() {
 
   return (
     <Button
-      size="sm"
+      size="xs"
       iconLeft={<ChatBubbleBottomCenterTextIcon />}
       variant="neutral"
       onClick={handleOnClick}
