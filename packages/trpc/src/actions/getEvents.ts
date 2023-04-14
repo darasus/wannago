@@ -4,8 +4,9 @@ import {ActionContext} from '../context';
 
 const validation = z.object({
   id: z.string().uuid(),
-  isPublished: z.boolean().optional(),
   eventType: z.enum(['attending', 'organizing', 'all', 'following']),
+  isPublished: z.boolean().optional(),
+  onlyPast: z.boolean().optional(),
 });
 
 export function getEvents(ctx: ActionContext) {
@@ -67,6 +68,20 @@ export function getEvents(ctx: ActionContext) {
         startDate: 'desc',
       },
       where: {
+        ...(input.onlyPast === true
+          ? {
+              endDate: {
+                lte: new Date(),
+              },
+            }
+          : {}),
+        ...(input.onlyPast === false
+          ? {
+              endDate: {
+                gte: new Date(),
+              },
+            }
+          : {}),
         OR: [
           ...(eventType === 'organizing' ? organizingQuery : []),
           ...(eventType === 'attending' ? attendingQuery : []),
