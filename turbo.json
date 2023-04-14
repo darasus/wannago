@@ -22,6 +22,7 @@
     "CLERK_API_KEY",
     "OPENAI_API_KEY",
     "STRIPE_API_SECRET",
+    "DATABASE_URL",
     "STRIPE_ENDPOINT_SECRET"
   ],
   "pipeline": {

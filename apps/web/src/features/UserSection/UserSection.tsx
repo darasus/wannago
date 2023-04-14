@@ -115,6 +115,7 @@ export function UserSection() {
                           }}
                           size="sm"
                           variant="neutral"
+                          data-testid="toggle-session-button"
                         >
                           {label}
                         </Button>

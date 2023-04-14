@@ -40,4 +40,12 @@ Cypress.Commands.addAll({
     cy.get('[data-testid="select-option-button"]').contains('Publish').click();
     cy.get('[data-testid="confirm-dialog-confirm-button"]').click();
   },
+  toggleSession() {
+    cy.get('[data-testid="header-user-section-button"]').click();
+    cy.get('[data-testid="toggle-session-button"]').click();
+  },
+  logout() {
+    cy.get('[data-testid="header-user-section-button"]').click();
+    cy.get('[data-testid="logout-button"]').click();
+  },
 });

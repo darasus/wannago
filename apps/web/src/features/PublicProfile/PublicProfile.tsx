@@ -47,7 +47,7 @@ export function PublicProfile({
               </Text>
               <div className="flex gap-2">
                 <div>
-                  <Text className="font-bold">
+                  <Text className="font-bold" data-testid="follower-count">
                     {followCounts.data?.followerCount || 0}
                   </Text>
                   <Text className=""> followers</Text>
