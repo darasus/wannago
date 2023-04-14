@@ -5,9 +5,10 @@ import {useMyUserQuery} from '../user/useMyUserQuery';
 
 interface Props {
   eventType: 'attending' | 'organizing' | 'following' | 'all';
+  onlyPast: boolean;
 }
 
-export function useMyEventsQuery({eventType}: Props) {
+export function useMyEventsQuery({eventType, onlyPast}: Props) {
   const user = useMyUserQuery();
   const session = useSessionQuery();
   const organization = useMyOrganizationQuery();
@@ -19,6 +20,7 @@ export function useMyEventsQuery({eventType}: Props) {
     {
       organizerId: id,
       eventType,
+      onlyPast,
     },
     {
       enabled: Boolean(id),

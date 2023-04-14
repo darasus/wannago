@@ -948,6 +948,7 @@ const getMyEvents = publicProcedure
   .input(
     z.object({
       organizerId: z.string().uuid(),
+      onlyPast: z.boolean().optional(),
       eventType: z.enum(['attending', 'organizing', 'following', 'all']),
     })
   )
@@ -959,6 +960,7 @@ const getMyEvents = publicProcedure
     return ctx.actions.getEvents({
       id: input.organizerId,
       eventType: input.eventType,
+      onlyPast: input.onlyPast,
     });
   });
 

@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import {EventCard} from 'cards';
 import Head from 'next/head';
-import {Container, PageHeader, LoadingBlock, Menu} from 'ui';
+import {Container, PageHeader, LoadingBlock, Menu, Button} from 'ui';
 import {withProtected} from '../../utils/withAuthProtect';
 import {useMyEventsQuery} from 'hooks';
 import {useRouter} from 'next/router';
 import {z} from 'zod';
+import {useState} from 'react';
 
 const filterSchema = z.array(
   z.enum(['attending', 'organizing', 'all', 'following'])
@@ -13,8 +14,12 @@ const filterSchema = z.array(
 
 function Dashboard() {
   const router = useRouter();
+  const [onlyPast, setOnlyPast] = useState(false);
   const eventType = filterSchema.parse(router.query.filter)[0] || 'all';
-  const {data, isLoading, isFetching} = useMyEventsQuery({eventType});
+  const {data, isLoading, isFetching} = useMyEventsQuery({
+    eventType,
+    onlyPast,
+  });
   const haveNoEvents = data?.length === 0;
   const isGettingCards = isLoading || isFetching;
 
@@ -25,6 +30,13 @@ function Dashboard() {
       </Head>
       <Container maxSize="sm" className="flex flex-col gap-y-4 md:px-4">
         <PageHeader title="My events">
+          <Button
+            variant={onlyPast ? 'primary' : 'neutral'}
+            size="sm"
+            onClick={() => setOnlyPast(!onlyPast)}
+          >
+            Show past
+          </Button>
           <Menu
             activeHref={router.asPath}
             size="sm"
