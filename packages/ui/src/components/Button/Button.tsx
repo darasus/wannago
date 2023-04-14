@@ -175,7 +175,7 @@ export const Button = forwardRef(function Button(
               </div>
             ))
           }
-          <span className="truncate">{children}</span>
+          {children && <span className="truncate">{children}</span>}
         </>
       )}
     </Component>

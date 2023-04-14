@@ -69,17 +69,38 @@ export function UserSection() {
   return (
     <div className="flex gap-2">
       <Button
+        className="flex md:hidden"
+        onClick={() => router.push('/e/add')}
+        iconLeft={<PlusCircleIcon />}
+        data-testid="add-event-button"
+      />
+      <Button
+        className="hidden md:flex"
         onClick={() => router.push('/e/add')}
         iconLeft={<PlusCircleIcon />}
         data-testid="add-event-button"
       >
-        <span className="hidden md:inline">Create event</span>
+        Create event
       </Button>
       <Popover className="relative z-50">
         {() => (
           <>
             <Popover.Button as="div" data-testid="header-user-section-button">
               <Button
+                className="flex md:hidden"
+                variant="neutral"
+                iconLeft={
+                  <Avatar
+                    className="h-6 w-6"
+                    src={getImage()}
+                    data-testid="user-header-button"
+                    alt={'avatar'}
+                  />
+                }
+                hasNotificationBadge={hasUnseenConversation.data}
+              />
+              <Button
+                className="hidden md:flex"
                 variant="neutral"
                 iconLeft={
                   <Avatar
@@ -91,7 +112,7 @@ export function UserSection() {
                 }
                 hasNotificationBadge={hasUnseenConversation.data}
               >
-                <span className="hidden md:inline">{getName()}</span>
+                {getName()}
               </Button>
             </Popover.Button>
             <Transition

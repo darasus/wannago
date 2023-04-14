@@ -19,12 +19,12 @@ export function MessageButton() {
 
   return (
     <Button
-      size="xs"
+      size="sm"
       iconLeft={<ChatBubbleBottomCenterTextIcon />}
       variant="neutral"
       onClick={handleOnClick}
       isLoading={isLoading || isMutating}
-      className="w-40"
+      className="w-full md:w-40"
       data-testid="message-button"
     >
       Message

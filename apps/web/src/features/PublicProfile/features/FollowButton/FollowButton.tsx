@@ -16,12 +16,12 @@ export function FollowButton() {
   if (amFollowing) {
     return (
       <Button
-        size="xs"
+        size="sm"
         iconLeft={<UserMinusIcon />}
         variant="danger"
         onClick={handleUnfollow}
         isLoading={isLoading || isMutating}
-        className="w-40"
+        className="w-full md:w-40"
         data-testid="unfollow-button"
       >
         Unfollow
@@ -31,12 +31,12 @@ export function FollowButton() {
 
   return (
     <Button
-      size="xs"
+      size="sm"
       iconLeft={<UserPlusIcon />}
       variant="neutral"
       onClick={handleFollow}
       isLoading={isLoading || isMutating}
-      className="w-40"
+      className="w-full md:w-40"
       data-testid="follow-button"
     >
       Follow
