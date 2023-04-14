@@ -41,7 +41,12 @@ export function Avatar({
           alt={alt}
         />
       ) : (
-        <div className="flex items-center justify-center h-full w-full border-2 border-gray-800 rounded-full bg-slate-200">
+        <div
+          className={cn(
+            'flex items-center justify-center h-full w-full border-2 border-gray-800 rounded-full bg-slate-200',
+            imageClassName
+          )}
+        >
           <UserIcon className="h-2/3 w-2/4" />
         </div>
       )}

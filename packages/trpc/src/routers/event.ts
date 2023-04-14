@@ -948,7 +948,7 @@ const getMyEvents = publicProcedure
   .input(
     z.object({
       organizerId: z.string().uuid(),
-      eventType: z.enum(['attending', 'organizing', 'all']),
+      eventType: z.enum(['attending', 'organizing', 'following', 'all']),
     })
   )
   .query(async ({ctx, input}) => {

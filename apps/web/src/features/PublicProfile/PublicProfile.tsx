@@ -1,8 +1,11 @@
 import {Event} from '@prisma/client';
 import {EventCard} from 'cards';
+import {useFollow} from 'hooks';
 import Link from 'next/link';
+import {useRouter} from 'next/router';
 import {Avatar, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
-import {MessageButton} from '../MessageButton/MessageButton';
+import {FollowButton} from './features/FollowButton/FollowButton';
+import {MessageButton} from './features/MessageButton/MessageButton';
 
 interface Props {
   isLoadingEvents?: boolean;
@@ -17,6 +20,11 @@ export function PublicProfile({
   name,
   profileImageSrc,
 }: Props) {
+  const router = useRouter();
+  const organizationId = router.query.organizationId as string;
+  const userId = router.query.userId as string;
+  const {followCounts} = useFollow({organizationId, userId});
+
   return (
     <>
       <Container maxSize="sm" className="flex flex-col gap-y-4">
@@ -30,17 +38,34 @@ export function PublicProfile({
               height={1000}
               width={1000}
             />
-            <div className="flex max-w-full overflow-hidden">
+            <div className="flex flex-col max-w-full overflow-hidden">
               <Text
                 className="text-3xl font-bold truncate"
                 data-testid="user-profile-name"
               >
                 {name}
               </Text>
+              <div className="flex gap-2">
+                <div>
+                  <Text className="font-bold" data-testid="follower-count">
+                    {followCounts.data?.followerCount || 0}
+                  </Text>
+                  <Text className=""> followers</Text>
+                </div>
+                {userId && (
+                  <div>
+                    <Text className="font-bold">
+                      {followCounts.data?.followingCount || 0}
+                    </Text>
+                    <Text> following</Text>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-          <div className="flex justify-center md:justify-start">
+          <div className="flex flex-col justify-center md:justify-start gap-2">
             <MessageButton />
+            <FollowButton />
           </div>
         </CardBase>
         {isLoadingEvents && <LoadingBlock />}

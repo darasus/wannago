@@ -42,3 +42,6 @@ export {useSubscription} from './src/useSubscription';
 export {useHasUnseenConversation} from './src/conversation/useHasUnseenConversation';
 export {useMarkConversationAsSeen} from './src/conversation/useMarkConversationAsSeen';
 export {useCreateConversation} from './src/conversation/useCreateConversation';
+
+// follow
+export {useFollow} from './src/follow/useFollow';

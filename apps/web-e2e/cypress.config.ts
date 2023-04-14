@@ -1,10 +1,11 @@
 const {defineConfig} = require('cypress');
+import {resetDB} from './utils/resetDB';
 
-module.exports = defineConfig({
+export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
-    specPattern: 'cypress/integration/**/*.cy.{js,jsx}',
-    supportFile: 'cypress/support/commands.js',
+    specPattern: 'cypress/integration/**/*.cy.{js,jsx,ts,tsx}',
+    supportFile: 'cypress/support/commands.ts',
     viewportHeight: 1000,
     viewportWidth: 1240,
     video: false,
@@ -13,7 +14,6 @@ module.exports = defineConfig({
     defaultCommandTimeout: 60000,
     requestTimeout: 60000,
     pageLoadTimeout: 60000,
-    requestTimeout: 60000,
     retries: {
       runMode: 2,
       openMode: 0,
@@ -30,6 +30,15 @@ module.exports = defineConfig({
         'idarase+2+organization+automation+clerk_test@gmail.com',
       organization_2_id: '28acab1f-7c9d-4782-a168-393ff902aba5',
       otp: '424242',
+    },
+    setupNodeEvents(on: any, config: any) {
+      on('task', {
+        async 'db:reset'() {
+          await resetDB();
+
+          return 'done';
+        },
+      });
     },
   },
 });

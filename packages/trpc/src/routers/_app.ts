@@ -8,6 +8,7 @@ import {organizationRouter} from './organization';
 import {sessionRouter} from './session';
 import {subscriptionRouter} from './subscription';
 import {conversationRouter} from './conversation';
+import {followRouter} from './follow';
 
 export const appRouter = router({
   event: eventRouter,
@@ -19,6 +20,7 @@ export const appRouter = router({
   session: sessionRouter,
   subscription: subscriptionRouter,
   conversation: conversationRouter,
+  follow: followRouter,
 });
 
 export type AppRouter = typeof appRouter;

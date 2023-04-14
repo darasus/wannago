@@ -59,6 +59,8 @@ model User {
   messages         Message[]              @relation(name: "UserMessage")
   conversation     Conversation[]         @relation(name: "UserConversation")
   lastSeens        ConversationLastSeen[] @relation(name: "UserConversationLastSeen")
+  followers        Follow[]               @relation(name: "FollowingUser")
+  following        Follow[]               @relation(name: "FollowerUser")
 
   @@index([organizationId])
   @@index([subscriptionId])
@@ -79,6 +81,7 @@ model Organization {
   messages         Message[]              @relation(name: "OrganizationMessage")
   conversation     Conversation[]         @relation(name: "OrganizationConversation")
   lastSeens        ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
+  followers        Follow[]               @relation(name: "FollowingOrganization")
 
   @@index([externalId])
   @@index([subscriptionId])
@@ -167,4 +170,21 @@ model ConversationLastSeen {
   @@index([conversationId])
   @@index([userId])
   @@index([organizationId])
+}
+
+model Follow {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  followerUser            User          @relation(name: "FollowerUser", fields: [followerUserId], references: [id])
+  followerUserId          String
+  followingUser           User?         @relation(name: "FollowingUser", fields: [followingUserId], references: [id])
+  followingUserId         String?
+  followingOrganization   Organization? @relation(name: "FollowingOrganization", fields: [followingOrganizationId], references: [id])
+  followingOrganizationId String?
+
+  @@index([followerUserId])
+  @@index([followingUserId])
+  @@index([followingOrganizationId])
 }

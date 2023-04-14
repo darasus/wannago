@@ -4,7 +4,7 @@ import {useSessionQuery} from '../session/useSessionQuery';
 import {useMyUserQuery} from '../user/useMyUserQuery';
 
 interface Props {
-  eventType: 'attending' | 'organizing' | 'all';
+  eventType: 'attending' | 'organizing' | 'following' | 'all';
 }
 
 export function useMyEventsQuery({eventType}: Props) {

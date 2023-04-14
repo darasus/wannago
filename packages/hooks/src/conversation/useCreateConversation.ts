@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react';
+import {useCallback} from 'react';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {useMyOrganizationQuery} from '../organization/useMyOrganizationQuery';
@@ -6,7 +6,6 @@ import {useSessionQuery} from '../session/useSessionQuery';
 import {useMyUserQuery} from '../user/useMyUserQuery';
 
 export function useCreateConversation() {
-  const [isReady, useIsReady] = useState(false);
   const me = useMyUserQuery();
   const myOrganization = useMyOrganizationQuery();
   const session = useSessionQuery();
