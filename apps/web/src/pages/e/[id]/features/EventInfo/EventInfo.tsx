@@ -11,8 +11,6 @@ export function EventInfo() {
   const {data: event} = useEventQuery({eventShortId});
   const attendeesCount = useAttendeeCount({eventId: event?.id});
 
-  console.log({event});
-
   const publicEventUrl = event?.isPublished
     ? `${getBaseUrl()}/e/${event?.shortId}`
         .replace('https://www.', '')
