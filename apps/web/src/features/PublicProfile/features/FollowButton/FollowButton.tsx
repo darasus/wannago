@@ -7,10 +7,11 @@ export function FollowButton() {
   const router = useRouter();
   const organizationId = router.query.organizationId as string;
   const userId = router.query.userId as string;
-  const {handleFollow, handleUnfollow, isLoading, amFollowing} = useFollow({
-    organizationId,
-    userId,
-  });
+  const {handleFollow, handleUnfollow, isLoading, isMutating, amFollowing} =
+    useFollow({
+      organizationId,
+      userId,
+    });
 
   if (amFollowing) {
     return (
@@ -19,7 +20,7 @@ export function FollowButton() {
         iconLeft={<UserMinusIcon />}
         variant="danger"
         onClick={handleUnfollow}
-        isLoading={isLoading}
+        isLoading={isLoading || isMutating}
         className="w-40"
         data-testid="unfollow-button"
       >
@@ -34,7 +35,7 @@ export function FollowButton() {
       iconLeft={<UserPlusIcon />}
       variant="neutral"
       onClick={handleFollow}
-      isLoading={isLoading}
+      isLoading={isLoading || isMutating}
       className="w-40"
       data-testid="follow-button"
     >

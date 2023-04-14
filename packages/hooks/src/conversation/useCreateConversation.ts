@@ -18,11 +18,12 @@ export function useCreateConversation() {
     Boolean
   ) as string[];
 
+  const isMutating = createConversationMutation.isLoading;
+
   const isLoading =
-    createConversationMutation.isLoading ||
-    me.isLoading ||
-    myOrganization.isLoading ||
-    session.isLoading;
+    me.isInitialLoading ||
+    myOrganization.isInitialLoading ||
+    session.isInitialLoading;
 
   const createConversation = useCallback(
     ({
@@ -70,5 +71,5 @@ export function useCreateConversation() {
     ]
   );
 
-  return {createConversation, isLoading};
+  return {createConversation, isLoading, isMutating};
 }

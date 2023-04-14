@@ -5,6 +5,6 @@ export const useMyUserQuery = () => {
   const auth = useAuth();
 
   return trpc.user.me.useQuery(undefined, {
-    enabled: !!auth.isSignedIn,
+    enabled: auth.isSignedIn,
   });
 };

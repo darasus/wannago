@@ -7,7 +7,7 @@ export function MessageButton() {
   const router = useRouter();
   const organizationId = router.query.organizationId as string;
   const userId = router.query.userId as string;
-  const {createConversation, isLoading} = useCreateConversation();
+  const {createConversation, isLoading, isMutating} = useCreateConversation();
 
   const handleOnClick = async () => {
     const conversation = await createConversation({organizationId, userId});
@@ -23,7 +23,7 @@ export function MessageButton() {
       iconLeft={<ChatBubbleBottomCenterTextIcon />}
       variant="neutral"
       onClick={handleOnClick}
-      isLoading={isLoading}
+      isLoading={isLoading || isMutating}
       className="w-40"
       data-testid="message-button"
     >

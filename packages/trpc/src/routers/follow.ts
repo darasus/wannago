@@ -174,14 +174,14 @@ const amFollowing = publicProcedure
   )
   .query(async ({ctx, input}) => {
     if (!ctx.auth?.userId) {
-      return null;
+      return false;
     }
 
     const session = await ctx.actions.getActiveSessionType();
 
     // organizations can not follow others
     if (session === 'organization') {
-      return null;
+      return false;
     }
 
     const me = await ctx.actions.getUserByExternalId({
@@ -212,7 +212,7 @@ const amFollowing = publicProcedure
       return Boolean(follow);
     }
 
-    return null;
+    return false;
   });
 
 export const followRouter = router({
