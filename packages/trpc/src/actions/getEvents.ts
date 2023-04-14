@@ -14,6 +14,7 @@ export function getEvents(ctx: ActionContext) {
 
     const organizingQuery: Prisma.EventWhereInput['OR'] = [
       {
+        isPublished,
         user: {
           id,
         },
@@ -26,6 +27,7 @@ export function getEvents(ctx: ActionContext) {
     ];
     const attendingQuery: Prisma.EventWhereInput['OR'] = [
       {
+        isPublished: true,
         eventSignUps: {
           some: {
             status: {
@@ -40,6 +42,7 @@ export function getEvents(ctx: ActionContext) {
     ];
     const followingQuery: Prisma.EventWhereInput['OR'] = [
       {
+        isPublished: true,
         user: {
           followers: {
             some: {
@@ -49,6 +52,7 @@ export function getEvents(ctx: ActionContext) {
         },
       },
       {
+        isPublished: true,
         organization: {
           followers: {
             some: {
@@ -63,7 +67,6 @@ export function getEvents(ctx: ActionContext) {
         startDate: 'desc',
       },
       where: {
-        isPublished,
         OR: [
           ...(eventType === 'organizing' ? organizingQuery : []),
           ...(eventType === 'attending' ? attendingQuery : []),
