@@ -59,12 +59,10 @@ const button = cva(
     },
     compoundVariants: [
       {
-        hasChildren: 'yes',
         size: 'xs',
         class: 'gap-x-1',
       },
       {
-        hasChildren: 'yes',
         size: ['sm', 'md', 'lg'],
         class: 'gap-x-2',
       },
@@ -76,7 +74,7 @@ const button = cva(
       {
         intent: ['link', 'link-gray'],
         class:
-          'inline border-t-0 border-l-0 border-r-0 rounded-none border-0 border-b-2 leading-none font-bold',
+          'inline-flex items-center border-t-0 border-l-0 border-r-0 rounded-none border-0 border-b-2 leading-none font-bold',
       },
       {
         intent: ['primary', 'secondary', 'neutral', 'danger', 'success'],
@@ -97,6 +95,26 @@ const button = cva(
         intent: ['primary', 'secondary', 'neutral', 'danger', 'success'],
         size: 'lg',
         class: 'h-16 px-6',
+      },
+      {
+        hasChildren: 'no',
+        size: ['xs'],
+        class: 'w-6',
+      },
+      {
+        hasChildren: 'no',
+        size: ['sm'],
+        class: 'w-8',
+      },
+      {
+        hasChildren: 'no',
+        size: ['md'],
+        class: 'w-11',
+      },
+      {
+        hasChildren: 'no',
+        size: ['lg'],
+        class: 'w-16',
       },
     ],
   }
@@ -151,7 +169,11 @@ export const Button = forwardRef(function Button(
       disabled={disabled || isLoading}
       {...props}
       className={cn(
-        button({intent: variant, size, hasChildren: !!children ? 'yes' : 'no'}),
+        button({
+          intent: variant,
+          size,
+          hasChildren: Boolean(children) ? 'yes' : 'no',
+        }),
         className
       )}
     >
