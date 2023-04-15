@@ -38,7 +38,11 @@ export function Conversations() {
               {c.hasUnseenMessages && (
                 <div className="w-3 h-3 rounded-full bg-red-500" />
               )}
-              <Text>{c.messages?.[0]?.text}</Text>
+              <Text>
+                {c.messages?.[0]?.text
+                  ? c.messages?.[0]?.text
+                  : 'No messages...'}
+              </Text>
             </div>
           </Link>
         );
