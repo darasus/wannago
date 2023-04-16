@@ -35,36 +35,56 @@ export function MobileMenu() {
               as={CardBase}
               className="absolute z-50 inset-x-0 top-20 flex origin-top flex-col tracking-tight -mx-4"
             >
-              <div className="flex flex-col items-start gap-y-2">
-                {navItems.map((item, i) => (
-                  <Button key={i} as="a" variant="neutral" href={item.href}>
-                    {item.label}
-                  </Button>
-                ))}
-              </div>
-              {showAuthButtons && (
-                <>
-                  <hr className="my-2 border-[1px] border-gray-800" />
-                  <div className="flex gap-x-2">
-                    <Button
-                      as="a"
-                      variant="secondary"
-                      data-testid="mobile-login-button"
-                      href={'/login'}
-                    >
-                      Login
-                    </Button>
-                    <Button
-                      as="a"
-                      variant="primary"
-                      data-testid="mobile-register-button"
-                      href={'/register'}
-                    >
-                      Register
-                    </Button>
-                  </div>
-                </>
-              )}
+              {({close}) => {
+                return (
+                  <>
+                    <div className="flex flex-col items-start gap-y-2">
+                      {navItems.map((item, i) => (
+                        <Button
+                          key={i}
+                          as="a"
+                          variant="neutral"
+                          href={item.href}
+                          onClick={() => {
+                            close();
+                          }}
+                        >
+                          {item.label}
+                        </Button>
+                      ))}
+                    </div>
+                    {showAuthButtons && (
+                      <>
+                        <hr className="my-2 border-[1px] border-gray-800" />
+                        <div className="flex gap-x-2">
+                          <Button
+                            as="a"
+                            variant="secondary"
+                            data-testid="mobile-login-button"
+                            href={'/login'}
+                            onClick={() => {
+                              close();
+                            }}
+                          >
+                            Login
+                          </Button>
+                          <Button
+                            as="a"
+                            variant="primary"
+                            data-testid="mobile-register-button"
+                            href={'/register'}
+                            onClick={() => {
+                              close();
+                            }}
+                          >
+                            Register
+                          </Button>
+                        </div>
+                      </>
+                    )}
+                  </>
+                );
+              }}
             </Popover.Panel>
           </Transition.Child>
         </Transition.Root>
