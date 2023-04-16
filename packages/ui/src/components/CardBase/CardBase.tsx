@@ -30,8 +30,8 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
 ) {
   return (
     <div
-      {...props}
       ref={ref}
+      {...props}
       className={cn(
         'relative',
         'p-6 rounded-3xl border-2',

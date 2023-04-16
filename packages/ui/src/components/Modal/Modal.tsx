@@ -15,12 +15,12 @@ export function Modal({children, isOpen, onClose, title, className}: Props) {
       <Dialog as="div" className="relative z-50" onClose={onClose}>
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+          enter="duration-150 ease-out"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
+          leave="duration-100 ease-in"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
         >
           <div className="fixed inset-0 bg-slate-700 bg-opacity-50" />
         </Transition.Child>
@@ -29,10 +29,10 @@ export function Modal({children, isOpen, onClose, title, className}: Props) {
           <div className="flex min-h-full items-center justify-center text-left">
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-300"
+              enter="duration-150 ease-out"
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
+              leave="duration-100 ease-in"
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
