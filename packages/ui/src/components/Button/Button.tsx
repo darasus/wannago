@@ -141,7 +141,7 @@ const icon = cva(['text-gray-800 shrink-0'], {
   compoundVariants: [],
 });
 
-export const Button = forwardRef(function Button(
+export const Button = forwardRef<HTMLButtonElement, Props>(function Button(
   {
     size = 'md',
     variant = 'primary',
@@ -153,8 +153,8 @@ export const Button = forwardRef(function Button(
     disabled,
     hasNotificationBadge,
     ...props
-  }: Props,
-  ref: React.Ref<HTMLButtonElement>
+  },
+  ref
 ) {
   const isXs = size === 'xs';
   const isSm = size === 'sm';
