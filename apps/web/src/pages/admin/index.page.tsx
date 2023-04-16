@@ -1,66 +1,143 @@
-import {Container, Td, Th, THead, TRow, Table, TBody} from 'ui';
-import {formatDate} from 'utils';
+import {Button, CardBase, Container, Text} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {withProtected} from '../../utils/withAuthProtect';
+import {
+  ResponsiveContainer,
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Line,
+} from 'recharts';
 
 function AdminPage() {
-  const {data} = trpc.admin.getAllRegisteredUsers.useQuery();
+  const dailySignUps = trpc.admin.getDailySignUps.useQuery();
+  const dailyCreatedEvents = trpc.admin.getDailyCreatedEvents.useQuery();
+  const usersCount = trpc.admin.getUsersCount.useQuery();
+  const eventsCount = trpc.admin.getEventsCount.useQuery();
+  const organizationsCount = trpc.admin.getOrganizationsCount.useQuery();
 
-  if (!data) {
-    return null;
-  }
+  const dailySignUpsData = Object.entries(dailySignUps.data || {}).map(
+    signUp => {
+      return {
+        date: signUp[0],
+        count: signUp[1],
+      };
+    }
+  );
+
+  const dailyEventsCreatedData = Object.entries(
+    dailyCreatedEvents.data || {}
+  ).map(signUp => {
+    return {
+      date: signUp[0],
+      count: signUp[1],
+    };
+  });
 
   return (
     <Container maxSize="full">
-      <Table>
-        <THead>
-          <TRow>
-            <Th>#</Th>
-            <Th>First name</Th>
-            <Th>Last name</Th>
-            <Th>Created at</Th>
-            <Th>Email</Th>
-            <Th>External id</Th>
-            <Th>Events</Th>
-          </TRow>
-        </THead>
-        <TBody>
-          {data?.map((user, i) => {
-            return (
-              <TRow>
-                <Td>{data.length - i}</Td>
-                <Td>{user.firstName}</Td>
-                <Td>{user.lastName}</Td>
-                <Td>{formatDate(user.createdAt, 'dd MMM, HH:mm')}</Td>
-                <Td>{user.email}</Td>
-                <Td>{user.externalId}</Td>
-                <Td>
-                  {user.events.map(event => {
-                    const status = event.isPublished ? 'published' : 'draft';
-                    const signUpCount = event.isPublished
-                      ? event.eventSignUps.length
-                      : 0;
-                    const label = `${event.title} (${status}) - ${signUpCount} sign ups`;
-
-                    return (
-                      <>
-                        <a
-                          className="underline"
-                          href={`/e/${event.shortId}`}
-                          rel="noreferrer"
-                        >
-                          {label}
-                        </a>
-                        <br />
-                      </>
-                    );
-                  })}
-                </Td>
-              </TRow>
-            );
-          })}
-        </TBody>
-      </Table>
+      <div className="grid grid-cols-12 gap-4">
+        <CardBase
+          title="Total users count"
+          titleChildren={
+            <Button variant="neutral" size="xs" as="a" href="/admin/users">
+              View all users
+            </Button>
+          }
+          className="col-span-4"
+        >
+          <Text className="text-5xl">{usersCount.data}</Text>
+        </CardBase>
+        <CardBase
+          title="Total events count"
+          className="col-span-4"
+          titleChildren={
+            <Button variant="neutral" size="xs" as="a" href="/admin/events">
+              View all events
+            </Button>
+          }
+        >
+          <Text className="text-5xl">{eventsCount.data}</Text>
+        </CardBase>
+        <CardBase
+          title="Total organizations count"
+          className="col-span-4"
+          titleChildren={
+            <Button
+              variant="neutral"
+              size="xs"
+              as="a"
+              href="/admin/organizations"
+            >
+              View all organizations
+            </Button>
+          }
+        >
+          <Text className="text-5xl">{organizationsCount.data}</Text>
+        </CardBase>
+        <CardBase
+          className="col-span-12"
+          innerClassName="h-80"
+          title="Daily registrations since start"
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              width={500}
+              height={300}
+              data={dailySignUpsData}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis dataKey="count" />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="count"
+                stroke="#000"
+                activeDot={{r: 8}}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardBase>
+        <CardBase
+          className="col-span-12"
+          innerClassName="h-80"
+          title="Daily events created since start"
+        >
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              width={500}
+              height={300}
+              data={dailyEventsCreatedData}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis dataKey="count" />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="count"
+                stroke="#000"
+                activeDot={{r: 8}}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardBase>
+      </div>
     </Container>
   );
 }
