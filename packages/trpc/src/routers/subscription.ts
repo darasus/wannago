@@ -83,6 +83,7 @@ const createCheckoutSession = protectedProcedure
       tax_id_collection: {
         enabled: true,
       },
+      allow_promotion_codes: true,
     });
 
     return session.url;
