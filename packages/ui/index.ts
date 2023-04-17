@@ -24,3 +24,4 @@ export {Toggle} from './src/components/Toggle/Toggle';
 export {LoadingWave} from './src/components/LoadingWave/LoadingWave';
 export {LoadingBlock} from './src/components/LoadingBlock/LoadingBlock';
 export {Menu} from './src/components/Menu/Menu';
+export {NotFoundMessage} from './src/components/NotFoundMessage/NotFoundMessage';

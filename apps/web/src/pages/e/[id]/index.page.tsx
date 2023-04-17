@@ -1,11 +1,12 @@
 import {GetServerSidePropsContext} from 'next';
 import {createProxySSGHelpers} from '@trpc/react-query/ssg';
 import {EventView} from '../../../features/EventView/EventView';
-import {Container, LoadingBlock} from 'ui';
+import {Container, LoadingBlock, NotFoundMessage} from 'ui';
 import {
   useEventId,
   useEventQuery,
   useHandleEmailCallbackParam,
+  useIsMyEvent,
   useMyUserQuery,
 } from 'hooks';
 import {appRouter} from 'trpc/src/routers/_app';
@@ -21,12 +22,19 @@ export default function EventPage() {
   const user = useMyUserQuery();
   const {eventShortId} = useEventId();
   const event = useEventQuery({eventShortId});
+  const isMyEvent = useIsMyEvent({eventShortId});
 
   if (event.isLoading) {
     return <LoadingBlock />;
   }
 
-  if (!event.data) return null;
+  if (!event.data) {
+    return null;
+  }
+
+  if (!event.data.isPublished && !isMyEvent.data?.isMyEvent) {
+    return <NotFoundMessage />;
+  }
 
   return (
     <>
