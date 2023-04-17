@@ -19,8 +19,18 @@ export async function resetDB() {
       id: 'ba2c68ad-f288-43c5-b3c5-6bfcc3611a98',
     },
   });
+  const organization_1 = await prisma.organization.findUnique({
+    where: {
+      id: '5d78757d-c68b-45fd-8954-0e14cb0b6753',
+    },
+  });
+  const organization_2 = await prisma.organization.findUnique({
+    where: {
+      id: 'ba2c68ad-f288-43c5-b3c5-6bfcc3611a98',
+    },
+  });
 
-  if (!user_1 || !user_2) {
+  if (!user_1 || !user_2 || !organization_1 || !organization_2) {
     return;
   }
 
@@ -94,25 +104,46 @@ export async function resetDB() {
       ],
     },
   });
-  await prisma.conversationLastSeen.deleteMany({
+  const conversations = await await prisma.conversation.findMany({
     where: {
       OR: [
         {
-          conversation: {
-            lastSeen: {
-              some: {
-                userId: user_1.id,
-              },
+          users: {
+            some: {
+              id: user_1.id,
             },
           },
         },
         {
-          conversation: {
-            lastSeen: {
-              some: {
-                userId: user_2.id,
-              },
+          users: {
+            some: {
+              id: user_2.id,
             },
+          },
+        },
+        {
+          organizations: {
+            some: {
+              id: organization_1.id,
+            },
+          },
+        },
+        {
+          organizations: {
+            some: {
+              id: organization_2.id,
+            },
+          },
+        },
+      ],
+    },
+  });
+  await prisma.conversationLastSeen.deleteMany({
+    where: {
+      OR: [
+        {
+          id: {
+            in: conversations.map(conversation => conversation.id),
           },
         },
       ],

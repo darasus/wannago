@@ -20,10 +20,9 @@ describe('Follow', () => {
     cy.get('[data-testid="select-option-button"]')
       .contains('Following')
       .click();
-    cy.get('[data-testid="event-card"]').should(
-      'contain.text',
-      'Organization 2'
-    );
+    cy.get('[data-testid="event-card"]')
+      .first()
+      .should('contain.text', 'Organization 2');
   });
 
   it('Can follow user', () => {
@@ -42,6 +41,6 @@ describe('Follow', () => {
     cy.get('[data-testid="select-option-button"]')
       .contains('Following')
       .click();
-    cy.get('[data-testid="event-card"]').should('contain.text', 'John');
+    cy.get('[data-testid="event-card"]').first().should('contain.text', 'John');
   });
 });

@@ -72,7 +72,7 @@ export function UserSection() {
         className="flex md:hidden"
         onClick={() => router.push('/e/add')}
         iconLeft={<PlusCircleIcon />}
-        data-testid="add-event-button"
+        data-testid="add-event-button-mini"
       />
       <Button
         className="hidden md:flex"
