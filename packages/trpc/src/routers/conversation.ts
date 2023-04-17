@@ -243,6 +243,10 @@ const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
           createdAt: 'desc',
         },
         take: 1,
+        include: {
+          user: true,
+          organization: true,
+        },
       },
     },
   });
@@ -266,6 +270,12 @@ const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
 
   const hasUnseen = conversations.some(conversation => {
     return conversation.messages.some(message => {
+      if (
+        message.user?.id === user?.id ||
+        message.organization?.id === user?.organization?.id
+      ) {
+        return false;
+      }
       if (lastSeen?.lastSeen) {
         return isBefore(lastSeen?.lastSeen, message.createdAt);
       }
