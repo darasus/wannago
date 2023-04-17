@@ -18,7 +18,7 @@ import {
 } from 'hooks';
 import {useRouter} from 'next/router';
 import {forwardRef} from 'react';
-import {Button, Menu} from 'ui';
+import {Badge, Button, Menu} from 'ui';
 
 export function ManageEventButton() {
   const router = useRouter();
@@ -57,65 +57,72 @@ export function ManageEventButton() {
   });
 
   return (
-    <div className="w-full">
+    <div className="flex gap-2 w-full">
       {removeEventModal}
       {publishModal}
       {unpublishModal}
-      <Menu
-        testId="manage-event-menu"
-        size="sm"
-        activeHref={router.asPath}
-        as={ButtonWIthRef}
-        options={[
-          {
-            label: 'Event info',
-            href: `/e/${eventShortId}/info`,
-            iconLeft: <InformationCircleIcon />,
-          },
-          {
-            label: 'Edit event',
-            href: `/e/${eventShortId}/edit`,
-            iconLeft: <PencilIcon />,
-          },
-          {
-            label: 'Event attendees',
-            href: `/e/${eventShortId}/attendees`,
-            iconLeft: <UsersIcon />,
-          },
-          {
-            label: 'Invite attendees',
-            href: `/e/${eventShortId}/invite`,
-            iconLeft: <UserPlusIcon />,
-          },
-          ...(!event.data?.isPublished
-            ? [
-                {
-                  label: 'Publish event',
-                  onClick: onPublishClick,
-                  variant: 'success',
-                  iconLeft: <RocketLaunchIcon />,
-                } as const,
-              ]
-            : []),
-          ...(event.data?.isPublished
-            ? [
-                {
-                  label: 'Unpublish event',
-                  onClick: onUnpublishClick,
-                  variant: 'danger',
-                  iconLeft: <InboxArrowDownIcon />,
-                } as const,
-              ]
-            : []),
+      {event.data?.isPublished ? (
+        <Badge color="green">Published</Badge>
+      ) : (
+        <Badge color="yellow">Draft</Badge>
+      )}
+      <div className="grow">
+        <Menu
+          testId="manage-event-menu"
+          size="sm"
+          activeHref={router.asPath}
+          as={ButtonWIthRef}
+          options={[
+            {
+              label: 'Event info',
+              href: `/e/${eventShortId}/info`,
+              iconLeft: <InformationCircleIcon />,
+            },
+            {
+              label: 'Edit event',
+              href: `/e/${eventShortId}/edit`,
+              iconLeft: <PencilIcon />,
+            },
+            {
+              label: 'Event attendees',
+              href: `/e/${eventShortId}/attendees`,
+              iconLeft: <UsersIcon />,
+            },
+            {
+              label: 'Invite attendees',
+              href: `/e/${eventShortId}/invite`,
+              iconLeft: <UserPlusIcon />,
+            },
+            ...(!event.data?.isPublished
+              ? [
+                  {
+                    label: 'Publish event',
+                    onClick: onPublishClick,
+                    variant: 'success',
+                    iconLeft: <RocketLaunchIcon />,
+                  } as const,
+                ]
+              : []),
+            ...(event.data?.isPublished
+              ? [
+                  {
+                    label: 'Unpublish event',
+                    onClick: onUnpublishClick,
+                    variant: 'danger',
+                    iconLeft: <InboxArrowDownIcon />,
+                  } as const,
+                ]
+              : []),
 
-          {
-            label: 'Remove event',
-            onClick: onRemoveClick,
-            variant: 'danger',
-            iconLeft: <TrashIcon />,
-          },
-        ]}
-      />
+            {
+              label: 'Remove event',
+              onClick: onRemoveClick,
+              variant: 'danger',
+              iconLeft: <TrashIcon />,
+            },
+          ]}
+        />
+      </div>
     </div>
   );
 }
