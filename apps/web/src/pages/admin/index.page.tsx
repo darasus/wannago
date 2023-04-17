@@ -38,21 +38,21 @@ function AdminPage() {
 
   return (
     <Container maxSize="full">
-      <div className="grid grid-cols-12 gap-4">
+      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">
         <CardBase
+          className="lg:col-span-4"
           title="Total users count"
           titleChildren={
             <Button variant="neutral" size="xs" as="a" href="/admin/users">
               View all users
             </Button>
           }
-          className="col-span-4"
         >
           <Text className="text-5xl">{usersCount.data}</Text>
         </CardBase>
         <CardBase
+          className="lg:col-span-4"
           title="Total events count"
-          className="col-span-4"
           titleChildren={
             <Button variant="neutral" size="xs" as="a" href="/admin/events">
               View all events
@@ -63,7 +63,7 @@ function AdminPage() {
         </CardBase>
         <CardBase
           title="Total organizations count"
-          className="col-span-4"
+          className="lg:col-span-4"
           titleChildren={
             <Button
               variant="neutral"
@@ -78,7 +78,7 @@ function AdminPage() {
           <Text className="text-5xl">{organizationsCount.data}</Text>
         </CardBase>
         <CardBase
-          className="col-span-12"
+          className="lg:col-span-12"
           innerClassName="h-80"
           title="Daily registrations since start"
         >
@@ -108,7 +108,7 @@ function AdminPage() {
           </ResponsiveContainer>
         </CardBase>
         <CardBase
-          className="col-span-12"
+          className="lg:col-span-12"
           innerClassName="h-80"
           title="Daily events created since start"
         >
