@@ -60,10 +60,7 @@ const features = [
 function Feature({feature, className, ...props}: any) {
   return (
     <CardBase
-      className={cn(
-        className,
-        'flex flex-col items-center overflow-hidden h-full'
-      )}
+      className={cn(className, 'flex flex-col overflow-hidden h-full')}
       {...props}
     >
       <div className="relative z-10 flex flex-col gap-1">
