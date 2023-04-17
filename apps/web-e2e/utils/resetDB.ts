@@ -138,6 +138,7 @@ export async function resetDB() {
       ],
     },
   });
+
   await prisma.conversationLastSeen.deleteMany({
     where: {
       OR: [
