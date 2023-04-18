@@ -12,6 +12,7 @@ import {
   handleEventSignUpEmailInputSchema,
   handleOrganizerEventSignUpNotificationEmailInputSchema,
 } from 'email-input-validation';
+import {parseISO} from 'date-fns';
 
 const eventInput = z.object({
   title: z.string(),
@@ -998,6 +999,79 @@ const getIsMyEvent = publicProcedure
     return {isMyEvent};
   });
 
+const createEventWithPrompt = protectedProcedure
+  .input(
+    z.object({
+      prompt: z.string(),
+    })
+  )
+  .mutation(async ({input, ctx}) => {
+    const url = new URL(`${getBaseUrl()}/api/ai`);
+
+    url.searchParams.append('prompt', input.prompt);
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    console.log(JSON.stringify(data, null, 2));
+
+    const responseSchema = z.object({
+      output: z.object({
+        title: z.string(),
+        address: z.string(),
+        description: z.string(),
+        startDate: z.string(),
+        endDate: z.string(),
+        maxNumberOfAttendees: z.string(),
+      }),
+    });
+
+    const {output} = responseSchema.parse(data);
+
+    const user = await ctx.actions.getUserByExternalId({
+      externalId: ctx.auth?.userId,
+    });
+
+    invariant(user, userNotFoundError);
+
+    const result = await ctx.googleMaps.placeAutocomplete({
+      params: {
+        key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+        input: output.address,
+      },
+    });
+
+    const geocodeResponse = await ctx.googleMaps.geocode({
+      params: {
+        key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+        place_id: result.data.predictions[0].place_id,
+      },
+    });
+
+    const addressResult = geocodeResponse?.data.results?.[0];
+
+    const event = await ctx.prisma.event.create({
+      data: {
+        title: output.title.replaceAll('{name}', user.firstName),
+        maxNumberOfAttendees: Number(output.maxNumberOfAttendees),
+        description: output.description.replaceAll('{name}', user.firstName),
+        address: addressResult.formatted_address || output.address,
+        startDate: parseISO(output.startDate),
+        endDate: parseISO(output.endDate),
+        shortId: nanoid(6),
+        user: {
+          connect: {
+            id: user?.id,
+          },
+        },
+        longitude: addressResult.geometry.location.lng,
+        latitude: addressResult.geometry.location.lat,
+      },
+    });
+
+    return event;
+  });
+
 export const eventRouter = router({
   create,
   remove,
@@ -1020,4 +1094,5 @@ export const eventRouter = router({
   getPublicEvents,
   getMyEvents,
   getIsMyEvent,
+  createEventWithPrompt,
 });
