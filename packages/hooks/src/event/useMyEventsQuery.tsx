@@ -24,6 +24,7 @@ export function useMyEventsQuery({eventType, onlyPast}: Props) {
     },
     {
       enabled: Boolean(id),
+      refetchOnMount: 'always',
     }
   );
 }

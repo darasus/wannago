@@ -34,8 +34,9 @@ export function UserSection() {
   };
 
   const onSignOutClick = async () => {
-    await signOut();
+    await setSession.mutateAsync({userType: 'user'});
     await utils.invalidate();
+    await signOut();
   };
 
   const getName = () => {

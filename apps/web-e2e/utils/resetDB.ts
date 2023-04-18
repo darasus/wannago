@@ -1,4 +1,10 @@
 import {PrismaClient} from '@prisma/client';
+import {
+  organization_1_id,
+  organization_2_id,
+  user_1_id,
+  user_2_id,
+} from '../constants';
 
 export async function resetDB() {
   const prisma = new PrismaClient({
@@ -11,22 +17,22 @@ export async function resetDB() {
 
   const user_1 = await prisma.user.findUnique({
     where: {
-      id: '52cb62d5-c6ca-4da3-be41-d1c3a83dfa21',
+      id: user_1_id,
     },
   });
   const user_2 = await prisma.user.findUnique({
     where: {
-      id: 'ba2c68ad-f288-43c5-b3c5-6bfcc3611a98',
+      id: user_2_id,
     },
   });
   const organization_1 = await prisma.organization.findUnique({
     where: {
-      id: '5d78757d-c68b-45fd-8954-0e14cb0b6753',
+      id: organization_1_id,
     },
   });
   const organization_2 = await prisma.organization.findUnique({
     where: {
-      id: 'ba2c68ad-f288-43c5-b3c5-6bfcc3611a98',
+      id: organization_2_id,
     },
   });
 
@@ -49,6 +55,12 @@ export async function resetDB() {
         {
           followingUserId: user_2.id,
         },
+        {
+          followingOrganizationId: organization_1.id,
+        },
+        {
+          followingOrganizationId: organization_2.id,
+        },
       ],
     },
   });
@@ -65,6 +77,16 @@ export async function resetDB() {
             userId: user_2.id,
           },
         },
+        {
+          event: {
+            organizationId: organization_1.id,
+          },
+        },
+        {
+          event: {
+            organizationId: organization_2.id,
+          },
+        },
       ],
     },
   });
@@ -77,34 +99,16 @@ export async function resetDB() {
         {
           userId: user_2.id,
         },
-      ],
-    },
-  });
-  await prisma.message.deleteMany({
-    where: {
-      OR: [
         {
-          conversation: {
-            users: {
-              some: {
-                id: user_1.id,
-              },
-            },
-          },
+          organizationId: organization_1.id,
         },
         {
-          conversation: {
-            users: {
-              some: {
-                id: user_2.id,
-              },
-            },
-          },
+          organizationId: organization_2.id,
         },
       ],
     },
   });
-  const conversations = await await prisma.conversation.findMany({
+  const conversations = await prisma.conversation.findMany({
     where: {
       OR: [
         {
@@ -138,32 +142,26 @@ export async function resetDB() {
       ],
     },
   });
+  await prisma.message.deleteMany({
+    where: {
+      conversationId: {
+        in: conversations.map(conversation => conversation.id),
+      },
+    },
+  });
   await prisma.conversationLastSeen.deleteMany({
     where: {
-      OR: [
-        {
-          id: {
-            in: conversations.map(conversation => conversation.id),
-          },
-        },
-      ],
+      conversationId: {
+        in: conversations.map(conversation => conversation.id),
+      },
     },
   });
   await prisma.conversation.deleteMany({
     where: {
       OR: [
         {
-          users: {
-            some: {
-              id: user_1.id,
-            },
-          },
-        },
-        {
-          users: {
-            some: {
-              id: user_2.id,
-            },
+          id: {
+            in: conversations.map(conversation => conversation.id),
           },
         },
       ],

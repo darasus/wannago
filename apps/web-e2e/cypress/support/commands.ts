@@ -1,18 +1,12 @@
 Cypress.Commands.addAll({
-  login(user = 'user_1_email') {
+  login(user_email = 'user_1_email') {
     cy.visit('/');
-    cy.document().then(doc => {
-      if (doc.querySelector('[data-testid="dashboard-button"]')) {
-        cy.get('[data-testid="dashboard-button"]');
-      } else {
-        cy.get('[data-testid="login-button"]').click();
-        cy.get('[data-testid="login-email-input"]').type(Cypress.env(user));
-        cy.get('[data-testid="login-email-form-submit"]').click();
-        cy.get('[data-testid="login-code-input"]').type(Cypress.env('otp'));
-        cy.get('[data-testid="add-event-button"]');
-        cy.get('[data-testid="header-user-section-button"]').contains('John');
-      }
-    });
+    cy.get('[data-testid="login-button"]').click();
+    cy.get('[data-testid="login-email-input"]').type(Cypress.env(user_email));
+    cy.get('[data-testid="login-email-form-submit"]').click();
+    cy.get('[data-testid="login-code-input"]').type(Cypress.env('otp'));
+    cy.get('[data-testid="add-event-button"]');
+    cy.get('[data-testid="header-user-section-button"]').contains('John');
   },
   createOfflineEvent() {
     cy.visit('/dashboard');
@@ -47,5 +41,6 @@ Cypress.Commands.addAll({
   logout() {
     cy.get('[data-testid="header-user-section-button"]').click();
     cy.get('[data-testid="logout-button"]').click();
+    cy.wait(3000);
   },
 });
