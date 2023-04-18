@@ -55,6 +55,14 @@ const moduleExports = {
     'cards',
     'ui',
   ],
+  webpack(config) {
+    config.experiments = {
+      asyncWebAssembly: true,
+      layers: true,
+    };
+
+    return config;
+  },
   async redirects() {
     return [
       {
