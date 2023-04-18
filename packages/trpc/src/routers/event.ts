@@ -1052,9 +1052,13 @@ const createEventWithPrompt = protectedProcedure
 
     const event = await ctx.prisma.event.create({
       data: {
-        title: output.title.replaceAll('{name}', user.firstName),
+        title: output.title
+          .replaceAll('{name}', user.firstName)
+          .replaceAll('{Name}', user.firstName),
         maxNumberOfAttendees: Number(output.maxNumberOfAttendees),
-        description: output.description.replaceAll('{name}', user.firstName),
+        description: output.description
+          .replaceAll('{name}', user.firstName)
+          .replaceAll('{Name}', user.firstName),
         address: addressResult.formatted_address || output.address,
         startDate: parseISO(output.startDate),
         endDate: parseISO(output.endDate),
