@@ -32,7 +32,7 @@ export default function EventPage() {
     return null;
   }
 
-  if (!event.data.isPublished && !isMyEvent.data?.isMyEvent) {
+  if (event.data.isPublished === false && isMyEvent.data?.isMyEvent === false) {
     return <NotFoundMessage />;
   }
 

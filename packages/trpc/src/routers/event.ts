@@ -992,7 +992,8 @@ const getIsMyEvent = publicProcedure
 
     const isMyEvent =
       event.userId === user.id ||
-      (user.organization?.id && event.organizationId === user.organization?.id);
+      (Boolean(user.organization?.id) &&
+        event.organizationId === user.organization?.id);
 
     return {isMyEvent};
   });
