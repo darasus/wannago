@@ -1010,29 +1010,72 @@ const createEventWithPrompt = protectedProcedure
 
     url.searchParams.append('prompt', input.prompt);
 
-    const response = await fetch(url);
-    const data = await response.json();
-
-    console.log(JSON.stringify(data, null, 2));
-
-    const responseSchema = z.object({
-      output: z.object({
-        title: z.string(),
-        address: z.string(),
-        description: z.string(),
-        startDate: z.string(),
-        endDate: z.string(),
-        maxNumberOfAttendees: z.string(),
-      }),
+    const response = await fetch(url).catch(err => {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: `Something went wrong. Please try again.`,
+      });
     });
-
-    const {output} = responseSchema.parse(data);
-
+    const data = await response.json();
     const user = await ctx.actions.getUserByExternalId({
       externalId: ctx.auth?.userId,
     });
 
     invariant(user, userNotFoundError);
+
+    const responseSchema = z.object({
+      output: z.object({
+        title: z.string().transform(value => {
+          return value
+            .replaceAll('{name}', user.firstName)
+            .replaceAll('{Name}', user.firstName);
+        }),
+        description: z.string().transform(value => {
+          return value
+            .replaceAll('{name}', user.firstName)
+            .replaceAll('{Name}', user.firstName);
+        }),
+        address: z.string({
+          required_error: `Doesn't seem like you entered an address. Please try again.`,
+        }),
+        startDate: z.string().transform(value => {
+          if (value === 'unknown') {
+            throw new TRPCError({
+              code: 'BAD_REQUEST',
+              message: `Doesn't seem like you entered time of your event. Please try again.`,
+            });
+          }
+
+          return parseISO(value);
+        }),
+        endDate: z.string().transform(value => {
+          if (value === 'unknown') {
+            throw new TRPCError({
+              code: 'BAD_REQUEST',
+              message: `Doesn't seem like you entered time of your event. Please try again.`,
+            });
+          }
+
+          return parseISO(value);
+        }),
+        maxNumberOfAttendees: z.string().transform(value => {
+          if (value === 'unknown') {
+            return 0;
+          }
+
+          return Number(value);
+        }),
+      }),
+    });
+
+    const {output} = responseSchema.parse(data);
+
+    if (output.address === 'unknown') {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: `Doesn't seem like you entered location for your event. Please try again.`,
+      });
+    }
 
     const result = await ctx.googleMaps.placeAutocomplete({
       params: {
@@ -1052,16 +1095,12 @@ const createEventWithPrompt = protectedProcedure
 
     const event = await ctx.prisma.event.create({
       data: {
-        title: output.title
-          .replaceAll('{name}', user.firstName)
-          .replaceAll('{Name}', user.firstName),
-        maxNumberOfAttendees: Number(output.maxNumberOfAttendees),
-        description: output.description
-          .replaceAll('{name}', user.firstName)
-          .replaceAll('{Name}', user.firstName),
+        title: output.title,
+        maxNumberOfAttendees: output.maxNumberOfAttendees,
+        description: output.description,
         address: addressResult.formatted_address || output.address,
-        startDate: parseISO(output.startDate),
-        endDate: parseISO(output.endDate),
+        startDate: output.startDate,
+        endDate: output.endDate,
         shortId: nanoid(6),
         user: {
           connect: {
