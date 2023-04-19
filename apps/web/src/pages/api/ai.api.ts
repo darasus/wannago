@@ -3,10 +3,6 @@ import {OpenAI} from 'langchain/llms/openai';
 import {PromptTemplate} from 'langchain/prompts';
 import {StructuredOutputParser} from 'langchain/output_parsers';
 
-// const userInstruction =
-// "I want to celebrate house warming with my friends and family. My event starts today at 3pm and lasts for 2 hours 33 minutes, it is at 123 Main St, New York. I'm thinking of inviting around 53 people.";
-// 'Birthday lunch tomorrow at 12pm, in Permanent cafe (amsterdam)';
-
 const generateEventData = async (userInstruction: string) => {
   const parser = StructuredOutputParser.fromNamesAndDescriptions({
     title:
