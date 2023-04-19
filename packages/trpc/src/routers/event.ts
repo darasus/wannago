@@ -1018,7 +1018,9 @@ const createEventWithPrompt = protectedProcedure
     const responseSchema = z.object({
       output: z.object({
         title: z.string(),
-        address: z.string(),
+        address: z.string({
+          required_error: `Doesn't seem like you entered an address. Please try again.`,
+        }),
         description: z.string(),
         startDate: z.string(),
         endDate: z.string(),
