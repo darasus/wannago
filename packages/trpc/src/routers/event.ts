@@ -1009,6 +1009,7 @@ const createEventWithPrompt = protectedProcedure
     const url = new URL(`${getBaseUrl()}/api/ai`);
 
     url.searchParams.append('prompt', input.prompt);
+    url.searchParams.append('timezone', ctx.timezone);
 
     const response = await fetch(url).catch(err => {
       throw new TRPCError({
