@@ -41,7 +41,7 @@ function EventAddPage() {
                   label="Describe your event"
                   type="text"
                   {...form.register('prompt')}
-                  placeholder="Type here..."
+                  placeholder="Type what are willing to do, where and when..."
                   disabled={createEventWithPrompt.isLoading}
                 />
               </div>
