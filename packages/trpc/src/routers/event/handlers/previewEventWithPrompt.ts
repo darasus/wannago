@@ -74,7 +74,9 @@ export const previewEventWithPrompt = protectedProcedure
             return 0;
           }
 
-          return Number(value);
+          const number = isNaN(Number(value)) ? 0 : Number(value);
+
+          return number;
         }),
         imagePrompt: z.string(),
       }),
