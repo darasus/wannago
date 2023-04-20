@@ -2,10 +2,11 @@ import Head from 'next/head';
 import {Button, CardBase, Container, LoadingBlock, PageHeader} from 'ui';
 import {withProtected} from '../../utils/withAuthProtect';
 import {useForm} from 'react-hook-form';
-import {Input} from '../../components/Input/Input/Input';
 import {useCreateEventMutation, usePreviewEventWithPromptMutation} from 'hooks';
 import {EventView} from '../../features/EventView/EventView';
 import {useRouter} from 'next/router';
+import {PromptExamples} from './[id]/features/PromptExamples/PromptExamples';
+import {Textarea} from '../../components/Input/Input/Textarea';
 
 function EventAddPage() {
   const router = useRouter();
@@ -47,6 +48,11 @@ function EventAddPage() {
     }
   };
 
+  const handleCancel = () => {
+    form.reset();
+    previewEventMutation.reset();
+  };
+
   return (
     <>
       <Head>
@@ -55,27 +61,31 @@ function EventAddPage() {
       <Container maxSize="sm" className="flex flex-col gap-4 md:px-4">
         <CardBase>
           <form onSubmit={handleSubmit}>
-            <div className="flex items-end gap-2">
-              <div className="grow">
-                <Input
-                  label="Describe your event"
-                  type="text"
-                  {...form.register('prompt')}
-                  placeholder="Type what are willing to do, where and when..."
-                  disabled={previewEventMutation.isLoading}
-                  autoComplete="off"
-                />
-              </div>
+            <div className="flex flex-col gap-2">
+              <Textarea
+                label="Describe your event"
+                {...form.register('prompt')}
+                placeholder="Type what are willing to do, where and when..."
+                disabled={previewEventMutation.isLoading}
+                autoComplete="off"
+              />
               <Button type="submit" isLoading={form.formState.isSubmitting}>
                 Create preview
               </Button>
             </div>
           </form>
         </CardBase>
+        {!previewEventMutation.isLoading && !previewEventMutation.data && (
+          <PromptExamples />
+        )}
         {previewEventMutation.isLoading && <LoadingBlock />}
         {previewEventMutation.data && (
           <>
-            <PageHeader title="Preview event" />
+            <PageHeader title="Preview event">
+              <Button size="xs" variant="neutral" onClick={handleCancel}>
+                Clear preview
+              </Button>
+            </PageHeader>
             <div className="opacity-60 pointer-events-none">
               <EventView event={previewEventMutation.data} />
             </div>
@@ -83,7 +93,7 @@ function EventAddPage() {
               onClick={handleCreateEvent}
               isLoading={createEventMutation.isLoading}
             >
-              Create event
+              Create draft event
             </Button>
           </>
         )}
