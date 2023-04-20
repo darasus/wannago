@@ -6,7 +6,6 @@ export const eventInput = z.object({
   startDate: z.date(),
   endDate: z.date(),
   address: z.string().nullable().default(null),
-  streamUrl: z.string().nullable(),
   featuredImageSrc: z.string().nullable().default(null),
   featuredImageHeight: z.number().nullable().default(null),
   featuredImageWidth: z.number().nullable().default(null),

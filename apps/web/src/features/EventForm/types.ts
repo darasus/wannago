@@ -3,12 +3,10 @@ export interface Form {
   description: string | null;
   startDate: string;
   endDate: string;
-  address?: string;
-  streamUrl?: string;
+  address: string;
   maxNumberOfAttendees: number | null;
   featuredImageSrc: string | null;
   featuredImageHeight: number | null;
   featuredImageWidth: number | null;
   featuredImagePreviewSrc: string | null;
-  type: 'online' | 'offline';
 }

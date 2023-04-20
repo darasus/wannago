@@ -19,7 +19,6 @@ export const create = protectedProcedure
         featuredImagePreviewSrc,
         maxNumberOfAttendees,
         startDate,
-        streamUrl,
         authorId,
       },
       ctx,
@@ -88,7 +87,6 @@ export const create = protectedProcedure
           featuredImageHeight,
           featuredImageWidth,
           featuredImagePreviewSrc,
-          streamUrl,
           longitude: geocodeResponse?.data.results[0].geometry.location.lng,
           latitude: geocodeResponse?.data.results[0].geometry.location.lat,
           ...(organization?.id
