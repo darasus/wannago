@@ -63,6 +63,7 @@ function EventAddPage() {
                   {...form.register('prompt')}
                   placeholder="Type what are willing to do, where and when..."
                   disabled={previewEventMutation.isLoading}
+                  autoComplete="off"
                 />
               </div>
               <Button type="submit" isLoading={form.formState.isSubmitting}>
