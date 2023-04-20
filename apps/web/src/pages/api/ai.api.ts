@@ -40,7 +40,5 @@ export default async function handler(
   const timezone = req.query.timezone as string;
   const data = await generateEventData(userInstruction, timezone);
 
-  console.log(JSON.stringify(data, null, 2));
-
   res.status(200).json({userInstruction, output: data});
 }
