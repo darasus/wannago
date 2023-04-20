@@ -1,4 +1,3 @@
-import {Link} from './Link';
 import {Text} from './Text';
 
 interface Props {
@@ -7,7 +6,6 @@ interface Props {
   startDate: string;
   endDate: string;
   address: string;
-  streamUrl: string;
 }
 
 export function EventInfo({
@@ -16,7 +14,6 @@ export function EventInfo({
   startDate,
   endDate,
   address,
-  streamUrl,
 }: Props) {
   return (
     <>
@@ -35,11 +32,6 @@ export function EventInfo({
       {address !== 'none' && (
         <Text>
           <b>Address:</b> {address}
-        </Text>
-      )}
-      {streamUrl !== 'none' && (
-        <Text>
-          <b>Stream URL:</b> <Link href={streamUrl}>{streamUrl}</Link>
         </Text>
       )}
     </>

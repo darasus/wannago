@@ -41,7 +41,6 @@ function EventAddPage() {
           previewEventMutation.data.featuredImagePreviewSrc,
         featuredImageHeight: previewEventMutation.data.featuredImageHeight,
         featuredImageWidth: previewEventMutation.data.featuredImageWidth,
-        streamUrl: null,
       });
 
       router.push(`/e/${response.shortId}`);

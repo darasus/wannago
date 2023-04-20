@@ -1,5 +1,4 @@
 import {Event} from '@prisma/client';
-import {useMemo} from 'react';
 import {useForm} from 'react-hook-form';
 import {formatDate} from 'utils';
 import {Form} from '../types';
@@ -10,16 +9,6 @@ const formatDateForInput = (date: Date | string) => {
 
 export function useEventForm(props?: {event?: Event | null}) {
   const {event} = props || {};
-
-  const type = useMemo(() => {
-    if (event?.address) {
-      return 'offline';
-    }
-    if (event?.streamUrl) {
-      return 'online';
-    }
-    return 'offline';
-  }, [event?.address, event?.streamUrl]);
 
   const form = useForm<Form>({
     defaultValues: {
@@ -32,13 +21,11 @@ export function useEventForm(props?: {event?: Event | null}) {
         : formatDateForInput(new Date()),
       description: event?.description || null,
       address: event?.address || undefined,
-      streamUrl: event?.streamUrl || undefined,
       maxNumberOfAttendees: event?.maxNumberOfAttendees || undefined,
       featuredImageSrc: event?.featuredImageSrc || null,
       featuredImageHeight: event?.featuredImageHeight || null,
       featuredImageWidth: event?.featuredImageWidth || null,
       featuredImagePreviewSrc: event?.featuredImagePreviewSrc || null,
-      type,
     },
   });
 

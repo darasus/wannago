@@ -133,7 +133,6 @@ export const previewEventWithPrompt = protectedProcedure
       featuredImageWidth: imageResponse.width,
       featuredImageSrc: imageResponse.url,
       featuredImagePreviewSrc: imageResponse.imageSrcBase64,
-      streamUrl: null,
       messageId: null,
     };
 

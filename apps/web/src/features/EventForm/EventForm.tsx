@@ -7,12 +7,7 @@ import {Input} from '../../components/Input/Input/Input';
 import {LocationInput} from '../../components/Input/LocationInput/LocationInput';
 import {RichTextarea} from '../../components/Input/RichTextarea/RichTextarea';
 import {Form} from './types';
-import {EventTypeToggleInput} from '../../components/Input/EventTypeToggleInput/EventTypeToggleInput';
-import {
-  VideoCameraIcon,
-  BuildingOffice2Icon,
-  SparklesIcon,
-} from '@heroicons/react/24/solid';
+import {SparklesIcon} from '@heroicons/react/24/solid';
 import {useGenerateEventDescription} from 'hooks';
 
 interface Props {
@@ -30,7 +25,6 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
     setValue,
   } = useFormContext<Form>();
   const startDate = useWatch<Form>({name: 'startDate'});
-  const type = useWatch<Form>({name: 'type'});
   const {generate, generatedOutput, isLoading} = useGenerateEventDescription();
   const title = watch('title');
 
@@ -128,51 +122,15 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
       content: (
         <div className="flex gap-x-2 items-end relative">
           <div className="grow">
-            {type === 'offline' && (
-              <LocationInput
-                label="Address"
-                data-testid="event-form-address"
-                error={errors.address}
-                {...register('address', {
-                  required: {value: true, message: 'Address is required'},
-                })}
-              />
-            )}
-            {type === 'online' && (
-              <Input
-                label="Stream URL"
-                data-testid="event-form-url"
-                error={errors.streamUrl}
-                {...register('streamUrl', {
-                  required: {value: true, message: 'Stream URL is required'},
-                  validate: (value: string | undefined) => {
-                    try {
-                      if (value) {
-                        new URL(value);
-                      }
-                    } catch (error) {
-                      return 'Stream URL is not valid';
-                    }
-                    return undefined;
-                  },
-                })}
-              />
-            )}
+            <LocationInput
+              label="Address"
+              data-testid="event-form-address"
+              error={errors.address}
+              {...register('address', {
+                required: {value: true, message: 'Address is required'},
+              })}
+            />
           </div>
-          <EventTypeToggleInput
-            {...register('type')}
-            data-testid="event-form-type"
-            options={[
-              {
-                label: <BuildingOffice2Icon className="h-5 w-5" />,
-                value: 'offline',
-              },
-              {
-                label: <VideoCameraIcon className="h-5 w-5" />,
-                value: 'online',
-              },
-            ]}
-          />
         </div>
       ),
     },

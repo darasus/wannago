@@ -18,14 +18,12 @@ interface Props {
   eventUrl: string;
   cancelEventUrl: string;
   address: string | 'none';
-  streamUrl: string | 'none';
   organizerName: string;
 }
 
 export default function EventReminder({
   title = 'Event name',
   address = 'Paris, France',
-  streamUrl = 'https://meet.google.com/xxx-xxx-xxx',
   startDate = '2022/12/11 11:30',
   endDate = '2022/12/11 11:30',
   eventUrl = 'https://www.wannago.app',
@@ -48,7 +46,6 @@ export default function EventReminder({
               startDate={startDate}
               endDate={endDate}
               address={address}
-              streamUrl={streamUrl}
             />
           </Section>
           <Section style={buttonContainer}>

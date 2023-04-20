@@ -13,7 +13,7 @@ export function EditEventForm() {
   const {logEvent} = useAmplitude();
   const router = useRouter();
   const {push} = useRouter();
-  const {mutateAsync} = trpc.event.update.useMutation({
+  const updateMutation = trpc.event.update.useMutation({
     onSuccess: data => {
       logEvent('event_updated', {
         eventId: data?.id,
@@ -25,47 +25,27 @@ export function EditEventForm() {
     event,
   });
 
-  const {handleSubmit, watch} = form;
-
-  const onSubmit = handleSubmit(async ({streamUrl, address, type, ...data}) => {
+  const onSubmit = form.handleSubmit(async data => {
     logEvent('event_update_submitted');
 
-    let location: {streamUrl: string | null; address: string | null} = {
-      streamUrl: null,
-      address: null,
-    };
-
-    if (streamUrl && type === 'online') {
-      location = {
-        streamUrl,
-        address: null,
-      };
-    }
-
-    if (address && type === 'offline') {
-      location = {
-        address,
-        streamUrl: null,
-      };
-    }
-
     if (event?.id) {
-      await mutateAsync({
-        ...data,
-        ...location,
-        description: data.description === '<p></p>' ? null : data.description,
-        eventId: event.id,
-        startDate: zonedTimeToUtc(
-          data.startDate,
-          Intl.DateTimeFormat().resolvedOptions().timeZone
-        ),
-        endDate: zonedTimeToUtc(
-          data.endDate,
-          Intl.DateTimeFormat().resolvedOptions().timeZone
-        ),
-      }).catch(() => {
-        form.trigger();
-      });
+      await updateMutation
+        .mutateAsync({
+          ...data,
+          description: data.description === '<p></p>' ? null : data.description,
+          eventId: event.id,
+          startDate: zonedTimeToUtc(
+            data.startDate,
+            Intl.DateTimeFormat().resolvedOptions().timeZone
+          ),
+          endDate: zonedTimeToUtc(
+            data.endDate,
+            Intl.DateTimeFormat().resolvedOptions().timeZone
+          ),
+        })
+        .catch(() => {
+          form.trigger();
+        });
     }
   });
 

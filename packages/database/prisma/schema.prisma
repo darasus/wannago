@@ -23,7 +23,6 @@ model Event {
   featuredImageWidth      Int?
   featuredImageHeight     Int?
   featuredImagePreviewSrc String?       @db.LongText()
-  streamUrl               String?
   address                 String?
   longitude               Float?
   latitude                Float?

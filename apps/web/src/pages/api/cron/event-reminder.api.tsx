@@ -59,7 +59,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
                 <EventReminder
                   title={event.title}
                   address={event.address || 'none'}
-                  streamUrl={event.streamUrl || 'none'}
                   eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
                   cancelEventUrl={cancelEventUrl.toString()}
                   startDate={formatDate(event.startDate, 'MMMM d, yyyy')}

@@ -3,7 +3,7 @@ import {LocationImage} from 'ui/src/components/LocationImage/LocationImage';
 import {Text} from 'ui';
 
 interface Props {
-  address: string;
+  address: string | null;
   latitude: number;
   longitude: number;
   onGetDirectionsClick: () => void;
@@ -15,6 +15,7 @@ export function LocationCard({
   longitude,
   onGetDirectionsClick,
 }: Props) {
+  if (!address) return null;
   return (
     <CardBase className="h-full">
       <div className="mb-2">

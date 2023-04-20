@@ -14,7 +14,7 @@ export function AddEventForm() {
   const {authorId} = useCurrentAuthorId();
   const router = useRouter();
   const {push} = useRouter();
-  const {mutateAsync} = trpc.event.create.useMutation({
+  const createMutation = trpc.event.create.useMutation({
     onSuccess(data) {
       logEvent('event_created', {
         eventId: data?.id,
@@ -31,45 +31,26 @@ export function AddEventForm() {
   const form = useEventForm();
   const {handleSubmit} = form;
 
-  const onSubmit = handleSubmit(async ({streamUrl, address, type, ...data}) => {
+  const onSubmit = handleSubmit(async data => {
     logEvent('event_create_submitted');
     trackEventCreateConversion();
 
-    let location: {streamUrl: string | null; address: string | null} = {
-      streamUrl: null,
-      address: null,
-    };
-
-    if (streamUrl && type === 'online') {
-      location = {
-        streamUrl,
-        address: null,
-      };
-    }
-
-    if (address && type === 'offline') {
-      location = {
-        address,
-        streamUrl: null,
-      };
-    }
-
     invariant(authorId);
 
-    await mutateAsync({
-      authorId,
-      ...data,
-      ...location,
-      description: data.description === '<p></p>' ? null : data.description,
-      startDate: zonedTimeToUtc(
-        data.startDate,
-        Intl.DateTimeFormat().resolvedOptions().timeZone
-      ),
-      endDate: zonedTimeToUtc(
-        data.endDate,
-        Intl.DateTimeFormat().resolvedOptions().timeZone
-      ),
-    })
+    await createMutation
+      .mutateAsync({
+        authorId,
+        ...data,
+        description: data.description === '<p></p>' ? null : data.description,
+        startDate: zonedTimeToUtc(
+          data.startDate,
+          Intl.DateTimeFormat().resolvedOptions().timeZone
+        ),
+        endDate: zonedTimeToUtc(
+          data.endDate,
+          Intl.DateTimeFormat().resolvedOptions().timeZone
+        ),
+      })
       .then(async res => {
         await utils.event.getByShortId.prefetch({id: res.shortId});
       })
