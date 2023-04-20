@@ -19,7 +19,6 @@ export const update = protectedProcedure
         featuredImageWidth,
         featuredImagePreviewSrc,
         title,
-        streamUrl,
       },
       ctx,
     }) => {
@@ -59,7 +58,6 @@ export const update = protectedProcedure
           featuredImagePreviewSrc,
           longitude: geocodeResponse?.data.results[0].geometry.location.lng,
           latitude: geocodeResponse?.data.results[0].geometry.location.lat,
-          streamUrl,
         },
       });
 

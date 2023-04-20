@@ -2,7 +2,7 @@ import {LocationCard as LocationCardView} from 'cards';
 import {useAmplitude} from 'hooks';
 
 interface Props {
-  address: string;
+  address: string | null;
   latitude: number;
   longitude: number;
   eventId: string;

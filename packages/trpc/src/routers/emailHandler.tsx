@@ -68,7 +68,6 @@ const handleEventSignUpEmail = publicProcedure
         <EventSignUp
           title={event.title}
           address={event.address || 'none'}
-          streamUrl={event.streamUrl || 'none'}
           eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
           cancelEventUrl={cancelEventUrl.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
@@ -121,7 +120,6 @@ const handleEventInviteEmail = publicProcedure
         <EventInvite
           title={event.title}
           address={event.address || 'none'}
-          streamUrl={event.streamUrl || 'none'}
           eventUrl={eventUrl.toString()}
           cancelEventUrl={cancelEventUrl.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
@@ -289,7 +287,6 @@ const handleEventCancelInviteEmail = publicProcedure
         <EventCancelInvite
           title={event.title}
           address={event.address || 'none'}
-          streamUrl={event.streamUrl || 'none'}
           eventUrl={url.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
@@ -337,7 +334,6 @@ const handleEventCancelSignUpEmail = publicProcedure
         <EventCancelSignUp
           title={event.title}
           address={event.address || 'none'}
-          streamUrl={event.streamUrl || 'none'}
           eventUrl={url.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
@@ -443,7 +439,6 @@ const handleEventReminderEmail = publicProcedure
               <EventReminder
                 title={event.title}
                 address={event.address || 'none'}
-                streamUrl={event.streamUrl || 'none'}
                 eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
                 cancelEventUrl={cancelEventUrl.toString()}
                 startDate={formatDate(event.startDate, 'MMMM d, yyyy')}

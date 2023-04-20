@@ -15,7 +15,6 @@ interface Props {
   startDate: string;
   endDate: string;
   address: string | 'none';
-  streamUrl: string | 'none';
   eventUrl: string;
   organizerName: string;
 }
@@ -23,7 +22,6 @@ interface Props {
 export default function EventCancelInvite({
   title = 'Event name',
   address = 'Paris, France',
-  streamUrl = 'https://meet.google.com/xxx-xxx-xxx',
   endDate = '2022/12/11 11:30',
   startDate = '2022/12/11 11:30',
   eventUrl = 'https://www.wannago.app',
@@ -45,7 +43,6 @@ export default function EventCancelInvite({
               startDate={startDate}
               endDate={endDate}
               address={address}
-              streamUrl={streamUrl}
             />
           </Section>
           <Section style={buttonContainer}>
