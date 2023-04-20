@@ -76,6 +76,7 @@ export const previewEventWithPrompt = protectedProcedure
 
           return Number(value);
         }),
+        imagePrompt: z.string(),
       }),
     });
 
@@ -104,6 +105,10 @@ export const previewEventWithPrompt = protectedProcedure
 
     const addressResult = geocodeResponse?.data.results?.[0];
 
+    const imageResponse = await fetch(
+      `${getBaseUrl()}/api/ai-image?prompt=${encodeURI(output.imagePrompt)}`
+    ).then(res => res.json());
+
     const event: Event & {user: User; organization: null} = {
       id: randomUUID(),
       title: output.title,
@@ -122,10 +127,10 @@ export const previewEventWithPrompt = protectedProcedure
       organizationId: null,
       organization: null,
       isPublished: true,
-      featuredImageHeight: 0,
-      featuredImageWidth: 0,
-      featuredImageSrc: null,
-      featuredImagePreviewSrc: null,
+      featuredImageHeight: imageResponse.height,
+      featuredImageWidth: imageResponse.width,
+      featuredImageSrc: imageResponse.url,
+      featuredImagePreviewSrc: imageResponse.imageSrcBase64,
       streamUrl: null,
       messageId: null,
     };

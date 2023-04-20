@@ -13,6 +13,7 @@ const generateEventData = async (userInstruction: string, timezone: string) => {
     endDate: `Current day is ${new Date().toISOString()}. Parse the date in user prompt considering user is in ${timezone} timezone. If end date was not indicated in the user's prompt derive approximate end date from start date, needs to be ISO 8601 format.`,
     address: `Address that was indicated in the user's prompt. If location is not provided then use "unknown".`,
     maxNumberOfAttendees: `Maximum number of attendees that was indicated in the user's prompt. If not mentioned then set to "0".`,
+    imagePrompt: `Generate featured image prompt I could use to generate a featured image for the event.`,
   });
   const formatInstructions = parser.getFormatInstructions();
   const prompt = new PromptTemplate({
