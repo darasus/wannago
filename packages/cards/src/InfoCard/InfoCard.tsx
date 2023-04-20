@@ -41,10 +41,7 @@ export function InfoCard({event}: Props) {
                   placeholder={'blur'}
                   sizes="320 640 750 1000"
                   style={{
-                    backgroundImage: 'url(' + featuredImagePreviewSrc + ')',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
+                    width: '100%',
                   }}
                 />
               )}
