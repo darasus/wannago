@@ -31,6 +31,7 @@ export {usePublishEvent} from './src/event/usePublishEvent';
 export {useRemoveEvent} from './src/event/useRemoveEvent';
 export {useEventQuery} from './src/event/useEventQuery';
 export {useIsMyEvent} from './src/event/useIsMyEvent';
+export {useCreateEventMutation} from './src/event/useCreateEventMutation';
 
 // ai
 export {useGenerateEventDescription} from './src/useGenerateEventDescription';
@@ -45,3 +46,6 @@ export {useCreateConversation} from './src/conversation/useCreateConversation';
 
 // follow
 export {useFollow} from './src/follow/useFollow';
+
+// ai prompt
+export {usePreviewEventWithPromptMutation} from './src/ai-prompt/usePreviewEventWithPromptMutation';

@@ -21,6 +21,7 @@ import {getPublicEvents} from './handlers/getPublicEvents';
 import {getMyEvents} from './handlers/getMyEvents';
 import {getIsMyEvent} from './handlers/getIsMyEvent';
 import {createEventWithPrompt} from './handlers/createEventWithPrompt';
+import {previewEventWithPrompt} from './handlers/previewEventWithPrompt';
 
 export const eventRouter = router({
   create,
@@ -45,4 +46,5 @@ export const eventRouter = router({
   getMyEvents,
   getIsMyEvent,
   createEventWithPrompt,
+  previewEventWithPrompt,
 });

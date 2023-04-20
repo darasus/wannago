@@ -1,4 +1,4 @@
-import {Event} from '@prisma/client';
+import {Event, Organization, User} from '@prisma/client';
 import {getBaseUrl} from 'utils';
 import {DateCard} from '../DateCard/DateCard';
 import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
@@ -9,7 +9,10 @@ import {StreamCard} from '../StreamCard/StreamCard';
 import {SignUpCard} from '../SignUpCard/SignUpCard';
 
 interface Props {
-  event: Event;
+  event: Event & {
+    user: User | null;
+    organization: Organization | null;
+  };
 }
 
 export function EventView({event}: Props) {
