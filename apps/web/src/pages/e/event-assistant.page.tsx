@@ -34,6 +34,12 @@ function EventAddPage() {
         address: previewEventMutation.data.address,
         startDate: previewEventMutation.data.startDate,
         endDate: previewEventMutation.data.endDate,
+        maxNumberOfAttendees: previewEventMutation.data.maxNumberOfAttendees,
+        featuredImageSrc: previewEventMutation.data.featuredImageSrc,
+        featuredImagePreviewSrc:
+          previewEventMutation.data.featuredImagePreviewSrc,
+        featuredImageHeight: previewEventMutation.data.featuredImageHeight,
+        featuredImageWidth: previewEventMutation.data.featuredImageWidth,
         streamUrl: null,
       });
 
