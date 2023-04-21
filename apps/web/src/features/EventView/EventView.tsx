@@ -12,9 +12,10 @@ interface Props {
     user: User | null;
     organization: Organization | null;
   };
+  isLoadingImage?: boolean;
 }
 
-export function EventView({event}: Props) {
+export function EventView({event, isLoadingImage}: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="sticky top-4 z-20">
@@ -33,7 +34,7 @@ export function EventView({event}: Props) {
         </div>
       </div>
       <div>
-        <InfoCard event={event} />
+        <InfoCard event={event} isLoadingImage={isLoadingImage} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="items-stretch">

@@ -1,0 +1,47 @@
+import {toast} from 'react-hot-toast';
+import {trpc} from 'trpc/src/trpc';
+
+export function useGenerateEventWithPromptMutation() {
+  const {
+    data: eventData,
+    mutateAsync,
+    isLoading: isGeneratingEvent,
+  } = trpc.event.generateEventWithPrompt.useMutation({
+    onError: error => {
+      toast.error(error.message);
+    },
+  });
+
+  const generateImageWithEventTitleMutation =
+    trpc.event.generateImageWithEventTitle.useMutation();
+
+  const generateEvent = async (prompt: string) => {
+    const {imagePrompt} = await mutateAsync({prompt});
+
+    await generateImageWithEventTitleMutation.mutate({
+      eventTitle: imagePrompt,
+    });
+  };
+
+  const imageData = generateImageWithEventTitleMutation.data
+    ? {
+        featuredImageSrc: generateImageWithEventTitleMutation.data.url,
+        featuredImagePreviewSrc:
+          generateImageWithEventTitleMutation.data.imageSrcBase64,
+        featuredImageHeight: generateImageWithEventTitleMutation.data.height,
+        featuredImageWidth: generateImageWithEventTitleMutation.data.width,
+      }
+    : {
+        featuredImageSrc: null,
+        featuredImagePreviewSrc: null,
+        featuredImageHeight: null,
+        featuredImageWidth: null,
+      };
+
+  return {
+    data: eventData ? {...eventData, ...imageData} : null,
+    generateEvent,
+    isGeneratingEvent,
+    isGeneratingImage: generateImageWithEventTitleMutation.isLoading,
+  };
+}

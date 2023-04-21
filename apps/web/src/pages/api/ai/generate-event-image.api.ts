@@ -10,6 +10,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const prompt = req.query.prompt as string;
+  console.log({prompt});
   const response = await fetch(
     'https://api.stability.ai/v1/generation/stable-diffusion-xl-beta-v2-2-2/text-to-image',
     {
@@ -17,8 +18,7 @@ export default async function handler(
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization:
-          'Bearer sk-2PsUWRv7tqiyOxh2qQxA8mB5BSrW1Z9wvIhQEM8LVEfLCMXc',
+        Authorization: `Bearer ${env.STABILITY_AI_API_KEY}`,
       },
       body: JSON.stringify({
         cfg_scale: 7,

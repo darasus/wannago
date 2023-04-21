@@ -14,4 +14,5 @@ export const serverSchema = z.object({
   VERCEL_ENV: z.enum(['development', 'preview', 'production']),
   STRIPE_API_SECRET: z.string(),
   STRIPE_ENDPOINT_SECRET: z.string(),
+  STABILITY_AI_API_KEY: z.string(),
 });

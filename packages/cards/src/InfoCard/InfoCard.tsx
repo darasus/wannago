@@ -1,14 +1,15 @@
 import Image from 'next/image';
-import {Badge, CardBase} from 'ui';
+import {Badge, CardBase, LoadingBlock} from 'ui';
 import {cn} from 'utils';
 import {cloudflareImageLoader} from 'utils';
 import {Event} from '@prisma/client';
 
 interface Props {
   event: Event;
+  isLoadingImage?: boolean;
 }
 
-export function InfoCard({event}: Props) {
+export function InfoCard({event, isLoadingImage}: Props) {
   const {
     description,
     title,
@@ -18,33 +19,41 @@ export function InfoCard({event}: Props) {
     featuredImagePreviewSrc,
   } = event;
 
+  const canRenderImage =
+    featuredImageSrc &&
+    featuredImagePreviewSrc &&
+    featuredImageWidth &&
+    featuredImageHeight &&
+    !isLoadingImage;
+
   return (
     <>
       <CardBase>
-        {featuredImageSrc && (
+        {isLoadingImage && (
+          <div className="flex flex-col items-center overflow-hidden relative justify-center bg-gray-300 rounded-3xl safari-rounded-border-fix mb-4 aspect-square">
+            <LoadingBlock />
+          </div>
+        )}
+        {canRenderImage && (
           <div
             className={cn(
-              'flex items-center overflow-hidden relative justify-center bg-slate-700 rounded-3xl safari-rounded-border-fix mb-4'
+              'overflow-hidden relative justify-center bg-slate-700 rounded-3xl safari-rounded-border-fix mb-4'
             )}
           >
-            {featuredImagePreviewSrc &&
-              featuredImageWidth &&
-              featuredImageHeight && (
-                <Image
-                  priority
-                  src={featuredImageSrc}
-                  alt={title}
-                  loader={cloudflareImageLoader}
-                  width={featuredImageWidth}
-                  height={featuredImageHeight}
-                  blurDataURL={featuredImagePreviewSrc}
-                  placeholder={'blur'}
-                  sizes="320 640 750 1000"
-                  style={{
-                    width: '100%',
-                  }}
-                />
-              )}
+            <Image
+              priority
+              src={featuredImageSrc}
+              alt={title}
+              loader={cloudflareImageLoader}
+              width={featuredImageWidth}
+              height={featuredImageHeight}
+              blurDataURL={featuredImagePreviewSrc}
+              placeholder={'blur'}
+              sizes="320 640 750 1000"
+              style={{
+                width: '100%',
+              }}
+            />
           </div>
         )}
         <div className="flex flex-col gap-y-2">

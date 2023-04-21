@@ -7,7 +7,7 @@ export function useGenerateEventDescription() {
   const generate = useCallback(async (eventTitle: string) => {
     setGeneratedOutput('');
     setLoading(true);
-    const response = await fetch('/api/generate-event-description', {
+    const response = await fetch('/api/ai/generate-event-description', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

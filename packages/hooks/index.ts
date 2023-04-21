@@ -48,4 +48,4 @@ export {useCreateConversation} from './src/conversation/useCreateConversation';
 export {useFollow} from './src/follow/useFollow';
 
 // ai prompt
-export {usePreviewEventWithPromptMutation} from './src/ai-prompt/usePreviewEventWithPromptMutation';
+export {useGenerateEventWithPromptMutation} from './src/ai-prompt/useGenerateEventWithPromptMutation';

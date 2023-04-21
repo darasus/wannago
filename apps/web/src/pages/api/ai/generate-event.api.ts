@@ -24,7 +24,11 @@ const generateEventData = async (userInstruction: string, timezone: string) => {
     inputVariables: ['instruction'],
     partialVariables: {format_instructions: formatInstructions},
   });
-  const model = new OpenAI({temperature: 0, modelName: 'gpt-3.5-turbo'});
+  const model = new OpenAI({
+    temperature: 0.3,
+    modelName: 'gpt-3.5-turbo',
+    maxTokens: 1000,
+  });
   const input = await prompt.format({
     instruction: 'User prompt: ' + userInstruction,
   });
