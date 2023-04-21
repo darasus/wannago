@@ -3,7 +3,7 @@ import {z} from 'zod';
 import {ActionContext} from '../context';
 
 const validation = z.object({
-  eventTitle: z.string(),
+  prompt: z.string(),
 });
 
 const imageResponseSchema = z.object({
@@ -13,16 +13,12 @@ const imageResponseSchema = z.object({
   imageSrcBase64: z.string(),
 });
 
-export function generateImageFromEventTitle(ctx: ActionContext) {
+export function generateImageFromPrompt(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
-    const {eventTitle} = validation.parse(input);
-
-    console.log({eventTitle});
+    const {prompt} = validation.parse(input);
 
     const response = await fetch(
-      `${getBaseUrl()}/api/ai/generate-event-image?prompt=${encodeURI(
-        eventTitle
-      )}`
+      `${getBaseUrl()}/api/ai/generate-event-image?prompt=${encodeURI(prompt)}`
     );
     const data = await response.json();
 

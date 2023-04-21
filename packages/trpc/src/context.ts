@@ -31,7 +31,7 @@ import {createEventReminder} from './actions/createEventReminder';
 import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
 import {getActiveSessionType} from './actions/getActiveSessionType';
 import {generateEventFromPrompt} from './actions/generateEventFromPrompt';
-import {generateImageFromEventTitle} from './actions/generateImageFromEventTitle';
+import {generateImageFromPrompt} from './actions/generateImageFromPrompt';
 // assertions
 import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
@@ -55,7 +55,7 @@ const actions = {
   getOrganizerByEmail,
   getActiveSessionType,
   generateEventFromPrompt,
-  generateImageFromEventTitle,
+  generateImageFromPrompt,
 } as const;
 
 const assertions = {

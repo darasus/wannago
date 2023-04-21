@@ -13,13 +13,13 @@ export function useGenerateEventWithPromptMutation() {
   });
 
   const generateImageWithEventTitleMutation =
-    trpc.event.generateImageWithEventTitle.useMutation();
+    trpc.event.generateImageWithPrompt.useMutation();
 
   const generateEvent = async (prompt: string) => {
     const {imagePrompt} = await mutateAsync({prompt});
 
     await generateImageWithEventTitleMutation.mutate({
-      eventTitle: imagePrompt,
+      prompt: imagePrompt,
     });
   };
 

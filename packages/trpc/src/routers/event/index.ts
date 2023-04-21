@@ -21,7 +21,7 @@ import {getPublicEvents} from './handlers/getPublicEvents';
 import {getMyEvents} from './handlers/getMyEvents';
 import {getIsMyEvent} from './handlers/getIsMyEvent';
 import {generateEventWithPrompt} from './handlers/generateEventWithPrompt';
-import {generateImageWithEventTitle} from './handlers/generateImageWithEventTitle';
+import {generateImageWithPrompt} from './handlers/generateImageWithPrompt';
 
 export const eventRouter = router({
   create,
@@ -46,5 +46,5 @@ export const eventRouter = router({
   getMyEvents,
   getIsMyEvent,
   generateEventWithPrompt,
-  generateImageWithEventTitle,
+  generateImageWithPrompt,
 });
