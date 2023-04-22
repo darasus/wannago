@@ -412,6 +412,9 @@ importers:
       hooks:
         specifier: workspace:*
         version: link:../hooks
+      utils:
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       eslint-config-custom:
         specifier: workspace:*
