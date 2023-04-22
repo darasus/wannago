@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {Badge, CardBase, LoadingBlock} from 'ui';
+import {Badge, CardBase, InfoIconWithTooltip, LoadingBlock} from 'ui';
 import {cn} from 'utils';
 import {cloudflareImageLoader} from 'utils';
 import {Event} from '@prisma/client';
@@ -28,7 +28,35 @@ export function InfoCard({event, isLoadingImage}: Props) {
 
   return (
     <>
-      <CardBase>
+      <CardBase
+        badges={[
+          ...(event.isPublished
+            ? ([
+                {
+                  badgeColor: 'green',
+                  badgeContent: (
+                    <div className="flex gap-[2px]">
+                      <span className="text-xs uppercase font-bold">
+                        Published
+                      </span>{' '}
+                      <InfoIconWithTooltip text="Your event is published and can be shared." />
+                    </div>
+                  ),
+                },
+              ] as const)
+            : ([
+                {
+                  badgeColor: 'yellow',
+                  badgeContent: (
+                    <div className="flex gap-[2px]">
+                      <span className="text-xs uppercase font-bold">Draft</span>{' '}
+                      <InfoIconWithTooltip text="Your event is not published yet. To be able to share your event please publish it first." />
+                    </div>
+                  ),
+                },
+              ] as const)),
+        ]}
+      >
         {isLoadingImage && (
           <div className="flex flex-col items-center overflow-hidden relative justify-center bg-gray-300 rounded-3xl safari-rounded-border-fix mb-4 aspect-square">
             <LoadingBlock />

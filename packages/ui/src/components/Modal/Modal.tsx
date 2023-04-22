@@ -5,7 +5,7 @@ import {cn} from 'utils';
 interface Props extends React.PropsWithChildren {
   isOpen: boolean;
   onClose: () => void;
-  title: string;
+  title?: string;
   className?: string;
 }
 
@@ -38,17 +38,19 @@ export function Modal({children, isOpen, onClose, title, className}: Props) {
             >
               <Dialog.Panel
                 className={cn(
-                  'w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 shadow-xl transition-all border-2 border-gray-800 mx-4',
+                  'flex flex-col gap-2 w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 shadow-xl transition-all border-2 border-gray-800 mx-4',
                   className
                 )}
               >
-                <Dialog.Title
-                  as="h3"
-                  className="text-xl font-bold leading-6 text-gray-900"
-                >
-                  {title}
-                </Dialog.Title>
-                <div className="mt-2">{children}</div>
+                {title && (
+                  <Dialog.Title
+                    as="h3"
+                    className="text-xl font-bold leading-6 text-gray-900"
+                  >
+                    {title}
+                  </Dialog.Title>
+                )}
+                <div>{children}</div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

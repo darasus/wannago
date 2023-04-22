@@ -6,3 +6,4 @@ export {ParticipantsCard} from './src/ParticipantsCard/ParticipantsCard';
 export {LoadingEventCard} from './src/LoadingEventCard/LoadingEventCard';
 export {LocationCard} from './src/LocationCard/LocationCard';
 export {SignUpCard} from './src/SignUpCard/SignUpCard';
+export {UrlCard} from './src/UrlCard/UrlCard';

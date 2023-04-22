@@ -18,7 +18,7 @@ import {
 } from 'hooks';
 import {useRouter} from 'next/router';
 import {forwardRef} from 'react';
-import {Badge, Button, Menu} from 'ui';
+import {Button, Menu} from 'ui';
 
 export function ManageEventButton() {
   const router = useRouter();
@@ -48,7 +48,6 @@ export function ManageEventButton() {
         className="w-full"
         iconLeft={<ChevronDownIcon />}
         size="md"
-        variant="secondary"
         data-testid="manage-event-button"
       >
         Manage event
@@ -61,11 +60,6 @@ export function ManageEventButton() {
       {removeEventModal}
       {publishModal}
       {unpublishModal}
-      {event.data?.isPublished ? (
-        <Badge color="green">Published</Badge>
-      ) : (
-        <Badge color="yellow">Draft</Badge>
-      )}
       <div className="grow">
         <Menu
           testId="manage-event-menu"

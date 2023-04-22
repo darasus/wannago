@@ -3,6 +3,11 @@ import {cn} from '../../../../utils';
 import {LoadingBlock} from '../LoadingBlock/LoadingBlock';
 import {Text} from '../Text/Text';
 
+interface BadgeItem {
+  badgeContent: React.ReactNode;
+  badgeColor: 'green' | 'gray' | 'yellow' | 'white';
+}
+
 type Props = PropsWithChildren & {
   className?: string;
   innerClassName?: string;
@@ -11,7 +16,7 @@ type Props = PropsWithChildren & {
   isLoading?: boolean;
   title?: string;
   titleChildren?: React.ReactNode;
-  onClick?: () => void;
+  badges?: BadgeItem[];
 };
 
 export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
@@ -24,6 +29,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
     isLoading,
     title,
     titleChildren = null,
+    badges,
     ...props
   },
   ref
@@ -41,6 +47,25 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
         className
       )}
     >
+      {badges && (
+        <div className="flex justify-center items-center gap-1 absolute left-0 right-0 top-0 mx-auto -translate-y-[50%]">
+          {badges.map(({badgeColor, badgeContent}, index) => (
+            <div
+              key={index}
+              className={cn(
+                'flex justify-center items-center border-2 border-gray-800 rounded-3xl px-1 py-[1px]',
+                {
+                  'bg-green-300': badgeColor === 'green',
+                  'bg-white': badgeColor === 'white',
+                  'bg-yellow-300': badgeColor === 'yellow',
+                }
+              )}
+            >
+              <Text className="-mb-[1px]">{badgeContent}</Text>
+            </div>
+          ))}
+        </div>
+      )}
       {title && (
         <div className="flex items-center mb-2 gap-x-2">
           <Text className="font-bold">{title}</Text>
