@@ -21,6 +21,8 @@
     "email-input-validation": "workspace:*",
     "stripe-webhook-input-validation": "workspace:*",
     "email": "workspace:*",
+    "card-features": "workspace:*",
+    "auth-features": "workspace:*",
     "utils": "workspace:*",
     "hooks": "workspace:*",
     "lib": "workspace:*",

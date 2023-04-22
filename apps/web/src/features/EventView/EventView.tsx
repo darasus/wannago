@@ -1,11 +1,13 @@
 import {Event, Organization, User} from '@prisma/client';
 import {getBaseUrl} from 'utils';
-import {DateCard} from '../DateCard/DateCard';
-import {EventUrlCard} from '../EventUrlCard/EventUrlCard';
+import {
+  DateCard,
+  UrlCard,
+  LocationCard,
+  OrganizerCard,
+  SignUpCard,
+} from 'card-features';
 import {InfoCard} from 'cards';
-import {LocationCard} from '../LocationCard/LocationCard';
-import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
-import {SignUpCard} from '../SignUpCard/SignUpCard';
 
 interface Props {
   event: Event & {
@@ -27,7 +29,7 @@ export function EventView({event, isLoadingImage, isMyEvent}: Props) {
           <OrganizerCard event={event} />
         </div>
         <div className="items-stretch">
-          <EventUrlCard
+          <UrlCard
             url={`${getBaseUrl()}/e/${event.shortId}`}
             eventId={event.id}
             isPublished={event.isPublished ?? false}

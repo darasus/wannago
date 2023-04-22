@@ -2,11 +2,14 @@ import {useEffect, useRef, useState} from 'react';
 import {getBaseUrl} from 'utils';
 import {MockFormProvider} from '../../utils/MockFormProvider';
 import {trpc} from 'trpc/src/trpc';
-import {DateCard, InfoCard} from 'cards';
-import {EventUrlCard} from '../../features/EventUrlCard/EventUrlCard';
-import {LocationCard} from 'cards/src/LocationCard/LocationCard';
-import {OrganizerCard as OrganizerCardView} from 'cards';
-import {ParticipantsCard} from 'cards';
+import {
+  DateCard,
+  InfoCard,
+  UrlCard,
+  OrganizerCard,
+  LocationCard,
+  ParticipantsCard,
+} from 'cards';
 import {AnimateRender} from './AnimateRender';
 
 function Event() {
@@ -34,7 +37,7 @@ function Event() {
     {
       el: (
         <MockFormProvider>
-          <OrganizerCardView
+          <OrganizerCard
             name={`${event.user.firstName} ${event.user.lastName}`}
             profileImageSrc={event.user.profileImageSrc}
             profilePath={''}
@@ -67,9 +70,9 @@ function Event() {
     },
     {
       el: (
-        <EventUrlCard
+        <UrlCard
           url={`${getBaseUrl()}/e/${event.shortId}`}
-          eventId={''}
+          publicEventUrl={`${getBaseUrl()}/e/${event.shortId}`}
           isPublished={true}
         />
       ),
