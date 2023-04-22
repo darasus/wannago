@@ -7,9 +7,10 @@ import {Event} from '@prisma/client';
 interface Props {
   event: Event;
   isLoadingImage?: boolean;
+  isMyEvent?: boolean;
 }
 
-export function InfoCard({event, isLoadingImage}: Props) {
+export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
   const {
     description,
     title,
@@ -26,37 +27,39 @@ export function InfoCard({event, isLoadingImage}: Props) {
     featuredImageHeight &&
     !isLoadingImage;
 
+  const badges = isMyEvent
+    ? [
+        ...(event.isPublished
+          ? ([
+              {
+                badgeColor: 'green',
+                badgeContent: (
+                  <div className="flex gap-[2px]">
+                    <span className="text-xs uppercase font-bold">
+                      Published
+                    </span>{' '}
+                    <InfoIconWithTooltip text="Your event is published and can be shared." />
+                  </div>
+                ),
+              },
+            ] as const)
+          : ([
+              {
+                badgeColor: 'yellow',
+                badgeContent: (
+                  <div className="flex gap-[2px]">
+                    <span className="text-xs uppercase font-bold">Draft</span>{' '}
+                    <InfoIconWithTooltip text="Your event is not published yet. To be able to share your event please publish it first." />
+                  </div>
+                ),
+              },
+            ] as const)),
+      ]
+    : undefined;
+
   return (
     <>
-      <CardBase
-        badges={[
-          ...(event.isPublished
-            ? ([
-                {
-                  badgeColor: 'green',
-                  badgeContent: (
-                    <div className="flex gap-[2px]">
-                      <span className="text-xs uppercase font-bold">
-                        Published
-                      </span>{' '}
-                      <InfoIconWithTooltip text="Your event is published and can be shared." />
-                    </div>
-                  ),
-                },
-              ] as const)
-            : ([
-                {
-                  badgeColor: 'yellow',
-                  badgeContent: (
-                    <div className="flex gap-[2px]">
-                      <span className="text-xs uppercase font-bold">Draft</span>{' '}
-                      <InfoIconWithTooltip text="Your event is not published yet. To be able to share your event please publish it first." />
-                    </div>
-                  ),
-                },
-              ] as const)),
-        ]}
-      >
+      <CardBase badges={badges}>
         {isLoadingImage && (
           <div className="flex flex-col items-center overflow-hidden relative justify-center bg-gray-300 rounded-3xl safari-rounded-border-fix mb-4 aspect-square">
             <LoadingBlock />

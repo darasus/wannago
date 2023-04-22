@@ -60,7 +60,10 @@ export default function EventPage() {
           />
           <Container className="flex flex-col gap-4" maxSize="sm">
             <ManageEventButton />
-            <EventView event={event.data} />
+            <EventView
+              event={event.data}
+              isMyEvent={isMyEvent.data?.isMyEvent}
+            />
           </Container>
         </>
       )}
