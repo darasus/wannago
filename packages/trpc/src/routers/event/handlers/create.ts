@@ -1,5 +1,5 @@
-import {nanoid} from 'nanoid';
 import {env} from 'server-env';
+import {generateShortId} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpcServer';
 import {eventInput} from '../validation';
@@ -76,7 +76,7 @@ export const create = protectedProcedure
 
       let event = await ctx.prisma.event.create({
         data: {
-          shortId: nanoid(6),
+          shortId: generateShortId(),
           title,
           description,
           endDate,
