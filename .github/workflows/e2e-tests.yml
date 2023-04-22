@@ -48,6 +48,7 @@ jobs:
         NEXT_PUBLIC_VERCEL_ENV: ${{ secrets.NEXT_PUBLIC_VERCEL_ENV }}
         STRIPE_API_SECRET: "STRIPE_API_SECRET"
         STRIPE_ENDPOINT_SECRET: "STRIPE_ENDPOINT_SECRET"
+        STABILITY_AI_API_KEY: "STABILITY_AI_API_KEY"
  
       steps:
         # - uses: actions/cache@v3
