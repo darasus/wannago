@@ -311,6 +311,12 @@ importers:
 
   apps/web:
     dependencies:
+      auth-features:
+        specifier: workspace:*
+        version: link:../../packages/auth-features
+      card-features:
+        specifier: workspace:*
+        version: link:../../packages/card-features
       cards:
         specifier: workspace:*
         version: link:../../packages/cards
@@ -375,6 +381,44 @@ importers:
       eslint-config-custom:
         specifier: workspace:*
         version: link:../../packages/eslint-config-custom
+
+  packages/auth-features:
+    dependencies:
+      hooks:
+        specifier: workspace:*
+        version: link:../hooks
+      ui:
+        specifier: workspace:*
+        version: link:../ui
+      utils:
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+
+  packages/card-features:
+    dependencies:
+      auth-features:
+        specifier: workspace:*
+        version: link:../auth-features
+      cards:
+        specifier: workspace:*
+        version: link:../cards
+      hooks:
+        specifier: workspace:*
+        version: link:../hooks
+    devDependencies:
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
 
   packages/cards:
     dependencies:
@@ -3040,7 +3084,7 @@ packages:
       '@typescript-eslint/scope-manager': 5.58.0
       '@typescript-eslint/types': 5.58.0
       '@typescript-eslint/typescript-estree': 5.58.0(typescript@4.9.5)
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.39.0
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -3071,7 +3115,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.58.0
       '@typescript-eslint/visitor-keys': 5.58.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.4.0
@@ -4277,17 +4321,6 @@ packages:
     resolution: {integrity: sha512-zZbY5giJAinCG+7AGaw0wIhNZ6J8AhWuSXKvuc1KAyMiRsvGQWqh4L+MomvhdAYjN+lqvVCMq1I41e3YHvXkyQ==}
     dev: true
 
-  /debug@3.2.7:
-    resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
-    dependencies:
-      ms: 2.1.3
-    dev: false
-
   /debug@3.2.7(supports-color@8.1.1):
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
     peerDependencies:
@@ -4298,7 +4331,6 @@ packages:
     dependencies:
       ms: 2.1.3
       supports-color: 8.1.1
-    dev: true
 
   /debug@4.3.4(supports-color@5.5.0):
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
@@ -4808,7 +4840,7 @@ packages:
       eslint: '*'
       eslint-plugin-import: '*'
     dependencies:
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       enhanced-resolve: 5.12.0
       eslint: 8.39.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.58.0)(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.39.0)
@@ -7404,7 +7436,7 @@ packages:
     dependencies:
       array.prototype.findindex: 2.2.1
       bl: 1.2.3
-      debug: 3.2.7
+      debug: 3.2.7(supports-color@8.1.1)
       eventemitter3: 3.1.2
       file-type: 3.9.0
       mime: 1.6.0

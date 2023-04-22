@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {Modal} from 'ui';
-import {Login} from '../../../Login/Login';
-import {Register} from '../../../Register/Register';
+import {Login, Register} from 'auth-features';
 
 interface Props {
   isOpen: boolean;

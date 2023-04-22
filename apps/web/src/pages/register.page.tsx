@@ -2,7 +2,7 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useCallback} from 'react';
 import {Container} from 'ui';
-import {Register} from '../features/Register/Register';
+import {Register} from 'auth-features';
 
 function RegisterPage() {
   const router = useRouter();

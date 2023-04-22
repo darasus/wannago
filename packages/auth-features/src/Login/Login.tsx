@@ -6,8 +6,8 @@ import {useCallback, useEffect, useState} from 'react';
 import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {CardBase, LoadingBlock, Button, Text} from 'ui';
 import {cn, sleep} from 'utils';
-import {Input} from '../../components/Input/Input/Input';
-import {titleFont} from '../../fonts';
+import {Input} from '../../../../apps/web/src/components/Input/Input/Input';
+import {titleFont} from '../../../../apps/web/src/fonts';
 
 interface TEmailForm {
   email: string;

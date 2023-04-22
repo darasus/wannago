@@ -1,4 +1,4 @@
-import {UrlCard} from 'cards';
+import {UrlCard as UrlCardView} from 'cards';
 import {useCopyClipboard, useAmplitude} from 'hooks';
 import {Button} from 'ui';
 import {getBaseUrl} from 'utils';
@@ -9,7 +9,7 @@ interface Props {
   isPublished: boolean;
 }
 
-export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
+export function UrlCard({url: _url, eventId, isPublished}: Props) {
   const url = isPublished ? _url : `${getBaseUrl()}/e/abcdef`;
   const [isCopied, copy] = useCopyClipboard(url);
   const {logEvent} = useAmplitude();
@@ -38,7 +38,7 @@ export function EventUrlCard({url: _url, eventId, isPublished}: Props) {
   );
 
   return (
-    <UrlCard
+    <UrlCardView
       url={url}
       publicEventUrl={publicEventUrl}
       isPublished={isPublished}
