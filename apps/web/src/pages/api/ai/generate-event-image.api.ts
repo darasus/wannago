@@ -5,6 +5,7 @@ import got from 'got';
 import {env} from 'server-env';
 import {getImageMetaData} from 'utils';
 import {captureException, captureMessage} from '@sentry/nextjs';
+import {TRPCError} from '@trpc/server';
 
 export default async function handler(
   req: NextApiRequest,
@@ -39,7 +40,20 @@ export default async function handler(
     }
   );
   const data = await response.json();
-  const base64 = data.artifacts[0].base64;
+  captureMessage('Generated image', {
+    extra: {
+      data,
+    },
+  });
+
+  const base64 = data.artifacts?.[0]?.base64;
+
+  if (!base64) {
+    throw new TRPCError({
+      code: 'INTERNAL_SERVER_ERROR',
+      message: 'Could not generate image',
+    });
+  }
 
   const decoded = base64.replace('data:image/png;base64,', '');
   const imageResp = new Buffer(decoded, 'base64');
@@ -61,7 +75,7 @@ export default async function handler(
       )
       .json()) as any;
 
-    captureMessage('Generated image', {
+    captureMessage('Uploaded image', {
       extra: {
         response,
       },
