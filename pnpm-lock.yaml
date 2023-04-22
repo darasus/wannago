@@ -412,6 +412,12 @@ importers:
       hooks:
         specifier: workspace:*
         version: link:../hooks
+      trpc:
+        specifier: workspace:*
+        version: link:../trpc
+      ui:
+        specifier: workspace:*
+        version: link:../ui
       utils:
         specifier: workspace:*
         version: link:../utils
