@@ -2,8 +2,7 @@ import {Event, User} from '@prisma/client';
 import {env} from 'client-env';
 import {randomUUID} from 'crypto';
 import {userNotFoundError} from 'error';
-import {nanoid} from 'nanoid';
-import {invariant} from 'utils';
+import {generateShortId, invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpcServer';
 
@@ -50,7 +49,7 @@ export const generateEventWithPrompt = protectedProcedure
         address: addressResult.formatted_address || output.address,
         startDate: output.startDate,
         endDate: output.endDate,
-        shortId: nanoid(6),
+        shortId: generateShortId(),
         longitude: addressResult.geometry.location.lng,
         latitude: addressResult.geometry.location.lat,
         createdAt: new Date(),
