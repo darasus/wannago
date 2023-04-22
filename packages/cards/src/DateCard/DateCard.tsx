@@ -1,7 +1,6 @@
 import {useEffect, useMemo, useState} from 'react';
 import {formatDate, isSameDay, getRelativeTime} from 'utils';
 import {Button, Badge, CardBase, Text} from 'ui';
-import {useScroll} from 'framer-motion';
 
 interface Props {
   onAddToCalendarClick: () => void;
