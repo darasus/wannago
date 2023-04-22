@@ -7,7 +7,7 @@ import {
   OrganizerCard,
   UrlCard,
 } from 'cards';
-import {CardBase, Container} from 'ui';
+import {CardBase, Container, InfoIconWithTooltip} from 'ui';
 import {getBaseUrl} from 'utils';
 
 function Section({children}: {children?: React.ReactNode}) {
@@ -59,8 +59,16 @@ export default function CardsPage() {
       <Section>
         <CardBase
           badges={[
-            {badgeColor: 'green', badgeText: 'Published'},
-            {badgeColor: 'yellow', badgeText: 'Draft'},
+            {
+              badgeColor: 'green',
+              badgeContent: (
+                <div className="flex gap-[2px]">
+                  <span className="text-xs uppercase font-bold">Published</span>{' '}
+                  <InfoIconWithTooltip text="Some text" />
+                </div>
+              ),
+            },
+            {badgeColor: 'yellow', badgeContent: 'Draft'},
           ]}
         >
           This is some base card

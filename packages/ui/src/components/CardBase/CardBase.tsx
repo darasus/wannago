@@ -4,9 +4,8 @@ import {LoadingBlock} from '../LoadingBlock/LoadingBlock';
 import {Text} from '../Text/Text';
 
 interface BadgeItem {
-  badgeText: string;
+  badgeContent: React.ReactNode;
   badgeColor: 'green' | 'gray' | 'yellow' | 'white';
-  badgeTooltipText?: string;
 }
 
 type Props = PropsWithChildren & {
@@ -50,10 +49,11 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
     >
       {badges && (
         <div className="flex justify-center items-center gap-1 absolute left-0 right-0 top-0 mx-auto -translate-y-[50%]">
-          {badges.map(({badgeColor, badgeText, badgeTooltipText}, index) => (
+          {badges.map(({badgeColor, badgeContent}, index) => (
             <div
+              key={index}
               className={cn(
-                'flex justify-center items-center border-2 border-gray-800 rounded-3xl px-2 py-[1px]',
+                'flex justify-center items-center border-2 border-gray-800 rounded-3xl px-1 py-[1px]',
                 {
                   'bg-green-300': badgeColor === 'green',
                   'bg-white': badgeColor === 'white',
@@ -61,7 +61,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
                 }
               )}
             >
-              <Text className="text-xs uppercase font-bold">{badgeText}</Text>
+              <Text className="-mb-[1px]">{badgeContent}</Text>
             </div>
           ))}
         </div>
