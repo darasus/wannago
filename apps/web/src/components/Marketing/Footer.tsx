@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {Text, Logo, Container, Button} from 'ui';
-import {navItems} from '../../features/Header/constants';
+import {navItems} from '../../features/AppLayout/features/Header/constants';
 
 export function Footer() {
   return (

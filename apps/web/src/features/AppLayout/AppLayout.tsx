@@ -1,6 +1,6 @@
 import {PropsWithChildren} from 'react';
 import {Container} from 'ui';
-import {Header} from '../Header/Header';
+import {Header} from './features/Header/Header';
 
 interface Props extends PropsWithChildren {}
 
