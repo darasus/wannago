@@ -4,6 +4,7 @@ import {randomUUID} from 'crypto';
 import got from 'got';
 import {env} from 'server-env';
 import {getImageMetaData} from 'utils';
+import {captureException, captureMessage} from '@sentry/nextjs';
 
 export default async function handler(
   req: NextApiRequest,
@@ -60,11 +61,18 @@ export default async function handler(
       )
       .json()) as any;
 
+    captureMessage('Generated image', {
+      extra: {
+        response,
+      },
+    });
+
     const url = response?.result?.variants[0] as string;
     const {height, width, imageSrcBase64} = await getImageMetaData(url);
 
     res.status(200).json({url, imageSrcBase64, height, width});
   } catch (error) {
+    captureException(error);
     res.status(400).json(error);
   }
 }
