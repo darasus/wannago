@@ -76,7 +76,7 @@ export default async function handler(
 
     captureMessage('Uploaded image', {
       extra: {
-        response,
+        response: JSON.stringify(response),
       },
     });
 
