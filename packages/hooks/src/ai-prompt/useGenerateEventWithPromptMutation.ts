@@ -6,6 +6,7 @@ export function useGenerateEventWithPromptMutation() {
     data: eventData,
     mutateAsync,
     isLoading: isGeneratingEvent,
+    reset: resetEventData,
   } = trpc.event.generateEventWithPrompt.useMutation({
     onError: error => {
       toast.error(error.message);
@@ -38,10 +39,16 @@ export function useGenerateEventWithPromptMutation() {
         featuredImageWidth: null,
       };
 
+  const reset = () => {
+    resetEventData();
+    generateImageWithEventTitleMutation.reset();
+  };
+
   return {
     data: eventData ? {...eventData, ...imageData} : null,
     generateEvent,
     isGeneratingEvent,
     isGeneratingImage: generateImageWithEventTitleMutation.isLoading,
+    reset,
   };
 }

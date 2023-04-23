@@ -50,7 +50,7 @@ function EventAddPage() {
 
   const handleCancel = () => {
     form.reset();
-    // previewEventMutation.reset();
+    previewEventMutation.reset();
   };
 
   return (
