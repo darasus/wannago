@@ -3,6 +3,7 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
 import sizeOf from 'image-size';
 import sharp from 'sharp';
+import {captureMessage} from '@sentry/nextjs';
 
 const scheme = z.object({
   imageSrc: z.string().url(),
@@ -15,6 +16,12 @@ export default async function handler(
   if (req.method !== 'POST') {
     res.status(405).json({error: 'Method Not Allowed'});
   }
+
+  captureMessage('Generating image metadata', {
+    extra: {
+      body: JSON.stringify(req.body),
+    },
+  });
 
   const {imageSrc} = scheme.parse(JSON.parse(req.body));
 
@@ -31,6 +38,12 @@ export default async function handler(
     height: dimensions.height,
     imageSrcBase64,
   };
+
+  captureMessage('Generating image metadata', {
+    extra: {
+      data: JSON.stringify(data),
+    },
+  });
 
   return res.status(200).json(data);
 }
