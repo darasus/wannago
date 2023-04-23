@@ -1,11 +1,11 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import FormData from 'form-data';
 import {randomUUID} from 'crypto';
-import got from 'got';
 import {env} from 'server-env';
 import {getImageMetaData} from 'utils';
 import {captureException, captureMessage} from '@sentry/nextjs';
 import {TRPCError} from '@trpc/server';
+import axios from 'axios';
 
 export default async function handler(
   req: NextApiRequest,
@@ -67,25 +67,24 @@ export default async function handler(
         payload: JSON.stringify(payload),
       },
     });
-    const cloudflareResponse = (await got
-      .post(
-        'https://api.cloudflare.com/client/v4/accounts/520ed574991657981b4927dda46f2477/images/v1',
-        {
-          body: payload,
-          headers: {
-            Authorization: `Bearer ${env.CLOUDFLARE_API_KEY}`,
-          },
-        }
-      )
-      .json()) as any;
+
+    const cloudflareResponse = await axios.post(
+      'https://api.cloudflare.com/client/v4/accounts/520ed574991657981b4927dda46f2477/images/v1',
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${env.CLOUDFLARE_API_KEY}`,
+        },
+      }
+    );
 
     captureMessage('Uploaded image', {
       extra: {
-        response: JSON.stringify(cloudflareResponse),
+        response: JSON.stringify(cloudflareResponse.data),
       },
     });
 
-    const url = cloudflareResponse?.result?.variants[0] as string;
+    const url = cloudflareResponse.data?.result?.variants[0] as string;
     const {height, width, imageSrcBase64} = await getImageMetaData(url);
 
     res.status(200).json({url, imageSrcBase64, height, width});
