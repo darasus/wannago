@@ -55,7 +55,7 @@ export default async function handler(
   }
 
   const decoded = base64.replace('data:image/png;base64,', '');
-  const imageResp = new Buffer(decoded, 'base64');
+  const imageResp = Buffer.from(decoded, 'base64');
 
   const payload = new FormData();
   payload.append('requireSignedURLs', 'false');
