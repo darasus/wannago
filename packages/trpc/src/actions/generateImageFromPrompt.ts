@@ -1,3 +1,4 @@
+import {captureMessage} from '@sentry/nextjs';
 import {getBaseUrl} from 'utils';
 import {z} from 'zod';
 import {ActionContext} from '../context';
@@ -15,6 +16,11 @@ const imageResponseSchema = z.object({
 
 export function generateImageFromPrompt(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
+    captureMessage('generateImageFromPrompt', {
+      extra: {
+        input: JSON.stringify(input),
+      },
+    });
     const {prompt} = validation.parse(input);
 
     const response = await fetch(
