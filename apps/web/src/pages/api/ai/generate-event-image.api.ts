@@ -62,6 +62,11 @@ export default async function handler(
   payload.append('file', imageResp, randomUUID());
 
   try {
+    captureMessage('Uploading image', {
+      extra: {
+        payload: JSON.stringify(payload),
+      },
+    });
     const response = (await got
       .post(
         'https://api.cloudflare.com/client/v4/accounts/520ed574991657981b4927dda46f2477/images/v1',
