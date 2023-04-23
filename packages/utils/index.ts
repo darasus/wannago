@@ -13,7 +13,6 @@ export {
   isSameDay,
   getRelativeTime,
 } from './src/formatDate';
-export {getImageMetaData} from './src/getImageMetaData';
 export {random} from './src/random';
 export {createOGImageEventUrl} from './src/createOGImageEventUrl';
 export {isUser} from './src/isUser';
