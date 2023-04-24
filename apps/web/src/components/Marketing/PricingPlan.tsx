@@ -79,6 +79,7 @@ export function PricingPlan({
           className={cn('flex flex-col border rounded-xl p-2', {
             'border-gray-200 bg-gray-100': type === 'general',
             'border-gray-800 bg-gray-600': type === 'featured',
+            'border-white/20 bg-white/10': type === 'highlighted',
           })}
         >
           <div className="flex items-center">
