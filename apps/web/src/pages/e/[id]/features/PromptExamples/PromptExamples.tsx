@@ -8,10 +8,11 @@ export function PromptExamples() {
   useEffect(() => {
     const typed = new Typed(el.current, {
       strings: [
+        'Birthday picnic in Central Park tomorrow afternoon',
+        'Retirement party June 15, at 5pm, Greenwood 715 Orlando, max 20 people',
         'My birthday party next week at 7pm, Rokin 75 Amsterdam',
         'Rooftop terrace celebration tomorrow at 22:00 Le Rooftop Paris, max 10 people',
         'Baby shower next week at 7pm, 777 Ocean Avenue, Brooklyn',
-        'Retirement party June 15, at 5pm, Greenwood 715 Orlando, max 20 people',
       ],
       typeSpeed: 50,
       backDelay: 3000,
