@@ -61,7 +61,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
                 }
               )}
             >
-              <Text className="-mb-[1px]">{badgeContent}</Text>
+              <div className="-mb-[1px]">{badgeContent}</div>
             </div>
           ))}
         </div>
