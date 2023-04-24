@@ -1,3 +1,4 @@
+import {exampleEventIds} from 'const';
 import {publicProcedure} from '../../../trpcServer';
 
 export const getExamples = publicProcedure.query(({ctx}) => {
@@ -5,7 +6,7 @@ export const getExamples = publicProcedure.query(({ctx}) => {
     where: {
       isPublished: true,
       shortId: {
-        in: ['pg15re'],
+        in: exampleEventIds,
       },
     },
     include: {

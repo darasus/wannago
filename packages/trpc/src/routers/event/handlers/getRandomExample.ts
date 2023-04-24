@@ -1,3 +1,4 @@
+import {exampleEventIds} from 'const';
 import {random} from 'utils';
 import {publicProcedure} from '../../../trpcServer';
 
@@ -6,8 +7,7 @@ export const getRandomExample = publicProcedure.query(async ({ctx}) => {
     where: {
       isPublished: true,
       shortId: {
-        // TODO: find more examples
-        in: ['pg15re'],
+        in: exampleEventIds,
       },
     },
     include: {

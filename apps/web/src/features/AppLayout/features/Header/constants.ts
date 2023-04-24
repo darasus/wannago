@@ -1,11 +1,4 @@
-export const exampleEvents = [
-  '/e/FyThYG',
-  '/e/WC1Fo6',
-  '/e/59AlAn',
-  '/e/0q5ipF',
-  '/e/AfnfDh',
-  '/e/3ggj1Y',
-];
+import {exampleEventIds} from 'const';
 
 export function getIsPublic(pathname: string) {
   if (pathname === '/') return true;
@@ -14,7 +7,7 @@ export function getIsPublic(pathname: string) {
     '/login',
     '/register',
     '/terms',
-    ...exampleEvents,
+    ...exampleEventIds.map(a => `/e/${a}`),
   ].includes(pathname);
 }
 
