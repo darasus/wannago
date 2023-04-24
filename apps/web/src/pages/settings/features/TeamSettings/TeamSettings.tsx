@@ -3,6 +3,7 @@ import {
   useCreateOrganizationMutation,
   useRemoveOrganizationMutation,
   useConfirmDialog,
+  useSetSessionMutation,
 } from 'hooks';
 import {useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
@@ -21,6 +22,7 @@ interface Form {
 }
 
 export function TeamSettings() {
+  const setSession = useSetSessionMutation();
   const organization = useMyOrganizationQuery();
   const createOrganization = useCreateOrganizationMutation();
   const removeOrganization = useRemoveOrganizationMutation();
@@ -48,8 +50,9 @@ export function TeamSettings() {
       form.setValue('name', null);
       form.setValue('email', null);
       form.setValue('logoSrc', null);
+      await setSession.mutateAsync({userType: 'user'});
     }
-  }, [removeOrganization, form, organization?.data?.id]);
+  }, [removeOrganization, form, organization?.data?.id, setSession]);
 
   const {modal, open} = useConfirmDialog({
     title: 'Are you sure you want to remove your organization?',

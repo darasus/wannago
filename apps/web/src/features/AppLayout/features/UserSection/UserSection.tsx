@@ -1,7 +1,7 @@
 import {useAuth} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
-import {Avatar, Button, CardBase, LoadingBlock} from 'ui';
+import {Button, CardBase, LoadingBlock} from 'ui';
 import {
   useSessionQuery,
   useSetSessionMutation,
@@ -12,6 +12,9 @@ import {
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
+import {UserSwitcher} from './features/UserSwitcher';
+import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline';
+import {getIsPublic} from '../Header/constants';
 
 export function UserSection() {
   const router = useRouter();
@@ -23,15 +26,7 @@ export function UserSection() {
   const isOrganization = session.data === 'organization';
   const utils = trpc.useContext();
   const hasUnseenConversation = useHasUnseenConversation();
-
-  const toggleSession = () => {
-    if (isOrganization) {
-      setSession.mutate({userType: 'user'});
-    } else {
-      setSession.mutate({userType: 'organization'});
-    }
-    router.push('/dashboard');
-  };
+  const isPublicPage = getIsPublic(router.asPath);
 
   const onSignOutClick = async () => {
     await setSession.mutateAsync({userType: 'user'});
@@ -39,32 +34,16 @@ export function UserSection() {
     await signOut();
   };
 
-  const getName = () => {
-    if (isOrganization) {
-      return organization.data?.name;
-    }
-
-    return user.data?.firstName;
-  };
-
-  const getImage = () => {
-    if (isOrganization) {
-      return organization.data?.logoSrc;
-    }
-
-    if (user.data?.profileImageSrc?.includes('gravatar')) {
-      return null;
-    }
-
-    return user.data?.profileImageSrc;
-  };
-
-  const label = isOrganization
-    ? `Use as ${user.data?.firstName}`
-    : `Use as ${organization?.data?.name}`;
-
   if (user.isLoading && !user.data) {
     return <LoadingBlock />;
+  }
+
+  if (isPublicPage) {
+    return (
+      <div className="flex gap-2">
+        <Button onClick={() => router.push('/dashboard')}>Dashboard</Button>
+      </div>
+    );
   }
 
   return (
@@ -83,38 +62,19 @@ export function UserSection() {
       >
         Create event
       </Button>
+      <UserSwitcher />
       <Popover className="relative z-50">
         {() => (
           <>
             <Popover.Button as="div" data-testid="header-user-section-button">
-              <Button
-                className="flex md:hidden"
-                variant="neutral"
-                iconLeft={
-                  <Avatar
-                    className="h-6 w-6"
-                    src={getImage()}
-                    data-testid="user-header-button"
-                    alt={'avatar'}
+              {({open}) => {
+                return (
+                  <Button
+                    iconLeft={open ? <XMarkIcon /> : <Bars3Icon />}
+                    variant="neutral"
                   />
-                }
-                hasNotificationBadge={hasUnseenConversation.data}
-              />
-              <Button
-                className="hidden md:flex"
-                variant="neutral"
-                iconLeft={
-                  <Avatar
-                    className="h-6 w-6"
-                    src={getImage()}
-                    data-testid="user-header-button"
-                    alt={'avatar'}
-                  />
-                }
-                hasNotificationBadge={hasUnseenConversation.data}
-              >
-                {getName()}
-              </Button>
+                );
+              }}
             </Popover.Button>
             <Transition
               as={Fragment}
@@ -129,19 +89,6 @@ export function UserSection() {
                 {({close}) => {
                   return (
                     <CardBase innerClassName="flex flex-col gap-y-2 w-40">
-                      {Boolean(organization.data) && (
-                        <Button
-                          onClick={() => {
-                            toggleSession();
-                            close();
-                          }}
-                          size="sm"
-                          variant="neutral"
-                          data-testid="toggle-session-button"
-                        >
-                          {label}
-                        </Button>
-                      )}
                       <Button
                         variant="neutral"
                         size="sm"
