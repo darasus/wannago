@@ -6,7 +6,7 @@ describe('Follow', () => {
   it('Can follow organization', () => {
     cy.login('user_2_email');
     cy.visit('/dashboard');
-    cy.toggleSession();
+    cy.get('[data-testid="organization-header-button"]').click();
     cy.createOfflineEvent();
     cy.publishCurrentEvent();
     cy.logout();

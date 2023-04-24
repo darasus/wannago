@@ -11,7 +11,8 @@ import {Avatar, Button} from 'ui';
 import {cn} from 'utils';
 
 export function UserSwitcher() {
-  const canShowLabel = useBreakpoint('md', false);
+  const size = useBreakpoint();
+  const canShowLabel = size !== 'sm';
   const router = useRouter();
   const me = useMyUserQuery();
   const organization = useMyOrganizationQuery();
@@ -34,7 +35,6 @@ export function UserSwitcher() {
             <Avatar
               className="h-6 w-6"
               src={me.data.profileImageSrc}
-              data-testid="user-header-button"
               alt={'avatar'}
             />
           }
@@ -46,6 +46,7 @@ export function UserSwitcher() {
               router.push(`/u/${me.data?.id}`);
             }
           }}
+          data-testid="header-user-button"
         >
           {session.data === 'user' && canShowLabel ? me.data.firstName : null}
         </Button>
@@ -63,7 +64,6 @@ export function UserSwitcher() {
             <Avatar
               className="h-6 w-6"
               src={organization.data.logoSrc}
-              data-testid="user-header-button"
               alt={'avatar'}
             />
           }
@@ -75,6 +75,7 @@ export function UserSwitcher() {
               router.push(`/o/${organization.data?.id}`);
             }
           }}
+          data-testid="organization-header-button"
         >
           {session.data === 'organization' && canShowLabel ? (
             <span className="contents">{organization.data.name}</span>
