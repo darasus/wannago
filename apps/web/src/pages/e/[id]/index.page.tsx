@@ -24,7 +24,7 @@ export default function EventPage() {
   const event = useEventQuery({eventShortId});
   const isMyEvent = useIsMyEvent({eventShortId});
 
-  if (event.isLoading) {
+  if (event.isInitialLoading || isMyEvent.isInitialLoading) {
     return <LoadingBlock />;
   }
 
