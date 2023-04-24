@@ -74,31 +74,3 @@ export const email = {
     }),
   }),
 };
-
-export const organization = {
-  created: baseScheme.extend({
-    data: z.object({
-      id: z.string(),
-      name: z.string(),
-      object: z.enum(['organization']),
-      logo_url: z.string().url().nullable(),
-      created_by: z.string(),
-    }),
-  }),
-  updated: baseScheme.extend({
-    data: z.object({
-      id: z.string(),
-      name: z.string(),
-      object: z.enum(['organization']),
-      logo_url: z.string().url(),
-      created_by: z.string(),
-    }),
-  }),
-  deleted: baseScheme.extend({
-    data: z.object({
-      id: z.string(),
-      object: z.enum(['organization']),
-      deleted: z.boolean(),
-    }),
-  }),
-};

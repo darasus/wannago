@@ -65,16 +65,6 @@ const getOrganizationById = publicProcedure
     });
   });
 
-const getOrganizationByExternalId = publicProcedure
-  .input(z.object({externalId: z.string()}))
-  .query(async ({ctx, input}) => {
-    return ctx.prisma.organization.findFirst({
-      where: {
-        externalId: input.externalId,
-      },
-    });
-  });
-
 const getMyOrganization = publicProcedure.query(async ({ctx}) => {
   if (!ctx.auth?.userId) {
     return null;
@@ -97,8 +87,6 @@ const remove = protectedProcedure
         id: input.organizationId,
       },
       data: {
-        name: null,
-        logoSrc: null,
         disabled: true,
       },
     });
@@ -206,7 +194,6 @@ export const organizationRouter = router({
   getMyOrganization,
   getMyOrganizationMembers,
   getOrganizationById,
-  getOrganizationByExternalId,
   addOrganizationMember,
   removeOrganizationMember,
 });

@@ -18,7 +18,6 @@ import {getEvents} from './actions/getEvents';
 import {getUserByExternalId} from './actions/getUserByExternalId';
 import {getUserById} from './actions/getUserById';
 import {getOrganizationById} from './actions/getOrganizationById';
-import {getOrganizationByExternalId} from './actions/getOrganizationByExternalId';
 import {getEvent} from './actions/getEvent';
 import {getOrganizerByEventId} from './actions/getOrganizerByEventId';
 import {getOrganizationByUserId} from './actions/getOrganizationByUserId';
@@ -42,7 +41,6 @@ const actions = {
   getUserByExternalId,
   getUserById,
   getOrganizationById,
-  getOrganizationByExternalId,
   getEvent,
   getOrganizerByEventId,
   getOrganizationByUserId,
