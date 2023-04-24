@@ -83,7 +83,7 @@ export function PricingPlan({
         >
           <div className="flex items-center">
             <Text className={cn('font-bold text-xs uppercase')}>
-              Perfect for:
+              Ideal for:
             </Text>
           </div>
           <Text className={cn('text-xs')}>{description}</Text>
