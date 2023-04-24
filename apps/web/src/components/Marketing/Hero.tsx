@@ -4,7 +4,6 @@ import {titleFontClassName} from '../../fonts';
 import {Button} from 'ui';
 import {Container} from 'ui';
 import dynamic from 'next/dynamic';
-import {TextAnimation} from 'ui/src/components/TextAnimation/TextAnimation';
 import {cn} from 'utils';
 import {useAuth} from '@clerk/nextjs';
 
@@ -33,41 +32,19 @@ export const Hero = forwardRef(function Hero(
         <h1
           className={cn(
             titleFontClassName,
-            'mx-auto max-w-4xl text-4xl lg:text-7xl tracking-tight text-center',
+            'mx-auto max-w-4xl text-6xl lg:text-7xl tracking-tight text-center',
             'bg-clip-text bg-gradient-to-br from-brand-100 to-brand-1000',
             'pb-2'
           )}
         >
           <span className="block text-transparent mb-4">
-            <span className="block">Create</span>
-            <span className="block">simple and stunning</span>
-            <span className="block">pages for your</span>
+            <div>Better way to</div>
+            <div>organize events</div>
           </span>
-          <TextAnimation
-            texts={[
-              'private event',
-              'birthday',
-              'party',
-              'wedding',
-              'company event',
-              'house viewing',
-              'meetup',
-              'anniversary',
-              'bar and bat mitzvah',
-              'family event',
-              'reunion',
-              'shower',
-              'networking event',
-              'graduation',
-              'retirement party',
-              'fundraiser event',
-            ]}
-          />
         </h1>
         <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-gray-800 text-center">
           <span className="font-medium">
-            Send killer invitations to your event, and get ready to meet your
-            guests.
+            {`Build lasting connections with your attendees. Provide an unforgettable online experience they'll cherish — and eagerly return for.`}
           </span>
         </div>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">

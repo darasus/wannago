@@ -15,45 +15,52 @@ export function Pricing() {
           <PricingPlan
             name="Starter"
             price="$0"
-            description="Great for anyone running small private events."
+            description="Anyone running small and private events, or just starting up."
             features={['Up to 5 events', 'Up to 50 attendees']}
-            featured={false}
+            type="general"
             planId="starter"
           />
           <PricingPlan
-            featured
+            type="featured"
             name="Pro"
             planId="pro"
-            price="$2.99"
-            description="For individuals that run recurring events."
+            price="$29.99"
+            description="Those who run one or more events a month and promote personal brand."
             features={[
               'Unlimited events',
               'Unlimited attendees',
-              'AI assistant',
+              'Generative AI assistant',
               'Many more upcoming features...',
             ]}
           />
           <PricingPlan
-            featured
+            type="highlighted"
             name="Business"
             planId="business"
-            price="$9.99"
-            description="For small and medium sized businesses."
+            price="$79.99"
+            description="Small and medium sized businesses that want to build lasting relationship with their customers."
             features={[
               'Organization profile',
               'Unlimited team members',
               'Unlimited events',
               'Unlimited attendees',
+              'Generative AI assistant',
               'Many more upcoming features...',
             ]}
           />
           <PricingPlan
-            featured
+            type="general"
             name="Enterprise"
             planId="enterprise"
             price="Custom"
-            description="Perfect for large organizations with special needs."
-            features={['Everything in Business', 'SSO', 'Custom permissions']}
+            description="Large organizations with special needs."
+            features={[
+              'Everything in Business',
+              'SSO',
+              'Custom permissions',
+              'Custom integration',
+              'Priority support',
+            ]}
           />
         </div>
       </Container>

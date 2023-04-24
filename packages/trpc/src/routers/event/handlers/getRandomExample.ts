@@ -5,14 +5,14 @@ export const getRandomExample = publicProcedure.query(async ({ctx}) => {
   const events = await ctx.prisma.event.findMany({
     where: {
       isPublished: true,
-      user: {
-        email: {
-          in: ['idarase+clerk_test@gmail.com', 'hi+example@wannago.app'],
-        },
+      shortId: {
+        // TODO: find more examples
+        in: ['pg15re'],
       },
     },
     include: {
       user: true,
+      organization: true,
     },
   });
 
