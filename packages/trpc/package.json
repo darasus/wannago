@@ -14,6 +14,7 @@
     "utils": "workspace:*",
     "error": "workspace:*",
     "types": "workspace:*",
+    "const": "workspace:*",
     "email": "workspace:*",
     "lib": "workspace:*",
     "database": "workspace:*"

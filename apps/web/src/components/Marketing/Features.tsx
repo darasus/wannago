@@ -15,6 +15,12 @@ import {cn} from 'utils';
 
 const features = [
   {
+    summary: 'Profile page',
+    description:
+      'Let visitors easily connect with your business or subscribe to your events through beautiful profile pages.',
+    icon: CalendarDaysIcon,
+  },
+  {
     summary: 'Create',
     description:
       'Easily create a shareable event page with all the details your guests need to know.',

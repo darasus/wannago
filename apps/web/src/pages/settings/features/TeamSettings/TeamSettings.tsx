@@ -38,7 +38,9 @@ export function TeamSettings() {
     const {name, logoSrc, email} = data;
 
     if (name && logoSrc && email) {
-      await createOrganization.mutateAsync({logoSrc, name, email});
+      try {
+        await createOrganization.mutateAsync({logoSrc, name, email});
+      } catch (error) {}
     }
   });
 

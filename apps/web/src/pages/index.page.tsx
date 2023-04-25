@@ -18,10 +18,10 @@ function HomePage() {
       <Features />
       <div className="h-0.5 bg-gray-800" />
       {/* <SecondaryFeatures /> */}
-      <CallToAction />
+      <Pricing />
       <div className="h-0.5 bg-gray-800" />
       {/* <Testimonials /> */}
-      <Pricing />
+      <CallToAction />
       <div className="h-0.5 bg-gray-800" />
       <Faqs />
       <div className="h-0.5 bg-gray-800" />

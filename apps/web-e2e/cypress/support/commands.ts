@@ -6,7 +6,7 @@ Cypress.Commands.addAll({
     cy.get('[data-testid="login-email-form-submit"]').click();
     cy.get('[data-testid="login-code-input"]').type(Cypress.env('otp'));
     cy.get('[data-testid="add-event-button"]');
-    cy.get('[data-testid="header-user-section-button"]').contains('John');
+    cy.get('[data-testid="header-user-button"]').contains('John');
   },
   createOfflineEvent() {
     cy.visit('/dashboard');
