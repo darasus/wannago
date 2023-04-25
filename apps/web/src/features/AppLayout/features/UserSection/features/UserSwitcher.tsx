@@ -1,5 +1,4 @@
 import {
-  useHasUnseenConversation,
   useMyOrganizationQuery,
   useMyUserQuery,
   useSessionQuery,
@@ -16,7 +15,6 @@ export function UserSwitcher() {
   const router = useRouter();
   const me = useMyUserQuery();
   const organization = useMyOrganizationQuery();
-  const hasUnseenConversation = useHasUnseenConversation();
   const session = useSessionQuery();
   const setSession = useSetSessionMutation();
 
@@ -38,7 +36,6 @@ export function UserSwitcher() {
               alt={'avatar'}
             />
           }
-          hasNotificationBadge={hasUnseenConversation.data}
           onClick={() => {
             if (session.data === 'organization') {
               setSession.mutate({userType: 'user'});
@@ -67,7 +64,6 @@ export function UserSwitcher() {
               alt={'avatar'}
             />
           }
-          hasNotificationBadge={hasUnseenConversation.data}
           onClick={() => {
             if (session.data === 'user') {
               setSession.mutate({userType: 'organization'});

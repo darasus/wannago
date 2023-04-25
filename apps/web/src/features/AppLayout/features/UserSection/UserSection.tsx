@@ -72,6 +72,7 @@ export function UserSection() {
                   <Button
                     iconLeft={open ? <XMarkIcon /> : <Bars3Icon />}
                     variant="neutral"
+                    hasNotificationBadge={hasUnseenConversation.data}
                   />
                 );
               }}
