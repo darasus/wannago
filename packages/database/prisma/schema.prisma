@@ -32,8 +32,37 @@ model Event {
   userId                  String?
   messageId               String?
   eventSignUps            EventSignUp[] @relation(name: "EventSignUps")
+  tickets                 Ticket[]
 
   @@index([organizationId])
+  @@index([userId])
+}
+
+model Ticket {
+  id          String       @id @default(uuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  title       String
+  event       Event        @relation(fields: [eventId], references: [id])
+  eventId     String
+  ticketSales TicketSale[]
+  price       Decimal
+  maxQuantity Int
+
+  @@index([eventId])
+}
+
+model TicketSale {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ticket    Ticket   @relation(fields: [ticketId], references: [id])
+  ticketId  String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  quantity  Int
+
+  @@index([ticketId])
   @@index([userId])
 }
 
@@ -60,6 +89,7 @@ model User {
   lastSeens        ConversationLastSeen[] @relation(name: "UserConversationLastSeen")
   followers        Follow[]               @relation(name: "FollowingUser")
   following        Follow[]               @relation(name: "FollowerUser")
+  ticketSale       TicketSale[]
 
   @@index([organizationId])
   @@index([subscriptionId])
