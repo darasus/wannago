@@ -4,6 +4,8 @@ export const exampleEventIds = [
   // prod
   '7WPjci',
   'rv3f92',
+  '3ggj1Y',
+  'pk6cit',
   // dev
   'pg15re',
 ];
