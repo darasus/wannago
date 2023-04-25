@@ -5,7 +5,7 @@ import {Badge, Text} from 'ui';
 import {cn} from 'utils';
 
 interface Props extends PropsWithChildren {
-  label?: string;
+  label?: string | JSX.Element;
   description?: string;
   containerClassName?: string;
   error?: FieldError;

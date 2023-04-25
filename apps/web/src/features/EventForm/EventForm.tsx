@@ -1,6 +1,6 @@
 import {isBefore, isEqual} from 'date-fns';
-import {FormEventHandler, useEffect} from 'react';
-import {useFormContext, useWatch} from 'react-hook-form';
+import {FormEventHandler, useEffect, useState} from 'react';
+import {useFieldArray, useFormContext, useWatch} from 'react-hook-form';
 import {Badge, Button, CardBase} from 'ui';
 import {FileInput} from '../../components/Input/FileInput/FileInput';
 import {Input} from '../../components/Input/Input/Input';
@@ -9,6 +9,7 @@ import {RichTextarea} from '../../components/Input/RichTextarea/RichTextarea';
 import {Form} from './types';
 import {SparklesIcon} from '@heroicons/react/24/solid';
 import {useGenerateEventDescription} from 'hooks';
+import {InputWrapper} from '../../components/Input/Input/InputWrapper';
 
 interface Props {
   onSubmit: FormEventHandler;
@@ -18,13 +19,20 @@ interface Props {
 }
 
 export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
+  const [attendType, setAttendType] = useState<'free' | 'paid'>('free');
   const {
     register,
     formState: {isSubmitting, errors},
     watch,
     setValue,
+    control,
   } = useFormContext<Form>();
-  const startDate = useWatch<Form>({name: 'startDate'});
+  const {fields, append, remove} = useFieldArray({
+    control,
+    name: 'tickets',
+  });
+  // TODO: this casting is weird, figure out
+  const startDate = useWatch<Form>({name: 'startDate'}) as string | null;
   const {generate, generatedOutput, isLoading} = useGenerateEventDescription();
   const title = watch('title');
 
@@ -40,7 +48,11 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
 
   const items = [
     {
-      label: 'What',
+      label: (
+        <Badge color="gray" size="xs">
+          What
+        </Badge>
+      ),
       content: (
         <>
           <Input
@@ -85,9 +97,13 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
       ),
     },
     {
-      label: 'When',
+      label: (
+        <Badge color="gray" size="xs">
+          When
+        </Badge>
+      ),
       content: (
-        <>
+        <div className="grid grid-cols-2 gap-2">
           <Input
             type="datetime-local"
             label="Event start date"
@@ -114,40 +130,129 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
               },
             })}
           />
-        </>
-      ),
-    },
-    {
-      label: 'Where',
-      content: (
-        <div className="flex gap-x-2 items-end relative">
-          <div className="grow">
-            <LocationInput
-              label="Address"
-              data-testid="event-form-address"
-              error={errors.address}
-              {...register('address', {
-                required: {value: true, message: 'Address is required'},
-              })}
-            />
-          </div>
         </div>
       ),
     },
     {
-      label: 'Attend',
+      label: (
+        <Badge color="gray" size="xs">
+          Where
+        </Badge>
+      ),
       content: (
+        <LocationInput
+          label="Address"
+          data-testid="event-form-address"
+          error={errors.address}
+          {...register('address', {
+            required: {value: true, message: 'Address is required'},
+          })}
+        />
+      ),
+    },
+    {
+      label: (
         <>
-          <Input
-            type="number"
-            label="Max number of attendees"
-            data-testid="event-form-max-attendees"
-            error={errors.maxNumberOfAttendees}
-            isOptional
-            placeholder='Leave empty for "unlimited"'
-            {...register('maxNumberOfAttendees')}
-          />
+          <div className="flex gap-2">
+            <Badge color="gray" size="xs">
+              Attend
+            </Badge>
+            <div className="flex gap-1">
+              <Button
+                size="xs"
+                variant={attendType === 'free' ? 'primary' : 'neutral'}
+                onClick={() => {
+                  setAttendType('free');
+                  fields.forEach((_, index) => {
+                    remove(index);
+                  });
+                }}
+              >
+                Free
+              </Button>
+              <Button
+                size="xs"
+                onClick={() => {
+                  setAttendType('paid');
+                  setValue('maxNumberOfAttendees', null);
+                }}
+                variant={attendType === 'paid' ? 'primary' : 'neutral'}
+              >
+                Paid
+              </Button>
+            </div>
+          </div>
         </>
+      ),
+      content: (
+        <div className="flex flex-col gap-2">
+          {attendType === 'free' && (
+            <Input
+              type="number"
+              label="Max number of attendees"
+              data-testid="event-form-max-attendees"
+              error={errors.maxNumberOfAttendees}
+              isOptional
+              placeholder='Leave empty for "unlimited"'
+              {...register('maxNumberOfAttendees')}
+            />
+          )}
+          {attendType === 'paid' && (
+            <>
+              <InputWrapper label="Tickets">
+                <div className="flex flex-col gap-2">
+                  {fields.map((field, index) => {
+                    return (
+                      <div
+                        className="flex flex-col border-2 border-gray-300 rounded-3xl gap-2 p-4"
+                        key={field.id}
+                      >
+                        <Input
+                          label={'Title'}
+                          {...register(`tickets.${index}.title`)}
+                        />
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input
+                            label="Price"
+                            type="number"
+                            {...register(`tickets.${index}.price`)}
+                          />
+                          <Input
+                            label="Max quantity"
+                            type="number"
+                            {...register(`tickets.${index}.maxQuantity`)}
+                          />
+                        </div>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => {
+                            remove(index);
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </InputWrapper>
+              <Button
+                onClick={() => {
+                  append({
+                    maxQuantity: 0,
+                    price: 0,
+                    title: '',
+                  });
+                }}
+                variant="neutral"
+                size="sm"
+              >
+                Add another ticket
+              </Button>
+            </>
+          )}
+        </div>
       ),
     },
   ];
@@ -160,11 +265,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
             {items.map(({label, content}, i) => {
               return (
                 <CardBase key={i}>
-                  <div className="mb-2">
-                    <Badge color="gray" size="xs">
-                      {label}
-                    </Badge>
-                  </div>
+                  <div className="mb-2">{label}</div>
                   <div className="flex flex-col gap-y-2">{content}</div>
                 </CardBase>
               );
