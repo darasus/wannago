@@ -9,7 +9,7 @@ import {DesktopMenu} from './DesktopMenu';
 export function Header() {
   const router = useRouter();
   const auth = useAuth();
-  const isPublic = getIsPublic(router.pathname);
+  const isPublic = getIsPublic(router.asPath);
   const showUserProfile = auth.isLoaded && auth.isSignedIn;
   const showAuthButtons = auth.isLoaded && !auth.isSignedIn;
   const showMobileMenu = isPublic;
