@@ -20,6 +20,7 @@ export const create = protectedProcedure
         maxNumberOfAttendees,
         startDate,
         authorId,
+        tickets,
       },
       ctx,
     }) => {
@@ -95,6 +96,17 @@ export const create = protectedProcedure
           ...(user?.id ? {user: {connect: {id: user.id}}} : {}),
         },
       });
+
+      if (tickets.length > 0) {
+        await ctx.prisma.ticket.createMany({
+          data: tickets.map(ticket => ({
+            title: ticket.title,
+            price: ticket.price,
+            maxQuantity: ticket.maxQuantity,
+            eventId: event.id,
+          })),
+        });
+      }
 
       const {messageId} = await ctx.actions.createEventReminder({
         eventId: event.id,

@@ -41,6 +41,11 @@ export function AddEventForm() {
       .mutateAsync({
         authorId,
         ...data,
+        tickets: data.tickets.map(ticket => ({
+          ...ticket,
+          price: Number(ticket.price),
+          maxQuantity: Number(ticket.maxQuantity),
+        })),
         description: data.description === '<p></p>' ? null : data.description,
         startDate: zonedTimeToUtc(
           data.startDate,

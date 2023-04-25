@@ -1,7 +1,7 @@
 interface Ticket {
   title: string;
-  price: number;
-  maxQuantity: number;
+  price: string;
+  maxQuantity: string;
 }
 
 export interface Form {

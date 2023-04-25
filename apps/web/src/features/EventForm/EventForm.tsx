@@ -174,7 +174,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
                 size="xs"
                 onClick={() => {
                   setAttendType('paid');
-                  setValue('maxNumberOfAttendees', null);
+                  setValue('maxNumberOfAttendees', 0);
                 }}
                 variant={attendType === 'paid' ? 'primary' : 'neutral'}
               >
@@ -240,8 +240,8 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
               <Button
                 onClick={() => {
                   append({
-                    maxQuantity: 0,
-                    price: 0,
+                    maxQuantity: '0',
+                    price: '0',
                     title: '',
                   });
                 }}

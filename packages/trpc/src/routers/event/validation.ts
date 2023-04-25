@@ -21,4 +21,7 @@ export const eventInput = z.object({
     })
     .nullable()
     .default(Infinity),
+  tickets: z.array(
+    z.object({title: z.string(), price: z.number(), maxQuantity: z.number()})
+  ),
 });
