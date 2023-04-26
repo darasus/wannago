@@ -1,6 +1,7 @@
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
 import {Badge, Button, CardBase, Text, Tooltip} from 'ui';
+import {formatCents} from 'utils';
 import {Switch} from '../../../../apps/web/src/components/Input/Switch/Switch';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
   amInvited: boolean;
   isBlur?: boolean;
   isLoading?: boolean;
+  minimumPrice?: number;
 }
 
 interface EventSignUpForm {
@@ -26,6 +28,7 @@ export function SignUpCard({
   amSignedUp,
   amInvited,
   isLoading,
+  minimumPrice,
 }: Props) {
   const {
     formState: {defaultValues, isSubmitting},
@@ -112,7 +115,9 @@ export function SignUpCard({
           size="sm"
           data-testid="attend-button"
         >
-          Attend
+          {`Attend${
+            minimumPrice ? ` (from ${formatCents(minimumPrice)})` : ''
+          }`}
         </Button>
       </form>
     );

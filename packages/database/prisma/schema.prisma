@@ -46,7 +46,7 @@ model Ticket {
   event       Event        @relation(fields: [eventId], references: [id])
   eventId     String
   ticketSales TicketSale[]
-  price       Decimal
+  price       Int
   maxQuantity Int
 
   @@index([eventId])

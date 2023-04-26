@@ -1,5 +1,5 @@
 import {useAuth} from '@clerk/nextjs';
-import {Event} from '@prisma/client';
+import {Event, Ticket} from '@prisma/client';
 import {SignUpCard as _SignUpCard} from 'cards';
 import {
   useAmplitude,
@@ -13,9 +13,10 @@ import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {Container} from 'ui';
 import {AuthModal} from './features/AuthModal/AuthModal';
+import {TicketSelectorModal} from './features/TicketSelectorModal/TicketSelectorModal';
 
 interface Props {
-  event: Event;
+  event: Event & {tickets: Ticket[]};
 }
 
 interface EventSignUpForm {
@@ -25,7 +26,9 @@ interface EventSignUpForm {
 export function SignUpCard({event}: Props) {
   const {confetti} = useConfetti();
   const {logEvent} = useAmplitude();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isTicketSelectorModalOpen, setIsTicketSelectorModalOpen] =
+    useState(false);
   const auth = useAuth();
   const signUp = trpc.event.getMySignUp.useQuery(
     {eventId: event.id},
@@ -77,9 +80,14 @@ export function SignUpCard({event}: Props) {
       const token = await auth.getToken();
 
       if (!token) {
-        setIsOpen(true);
+        setIsAuthModalOpen(true);
         return;
       }
+    }
+
+    if (event.tickets.length > 0) {
+      setIsTicketSelectorModalOpen(true);
+      return;
     }
 
     try {
@@ -101,14 +109,17 @@ export function SignUpCard({event}: Props) {
   return (
     <>
       {cancelModal}
-      {isOpen && (
-        // <RedirectToSignIn redirectUrl={`${getBaseUrl()}/e/${event.shortId}`} />
-        <AuthModal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          onDone={onJoinSubmit}
-        />
-      )}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onDone={onJoinSubmit}
+      />
+      <TicketSelectorModal
+        isOpen={isTicketSelectorModalOpen}
+        onClose={() => setIsTicketSelectorModalOpen(false)}
+        onDone={() => {}}
+        event={event}
+      />
       <Container className="w-full p-0 m-0">
         <FormProvider {...form}>
           <_SignUpCard
@@ -119,6 +130,7 @@ export function SignUpCard({event}: Props) {
             isPublished={event.isPublished}
             numberOfAttendees={attendeeCount?.data?.count ?? 0}
             isLoading={signUp.isLoading}
+            minimumPrice={event.tickets[0]?.price}
           />
         </FormProvider>
       </Container>

@@ -10,8 +10,7 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/hooks/**/*.{js,ts,jsx,tsx}',
     './src/features/**/*.{js,ts,jsx,tsx}',
-    '../../packages/ui/**/*.{js,ts,jsx,tsx}',
-    '../../packages/cards/**/*.{js,ts,jsx,tsx}',
+    '../../packages/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {

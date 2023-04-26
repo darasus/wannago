@@ -19,6 +19,7 @@ export const getByShortId = publicProcedure
           },
         },
         user: true,
+        tickets: true,
       },
     });
   });
