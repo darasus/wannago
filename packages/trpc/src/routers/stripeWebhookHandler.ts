@@ -3,11 +3,12 @@ import {
   handleCustomerSubscriptionCreatedInputSchema,
   handleCustomerSubscriptionUpdatedInputSchema,
   handleCustomerSubscriptionDeletedInputSchema,
+  handleCheckoutSessionCompletedInputSchema,
 } from 'stripe-webhook-input-validation';
 import * as s from 'stripe';
 import {invariant, isOrganization, isUser} from 'utils';
-import {organizerNotFoundError} from 'error';
-import {fromUnixTime} from 'date-fns';
+import {organizerNotFoundError, userNotFoundError} from 'error';
+import {z} from 'zod';
 
 const handleCustomerSubscriptionCreated = publicProcedure
   .input(handleCustomerSubscriptionCreatedInputSchema)
@@ -85,14 +86,12 @@ const handleCustomerSubscriptionUpdated = publicProcedure
     }
 
     if (!organizer.subscriptionId) {
-      const data = {stripeCustomerId: customer.id};
-
       if (isUser(organizer)) {
         await ctx.prisma.user.update({
           where: {
             id: organizer.id,
           },
-          data,
+          data: {stripeCustomerId: customer.id},
         });
       }
       if (isOrganization(organizer)) {
@@ -100,7 +99,7 @@ const handleCustomerSubscriptionUpdated = publicProcedure
           where: {
             id: organizer.id,
           },
-          data,
+          data: {stripeCustomerId: customer.id},
         });
       }
     }
@@ -160,8 +159,51 @@ const handleCustomerSubscriptionDeleted = publicProcedure
     return {success: true};
   });
 
+const checkoutCompleteMetadataSchema = z.array(
+  z.object({
+    ticketId: z.string().uuid(),
+    quantity: z.number().int(),
+  })
+);
+
+const handleCheckoutSessionCompleted = publicProcedure
+  .input(handleCheckoutSessionCompletedInputSchema)
+  .query(async ({ctx, input}) => {
+    if (input.data.object.status !== 'complete') return {success: true};
+
+    const customer = (await ctx.stripe.stripe.customers.retrieve(
+      input.data.object.customer
+    )) as s.Stripe.Customer;
+
+    invariant(customer.email, 'Customer email is required');
+
+    const user = await ctx.actions.getUserByExternalId({
+      externalId: input.data.object.metadata.externalUserId,
+    });
+
+    invariant(user, userNotFoundError);
+
+    const tickets = checkoutCompleteMetadataSchema.parse(
+      JSON.parse(input.data.object.metadata.tickets)
+    );
+
+    for (const ticket of tickets) {
+      await ctx.prisma.ticketSale.create({
+        data: {
+          quantity: ticket.quantity,
+          ticketId: ticket.ticketId,
+          userId: user.id,
+          eventId: input.data.object.metadata.eventId,
+        },
+      });
+    }
+
+    return {success: true};
+  });
+
 export const stripeWebhookHandlerRouter = router({
   handleCustomerSubscriptionCreated,
   handleCustomerSubscriptionUpdated,
   handleCustomerSubscriptionDeleted,
+  handleCheckoutSessionCompleted,
 });

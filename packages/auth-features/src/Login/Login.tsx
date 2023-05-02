@@ -24,9 +24,14 @@ export interface APIResponseError {
 interface Props {
   onDone?: () => void;
   onCreateAccountClick?: () => void;
+  redirectToDashboard?: boolean;
 }
 
-export function Login({onDone, onCreateAccountClick}: Props) {
+export function Login({
+  onDone,
+  onCreateAccountClick,
+  redirectToDashboard,
+}: Props) {
   const router = useRouter();
   const me = useMyUserQuery();
   const {setSession, isLoaded} = useSignIn();
@@ -35,7 +40,9 @@ export function Login({onDone, onCreateAccountClick}: Props) {
   const codeForm = useForm<TCodeForm>({
     mode: 'onSubmit',
   });
-  const setSessionMutation = useSetSessionMutation();
+  const setSessionMutation = useSetSessionMutation({
+    redirectToDashboard,
+  });
 
   const ready = useCallback(async (): Promise<any> => {
     const {data} = await me.refetch();

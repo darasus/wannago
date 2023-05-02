@@ -33,6 +33,7 @@ model Event {
   messageId               String?
   eventSignUps            EventSignUp[] @relation(name: "EventSignUps")
   tickets                 Ticket[]
+  ticketSales             TicketSale[]
 
   @@index([organizationId])
   @@index([userId])
@@ -60,8 +61,11 @@ model TicketSale {
   ticketId  String
   user      User     @relation(fields: [userId], references: [id])
   userId    String
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String
   quantity  Int
 
+  @@index([eventId])
   @@index([ticketId])
   @@index([userId])
 }

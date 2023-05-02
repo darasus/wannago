@@ -3,6 +3,8 @@ import {Event, Ticket} from '@prisma/client';
 import {Input} from '../../../../../../apps/web/src/components/Input/Input/Input';
 import {formatCents} from 'utils';
 import {useForm} from 'react-hook-form';
+import {trpc} from 'trpc/src/trpc';
+import {useRouter} from 'next/router';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -16,6 +18,7 @@ interface Form {
 }
 
 export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
+  const router = useRouter();
   const form = useForm<Form>({defaultValues: {}});
   const total = Object.entries(form.watch()).reduce(
     (acc: number, [ticketId, quantity]) => {
@@ -33,6 +36,24 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
     },
     0
   );
+  const createPaymentSession =
+    trpc.payments.createCheckoutSession.useMutation();
+
+  const handleBuy = async () => {
+    const responseUrl = await createPaymentSession.mutateAsync({
+      tickets: Object.entries(form.watch()).map(([ticketId, quantity]) => ({
+        ticketId,
+        quantity: Number(quantity),
+      })),
+      eventId: event.id,
+    });
+
+    if (!responseUrl) {
+      return;
+    }
+
+    router.push(responseUrl);
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -56,7 +77,7 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
                   {...form.register(id)}
                 />
               </div>
-              <div className="h-[2px] bg-gray-800" />
+              <div className="h-[2px] bg-gray-300" />
             </>
           );
         })}
@@ -68,7 +89,9 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
             <Text className="font-bold">{formatCents(total)}</Text>
           </div>
         </div>
-        <Button>Buy</Button>
+        <Button onClick={handleBuy} isLoading={createPaymentSession.isLoading}>
+          Buy
+        </Button>
       </div>
     </Modal>
   );

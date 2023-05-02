@@ -20,6 +20,7 @@ export function AuthModal({isOpen, onClose, onDone}: Props) {
             onClose();
             onDone?.();
           }}
+          redirectToDashboard={false}
         />
       )}
       {step === 'register' && (
@@ -29,6 +30,7 @@ export function AuthModal({isOpen, onClose, onDone}: Props) {
             onClose();
             onDone?.();
           }}
+          redirectToDashboard={false}
         />
       )}
     </Modal>

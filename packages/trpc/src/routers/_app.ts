@@ -9,6 +9,7 @@ import {sessionRouter} from './session';
 import {subscriptionRouter} from './subscription';
 import {conversationRouter} from './conversation';
 import {followRouter} from './follow';
+import {paymentsRouter} from './payments';
 
 export const appRouter = router({
   event: eventRouter,
@@ -21,6 +22,7 @@ export const appRouter = router({
   subscription: subscriptionRouter,
   conversation: conversationRouter,
   follow: followRouter,
+  payments: paymentsRouter,
 });
 
 export type AppRouter = typeof appRouter;

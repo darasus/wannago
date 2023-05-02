@@ -6,6 +6,7 @@ import {createContext} from 'trpc/src/context';
 import {stripeWebhookHandlerRouter} from 'trpc/src/routers/stripeWebhookHandler';
 import {
   baseEventHandlerSchema,
+  handleCheckoutSessionCompletedInputSchema,
   handleCustomerSubscriptionDeletedInputSchema,
   handleCustomerSubscriptionUpdatedInputSchema,
 } from 'stripe-webhook-input-validation';
@@ -35,6 +36,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const event = stripe.constructEvent(buf.toString(), sig);
     const input = baseEventHandlerSchema.parse(event);
+    console.log(input.type);
 
     if (input.type === 'customer.subscription.updated') {
       await caller.handleCustomerSubscriptionUpdated(
@@ -45,6 +47,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (input.type === 'customer.subscription.deleted') {
       await caller.handleCustomerSubscriptionDeleted(
         handleCustomerSubscriptionDeletedInputSchema.parse(event)
+      );
+    }
+
+    if (input.type === 'checkout.session.completed') {
+      await caller.handleCheckoutSessionCompleted(
+        handleCheckoutSessionCompletedInputSchema.parse(event)
       );
     }
 

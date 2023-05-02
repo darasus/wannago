@@ -26,16 +26,17 @@ export interface APIResponseError {
 interface Props {
   onDone?: () => void;
   onLoginClick?: () => void;
+  redirectToDashboard?: boolean;
 }
 
-export function Register({onDone, onLoginClick}: Props) {
+export function Register({onDone, onLoginClick, redirectToDashboard}: Props) {
   const me = useMyUserQuery();
   const {setSession, isLoaded} = useSignUp();
   const router = useRouter();
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
   const userInfoForm = useForm<UserInfoForm>();
   const codeForm = useForm<CodeForm>({mode: 'onSubmit'});
-  const setSessionMutation = useSetSessionMutation();
+  const setSessionMutation = useSetSessionMutation({redirectToDashboard});
 
   const ready = useCallback(async (): Promise<any> => {
     const {data} = await me.refetch();
