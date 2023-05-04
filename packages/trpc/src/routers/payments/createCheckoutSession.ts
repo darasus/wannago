@@ -41,10 +41,9 @@ export const createCheckoutSession = protectedProcedure
       },
     });
 
-    // TODO fix callback url
     const successCallbackUrl = `${getBaseUrl()}/e/${
       event.shortId
-    }/purchase-success`;
+    }/my-tickets?success=true`;
     const cancelCallbackUrl = `${getBaseUrl()}/e/${event.shortId}`;
 
     const session = await ctx.stripe.stripe.checkout.sessions.create({

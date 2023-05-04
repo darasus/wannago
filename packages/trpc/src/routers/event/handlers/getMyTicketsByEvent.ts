@@ -1,9 +1,9 @@
 import {eventNotFoundError, userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
-import {protectedProcedure} from '../../trpcServer';
+import {protectedProcedure} from '../../../trpcServer';
 
-export const pollPurchasedTicket = protectedProcedure
+export const getMyTicketsByEvent = protectedProcedure
   .input(
     z.object({
       eventShortId: z.string(),

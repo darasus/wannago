@@ -1,13 +1,24 @@
-import {CheckCircleIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
+import {useEffect} from 'react';
+import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {CardBase, LoadingBlock, PageHeader, Text} from 'ui';
 
-export function PurchaseSuccess() {
+export function MyTickets() {
   const router = useRouter();
-  const tickets = trpc.payments.pollPurchasedTicket.useQuery({
+  const tickets = trpc.event.getMyTicketsByEvent.useQuery({
     eventShortId: router.query.id as string,
   });
+
+  useEffect(() => {
+    if (
+      tickets.data &&
+      tickets.data?.length > 0 &&
+      router.query.success === 'true'
+    ) {
+      toast.success('Ticket purchased successfully!');
+    }
+  }, [router.query.success, tickets.data]);
 
   if (tickets.isInitialLoading) {
     return <LoadingBlock />;
@@ -15,14 +26,7 @@ export function PurchaseSuccess() {
 
   return (
     <div className="flex flex-col gap-4">
-      <PageHeader
-        title={
-          <div className="flex items-center gap-2">
-            <CheckCircleIcon className="h-7 w-7 text-green-500" />
-            <Text>You got your tickets!</Text>
-          </div>
-        }
-      />
+      <PageHeader title={<Text>My tickets</Text>} />
       <CardBase>
         {tickets.data?.map(ticketSale => {
           return (

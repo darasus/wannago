@@ -20,7 +20,7 @@ import {EditEventForm} from '../../../features/EventForm/EditEventForm';
 import {EventAttendees} from './features/EventAttendees/EventAttendees';
 import {EventInvite} from './features/EventInvite/EventInvite';
 import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
-import {PurchaseSuccess} from './features/PurchaseSuccess/PurchaseSuccess';
+import {MyTickets} from './features/MyTickets/MyTickets';
 
 export default function EventPage() {
   const router = useRouter();
@@ -76,7 +76,7 @@ export default function EventPage() {
                 {page === 'edit' && <EditEventForm />}
                 {page === 'attendees' && <EventAttendees />}
                 {page === 'invite' && <EventInvite />}
-                {page === 'purchase-success' && <PurchaseSuccess />}
+                {page === 'my-tickets' && <MyTickets />}
               </div>
             </div>
           </Container>
