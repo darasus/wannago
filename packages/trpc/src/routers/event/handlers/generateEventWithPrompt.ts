@@ -1,4 +1,4 @@
-import {Event, Organization, User} from '@prisma/client';
+import {Event, Organization, Ticket, User} from '@prisma/client';
 import {env} from 'client-env';
 import {randomUUID} from 'crypto';
 import {organizationNotFoundError, userNotFoundError} from 'error';
@@ -53,6 +53,7 @@ export const generateEventWithPrompt = protectedProcedure
       user: User | null;
       organization: Organization | null;
       imagePrompt: string;
+      tickets: Ticket[];
     } = {
       id: randomUUID(),
       title: output.title,
@@ -73,6 +74,7 @@ export const generateEventWithPrompt = protectedProcedure
       featuredImagePreviewSrc: null,
       messageId: null,
       imagePrompt: output.imagePrompt,
+      tickets: [],
       ...(isOrganizationSession
         ? {
             organizationId: user.organization?.id!,

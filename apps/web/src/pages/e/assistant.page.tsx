@@ -44,6 +44,7 @@ function EventAddPage() {
           previewEventMutation.data.featuredImagePreviewSrc,
         featuredImageHeight: previewEventMutation.data.featuredImageHeight,
         featuredImageWidth: previewEventMutation.data.featuredImageWidth,
+        tickets: [],
       });
 
       router.push(`/e/${response.shortId}`);
