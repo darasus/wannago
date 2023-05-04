@@ -19,7 +19,7 @@ export function InfoIconWithTooltip({className, text}: Props) {
         {text}
       </Modal>
       <InformationCircleIcon
-        className={cn('h-[15px] w-[15px] block', className)}
+        className={cn('h-[15px] w-[15px] block cursor-pointer', className)}
         onClick={openModal}
       />
     </div>
