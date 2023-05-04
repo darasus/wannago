@@ -1,16 +1,11 @@
 import {useAuth} from '@clerk/nextjs';
 import {Event, Ticket} from '@prisma/client';
-import {
-  useAmplitude,
-  useAttendeeCount,
-  useConfetti,
-  useConfirmDialog,
-} from 'hooks';
+import {useAmplitude, useAttendeeCount, useConfetti} from 'hooks';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
-import {Button, Text} from 'ui';
+import {Badge, Button} from 'ui';
 import {formatCents} from 'utils';
 import {AuthModal} from '../AuthModal/AuthModal';
 import {TicketSelectorModal} from '../TicketSelectorModal/TicketSelectorModal';
@@ -56,16 +51,6 @@ export function PaidEventAction({event}: Props) {
       toast.success('Event is cancelled!');
     },
   });
-  const {modal: cancelModal, open: openCancelModal} = useConfirmDialog({
-    title: 'Confirm cancellation',
-    description: 'Are you sure you want to cancel your attendance?',
-    onConfirm: async () => {
-      await cancelEvent.mutateAsync({
-        eventId: event.id,
-      });
-      await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
-    },
-  });
   const form = useForm();
   const attendeeCount = useAttendeeCount({
     eventId: event.id,
@@ -100,7 +85,7 @@ export function PaidEventAction({event}: Props) {
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
-        onDone={onJoinSubmit}
+        onDone={() => setIsTicketSelectorModalOpen(true)}
       />
       <TicketSelectorModal
         isOpen={isTicketSelectorModalOpen}
@@ -112,6 +97,9 @@ export function PaidEventAction({event}: Props) {
         className="flex items-center gap-x-2 w-full"
         onSubmit={onJoinSubmit}
       >
+        <Badge size="sm">{`from ${formatCents(
+          event.tickets[0]?.price || 0
+        )}`}</Badge>
         <Button
           type="submit"
           disabled={form.formState.isSubmitting}
@@ -119,9 +107,8 @@ export function PaidEventAction({event}: Props) {
           size="sm"
           data-testid="attend-button"
         >
-          {`But ticket`}
+          {`Buy ticket`}
         </Button>
-        <Text>{`from ${formatCents(event.tickets[0]?.price || 0)}`}</Text>
       </form>
     </>
   );

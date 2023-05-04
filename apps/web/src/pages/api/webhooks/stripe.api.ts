@@ -36,7 +36,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const event = stripe.constructEvent(buf.toString(), sig);
     const input = baseEventHandlerSchema.parse(event);
-    console.log(input.type);
 
     if (input.type === 'customer.subscription.updated') {
       await caller.handleCustomerSubscriptionUpdated(
@@ -58,7 +57,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     return res.status(200).json({success: true});
   } catch (err: any) {
-    console.log(err);
     captureException(err);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }

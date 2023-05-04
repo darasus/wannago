@@ -5,6 +5,7 @@ import {formatCents} from 'utils';
 import {useForm} from 'react-hook-form';
 import {trpc} from 'trpc/src/trpc';
 import {useRouter} from 'next/router';
+import {Fragment} from 'react';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -41,10 +42,12 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
 
   const handleBuy = async () => {
     const responseUrl = await createPaymentSession.mutateAsync({
-      tickets: Object.entries(form.watch()).map(([ticketId, quantity]) => ({
-        ticketId,
-        quantity: Number(quantity),
-      })),
+      tickets: Object.entries(form.watch())
+        .filter(([, quantity]) => Boolean(quantity))
+        .map(([ticketId, quantity]) => ({
+          ticketId,
+          quantity: Number(quantity) || 0,
+        })),
       eventId: event.id,
     });
 
@@ -60,7 +63,7 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
       <div className="flex flex-col gap-4">
         {event.tickets.map(({title, price, id}) => {
           return (
-            <>
+            <Fragment key={id}>
               <div key={id} className="flex items-center gap-4">
                 <div className="flex grow">
                   <div className="grow">
@@ -78,7 +81,7 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
                 />
               </div>
               <div className="h-[2px] bg-gray-300" />
-            </>
+            </Fragment>
           );
         })}
         <div className="flex">

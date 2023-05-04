@@ -43,8 +43,8 @@ export function AddEventForm() {
         ...data,
         tickets: data.tickets.map(ticket => ({
           ...ticket,
-          price: Number(ticket.price),
-          maxQuantity: Number(ticket.maxQuantity),
+          price: Number(ticket.price) * 100,
+          maxQuantity: Number(ticket.maxQuantity) * 100,
         })),
         description: data.description === '<p></p>' ? null : data.description,
         startDate: zonedTimeToUtc(

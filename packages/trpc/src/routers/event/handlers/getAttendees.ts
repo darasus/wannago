@@ -22,6 +22,11 @@ export const getAttendees = protectedProcedure
       },
       include: {
         user: true,
+        ticketSales: {
+          include: {
+            ticket: true,
+          },
+        },
       },
       orderBy: {
         createdAt: 'desc',

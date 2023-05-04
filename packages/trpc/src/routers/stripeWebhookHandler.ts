@@ -9,6 +9,7 @@ import * as s from 'stripe';
 import {invariant, isOrganization, isUser} from 'utils';
 import {organizerNotFoundError, userNotFoundError} from 'error';
 import {z} from 'zod';
+import {TicketSale} from '@prisma/client';
 
 const handleCustomerSubscriptionCreated = publicProcedure
   .input(handleCustomerSubscriptionCreatedInputSchema)
@@ -187,13 +188,52 @@ const handleCheckoutSessionCompleted = publicProcedure
       JSON.parse(input.data.object.metadata.tickets)
     );
 
+    let ticketSales: TicketSale[] = [];
+
     for (const ticket of tickets) {
-      await ctx.prisma.ticketSale.create({
+      const ticketSale = await ctx.prisma.ticketSale.create({
         data: {
           quantity: ticket.quantity,
           ticketId: ticket.ticketId,
           userId: user.id,
           eventId: input.data.object.metadata.eventId,
+        },
+      });
+      ticketSales = [...ticketSales, ticketSale];
+    }
+
+    const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
+      where: {
+        userId: user.id,
+        eventId: input.data.object.metadata.eventId,
+      },
+    });
+
+    if (eventSignUp) {
+      await ctx.prisma.eventSignUp.update({
+        where: {
+          id: eventSignUp?.id,
+        },
+        data: {
+          userId: user.id,
+          eventId: input.data.object.metadata.eventId,
+          ticketSales: {
+            connect: ticketSales.map(ticketSale => ({
+              id: ticketSale.id,
+            })),
+          },
+        },
+      });
+    } else {
+      await ctx.prisma.eventSignUp.create({
+        data: {
+          userId: user.id,
+          eventId: input.data.object.metadata.eventId,
+          ticketSales: {
+            connect: ticketSales.map(ticketSale => ({
+              id: ticketSale.id,
+            })),
+          },
         },
       });
     }

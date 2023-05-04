@@ -26,7 +26,9 @@ export function PurchaseSuccess() {
       <CardBase>
         {tickets.data?.map(ticketSale => {
           return (
-            <div>{`${ticketSale.ticket.title} x${ticketSale.quantity}`}</div>
+            <div
+              key={ticketSale.id}
+            >{`${ticketSale.ticket.title} x${ticketSale.quantity}`}</div>
           );
         })}
       </CardBase>

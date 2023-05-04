@@ -54,17 +54,20 @@ model Ticket {
 }
 
 model TicketSale {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  ticket    Ticket   @relation(fields: [ticketId], references: [id])
-  ticketId  String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  event     Event    @relation(fields: [eventId], references: [id])
-  eventId   String
-  quantity  Int
+  id            String       @id @default(uuid())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  quantity      Int
+  ticket        Ticket       @relation(fields: [ticketId], references: [id])
+  ticketId      String
+  user          User         @relation(fields: [userId], references: [id])
+  userId        String
+  event         Event        @relation(fields: [eventId], references: [id])
+  eventId       String
+  eventSignUp   EventSignUp? @relation(fields: [eventSignUpId], references: [id])
+  eventSignUpId String?
 
+  @@index([eventSignUpId])
   @@index([eventId])
   @@index([ticketId])
   @@index([userId])
@@ -104,7 +107,7 @@ model Organization {
   users            User[]                 @relation(name: "UserOrganization")
   events           Event[]                @relation(name: "EventOrganization")
   name             String                 @db.VarChar(255)
-  email            String                 @unique()
+  email            String                 @unique
   logoSrc          String
   disabled         Boolean                @default(false)
   subscription     Subscription?          @relation(fields: [subscriptionId], references: [id])
@@ -119,16 +122,16 @@ model Organization {
 }
 
 model EventSignUp {
-  id         String                  @id @default(uuid())
-  createdAt  DateTime                @default(now())
-  updatedAt  DateTime                @updatedAt
-  event      Event                   @relation(name: "EventSignUps", fields: [eventId], references: [id])
-  eventId    String
-  user       User                    @relation(name: "EventSignUpUser", fields: [userId], references: [id])
-  userId     String
-  hasPlusOne Boolean?                @default(false)
-  // INFO: remove default once production migration is done
-  status     EventRegistrationStatus @default(REGISTERED)
+  id          String                  @id @default(uuid())
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @updatedAt
+  hasPlusOne  Boolean?                @default(false)
+  status      EventRegistrationStatus @default(REGISTERED) // TODO: remove default once production migration is done
+  event       Event                   @relation(name: "EventSignUps", fields: [eventId], references: [id])
+  eventId     String
+  user        User                    @relation(name: "EventSignUpUser", fields: [userId], references: [id])
+  userId      String
+  ticketSales TicketSale[]
 
   @@index([eventId])
   @@index([userId])
