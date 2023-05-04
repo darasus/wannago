@@ -1,5 +1,5 @@
 import {GetServerSidePropsContext} from 'next';
-import {createProxySSGHelpers} from '@trpc/react-query/ssg';
+import {createServerSideHelpers} from '@trpc/react-query/server';
 import {EventInfo} from './features/EventInfo/EventInfo';
 import {Button, Container, LoadingBlock, Text} from 'ui';
 import {
@@ -87,7 +87,7 @@ export default function EventPage() {
 export async function getServerSideProps(
   context: GetServerSidePropsContext<{id: string}>
 ) {
-  const ssg = createProxySSGHelpers({
+  const ssg = createServerSideHelpers({
     router: appRouter,
     ctx: await createContext(),
     transformer: SuperJSON,
