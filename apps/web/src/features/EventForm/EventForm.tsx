@@ -19,10 +19,9 @@ interface Props {
 }
 
 export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
-  const [attendType, setAttendType] = useState<'free' | 'paid'>('free');
   const {
     register,
-    formState: {isSubmitting, errors},
+    formState: {isSubmitting, errors, defaultValues},
     watch,
     setValue,
     control,
@@ -31,6 +30,11 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
     control,
     name: 'tickets',
   });
+  const [attendType, setAttendType] = useState<'free' | 'paid'>(
+    defaultValues?.tickets && defaultValues?.tickets?.length > 0
+      ? 'paid'
+      : 'free'
+  );
   // TODO: this casting is weird, figure out
   const startDate = useWatch<Form>({name: 'startDate'}) as string | null;
   const {generate, generatedOutput, isLoading} = useGenerateEventDescription();
@@ -243,6 +247,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
                     maxQuantity: '0',
                     price: '0',
                     title: '',
+                    id: '',
                   });
                 }}
                 variant="neutral"

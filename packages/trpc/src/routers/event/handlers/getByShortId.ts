@@ -19,7 +19,11 @@ export const getByShortId = publicProcedure
           },
         },
         user: true,
-        tickets: true,
+        tickets: {
+          orderBy: {
+            price: 'asc',
+          },
+        },
       },
     });
   });

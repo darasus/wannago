@@ -1,4 +1,4 @@
-import {Event} from '@prisma/client';
+import {Event, Ticket} from '@prisma/client';
 import {useForm} from 'react-hook-form';
 import {formatDate} from 'utils';
 import {Form} from '../types';
@@ -7,7 +7,9 @@ const formatDateForInput = (date: Date | string) => {
   return formatDate(new Date(date), "yyyy-MM-dd'T'HH:mm");
 };
 
-export function useEventForm(props?: {event?: Event | null}) {
+export function useEventForm(props?: {
+  event?: (Event & {tickets: Ticket[]}) | null;
+}) {
   const {event} = props || {};
 
   const form = useForm<Form>({
@@ -26,6 +28,15 @@ export function useEventForm(props?: {event?: Event | null}) {
       featuredImageHeight: event?.featuredImageHeight || null,
       featuredImageWidth: event?.featuredImageWidth || null,
       featuredImagePreviewSrc: event?.featuredImagePreviewSrc || null,
+      tickets:
+        event?.tickets?.map(ticket => {
+          return {
+            id: ticket.id,
+            title: ticket.title,
+            price: (ticket.price / 100).toString(),
+            maxQuantity: ticket.maxQuantity.toString(),
+          };
+        }) || [],
     },
   });
 

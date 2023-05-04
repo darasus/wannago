@@ -25,6 +25,8 @@ export function EditEventForm() {
     event,
   });
 
+  console.log(form.formState);
+
   const onSubmit = form.handleSubmit(async data => {
     logEvent('event_update_submitted');
 
@@ -32,6 +34,11 @@ export function EditEventForm() {
       await updateMutation
         .mutateAsync({
           ...data,
+          tickets: data.tickets.map(ticket => ({
+            ...ticket,
+            price: Number(ticket.price) * 100,
+            maxQuantity: Number(ticket.maxQuantity),
+          })),
           description: data.description === '<p></p>' ? null : data.description,
           eventId: event.id,
           startDate: zonedTimeToUtc(
@@ -42,6 +49,7 @@ export function EditEventForm() {
             data.endDate,
             Intl.DateTimeFormat().resolvedOptions().timeZone
           ),
+          maxNumberOfAttendees: data.maxNumberOfAttendees || 0,
         })
         .catch(() => {
           form.trigger();
