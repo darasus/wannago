@@ -66,7 +66,7 @@ function Item({eventSignUp, refetch}: ItemProps) {
           <>
             {eventSignUp.ticketSales.map(ticketSale => {
               return (
-                <div>
+                <div key={ticketSale.id}>
                   <Text>{`Ticket: ${ticketSale.ticket.title} x${ticketSale.quantity}`}</Text>
                 </div>
               );
