@@ -44,8 +44,8 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
       '@prisma/client':
-        specifier: ^4.12.0
-        version: 4.12.0(prisma@4.12.0)
+        specifier: ^4.13.0
+        version: 4.13.0(prisma@4.13.0)
       '@react-email/render':
         specifier: ^0.0.2
         version: 0.0.2(react@18.2.0)
@@ -68,8 +68,8 @@ importers:
         specifier: ^0.5.9
         version: 0.5.9(tailwindcss@3.2.7)
       '@tanstack/react-query':
-        specifier: ^4.26.1
-        version: 4.26.1(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^4.29.5
+        version: 4.29.5(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-table':
         specifier: ^8.8.5
         version: 8.8.5(react-dom@18.2.0)(react@18.2.0)
@@ -89,17 +89,17 @@ importers:
         specifier: 2.0.2
         version: 2.0.2(@tiptap/pm@2.0.3)
       '@trpc/client':
-        specifier: ^10.15.0
-        version: 10.15.0(@trpc/server@10.15.0)
+        specifier: ^10.25.0
+        version: 10.25.0(@trpc/server@10.25.0)
       '@trpc/next':
-        specifier: ^10.15.0
-        version: 10.15.0(@tanstack/react-query@4.26.1)(@trpc/client@10.15.0)(@trpc/react-query@10.15.0)(@trpc/server@10.15.0)(next@13.3.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^10.25.0
+        version: 10.25.0(@tanstack/react-query@4.29.5)(@trpc/client@10.25.0)(@trpc/react-query@10.25.0)(@trpc/server@10.25.0)(next@13.3.0)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/react-query':
-        specifier: ^10.15.0
-        version: 10.15.0(@tanstack/react-query@4.26.1)(@trpc/client@10.15.0)(@trpc/server@10.15.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^10.25.0
+        version: 10.25.0(@tanstack/react-query@4.29.5)(@trpc/client@10.25.0)(@trpc/server@10.25.0)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
-        specifier: ^10.15.0
-        version: 10.15.0
+        specifier: ^10.25.0
+        version: 10.25.0
       '@upstash/edge-flags':
         specifier: ^0.1.1
         version: 0.1.1(react-dom@18.2.0)
@@ -303,8 +303,8 @@ importers:
         specifier: ^2.8.4
         version: 2.8.4
       prisma:
-        specifier: ^4.12.0
-        version: 4.12.0
+        specifier: ^4.13.0
+        version: 4.13.0
       tailwindcss:
         specifier: ^3.2.7
         version: 3.2.7(postcss@8.4.21)(ts-node@10.9.1)
@@ -1411,7 +1411,7 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       espree: 9.5.1
       globals: 13.20.0
       ignore: 5.2.4
@@ -1485,7 +1485,7 @@ packages:
     engines: {node: '>=10.10.0'}
     dependencies:
       '@humanwhocodes/object-schema': 1.2.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -1955,8 +1955,8 @@ packages:
     resolution: {integrity: sha512-Cr4OjIkipTtcXKjAsm8agyleBuDHvxzeBoa1v543lbv1YaIwQjESsVcmjiWiPEbC1FIeHOG/Op9kdCmAmiS3Kw==}
     dev: false
 
-  /@prisma/client@4.12.0(prisma@4.12.0):
-    resolution: {integrity: sha512-j9/ighfWwux97J2dS15nqhl60tYoH8V0IuSsgZDb6bCFcQD3fXbXmxjYC8GHhIgOk3lB7Pq+8CwElz2MiDpsSg==}
+  /@prisma/client@4.13.0(prisma@4.13.0):
+    resolution: {integrity: sha512-YaiiICcRB2hatxsbnfB66uWXjcRw3jsZdlAVxmx0cFcTc/Ad/sKdHCcWSnqyDX47vAewkjRFwiLwrOUjswVvmA==}
     engines: {node: '>=14.17'}
     requiresBuild: true
     peerDependencies:
@@ -1965,16 +1965,16 @@ packages:
       prisma:
         optional: true
     dependencies:
-      '@prisma/engines-version': 4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7
-      prisma: 4.12.0
+      '@prisma/engines-version': 4.13.0-50.1e7af066ee9cb95cf3a403c78d9aab3e6b04f37a
+      prisma: 4.13.0
     dev: false
 
-  /@prisma/engines-version@4.12.0-67.659ef412370fa3b41cd7bf6e94587c1dfb7f67e7:
-    resolution: {integrity: sha512-JIHNj5jlXb9mcaJwakM0vpgRYJIAurxTUqM0iX0tfEQA5XLZ9ONkIckkhuAKdAzocZ+80GYg7QSsfpjg7OxbOA==}
+  /@prisma/engines-version@4.13.0-50.1e7af066ee9cb95cf3a403c78d9aab3e6b04f37a:
+    resolution: {integrity: sha512-fsQlbkhPJf08JOzKoyoD9atdUijuGBekwoOPZC3YOygXEml1MTtgXVpnUNchQlRSY82OQ6pSGQ9PxUe4arcSLQ==}
     dev: false
 
-  /@prisma/engines@4.12.0:
-    resolution: {integrity: sha512-0alKtnxhNB5hYU+ymESBlGI4b9XrGGSdv7Ud+8TE/fBNOEhIud0XQsAR+TrvUZgS4na5czubiMsODw0TUrgkIA==}
+  /@prisma/engines@4.13.0:
+    resolution: {integrity: sha512-HrniowHRZXHuGT9XRgoXEaP2gJLXM5RMoItaY2PkjvuZ+iHc0Zjbm/302MB8YsPdWozAPHHn+jpFEcEn71OgPw==}
     requiresBuild: true
 
   /@react-email/button@0.0.6:
@@ -2396,12 +2396,12 @@ packages:
       tailwindcss: 3.2.7(postcss@8.4.21)(ts-node@10.9.1)
     dev: false
 
-  /@tanstack/query-core@4.26.1:
-    resolution: {integrity: sha512-Zrx2pVQUP4ndnsu6+K/m8zerXSVY8QM+YSbxA1/jbBY21GeCd5oKfYl92oXPK0hPEUtoNuunIdiq0ZMqLos+Zg==}
+  /@tanstack/query-core@4.29.5:
+    resolution: {integrity: sha512-xXIiyQ/4r9KfaJ3k6kejqcaqFXXBTzN2aOJ5H1J6aTJE9hl/nbgAdfF6oiIu0CD5xowejJEJ6bBg8TO7BN4NuQ==}
     dev: false
 
-  /@tanstack/react-query@4.26.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-i3dnz4TOARGIXrXQ5P7S25Zfi4noii/bxhcwPurh2nrf5EUCcAt/95TB2HSmMweUBx206yIMWUMEQ7ptd6zwDg==}
+  /@tanstack/react-query@4.29.5(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-F87cibC3s3eG0Q90g2O+hqntpCrudKFnR8P24qkH9uccEhXErnJxBC/AAI4cJRV2bfMO8IeGZQYf3WyYgmSg0w==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -2412,7 +2412,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@tanstack/query-core': 4.26.1
+      '@tanstack/query-core': 4.29.5
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
@@ -2708,53 +2708,53 @@ packages:
       - '@tiptap/pm'
     dev: false
 
-  /@trpc/client@10.15.0(@trpc/server@10.15.0):
-    resolution: {integrity: sha512-Tmm3N7jibEOZTsvHRU+tWCVvUf8F9/UcKOVTGAWuyasBpnjOZ7ClZ81F9wo4cg9+9tUxUhuJns+E96/HtATpyQ==}
+  /@trpc/client@10.25.0(@trpc/server@10.25.0):
+    resolution: {integrity: sha512-XWuzbbACX2fzB9UHVkPJtaaAeFiyPjQSC3YgnRtDwjQx03/nt7OsxTBxvG0kblCN0Z2zZrnLF65aDrMJEP43LQ==}
     peerDependencies:
-      '@trpc/server': 10.15.0
+      '@trpc/server': 10.25.0
     dependencies:
-      '@trpc/server': 10.15.0
+      '@trpc/server': 10.25.0
     dev: false
 
-  /@trpc/next@10.15.0(@tanstack/react-query@4.26.1)(@trpc/client@10.15.0)(@trpc/react-query@10.15.0)(@trpc/server@10.15.0)(next@13.3.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-jekFhfvqvw5+KP+ya3zK0nXlNtOTBjlhAynlIJqTOoTM08rx1s24x3S35seaxKmxVSdREClmpNgoZmaHWH6rlw==}
+  /@trpc/next@10.25.0(@tanstack/react-query@4.29.5)(@trpc/client@10.25.0)(@trpc/react-query@10.25.0)(@trpc/server@10.25.0)(next@13.3.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-cKvW8ktu7IKbPMobx7lzAPzXUG+vGofQtoQ76P0fmKj2ckh9chDMUnOa6XUaXm8InJrq1HM3gamf35zzGz3gqQ==}
     peerDependencies:
-      '@tanstack/react-query': ^4.3.8
-      '@trpc/client': 10.15.0
-      '@trpc/react-query': 10.15.0
-      '@trpc/server': 10.15.0
+      '@tanstack/react-query': ^4.18.0
+      '@trpc/client': 10.25.0
+      '@trpc/react-query': 10.25.0
+      '@trpc/server': 10.25.0
       next: '*'
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 4.26.1(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client': 10.15.0(@trpc/server@10.15.0)
-      '@trpc/react-query': 10.15.0(@tanstack/react-query@4.26.1)(@trpc/client@10.15.0)(@trpc/server@10.15.0)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/server': 10.15.0
+      '@tanstack/react-query': 4.29.5(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client': 10.25.0(@trpc/server@10.25.0)
+      '@trpc/react-query': 10.25.0(@tanstack/react-query@4.29.5)(@trpc/client@10.25.0)(@trpc/server@10.25.0)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server': 10.25.0
       next: 13.3.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
     dev: false
 
-  /@trpc/react-query@10.15.0(@tanstack/react-query@4.26.1)(@trpc/client@10.15.0)(@trpc/server@10.15.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-MD8JBoviAioI3ssOzN+Uxd8uGvhgfqvtbmkdhYQkQJOBlQw+4A55BfeXykeRmIHOs6X83iiqZVVerximEzTADQ==}
+  /@trpc/react-query@10.25.0(@tanstack/react-query@4.29.5)(@trpc/client@10.25.0)(@trpc/server@10.25.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-6+gHPjEo4ocTwgij5fLqEwTP6ud1ZW48Kt/STM8Kgz8/Vj7QhBSbGVEmUL++/8MD3Ro1SEBV63DTc1t7vMEZ/Q==}
     peerDependencies:
-      '@tanstack/react-query': ^4.3.8
-      '@trpc/client': 10.15.0
-      '@trpc/server': 10.15.0
+      '@tanstack/react-query': ^4.18.0
+      '@trpc/client': 10.25.0
+      '@trpc/server': 10.25.0
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@tanstack/react-query': 4.26.1(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client': 10.15.0(@trpc/server@10.15.0)
-      '@trpc/server': 10.15.0
+      '@tanstack/react-query': 4.29.5(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/client': 10.25.0(@trpc/server@10.25.0)
+      '@trpc/server': 10.25.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@trpc/server@10.15.0:
-    resolution: {integrity: sha512-Kf+wTU5iZjjjEzqZDy+o5wc4nEZKvE0yWdF9qZa72xLu6eTJ0BS2hnwQZeCZ2pIbmQb8/6lFr5igHiY4/dy0mA==}
+  /@trpc/server@10.25.0:
+    resolution: {integrity: sha512-OKcGw2iZMUV8zCHoS+uLYGVq2tbZhhK0TPbb0pGhT+KTN8oWYPG+oYpTe9He9J1A2y8qcRAoy5u1zdiUUOiFEg==}
     dev: false
 
   /@tsconfig/node10@1.0.9:
@@ -3111,7 +3111,7 @@ packages:
       '@typescript-eslint/scope-manager': 5.58.0
       '@typescript-eslint/types': 5.58.0
       '@typescript-eslint/typescript-estree': 5.58.0(typescript@4.9.5)
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.39.0
       typescript: 4.9.5
     transitivePeerDependencies:
@@ -3142,7 +3142,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.58.0
       '@typescript-eslint/visitor-keys': 5.58.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.4.0
@@ -3367,7 +3367,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -3376,7 +3376,7 @@ packages:
     resolution: {integrity: sha512-Zn4cw2NEqd+9fiSVWMscnjyQ1a8Yfoc5oBajLeo5w+YBHgDUcEBY2hS4YpTz6iN5f/2zQiktcuM6tS8x1p9dpA==}
     engines: {node: '>= 8.0.0'}
     dependencies:
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       depd: 1.1.2
       humanize-ms: 1.2.1
     transitivePeerDependencies:
@@ -4380,7 +4380,6 @@ packages:
     dependencies:
       ms: 2.1.2
       supports-color: 5.5.0
-    dev: false
 
   /debug@4.3.4(supports-color@8.1.1):
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
@@ -4393,6 +4392,7 @@ packages:
     dependencies:
       ms: 2.1.2
       supports-color: 8.1.1
+    dev: true
 
   /decimal.js-light@2.5.1:
     resolution: {integrity: sha512-qIMFpTMZmny+MMIitAB6D7iVPEorVw6YQRWkvarTkT4tBeSLLiHzcwj6q0MmYSFCiVpiqPJTJEYIrpcPzVEIvg==}
@@ -4877,7 +4877,7 @@ packages:
       eslint: '*'
       eslint-plugin-import: '*'
     dependencies:
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       enhanced-resolve: 5.12.0
       eslint: 8.39.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.58.0)(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.39.0)
@@ -5089,7 +5089,7 @@ packages:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.0
@@ -5903,7 +5903,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -7171,7 +7171,7 @@ packages:
     resolution: {integrity: sha512-6Mj0yHLdUZjHnOPgr5xfWIMqMWS12zDN6iws9SLuSz76W8jTtAv24MN4/CL7gJrl5vtxGInkkqDv/JIoRsQOvA==}
     dependencies:
       '@types/debug': 4.1.7
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       decode-named-character-reference: 1.0.2
       micromark-core-commonmark: 1.0.6
       micromark-factory-space: 1.0.0
@@ -7990,13 +7990,13 @@ packages:
       js-beautify: 1.14.7
     dev: false
 
-  /prisma@4.12.0:
-    resolution: {integrity: sha512-xqVper4mbwl32BWzLpdznHAYvYDWQQWK2tBfXjdUD397XaveRyAP7SkBZ6kFlIg8kKayF4hvuaVtYwXd9BodAg==}
+  /prisma@4.13.0:
+    resolution: {integrity: sha512-L9mqjnSmvWIRCYJ9mQkwCtj4+JDYYTdhoyo8hlsHNDXaZLh/b4hR0IoKIBbTKxZuyHQzLopb/+0Rvb69uGV7uA==}
     engines: {node: '>=14.17'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@prisma/engines': 4.12.0
+      '@prisma/engines': 4.13.0
 
   /process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
