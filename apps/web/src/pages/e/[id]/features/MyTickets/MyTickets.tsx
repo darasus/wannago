@@ -28,13 +28,18 @@ export function MyTickets() {
     <div className="flex flex-col gap-4">
       <PageHeader title={<Text>My tickets</Text>} />
       <CardBase>
-        {tickets.data?.map(ticketSale => {
-          return (
-            <div
-              key={ticketSale.id}
-            >{`${ticketSale.ticket.title} x${ticketSale.quantity}`}</div>
-          );
-        })}
+        <div className="divide-y-2">
+          {tickets.data?.map(ticket => {
+            return (
+              <div key={ticket.id} className="flex">
+                <div className="grow">
+                  <Text>{`${ticket.title}`}</Text>
+                </div>
+                <Text>{`quantity: ${ticket.quantity}`}</Text>
+              </div>
+            );
+          })}
+        </div>
       </CardBase>
     </div>
   );

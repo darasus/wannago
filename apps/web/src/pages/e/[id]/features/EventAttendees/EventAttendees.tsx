@@ -1,4 +1,4 @@
-import {EventSignUp, Ticket, TicketSale, User} from '@prisma/client';
+import {EventSignUp, User} from '@prisma/client';
 import Head from 'next/head';
 import {CardBase, Button, Text, LoadingBlock, PageHeader} from 'ui';
 import {trpc} from 'trpc/src/trpc';
@@ -11,7 +11,7 @@ import {ExportAttendeesCSV} from './features/ExportAttendeesCSV/ExportAttendeesC
 interface ItemProps {
   eventSignUp: EventSignUp & {
     user: User;
-    ticketSales: Array<TicketSale & {ticket: Ticket}>;
+    tickets: {[id: string]: {id: string; title: string; quantity: number}};
   };
   refetch: () => void;
 }
@@ -21,8 +21,6 @@ function Item({eventSignUp, refetch}: ItemProps) {
     eventSignUp.user.firstName +
     ' ' +
     eventSignUp.user.lastName +
-    ' · ' +
-    eventSignUp.user.email +
     (eventSignUp.hasPlusOne ? ' · +1' : '');
 
   const {mutateAsync} = trpc.event.cancelEventByUserId.useMutation();
@@ -50,7 +48,7 @@ function Item({eventSignUp, refetch}: ItemProps) {
           </div>
           <div className="flex gap-2">
             <EventRegistrationStatusBadge status={eventSignUp.status} />
-            {eventSignUp.ticketSales.length === 0 && (
+            {Object.entries(eventSignUp.tickets).length === 0 && (
               <Button
                 size="sm"
                 variant="neutral"
@@ -62,12 +60,12 @@ function Item({eventSignUp, refetch}: ItemProps) {
             )}
           </div>
         </div>
-        {eventSignUp.ticketSales.length > 0 && (
+        {Object.entries(eventSignUp.tickets).length > 0 && (
           <>
-            {eventSignUp.ticketSales.map(ticketSale => {
+            {Object.values(eventSignUp.tickets).map(ticket => {
               return (
-                <div key={ticketSale.id}>
-                  <Text>{`Ticket: ${ticketSale.ticket.title} x${ticketSale.quantity}`}</Text>
+                <div key={ticket.id}>
+                  <Text>{`Ticket: ${ticket.title} x${ticket.quantity}`}</Text>
                 </div>
               );
             })}
