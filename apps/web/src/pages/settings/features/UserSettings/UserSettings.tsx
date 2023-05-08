@@ -3,6 +3,8 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {Button, CardBase} from 'ui';
 import {FileInput} from '../../../../components/Input/FileInput/FileInput';
 import {Input} from '../../../../components/Input/Input/Input';
+import {UserSubscription} from './features/UserSubscription/UserSubscription';
+import {StripeAccountLinkSettings} from './features/StripeAccountLinkSettings/StripeAccountLinkSettings';
 
 interface UserForm {
   firstName: string;
@@ -36,66 +38,70 @@ export function UserSettings() {
   });
 
   return (
-    <CardBase>
-      <form onSubmit={onSubmit}>
-        <div className="flex flex-col gap-y-4">
-          <div>
-            <Input
-              type="text"
-              label="First name"
-              {...form.register('firstName', {
-                required: {
-                  value: true,
-                  message: 'First name is required',
-                },
-              })}
-              data-testid="first-name-input"
-            />
+    <div className="flex flex-col gap-4">
+      <CardBase>
+        <form onSubmit={onSubmit}>
+          <div className="flex flex-col gap-y-4">
+            <div>
+              <Input
+                type="text"
+                label="First name"
+                {...form.register('firstName', {
+                  required: {
+                    value: true,
+                    message: 'First name is required',
+                  },
+                })}
+                data-testid="first-name-input"
+              />
+            </div>
+            <div>
+              <Input
+                type="text"
+                label="Last name"
+                {...form.register('lastName', {
+                  required: {
+                    value: true,
+                    message: 'Last name is required',
+                  },
+                })}
+                data-testid="last-name-input"
+              />
+            </div>
+            <div>
+              <Input
+                type="email"
+                label="Email"
+                {...form.register('email', {
+                  required: {
+                    value: true,
+                    message: 'Email is required',
+                  },
+                })}
+                data-testid="email-input"
+                disabled
+              />
+            </div>
+            <div>
+              <FormProvider {...form}>
+                <FileInput {...form.register('profileImageSrc')} />
+              </FormProvider>
+            </div>
+            <div>
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                data-testid="user-settings-submit-button"
+                isLoading={form.formState.isSubmitting}
+              >
+                Save
+              </Button>
+            </div>
           </div>
-          <div>
-            <Input
-              type="text"
-              label="Last name"
-              {...form.register('lastName', {
-                required: {
-                  value: true,
-                  message: 'Last name is required',
-                },
-              })}
-              data-testid="last-name-input"
-            />
-          </div>
-          <div>
-            <Input
-              type="email"
-              label="Email"
-              {...form.register('email', {
-                required: {
-                  value: true,
-                  message: 'Email is required',
-                },
-              })}
-              data-testid="email-input"
-              disabled
-            />
-          </div>
-          <div>
-            <FormProvider {...form}>
-              <FileInput {...form.register('profileImageSrc')} />
-            </FormProvider>
-          </div>
-          <div>
-            <Button
-              type="submit"
-              disabled={form.formState.isSubmitting}
-              data-testid="user-settings-submit-button"
-              isLoading={form.formState.isSubmitting}
-            >
-              Save
-            </Button>
-          </div>
-        </div>
-      </form>
-    </CardBase>
+        </form>
+      </CardBase>
+      <StripeAccountLinkSettings />
+      <UserSubscription />
+    </div>
   );
 }

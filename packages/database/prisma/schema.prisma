@@ -74,29 +74,30 @@ model TicketSale {
 }
 
 model User {
-  id               String                 @id @default(uuid())
-  email            String                 @unique
-  createdAt        DateTime               @default(now())
-  updatedAt        DateTime               @default(now()) @updatedAt
-  externalId       String?
-  firstName        String
-  lastName         String
-  profileImageSrc  String?
-  organization     Organization?          @relation(name: "UserOrganization", fields: [organizationId], references: [id])
-  organizationId   String?
-  eventSignUps     EventSignUp[]          @relation(name: "EventSignUpUser")
-  type             UserType               @default(USER)
-  events           Event[]                @relation(name: "EventUser")
-  disabled         Boolean                @default(false)
-  subscription     Subscription?          @relation(fields: [subscriptionId], references: [id])
-  subscriptionId   String?
-  stripeCustomerId String?
-  messages         Message[]              @relation(name: "UserMessage")
-  conversation     Conversation[]         @relation(name: "UserConversation")
-  lastSeens        ConversationLastSeen[] @relation(name: "UserConversationLastSeen")
-  followers        Follow[]               @relation(name: "FollowingUser")
-  following        Follow[]               @relation(name: "FollowerUser")
-  ticketSale       TicketSale[]
+  id                    String                 @id @default(uuid())
+  email                 String                 @unique
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @default(now()) @updatedAt
+  externalId            String?
+  firstName             String
+  lastName              String
+  profileImageSrc       String?
+  organization          Organization?          @relation(name: "UserOrganization", fields: [organizationId], references: [id])
+  organizationId        String?
+  eventSignUps          EventSignUp[]          @relation(name: "EventSignUpUser")
+  type                  UserType               @default(USER)
+  events                Event[]                @relation(name: "EventUser")
+  disabled              Boolean                @default(false)
+  subscription          Subscription?          @relation(fields: [subscriptionId], references: [id])
+  subscriptionId        String?
+  stripeCustomerId      String?
+  stripeLinkedAccountId String?
+  messages              Message[]              @relation(name: "UserMessage")
+  conversation          Conversation[]         @relation(name: "UserConversation")
+  lastSeens             ConversationLastSeen[] @relation(name: "UserConversationLastSeen")
+  followers             Follow[]               @relation(name: "FollowingUser")
+  following             Follow[]               @relation(name: "FollowerUser")
+  ticketSale            TicketSale[]
 
   @@index([organizationId])
   @@index([subscriptionId])

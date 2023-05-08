@@ -24,6 +24,13 @@ export const createCheckoutSession = protectedProcedure
 
     invariant(user, userNotFoundError);
     invariant(event, eventNotFoundError);
+    invariant(
+      user.stripeLinkedAccountId,
+      new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Stripe customer id is required',
+      })
+    );
 
     const stripeCustomerId = user.stripeCustomerId || undefined;
     const email = user.email;
@@ -86,6 +93,12 @@ export const createCheckoutSession = protectedProcedure
             };
           })
         ),
+      },
+      payment_intent_data: {
+        application_fee_amount: 123,
+        transfer_data: {
+          destination: user.stripeLinkedAccountId,
+        },
       },
     });
 
