@@ -4,7 +4,7 @@ import {Button, CardBase} from 'ui';
 import {FileInput} from '../../../../components/Input/FileInput/FileInput';
 import {Input} from '../../../../components/Input/Input/Input';
 import {UserSubscription} from './features/UserSubscription/UserSubscription';
-import {StripeAccountLinkSettings} from './features/StripeAccountLinkSettings/StripeAccountLinkSettings';
+import {StripeAccountLinkSettings} from '../StripeAccountLinkSettings/StripeAccountLinkSettings';
 
 interface UserForm {
   firstName: string;
@@ -100,8 +100,8 @@ export function UserSettings() {
           </div>
         </form>
       </CardBase>
-      <StripeAccountLinkSettings />
       <UserSubscription />
+      <StripeAccountLinkSettings type="PRO" />
     </div>
   );
 }

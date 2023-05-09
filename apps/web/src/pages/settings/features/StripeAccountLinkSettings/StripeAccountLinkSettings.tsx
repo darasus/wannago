@@ -1,35 +1,70 @@
+import {useSubscription} from 'hooks';
 import {useRouter} from 'next/router';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {Button, CardBase, LoadingBlock} from 'ui';
 
-export function StripeAccountLinkSettings() {
+interface Props {
+  type: 'PRO' | 'BUSINESS';
+}
+
+export function StripeAccountLinkSettings({type}: Props) {
   const router = useRouter();
-  const account = trpc.stripeAccountLink.getLinkedAccount.useQuery();
+  const {subscription} = useSubscription({type});
+  const account = trpc.stripeAccountLink.getLinkedAccount.useQuery(
+    {
+      type,
+    },
+    {
+      keepPreviousData: false,
+      refetchOnMount: true,
+    }
+  );
   const createAccountLink =
-    trpc.stripeAccountLink.createAccountLink.useMutation();
+    trpc.stripeAccountLink.createAccountLink.useMutation({
+      onError: error => {
+        toast.error(error.message);
+      },
+    });
   const updateAccountLink =
-    trpc.stripeAccountLink.updateAccountLink.useMutation();
+    trpc.stripeAccountLink.updateAccountLink.useMutation({
+      onError: error => {
+        toast.error(error.message);
+      },
+    });
   const deleteAccountLink =
-    trpc.stripeAccountLink.deleteAccountLink.useMutation();
+    trpc.stripeAccountLink.deleteAccountLink.useMutation({
+      onError: error => {
+        toast.error(error.message);
+      },
+      onSuccess: async () => {
+        await account.refetch();
+      },
+    });
 
   const handleCreateAccountLink = async () => {
-    const url = await createAccountLink.mutateAsync();
-    router.push(url);
+    try {
+      const url = await createAccountLink.mutateAsync();
+      router.push(url);
+    } catch (error) {}
   };
 
   const handleDeleteAccountLink = async () => {
-    const response = await deleteAccountLink.mutateAsync();
-    if (response.success) {
-      toast.success('Account link deleted.');
-    } else {
-      toast.error('Failed to delete account link.');
-    }
+    try {
+      const response = await deleteAccountLink.mutateAsync();
+      if (response.success) {
+        toast.success('Account link deleted.');
+      } else {
+        toast.error('Failed to delete account link.');
+      }
+    } catch (error) {}
   };
 
   const handleUpdateAccountLink = async () => {
-    const url = await updateAccountLink.mutateAsync();
-    window.open(url, '_blank');
+    try {
+      const url = await updateAccountLink.mutateAsync();
+      window.open(url, '_blank');
+    } catch (error) {}
   };
 
   if (account.isInitialLoading) {
@@ -38,6 +73,10 @@ export function StripeAccountLinkSettings() {
         <LoadingBlock />
       </CardBase>
     );
+  }
+
+  if (subscription.data?.type !== type) {
+    return null;
   }
 
   return (
@@ -72,6 +111,7 @@ export function StripeAccountLinkSettings() {
         <Button
           onClick={handleCreateAccountLink}
           isLoading={createAccountLink.isLoading}
+          size="sm"
         >
           Link Stripe account
         </Button>

@@ -11,6 +11,7 @@ export const createAccountLink = protectedProcedure.mutation(async ({ctx}) => {
 
   const account = await ctx.stripe.stripe.accounts.create({
     type: 'express',
+    business_type: 'individual',
   });
 
   await ctx.prisma.user.update({

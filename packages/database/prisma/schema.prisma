@@ -104,20 +104,21 @@ model User {
 }
 
 model Organization {
-  id               String                 @id @default(uuid())
-  users            User[]                 @relation(name: "UserOrganization")
-  events           Event[]                @relation(name: "EventOrganization")
-  name             String                 @db.VarChar(255)
-  email            String                 @unique
-  logoSrc          String
-  disabled         Boolean                @default(false)
-  subscription     Subscription?          @relation(fields: [subscriptionId], references: [id])
-  subscriptionId   String?
-  stripeCustomerId String?
-  messages         Message[]              @relation(name: "OrganizationMessage")
-  conversation     Conversation[]         @relation(name: "OrganizationConversation")
-  lastSeens        ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
-  followers        Follow[]               @relation(name: "FollowingOrganization")
+  id                    String                 @id @default(uuid())
+  users                 User[]                 @relation(name: "UserOrganization")
+  events                Event[]                @relation(name: "EventOrganization")
+  name                  String                 @db.VarChar(255)
+  email                 String                 @unique
+  logoSrc               String
+  disabled              Boolean                @default(false)
+  subscription          Subscription?          @relation(fields: [subscriptionId], references: [id])
+  subscriptionId        String?
+  stripeCustomerId      String?
+  stripeLinkedAccountId String?
+  messages              Message[]              @relation(name: "OrganizationMessage")
+  conversation          Conversation[]         @relation(name: "OrganizationConversation")
+  lastSeens             ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
+  followers             Follow[]               @relation(name: "FollowingOrganization")
 
   @@index([subscriptionId])
 }
