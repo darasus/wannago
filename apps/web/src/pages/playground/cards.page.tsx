@@ -50,6 +50,7 @@ const event: Event & {user: User} = {
     organizationId: null,
     stripeCustomerId: null,
     subscriptionId: null,
+    stripeLinkedAccountId: null,
   },
 };
 
