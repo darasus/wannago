@@ -1,12 +1,12 @@
 import {router} from '../../trpcServer';
 import {createAccountLink} from './createAccountLink';
-import {getLinkedAccount} from './getLinkedAccount';
-import {updateAccountLink} from './updateAccountLink';
+import {getAccount} from './getAccount';
+import {getAccountLink} from './getAccountLink';
 import {deleteAccountLink} from './deleteAccountLink';
 
 export const stripeAccountLinkRouter = router({
   createAccountLink,
-  getLinkedAccount,
-  updateAccountLink,
+  getAccount,
+  getAccountLink,
   deleteAccountLink,
 });

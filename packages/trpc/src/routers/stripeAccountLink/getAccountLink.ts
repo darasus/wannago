@@ -4,7 +4,7 @@ import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpcServer';
 
-export const deleteAccountLink = protectedProcedure
+export const getAccountLink = protectedProcedure
   .input(
     z.object({
       type: z.enum(['PRO', 'BUSINESS']),
@@ -26,22 +26,11 @@ export const deleteAccountLink = protectedProcedure
         });
       }
 
-      const account = await ctx.stripe.stripe.accounts.del(
+      const account = await ctx.stripe.stripe.accounts.createLoginLink(
         user.stripeLinkedAccountId
       );
 
-      if (account.deleted) {
-        await ctx.prisma.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            stripeLinkedAccountId: null,
-          },
-        });
-      }
-
-      return {success: true};
+      return account.url;
     }
 
     if (input.type === 'BUSINESS') {
@@ -55,23 +44,12 @@ export const deleteAccountLink = protectedProcedure
         });
       }
 
-      const account = await ctx.stripe.stripe.accounts.del(
-        user.organization.id
+      const account = await ctx.stripe.stripe.accounts.createLoginLink(
+        user.organization.stripeLinkedAccountId
       );
 
-      if (account.deleted) {
-        await ctx.prisma.organization.update({
-          where: {
-            id: user.organization.id,
-          },
-          data: {
-            stripeLinkedAccountId: null,
-          },
-        });
-      }
-
-      return {success: true};
+      return account.url;
     }
 
-    return {success: false};
+    return null;
   });

@@ -11,7 +11,7 @@ interface Props {
 export function StripeAccountLinkSettings({type}: Props) {
   const router = useRouter();
   const {subscription} = useSubscription({type});
-  const account = trpc.stripeAccountLink.getLinkedAccount.useQuery(
+  const account = trpc.stripeAccountLink.getAccount.useQuery(
     {
       type,
     },
@@ -26,12 +26,11 @@ export function StripeAccountLinkSettings({type}: Props) {
         toast.error(error.message);
       },
     });
-  const updateAccountLink =
-    trpc.stripeAccountLink.updateAccountLink.useMutation({
-      onError: error => {
-        toast.error(error.message);
-      },
-    });
+  const getAccountLink = trpc.stripeAccountLink.getAccountLink.useMutation({
+    onError: error => {
+      toast.error(error.message);
+    },
+  });
   const deleteAccountLink =
     trpc.stripeAccountLink.deleteAccountLink.useMutation({
       onError: error => {
@@ -44,14 +43,14 @@ export function StripeAccountLinkSettings({type}: Props) {
 
   const handleCreateAccountLink = async () => {
     try {
-      const url = await createAccountLink.mutateAsync();
+      const url = await createAccountLink.mutateAsync({type});
       router.push(url);
     } catch (error) {}
   };
 
   const handleDeleteAccountLink = async () => {
     try {
-      const response = await deleteAccountLink.mutateAsync();
+      const response = await deleteAccountLink.mutateAsync({type});
       if (response.success) {
         toast.success('Account link deleted.');
       } else {
@@ -62,8 +61,10 @@ export function StripeAccountLinkSettings({type}: Props) {
 
   const handleUpdateAccountLink = async () => {
     try {
-      const url = await updateAccountLink.mutateAsync();
-      window.open(url, '_blank');
+      const url = await getAccountLink.mutateAsync({type});
+      if (url) {
+        window.open(url, '_blank');
+      }
     } catch (error) {}
   };
 
@@ -91,7 +92,7 @@ export function StripeAccountLinkSettings({type}: Props) {
           <div className="flex gap-2">
             <Button
               onClick={handleUpdateAccountLink}
-              isLoading={updateAccountLink.isLoading}
+              isLoading={getAccountLink.isLoading}
               size="sm"
             >
               View account

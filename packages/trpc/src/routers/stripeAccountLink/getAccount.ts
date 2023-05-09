@@ -3,7 +3,7 @@ import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpcServer';
 
-export const getLinkedAccount = protectedProcedure
+export const getAccount = protectedProcedure
   .input(
     z.object({
       type: z.enum(['PRO', 'BUSINESS']),
