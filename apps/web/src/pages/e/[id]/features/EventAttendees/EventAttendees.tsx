@@ -1,6 +1,6 @@
 import {EventSignUp, User} from '@prisma/client';
 import Head from 'next/head';
-import {CardBase, Button, Text, LoadingBlock, PageHeader} from 'ui';
+import {CardBase, Button, Text, LoadingBlock, PageHeader, TicketList} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {useConfirmDialog, useEventId} from 'hooks';
@@ -41,7 +41,7 @@ function Item({eventSignUp, refetch}: ItemProps) {
   return (
     <>
       {modal}
-      <CardBase data-testid="invitee-card">
+      <CardBase data-testid="invitee-card" innerClassName="flex flex-col gap-2">
         <div className="flex flex-col md:flex-row gap-2">
           <div className="flex items-center truncate grow">
             <Text className="truncate">{label}</Text>
@@ -61,15 +61,9 @@ function Item({eventSignUp, refetch}: ItemProps) {
           </div>
         </div>
         {Object.entries(eventSignUp.tickets).length > 0 && (
-          <>
-            {Object.values(eventSignUp.tickets).map(ticket => {
-              return (
-                <div key={ticket.id}>
-                  <Text>{`Ticket: ${ticket.title} x${ticket.quantity}`}</Text>
-                </div>
-              );
-            })}
-          </>
+          <div className="bg-gray-100 py-2 px-4 rounded-3xl">
+            <TicketList tickets={Object.values(eventSignUp.tickets)} />
+          </div>
         )}
       </CardBase>
     </>

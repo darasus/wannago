@@ -35,15 +35,23 @@ export const getMyTicketsByEvent = protectedProcedure
       },
     });
 
-    return tickets.map(ticket => {
-      return {
-        id: ticket.id,
-        title: ticket.title,
-        price: ticket.price,
-        quantity: ticket.ticketSales.reduce(
-          (acc, ticketSale) => acc + ticketSale.quantity,
-          0
-        ),
-      };
-    });
+    const response = tickets
+      .map(ticket => {
+        return {
+          id: ticket.id,
+          title: ticket.title,
+          price: ticket.price,
+          quantity: ticket.ticketSales.reduce(
+            (acc, ticketSale) => acc + ticketSale.quantity,
+            0
+          ),
+        };
+      })
+      .filter(ticket => ticket.quantity > 0);
+
+    if (response.length === 0) {
+      return null;
+    }
+
+    return response;
   });

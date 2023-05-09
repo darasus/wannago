@@ -2,7 +2,7 @@ import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
-import {CardBase, LoadingBlock, PageHeader, Text} from 'ui';
+import {CardBase, LoadingBlock, PageHeader, Text, TicketList} from 'ui';
 
 export function MyTickets() {
   const router = useRouter();
@@ -28,18 +28,7 @@ export function MyTickets() {
     <div className="flex flex-col gap-4">
       <PageHeader title={<Text>My tickets</Text>} />
       <CardBase>
-        <div className="divide-y-2">
-          {tickets.data?.map(ticket => {
-            return (
-              <div key={ticket.id} className="flex">
-                <div className="grow">
-                  <Text>{`${ticket.title}`}</Text>
-                </div>
-                <Text>{`quantity: ${ticket.quantity}`}</Text>
-              </div>
-            );
-          })}
-        </div>
+        <TicketList tickets={tickets.data ?? []} />
       </CardBase>
     </div>
   );
