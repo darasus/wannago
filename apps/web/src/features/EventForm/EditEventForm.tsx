@@ -25,8 +25,6 @@ export function EditEventForm() {
     event,
   });
 
-  console.log(form.formState);
-
   const onSubmit = form.handleSubmit(async data => {
     logEvent('event_update_submitted');
 

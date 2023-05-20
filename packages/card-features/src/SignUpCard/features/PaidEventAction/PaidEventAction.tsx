@@ -75,7 +75,7 @@ export function PaidEventAction({event}: Props) {
         >
           {`Buy ticket`}
         </Button>
-        <Badge size="sm">{`from ${formatCents(
+        <Badge className="sm:hidden" size="sm">{`from ${formatCents(
           event.tickets[0]?.price || 0
         )}`}</Badge>
       </form>

@@ -5,7 +5,6 @@ import {formatCents} from 'utils';
 import {useForm} from 'react-hook-form';
 import {trpc} from 'trpc/src/trpc';
 import {useRouter} from 'next/router';
-import {Fragment} from 'react';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -40,9 +39,9 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
   const createPaymentSession =
     trpc.payments.createCheckoutSession.useMutation();
 
-  const handleBuy = async () => {
+  const handleSubmit = form.handleSubmit(async data => {
     const responseUrl = await createPaymentSession.mutateAsync({
-      tickets: Object.entries(form.watch())
+      tickets: Object.entries(data)
         .filter(([, quantity]) => Boolean(quantity))
         .map(([ticketId, quantity]) => ({
           ticketId,
@@ -56,46 +55,48 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
     }
 
     router.push(responseUrl);
-  };
+  });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex flex-col gap-4">
-        {event.tickets.map(({title, price, id}) => {
-          return (
-            <Fragment key={id}>
-              <div key={id} className="flex items-center gap-4">
-                <div className="flex grow">
-                  <div className="grow">
-                    <Text>{title}</Text>
+    <form onSubmit={handleSubmit}>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <div className="flex flex-col gap-4">
+          {event.tickets.map(({title, price, id, description}) => {
+            return (
+              <div key={id} className="divide-2">
+                <div key={id} className="flex items-center gap-4">
+                  <div className="flex grow">
+                    <div className="grow">
+                      <Text>{title}</Text>
+                    </div>
+                    <div>
+                      <Text>{formatCents(price)}</Text>
+                    </div>
                   </div>
-                  <div>
-                    <Text>{formatCents(price)}</Text>
-                  </div>
+                  <Input
+                    placeholder="Quantity"
+                    type="number"
+                    inputClassName="w-[120px]"
+                    {...form.register(id)}
+                  />
                 </div>
-                <Input
-                  placeholder="Quantity"
-                  type="number"
-                  inputClassName="w-[120px]"
-                  {...form.register(id)}
-                />
+                <Text>{description}</Text>
               </div>
-              <div className="h-[2px] bg-gray-300" />
-            </Fragment>
-          );
-        })}
-        <div className="flex">
-          <div className="grow">
-            <Text>Total:</Text>
+            );
+          })}
+          <div className="flex">
+            <div className="grow">
+              <Text>Total:</Text>
+            </div>
+            <div>
+              <Text className="font-bold">{formatCents(total)}</Text>
+            </div>
           </div>
-          <div>
-            <Text className="font-bold">{formatCents(total)}</Text>
-          </div>
+          <Button type="submit" isLoading={createPaymentSession.isLoading}>
+            Buy
+          </Button>
         </div>
-        <Button onClick={handleBuy} isLoading={createPaymentSession.isLoading}>
-          Buy
-        </Button>
-      </div>
-    </Modal>
+      </Modal>
+    </form>
   );
 }

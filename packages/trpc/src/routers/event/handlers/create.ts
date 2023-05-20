@@ -103,6 +103,7 @@ export const create = protectedProcedure
             title: ticket.title,
             price: ticket.price,
             maxQuantity: ticket.maxQuantity,
+            description: ticket.description,
             eventId: event.id,
           })),
         });

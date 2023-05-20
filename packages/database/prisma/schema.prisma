@@ -44,6 +44,7 @@ model Ticket {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   title       String
+  description String?
   event       Event        @relation(fields: [eventId], references: [id])
   eventId     String
   ticketSales TicketSale[]

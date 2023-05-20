@@ -33,6 +33,7 @@ export function useEventForm(props?: {
           return {
             id: ticket.id,
             title: ticket.title,
+            description: ticket.description || undefined,
             price: (ticket.price / 100).toString(),
             maxQuantity: ticket.maxQuantity.toString(),
           };

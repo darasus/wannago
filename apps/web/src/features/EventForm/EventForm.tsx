@@ -10,6 +10,7 @@ import {Form} from './types';
 import {SparklesIcon} from '@heroicons/react/24/solid';
 import {useGenerateEventDescription} from 'hooks';
 import {InputWrapper} from '../../components/Input/Input/InputWrapper';
+import {Textarea} from '../../components/Input/Input/Textarea';
 
 interface Props {
   onSubmit: FormEventHandler;
@@ -214,6 +215,11 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
                         <Input
                           label={'Title'}
                           {...register(`tickets.${index}.title`)}
+                        />
+                        <Textarea
+                          label="Description"
+                          isOptional
+                          {...register(`tickets.${index}.description`)}
                         />
                         <div className="grid grid-cols-2 gap-2">
                           <Input

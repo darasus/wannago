@@ -24,6 +24,7 @@ export const eventInput = z.object({
   tickets: z.array(
     z.object({
       title: z.string(),
+      description: z.string().optional(),
       price: z.number(),
       maxQuantity: z.number(),
       id: z.string().optional(),
