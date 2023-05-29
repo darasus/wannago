@@ -68,7 +68,7 @@ function Item({eventSignUp, refetch}: ItemProps) {
           </div>
         </div>
         {Object.entries(eventSignUp.tickets).length > 0 && (
-          <div>
+          <div className="p-4 rounded-3xl border-2">
             <TicketList tickets={Object.values(eventSignUp.tickets)} />
           </div>
         )}

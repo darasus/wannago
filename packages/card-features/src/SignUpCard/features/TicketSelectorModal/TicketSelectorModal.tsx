@@ -40,6 +40,7 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
     trpc.payments.createCheckoutSession.useMutation();
 
   const handleSubmit = form.handleSubmit(async data => {
+    console.log('>>> hello');
     const responseUrl = await createPaymentSession.mutateAsync({
       tickets: Object.entries(data)
         .filter(([, quantity]) => Boolean(quantity))
@@ -58,12 +59,12 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
   });
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
           {event.tickets.map(({title, price, id, description}) => {
             return (
-              <div key={id} className="divide-2">
+              <div key={id} className="flex flex-col gap-2">
                 <div key={id} className="flex items-center gap-4">
                   <div className="flex grow">
                     <div className="grow">
@@ -80,7 +81,11 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
                     {...form.register(id)}
                   />
                 </div>
-                <Text>{description}</Text>
+                {description && (
+                  <div className="bg-gray-100 p-2 rounded-xl">
+                    <Text>{description}</Text>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -96,7 +101,7 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
             Buy
           </Button>
         </div>
-      </Modal>
-    </form>
+      </form>
+    </Modal>
   );
 }
