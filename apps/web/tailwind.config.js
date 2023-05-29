@@ -1,19 +1,14 @@
 const forms = require('@tailwindcss/forms');
 const typography = require('@tailwindcss/typography');
-const lineClamp = require('@tailwindcss/line-clamp');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './src/app/**/*.{js,ts,jsx,tsx}',
-    './src/pages/**/*.{js,ts,jsx,tsx}',
-    './src/components/**/*.{js,ts,jsx,tsx}',
-    './src/hooks/**/*.{js,ts,jsx,tsx}',
-    './src/features/**/*.{js,ts,jsx,tsx}',
-    '../../packages/ui/**/*.{js,ts,jsx,tsx}',
-    '../../packages/cards/**/*.{js,ts,jsx,tsx}',
-    '../../packages/card-features/**/*.{js,ts,jsx,tsx}',
-    '../../packages/auth-features/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/cards/src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/card-features/src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/auth-features/src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -45,7 +40,7 @@ module.exports = {
       },
     },
   },
-  plugins: [lineClamp, forms, typography],
+  plugins: [forms, typography],
   future: {
     hoverOnlyWhenSupported: true,
   },
