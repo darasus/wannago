@@ -11,7 +11,14 @@ import {ExportAttendeesCSV} from './features/ExportAttendeesCSV/ExportAttendeesC
 interface ItemProps {
   eventSignUp: EventSignUp & {
     user: User;
-    tickets: {[id: string]: {id: string; title: string; quantity: number}};
+    tickets: {
+      [id: string]: {
+        id: string;
+        title: string;
+        description: string | undefined | null;
+        quantity: number;
+      };
+    };
   };
   refetch: () => void;
 }
@@ -61,7 +68,7 @@ function Item({eventSignUp, refetch}: ItemProps) {
           </div>
         </div>
         {Object.entries(eventSignUp.tickets).length > 0 && (
-          <div className="bg-gray-100 py-2 px-4 rounded-3xl">
+          <div>
             <TicketList tickets={Object.values(eventSignUp.tickets)} />
           </div>
         )}

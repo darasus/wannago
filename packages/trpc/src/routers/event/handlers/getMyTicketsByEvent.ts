@@ -40,6 +40,7 @@ export const getMyTicketsByEvent = protectedProcedure
         return {
           id: ticket.id,
           title: ticket.title,
+          description: ticket.description,
           price: ticket.price,
           quantity: ticket.ticketSales.reduce(
             (acc, ticketSale) => acc + ticketSale.quantity,

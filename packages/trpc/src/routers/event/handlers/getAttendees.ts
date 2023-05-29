@@ -36,7 +36,12 @@ export const getAttendees = protectedProcedure
 
     return eventSignUps.map(eventSignUp => {
       const tickets: {
-        [id: string]: {quantity: number; id: string; title: string};
+        [id: string]: {
+          quantity: number;
+          id: string;
+          title: string;
+          description: string | null;
+        };
       } = {};
 
       for (const ticketSale of eventSignUp.ticketSales) {
@@ -44,6 +49,7 @@ export const getAttendees = protectedProcedure
           tickets[ticketSale.ticketId] = {
             id: ticketSale.ticket.id,
             title: ticketSale.ticket.title,
+            description: ticketSale.ticket.description,
             quantity: ticketSale.quantity,
           };
         } else {
