@@ -27,7 +27,6 @@ export function Badge({
       {...props}
       className={cn(
         'inline-flex items-center rounded-full text-sm font-bold shrink-0',
-        className,
         {
           'bg-gray-200 text-slate-700': color === 'gray',
           'bg-yellow-100 text-yellow-700': color === 'yellow',
@@ -44,7 +43,8 @@ export function Badge({
           'h-8 px-2 text-sm': size === 'sm',
           'h-11 px-4 text-base': size === 'md',
           'h-16 px-6 text-md': size === 'lg',
-        }
+        },
+        className
       )}
     >
       {children}

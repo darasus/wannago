@@ -1,6 +1,6 @@
-import {EventRegistrationStatus, User} from '@prisma/client';
+import {EventSignUp, User} from '@prisma/client';
 import Head from 'next/head';
-import {CardBase, Button, Text, LoadingBlock, PageHeader} from 'ui';
+import {CardBase, Button, Text, LoadingBlock, PageHeader, TicketList} from 'ui';
 import {trpc} from 'trpc/src/trpc';
 import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {useConfirmDialog, useEventId} from 'hooks';
@@ -9,56 +9,69 @@ import {MessageParticipantsButton} from './features/MessageParticipantsButton/Me
 import {ExportAttendeesCSV} from './features/ExportAttendeesCSV/ExportAttendeesCSV';
 
 interface ItemProps {
-  user: User;
-  status: EventRegistrationStatus;
-  hasPlusOne: boolean | null;
+  eventSignUp: EventSignUp & {
+    user: User;
+    tickets: {
+      [id: string]: {
+        id: string;
+        title: string;
+        description: string | undefined | null;
+        quantity: number;
+      };
+    };
+  };
   refetch: () => void;
 }
 
-function Item({user, hasPlusOne, status, refetch}: ItemProps) {
+function Item({eventSignUp, refetch}: ItemProps) {
   const label =
-    user.firstName +
+    eventSignUp.user.firstName +
     ' ' +
-    user.lastName +
-    ' · ' +
-    user.email +
-    (hasPlusOne ? ' · +1' : '');
+    eventSignUp.user.lastName +
+    (eventSignUp.hasPlusOne ? ' · +1' : '');
 
   const {mutateAsync} = trpc.event.cancelEventByUserId.useMutation();
   const {eventShortId} = useEventId();
   const handleCancelClick = useCallback(async () => {
     if (eventShortId) {
-      await mutateAsync({eventShortId, userId: user.id}).then(() => refetch());
+      await mutateAsync({eventShortId, userId: eventSignUp.user.id}).then(() =>
+        refetch()
+      );
     }
-  }, [mutateAsync, eventShortId, user.id, refetch]);
+  }, [mutateAsync, eventShortId, eventSignUp, refetch]);
   const {open, modal} = useConfirmDialog({
     title: 'Cancel RSVP',
-    description: `Are you sure you want to cancel the RSVP for ${user.firstName} ${user.lastName}?`,
+    description: `Are you sure you want to cancel the RSVP for ${eventSignUp.user.firstName} ${eventSignUp.user.lastName}?`,
     onConfirm: handleCancelClick,
   });
 
   return (
     <>
       {modal}
-      <CardBase
-        innerClassName="flex flex-col md:flex-row gap-2"
-        key={user.id}
-        data-testid="invitee-card"
-      >
-        <div className="flex items-center truncate grow">
-          <Text className="truncate">{label}</Text>
+      <CardBase data-testid="invitee-card" innerClassName="flex flex-col gap-2">
+        <div className="flex flex-col md:flex-row gap-2">
+          <div className="flex items-center truncate grow">
+            <Text className="truncate">{label}</Text>
+          </div>
+          <div className="flex gap-2">
+            <EventRegistrationStatusBadge status={eventSignUp.status} />
+            {Object.entries(eventSignUp.tickets).length === 0 && (
+              <Button
+                size="sm"
+                variant="neutral"
+                onClick={open}
+                disabled={eventSignUp.status === 'CANCELLED'}
+              >
+                Cancel
+              </Button>
+            )}
+          </div>
         </div>
-        <div className="flex gap-2">
-          <EventRegistrationStatusBadge status={status} />
-          <Button
-            size="sm"
-            variant="neutral"
-            onClick={open}
-            disabled={status === 'CANCELLED'}
-          >
-            Cancel
-          </Button>
-        </div>
+        {Object.entries(eventSignUp.tickets).length > 0 && (
+          <div className="p-4 rounded-3xl border-2">
+            <TicketList tickets={Object.values(eventSignUp.tickets)} />
+          </div>
+        )}
       </CardBase>
     </>
   );
@@ -95,13 +108,11 @@ export function EventAttendees() {
             <Text>No attendees yet...</Text>
           </div>
         )}
-        {data?.map(signUp => {
+        {data?.map(eventSignUp => {
           return (
             <Item
-              key={signUp.user.id}
-              user={signUp.user}
-              hasPlusOne={signUp.hasPlusOne}
-              status={signUp.status}
+              key={eventSignUp.user.id}
+              eventSignUp={eventSignUp}
               refetch={refetch}
             />
           );

@@ -91,7 +91,11 @@ function MyApp({Component, pageProps}: AppProps) {
               <Intercom />
             </>
           )}
-          <Toaster>
+          <Toaster
+            toastOptions={{
+              duration: 5000,
+            }}
+          >
             {t => (
               <ToastBar
                 toast={t}

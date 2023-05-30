@@ -19,6 +19,7 @@ export const update = protectedProcedure
         featuredImageWidth,
         featuredImagePreviewSrc,
         title,
+        tickets,
       },
       ctx,
     }) => {
@@ -46,12 +47,12 @@ export const update = protectedProcedure
           id: eventId,
         },
         data: {
-          title: title,
-          description: description,
+          title,
+          description,
           startDate,
           endDate,
-          address: address,
-          maxNumberOfAttendees: maxNumberOfAttendees ?? Infinity,
+          address,
+          maxNumberOfAttendees: maxNumberOfAttendees ?? 0,
           featuredImageSrc,
           featuredImageHeight,
           featuredImageWidth,
@@ -60,6 +61,32 @@ export const update = protectedProcedure
           latitude: geocodeResponse?.data.results[0].geometry.location.lat,
         },
       });
+
+      for (const ticket of tickets) {
+        if (ticket.id) {
+          await ctx.prisma.ticket.update({
+            where: {
+              id: ticket.id,
+            },
+            data: {
+              title: ticket.title,
+              price: ticket.price,
+              maxQuantity: ticket.maxQuantity,
+              description: ticket.description,
+            },
+          });
+        } else {
+          await ctx.prisma.ticket.create({
+            data: {
+              title: ticket.title,
+              price: ticket.price,
+              maxQuantity: ticket.maxQuantity,
+              description: ticket.description,
+              eventId: event.id,
+            },
+          });
+        }
+      }
 
       const {messageId} = await ctx.actions.updateEventReminder({
         eventId,

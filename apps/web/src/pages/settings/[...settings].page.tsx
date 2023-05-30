@@ -5,7 +5,6 @@ import {UserSettings} from './features/UserSettings/UserSettings';
 import {withProtected} from '../../utils/withAuthProtect';
 import {useMyOrganizationQuery, useMyUserQuery} from 'hooks';
 import {useRouter} from 'next/router';
-import {UserSubscription} from './features/UserSubscription/UserSubscription';
 
 type SettingsPageType = 'personal' | 'team';
 
@@ -56,12 +55,7 @@ function SettingsPage() {
               </Button>
             </div>
           </PageHeader>
-          {settings === 'personal' && (
-            <div className="flex flex-col gap-4">
-              <UserSettings />
-              <UserSubscription />
-            </div>
-          )}
+          {settings === 'personal' && <UserSettings />}
           {settings === 'team' && <TeamSettings />}
         </div>
       </Container>

@@ -1,4 +1,5 @@
 import {eventNotFoundError} from 'error';
+import {omit} from 'ramda';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpcServer';
@@ -16,15 +17,49 @@ export const getAttendees = protectedProcedure
 
     await ctx.actions.canModifyEvent({eventId: event.id});
 
-    return ctx.prisma.eventSignUp.findMany({
+    const eventSignUps = await ctx.prisma.eventSignUp.findMany({
       where: {
         eventId: event.id,
-      },
-      include: {
-        user: true,
       },
       orderBy: {
         createdAt: 'desc',
       },
+      include: {
+        user: true,
+        ticketSales: {
+          include: {
+            ticket: true,
+          },
+        },
+      },
+    });
+
+    return eventSignUps.map(eventSignUp => {
+      const tickets: {
+        [id: string]: {
+          quantity: number;
+          id: string;
+          title: string;
+          description: string | null;
+        };
+      } = {};
+
+      for (const ticketSale of eventSignUp.ticketSales) {
+        if (!tickets[ticketSale.ticketId]) {
+          tickets[ticketSale.ticketId] = {
+            id: ticketSale.ticket.id,
+            title: ticketSale.ticket.title,
+            description: ticketSale.ticket.description,
+            quantity: ticketSale.quantity,
+          };
+        } else {
+          tickets[ticketSale.ticketId].quantity += ticketSale.quantity;
+        }
+      }
+
+      return {
+        ...omit(['ticketSales'], eventSignUp),
+        tickets,
+      };
     });
   });

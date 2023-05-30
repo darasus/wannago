@@ -6,6 +6,7 @@ import {createContext} from 'trpc/src/context';
 import {stripeWebhookHandlerRouter} from 'trpc/src/routers/stripeWebhookHandler';
 import {
   baseEventHandlerSchema,
+  handleCheckoutSessionCompletedInputSchema,
   handleCustomerSubscriptionDeletedInputSchema,
   handleCustomerSubscriptionUpdatedInputSchema,
 } from 'stripe-webhook-input-validation';
@@ -48,9 +49,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       );
     }
 
+    if (input.type === 'checkout.session.completed') {
+      await caller.handleCheckoutSessionCompleted(
+        handleCheckoutSessionCompletedInputSchema.parse(event)
+      );
+    }
+
     return res.status(200).json({success: true});
   } catch (err: any) {
-    console.log(err);
     captureException(err);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }

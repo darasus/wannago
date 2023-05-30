@@ -17,8 +17,17 @@ export const eventInput = z.object({
       if (typeof val === 'number') {
         return val;
       }
-      return Number(val);
+      return isNaN(Number(val)) ? 0 : Number(val);
     })
     .nullable()
     .default(Infinity),
+  tickets: z.array(
+    z.object({
+      title: z.string(),
+      description: z.string().optional(),
+      price: z.number(),
+      maxQuantity: z.number(),
+      id: z.string().optional(),
+    })
+  ),
 });

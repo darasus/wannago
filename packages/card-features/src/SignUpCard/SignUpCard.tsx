@@ -1,126 +1,29 @@
-import {useAuth} from '@clerk/nextjs';
-import {Event} from '@prisma/client';
+import {Event, Ticket} from '@prisma/client';
 import {SignUpCard as _SignUpCard} from 'cards';
-import {
-  useAmplitude,
-  useAttendeeCount,
-  useConfetti,
-  useConfirmDialog,
-} from 'hooks';
-import {useState} from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
-import {toast} from 'react-hot-toast';
-import {trpc} from 'trpc/src/trpc';
+import {useAttendeeCount} from 'hooks';
 import {Container} from 'ui';
-import {AuthModal} from './features/AuthModal/AuthModal';
+import {FreeEventAction} from './features/FreeEventAction/FreeEventAction';
+import {PaidEventAction} from './features/PaidEventAction/PaidEventAction';
 
 interface Props {
-  event: Event;
-}
-
-interface EventSignUpForm {
-  hasPlusOne: boolean;
+  event: Event & {tickets: Ticket[]};
 }
 
 export function SignUpCard({event}: Props) {
-  const {confetti} = useConfetti();
-  const {logEvent} = useAmplitude();
-  const [isOpen, setIsOpen] = useState(false);
-  const auth = useAuth();
-  const signUp = trpc.event.getMySignUp.useQuery(
-    {eventId: event.id},
-    {
-      retry: false,
-      enabled: auth.isSignedIn,
-    }
-  );
-  const joinEvent = trpc.event.joinEvent.useMutation({
-    onError(error) {
-      toast.error(error.message);
-    },
-    onSuccess: () => {
-      logEvent('event_sign_up_submitted', {
-        eventId: event.id,
-      });
-      toast.success('Signed up! Check your email for more details!');
-      confetti();
-    },
-  });
-  const cancelEvent = trpc.event.cancelEvent.useMutation({
-    onError(error) {
-      toast.error(error.message);
-    },
-    onSuccess: () => {
-      logEvent('event_sign_up_cancel_submitted', {
-        eventId: event.id,
-      });
-      toast.success('Event is cancelled!');
-    },
-  });
-  const {modal: cancelModal, open: openCancelModal} = useConfirmDialog({
-    title: 'Confirm cancellation',
-    description: 'Are you sure you want to cancel your attendance?',
-    onConfirm: async () => {
-      await cancelEvent.mutateAsync({
-        eventId: event.id,
-      });
-      await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
-    },
-  });
-  const form = useForm<EventSignUpForm>();
   const attendeeCount = useAttendeeCount({
     eventId: event.id,
   });
 
-  const onJoinSubmit = form.handleSubmit(async data => {
-    if (!auth.isSignedIn) {
-      const token = await auth.getToken();
-
-      if (!token) {
-        setIsOpen(true);
-        return;
-      }
-    }
-
-    try {
-      await joinEvent.mutateAsync({
-        eventId: event.id,
-        hasPlusOne: data.hasPlusOne,
-      });
-      await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
-    } catch (error) {}
-  });
-
-  const onCancelSubmit = form.handleSubmit(async () => {
-    openCancelModal();
-  });
-
-  const amSignedUp = Boolean(signUp && signUp.data?.status === 'REGISTERED');
-  const amInvited = Boolean(signUp && signUp.data?.status === 'INVITED');
+  const isFreeEvent = event.tickets.length === 0;
+  const isPaidEvent = event.tickets.length > 0;
 
   return (
     <>
-      {cancelModal}
-      {isOpen && (
-        // <RedirectToSignIn redirectUrl={`${getBaseUrl()}/e/${event.shortId}`} />
-        <AuthModal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          onDone={onJoinSubmit}
-        />
-      )}
       <Container className="w-full p-0 m-0">
-        <FormProvider {...form}>
-          <_SignUpCard
-            amSignedUp={amSignedUp}
-            amInvited={amInvited}
-            onJoinSubmit={onJoinSubmit}
-            onCancelSubmit={onCancelSubmit}
-            isPublished={event.isPublished}
-            numberOfAttendees={attendeeCount?.data?.count ?? 0}
-            isLoading={signUp.isLoading}
-          />
-        </FormProvider>
+        <_SignUpCard numberOfAttendees={attendeeCount?.data?.count ?? 0}>
+          {isFreeEvent && <FreeEventAction event={event} />}
+          {isPaidEvent && <PaidEventAction event={event} />}
+        </_SignUpCard>
       </Container>
     </>
   );

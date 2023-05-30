@@ -32,69 +32,109 @@ model Event {
   userId                  String?
   messageId               String?
   eventSignUps            EventSignUp[] @relation(name: "EventSignUps")
+  tickets                 Ticket[]
+  ticketSales             TicketSale[]
 
   @@index([organizationId])
   @@index([userId])
 }
 
+model Ticket {
+  id          String       @id @default(uuid())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  title       String
+  description String?
+  event       Event        @relation(fields: [eventId], references: [id])
+  eventId     String
+  ticketSales TicketSale[]
+  price       Int
+  maxQuantity Int
+
+  @@index([eventId])
+}
+
+model TicketSale {
+  id            String       @id @default(uuid())
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  quantity      Int
+  ticket        Ticket       @relation(fields: [ticketId], references: [id])
+  ticketId      String
+  user          User         @relation(fields: [userId], references: [id])
+  userId        String
+  event         Event        @relation(fields: [eventId], references: [id])
+  eventId       String
+  eventSignUp   EventSignUp? @relation(fields: [eventSignUpId], references: [id])
+  eventSignUpId String?
+
+  @@index([eventSignUpId])
+  @@index([eventId])
+  @@index([ticketId])
+  @@index([userId])
+}
+
 model User {
-  id               String                 @id @default(uuid())
-  email            String                 @unique
-  createdAt        DateTime               @default(now())
-  updatedAt        DateTime               @default(now()) @updatedAt
-  externalId       String?
-  firstName        String
-  lastName         String
-  profileImageSrc  String?
-  organization     Organization?          @relation(name: "UserOrganization", fields: [organizationId], references: [id])
-  organizationId   String?
-  eventSignUps     EventSignUp[]          @relation(name: "EventSignUpUser")
-  type             UserType               @default(USER)
-  events           Event[]                @relation(name: "EventUser")
-  disabled         Boolean                @default(false)
-  subscription     Subscription?          @relation(fields: [subscriptionId], references: [id])
-  subscriptionId   String?
-  stripeCustomerId String?
-  messages         Message[]              @relation(name: "UserMessage")
-  conversation     Conversation[]         @relation(name: "UserConversation")
-  lastSeens        ConversationLastSeen[] @relation(name: "UserConversationLastSeen")
-  followers        Follow[]               @relation(name: "FollowingUser")
-  following        Follow[]               @relation(name: "FollowerUser")
+  id                    String                 @id @default(uuid())
+  email                 String                 @unique
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @default(now()) @updatedAt
+  externalId            String?
+  firstName             String
+  lastName              String
+  profileImageSrc       String?
+  organization          Organization?          @relation(name: "UserOrganization", fields: [organizationId], references: [id])
+  organizationId        String?
+  eventSignUps          EventSignUp[]          @relation(name: "EventSignUpUser")
+  type                  UserType               @default(USER)
+  events                Event[]                @relation(name: "EventUser")
+  disabled              Boolean                @default(false)
+  subscription          Subscription?          @relation(fields: [subscriptionId], references: [id])
+  subscriptionId        String?
+  stripeCustomerId      String?
+  stripeLinkedAccountId String?
+  messages              Message[]              @relation(name: "UserMessage")
+  conversation          Conversation[]         @relation(name: "UserConversation")
+  lastSeens             ConversationLastSeen[] @relation(name: "UserConversationLastSeen")
+  followers             Follow[]               @relation(name: "FollowingUser")
+  following             Follow[]               @relation(name: "FollowerUser")
+  ticketSale            TicketSale[]
 
   @@index([organizationId])
   @@index([subscriptionId])
 }
 
 model Organization {
-  id               String                 @id @default(uuid())
-  users            User[]                 @relation(name: "UserOrganization")
-  events           Event[]                @relation(name: "EventOrganization")
-  name             String                 @db.VarChar(255)
-  email            String                 @unique()
-  logoSrc          String
-  disabled         Boolean                @default(false)
-  subscription     Subscription?          @relation(fields: [subscriptionId], references: [id])
-  subscriptionId   String?
-  stripeCustomerId String?
-  messages         Message[]              @relation(name: "OrganizationMessage")
-  conversation     Conversation[]         @relation(name: "OrganizationConversation")
-  lastSeens        ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
-  followers        Follow[]               @relation(name: "FollowingOrganization")
+  id                    String                 @id @default(uuid())
+  users                 User[]                 @relation(name: "UserOrganization")
+  events                Event[]                @relation(name: "EventOrganization")
+  name                  String                 @db.VarChar(255)
+  email                 String                 @unique
+  logoSrc               String
+  disabled              Boolean                @default(false)
+  subscription          Subscription?          @relation(fields: [subscriptionId], references: [id])
+  subscriptionId        String?
+  stripeCustomerId      String?
+  stripeLinkedAccountId String?
+  messages              Message[]              @relation(name: "OrganizationMessage")
+  conversation          Conversation[]         @relation(name: "OrganizationConversation")
+  lastSeens             ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
+  followers             Follow[]               @relation(name: "FollowingOrganization")
 
   @@index([subscriptionId])
 }
 
 model EventSignUp {
-  id         String                  @id @default(uuid())
-  createdAt  DateTime                @default(now())
-  updatedAt  DateTime                @updatedAt
-  event      Event                   @relation(name: "EventSignUps", fields: [eventId], references: [id])
-  eventId    String
-  user       User                    @relation(name: "EventSignUpUser", fields: [userId], references: [id])
-  userId     String
-  hasPlusOne Boolean?                @default(false)
-  // INFO: remove default once production migration is done
-  status     EventRegistrationStatus @default(REGISTERED)
+  id          String                  @id @default(uuid())
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @updatedAt
+  hasPlusOne  Boolean?                @default(false)
+  status      EventRegistrationStatus @default(REGISTERED) // TODO: remove default once production migration is done
+  event       Event                   @relation(name: "EventSignUps", fields: [eventId], references: [id])
+  eventId     String
+  user        User                    @relation(name: "EventSignUpUser", fields: [userId], references: [id])
+  userId      String
+  ticketSales TicketSale[]
 
   @@index([eventId])
   @@index([userId])

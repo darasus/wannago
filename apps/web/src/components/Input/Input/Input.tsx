@@ -5,7 +5,7 @@ import {Spinner} from 'ui';
 import {cn} from 'utils';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
+  label?: string | JSX.Element;
   description?: string;
   inputClassName?: string;
   containerClassName?: string;

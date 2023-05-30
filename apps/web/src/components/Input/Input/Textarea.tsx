@@ -8,10 +8,11 @@ interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   inputClassName?: string;
   containerClassName?: string;
   error?: FieldError;
+  isOptional?: boolean;
 }
 
 export const Textarea = forwardRef(function Input(
-  {containerClassName, inputClassName, error, ...props}: Props,
+  {containerClassName, inputClassName, error, isOptional, ...props}: Props,
   ref: React.Ref<HTMLTextAreaElement>
 ) {
   const hasError = Boolean(error);
@@ -19,6 +20,7 @@ export const Textarea = forwardRef(function Input(
   return (
     <InputWrapper
       containerClassName={containerClassName}
+      isOptional={isOptional}
       error={error}
       id={props.id}
       label={props.label}

@@ -10,8 +10,9 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {Button, CardBase} from 'ui';
 import {FileInput} from '../../../../components/Input/FileInput/FileInput';
 import {Input} from '../../../../components/Input/Input/Input';
-import {OrganizationSubscription} from '../OrganizationSubscription/OrganizationSubscription';
-import {TeamMembersSettings} from './TeamMembersSettings';
+import {StripeAccountLinkSettings} from '../StripeAccountLinkSettings/StripeAccountLinkSettings';
+import {OrganizationSubscription} from './features/OrganizationSubscription/OrganizationSubscription';
+import {TeamMembersSettings} from './features/TeamMemberSettings/TeamMembersSettings';
 
 // TODO: create description text explaining why you need to create a team
 
@@ -126,6 +127,7 @@ export function TeamSettings() {
       </CardBase>
       <TeamMembersSettings />
       <OrganizationSubscription />
+      <StripeAccountLinkSettings type="BUSINESS" />
     </>
   );
 }

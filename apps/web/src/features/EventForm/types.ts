@@ -1,7 +1,15 @@
+interface Ticket {
+  id: string;
+  title: string;
+  description?: string;
+  price: string;
+  maxQuantity: string;
+}
+
 export interface Form {
   title: string;
-  description: string | null;
   startDate: string;
+  description: string | null;
   endDate: string;
   address: string;
   maxNumberOfAttendees: number | null;
@@ -9,4 +17,5 @@ export interface Form {
   featuredImageHeight: number | null;
   featuredImageWidth: number | null;
   featuredImagePreviewSrc: string | null;
+  tickets: Ticket[];
 }

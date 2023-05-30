@@ -1,4 +1,4 @@
-import {Event, Organization, User} from '@prisma/client';
+import {Event, Organization, Ticket, User} from '@prisma/client';
 import {getBaseUrl} from 'utils';
 import {
   DateCard,
@@ -13,6 +13,7 @@ interface Props {
   event: Event & {
     user: User | null;
     organization: Organization | null;
+    tickets: Ticket[];
   };
   isLoadingImage?: boolean;
   isMyEvent?: boolean;

@@ -1,3 +1,4 @@
+import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpcServer';
 
@@ -10,12 +11,22 @@ export const remove = protectedProcedure
   .mutation(async ({input: {eventId}, ctx}) => {
     await ctx.actions.canModifyEvent({eventId});
 
-    const event = await ctx.prisma.event.findUnique({
+    const ticketSales = await ctx.prisma.ticketSale.count({
       where: {
-        id: eventId,
+        eventId,
       },
-      include: {
-        eventSignUps: true,
+    });
+
+    if (ticketSales > 0) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Cannot delete an event that has ticket sales',
+      });
+    }
+
+    await ctx.prisma.ticket.deleteMany({
+      where: {
+        eventId,
       },
     });
 
