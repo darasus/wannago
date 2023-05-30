@@ -8,7 +8,11 @@ import {LocationInput} from '../../components/Input/LocationInput/LocationInput'
 import {RichTextarea} from '../../components/Input/RichTextarea/RichTextarea';
 import {Form} from './types';
 import {SparklesIcon} from '@heroicons/react/24/solid';
-import {useGenerateEventDescription} from 'hooks';
+import {
+  useGenerateEventDescription,
+  useSessionQuery,
+  useSubscription,
+} from 'hooks';
 import {InputWrapper} from '../../components/Input/Input/InputWrapper';
 import {Textarea} from '../../components/Input/Input/Textarea';
 
@@ -20,6 +24,14 @@ interface Props {
 }
 
 export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
+  const session = useSessionQuery();
+  const subscription = useSubscription({
+    type: session.data === 'organization' ? 'BUSINESS' : 'PRO',
+  });
+  const canUsePaidEvent =
+    subscription.subscription.data?.type === 'PRO' ||
+    subscription.subscription.data?.type === 'BUSINESS';
+
   const {
     register,
     formState: {isSubmitting, errors, defaultValues},
@@ -182,6 +194,7 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
                   setValue('maxNumberOfAttendees', 0);
                 }}
                 variant={attendType === 'paid' ? 'primary' : 'neutral'}
+                disabled={!canUsePaidEvent}
               >
                 Paid
               </Button>
