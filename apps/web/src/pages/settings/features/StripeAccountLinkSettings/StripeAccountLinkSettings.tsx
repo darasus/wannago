@@ -1,3 +1,4 @@
+import {captureException, captureMessage} from '@sentry/nextjs';
 import {useSubscription} from 'hooks';
 import {useRouter} from 'next/router';
 import {toast} from 'react-hot-toast';
@@ -44,8 +45,16 @@ export function StripeAccountLinkSettings({type}: Props) {
   const handleCreateAccountLink = async () => {
     try {
       const url = await createAccountLink.mutateAsync({type});
+      captureMessage(url);
       router.push(url);
-    } catch (error) {}
+    } catch (error) {
+      captureException(error, {
+        extra: {
+          type,
+          function: 'createAccountLink',
+        },
+      });
+    }
   };
 
   const handleDeleteAccountLink = async () => {
@@ -56,7 +65,14 @@ export function StripeAccountLinkSettings({type}: Props) {
       } else {
         toast.error('Failed to delete account link.');
       }
-    } catch (error) {}
+    } catch (error) {
+      captureException(error, {
+        extra: {
+          type,
+          function: 'deleteAccountLink',
+        },
+      });
+    }
   };
 
   const handleUpdateAccountLink = async () => {
@@ -65,7 +81,14 @@ export function StripeAccountLinkSettings({type}: Props) {
       if (url) {
         window.open(url, '_blank');
       }
-    } catch (error) {}
+    } catch (error) {
+      captureException(error, {
+        extra: {
+          type,
+          function: 'getAccountLink',
+        },
+      });
+    }
   };
 
   if (account.isInitialLoading) {
