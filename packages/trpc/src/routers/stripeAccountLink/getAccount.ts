@@ -47,7 +47,9 @@ export const getAccount = protectedProcedure
       }
     );
 
-    console.log(JSON.stringify(account, null, 2));
+    if (!account.details_submitted) {
+      return null;
+    }
 
     if (!account) {
       return null;

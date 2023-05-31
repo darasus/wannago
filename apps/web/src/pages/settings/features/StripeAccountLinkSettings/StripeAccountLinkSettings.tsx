@@ -120,14 +120,14 @@ export function StripeAccountLinkSettings({type}: Props) {
             >
               View account
             </Button>
-            <Button
+            {/* <Button
               onClick={handleDeleteAccountLink}
               isLoading={deleteAccountLink.isLoading}
               size="sm"
               variant="danger"
             >
               Delete account
-            </Button>
+            </Button> */}
           </div>
         </div>
       )}

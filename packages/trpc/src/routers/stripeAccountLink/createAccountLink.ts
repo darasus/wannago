@@ -10,27 +10,40 @@ export const createAccountLink = protectedProcedure
       externalId: ctx.auth.userId,
       includeOrganization: true,
     });
+    invariant(user, userNotFoundError);
 
-    const account = await ctx.stripe.stripe.accounts.create({
-      type: 'express',
-      business_type: 'individual',
-    });
+    let stripeLinkedAccountId = '';
+
+    if (input.type === 'PRO' && user.stripeLinkedAccountId) {
+      stripeLinkedAccountId = user.stripeLinkedAccountId;
+    }
+
+    if (input.type === 'BUSINESS' && user.organization?.stripeLinkedAccountId) {
+      stripeLinkedAccountId = user.organization?.stripeLinkedAccountId;
+    }
+
+    if (!stripeLinkedAccountId) {
+      const account = await ctx.stripe.stripe.accounts.create({
+        type: 'express',
+        business_type: input.type === 'BUSINESS' ? 'company' : 'individual',
+        ...(input.type === 'BUSINESS' ? {} : {}),
+      });
+
+      stripeLinkedAccountId = account.id;
+    }
 
     if (input.type === 'PRO') {
-      invariant(user, userNotFoundError);
-
       await ctx.prisma.user.update({
         where: {
           id: user.id,
         },
         data: {
-          stripeLinkedAccountId: account.id,
+          stripeLinkedAccountId,
         },
       });
     }
 
     if (input.type === 'BUSINESS') {
-      invariant(user, userNotFoundError);
       invariant(user.organization, organizationNotFoundError);
 
       await ctx.prisma.organization.update({
@@ -38,19 +51,19 @@ export const createAccountLink = protectedProcedure
           id: user.organization.id,
         },
         data: {
-          stripeLinkedAccountId: account.id,
+          stripeLinkedAccountId,
         },
       });
     }
 
+    const callbackUrl = `${getBaseUrl()}/settings/${
+      input.type === 'BUSINESS' ? 'team' : 'personal'
+    }`;
+
     const accountLink = await ctx.stripe.stripe.accountLinks.create({
-      account: account.id,
-      refresh_url: `${getBaseUrl()}/settings/${
-        input.type === 'PRO' ? 'personal' : 'team'
-      }`,
-      return_url: `${getBaseUrl()}/settings/${
-        input.type === 'PRO' ? 'personal' : 'team'
-      }`,
+      account: stripeLinkedAccountId,
+      refresh_url: callbackUrl,
+      return_url: callbackUrl,
       type: 'account_onboarding',
     });
 
