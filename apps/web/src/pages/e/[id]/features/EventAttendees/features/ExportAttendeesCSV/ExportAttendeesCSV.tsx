@@ -1,32 +1,26 @@
 import {DocumentArrowDownIcon} from '@heroicons/react/24/solid';
-import {useEventId} from 'hooks';
+import {useEventId, useEventQuery} from 'hooks';
 import {trpc} from 'trpc/src/trpc';
 import {Button} from 'ui';
 import {saveAs} from 'file-saver';
+import {toast} from 'react-hot-toast';
+import {snakeCase} from 'change-case';
 
 export function ExportAttendeesCSV() {
   const {eventShortId} = useEventId();
-  const {data, refetch, isLoading} = trpc.event.getAttendees.useQuery(
-    {
-      eventShortId: eventShortId!,
-    },
-    {
-      enabled: !!eventShortId,
-    }
-  );
+  const {data} = useEventQuery({eventShortId});
+  const generateEventCsvData = trpc.event.generateEventCsvData.useMutation();
 
-  const handleDownloadCsvClick = () => {
-    const content =
-      'First name,Last name,Email,Plus one,Status\r\n' +
-      data
-        ?.map(signUp => {
-          return `${signUp.user.firstName},${signUp.user.lastName},${
-            signUp.user.email
-          },${signUp.hasPlusOne ? 'Yes' : 'No'},${signUp.status}`;
-        })
-        .join('\r\n')!;
+  const handleDownloadCsvClick = async () => {
+    const content = await generateEventCsvData.mutateAsync({
+      eventShortId: eventShortId!,
+    });
+    if (!content || !data?.title) {
+      toast.error('Error generating CSV file, please try again later.');
+      return;
+    }
     const blob = new Blob([content], {type: 'text/csv;charset=utf-8'});
-    saveAs(blob, 'file.csv');
+    saveAs(blob, `${snakeCase(data?.title)}.csv`);
   };
 
   return (
@@ -37,6 +31,7 @@ export function ExportAttendeesCSV() {
       iconLeft={<DocumentArrowDownIcon />}
       title={'Export CSV'}
       data-testid="export-csv-button"
+      isLoading={generateEventCsvData.isLoading}
     >
       Export CSV
     </Button>

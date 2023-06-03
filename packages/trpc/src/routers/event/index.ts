@@ -23,6 +23,7 @@ import {getIsMyEvent} from './handlers/getIsMyEvent';
 import {generateEventWithPrompt} from './handlers/generateEventWithPrompt';
 import {generateImageWithPrompt} from './handlers/generateImageWithPrompt';
 import {getMyTicketsByEvent} from './handlers/getMyTicketsByEvent';
+import {generateEventCsvData} from './handlers/generateEventCsvData';
 
 export const eventRouter = router({
   create,
@@ -49,4 +50,5 @@ export const eventRouter = router({
   generateEventWithPrompt,
   generateImageWithPrompt,
   getMyTicketsByEvent,
+  generateEventCsvData,
 });
