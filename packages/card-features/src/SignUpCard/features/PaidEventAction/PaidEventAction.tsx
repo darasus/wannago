@@ -38,6 +38,8 @@ export function PaidEventAction({event}: Props) {
     }
   });
 
+  const formattedPrice = formatCents(event.tickets[0].price);
+
   return (
     <>
       <AuthModal
@@ -75,9 +77,10 @@ export function PaidEventAction({event}: Props) {
         >
           {`Buy ticket`}
         </Button>
-        <Badge className="sm:hidden" size="sm">{`from ${formatCents(
-          event.tickets[0]?.price || 0
-        )}`}</Badge>
+        <Badge
+          className="hidden md:flex"
+          size="sm"
+        >{`from ${formattedPrice}`}</Badge>
       </form>
     </>
   );
