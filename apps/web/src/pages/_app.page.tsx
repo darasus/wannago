@@ -83,7 +83,7 @@ function MyApp({Component, pageProps}: AppProps) {
         </Script>
       )}
       <div className={cn(bodyFont.className)}>
-        <ClerkProvider {...pageProps} supportEmail="hi@wannago.app">
+        <ClerkProvider {...pageProps}>
           {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
             <>
               <Amplitude />

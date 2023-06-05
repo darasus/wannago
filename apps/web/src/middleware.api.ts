@@ -1,10 +1,29 @@
-import {withClerkMiddleware} from '@clerk/nextjs/server';
-import {NextResponse} from 'next/server';
+import {authMiddleware} from '@clerk/nextjs';
 
-export default withClerkMiddleware(() => {
-  return NextResponse.next();
+const publicRoutes = [
+  '/',
+  '/login',
+  '/register',
+  '/examples',
+  '/terms',
+  '/e/',
+  '/u/',
+  '/o/',
+  '/api/',
+  '/api/trpc/',
+];
+
+export default authMiddleware({
+  publicRoutes: req => {
+    return true;
+  },
 });
 
 export const config = {
-  matcher: ['/((?!static|_next/static|_next/image|favicon.ico).*)'],
+  matcher: [
+    '/((?!static|_next/static|_next/image|favicon.ico).*)',
+    '/((?!.*\\..*|_next).*)',
+    '/',
+    '/(api|trpc)(.*)',
+  ],
 };
