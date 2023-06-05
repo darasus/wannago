@@ -24,7 +24,7 @@ export function Pricing() {
             type="featured"
             name="Pro"
             planId="pro"
-            price="$29.99"
+            price="$29"
             description="Those who run one or more events a month and promote personal brand."
             features={[
               'Unlimited events',
@@ -37,7 +37,7 @@ export function Pricing() {
             type="highlighted"
             name="Business"
             planId="business"
-            price="$79.99"
+            price="$79"
             description="Small and medium sized businesses that want to build lasting relationship with their customers."
             features={[
               'Organization profile',
