@@ -32,7 +32,7 @@ export function getCurrencyFromHeaders(
     return 'USD';
   }
 
-  const countryRegion = headers['x-vercel-ip-country-region'] as string;
+  const countryRegion = headers['x-vercel-ip-country'] as string;
 
   if (usdRegions.includes(countryRegion)) {
     return 'USD';
