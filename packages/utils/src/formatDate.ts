@@ -1,7 +1,6 @@
 import {
   format as _format,
   isSameDay as _isSameDay,
-  isPast as _isPast,
   differenceInSeconds as _differenceInSeconds,
 } from 'date-fns';
 import {utcToZonedTime} from 'date-fns-tz';

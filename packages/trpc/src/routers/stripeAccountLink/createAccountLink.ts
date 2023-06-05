@@ -27,6 +27,7 @@ export const createAccountLink = protectedProcedure
         type: 'express',
         business_type: input.type === 'BUSINESS' ? 'company' : 'individual',
         ...(input.type === 'BUSINESS' ? {} : {}),
+        default_currency: ctx.currency.toLowerCase(),
       });
 
       stripeLinkedAccountId = account.id;

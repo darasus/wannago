@@ -1,6 +1,8 @@
-export function formatCents(cents: number): string {
+import {Currency} from 'types';
+
+export function formatCents(cents: number, currency: Currency): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency,
   }).format(cents / 100);
 }

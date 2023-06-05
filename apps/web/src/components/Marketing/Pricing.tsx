@@ -14,7 +14,7 @@ export function Pricing() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 m-auto">
           <PricingPlan
             name="Starter"
-            price="$0"
+            price={0}
             description="Anyone running small and private events, or just starting up."
             features={['Up to 5 events', 'Up to 50 attendees']}
             type="general"
@@ -24,7 +24,7 @@ export function Pricing() {
             type="featured"
             name="Pro"
             planId="pro"
-            price="$29"
+            price={2900}
             description="Those who run one or more events a month and promote personal brand."
             features={[
               'Unlimited events',
@@ -37,7 +37,7 @@ export function Pricing() {
             type="highlighted"
             name="Business"
             planId="business"
-            price="$79"
+            price={7900}
             description="Small and medium sized businesses that want to build lasting relationship with their customers."
             features={[
               'Organization profile',
@@ -52,7 +52,7 @@ export function Pricing() {
             type="general"
             name="Enterprise"
             planId="enterprise"
-            price="Custom"
+            price={0}
             description="Large organizations with special needs."
             features={[
               'Everything in Business',

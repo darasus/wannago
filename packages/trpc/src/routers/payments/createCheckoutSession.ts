@@ -70,7 +70,7 @@ export const createCheckoutSession = protectedProcedure
             product_data: {
               name: ticket.title,
             },
-            currency: 'usd',
+            currency: ctx.currency.toLocaleLowerCase(),
             unit_amount: ticket.price,
           },
         };

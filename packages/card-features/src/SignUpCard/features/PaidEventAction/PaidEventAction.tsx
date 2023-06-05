@@ -7,12 +7,14 @@ import {Badge, Button} from 'ui';
 import {formatCents} from 'utils';
 import {AuthModal} from '../AuthModal/AuthModal';
 import {TicketSelectorModal} from '../TicketSelectorModal/TicketSelectorModal';
+import {useGetCurrencyQuery} from 'hooks';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
 }
 
 export function PaidEventAction({event}: Props) {
+  const currency = useGetCurrencyQuery();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isTicketSelectorModalOpen, setIsTicketSelectorModalOpen] =
     useState(false);
@@ -38,7 +40,7 @@ export function PaidEventAction({event}: Props) {
     }
   });
 
-  const formattedPrice = formatCents(event.tickets[0].price);
+  const formattedPrice = formatCents(event.tickets[0].price, currency.data);
 
   return (
     <>

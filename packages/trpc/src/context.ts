@@ -35,6 +35,8 @@ import {generateImageFromPrompt} from './actions/generateImageFromPrompt';
 import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
 import {assertCanAddOrganizationMember} from './assertions/assertCanAddOrganizationMember';
+import {getCurrencyFromHeaders} from 'utils';
+import {Currency} from 'types';
 
 const actions = {
   getEvents,
@@ -75,6 +77,7 @@ interface CreateInnerContextOptions {
   clerk: ReturnType<typeof createClerkClient>;
   prisma: PrismaClient;
   timezone: string;
+  currency: Currency;
   telegram: Telegram;
   postmark: Postmark;
   mailQueue: MailQueue;
@@ -94,6 +97,7 @@ export async function createContextInner(_opts: CreateInnerContextOptions) {
     clerk: _opts.clerk,
     prisma: _opts.prisma,
     timezone: _opts.timezone,
+    currency: _opts.currency,
     telegram: _opts.telegram,
     postmark: _opts.postmark,
     mailQueue: _opts.mailQueue,
@@ -112,6 +116,8 @@ export async function createContext(
 ): Promise<Context> {
   const timezone =
     (opts?.req.headers['x-vercel-ip-timezone'] as string) ?? 'UTC';
+  const currency = getCurrencyFromHeaders(opts?.req.headers);
+
   let auth = null;
 
   if (opts?.req) {
@@ -123,6 +129,7 @@ export async function createContext(
     clerk,
     prisma,
     timezone,
+    currency,
     telegram: new Telegram(),
     postmark: new Postmark(),
     mailQueue: new MailQueue(),

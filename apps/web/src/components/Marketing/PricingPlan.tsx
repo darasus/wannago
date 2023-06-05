@@ -2,14 +2,15 @@ import {useAuth} from '@clerk/nextjs';
 import {CheckCircleIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/router';
 import {Button, CardBase, Text} from 'ui';
-import {cn} from 'utils';
+import {cn, formatCents} from 'utils';
 import {titleFont} from '../../fonts';
+import {useGetCurrencyQuery} from 'hooks';
 
 interface Props {
   type: 'general' | 'featured' | 'highlighted';
   name: string;
   description: string;
-  price: string;
+  price: number;
   planId: 'starter' | 'pro' | 'business' | 'enterprise';
   features: string[];
 }
@@ -22,6 +23,7 @@ export function PricingPlan({
   features,
   type,
 }: Props) {
+  const currency = useGetCurrencyQuery();
   const {isSignedIn} = useAuth();
   const router = useRouter();
 
@@ -59,7 +61,9 @@ export function PricingPlan({
         </div>
         <div>
           <Text className={cn(titleFont.className, 'text-5xl tracking-tight')}>
-            {price}
+            {planId === 'enterprise'
+              ? 'Custom'
+              : formatCents(price, currency.data)}
           </Text>
         </div>
         <div className={cn('flex flex-col gap-y-3 text-sm')}>

@@ -50,3 +50,6 @@ export {useFollow} from './src/follow/useFollow';
 
 // ai prompt
 export {useGenerateEventWithPromptMutation} from './src/ai-prompt/useGenerateEventWithPromptMutation';
+
+// payments
+export {useGetCurrencyQuery} from './src/useGetCurrencyQuery';

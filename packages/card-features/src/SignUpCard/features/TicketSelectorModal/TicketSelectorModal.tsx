@@ -5,6 +5,7 @@ import {formatCents} from 'utils';
 import {useForm} from 'react-hook-form';
 import {trpc} from 'trpc/src/trpc';
 import {useRouter} from 'next/router';
+import {useGetCurrencyQuery} from 'hooks';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -19,6 +20,7 @@ interface Form {
 
 export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
   const router = useRouter();
+  const currency = useGetCurrencyQuery();
   const form = useForm<Form>({defaultValues: {}});
   const total = Object.entries(form.watch()).reduce(
     (acc: number, [ticketId, quantity]) => {
@@ -40,7 +42,6 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
     trpc.payments.createCheckoutSession.useMutation();
 
   const handleSubmit = form.handleSubmit(async data => {
-    console.log('>>> hello');
     const responseUrl = await createPaymentSession.mutateAsync({
       tickets: Object.entries(data)
         .filter(([, quantity]) => Boolean(quantity))
@@ -71,7 +72,7 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
                       <Text>{title}</Text>
                     </div>
                     <div>
-                      <Text>{formatCents(price)}</Text>
+                      <Text>{formatCents(price, currency.data)}</Text>
                     </div>
                   </div>
                   <Input
@@ -94,7 +95,9 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
               <Text>Total:</Text>
             </div>
             <div>
-              <Text className="font-bold">{formatCents(total)}</Text>
+              <Text className="font-bold">
+                {formatCents(total, currency.data)}
+              </Text>
             </div>
           </div>
           <Button type="submit" isLoading={createPaymentSession.isLoading}>
