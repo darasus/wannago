@@ -17,23 +17,34 @@ export const createCheckoutSession = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const user = await ctx.actions.getUserByExternalId({
+    const customer = await ctx.actions.getUserByExternalId({
       externalId: ctx.auth.userId,
     });
-    const event = await ctx.actions.getEvent({id: input.eventId});
+    const event = await ctx.prisma.event.findUnique({
+      where: {
+        id: input.eventId,
+      },
+      include: {
+        organization: true,
+        user: true,
+      },
+    });
+    const stripeLinkedAccountId =
+      event?.organization?.stripeLinkedAccountId ||
+      event?.user?.stripeLinkedAccountId;
 
-    invariant(user, userNotFoundError);
+    invariant(customer, userNotFoundError);
     invariant(event, eventNotFoundError);
     invariant(
-      user.stripeLinkedAccountId,
+      stripeLinkedAccountId,
       new TRPCError({
         code: 'BAD_REQUEST',
-        message: 'Stripe customer id is required',
+        message: 'Stripe account id is required',
       })
     );
 
-    const stripeCustomerId = user.stripeCustomerId || undefined;
-    const email = user.email;
+    const stripeCustomerId = customer.stripeCustomerId || undefined;
+    const email = customer.email;
 
     invariant(
       email,
@@ -97,7 +108,7 @@ export const createCheckoutSession = protectedProcedure
       payment_intent_data: {
         application_fee_amount: 123,
         transfer_data: {
-          destination: user.stripeLinkedAccountId,
+          destination: stripeLinkedAccountId,
         },
       },
     });
