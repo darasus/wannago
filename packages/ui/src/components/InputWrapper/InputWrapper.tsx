@@ -1,8 +1,9 @@
 import {ExclamationCircleIcon} from '@heroicons/react/24/solid';
 import {PropsWithChildren} from 'react';
 import {FieldError} from 'react-hook-form';
-import {Badge, Text} from 'ui';
 import {cn} from 'utils';
+import {Badge} from '../Badge/Badge';
+import {Text} from '../Text/Text';
 
 interface Props extends PropsWithChildren {
   label?: string | JSX.Element;

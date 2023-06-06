@@ -10,6 +10,7 @@ const create = protectedProcedure
       name: z.string(),
       logoSrc: z.string().url(),
       email: z.string().email(),
+      currency: z.enum(['USD', 'EUR', 'GBP']),
     })
   )
   .mutation(async ({ctx, input}) => {
@@ -33,7 +34,7 @@ const create = protectedProcedure
           logoSrc: input.logoSrc,
           disabled: false,
           email: input.email,
-          preferredCurrency: 'USD',
+          preferredCurrency: input.currency,
           users: {
             connect: {
               id: user.id,
@@ -51,6 +52,7 @@ const create = protectedProcedure
           logoSrc: input.logoSrc,
           disabled: false,
           email: input.email,
+          preferredCurrency: input.currency,
         },
       });
     }

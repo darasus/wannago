@@ -1,4 +1,4 @@
-import {InputWrapper} from '../Input/InputWrapper';
+import {InputWrapper} from 'ui';
 import NextImage from 'next/image';
 import React, {
   ComponentProps,

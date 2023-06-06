@@ -27,6 +27,7 @@ const update = protectedProcedure
       lastName: z.string(),
       email: z.string().email(),
       profileImageSrc: z.string().nullable(),
+      currency: z.enum(['USD', 'EUR', 'GBP']),
     })
   )
   .mutation(async ({ctx, input}) => {
@@ -39,6 +40,7 @@ const update = protectedProcedure
         lastName: input.lastName,
         email: input.email,
         profileImageSrc: input.profileImageSrc,
+        preferredCurrency: input.currency,
       },
     });
   });

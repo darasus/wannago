@@ -13,7 +13,7 @@ import {
   useSessionQuery,
   useSubscription,
 } from 'hooks';
-import {InputWrapper} from '../../components/Input/Input/InputWrapper';
+import {InputWrapper} from 'ui/src/components/InputWrapper';
 import {Textarea} from '../../components/Input/Input/Textarea';
 
 interface Props {

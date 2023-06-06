@@ -1,6 +1,7 @@
 import {forwardRef, useState} from 'react';
-import {useFormContext} from 'react-hook-form';
+import {FieldError, useFormContext} from 'react-hook-form';
 import {cn} from 'utils';
+import {InputWrapper} from '../InputWrapper/InputWrapper';
 
 interface Option {
   label: JSX.Element | string;
@@ -9,10 +10,15 @@ interface Option {
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   options: Option[];
+  label?: string | JSX.Element;
+  description?: string;
+  containerClassName?: string;
+  error?: FieldError;
+  isOptional?: boolean;
 }
 
 export const Toggle = forwardRef<HTMLInputElement, Props>(function Toggle(
-  {options, ...props},
+  {options, containerClassName, error, isOptional, ...props},
   ref
 ) {
   const {formState, setValue} = useFormContext();
@@ -21,7 +27,14 @@ export const Toggle = forwardRef<HTMLInputElement, Props>(function Toggle(
   );
 
   return (
-    <>
+    <InputWrapper
+      containerClassName={containerClassName}
+      error={error}
+      id={props.id}
+      label={props.label}
+      description={props.description}
+      isOptional={isOptional}
+    >
       <input {...props} ref={ref} className="hidden" type="text" />
       <div className="flex">
         <div className="flex h-11 rounded-full border-2 bg-white border-gray-800 sm:text-md placeholder-gray-400 focus:border-gray-500 focus:ring-gray-500 p-1">
@@ -54,6 +67,6 @@ export const Toggle = forwardRef<HTMLInputElement, Props>(function Toggle(
           })}
         </div>
       </div>
-    </>
+    </InputWrapper>
   );
 });

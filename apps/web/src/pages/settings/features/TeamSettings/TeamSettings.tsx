@@ -7,19 +7,21 @@ import {
 } from 'hooks';
 import {useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
-import {Button, CardBase} from 'ui';
+import {Button, CardBase, Toggle} from 'ui';
 import {FileInput} from '../../../../components/Input/FileInput/FileInput';
 import {Input} from '../../../../components/Input/Input/Input';
 import {StripeAccountLinkSettings} from '../StripeAccountLinkSettings/StripeAccountLinkSettings';
 import {OrganizationSubscription} from './features/OrganizationSubscription/OrganizationSubscription';
 import {TeamMembersSettings} from './features/TeamMemberSettings/TeamMembersSettings';
+import {Currency} from '@prisma/client';
 
 // TODO: create description text explaining why you need to create a team
 
-interface Form {
+interface OrganizationForm {
   name: string | null;
   logoSrc: string | null;
   email: string | null;
+  currency: Currency | null;
 }
 
 export function TeamSettings() {
@@ -27,20 +29,21 @@ export function TeamSettings() {
   const organization = useMyOrganizationQuery();
   const createOrganization = useCreateOrganizationMutation();
   const removeOrganization = useRemoveOrganizationMutation();
-  const form = useForm<Form>({
+  const form = useForm<OrganizationForm>({
     defaultValues: {
       name: organization.data?.name || null,
       logoSrc: organization.data?.logoSrc || null,
       email: organization.data?.email || null,
+      currency: organization.data?.preferredCurrency || null,
     },
   });
 
   const handleSubmit = form.handleSubmit(async data => {
-    const {name, logoSrc, email} = data;
+    const {name, logoSrc, email, currency} = data;
 
-    if (name && logoSrc && email) {
+    if (name && logoSrc && email && currency) {
       try {
-        await createOrganization.mutateAsync({logoSrc, name, email});
+        await createOrganization.mutateAsync({logoSrc, name, email, currency});
       } catch (error) {}
     }
   });
@@ -102,6 +105,17 @@ export function TeamSettings() {
                   },
                 })}
                 error={form.formState.errors.logoSrc}
+              />
+              <Toggle
+                options={[
+                  {label: 'USD', value: 'USD'},
+                  {label: 'EUR', value: 'EUR'},
+                  {label: 'GBP', value: 'GBP'},
+                ]}
+                label="Default Currency"
+                {...form.register('currency')}
+                data-testid="email-input"
+                error={form.formState.errors.currency}
               />
               <div className="flex gap-2">
                 <Button
