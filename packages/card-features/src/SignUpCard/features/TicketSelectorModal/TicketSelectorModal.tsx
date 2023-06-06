@@ -5,7 +5,6 @@ import {formatCents} from 'utils';
 import {useForm} from 'react-hook-form';
 import {trpc} from 'trpc/src/trpc';
 import {useRouter} from 'next/router';
-import {useGetCurrencyQuery} from 'hooks';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -20,7 +19,6 @@ interface Form {
 
 export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
   const router = useRouter();
-  const currency = useGetCurrencyQuery();
   const form = useForm<Form>({defaultValues: {}});
   const total = Object.entries(form.watch()).reduce(
     (acc: number, [ticketId, quantity]) => {
@@ -72,7 +70,7 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
                       <Text>{title}</Text>
                     </div>
                     <div>
-                      <Text>{formatCents(price, currency.data)}</Text>
+                      <Text>{formatCents(price, event.preferredCurrency)}</Text>
                     </div>
                   </div>
                   <Input
@@ -96,7 +94,7 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
             </div>
             <div>
               <Text className="font-bold">
-                {formatCents(total, currency.data)}
+                {formatCents(total, event.preferredCurrency)}
               </Text>
             </div>
           </div>

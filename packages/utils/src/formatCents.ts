@@ -1,4 +1,4 @@
-import {Currency} from 'types';
+import {Currency} from '@prisma/client';
 
 export function formatCents(cents: number, currency: Currency): string {
   return new Intl.NumberFormat('en-US', {

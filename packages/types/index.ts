@@ -11,5 +11,3 @@ export enum EmailType {
 }
 
 export type PricingPlan = 'starter' | 'pro';
-
-export type Currency = 'USD' | 'EUR' | 'GBP';

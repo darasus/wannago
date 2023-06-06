@@ -59,6 +59,16 @@ export const createCheckoutSession = protectedProcedure
       },
     });
 
+    const totalAmount = input.tickets.reduce((acc, ticket) => {
+      const {price} = selectedTickets.find(t => t.id === ticket.ticketId) || {};
+
+      if (!price) {
+        return acc;
+      }
+
+      return acc + ticket.quantity * price;
+    }, 0);
+
     const successCallbackUrl = `${getBaseUrl()}/e/${
       event.shortId
     }/my-tickets?success=true`;
@@ -81,7 +91,7 @@ export const createCheckoutSession = protectedProcedure
             product_data: {
               name: ticket.title,
             },
-            currency: ctx.currency.toLocaleLowerCase(),
+            currency: event.preferredCurrency,
             unit_amount: ticket.price,
           },
         };
@@ -106,7 +116,7 @@ export const createCheckoutSession = protectedProcedure
         ),
       },
       payment_intent_data: {
-        application_fee_amount: 123,
+        application_fee_amount: getTicketSalePlatformFee(totalAmount),
         transfer_data: {
           destination: stripeLinkedAccountId,
         },
@@ -115,3 +125,7 @@ export const createCheckoutSession = protectedProcedure
 
     return session.url;
   });
+
+function getTicketSalePlatformFee(totalAmountForTickets: number): number {
+  return Math.round((totalAmountForTickets * 0.1 + Number.EPSILON) * 100) / 100;
+}

@@ -46,7 +46,7 @@ export const generateEventCsvData = protectedProcedure
           email: ticketSale.user.email,
           ticketName: ticket.title,
           quantity: ticketSale.quantity,
-          ticketPrice: formatCents(ticket.price, ctx.currency),
+          ticketPrice: formatCents(ticket.price, event.preferredCurrency),
         };
       });
 
