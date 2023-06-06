@@ -34,7 +34,7 @@ model Event {
   eventSignUps            EventSignUp[] @relation(name: "EventSignUps")
   tickets                 Ticket[]
   ticketSales             TicketSale[]
-  preferredCurrency       Currency      @default(USD)
+  preferredCurrency       Currency
 
   @@index([organizationId])
   @@index([userId])
@@ -100,7 +100,7 @@ model User {
   followers             Follow[]               @relation(name: "FollowingUser")
   following             Follow[]               @relation(name: "FollowerUser")
   ticketSale            TicketSale[]
-  preferredCurrency     Currency               @default(USD)
+  preferredCurrency     Currency
 
   @@index([organizationId])
   @@index([subscriptionId])
@@ -122,7 +122,7 @@ model Organization {
   conversation          Conversation[]         @relation(name: "OrganizationConversation")
   lastSeens             ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
   followers             Follow[]               @relation(name: "FollowingOrganization")
-  preferredCurrency     Currency               @default(USD)
+  preferredCurrency     Currency
 
   @@index([subscriptionId])
 }

@@ -75,6 +75,7 @@ export const generateEventWithPrompt = protectedProcedure
       messageId: null,
       imagePrompt: output.imagePrompt,
       tickets: [],
+      preferredCurrency: user.preferredCurrency,
       ...(isOrganizationSession
         ? {
             organizationId: user.organization?.id!,

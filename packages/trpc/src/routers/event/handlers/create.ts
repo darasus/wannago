@@ -1,8 +1,9 @@
 import {env} from 'server-env';
-import {generateShortId} from 'utils';
+import {generateShortId, invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpcServer';
 import {eventInput} from '../validation';
+import {TRPCError} from '@trpc/server';
 
 export const create = protectedProcedure
   .input(eventInput.extend({authorId: z.string().uuid()}))
@@ -37,10 +38,10 @@ export const create = protectedProcedure
 
       const [user, organization, subscription, userEventCount] =
         await Promise.all([
-          ctx.prisma.user.findFirst({
+          ctx.prisma.user.findUnique({
             where: {id: authorId},
           }),
-          ctx.actions.getOrganizationById({id: authorId}),
+          ctx.prisma.organization.findUnique({where: {id: authorId}}),
           ctx.prisma.subscription.findFirst({
             where: {
               OR: [
@@ -75,6 +76,18 @@ export const create = protectedProcedure
         userEventCount,
       });
 
+      const preferredCurrency = user?.id
+        ? user.preferredCurrency
+        : organization?.preferredCurrency;
+
+      invariant(
+        preferredCurrency,
+        new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Preferred currency is required',
+        })
+      );
+
       let event = await ctx.prisma.event.create({
         data: {
           shortId: generateShortId(),
@@ -90,10 +103,17 @@ export const create = protectedProcedure
           featuredImagePreviewSrc,
           longitude: geocodeResponse?.data.results[0].geometry.location.lng,
           latitude: geocodeResponse?.data.results[0].geometry.location.lat,
+          preferredCurrency,
           ...(organization?.id
-            ? {organization: {connect: {id: organization.id}}}
+            ? {
+                organization: {connect: {id: organization.id}},
+              }
             : {}),
-          ...(user?.id ? {user: {connect: {id: user.id}}} : {}),
+          ...(user?.id
+            ? {
+                user: {connect: {id: user.id}},
+              }
+            : {}),
         },
       });
 

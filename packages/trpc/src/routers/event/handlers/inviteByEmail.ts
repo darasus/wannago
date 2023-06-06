@@ -42,6 +42,7 @@ export const inviteByEmail = protectedProcedure
           firstName: input.firstName,
           lastName: input.lastName,
           externalId: null,
+          preferredCurrency: 'USD',
         },
       });
     }

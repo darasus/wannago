@@ -1,5 +1,5 @@
+import {Currency} from '@prisma/client';
 import {IncomingHttpHeaders} from 'http2';
-import {Currency} from 'types';
 
 const usdRegions = ['US', 'TL', 'EC', 'SV', 'FM', 'MH', 'PW', 'PA', 'ZW'];
 const eurRegions = [

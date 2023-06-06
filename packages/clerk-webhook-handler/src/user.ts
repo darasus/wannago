@@ -46,6 +46,7 @@ export const user = {
           email: data.email_addresses[0].email_address,
           firstName: data.first_name,
           lastName: data.last_name,
+          preferredCurrency: 'USD',
         },
       });
 

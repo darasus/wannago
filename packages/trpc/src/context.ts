@@ -3,7 +3,7 @@ import {
   getAuth,
   createClerkClient,
 } from '@clerk/nextjs/server';
-import {PrismaClient} from '@prisma/client';
+import {Currency, PrismaClient} from '@prisma/client';
 import {prisma} from 'database';
 import {Telegram} from 'lib/src/telegram';
 import {Postmark} from 'lib/src/postmark';
@@ -36,7 +36,6 @@ import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
 import {assertCanAddOrganizationMember} from './assertions/assertCanAddOrganizationMember';
 import {getCurrencyFromHeaders} from 'utils';
-import {Currency} from 'types';
 
 const actions = {
   getEvents,

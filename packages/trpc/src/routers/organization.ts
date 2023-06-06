@@ -33,6 +33,7 @@ const create = protectedProcedure
           logoSrc: input.logoSrc,
           disabled: false,
           email: input.email,
+          preferredCurrency: 'USD',
           users: {
             connect: {
               id: user.id,

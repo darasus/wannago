@@ -36,6 +36,7 @@ const event: Event & {user: User} = {
   organizationId: null,
   shortId: '123',
   userId: '1',
+  preferredCurrency: 'USD',
   user: {
     id: '1',
     firstName: 'Ilya',
@@ -51,6 +52,7 @@ const event: Event & {user: User} = {
     stripeCustomerId: null,
     subscriptionId: null,
     stripeLinkedAccountId: null,
+    preferredCurrency: 'USD',
   },
 };
 
