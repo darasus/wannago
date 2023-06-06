@@ -1,4 +1,4 @@
-import {InputWrapper} from 'ui/src/components/InputWrapper';
+import {InputWrapper} from 'ui';
 import {forwardRef} from 'react';
 import {FieldError} from 'react-hook-form';
 import {cn} from 'utils';

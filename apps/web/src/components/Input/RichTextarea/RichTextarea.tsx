@@ -6,7 +6,7 @@ import {forwardRef, HTMLAttributes, useEffect} from 'react';
 import {FieldError, useFormContext} from 'react-hook-form';
 import {cn} from 'utils';
 import {Form} from '../../../features/EventForm/types';
-import {InputWrapper} from 'ui/src/components/InputWrapper';
+import {InputWrapper} from 'ui';
 import {EditorMenu} from './EditorMenu';
 
 interface Props extends HTMLAttributes<HTMLInputElement> {

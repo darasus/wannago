@@ -4,7 +4,7 @@ import {useDropzone} from 'react-dropzone';
 import {FieldError} from 'react-hook-form';
 import {Button} from 'ui';
 import {cn} from 'utils';
-import {InputWrapper} from 'ui/src/components/InputWrapper';
+import {InputWrapper} from 'ui';
 
 interface Props {
   onChange: (file: File | null) => void;
