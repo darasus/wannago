@@ -145,6 +145,11 @@ export const create = protectedProcedure
         });
       }
 
+      await ctx.inngest.send({
+        name: 'event.created',
+        data: {eventId: event.id},
+      });
+
       return event;
     }
   );

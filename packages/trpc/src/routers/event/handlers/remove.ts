@@ -36,9 +36,16 @@ export const remove = protectedProcedure
       },
     });
 
-    return ctx.prisma.event.delete({
+    const event = await ctx.prisma.event.delete({
       where: {
         id: eventId,
       },
     });
+
+    await ctx.inngest.send({
+      name: 'event.removed',
+      data: {eventId: eventId},
+    });
+
+    return event;
   });

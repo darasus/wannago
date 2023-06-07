@@ -105,6 +105,11 @@ export const update = protectedProcedure
         });
       }
 
+      await ctx.inngest.send({
+        name: 'event.updated',
+        data: {eventId: event.id},
+      });
+
       return event;
     }
   );

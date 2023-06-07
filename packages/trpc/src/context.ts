@@ -13,7 +13,7 @@ import {Stripe} from 'lib/src/stripe';
 import {type CreateNextContextOptions} from '@trpc/server/adapters/next';
 import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
 import {SignedInAuthObject, SignedOutAuthObject} from '@clerk/clerk-sdk-node';
-// actions
+import {getCurrencyFromHeaders} from 'utils';
 import {getEvents} from './actions/getEvents';
 import {getUserByExternalId} from './actions/getUserByExternalId';
 import {getUserById} from './actions/getUserById';
@@ -31,11 +31,11 @@ import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
 import {getActiveSessionType} from './actions/getActiveSessionType';
 import {generateEventFromPrompt} from './actions/generateEventFromPrompt';
 import {generateImageFromPrompt} from './actions/generateImageFromPrompt';
-// assertions
 import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
 import {assertCanAddOrganizationMember} from './assertions/assertCanAddOrganizationMember';
-import {getCurrencyFromHeaders} from 'utils';
+import {Inngest, EventSchemas} from 'inngest';
+import {EventsStoreType} from 'types';
 
 const actions = {
   getEvents,
@@ -83,6 +83,7 @@ interface CreateInnerContextOptions {
   googleMaps: GoogleMapsClient;
   cache: CacheService;
   stripe: Stripe;
+  inngest: InngestType;
 }
 
 interface CreateContextOptions extends CreateInnerContextOptions {
@@ -103,12 +104,19 @@ export async function createContextInner(_opts: CreateInnerContextOptions) {
     googleMaps: _opts.googleMaps,
     cache: _opts.cache,
     stripe: _opts.stripe,
+    inngest: _opts.inngest,
   };
 }
 
 export type ActionContext = CreateInnerContextOptions;
 export type AssertionContext = CreateInnerContextOptions;
 export type Context = CreateContextOptions;
+
+const inngest = new Inngest({
+  name: 'WannaGo',
+  schemas: new EventSchemas().fromRecord<EventsStoreType>(),
+});
+export type InngestType = typeof inngest;
 
 export async function createContext(
   opts?: CreateNextContextOptions
@@ -129,6 +137,7 @@ export async function createContext(
     prisma,
     timezone,
     currency,
+    inngest,
     telegram: new Telegram(),
     postmark: new Postmark(),
     mailQueue: new MailQueue(),

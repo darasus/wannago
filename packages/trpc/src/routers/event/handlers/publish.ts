@@ -31,5 +31,19 @@ export const publish = protectedProcedure
         .catch(console.error);
     }
 
+    if (input.isPublished === true) {
+      await ctx.inngest.send({
+        name: 'event.published',
+        data: {eventId: input.eventId},
+      });
+    }
+
+    if (input.isPublished === false) {
+      await ctx.inngest.send({
+        name: 'event.unpublished',
+        data: {eventId: input.eventId},
+      });
+    }
+
     return result;
   });

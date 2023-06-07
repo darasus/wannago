@@ -11,3 +11,31 @@ export enum EmailType {
 }
 
 export type PricingPlan = 'starter' | 'pro';
+
+export type EventsStoreType = {
+  'event.created': {
+    data: {
+      eventId: string;
+    };
+  };
+  'event.updated': {
+    data: {
+      eventId: string;
+    };
+  };
+  'event.published': {
+    data: {
+      eventId: string;
+    };
+  };
+  'event.unpublished': {
+    data: {
+      eventId: string;
+    };
+  };
+  'event.removed': {
+    data: {
+      eventId: string;
+    };
+  };
+};
