@@ -38,4 +38,9 @@ export type EventsStoreType = {
       eventId: string;
     };
   };
+  'stripe/payout.scheduled': {
+    data: {
+      eventId: string;
+    };
+  };
 };
