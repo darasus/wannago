@@ -38,7 +38,7 @@ export const getAccount = protectedProcedure
       stripeLinkedAccountId = user.organization?.stripeLinkedAccountId;
     }
 
-    const account = await ctx.stripe.stripe.accounts.retrieve(
+    const account = await ctx.stripe.client.accounts.retrieve(
       {
         expand: ['external_accounts'],
       },

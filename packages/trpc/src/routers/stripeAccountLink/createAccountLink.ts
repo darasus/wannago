@@ -23,11 +23,18 @@ export const createAccountLink = protectedProcedure
     }
 
     if (!stripeLinkedAccountId) {
-      const account = await ctx.stripe.stripe.accounts.create({
+      const account = await ctx.stripe.client.accounts.create({
         type: 'express',
         business_type: input.type === 'BUSINESS' ? 'company' : 'individual',
         ...(input.type === 'BUSINESS' ? {} : {}),
         default_currency: ctx.currency.toLowerCase(),
+        settings: {
+          payouts: {
+            schedule: {
+              interval: 'manual',
+            },
+          },
+        },
       });
 
       stripeLinkedAccountId = account.id;
@@ -61,7 +68,7 @@ export const createAccountLink = protectedProcedure
       input.type === 'BUSINESS' ? 'team' : 'personal'
     }`;
 
-    const accountLink = await ctx.stripe.stripe.accountLinks.create({
+    const accountLink = await ctx.stripe.client.accountLinks.create({
       account: stripeLinkedAccountId,
       refresh_url: callbackUrl,
       return_url: callbackUrl,

@@ -12,6 +12,7 @@
     "email-input-validation": "workspace:*",
     "stripe-webhook-input-validation": "workspace:*",
     "utils": "workspace:*",
+    "inngest-client": "workspace:*",
     "error": "workspace:*",
     "types": "workspace:*",
     "const": "workspace:*",

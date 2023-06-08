@@ -26,7 +26,7 @@ export const getAccountLink = protectedProcedure
         });
       }
 
-      const account = await ctx.stripe.stripe.accounts.createLoginLink(
+      const account = await ctx.stripe.client.accounts.createLoginLink(
         user.stripeLinkedAccountId
       );
 
@@ -44,7 +44,7 @@ export const getAccountLink = protectedProcedure
         });
       }
 
-      const account = await ctx.stripe.stripe.accounts.createLoginLink(
+      const account = await ctx.stripe.client.accounts.createLoginLink(
         user.organization.stripeLinkedAccountId
       );
 

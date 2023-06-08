@@ -61,7 +61,7 @@ const createCheckoutSession = protectedProcedure
     const callbackUrl = callbackUrlMap[input.plan];
     const config = await getConfig();
 
-    const session = await ctx.stripe.stripe.checkout.sessions.create({
+    const session = await ctx.stripe.client.checkout.sessions.create({
       customer: stripeCustomerId,
       customer_email: stripeCustomerId ? undefined : email,
       customer_update: stripeCustomerId
@@ -124,13 +124,13 @@ const createCustomerPortalSession = protectedProcedure
       })
     );
 
-    const customer = await ctx.stripe.stripe.customers.retrieve(
+    const customer = await ctx.stripe.client.customers.retrieve(
       stripeCustomerId
     );
 
     const callbackUrl = callbackUrlMap[input.plan];
 
-    const portalSession = await ctx.stripe.stripe.billingPortal.sessions.create(
+    const portalSession = await ctx.stripe.client.billingPortal.sessions.create(
       {
         customer: customer.id,
         return_url: callbackUrl,

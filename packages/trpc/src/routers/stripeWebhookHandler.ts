@@ -22,7 +22,7 @@ const handleCustomerSubscriptionUpdated = publicProcedure
   .query(async ({ctx, input}) => {
     if (input.data.object.status !== 'active') return {success: true};
 
-    const customer = (await ctx.stripe.stripe.customers.retrieve(
+    const customer = (await ctx.stripe.client.customers.retrieve(
       input.data.object.customer
     )) as s.Stripe.Customer;
 
@@ -137,7 +137,7 @@ const handleCustomerSubscriptionDeleted = publicProcedure
   .query(async ({ctx, input}) => {
     if (input.data.object.status !== 'canceled') return {success: true};
 
-    const customer = (await ctx.stripe.stripe.customers.retrieve(
+    const customer = (await ctx.stripe.client.customers.retrieve(
       input.data.object.customer
     )) as s.Stripe.Customer;
 
@@ -172,7 +172,7 @@ const handleCheckoutSessionCompleted = publicProcedure
   .query(async ({ctx, input}) => {
     if (input.data.object.status !== 'complete') return {success: true};
 
-    const customer = (await ctx.stripe.stripe.customers.retrieve(
+    const customer = (await ctx.stripe.client.customers.retrieve(
       input.data.object.customer
     )) as s.Stripe.Customer;
 

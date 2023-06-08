@@ -369,6 +369,9 @@ importers:
       hooks:
         specifier: workspace:*
         version: link:../../packages/hooks
+      inngest-client:
+        specifier: workspace:*
+        version: link:../../packages/inngest-client
       lib:
         specifier: workspace:*
         version: link:../../packages/lib
@@ -654,6 +657,22 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
 
+  packages/inngest-client:
+    dependencies:
+      database:
+        specifier: workspace:*
+        version: link:../database
+      lib:
+        specifier: workspace:*
+        version: link:../lib
+    devDependencies:
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+
   packages/lib:
     dependencies:
       client-env:
@@ -748,6 +767,9 @@ importers:
       error:
         specifier: workspace:*
         version: link:../error
+      inngest-client:
+        specifier: workspace:*
+        version: link:../inngest-client
       lib:
         specifier: workspace:*
         version: link:../lib

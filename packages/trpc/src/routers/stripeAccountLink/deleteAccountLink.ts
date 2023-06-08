@@ -26,7 +26,7 @@ export const deleteAccountLink = protectedProcedure
         })
       );
 
-      await ctx.stripe.stripe.accounts.del(user.stripeLinkedAccountId);
+      await ctx.stripe.client.accounts.del(user.stripeLinkedAccountId);
 
       await ctx.prisma.user.update({
         where: {
@@ -51,7 +51,7 @@ export const deleteAccountLink = protectedProcedure
         })
       );
 
-      await ctx.stripe.stripe.accounts.del(user.organization.id);
+      await ctx.stripe.client.accounts.del(user.organization.id);
 
       await ctx.prisma.organization.update({
         where: {

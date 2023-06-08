@@ -35,7 +35,7 @@ import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
 import {assertCanAddOrganizationMember} from './assertions/assertCanAddOrganizationMember';
 import {Inngest, EventSchemas} from 'inngest';
-import {EventsStoreType} from 'types';
+import {EventsStoreType} from 'inngest-client';
 
 const actions = {
   getEvents,

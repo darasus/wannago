@@ -74,7 +74,7 @@ export const createCheckoutSession = protectedProcedure
     }/my-tickets?success=true`;
     const cancelCallbackUrl = `${getBaseUrl()}/e/${event.shortId}`;
 
-    const session = await ctx.stripe.stripe.checkout.sessions.create({
+    const session = await ctx.stripe.client.checkout.sessions.create({
       customer: stripeCustomerId,
       customer_email: stripeCustomerId ? undefined : email,
       customer_update: stripeCustomerId
