@@ -10,7 +10,6 @@ import {
   handleEventCancelInviteEmailInputSchema,
   handleEventCancelSignUpEmailInputSchema,
   handleOrganizerEventSignUpNotificationEmailInputSchema,
-  handleEventReminderEmailInputSchema,
 } from 'email-input-validation';
 import {emailHandlerRouter} from 'trpc/src/routers/emailHandler';
 import {EmailType} from 'types';
@@ -73,12 +72,6 @@ export default async function handle(
   if (input.type === EmailType.OrganizerEventSignUpNotification) {
     await caller.handleOrganizerEventSignUpNotificationEmail(
       handleOrganizerEventSignUpNotificationEmailInputSchema.parse(input)
-    );
-  }
-
-  if (input.type === EmailType.EventReminder) {
-    await caller.handleEventReminderEmail(
-      handleEventReminderEmailInputSchema.parse(input)
     );
   }
 

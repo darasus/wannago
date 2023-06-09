@@ -25,8 +25,6 @@ import {getOrganizationByUserExternalId} from './actions/getOrganizationByUserEx
 import {getUserByEmail} from './actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizationWithMembersByOrganizationId';
 import {canModifyEvent} from './actions/canModifyEvent';
-import {updateEventReminder} from './actions/updateEventReminder';
-import {createEventReminder} from './actions/createEventReminder';
 import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
 import {getActiveSessionType} from './actions/getActiveSessionType';
 import {generateEventFromPrompt} from './actions/generateEventFromPrompt';
@@ -49,8 +47,6 @@ const actions = {
   getUserByEmail,
   getOrganizationWithMembersByOrganizationId,
   canModifyEvent,
-  updateEventReminder,
-  createEventReminder,
   getOrganizerByEmail,
   getActiveSessionType,
   generateEventFromPrompt,

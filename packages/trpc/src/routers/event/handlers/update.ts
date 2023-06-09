@@ -88,23 +88,6 @@ export const update = protectedProcedure
         }
       }
 
-      const {messageId} = await ctx.actions.updateEventReminder({
-        eventId,
-        startDate: event.startDate,
-        oldMessageId: originalEvent?.messageId,
-      });
-
-      if (messageId) {
-        event = await ctx.prisma.event.update({
-          where: {
-            id: eventId,
-          },
-          data: {
-            messageId,
-          },
-        });
-      }
-
       await ctx.inngest.send({
         name: 'event.updated',
         data: {eventId: event.id},
