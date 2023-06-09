@@ -8,6 +8,9 @@
   },
   "dependencies": {
     "lib": "workspace:*",
+    "error": "workspace:*",
+    "email": "workspace:*",
+    "utils": "workspace:*",
     "database": "workspace:*"
   },
   "devDependencies": {

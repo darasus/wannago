@@ -24,12 +24,11 @@ export const stripePayoutScheduled = inngest.createFunction(
     }
 
     const endDate = new Date(event.endDate);
-    const payoutDate = addDays(endDate, 7);
+    const payoutDate = addDays(endDate, 7); // 7 days after event
 
     await ctx.step.sleepUntil(payoutDate);
 
     await ctx.step.run('Payout to linked account', async () => {
-      console.log('PAYOUT!');
       const stripeLinkedAccountId =
         event.organization?.stripeLinkedAccountId ||
         event.user?.stripeLinkedAccountId;

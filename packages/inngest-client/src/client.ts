@@ -1,6 +1,6 @@
 import {EventSchemas, Inngest, InngestMiddleware} from 'inngest';
 import {prisma} from 'database';
-import {Stripe} from 'lib';
+import {Stripe, Postmark} from 'lib';
 import {EventsStoreType} from './types';
 import {payoutAvailableBalanceToConnectedAccount} from './actions/payoutAvailableBalanceToConnectedAccount';
 
@@ -8,6 +8,7 @@ const middleware = new InngestMiddleware({
   name: 'Prisma Middleware',
   init() {
     const stripe = new Stripe().client;
+    const postmark = new Postmark();
 
     const actions = {
       payoutAvailableBalanceToConnectedAccount:
@@ -28,6 +29,7 @@ const middleware = new InngestMiddleware({
                 prisma,
                 stripe,
                 actions,
+                postmark,
               },
             };
           },

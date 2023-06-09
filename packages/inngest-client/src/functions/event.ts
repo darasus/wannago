@@ -29,6 +29,13 @@ export const eventUpdated = inngest.createFunction(
         },
       });
     }
+
+    await ctx.step.sendEvent({
+      name: 'email/reminder.scheduled',
+      data: {
+        eventId: ctx.event.data.eventId,
+      },
+    });
   }
 );
 
@@ -54,6 +61,13 @@ export const eventPublished = inngest.createFunction(
         },
       });
     }
+
+    await ctx.step.sendEvent({
+      name: 'email/reminder.scheduled',
+      data: {
+        eventId: ctx.event.data.eventId,
+      },
+    });
   }
 );
 

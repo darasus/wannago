@@ -662,9 +662,18 @@ importers:
       database:
         specifier: workspace:*
         version: link:../database
+      email:
+        specifier: workspace:*
+        version: link:../email
+      error:
+        specifier: workspace:*
+        version: link:../error
       lib:
         specifier: workspace:*
         version: link:../lib
+      utils:
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       eslint-config-custom:
         specifier: workspace:*

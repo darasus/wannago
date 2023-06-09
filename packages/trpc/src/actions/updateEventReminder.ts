@@ -1,7 +1,7 @@
 import {captureException} from '@sentry/nextjs';
 import {handleEventReminderEmailInputSchema} from 'email-input-validation';
 import {EmailType} from 'types';
-import {canCreateReminder, createDelay, invariant} from 'utils';
+import {canCreateReminder, createDelay} from 'utils';
 import {z} from 'zod';
 import {ActionContext} from '../context';
 

@@ -43,4 +43,15 @@ export type EventsStoreType = {
       eventId: string;
     };
   };
+  'email/reminder.scheduled': {
+    data: {
+      eventId: string;
+    };
+  };
+  'email/reminder.sent': {
+    data: {
+      eventId: string;
+      userId: string;
+    };
+  };
 };
