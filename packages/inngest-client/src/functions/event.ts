@@ -19,23 +19,25 @@ export const eventUpdated = inngest.createFunction(
       })
     );
 
-    const isPaidEvent = event?.tickets && event?.tickets.length > 0;
+    if (event?.isPublished === true) {
+      const isPaidEvent = event?.tickets && event?.tickets.length > 0;
 
-    if (isPaidEvent) {
+      if (isPaidEvent) {
+        await ctx.step.sendEvent({
+          name: 'stripe/payout.scheduled',
+          data: {
+            eventId: ctx.event.data.eventId,
+          },
+        });
+      }
+
       await ctx.step.sendEvent({
-        name: 'stripe/payout.scheduled',
+        name: 'email/reminder.scheduled',
         data: {
           eventId: ctx.event.data.eventId,
         },
       });
     }
-
-    await ctx.step.sendEvent({
-      name: 'email/reminder.scheduled',
-      data: {
-        eventId: ctx.event.data.eventId,
-      },
-    });
   }
 );
 
