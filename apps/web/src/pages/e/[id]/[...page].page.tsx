@@ -36,7 +36,7 @@ export default function EventPage() {
     return <LoadingBlock />;
   }
 
-  if (!isMyEvent.data?.isMyEvent || !event.data) return null;
+  if (!event.data) return null;
 
   return (
     <>
@@ -72,10 +72,14 @@ export default function EventPage() {
                 <Text truncate>{`Back to "${event.data.title}"`}</Text>
               </Button>
               <div>
-                {page === 'info' && <EventInfo />}
-                {page === 'edit' && <EditEventForm />}
-                {page === 'attendees' && <EventAttendees />}
-                {page === 'invite' && <EventInvite />}
+                {isMyEvent.data?.isMyEvent && (
+                  <>
+                    {page === 'info' && <EventInfo />}
+                    {page === 'edit' && <EditEventForm />}
+                    {page === 'attendees' && <EventAttendees />}
+                    {page === 'invite' && <EventInvite />}
+                  </>
+                )}
                 {page === 'my-tickets' && <MyTickets />}
               </div>
             </div>
