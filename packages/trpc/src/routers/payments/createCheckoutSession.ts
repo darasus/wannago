@@ -27,14 +27,23 @@ export const createCheckoutSession = protectedProcedure
       include: {
         organization: true,
         user: true,
+        tickets: true,
+        ticketSales: true,
       },
     });
+
+    invariant(event, eventNotFoundError);
+
+    await ctx.assertions.assertCanPurchaseTickets({
+      event,
+      requestedTickets: input.tickets,
+    });
+
     const stripeLinkedAccountId =
       event?.organization?.stripeLinkedAccountId ||
       event?.user?.stripeLinkedAccountId;
 
     invariant(customer, userNotFoundError);
-    invariant(event, eventNotFoundError);
     invariant(
       stripeLinkedAccountId,
       new TRPCError({
