@@ -31,6 +31,7 @@ import {generateEventFromPrompt} from './actions/generateEventFromPrompt';
 import {generateImageFromPrompt} from './actions/generateImageFromPrompt';
 import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
+import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
 import {assertCanAddOrganizationMember} from './assertions/assertCanAddOrganizationMember';
 import {Inngest, EventSchemas} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
@@ -57,6 +58,7 @@ const assertions = {
   assertCanCreateEvent,
   assertCanJoinEvent,
   assertCanAddOrganizationMember,
+  assertCanPurchaseTickets,
 } as const;
 
 type Actions = {

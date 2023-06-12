@@ -5,6 +5,7 @@ import {formatCents} from 'utils';
 import {useForm} from 'react-hook-form';
 import {trpc} from 'trpc/src/trpc';
 import {useRouter} from 'next/router';
+import {toast} from 'react-hot-toast';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -36,25 +37,30 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
     },
     0
   );
-  const createPaymentSession =
-    trpc.payments.createCheckoutSession.useMutation();
+  const createPaymentSession = trpc.payments.createCheckoutSession.useMutation({
+    onError: error => {
+      toast.error(error.message);
+    },
+  });
 
   const handleSubmit = form.handleSubmit(async data => {
-    const responseUrl = await createPaymentSession.mutateAsync({
-      tickets: Object.entries(data)
-        .filter(([, quantity]) => Boolean(quantity))
-        .map(([ticketId, quantity]) => ({
-          ticketId,
-          quantity: Number(quantity) || 0,
-        })),
-      eventId: event.id,
-    });
+    try {
+      const responseUrl = await createPaymentSession.mutateAsync({
+        tickets: Object.entries(data)
+          .filter(([, quantity]) => Boolean(quantity))
+          .map(([ticketId, quantity]) => ({
+            ticketId,
+            quantity: Number(quantity) || 0,
+          })),
+        eventId: event.id,
+      });
 
-    if (!responseUrl) {
-      return;
-    }
+      if (!responseUrl) {
+        return;
+      }
 
-    router.push(responseUrl);
+      router.push(responseUrl);
+    } catch (error) {}
   });
 
   return (
