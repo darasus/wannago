@@ -49,6 +49,8 @@ jobs:
         STRIPE_API_SECRET: "STRIPE_API_SECRET"
         STRIPE_ENDPOINT_SECRET: "STRIPE_ENDPOINT_SECRET"
         STABILITY_AI_API_KEY: "STABILITY_AI_API_KEY"
+        INNGEST_SIGNING_KEY: ${{ secrets.INNGEST_SIGNING_KEY }}
+        INNGEST_EVENT_KEY: ${{ secrets.INNGEST_EVENT_KEY }}
  
       steps:
         - name: Check out code
