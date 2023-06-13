@@ -140,7 +140,7 @@ export const emailReminderSent = inngest.createFunction(
 
 export const ticketPurchaseEmailSent = inngest.createFunction(
   {
-    name: 'Ticket Purchase Email sent',
+    name: 'Ticket Purchase Email Sent',
   },
   {event: 'email/ticket-purchase-email.sent'},
   async ctx => {
