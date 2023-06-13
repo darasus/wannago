@@ -30,6 +30,7 @@ export function Pricing() {
               'Unlimited events',
               'Unlimited attendees',
               'Generative AI assistant',
+              'Sell tickets (extra fees apply)',
               'Many more upcoming features...',
             ]}
           />
@@ -45,6 +46,7 @@ export function Pricing() {
               'Unlimited events',
               'Unlimited attendees',
               'Generative AI assistant',
+              'Sell tickets (extra fees apply)',
               'Many more upcoming features...',
             ]}
           />
