@@ -28,6 +28,18 @@ const faqs = [
     answer: `Unfortunately right now it is not possible to customize the visuals of your event page but we're planning to add that feature in the future.`,
   },
   {
+    question: 'What are the accepted currencies on WannaGo?',
+    answer: `At present, our platform accommodates transactions exclusively in three key currencies: the US Dollar, the British Pound, and the Euro.`,
+  },
+  {
+    question: 'In which countries is ticket selling permitted through WannaGo?',
+    answer: `Currently, our platform facilitates ticket sales within three countries only: the United States of America, Great Britain, and the Netherlands.`,
+  },
+  {
+    question: 'How much is the fee per sold ticket?',
+    answer: `We charge a 10% fee for every ticket sold. However there is extra card processing fee charged by Stripe.`,
+  },
+  {
     question: 'How do I invite people to my event?',
     answer: `You can invite people to your event either by sending them email invitation through attendees section or by sharing a public link to your event page by any means like WhatsApp or Twitter.`,
   },

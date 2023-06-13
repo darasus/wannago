@@ -8,6 +8,7 @@ import {
   EnvelopeOpenIcon,
   EllipsisHorizontalIcon,
   VideoCameraIcon,
+  TicketIcon,
 } from '@heroicons/react/24/outline';
 import {SectionContainer} from './SectionContainer';
 import {titleFontClassName} from '../../fonts';
@@ -25,6 +26,12 @@ const features = [
     description:
       'Easily create a shareable event page with all the details your guests need to know.',
     icon: CalendarDaysIcon,
+  },
+  {
+    summary: 'Sell',
+    description:
+      'Experience hassle-free ticket sales. WannaGo ensures a smooth process for all.',
+    icon: TicketIcon,
   },
   {
     summary: 'Engage',
@@ -95,7 +102,7 @@ export function Features() {
       <Container>
         <SectionHeader
           title="Easiest way to invite"
-          description="We provide the tools you need to invite your network while you focus on what's important"
+          description="We provide the tools you need to build your audience and sell tickets while you focus on what's important"
         />
         <div className="grid lg:grid-cols-12 gap-4 items-stretch">
           {features.map(feature => (
