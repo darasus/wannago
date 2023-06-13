@@ -58,7 +58,7 @@ export const Hero = forwardRef(function Hero(
             Create your first event
           </Button>
         </div>
-        <div className="flex justify-center relative w-full m-auto h-80 md:h-96 lg:h-hero-preview">
+        <div className="flex justify-center relative w-full max-w-2xl m-auto h-[400px] md:h-[900px]">
           <DynamicEventPreview />
         </div>
       </Container>

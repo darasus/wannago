@@ -1,125 +1,34 @@
-import {useEffect, useRef, useState} from 'react';
-import {getBaseUrl} from 'utils';
-import {MockFormProvider} from '../../utils/MockFormProvider';
+import {useRef, useState} from 'react';
 import {trpc} from 'trpc/src/trpc';
+import {AnimateRender} from './AnimateRender';
 import {
   DateCard,
-  InfoCard,
-  UrlCard,
-  OrganizerCard,
   LocationCard,
-  ParticipantsCard,
-} from 'cards';
-import {AnimateRender} from './AnimateRender';
-
-function Event() {
-  const {data: event} = trpc.event.getRandomExample.useQuery();
-
-  if (!event) return null;
-
-  const elements = [
-    {
-      el: <InfoCard key={1} event={event} />,
-      delay: 0,
-    },
-    {
-      el: (
-        <LocationCard
-          address={event.address!}
-          longitude={event.longitude!}
-          latitude={event.latitude!}
-          onGetDirectionsClick={() => {}}
-        />
-      ),
-      delay: 1,
-    },
-    {
-      el: (
-        <MockFormProvider>
-          <OrganizerCard
-            name={
-              event.organization
-                ? event.organization.name
-                : `${event.user?.firstName} ${event.user?.lastName}`
-            }
-            profileImageSrc={
-              event.organization?.logoSrc || event.user?.profileImageSrc
-            }
-            profilePath={''}
-          />
-        </MockFormProvider>
-      ),
-      delay: 2,
-    },
-    {
-      el: (
-        <DateCard
-          endDate={event.endDate}
-          startDate={event.startDate}
-          onAddToCalendarClick={() => {}}
-        />
-      ),
-      delay: 3,
-    },
-    {
-      el: (
-        <MockFormProvider>
-          <ParticipantsCard
-            numberOfAttendees={'31 people attending'}
-            onSubmit={() => {}}
-            isPublished={true}
-          />
-        </MockFormProvider>
-      ),
-      delay: 4,
-    },
-    {
-      el: (
-        <UrlCard
-          url={`${getBaseUrl()}/e/${event.shortId}`}
-          publicEventUrl={`${getBaseUrl()}/e/${event.shortId}`}
-          isPublished={true}
-        />
-      ),
-      delay: 5,
-    },
-  ];
-
-  return (
-    <div className="grid grid-cols-12 gap-4">
-      <div className="flex flex-col col-span-8 gap-y-4">
-        {elements.slice(0, 2).map(({el, delay}, i) => {
-          return (
-            <AnimateRender key={i} delay={(delay + 1) / 2}>
-              <div>{el}</div>
-            </AnimateRender>
-          );
-        })}
-      </div>
-      <div className="flex flex-col col-span-4 gap-y-4">
-        {elements.slice(2, 7).map(({el, delay}, i) => {
-          return (
-            <AnimateRender key={i} delay={(delay + 1) / 2}>
-              <div>{el}</div>
-            </AnimateRender>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+  OrganizerCard,
+  SignUpCard,
+  UrlCard,
+} from 'card-features';
+import {getBaseUrl} from 'utils';
+import {InfoCard} from 'cards';
+import {useEventListener, useIsomorphicLayoutEffect} from 'usehooks-ts';
 
 export default function EventPreview() {
   const ref = useRef<HTMLDivElement | null>(null);
   const [scale, setScale] = useState<number | null>(null);
   const canRenderPreview = scale !== null && scale > 0;
 
-  useEffect(() => {
+  const handleSize = () => {
     const el = ref.current?.getBoundingClientRect();
     const containerWidth = el?.width || 1024;
     const scale = containerWidth / 1024;
 
     setScale(scale);
+  };
+
+  useEventListener('resize', handleSize);
+
+  useIsomorphicLayoutEffect(() => {
+    handleSize();
   }, []);
 
   return (
@@ -134,5 +43,49 @@ export default function EventPreview() {
         {canRenderPreview && <Event />}
       </div>
     </div>
+  );
+}
+
+function Event() {
+  const {data: event} = trpc.event.getRandomExample.useQuery();
+
+  if (!event) return null;
+
+  return (
+    <AnimateRender>
+      <div className="flex flex-col gap-4">
+        <div className="sticky top-4 z-20">
+          <SignUpCard event={event} />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="items-stretch">
+            <OrganizerCard event={event} />
+          </div>
+          <div className="items-stretch">
+            <UrlCard
+              url={`${getBaseUrl()}/e/${event.shortId}`}
+              eventId={event.id}
+              isPublished={event.isPublished ?? false}
+            />
+          </div>
+        </div>
+        <div>
+          <InfoCard event={event} />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="items-stretch">
+            <LocationCard
+              address={event.address}
+              longitude={event.longitude!}
+              latitude={event.latitude!}
+              eventId={event.id}
+            />
+          </div>
+          <div className="items-stretch">
+            <DateCard event={event} />
+          </div>
+        </div>
+      </div>
+    </AnimateRender>
   );
 }
