@@ -50,18 +50,14 @@ export const stripeTicketsPurchased = inngest.createFunction(
   },
   {event: 'stripe/tickets.purchased'},
   async ctx => {
-    await ctx.step.run(
-      `Sent ticket purchase confirmation to user's email`,
-      async () => {
-        await ctx.step.sendEvent({
-          name: 'email/ticket-purchase-email.sent',
-          data: {
-            eventId: ctx.event.data.eventId,
-            userId: ctx.event.data.userId,
-            ticketSaleIds: ctx.event.data.ticketSaleIds,
-          },
-        });
-      }
-    );
+    await ctx.step.sleep(1000);
+    await ctx.step.sendEvent({
+      name: 'email/ticket-purchase-email.sent',
+      data: {
+        eventId: ctx.event.data.eventId,
+        userId: ctx.event.data.userId,
+        ticketSaleIds: ctx.event.data.ticketSaleIds,
+      },
+    });
   }
 );

@@ -170,18 +170,18 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
       ? `${organizer.name}`
       : '';
 
-    const {numberOfPurchasedTickets} =
-      await ctx.actions.getNumberOfPurchasedTickets({
-        ticketSaleIds: ctx.event.data.ticketSaleIds,
-      });
-
     await ctx.step.run(
       `Sent ticket purchase confirmation to user's email`,
       async () => {
+        const {numberOfPurchasedTickets} =
+          await ctx.actions.getNumberOfPurchasedTickets({
+            ticketSaleIds: ctx.event.data.ticketSaleIds,
+          });
+
         return ctx.postmark.sendToTransactionalStream({
           replyTo: 'WannaGo Team <hi@wannago.app>',
           to: user.email,
-          subject: `Your event is coming up "${event.title}"!`,
+          subject: `Order confirmation`,
           htmlString: render(
             <TicketPurchaseSuccess
               title={event.title}
