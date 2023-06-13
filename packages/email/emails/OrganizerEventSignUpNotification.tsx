@@ -3,7 +3,6 @@ import {Head} from '@react-email/head';
 import {Html} from '@react-email/html';
 import {Section} from '@react-email/section';
 import * as React from 'react';
-import {EventInfo} from './components/EventInfo';
 import {Header} from './components/Header';
 import {buttonContainer, container, main, gutter} from './components/shared';
 import {Footer} from './components/Footer';

@@ -1,11 +1,3 @@
-import {Img as _Img} from '@react-email/img';
-import {Section as _Section} from '@react-email/section';
-import {Text as _Text} from '@react-email/text';
-import {Link as _Link} from '@react-email/link';
-import {Hr as _Hr} from '@react-email/hr';
-import {Button as _Button} from '@react-email/button';
-import React, {PropsWithChildren} from 'react';
-
 // TODO: fix design token
 export const token = {
   light: '#e2e8f0',

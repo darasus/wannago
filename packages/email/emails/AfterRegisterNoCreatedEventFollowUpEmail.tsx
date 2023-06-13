@@ -1,6 +1,5 @@
 import {Container} from '@react-email/container';
 import {Head} from '@react-email/head';
-import {Hr} from '@react-email/hr';
 import {Html} from '@react-email/html';
 import {Section} from '@react-email/section';
 import * as React from 'react';
