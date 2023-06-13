@@ -1,6 +1,6 @@
 import {publicProcedure, router} from '../trpcServer';
 import {formatDate, getBaseUrl, invariant, isUser} from 'utils';
-import {render} from '@react-email/render';
+import {render} from 'email';
 import {
   EventSignUp,
   EventInvite,

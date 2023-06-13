@@ -3,12 +3,12 @@ import {Head} from '@react-email/head';
 import {Html} from '@react-email/html';
 import {Section} from './components/Section';
 import * as React from 'react';
-import {EventInfo} from './components/EventInfo';
 import {Header} from './components/Header';
 import {buttonContainer, container, main, gutter} from './components/shared';
+import {Button} from './components/Button';
+import {EventInfo} from './components/EventInfo';
 import {Footer} from './components/Footer';
 import {Title} from './components/Title';
-import {Button} from './components/Button';
 
 interface Props {
   title: string;
@@ -16,16 +16,20 @@ interface Props {
   endDate: string;
   address: string | 'none';
   eventUrl: string;
+  ticketUrl: string;
   organizerName: string;
+  numberOfTickets: number;
 }
 
-export default function EventCancelInvite({
+export default function TicketPurchaseSuccess({
   title = 'Event name',
   address = 'Paris, France',
   endDate = '2022/12/11 11:30',
   startDate = '2022/12/11 11:30',
   eventUrl = 'https://www.wannago.app',
+  ticketUrl = 'https://www.wannago.app',
   organizerName = 'Organizer Name',
+  numberOfTickets = 2,
 }: Props) {
   return (
     <Html>
@@ -34,7 +38,11 @@ export default function EventCancelInvite({
         <Container style={container}>
           <Header />
           <Section>
-            <Title>{`Your invite has been cancelled...`}</Title>
+            {numberOfTickets === 1 ? (
+              <Title>{`You just bought 1 ticket!`}</Title>
+            ) : (
+              <Title>{`You just bought ${numberOfTickets} tickets!`}</Title>
+            )}
           </Section>
           <Section style={{marginBottom: gutter}}>
             <EventInfo
@@ -47,7 +55,9 @@ export default function EventCancelInvite({
             />
           </Section>
           <Section style={buttonContainer}>
-            <Button href={eventUrl}>View event</Button>
+            <Button href={ticketUrl}>{`View your ticket${
+              numberOfTickets > 1 ? 's' : ''
+            }`}</Button>
           </Section>
           <Footer />
         </Container>

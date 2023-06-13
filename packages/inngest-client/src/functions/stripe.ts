@@ -43,3 +43,25 @@ export const stripePayoutScheduled = inngest.createFunction(
     });
   }
 );
+
+export const stripeTicketsPurchased = inngest.createFunction(
+  {
+    name: 'Stripe Tickets Purchased',
+  },
+  {event: 'stripe/tickets.purchased'},
+  async ctx => {
+    await ctx.step.run(
+      `Sent ticket purchase confirmation to user's email`,
+      async () => {
+        await ctx.step.sendEvent({
+          name: 'email/ticket-purchase-email.sent',
+          data: {
+            eventId: ctx.event.data.eventId,
+            userId: ctx.event.data.userId,
+            ticketSaleIds: ctx.event.data.ticketSaleIds,
+          },
+        });
+      }
+    );
+  }
+);

@@ -1,3 +1,4 @@
+import {Link} from './Link';
 import {Section} from './Section';
 import {Text} from './Text';
 
@@ -7,6 +8,7 @@ interface Props {
   startDate: string;
   endDate: string;
   address: string;
+  eventUrl: string;
 }
 
 export function EventInfo({
@@ -15,11 +17,12 @@ export function EventInfo({
   startDate,
   endDate,
   address,
+  eventUrl,
 }: Props) {
   return (
     <Section>
       <Text>
-        <b>Event:</b> {title}
+        <b>Event:</b> <Link href={eventUrl}>{title}</Link>
       </Text>
       <Text>
         <b>Organizer:</b> {organizerName}

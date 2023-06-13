@@ -46,6 +46,7 @@ export default function EventSignUp({
               startDate={startDate}
               endDate={endDate}
               address={address}
+              eventUrl={eventUrl}
             />
           </Section>
           <Section style={buttonContainer}>

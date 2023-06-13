@@ -54,4 +54,18 @@ export type EventsStoreType = {
       userId: string;
     };
   };
+  'stripe/tickets.purchased': {
+    data: {
+      eventId: string;
+      userId: string;
+      ticketSaleIds: string[];
+    };
+  };
+  'email/ticket-purchase-email.sent': {
+    data: {
+      eventId: string;
+      userId: string;
+      ticketSaleIds: string[];
+    };
+  };
 };

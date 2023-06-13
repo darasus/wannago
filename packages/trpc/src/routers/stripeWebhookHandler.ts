@@ -238,6 +238,15 @@ const handleCheckoutSessionCompleted = publicProcedure
       });
     }
 
+    await ctx.inngest.send({
+      name: 'stripe/tickets.purchased',
+      data: {
+        userId: user.id,
+        eventId: input.data.object.metadata.eventId,
+        ticketSaleIds: ticketSales.map(ticketSale => ticketSale.id),
+      },
+    });
+
     return {success: true};
   });
 

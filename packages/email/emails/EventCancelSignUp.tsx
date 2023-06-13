@@ -43,6 +43,7 @@ export default function EventCancelSignUp({
               startDate={startDate}
               endDate={endDate}
               address={address}
+              eventUrl={eventUrl}
             />
           </Section>
           <Section style={buttonContainer}>

@@ -5,7 +5,7 @@ import {verifySignature} from '@upstash/qstash/nextjs';
 import {prisma} from 'database/prisma';
 import {z} from 'zod';
 import {EventReminder} from 'email';
-import {render} from '@react-email/render';
+import {render} from 'email';
 import {getBaseUrl} from 'utils';
 import {Postmark} from 'lib';
 import {formatDate} from 'utils';

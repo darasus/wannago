@@ -1,8 +1,9 @@
 import {formatDate, getBaseUrl, invariant, isOrganization, isUser} from 'utils';
 import {inngest} from '../client';
 import {subHours, isFuture} from 'date-fns';
-import {render} from '@react-email/render';
+import {TicketPurchaseSuccess, render} from 'email';
 import {EventReminder} from 'email';
+import {eventNotFoundError, userNotFoundError} from 'error';
 
 export const emailReminderScheduled = inngest.createFunction(
   {
@@ -134,5 +135,67 @@ export const emailReminderSent = inngest.createFunction(
         />
       ),
     });
+  }
+);
+
+export const ticketPurchaseEmailSent = inngest.createFunction(
+  {
+    name: 'Ticket Purchase Email sent',
+  },
+  {event: 'email/ticket-purchase-email.sent'},
+  async ctx => {
+    const event = await ctx.step.run('Fetch event', () =>
+      ctx.prisma.event.findUnique({
+        where: {id: ctx.event.data.eventId},
+        include: {
+          user: true,
+          organization: true,
+        },
+      })
+    );
+    const user = await ctx.step.run('Fetch event', () =>
+      ctx.prisma.user.findUnique({
+        where: {id: ctx.event.data.userId},
+      })
+    );
+
+    invariant(event, eventNotFoundError);
+    invariant(user, userNotFoundError);
+
+    const organizer = event?.organization || event?.user;
+
+    const organizerName = isUser(organizer)
+      ? `${organizer.firstName} ${organizer.lastName}`
+      : isOrganization(organizer)
+      ? `${organizer.name}`
+      : '';
+
+    const {numberOfPurchasedTickets} =
+      await ctx.actions.getNumberOfPurchasedTickets({
+        ticketSaleIds: ctx.event.data.ticketSaleIds,
+      });
+
+    await ctx.step.run(
+      `Sent ticket purchase confirmation to user's email`,
+      async () => {
+        return ctx.postmark.sendToTransactionalStream({
+          replyTo: 'WannaGo Team <hi@wannago.app>',
+          to: user.email,
+          subject: `Your event is coming up "${event.title}"!`,
+          htmlString: render(
+            <TicketPurchaseSuccess
+              title={event.title}
+              address={event.address || 'none'}
+              eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
+              ticketUrl={`${getBaseUrl()}/e/${event.shortId}/my-tickets`}
+              startDate={formatDate(new Date(event.startDate), 'MMMM d, yyyy')}
+              endDate={formatDate(new Date(event.endDate), 'MMMM d, yyyy')}
+              organizerName={organizerName}
+              numberOfTickets={numberOfPurchasedTickets}
+            />
+          ),
+        });
+      }
+    );
   }
 );

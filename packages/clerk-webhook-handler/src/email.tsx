@@ -1,6 +1,6 @@
 import * as validation from './validation';
 import {Postmark} from 'lib';
-import {render} from '@react-email/render';
+import {render} from 'email';
 import {LoginCode} from 'email';
 
 const postmark = new Postmark();

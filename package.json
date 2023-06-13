@@ -30,7 +30,6 @@
     "@next/mdx": "^13.2.4",
     "@paralleldrive/cuid2": "^2.2.0",
     "@prisma/client": "^4.15.0",
-    "@react-email/render": "^0.0.7",
     "@sentry/nextjs": "^7.53.1",
     "@sentry/profiling-node": "^0.3.0",
     "@styled-icons/simple-icons": "^10.46.0",

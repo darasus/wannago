@@ -3,6 +3,7 @@ import {prisma} from 'database';
 import {Stripe, Postmark} from 'lib';
 import {EventsStoreType} from './types';
 import {payoutAvailableBalanceToConnectedAccount} from './actions/payoutAvailableBalanceToConnectedAccount';
+import {getNumberOfPurchasedTickets} from './actions/getNumberOfPurchasedTickets';
 
 const middleware = new InngestMiddleware({
   name: 'Prisma Middleware',
@@ -18,6 +19,12 @@ const middleware = new InngestMiddleware({
             prisma,
           },
         }),
+      getNumberOfPurchasedTickets: getNumberOfPurchasedTickets({
+        ctx: {
+          stripe,
+          prisma,
+        },
+      }),
     };
 
     return {

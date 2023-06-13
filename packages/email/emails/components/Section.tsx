@@ -6,5 +6,5 @@ interface Props extends PropsWithChildren {
 }
 
 export function Section({children, style}: Props) {
-  return <_Section style={{...style, textAlign: 'left'}}>{children}</_Section>;
+  return <_Section style={{textAlign: 'left', ...style}}>{children}</_Section>;
 }
