@@ -20,6 +20,7 @@ describe('Follow', () => {
     cy.get('[data-testid="select-option-button"]')
       .contains('Following')
       .click();
+    cy.reload();
     cy.get('[data-testid="event-card"]')
       .first()
       .should('contain.text', 'Organization 2');
@@ -41,6 +42,7 @@ describe('Follow', () => {
     cy.get('[data-testid="select-option-button"]')
       .contains('Following')
       .click();
+    cy.reload();
     cy.get('[data-testid="event-card"]').first().should('contain.text', 'John');
   });
 });
