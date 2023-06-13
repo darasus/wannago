@@ -2,7 +2,7 @@ import {Container} from '@react-email/container';
 import {Head} from '@react-email/head';
 import {Hr} from '@react-email/hr';
 import {Html} from '@react-email/html';
-import {Section} from '@react-email/section';
+import {Section} from './components/Section';
 import * as React from 'react';
 import {Header} from './components/Header';
 import {container, hr, main, gutter} from './components/shared';

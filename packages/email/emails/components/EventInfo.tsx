@@ -1,3 +1,4 @@
+import {Section} from './Section';
 import {Text} from './Text';
 
 interface Props {
@@ -16,7 +17,7 @@ export function EventInfo({
   address,
 }: Props) {
   return (
-    <>
+    <Section>
       <Text>
         <b>Event:</b> {title}
       </Text>
@@ -34,6 +35,6 @@ export function EventInfo({
           <b>Address:</b> {address}
         </Text>
       )}
-    </>
+    </Section>
   );
 }

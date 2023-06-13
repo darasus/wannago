@@ -1,7 +1,7 @@
 import {Container} from '@react-email/container';
 import {Head} from '@react-email/head';
 import {Html} from '@react-email/html';
-import {Section} from '@react-email/section';
+import {Section} from './components/Section';
 import * as React from 'react';
 import {EventInfo} from './components/EventInfo';
 import {Header} from './components/Header';

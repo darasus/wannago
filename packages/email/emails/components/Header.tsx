@@ -1,4 +1,4 @@
-import {Section} from '@react-email/section';
+import {Section} from './Section';
 import {Logo} from './Logo';
 
 export function Header() {

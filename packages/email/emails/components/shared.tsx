@@ -18,12 +18,15 @@ export const fontFamily =
 
 export const main = {
   backgroundColor: token.light,
+  paddingLeft: 20,
+  paddingRight: 20,
 };
 
 export const container = {
   margin: '0 auto',
   padding: '20px 0 48px',
   width: '560px',
+  textAlign: 'left' as const,
 };
 
 export const buttonContainer = {

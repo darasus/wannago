@@ -12,6 +12,7 @@ const textStyle = {
   lineHeight: '1.4',
   color: token.dark,
   margin: 0,
+  textAlign: 'left' as const,
 };
 
 export function Text({children, style}: Props) {
