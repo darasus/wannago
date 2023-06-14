@@ -72,6 +72,7 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
             )}
           >
             <Image
+              id="event-image"
               priority
               src={featuredImageSrc}
               alt={title}
