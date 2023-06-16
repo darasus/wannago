@@ -3,17 +3,9 @@ import {forwardRef} from 'react';
 import {titleFontClassName} from '../../fonts';
 import {Button} from 'ui';
 import {Container} from 'ui';
-import dynamic from 'next/dynamic';
 import {cn} from 'utils';
 import {useAuth} from '@clerk/nextjs';
-
-const DynamicSpinningCircle = dynamic(() => import('./SpinningCircle'), {
-  ssr: false,
-});
-
-const DynamicEventPreview = dynamic(() => import('./EventPreview'), {
-  ssr: false,
-});
+import EventPreview from './EventPreview';
 
 export const Hero = forwardRef(function Hero(
   _,
@@ -24,10 +16,9 @@ export const Hero = forwardRef(function Hero(
 
   return (
     <div className="relative overflow-hidden">
-      <DynamicSpinningCircle />
       <Container
         ref={ref}
-        className="pt-20 lg:pt-32 mb-0 relative z-10 md:pointer-events-none overflow-hidden"
+        className="py-20 lg:py-32 mb-0 relative z-10 md:pointer-events-none overflow-hidden"
       >
         <h1
           className={cn(
@@ -38,8 +29,9 @@ export const Hero = forwardRef(function Hero(
           )}
         >
           <span className="block text-transparent mb-4">
-            <div>Better way to</div>
-            <div>organize events</div>
+            Better way to
+            <br />
+            organize events
           </span>
         </h1>
         <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-gray-800 text-center">
@@ -58,8 +50,8 @@ export const Hero = forwardRef(function Hero(
             Create your first event
           </Button>
         </div>
-        <div className="flex justify-center relative w-full max-w-2xl m-auto h-[400px] md:h-[900px]">
-          <DynamicEventPreview />
+        <div className="flex justify-center relative w-full max-w-2xl m-auto">
+          <EventPreview />
         </div>
       </Container>
     </div>
