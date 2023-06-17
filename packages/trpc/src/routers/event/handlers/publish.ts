@@ -1,5 +1,4 @@
 import {env} from 'server-env';
-import {getBaseUrl} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpcServer';
 
@@ -21,14 +20,6 @@ export const publish = protectedProcedure
           externalId: ctx.auth.userId,
         },
       });
-
-      await ctx.telegram
-        .sendMessageToWannaGoChannel({
-          message: `${user?.firstName} ${user?.lastName} published event "${
-            result.title
-          }" ${getBaseUrl()}/e/${result.shortId}`,
-        })
-        .catch(console.error);
     }
 
     if (input.isPublished === true) {

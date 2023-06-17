@@ -5,7 +5,6 @@ import {
 } from '@clerk/nextjs/server';
 import {Currency, PrismaClient} from '@prisma/client';
 import {prisma} from 'database';
-import {Telegram} from 'lib/src/telegram';
 import {Postmark} from 'lib/src/postmark';
 import {MailQueue} from 'lib/src/mailQueue';
 import {CacheService} from 'lib/src/cache';
@@ -75,7 +74,6 @@ interface CreateInnerContextOptions {
   prisma: PrismaClient;
   timezone: string;
   currency: Currency;
-  telegram: Telegram;
   postmark: Postmark;
   mailQueue: MailQueue;
   googleMaps: GoogleMapsClient;
@@ -96,7 +94,6 @@ export async function createContextInner(_opts: CreateInnerContextOptions) {
     prisma: _opts.prisma,
     timezone: _opts.timezone,
     currency: _opts.currency,
-    telegram: _opts.telegram,
     postmark: _opts.postmark,
     mailQueue: _opts.mailQueue,
     googleMaps: _opts.googleMaps,
@@ -136,7 +133,6 @@ export async function createContext(
     timezone,
     currency,
     inngest,
-    telegram: new Telegram(),
     postmark: new Postmark(),
     mailQueue: new MailQueue(),
     googleMaps: new GoogleMapsClient(),

@@ -1,7 +1,6 @@
 import {prisma} from 'database';
 import * as validation from './validation';
-import {MailQueue, Telegram} from 'lib';
-import {env} from 'server-env';
+import {MailQueue} from 'lib';
 import {EmailType} from 'types';
 import {z} from 'zod';
 import {handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema} from 'email-input-validation';
@@ -49,16 +48,6 @@ export const user = {
           preferredCurrency: 'USD',
         },
       });
-
-      const telegram = new Telegram();
-
-      if (env.NODE_ENV !== 'development') {
-        await telegram
-          .sendMessageToWannaGoChannel({
-            message: `New user created: ${user.firstName} ${user.lastName} (${user.email})`,
-          })
-          .catch(console.error);
-      }
 
       await mailQueue.addMessage({
         body: {
