@@ -11,6 +11,7 @@ import {
   emailReminderSent,
   stripeTicketsPurchased,
   ticketPurchaseEmailSent,
+  userAccountRegistered,
 } from 'inngest-client';
 
 export default serve(inngest, [
@@ -24,4 +25,5 @@ export default serve(inngest, [
   emailReminderSent,
   stripeTicketsPurchased,
   ticketPurchaseEmailSent,
+  userAccountRegistered,
 ]);

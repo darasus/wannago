@@ -4,12 +4,14 @@ import {MailQueue} from 'lib';
 import {EmailType} from 'types';
 import {z} from 'zod';
 import {handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema} from 'email-input-validation';
+import {inngest} from 'inngest-client';
 
 const mailQueue = new MailQueue();
 
 export const user = {
   created: async (input: validation.Input) => {
     const {data} = validation.user.created.parse(input);
+    let userId: string | null = null;
 
     const user = await prisma.user.findFirst({
       where: {
@@ -27,6 +29,8 @@ export const user = {
     });
 
     if (user) {
+      userId = user.id;
+
       await prisma.user.update({
         where: {
           id: user.id,
@@ -49,6 +53,8 @@ export const user = {
         },
       });
 
+      userId = user.id;
+
       await mailQueue.addMessage({
         body: {
           userId: user.id,
@@ -59,6 +65,11 @@ export const user = {
         delay: 60 * 60 * 24 * 2,
       });
     }
+
+    await inngest.send({
+      name: 'user/account.registered',
+      data: {userId},
+    });
   },
   updated: async (input: validation.Input) => {
     const {data} = validation.user.updated.parse(input);

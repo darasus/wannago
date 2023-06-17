@@ -68,4 +68,9 @@ export type EventsStoreType = {
       ticketSaleIds: string[];
     };
   };
+  'user/account.registered': {
+    data: {
+      userId: string;
+    };
+  };
 };
