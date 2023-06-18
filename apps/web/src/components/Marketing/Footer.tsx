@@ -28,10 +28,19 @@ export function Footer() {
         <div className="flex items-center py-4">
           <div className="grow text-gray-400">
             <Text className="text-sm">
-              WannaGo &copy; {new Date().getFullYear()} ·{' '}
+              WannaGo &copy; {new Date().getFullYear()}
             </Text>
-            <Link href="/terms" className="text-sm underline">
-              Terms & Conditions
+            {' · '}
+            <Link href="/terms-of-service" className="text-sm underline">
+              Terms of Service
+            </Link>
+            {' · '}
+            <Link href="/privacy-policy" className="text-sm underline">
+              Privacy Policy
+            </Link>
+            {' · '}
+            <Link href="/cookie-policy" className="text-sm underline">
+              Cookie Policy
             </Link>
           </div>
           <div className="flex gap-x-6">
