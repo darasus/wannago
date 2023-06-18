@@ -1,7 +1,8 @@
-import {Container} from 'ui';
+import {Container, Text} from 'ui';
 import {SectionContainer} from './SectionContainer';
 import {SectionHeader} from './SectionHeader';
 import {PricingPlan} from './PricingPlan';
+import {ShieldCheckIcon} from '@heroicons/react/24/solid';
 
 export function Pricing() {
   return (
@@ -64,6 +65,15 @@ export function Pricing() {
               'Priority support',
             ]}
           />
+        </div>
+        <div className="flex items-center justify-center mt-8 px-4">
+          <div className="flex items-center gap-2">
+            <ShieldCheckIcon className="w-24 h-1w-24 md:w-7 md:h-7 text-green-500" />
+            <Text className="text-xl font-bold custom-underline leading-tight">
+              All plans include{' '}
+              <span className="underline">30-day money back guarantee</span>
+            </Text>
+          </div>
         </div>
       </Container>
     </SectionContainer>
