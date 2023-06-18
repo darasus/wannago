@@ -28,3 +28,4 @@ export {NotFoundMessage} from './src/components/NotFoundMessage/NotFoundMessage'
 export {InfoIconWithTooltip} from './src/components/InfoIconWithTooltip/InfoIconWithTooltip';
 export {TicketList} from './src/components/TicketList/TicketList';
 export {InputWrapper} from './src/components/InputWrapper/InputWrapper';
+export {AnimateRender} from './src/components/AnimateRender/AnimateRender';

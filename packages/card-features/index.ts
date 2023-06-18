@@ -3,3 +3,4 @@ export {OrganizerCard} from './src/OrganizerCard/OrganizerCard';
 export {LocationCard} from './src/LocationCard/LocationCard';
 export {UrlCard} from './src/UrlCard/UrlCard';
 export {SignUpCard} from './src/SignUpCard/SignUpCard';
+export {CookieConsent} from './src/CookieConsent/CookieConsent';

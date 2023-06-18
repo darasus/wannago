@@ -17,6 +17,7 @@ import {env} from 'client-env';
 import {Sentry} from '../features/Sentry/Sentry';
 import {AppLayout} from '../features/AppLayout/AppLayout';
 import {Intercom} from '../features/Intercom/Intercom';
+import {CookieConsent} from 'card-features';
 
 function MyApp({Component, pageProps}: AppProps) {
   const router = useRouter();
@@ -146,6 +147,7 @@ function MyApp({Component, pageProps}: AppProps) {
             <Component {...pageProps} />
           </AppLayout>
         </ClerkProvider>
+        <CookieConsent />
       </div>
     </>
   );
