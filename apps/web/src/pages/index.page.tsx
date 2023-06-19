@@ -5,6 +5,7 @@ import {Pricing} from '../components/Marketing/Pricing';
 import {Faqs} from '../components/Marketing/Faqs';
 import {Footer} from '../components/Marketing/Footer';
 import {Features} from '../components/Marketing/Features';
+import {HowDoesItWork} from '../components/Marketing/HowDoesItWork';
 
 function HomePage() {
   return (
@@ -14,7 +15,8 @@ function HomePage() {
       </Head>
       <Hero />
       <div className="h-0.5 bg-gray-800" />
-      {/* <PrimaryFeatures /> */}
+      <HowDoesItWork />
+      <div className="h-0.5 bg-gray-800" />
       <Features />
       <div className="h-0.5 bg-gray-800" />
       {/* <SecondaryFeatures /> */}
