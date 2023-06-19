@@ -101,7 +101,7 @@ export function Features() {
     <SectionContainer id="features">
       <Container>
         <SectionHeader
-          title="Easiest way to invite"
+          title="Better experience"
           description="We provide the tools you need to build your audience and sell tickets while you focus on what's important"
         />
         <div className="grid lg:grid-cols-12 gap-4 items-stretch">
