@@ -4,6 +4,7 @@ import {z} from 'zod';
 
 const scheme = z.object({
   to: z.string().email(),
+  from: z.string().email().optional(),
   replyTo: z.string().email().optional(),
   subject: z.string(),
   htmlString: z.string(),
@@ -14,10 +15,12 @@ type Input = z.input<typeof scheme>;
 type MessageStream =
   | 'outbound'
   | 'broadcast'
+  | 'invite-to-wannago-emails'
   | 'organizer-event-sign-up-notifi';
 
 export class Postmark {
   private client({
+    from,
     to,
     replyTo,
     subject,
@@ -32,7 +35,7 @@ export class Postmark {
         'X-Postmark-Server-Token': env.POSTMARK_API_KEY,
       },
       body: JSON.stringify({
-        From: 'hi@wannago.app',
+        From: from || 'hi@wannago.app',
         To: to,
         ReplyTo: replyTo || to,
         Subject: subject,
@@ -76,6 +79,23 @@ export class Postmark {
       htmlString,
       replyTo,
       messageStream: 'organizer-event-sign-up-notifi',
+    });
+  }
+
+  inviteToWannaGoBroadcastChannel({
+    to,
+    subject,
+    htmlString,
+    replyTo,
+    from,
+  }: Input) {
+    return this.client({
+      to,
+      subject,
+      htmlString,
+      replyTo,
+      from,
+      messageStream: 'invite-to-wannago-emails',
     });
   }
 }
