@@ -23,3 +23,9 @@ export const navItems = [
   {label: 'Examples', href: '/examples'},
   {label: 'Pricing', href: '/#pricing'},
 ];
+
+export const legalNavItems = [
+  {label: 'Terms of Service', href: '/terms-of-service'},
+  {label: 'Privacy Policy', href: '/privacy-policy'},
+  {label: 'Cookie Policy', href: '/cookie-policy'},
+];
