@@ -41,7 +41,7 @@ function Item({feature}: any) {
 
 export function HowDoesItWork() {
   return (
-    <SectionContainer id="features">
+    <SectionContainer id="how-does-it-work">
       <Container>
         <SectionHeader
           title="How does it work?"
