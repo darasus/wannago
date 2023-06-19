@@ -1,4 +1,4 @@
-import { Container } from 'ui'
+import { Container, CardBase } from 'ui'
 
 WannaGo Privacy Policy
 ----------------------
@@ -278,4 +278,10 @@ For any questions or concerns regarding your privacy, you may contact us using t
 Ilya Daraseliya  
 ilya@wannago.app
 
-export default ({ children }) => <Container className="prose">{children}</Container>
+export default ({ children }) => {
+    return (
+        <Container className="prose">
+            <CardBase>{children}</CardBase>
+        </Container>
+    )
+}

@@ -1,4 +1,4 @@
-import { Container } from 'ui'
+import { Container, CardBase } from 'ui'
 
 WannaGo Cookie Policy
 ---------------------
@@ -45,4 +45,10 @@ Targeting/advertising cookies help determine what promotional content is most re
 
 We use targeting/advertising cookies on our site.
 
-export default ({ children }) => <Container className="prose">{children}</Container>
+export default ({ children }) => {
+    return (
+        <Container className="prose">
+            <CardBase>{children}</CardBase>
+        </Container>
+    )
+}

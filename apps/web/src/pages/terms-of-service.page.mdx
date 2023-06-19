@@ -1,4 +1,4 @@
-import { Container } from 'ui'
+import { Container, CardBase } from 'ui'
 
 WannaGo Terms of Service
 ------------------------
@@ -71,4 +71,10 @@ Any term of these Terms of Service which is wholly or partially void or unenforc
 
 These Terms of Service are governed by and construed in accordance with the laws of The Netherlands. You irrevocably submit to the exclusive jurisdiction of the courts in that State or location.
 
-export default ({ children }) => <Container className="prose">{children}</Container>
+export default ({ children }) => {
+    return (
+        <Container className="prose">
+            <CardBase>{children}</CardBase>
+        </Container>
+    )
+}
