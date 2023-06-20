@@ -10,17 +10,15 @@ import {ArrowDownIcon} from '@heroicons/react/24/solid';
 const items = [
   {
     summary: 'Create event',
-    description:
-      'Our user-friendly tools and features allow you to design an engaging and captivating event page swiftly. Add images, videos, and details to bring your event to life and entice attendees.',
+    description: `Create an engaging and captivating event page swiftly. Add featured image and details to bring your event to life and entice attendees.`,
   },
   {
     summary: 'Share event',
-    description: `Spread the word about your event seamlessly! Share your expertly crafted event page across various social media platforms, emails, or even through direct messaging. Reach your target audience, grow your follower base, and increase your event's visibility. Facebook Events integration coming soon.`,
+    description: `Share your event page across various social media platforms, emails, or direct messages. Facebook Events integration coming soon.`,
   },
   {
     summary: 'Manage event',
-    description:
-      'Stay on top of your event with our robust management features. Track ticket sales, respond to attendee queries, and update event details effortlessly. Gain insights and use this information to perfect your current and future events.',
+    description: `Track ticket sales, respond to attendee queries, and update event details effortlessly. Gain insights and use this information to perfect your current and future events.`,
   },
 ];
 
