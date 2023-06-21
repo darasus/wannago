@@ -1,3 +1,5 @@
+'use client';
+
 import {LocationCard as LocationCardView} from 'cards';
 import {useAmplitude} from 'hooks';
 

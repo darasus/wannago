@@ -1,3 +1,5 @@
+'use client';
+
 import {Event, Ticket} from '@prisma/client';
 import {SignUpCard as _SignUpCard} from 'cards';
 import {useAttendeeCount} from 'hooks';

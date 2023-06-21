@@ -1,3 +1,5 @@
+'use client';
+
 import {useEffect, useMemo, useState} from 'react';
 import {formatDate, isSameDay, getRelativeTime} from 'utils';
 import {Button, Badge, CardBase, Text} from 'ui';
@@ -18,7 +20,9 @@ export function DateCard({endDate, startDate, onAddToCalendarClick}: Props) {
   const timeRangeString = getTimeRangeString(startDate, endDate);
 
   useEffect(() => {
-    setShow(true);
+    setTimeout(() => {
+      setShow(true);
+    }, 100);
   }, []);
 
   return (

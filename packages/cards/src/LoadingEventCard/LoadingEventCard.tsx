@@ -1,3 +1,5 @@
+'use client';
+
 import {CardBase} from 'ui';
 
 export function LoadingEventCard() {

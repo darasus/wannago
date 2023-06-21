@@ -1,3 +1,5 @@
+'use client';
+
 import {FormEventHandler} from 'react';
 import {useFormContext} from 'react-hook-form';
 import type {JoinForm as JoinFormType} from '../../types/forms';

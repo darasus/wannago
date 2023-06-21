@@ -1,3 +1,5 @@
+'use client';
+
 import {Event, Organization, User} from '@prisma/client';
 import {OrganizerCard as OrganizerCardView} from 'cards';
 import {useCreateConversation} from 'hooks';

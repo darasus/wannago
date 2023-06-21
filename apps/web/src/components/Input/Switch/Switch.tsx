@@ -1,3 +1,5 @@
+'use client';
+
 import {PropsWithChildren} from 'react';
 import {Switch as _Switch} from '@headlessui/react';
 import {Text} from 'ui';

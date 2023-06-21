@@ -1,3 +1,5 @@
+'use client';
+
 import {saveAs} from 'file-saver';
 import {createEvent} from 'ics';
 import {Event} from '@prisma/client';

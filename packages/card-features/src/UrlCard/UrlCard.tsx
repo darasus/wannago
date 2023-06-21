@@ -1,3 +1,5 @@
+'use client';
+
 import {UrlCard as UrlCardView} from 'cards';
 import {useCopyClipboard, useAmplitude} from 'hooks';
 import {Button} from 'ui';

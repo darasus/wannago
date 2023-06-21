@@ -71,7 +71,6 @@ export default function CardsPage() {
                 </div>
               ),
             },
-            {badgeColor: 'yellow', badgeContent: 'Draft'},
           ]}
         >
           This is some base card
@@ -85,7 +84,9 @@ export default function CardsPage() {
       </Section>
       <Section>
         <DateCard
-          onAddToCalendarClick={() => {}}
+          onAddToCalendarClick={async () => {
+            'use server';
+          }}
           startDate={event.startDate}
           endDate={event.endDate}
         />
@@ -95,7 +96,9 @@ export default function CardsPage() {
           address={event.address}
           latitude={event.latitude!}
           longitude={event.longitude!}
-          onGetDirectionsClick={() => {}}
+          onGetDirectionsClick={async () => {
+            'use server';
+          }}
         />
       </Section>
       <Section>

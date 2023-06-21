@@ -1,3 +1,5 @@
+'use client';
+
 import {Event, Organization, User} from '@prisma/client';
 import {isFuture} from 'date-fns';
 import Image from 'next/image';
