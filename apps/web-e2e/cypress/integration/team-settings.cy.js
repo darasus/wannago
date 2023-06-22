@@ -1,4 +1,8 @@
 describe('Team', () => {
+  beforeEach(() => {
+    cy.setLocalStorage();
+  });
+
   it('can update team', () => {
     cy.login();
     cy.visit('/settings/personal');

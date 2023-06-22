@@ -1,4 +1,7 @@
 describe('Create event', () => {
+  beforeEach(() => {
+    cy.setLocalStorage();
+  });
   it('Can create event', () => {
     cy.login();
     cy.visit('/dashboard');

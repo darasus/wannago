@@ -1,4 +1,7 @@
 describe('Event sign up', () => {
+  beforeEach(() => {
+    cy.setLocalStorage();
+  });
   it('Can sign up to an event', () => {
     cy.login();
     cy.createOfflineEvent();

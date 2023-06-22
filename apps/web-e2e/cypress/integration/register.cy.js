@@ -1,6 +1,10 @@
 const email = Math.random() + '+clerk_test@gmail.com';
 
 describe('Register', () => {
+  beforeEach(() => {
+    cy.setLocalStorage();
+  });
+
   it.skip('Can register', () => {
     cy.visit('/register');
     cy.get('[data-testid="register-first-name-input"]').type('John');

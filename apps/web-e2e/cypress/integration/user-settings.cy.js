@@ -1,4 +1,8 @@
 describe('user-settings', () => {
+  beforeEach(() => {
+    cy.setLocalStorage();
+  });
+
   it('Can update first and last name', () => {
     const firstName = 'John' + Math.random();
     const lastName = 'Doe' + Math.random();

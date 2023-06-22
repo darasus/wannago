@@ -48,4 +48,7 @@ Cypress.Commands.addAll({
     cy.get('[data-testid="logout-button"]').click();
     cy.wait(3000);
   },
+  setLocalStorage() {
+    window.localStorage.setItem('cookie-consent', 'true');
+  },
 });

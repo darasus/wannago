@@ -1,4 +1,7 @@
 describe('Invite attendees', () => {
+  beforeEach(() => {
+    cy.setLocalStorage();
+  });
   it('Can invite attendees by email', () => {
     cy.login();
     cy.createOfflineEvent();

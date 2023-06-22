@@ -1,4 +1,8 @@
 describe('Messages', () => {
+  beforeEach(() => {
+    cy.setLocalStorage();
+  });
+
   it('Can send message to organization', () => {
     const randomMessage = 'Message ' + Math.random();
     cy.login();
