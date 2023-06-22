@@ -6,6 +6,8 @@ import {useForm} from 'react-hook-form';
 import {trpc} from 'trpc/src/trpc';
 import {useRouter} from 'next/router';
 import {toast} from 'react-hot-toast';
+import {useMyUserQuery} from 'hooks';
+import {TRPCClientError} from '@trpc/client';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -19,6 +21,7 @@ interface Form {
 }
 
 export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
+  const me = useMyUserQuery();
   const router = useRouter();
   const form = useForm<Form>({defaultValues: {}});
   const total = Object.entries(form.watch()).reduce(
@@ -45,7 +48,14 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
 
   const handleSubmit = form.handleSubmit(async data => {
     try {
+      if (!me.data?.id) {
+        throw new TRPCClientError('You must be logged in to buy tickets');
+      }
+
+      console.log('>>>', me.data.id);
+
       const responseUrl = await createPaymentSession.mutateAsync({
+        userId: me.data.id,
         tickets: Object.entries(data)
           .filter(([, quantity]) => Boolean(quantity))
           .map(([ticketId, quantity]) => ({

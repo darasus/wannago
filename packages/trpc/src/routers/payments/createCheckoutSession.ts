@@ -7,6 +7,7 @@ import {protectedProcedure} from '../../trpcServer';
 export const createCheckoutSession = protectedProcedure
   .input(
     z.object({
+      userId: z.string().uuid(),
       eventId: z.string().uuid(),
       tickets: z.array(
         z.object({
@@ -17,8 +18,17 @@ export const createCheckoutSession = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const customer = await ctx.actions.getUserByExternalId({
-      externalId: ctx.auth.userId,
+    const customer = await ctx.prisma.user.findFirst({
+      where: {
+        OR: [
+          {
+            id: input.userId,
+          },
+          {
+            externalId: ctx.auth.userId,
+          },
+        ],
+      },
     });
     const event = await ctx.prisma.event.findUnique({
       where: {
@@ -52,7 +62,33 @@ export const createCheckoutSession = protectedProcedure
       })
     );
 
-    const stripeCustomerId = customer.stripeCustomerId || undefined;
+    let stripeCustomerId = customer.stripeCustomerId || undefined;
+
+    if (!customer.stripeCustomerId) {
+      const stripeCustomer = await ctx.stripe.client.customers.create({
+        email: customer.email,
+      });
+
+      stripeCustomerId = stripeCustomer.id;
+
+      await ctx.prisma.user.update({
+        where: {
+          id: customer.id,
+        },
+        data: {
+          stripeCustomerId,
+        },
+      });
+    }
+
+    invariant(
+      stripeCustomerId,
+      new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Stripe customer id is required',
+      })
+    );
+
     const email = customer.email;
 
     invariant(
