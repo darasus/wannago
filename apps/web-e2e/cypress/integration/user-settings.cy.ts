@@ -8,7 +8,7 @@ describe('user-settings', () => {
     const lastName = 'Doe' + Math.random();
 
     cy.login();
-    cy.visit('/settings/personal');
+    cy.visit('/settings');
     cy.get('[data-testid="first-name-input"]').clear();
     cy.get('[data-testid="first-name-input"]').type(firstName);
     cy.get('[data-testid="last-name-input"]').clear();
