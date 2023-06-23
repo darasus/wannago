@@ -1,7 +1,6 @@
 import {RedirectToSignIn, SignedIn, SignedOut} from '@clerk/nextjs';
-import {NextComponentType} from 'next';
 
-export function withProtected(Component: NextComponentType<any, any, any>) {
+export function withProtected(Component: any) {
   return function Render(props: any) {
     return (
       <>

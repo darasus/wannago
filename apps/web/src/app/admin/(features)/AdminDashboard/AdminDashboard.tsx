@@ -1,41 +1,37 @@
-import {Button, CardBase, Container, Text} from 'ui';
-import {trpc} from 'trpc/src/trpc';
-import {withProtected} from '../../utils/withAuthProtect';
+'use client';
+
 import {
   ResponsiveContainer,
   LineChart,
   CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip,
   Line,
+  Tooltip,
 } from 'recharts';
+import {Button, CardBase, Container, Text} from 'ui';
 
-function AdminPage() {
-  const dailySignUps = trpc.admin.getDailySignUps.useQuery();
-  const dailyCreatedEvents = trpc.admin.getDailyCreatedEvents.useQuery();
-  const usersCount = trpc.admin.getUsersCount.useQuery();
-  const eventsCount = trpc.admin.getEventsCount.useQuery();
-  const organizationsCount = trpc.admin.getOrganizationsCount.useQuery();
+interface AdminDashboardProps {
+  usersCount: number;
+  eventsCount: number;
+  organizationsCount: number;
+  dailySignUpsData: Array<{
+    date: string;
+    count: number;
+  }>;
+  dailyEventsCreatedData: Array<{
+    date: string;
+    count: number;
+  }>;
+}
 
-  const dailySignUpsData = Object.entries(dailySignUps.data || {}).map(
-    signUp => {
-      return {
-        date: signUp[0],
-        count: signUp[1],
-      };
-    }
-  );
-
-  const dailyEventsCreatedData = Object.entries(
-    dailyCreatedEvents.data || {}
-  ).map(signUp => {
-    return {
-      date: signUp[0],
-      count: signUp[1],
-    };
-  });
-
+export function AdminDashboard({
+  usersCount,
+  eventsCount,
+  organizationsCount,
+  dailyEventsCreatedData,
+  dailySignUpsData,
+}: AdminDashboardProps) {
   return (
     <Container maxSize="full">
       <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">
@@ -48,7 +44,7 @@ function AdminPage() {
             </Button>
           }
         >
-          <Text className="text-5xl">{usersCount.data}</Text>
+          <Text className="text-5xl">{usersCount}</Text>
         </CardBase>
         <CardBase
           className="lg:col-span-4"
@@ -59,7 +55,7 @@ function AdminPage() {
             </Button>
           }
         >
-          <Text className="text-5xl">{eventsCount.data}</Text>
+          <Text className="text-5xl">{eventsCount}</Text>
         </CardBase>
         <CardBase
           title="Total organizations count"
@@ -75,7 +71,7 @@ function AdminPage() {
             </Button>
           }
         >
-          <Text className="text-5xl">{organizationsCount.data}</Text>
+          <Text className="text-5xl">{organizationsCount}</Text>
         </CardBase>
         <CardBase
           className="lg:col-span-12"
@@ -141,5 +137,3 @@ function AdminPage() {
     </Container>
   );
 }
-
-export default withProtected(AdminPage);

@@ -1,0 +1,28 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "./index.ts",
+  "scripts": {
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "server-env": "workspace:*",
+    "client-env": "workspace:*",
+    "email-input-validation": "workspace:*",
+    "stripe-webhook-input-validation": "workspace:*",
+    "utils": "workspace:*",
+    "inngest-client": "workspace:*",
+    "error": "workspace:*",
+    "types": "workspace:*",
+    "trpc": "workspace:*",
+    "const": "workspace:*",
+    "email": "workspace:*",
+    "lib": "workspace:*",
+    "database": "workspace:*"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  }
+}

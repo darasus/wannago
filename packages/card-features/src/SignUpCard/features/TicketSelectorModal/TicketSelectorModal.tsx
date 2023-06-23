@@ -52,8 +52,6 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
         throw new TRPCClientError('You must be logged in to buy tickets');
       }
 
-      console.log('>>>', me.data.id);
-
       const responseUrl = await createPaymentSession.mutateAsync({
         userId: me.data.id,
         tickets: Object.entries(data)
