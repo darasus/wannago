@@ -1,62 +1,66 @@
+'use client';
+
+import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
+import {User} from '@prisma/client';
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  createColumnHelper,
+} from '@tanstack/react-table';
+import Link from 'next/link';
 import {
   Container,
-  Td,
-  Th,
-  THead,
-  TRow,
-  Table,
-  TBody,
   Button,
   PageHeader,
+  Table,
+  THead,
+  TRow,
+  Th,
+  TBody,
+  Td,
 } from 'ui';
-import {trpc} from 'trpc/src/trpc';
-import {
-  createColumnHelper,
-  useReactTable,
-  flexRender,
-  getCoreRowModel,
-} from '@tanstack/react-table';
-import {Event} from '@prisma/client';
 import {formatDate} from 'utils';
-import {withProtected} from '../../../utils/withAuthProtect';
-import Link from 'next/link';
-import {ArrowLeftCircleIcon} from '@heroicons/react/24/outline';
 
-const columnHelper = createColumnHelper<Event>();
+const columnHelper = createColumnHelper<User>();
 
 const columns = [
-  columnHelper.accessor('title', {
+  columnHelper.accessor(row => row.firstName, {
+    id: 'firstName',
+    header: () => 'Name',
     cell: info => (
       <Link
-        href={`/e/${info.row.original.shortId}`}
         className="underline"
-        target={'_blank'}
-      >
-        {info.getValue()}
-      </Link>
+        href={`/u/${info.row.original.id}`}
+      >{`${info.getValue()} ${info.row.original.lastName}`}</Link>
     ),
-  }),
-  columnHelper.accessor('shortId', {
-    cell: info => info.getValue(),
-  }),
-  columnHelper.accessor('isPublished', {
-    cell: info => (info.getValue() ? 'Published' : 'Draft'),
   }),
   columnHelper.accessor('createdAt', {
     cell: info => formatDate(info.getValue(), 'dd MMM, HH:mm'),
   }),
+  columnHelper.accessor('email', {
+    cell: info => info.renderValue(),
+  }),
+  columnHelper.accessor('id', {
+    cell: info => info.getValue(),
+  }),
+  columnHelper.accessor('externalId', {
+    cell: info => info.renderValue(),
+  }),
 ];
 
-function AdminPage() {
-  const {data} = trpc.admin.getAllEvents.useQuery();
+interface UsersTableProps {
+  users: User[];
+}
 
+export function UsersTable({users}: UsersTableProps) {
   const table = useReactTable({
-    data: data || [],
+    data: users || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
-  if (!data) {
+  if (!users) {
     return null;
   }
 
@@ -71,7 +75,7 @@ function AdminPage() {
         >
           Back to admin home
         </Button>
-        <PageHeader title={'All events'} />
+        <PageHeader title={'All users'} />
         <Table>
           <THead>
             {table.getHeaderGroups().map(headerGroup => (
@@ -105,5 +109,3 @@ function AdminPage() {
     </Container>
   );
 }
-
-export default withProtected(AdminPage);

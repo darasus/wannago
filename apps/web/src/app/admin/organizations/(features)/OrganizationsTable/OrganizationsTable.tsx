@@ -1,25 +1,25 @@
-import {
-  Container,
-  Td,
-  Th,
-  THead,
-  TRow,
-  Table,
-  TBody,
-  Button,
-  PageHeader,
-} from 'ui';
-import {trpc} from 'trpc/src/trpc';
+'use client';
+
+import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
+import {Organization} from '@prisma/client';
 import {
   createColumnHelper,
   useReactTable,
-  flexRender,
   getCoreRowModel,
+  flexRender,
 } from '@tanstack/react-table';
-import {Organization} from '@prisma/client';
-import {withProtected} from '../../../utils/withAuthProtect';
-import {ArrowLeftCircleIcon} from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import {
+  Button,
+  Container,
+  PageHeader,
+  TBody,
+  THead,
+  TRow,
+  Table,
+  Td,
+  Th,
+} from 'ui';
 
 const columnHelper = createColumnHelper<Organization>();
 
@@ -41,18 +41,16 @@ const columns = [
   }),
 ];
 
-function AdminPage() {
-  const {data} = trpc.admin.getAllOrganizations.useQuery();
+interface OrganizationsTableProps {
+  organizations: Organization[];
+}
 
+export function OrganizationsTable({organizations}: OrganizationsTableProps) {
   const table = useReactTable({
-    data: data || [],
+    data: organizations,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  if (!data) {
-    return null;
-  }
 
   return (
     <Container maxSize="full">
@@ -99,5 +97,3 @@ function AdminPage() {
     </Container>
   );
 }
-
-export default withProtected(AdminPage);
