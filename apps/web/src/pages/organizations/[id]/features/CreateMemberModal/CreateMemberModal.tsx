@@ -2,7 +2,7 @@ import {captureException} from '@sentry/nextjs';
 import {useAddOrganizationMemberMutation, useMyOrganizationQuery} from 'hooks';
 import {useForm} from 'react-hook-form';
 import {Button, Modal} from 'ui';
-import {Input} from '../../../../../../components/Input/Input/Input';
+import {Input} from '../../../../../components/Input/Input/Input';
 
 interface Props {
   isOpen: boolean;
@@ -25,7 +25,7 @@ export function CreateMemberModal({isOpen, onClose}: Props) {
           userEmail: data.email,
           organizationId: organization.data.id,
         })
-        .catch(error => {
+        .catch((error: any) => {
           captureException(error);
         });
       onClose();

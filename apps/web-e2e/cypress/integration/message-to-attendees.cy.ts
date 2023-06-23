@@ -1,5 +1,6 @@
 describe('Message to attendees', () => {
   beforeEach(() => {
+    cy.setLocalStorage();
     cy.task('db:reset');
   });
 

@@ -78,6 +78,27 @@ const getMyOrganization = publicProcedure.query(async ({ctx}) => {
   });
 });
 
+const getMyOrganizations = publicProcedure.query(async ({ctx}) => {
+  if (!ctx.auth?.userId) {
+    return null;
+  }
+
+  return ctx.prisma.organization.findMany({
+    where: {
+      users: {
+        some: {
+          externalId: ctx.auth.userId,
+        },
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      logoSrc: true,
+    },
+  });
+});
+
 const remove = protectedProcedure
   .input(
     z.object({
@@ -199,4 +220,5 @@ export const organizationRouter = router({
   getOrganizationById,
   addOrganizationMember,
   removeOrganizationMember,
+  getMyOrganizations,
 });

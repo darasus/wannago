@@ -118,8 +118,19 @@ export function UserSection() {
                       <Button
                         variant="neutral"
                         size="sm"
+                        data-testid="organizations-button"
                         onClick={() => {
-                          router.push('/settings/personal');
+                          router.push('/organizations');
+                          close();
+                        }}
+                      >
+                        Organizations
+                      </Button>
+                      <Button
+                        variant="neutral"
+                        size="sm"
+                        onClick={() => {
+                          router.push('/settings');
                           close();
                         }}
                       >

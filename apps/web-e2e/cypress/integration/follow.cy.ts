@@ -1,5 +1,6 @@
 describe('Follow', () => {
   beforeEach(() => {
+    cy.setLocalStorage();
     cy.task('db:reset');
   });
 

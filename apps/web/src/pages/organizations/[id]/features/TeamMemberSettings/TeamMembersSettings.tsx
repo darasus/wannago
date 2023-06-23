@@ -2,7 +2,7 @@ import {useMyOrganizationMembersQuery, useMyOrganizationQuery} from 'hooks';
 import {useState} from 'react';
 import {Button, CardBase, LoadingBlock} from 'ui';
 import {CreateMemberModal} from '../CreateMemberModal/CreateMemberModal';
-import {TeamMember} from '../TeamMembers/TeamMember';
+import {TeamMember} from '../TeamMember/TeamMember';
 
 export function TeamMembersSettings() {
   const organization = useMyOrganizationQuery();

@@ -1,10 +1,14 @@
 describe('user-settings', () => {
+  beforeEach(() => {
+    cy.setLocalStorage();
+  });
+
   it('Can update first and last name', () => {
     const firstName = 'John' + Math.random();
     const lastName = 'Doe' + Math.random();
 
     cy.login();
-    cy.visit('/settings/personal');
+    cy.visit('/settings');
     cy.get('[data-testid="first-name-input"]').clear();
     cy.get('[data-testid="first-name-input"]').type(firstName);
     cy.get('[data-testid="last-name-input"]').clear();

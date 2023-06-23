@@ -1,21 +1,12 @@
-import {
-  useMyOrganizationQuery,
-  useCreateOrganizationMutation,
-  useRemoveOrganizationMutation,
-  useConfirmDialog,
-  useSetSessionMutation,
-} from 'hooks';
-import {useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
-import {Button, CardBase, Toggle} from 'ui';
-import {FileInput} from '../../../../components/Input/FileInput/FileInput';
-import {Input} from '../../../../components/Input/Input/Input';
-import {StripeAccountLinkSettings} from '../StripeAccountLinkSettings/StripeAccountLinkSettings';
-import {OrganizationSubscription} from './features/OrganizationSubscription/OrganizationSubscription';
-import {TeamMembersSettings} from './features/TeamMemberSettings/TeamMembersSettings';
-import {Currency} from '@prisma/client';
-
-// TODO: create description text explaining why you need to create a team
+import {CardBase, Toggle, Button} from 'ui';
+import {FileInput} from '../../../../../components/Input/FileInput/FileInput';
+import {Input} from '../../../../../components/Input/Input/Input';
+import {StripeAccountLinkSettings} from '../../../../settings/features/StripeAccountLinkSettings/StripeAccountLinkSettings';
+import {OrganizationSubscription} from '../OrganizationSubscription/OrganizationSubscription';
+import {TeamMembersSettings} from '../TeamMemberSettings/TeamMembersSettings';
+import {useCreateOrganizationMutation} from 'hooks';
+import {Currency, Organization} from '@prisma/client';
 
 interface OrganizationForm {
   name: string | null;
@@ -24,17 +15,20 @@ interface OrganizationForm {
   currency: Currency | null;
 }
 
-export function TeamSettings() {
-  const setSession = useSetSessionMutation();
-  const organization = useMyOrganizationQuery();
+interface OrganizationSettingsProps {
+  organization: Organization;
+}
+
+export function OrganizationSettings({
+  organization,
+}: OrganizationSettingsProps) {
   const createOrganization = useCreateOrganizationMutation();
-  const removeOrganization = useRemoveOrganizationMutation();
   const form = useForm<OrganizationForm>({
     defaultValues: {
-      name: organization.data?.name || null,
-      logoSrc: organization.data?.logoSrc || null,
-      email: organization.data?.email || null,
-      currency: organization.data?.preferredCurrency || null,
+      name: organization.name || null,
+      logoSrc: organization.logoSrc || null,
+      email: organization.email || null,
+      currency: organization.preferredCurrency || null,
     },
   });
 
@@ -48,27 +42,8 @@ export function TeamSettings() {
     }
   });
 
-  const handleRemove = useCallback(async () => {
-    if (organization?.data?.id) {
-      await removeOrganization.mutateAsync({
-        organizationId: organization.data.id,
-      });
-      form.setValue('name', null);
-      form.setValue('email', null);
-      form.setValue('logoSrc', null);
-      await setSession.mutateAsync({userType: 'user'});
-    }
-  }, [removeOrganization, form, organization?.data?.id, setSession]);
-
-  const {modal, open} = useConfirmDialog({
-    title: 'Are you sure you want to remove your organization?',
-    description: 'This action cannot be undone.',
-    onConfirm: handleRemove,
-  });
-
   return (
-    <>
-      {modal}
+    <div className="flex flex-col gap-4">
       <CardBase>
         <form onSubmit={handleSubmit}>
           <FormProvider {...form}>
@@ -125,15 +100,6 @@ export function TeamSettings() {
                 >
                   Save
                 </Button>
-                {organization.data && (
-                  <Button
-                    onClick={open}
-                    variant="danger"
-                    data-testid="team-settings-remove-button"
-                  >
-                    Delete
-                  </Button>
-                )}
               </div>
             </div>
           </FormProvider>
@@ -142,6 +108,6 @@ export function TeamSettings() {
       <TeamMembersSettings />
       <OrganizationSubscription />
       <StripeAccountLinkSettings type="BUSINESS" />
-    </>
+    </div>
   );
 }
