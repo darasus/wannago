@@ -17,6 +17,7 @@
     "tsconfig": "workspace:*",
     "inngest-client": "workspace:*",
     "eslint-config-custom": "workspace:*",
+    "api": "workspace:*",
     "client-env": "workspace:*",
     "server-env": "workspace:*",
     "types": "workspace:*",
