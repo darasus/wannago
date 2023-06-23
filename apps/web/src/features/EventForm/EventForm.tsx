@@ -17,8 +17,6 @@ import {
   useGenerateEventDescription,
   useMyOrganizationQuery,
   useMyUserQuery,
-  useSessionQuery,
-  useSubscription,
 } from 'hooks';
 import {InputWrapper} from 'ui';
 import {Textarea} from '../../components/Input/Input/Textarea';
@@ -31,13 +29,6 @@ interface Props {
 }
 
 export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
-  const session = useSessionQuery();
-  const subscription = useSubscription({
-    type: session.data === 'organization' ? 'BUSINESS' : 'PRO',
-  });
-  const canUsePaidEvent =
-    subscription.subscription.data?.type === 'PRO' ||
-    subscription.subscription.data?.type === 'BUSINESS';
   const me = useMyUserQuery();
   const organization = useMyOrganizationQuery();
   const options = [
@@ -244,7 +235,6 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
                   setValue('maxNumberOfAttendees', 0);
                 }}
                 variant={attendType === 'paid' ? 'primary' : 'neutral'}
-                disabled={!canUsePaidEvent}
               >
                 Paid
               </Button>

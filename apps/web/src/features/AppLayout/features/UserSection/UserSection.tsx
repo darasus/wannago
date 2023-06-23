@@ -3,9 +3,7 @@ import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
 import {Button, CardBase, LoadingBlock} from 'ui';
 import {
-  useSessionQuery,
   useSetSessionMutation,
-  useMyOrganizationQuery,
   useMyUserQuery,
   useHasUnseenConversation,
 } from 'hooks';
@@ -20,10 +18,7 @@ export function UserSection() {
   const router = useRouter();
   const {signOut} = useAuth();
   const user = useMyUserQuery();
-  const organization = useMyOrganizationQuery();
-  const session = useSessionQuery();
   const setSession = useSetSessionMutation();
-  const isOrganization = session.data === 'organization';
   const utils = trpc.useContext();
   const hasUnseenConversation = useHasUnseenConversation();
   const isPublicPage = getIsPublic(router.asPath);
@@ -105,11 +100,7 @@ export function UserSection() {
                         size="sm"
                         data-testid="profile-button"
                         onClick={() => {
-                          router.push(
-                            isOrganization
-                              ? `/o/${organization?.data?.id}`
-                              : `/u/${user.data?.id}`
-                          );
+                          router.push(`/u/${user.data?.id}`);
                           close();
                         }}
                       >
