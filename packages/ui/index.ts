@@ -30,3 +30,4 @@ export {InfoIconWithTooltip} from './src/components/InfoIconWithTooltip/InfoIcon
 export {TicketList} from './src/components/TicketList/TicketList';
 export {InputWrapper} from './src/components/InputWrapper/InputWrapper';
 export {AnimateRender} from './src/components/AnimateRender/AnimateRender';
+export {Select, SelectItem} from './src/components/Select/Select';

@@ -18,4 +18,5 @@ export interface Form {
   featuredImageWidth: number | null;
   featuredImagePreviewSrc: string | null;
   tickets: Ticket[];
+  createdById: string;
 }

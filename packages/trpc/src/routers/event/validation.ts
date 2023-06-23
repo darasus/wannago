@@ -1,6 +1,7 @@
 import {z} from 'zod';
 
 export const eventInput = z.object({
+  createdById: z.string().uuid(),
   title: z.string(),
   description: z.string().nullable().default(null),
   startDate: z.date(),

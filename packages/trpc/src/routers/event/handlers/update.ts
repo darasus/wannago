@@ -20,6 +20,7 @@ export const update = protectedProcedure
         featuredImagePreviewSrc,
         title,
         tickets,
+        createdById,
       },
       ctx,
     }) => {
@@ -36,13 +37,16 @@ export const update = protectedProcedure
         });
       }
 
-      const originalEvent = await ctx.prisma.event.findUnique({
-        where: {
-          id: eventId,
-        },
-      });
+      const [user, organization] = await Promise.all([
+        await ctx.prisma.user.findUnique({
+          where: {id: createdById},
+        }),
+        await ctx.prisma.organization.findUnique({
+          where: {id: createdById},
+        }),
+      ]);
 
-      let event = await ctx.prisma.event.update({
+      const event = await ctx.prisma.event.update({
         where: {
           id: eventId,
         },
@@ -59,6 +63,26 @@ export const update = protectedProcedure
           featuredImagePreviewSrc,
           longitude: geocodeResponse?.data.results[0].geometry.location.lng,
           latitude: geocodeResponse?.data.results[0].geometry.location.lat,
+          ...(user && {
+            user: {
+              connect: {
+                id: user.id,
+              },
+            },
+            organization: {
+              disconnect: true,
+            },
+          }),
+          ...(organization && {
+            organization: {
+              connect: {
+                id: organization.id,
+              },
+            },
+            user: {
+              disconnect: true,
+            },
+          }),
         },
       });
 

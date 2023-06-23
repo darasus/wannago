@@ -32,9 +32,6 @@ const moduleExports = {
   },
   reactStrictMode: true,
   pageExtensions: ['page.tsx', 'page.ts', 'page.mdx', 'api.ts', 'api.tsx'],
-  experimental: {
-    serverActions: true,
-  },
   images: {
     domains: [
       'maps.googleapis.com',

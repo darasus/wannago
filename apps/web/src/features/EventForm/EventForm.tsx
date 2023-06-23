@@ -1,7 +1,12 @@
 import {isBefore, isEqual} from 'date-fns';
 import {FormEventHandler, useEffect, useState} from 'react';
-import {useFieldArray, useFormContext, useWatch} from 'react-hook-form';
-import {Badge, Button, CardBase} from 'ui';
+import {
+  Controller,
+  useFieldArray,
+  useFormContext,
+  useWatch,
+} from 'react-hook-form';
+import {Badge, Button, CardBase, Select, SelectItem} from 'ui';
 import {FileInput} from '../../components/Input/FileInput/FileInput';
 import {Input} from '../../components/Input/Input/Input';
 import {LocationInput} from '../../components/Input/LocationInput/LocationInput';
@@ -10,6 +15,8 @@ import {Form} from './types';
 import {SparklesIcon} from '@heroicons/react/24/solid';
 import {
   useGenerateEventDescription,
+  useMyOrganizationQuery,
+  useMyUserQuery,
   useSessionQuery,
   useSubscription,
 } from 'hooks';
@@ -31,6 +38,18 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
   const canUsePaidEvent =
     subscription.subscription.data?.type === 'PRO' ||
     subscription.subscription.data?.type === 'BUSINESS';
+  const me = useMyUserQuery();
+  const organization = useMyOrganizationQuery();
+  const options = [
+    {
+      label: `${me.data?.firstName} ${me.data?.lastName}`,
+      value: `${me.data?.id}`,
+    },
+    {
+      label: `${organization.data?.name}`,
+      value: `${organization.data?.id}`,
+    },
+  ];
 
   const {
     register,
@@ -64,6 +83,37 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
   }, [generatedOutput, setValue]);
 
   const items = [
+    {
+      label: (
+        <Badge color="gray" size="xs">
+          Who
+        </Badge>
+      ),
+      content: (
+        <Controller
+          name="createdById"
+          control={control}
+          rules={{required: 'Create as is required'}}
+          render={({field, formState}) => {
+            return (
+              <Select
+                className="w-full"
+                label="Create as"
+                onSelectionChange={key => {
+                  field.onChange(key);
+                }}
+                selectedKey={field.value}
+                error={formState.errors.createdById}
+              >
+                {options.map(option => (
+                  <SelectItem key={option.value}>{option.label}</SelectItem>
+                ))}
+              </Select>
+            );
+          }}
+        />
+      ),
+    },
     {
       label: (
         <Badge color="gray" size="xs">
