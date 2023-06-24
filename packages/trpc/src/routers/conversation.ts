@@ -85,7 +85,6 @@ const sendMessage = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const activeSessionType = await ctx.actions.getActiveSessionType();
     const [user, organization] = await Promise.all([
       ctx.prisma.user.findUnique({
         where: {
@@ -118,10 +117,7 @@ const sendMessage = protectedProcedure
       await ctx.prisma.conversationLastSeen.findFirst({
         where: {
           conversationId: input.conversationId,
-          ...(activeSessionType === 'user' ? {userId: input.senderId} : {}),
-          ...(activeSessionType === 'organization'
-            ? {organizationId: input.senderId}
-            : {}),
+          userId: input.senderId,
         },
       });
 
@@ -150,24 +146,22 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
 
   const conversations = await ctx.prisma.conversation.findMany({
     where: {
-      ...(activeSessionType === 'user'
-        ? {
-            users: {
-              some: {
-                id: user?.id,
-              },
+      OR: [
+        {
+          users: {
+            some: {
+              id: user?.id,
             },
-          }
-        : {}),
-      ...(activeSessionType === 'organization'
-        ? {
-            organizations: {
-              some: {
-                id: user?.organization?.id,
-              },
+          },
+        },
+        {
+          organizations: {
+            some: {
+              id: user?.organization?.id,
             },
-          }
-        : {}),
+          },
+        },
+      ],
     },
     include: {
       users: true,

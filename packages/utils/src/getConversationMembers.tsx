@@ -15,9 +15,7 @@ export function getConversationMembers(
   const list: (User | Organization)[] = [
     ...(conversation?.organizations || []),
     ...(conversation?.users || []),
-  ]
-    .filter(Boolean)
-    .filter(member => member.id !== me?.id);
+  ].filter(Boolean);
 
   const arr: Member[] = [];
 
