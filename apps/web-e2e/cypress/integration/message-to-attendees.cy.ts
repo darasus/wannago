@@ -7,7 +7,7 @@ describe('Message to attendees', () => {
   it('Can message to attendees', () => {
     cy.login();
     cy.visit('/dashboard');
-    cy.createOfflineEvent();
+    cy.createEvent();
     cy.publishCurrentEvent();
     cy.visit('/dashboard');
     cy.get('[data-testid="select-button"]').click();

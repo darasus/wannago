@@ -95,9 +95,15 @@ export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
                 }}
                 selectedKey={field.value}
                 error={formState.errors.createdById}
+                data-testid="event-form-created-by-input"
               >
                 {options.map(option => (
-                  <SelectItem key={option.value}>{option.label}</SelectItem>
+                  <SelectItem
+                    key={option.value}
+                    data-testid={`created-by-option-${option.value}`}
+                  >
+                    {option.label}
+                  </SelectItem>
                 ))}
               </Select>
             );

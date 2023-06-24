@@ -88,14 +88,16 @@ export default function ConversationPage() {
                         height={100}
                         alt={`${message.user?.firstName}'s profile picture`}
                       />
-                      <Text data-testid="message-text">
+                      <Text>
                         <b>{message.user?.firstName}</b>
                       </Text>
                       <Text className="text-xs text-gray-400">
                         {formatDate(message.createdAt, 'hh:mm, MMM d')}
                       </Text>
                     </div>
-                    <div className="p-2">{message.text}</div>
+                    <div className="p-2" data-testid="message-text">
+                      {message.text}
+                    </div>
                   </div>
                 </div>
               </div>

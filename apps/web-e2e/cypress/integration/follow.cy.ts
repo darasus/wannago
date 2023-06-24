@@ -1,3 +1,5 @@
+import {organization_2_id, user_2_id} from '../../constants';
+
 describe('Follow', () => {
   beforeEach(() => {
     cy.setLocalStorage();
@@ -7,8 +9,7 @@ describe('Follow', () => {
   it('Can follow organization', () => {
     cy.login('user_2_email');
     cy.visit('/dashboard');
-    cy.get('[data-testid="organization-header-button"]').click();
-    cy.createOfflineEvent();
+    cy.createEvent(organization_2_id);
     cy.publishCurrentEvent();
     cy.logout();
     cy.login('user_1_email');
@@ -30,7 +31,7 @@ describe('Follow', () => {
   it('Can follow user', () => {
     cy.login('user_2_email');
     cy.visit('/dashboard');
-    cy.createOfflineEvent();
+    cy.createEvent(user_2_id);
     cy.publishCurrentEvent();
     cy.logout();
     cy.login('user_1_email');

@@ -11,7 +11,7 @@
 declare namespace Cypress {
   interface Chainable<Subject = any> {
     login(value?: 'user_1_email' | 'user_2_email'): void;
-    createOfflineEvent(): void;
+    createEvent(authorId?: string): void;
     toggleSession(): void;
     logout(): void;
   }
