@@ -3,9 +3,9 @@ import {Button, CardBase, Container, LoadingBlock, PageHeader} from 'ui';
 import {withProtected} from '../../utils/withAuthProtect';
 import {useForm} from 'react-hook-form';
 import {
-  useAuthorId,
   useCreateEventMutation,
   useGenerateEventWithPromptMutation,
+  useMyUserQuery,
 } from 'hooks';
 import {EventView} from '../../features/EventView/EventView';
 import {useRouter} from 'next/router';
@@ -21,7 +21,7 @@ function EventAddPage() {
   });
   const previewEventMutation = useGenerateEventWithPromptMutation();
   const createEventMutation = useCreateEventMutation();
-  const authorId = useAuthorId();
+  const me = useMyUserQuery();
 
   const handleSubmit = form.handleSubmit(async data => {
     try {
@@ -30,9 +30,9 @@ function EventAddPage() {
   });
 
   const handleCreateEvent = async () => {
-    if (previewEventMutation.data && authorId) {
+    if (previewEventMutation.data && me.data?.id) {
       const response = await createEventMutation.mutateAsync({
-        authorId,
+        createdById: me.data.id,
         title: previewEventMutation.data.title,
         description: previewEventMutation.data.description,
         address: previewEventMutation.data.address,
