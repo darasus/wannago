@@ -1,5 +1,5 @@
 import {isBefore} from 'date-fns';
-import {conversationNotFoundError} from 'error';
+import {conversationNotFoundError, userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {router, protectedProcedure} from '../trpcServer';
@@ -143,23 +143,27 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
     },
   });
 
+  invariant(user, userNotFoundError);
+
   const conversations = await ctx.prisma.conversation.findMany({
     where: {
       OR: [
         {
           users: {
             some: {
-              id: user?.id,
+              id: user.id,
             },
           },
         },
-        {
-          organizations: {
-            some: {
-              id: user?.organization?.id,
-            },
-          },
-        },
+        user?.organization?.id
+          ? {
+              organizations: {
+                some: {
+                  id: user?.organization?.id,
+                },
+              },
+            }
+          : {},
       ],
     },
     include: {
