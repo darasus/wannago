@@ -15,6 +15,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <div>
             <div>
               <Container maxSize={'full'}>
+                {/* @ts-expect-error Server Component */}
                 <Header />
               </Container>
             </div>

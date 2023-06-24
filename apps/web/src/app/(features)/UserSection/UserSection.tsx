@@ -1,30 +1,32 @@
+'use client';
+
 import {useAuth} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment, use} from 'react';
 import {Avatar, Button, CardBase} from 'ui';
 import {useBreakpoint} from 'hooks';
 import {usePathname} from 'next/navigation';
-import {trpc} from 'trpc/src/trpc';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
 import {getIsPublic} from '../../../features/AppLayout/features/Header/constants';
-import {api} from '../../../trpc/client';
 import {useRouter} from 'next/navigation';
+import {User} from '@prisma/client';
 
-export function UserSection() {
+interface Props {
+  mePromise: Promise<User | null>;
+  hasUnseenConversationPromise: Promise<boolean>;
+}
+
+export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const {signOut} = useAuth();
-  const utils = trpc.useContext();
-  const hasUnseenConversation = use(
-    api.conversation.getUserHasUnseenConversation.query()
-  );
+  const me = use(mePromise);
+  const hasUnseenConversation = use(hasUnseenConversationPromise);
   const isPublicPage = getIsPublic(pathname ?? '/');
   const size = useBreakpoint();
   const canShowLabel = size !== 'sm';
-  const me = use(api.user.me.query());
 
   const onSignOutClick = async () => {
-    await utils.invalidate();
     await signOut();
   };
 
