@@ -1,6 +1,6 @@
 import {useSignIn} from '@clerk/nextjs';
 import {ClerkAPIError} from '@clerk/types';
-import {useMyUserQuery, useSetSessionMutation} from 'hooks';
+import {useMyUserQuery} from 'hooks';
 import {useRouter} from 'next/router';
 import {useCallback, useEffect, useState} from 'react';
 import {FormProvider, useForm, useFormContext} from 'react-hook-form';
@@ -40,9 +40,6 @@ export function Login({
   const codeForm = useForm<TCodeForm>({
     mode: 'onSubmit',
   });
-  const setSessionMutation = useSetSessionMutation({
-    redirectToDashboard,
-  });
 
   const ready = useCallback(async (): Promise<any> => {
     const {data} = await me.refetch();
@@ -57,11 +54,10 @@ export function Login({
     async (createdSessionId: string) => {
       await setSession?.(createdSessionId);
       await ready();
-      await setSessionMutation.mutateAsync({userType: 'user'});
 
       onDone?.();
     },
-    [ready, setSession, onDone, setSessionMutation]
+    [ready, setSession, onDone]
   );
 
   const handleLoginClick = useCallback(() => {

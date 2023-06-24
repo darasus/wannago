@@ -2,11 +2,7 @@ import {useAuth} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
 import {Button, CardBase, LoadingBlock} from 'ui';
-import {
-  useSetSessionMutation,
-  useMyUserQuery,
-  useHasUnseenConversation,
-} from 'hooks';
+import {useMyUserQuery, useHasUnseenConversation} from 'hooks';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
@@ -18,13 +14,11 @@ export function UserSection() {
   const router = useRouter();
   const {signOut} = useAuth();
   const user = useMyUserQuery();
-  const setSession = useSetSessionMutation();
   const utils = trpc.useContext();
   const hasUnseenConversation = useHasUnseenConversation();
   const isPublicPage = getIsPublic(router.asPath);
 
   const onSignOutClick = async () => {
-    await setSession.mutateAsync({userType: 'user'});
     await utils.invalidate();
     await signOut();
   };
