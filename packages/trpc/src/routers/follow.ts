@@ -12,16 +12,6 @@ const follow = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const session = await ctx.actions.getActiveSessionType();
-
-    invariant(
-      session === 'user',
-      new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Only users can follow',
-      })
-    );
-
     const me = await ctx.actions.getUserByExternalId({
       externalId: ctx.auth?.userId,
     });
@@ -72,16 +62,6 @@ const unfollow = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const session = await ctx.actions.getActiveSessionType();
-
-    invariant(
-      session === 'user',
-      new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Only users can follow',
-      })
-    );
-
     const me = await ctx.actions.getUserByExternalId({
       externalId: ctx.auth?.userId,
     });
@@ -174,13 +154,6 @@ const amFollowing = publicProcedure
   )
   .query(async ({ctx, input}) => {
     if (!ctx.auth?.userId) {
-      return false;
-    }
-
-    const session = await ctx.actions.getActiveSessionType();
-
-    // organizations can not follow others
-    if (session === 'organization') {
       return false;
     }
 

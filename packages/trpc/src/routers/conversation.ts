@@ -134,7 +134,6 @@ const sendMessage = protectedProcedure
   });
 
 const getMyConversations = protectedProcedure.query(async ({ctx}) => {
-  const activeSessionType = await ctx.actions.getActiveSessionType();
   const user = await ctx.prisma.user.findFirst({
     where: {
       externalId: ctx.auth?.userId,
@@ -178,14 +177,7 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
 
   return conversations.map(c => {
     const lastSeen = c.lastSeen?.find(ls => {
-      if (activeSessionType === 'user') {
-        return ls.userId === user?.id;
-      }
-      if (activeSessionType === 'organization') {
-        return ls.organizationId === user?.organization?.id;
-      }
-
-      return false;
+      return ls.userId === user?.id;
     });
 
     return {
@@ -200,7 +192,6 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
 });
 
 const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
-  const activeSessionType = await ctx.actions.getActiveSessionType();
   const user = await ctx.prisma.user.findFirst({
     where: {
       externalId: ctx.auth?.userId,
@@ -212,24 +203,11 @@ const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
 
   const conversations = await ctx.prisma.conversation.findMany({
     where: {
-      ...(activeSessionType === 'user'
-        ? {
-            users: {
-              some: {
-                id: user?.id,
-              },
-            },
-          }
-        : {}),
-      ...(activeSessionType === 'organization'
-        ? {
-            organizations: {
-              some: {
-                id: user?.organization?.id,
-              },
-            },
-          }
-        : {}),
+      users: {
+        some: {
+          id: user?.id,
+        },
+      },
     },
     include: {
       messages: {
@@ -251,10 +229,7 @@ const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
 
   const lastSeen = await ctx.prisma.conversationLastSeen.findFirst({
     where: {
-      ...(activeSessionType === 'organization'
-        ? {organizationId: user?.organization?.id}
-        : {}),
-      ...(activeSessionType === 'user' ? {userId: user?.id} : {}),
+      userId: user?.id,
     },
   });
 
@@ -288,7 +263,6 @@ const markConversationAsSeen = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const activeSessionType = await ctx.actions.getActiveSessionType();
     const user = await ctx.prisma.user.findFirst({
       where: {
         externalId: ctx.auth?.userId,
@@ -301,10 +275,7 @@ const markConversationAsSeen = protectedProcedure
       await ctx.prisma.conversationLastSeen.findFirst({
         where: {
           conversationId: input.conversationId,
-          ...(activeSessionType === 'user' ? {userId: user?.id} : {}),
-          ...(activeSessionType === 'organization'
-            ? {organizationId: user?.organization?.id}
-            : {}),
+          userId: user?.id,
         },
       });
 
@@ -326,24 +297,11 @@ const markConversationAsSeen = protectedProcedure
             },
           },
           lastSeen: new Date(),
-          ...(activeSessionType === 'user'
-            ? {
-                user: {
-                  connect: {
-                    id: user?.id,
-                  },
-                },
-              }
-            : {}),
-          ...(activeSessionType === 'organization'
-            ? {
-                organization: {
-                  connect: {
-                    id: user?.organization?.id,
-                  },
-                },
-              }
-            : {}),
+          user: {
+            connect: {
+              id: user?.id,
+            },
+          },
         },
       });
     }
