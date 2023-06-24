@@ -1,29 +1,29 @@
 import {useAuth} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
-import {Button, CardBase, LoadingBlock} from 'ui';
-import {useMyUserQuery, useHasUnseenConversation} from 'hooks';
+import {Avatar, Button, CardBase, LoadingBlock} from 'ui';
+import {useMyUserQuery, useHasUnseenConversation, useBreakpoint} from 'hooks';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
-import {UserSwitcher} from './features/UserSwitcher';
-import {Bars3Icon, XMarkIcon} from '@heroicons/react/24/outline';
 import {getIsPublic} from '../Header/constants';
 
 export function UserSection() {
   const router = useRouter();
   const {signOut} = useAuth();
-  const user = useMyUserQuery();
   const utils = trpc.useContext();
   const hasUnseenConversation = useHasUnseenConversation();
   const isPublicPage = getIsPublic(router.asPath);
+  const size = useBreakpoint();
+  const canShowLabel = size !== 'sm';
+  const me = useMyUserQuery();
 
   const onSignOutClick = async () => {
     await utils.invalidate();
     await signOut();
   };
 
-  if (user.isLoading && !user.data) {
+  if (me.isLoading && !me.data) {
     return <LoadingBlock />;
   }
 
@@ -51,106 +51,115 @@ export function UserSection() {
       >
         Create event
       </Button>
-      <UserSwitcher />
-      <Popover className="relative z-50">
-        {() => (
-          <>
-            <Popover.Button as="div" data-testid="header-user-section-button">
-              {({open}) => {
-                return (
-                  <Button
-                    iconLeft={open ? <XMarkIcon /> : <Bars3Icon />}
-                    variant="neutral"
-                    hasNotificationBadge={hasUnseenConversation.data}
-                  />
-                );
-              }}
-            </Popover.Button>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              <Popover.Panel className="absolute right-0 mt-3 max-w-sm">
-                {({close}) => {
+      {me.data && (
+        <Popover className="relative z-50">
+          {() => (
+            <>
+              <Popover.Button as="div" data-testid="header-user-section-button">
+                {() => {
                   return (
-                    <CardBase innerClassName="flex flex-col gap-y-2 w-40">
-                      <Button
-                        variant="neutral"
-                        size="sm"
-                        onClick={() => {
-                          router.push('/dashboard');
-                          close();
-                        }}
-                      >
-                        Dashboard
-                      </Button>
-                      <Button
-                        variant="neutral"
-                        size="sm"
-                        data-testid="profile-button"
-                        onClick={() => {
-                          router.push(`/u/${user.data?.id}`);
-                          close();
-                        }}
-                      >
-                        Profile
-                      </Button>
-                      <Button
-                        variant="neutral"
-                        size="sm"
-                        data-testid="organizations-button"
-                        onClick={() => {
-                          router.push('/organizations');
-                          close();
-                        }}
-                      >
-                        Organizations
-                      </Button>
-                      <Button
-                        variant="neutral"
-                        size="sm"
-                        onClick={() => {
-                          router.push('/settings');
-                          close();
-                        }}
-                      >
-                        Settings
-                      </Button>
-                      <Button
-                        variant="neutral"
-                        size="sm"
-                        onClick={() => {
-                          router.push('/messages');
-                          close();
-                        }}
-                        hasNotificationBadge={hasUnseenConversation.data}
-                      >
-                        Messages
-                      </Button>
-                      <Button
-                        variant="danger"
-                        onClick={() => {
-                          onSignOutClick();
-                          close();
-                        }}
-                        data-testid="logout-button"
-                        size="sm"
-                      >
-                        Logout
-                      </Button>
-                    </CardBase>
+                    <Button
+                      variant="neutral"
+                      iconLeft={
+                        <Avatar
+                          className="h-6 w-6"
+                          src={me.data?.profileImageSrc}
+                          alt={'avatar'}
+                        />
+                      }
+                      data-testid="header-user-button"
+                    >
+                      {canShowLabel ? me.data?.firstName : null}
+                    </Button>
                   );
                 }}
-              </Popover.Panel>
-            </Transition>
-          </>
-        )}
-      </Popover>
+              </Popover.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 translate-y-1"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-1"
+              >
+                <Popover.Panel className="absolute right-0 mt-3 max-w-sm">
+                  {({close}) => {
+                    return (
+                      <CardBase innerClassName="flex flex-col gap-y-2 w-40">
+                        <Button
+                          variant="neutral"
+                          size="sm"
+                          onClick={() => {
+                            router.push('/dashboard');
+                            close();
+                          }}
+                        >
+                          Dashboard
+                        </Button>
+                        <Button
+                          variant="neutral"
+                          size="sm"
+                          data-testid="profile-button"
+                          onClick={() => {
+                            router.push(`/u/${me.data?.id}`);
+                            close();
+                          }}
+                        >
+                          Profile
+                        </Button>
+                        <Button
+                          variant="neutral"
+                          size="sm"
+                          data-testid="organizations-button"
+                          onClick={() => {
+                            router.push('/organizations');
+                            close();
+                          }}
+                        >
+                          Organizations
+                        </Button>
+                        <Button
+                          variant="neutral"
+                          size="sm"
+                          onClick={() => {
+                            router.push('/settings');
+                            close();
+                          }}
+                        >
+                          Settings
+                        </Button>
+                        <Button
+                          variant="neutral"
+                          size="sm"
+                          onClick={() => {
+                            router.push('/messages');
+                            close();
+                          }}
+                          hasNotificationBadge={hasUnseenConversation.data}
+                        >
+                          Messages
+                        </Button>
+                        <Button
+                          variant="danger"
+                          onClick={() => {
+                            onSignOutClick();
+                            close();
+                          }}
+                          data-testid="logout-button"
+                          size="sm"
+                        >
+                          Logout
+                        </Button>
+                      </CardBase>
+                    );
+                  }}
+                </Popover.Panel>
+              </Transition>
+            </>
+          )}
+        </Popover>
+      )}
     </div>
   );
 }
