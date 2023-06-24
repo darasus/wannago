@@ -33,7 +33,6 @@ export function EventView({event, isLoadingImage, isMyEvent}: Props) {
           <UrlCard
             url={`${getBaseUrl()}/e/${event.shortId}`}
             eventId={event.id}
-            isPublished={event.isPublished ?? false}
           />
         </div>
       </div>

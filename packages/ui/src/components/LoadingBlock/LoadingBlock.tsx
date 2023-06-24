@@ -1,3 +1,5 @@
+'use client';
+
 import {LoadingWave} from '../LoadingWave/LoadingWave';
 
 export function LoadingBlock() {

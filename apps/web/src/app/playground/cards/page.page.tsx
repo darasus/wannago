@@ -103,7 +103,6 @@ export default function CardsPage() {
       </Section>
       <Section>
         <UrlCard
-          isPublished={event.isPublished}
           url={`${getBaseUrl()}/e/${event.shortId}`}
           publicEventUrl={`${getBaseUrl()}/e/${event.shortId}`}
         />
