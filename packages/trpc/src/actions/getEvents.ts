@@ -3,7 +3,7 @@ import {Prisma} from '@prisma/client';
 import {ActionContext} from '../context';
 
 const validation = z.object({
-  id: z.string().uuid(),
+  authorIds: z.array(z.string().uuid()),
   eventType: z.enum(['attending', 'organizing', 'all', 'following']),
   isPublished: z.boolean().optional(),
   onlyPast: z.boolean().optional(),
@@ -11,18 +11,22 @@ const validation = z.object({
 
 export function getEvents(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
-    const {id, isPublished, eventType} = validation.parse(input);
+    const {authorIds, isPublished, eventType} = validation.parse(input);
 
     const organizingQuery: Prisma.EventWhereInput['OR'] = [
       {
         isPublished,
         user: {
-          id,
+          id: {
+            in: authorIds,
+          },
         },
       },
       {
         organization: {
-          id,
+          id: {
+            in: authorIds,
+          },
         },
       },
     ];
@@ -35,7 +39,9 @@ export function getEvents(ctx: ActionContext) {
               in: ['REGISTERED', 'INVITED'],
             },
             user: {
-              id,
+              id: {
+                in: authorIds,
+              },
             },
           },
         },
@@ -47,7 +53,9 @@ export function getEvents(ctx: ActionContext) {
         user: {
           followers: {
             some: {
-              followerUserId: id,
+              followerUserId: {
+                in: authorIds,
+              },
             },
           },
         },
@@ -57,7 +65,9 @@ export function getEvents(ctx: ActionContext) {
         organization: {
           followers: {
             some: {
-              followerUserId: id,
+              followerUserId: {
+                in: authorIds,
+              },
             },
           },
         },
@@ -65,7 +75,7 @@ export function getEvents(ctx: ActionContext) {
     ];
     const events = await ctx.prisma.event.findMany({
       orderBy: {
-        startDate: 'desc',
+        startDate: 'asc',
       },
       where: {
         ...(input.onlyPast === true

@@ -5,7 +5,7 @@ import {cn} from 'utils';
 import {Badge} from '../Badge/Badge';
 import {Text} from '../Text/Text';
 
-interface Props extends PropsWithChildren {
+export interface InputWrapperProps extends PropsWithChildren {
   label?: string | JSX.Element;
   description?: string;
   containerClassName?: string;
@@ -22,7 +22,7 @@ export function InputWrapper({
   children,
   isOptional,
   description,
-}: Props) {
+}: InputWrapperProps) {
   const hasError = Boolean(error);
 
   return (

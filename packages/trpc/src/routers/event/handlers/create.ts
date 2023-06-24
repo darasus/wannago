@@ -1,12 +1,11 @@
 import {env} from 'server-env';
 import {generateShortId, invariant} from 'utils';
-import {z} from 'zod';
 import {protectedProcedure} from '../../../trpcServer';
 import {eventInput} from '../validation';
 import {TRPCError} from '@trpc/server';
 
 export const create = protectedProcedure
-  .input(eventInput.extend({authorId: z.string().uuid()}))
+  .input(eventInput)
   .mutation(
     async ({
       input: {
@@ -20,7 +19,7 @@ export const create = protectedProcedure
         featuredImagePreviewSrc,
         maxNumberOfAttendees,
         startDate,
-        authorId,
+        createdById,
         tickets,
       },
       ctx,
@@ -39,23 +38,23 @@ export const create = protectedProcedure
       const [user, organization, subscription, userEventCount] =
         await Promise.all([
           ctx.prisma.user.findUnique({
-            where: {id: authorId},
+            where: {id: createdById},
           }),
-          ctx.prisma.organization.findUnique({where: {id: authorId}}),
+          ctx.prisma.organization.findUnique({where: {id: createdById}}),
           ctx.prisma.subscription.findFirst({
             where: {
               OR: [
                 {
                   user: {
                     some: {
-                      id: authorId,
+                      id: createdById,
                     },
                   },
                 },
                 {
                   organization: {
                     some: {
-                      id: authorId,
+                      id: createdById,
                     },
                   },
                 },
@@ -64,7 +63,7 @@ export const create = protectedProcedure
           }),
           ctx.prisma.event.count({
             where: {
-              userId: authorId,
+              userId: createdById,
             },
           }),
         ]);

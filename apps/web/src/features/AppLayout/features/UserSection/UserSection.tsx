@@ -2,13 +2,7 @@ import {useAuth} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
 import {Button, CardBase, LoadingBlock} from 'ui';
-import {
-  useSessionQuery,
-  useSetSessionMutation,
-  useMyOrganizationQuery,
-  useMyUserQuery,
-  useHasUnseenConversation,
-} from 'hooks';
+import {useMyUserQuery, useHasUnseenConversation} from 'hooks';
 import {useRouter} from 'next/router';
 import {trpc} from 'trpc/src/trpc';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
@@ -20,16 +14,11 @@ export function UserSection() {
   const router = useRouter();
   const {signOut} = useAuth();
   const user = useMyUserQuery();
-  const organization = useMyOrganizationQuery();
-  const session = useSessionQuery();
-  const setSession = useSetSessionMutation();
-  const isOrganization = session.data === 'organization';
   const utils = trpc.useContext();
   const hasUnseenConversation = useHasUnseenConversation();
   const isPublicPage = getIsPublic(router.asPath);
 
   const onSignOutClick = async () => {
-    await setSession.mutateAsync({userType: 'user'});
     await utils.invalidate();
     await signOut();
   };
@@ -105,11 +94,7 @@ export function UserSection() {
                         size="sm"
                         data-testid="profile-button"
                         onClick={() => {
-                          router.push(
-                            isOrganization
-                              ? `/o/${organization?.data?.id}`
-                              : `/u/${user.data?.id}`
-                          );
+                          router.push(`/u/${user.data?.id}`);
                           close();
                         }}
                       >

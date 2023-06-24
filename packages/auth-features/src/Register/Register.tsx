@@ -1,6 +1,6 @@
 import {useSignUp} from '@clerk/nextjs';
 import {ClerkAPIError} from '@clerk/types';
-import {useMyUserQuery, useSetSessionMutation} from 'hooks';
+import {useMyUserQuery} from 'hooks';
 import {useRouter} from 'next/router';
 import {useCallback, useEffect, useState} from 'react';
 import {FormProvider, useForm, useFormContext} from 'react-hook-form';
@@ -36,7 +36,6 @@ export function Register({onDone, onLoginClick, redirectToDashboard}: Props) {
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
   const userInfoForm = useForm<UserInfoForm>();
   const codeForm = useForm<CodeForm>({mode: 'onSubmit'});
-  const setSessionMutation = useSetSessionMutation({redirectToDashboard});
 
   const ready = useCallback(async (): Promise<any> => {
     const {data} = await me.refetch();
@@ -50,7 +49,6 @@ export function Register({onDone, onLoginClick, redirectToDashboard}: Props) {
   const handleOnDone = async (createdSessionId: string): Promise<any> => {
     await setSession?.(createdSessionId);
     await ready();
-    await setSessionMutation.mutateAsync({userType: 'user'});
 
     onDone?.();
   };

@@ -1,7 +1,7 @@
 import {Event, Organization, Ticket, User} from '@prisma/client';
 import {env} from 'client-env';
 import {randomUUID} from 'crypto';
-import {organizationNotFoundError, userNotFoundError} from 'error';
+import {userNotFoundError} from 'error';
 import {generateShortId, invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpcServer';
@@ -13,24 +13,16 @@ export const generateEventWithPrompt = protectedProcedure
     })
   )
   .mutation(async ({input, ctx}) => {
-    const session = await ctx.actions.getActiveSessionType();
     const user = await ctx.actions.getUserByExternalId({
       externalId: ctx.auth?.userId,
       includeOrganization: true,
     });
-    const isOrganizationSession = session === 'organization';
 
     invariant(user, userNotFoundError);
 
-    if (isOrganizationSession) {
-      invariant(user.organization, organizationNotFoundError);
-    }
-
     const output = await ctx.actions.generateEventFromPrompt({
       prompt: input.prompt,
-      firstName: isOrganizationSession
-        ? user.organization?.name!
-        : user.firstName,
+      firstName: user.firstName,
     });
 
     const result = await ctx.googleMaps.placeAutocomplete({
@@ -76,14 +68,10 @@ export const generateEventWithPrompt = protectedProcedure
       imagePrompt: output.imagePrompt,
       tickets: [],
       preferredCurrency: user.preferredCurrency,
-      ...(isOrganizationSession
-        ? {
-            organizationId: user.organization?.id!,
-            organization: user.organization,
-            userId: null,
-            user: null,
-          }
-        : {userId: user.id, user, organizationId: null, organization: null}),
+      userId: user.id,
+      user,
+      organizationId: null,
+      organization: null,
     };
 
     return event;

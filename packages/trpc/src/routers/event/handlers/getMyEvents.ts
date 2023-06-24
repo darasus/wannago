@@ -1,21 +1,29 @@
 import {z} from 'zod';
-import {publicProcedure} from '../../../trpcServer';
+import {protectedProcedure} from '../../../trpcServer';
 
-export const getMyEvents = publicProcedure
+export const getMyEvents = protectedProcedure
   .input(
     z.object({
-      organizerId: z.string().uuid(),
       onlyPast: z.boolean().optional(),
       eventType: z.enum(['attending', 'organizing', 'following', 'all']),
     })
   )
   .query(async ({ctx, input}) => {
-    if (!ctx.auth?.userId) {
-      return null;
-    }
+    const user = await ctx.prisma.user.findFirst({
+      where: {
+        externalId: ctx.auth.userId,
+      },
+      include: {
+        organization: true,
+      },
+    });
+
+    const authorIds = [user?.id, user?.organization?.id].filter(
+      Boolean
+    ) as string[];
 
     return ctx.actions.getEvents({
-      id: input.organizerId,
+      authorIds,
       eventType: input.eventType,
       onlyPast: input.onlyPast,
     });

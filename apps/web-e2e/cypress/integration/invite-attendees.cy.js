@@ -4,7 +4,7 @@ describe('Invite attendees', () => {
   });
   it('Can invite attendees by email', () => {
     cy.login();
-    cy.createOfflineEvent();
+    cy.createEvent();
     cy.publishCurrentEvent();
     cy.get('[data-testid="manage-event-button"]').click();
     cy.get('[data-testid="select-option-button"]')

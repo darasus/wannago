@@ -25,7 +25,6 @@ import {getUserByEmail} from './actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizationWithMembersByOrganizationId';
 import {canModifyEvent} from './actions/canModifyEvent';
 import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
-import {getActiveSessionType} from './actions/getActiveSessionType';
 import {generateEventFromPrompt} from './actions/generateEventFromPrompt';
 import {generateImageFromPrompt} from './actions/generateImageFromPrompt';
 import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
@@ -48,7 +47,6 @@ const actions = {
   getOrganizationWithMembersByOrganizationId,
   canModifyEvent,
   getOrganizerByEmail,
-  getActiveSessionType,
   generateEventFromPrompt,
   generateImageFromPrompt,
 } as const;

@@ -2,7 +2,7 @@ import {useRouter} from 'next/router';
 import {useForm} from 'react-hook-form';
 import {trpc} from 'trpc/src/trpc';
 import {Input} from '../../../../../components/Input/Input/Input';
-import {useCurrentAuthorId} from 'hooks';
+import {useMyUserQuery} from 'hooks';
 import {Button} from 'ui';
 
 interface Form {
@@ -10,7 +10,7 @@ interface Form {
 }
 
 export function MessageInput() {
-  const {authorId} = useCurrentAuthorId();
+  const me = useMyUserQuery();
   const router = useRouter();
   const conversationId = router.query.conversationId as string;
   const form = useForm<Form>();
@@ -23,7 +23,7 @@ export function MessageInput() {
     await mutateAsync({
       conversationId,
       text: data.text,
-      senderId: authorId!,
+      senderId: me.data?.id as string,
     });
     await refetch();
     form.reset();

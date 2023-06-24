@@ -24,7 +24,6 @@ import {getUserByEmail} from 'trpc/src/actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from 'trpc/src/actions/getOrganizationWithMembersByOrganizationId';
 import {canModifyEvent} from 'trpc/src/actions/canModifyEvent';
 import {getOrganizerByEmail} from 'trpc/src/actions/getOrganizerByEmail';
-import {getActiveSessionType} from 'trpc/src/actions/getActiveSessionType';
 import {generateEventFromPrompt} from 'trpc/src/actions/generateEventFromPrompt';
 import {generateImageFromPrompt} from 'trpc/src/actions/generateImageFromPrompt';
 import {assertCanCreateEvent} from 'trpc/src/assertions/assertCanCreateEvent';
@@ -48,7 +47,6 @@ const actions = {
   getOrganizationWithMembersByOrganizationId,
   canModifyEvent,
   getOrganizerByEmail,
-  getActiveSessionType,
   generateEventFromPrompt,
   generateImageFromPrompt,
 } as const;

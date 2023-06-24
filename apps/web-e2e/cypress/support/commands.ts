@@ -13,9 +13,13 @@ Cypress.Commands.addAll({
     cy.get('[data-testid="add-event-button"]');
     cy.get('[data-testid="header-user-button"]').contains('John');
   },
-  createOfflineEvent() {
+  createEvent(authorId) {
     cy.visit('/dashboard');
     cy.get('[data-testid="add-event-button"]').click();
+    if (authorId) {
+      cy.get('[data-testid="event-form-created-by-input" ]').click();
+      cy.get(`[data-key="${authorId}"]`).click();
+    }
     cy.get('[data-testid="event-form-title"]').type('Test title');
     cy.get('[data-testid="event-form-description"]')
       .click()

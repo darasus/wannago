@@ -10,7 +10,6 @@ export {useInitiateAmplitude} from './src/useInitiateAmplitude';
 export {useUploadImage} from './src/useUploadImage';
 export {useFlag} from './src/useFeatureFlag';
 export {useGlobalLoading, useLoading} from './src/useGlobalLoading';
-export {useCurrentAuthorId} from './src/useCurrentAuthorId';
 export {useFileFromUrl} from './src/useFileFromUrl';
 export {useCreateOrganizationMutation} from './src/organization/useCreateOrganizationMutation';
 export {useMyOrganizationQuery} from './src/organization/useMyOrganizationQuery';
@@ -18,11 +17,8 @@ export {useRemoveOrganizationMutation} from './src/organization/useRemoveOrganiz
 export {useMyOrganizationMembersQuery} from './src/organization/useMyOrganizationMembersQuery';
 export {useAddOrganizationMemberMutation} from './src/organization/useAddOrganizationMemberMutation';
 export {useRemoveOrganizationMemberMutation} from './src/organization/useRemoveOrganizationMemberMutation';
-export {useSessionQuery} from './src/session/useSessionQuery';
-export {useSetSessionMutation} from './src/session/useSetSessionMutation';
 export {useMyUserQuery} from './src/user/useMyUserQuery';
 export {useUpdateUserMutation} from './src/user/useUpdateUserMutation';
-export {useAuthorId} from './src/useAuthorId';
 
 // event
 export {useEventId} from './src/event/useEventId';

@@ -2,28 +2,16 @@ import {useCallback} from 'react';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {useMyOrganizationQuery} from '../organization/useMyOrganizationQuery';
-import {useSessionQuery} from '../session/useSessionQuery';
 import {useMyUserQuery} from '../user/useMyUserQuery';
 
 export function useCreateConversation() {
   const me = useMyUserQuery();
   const myOrganization = useMyOrganizationQuery();
-  const session = useSessionQuery();
   const createConversationMutation =
     trpc.conversation.createConversation.useMutation();
-  const organizationIds = [
-    session.data === 'organization' && myOrganization.data?.id,
-  ].filter(Boolean) as string[];
-  const userIds = [session.data === 'user' && me.data?.id].filter(
-    Boolean
-  ) as string[];
 
   const isMutating = createConversationMutation.isLoading;
-
-  const isLoading =
-    me.isInitialLoading ||
-    myOrganization.isInitialLoading ||
-    session.isInitialLoading;
+  const isLoading = me.isInitialLoading || myOrganization.isInitialLoading;
 
   const createConversation = useCallback(
     ({
@@ -33,6 +21,9 @@ export function useCreateConversation() {
       userId: string | null | undefined;
       organizationId: string | null | undefined;
     }) => {
+      const organizationIds = [] as string[];
+      const userIds = [me.data?.id] as string[];
+
       if (!me.data?.id && !myOrganization.data?.id) {
         toast.error('To be able to message anyone you need to login first');
         return;
@@ -62,13 +53,7 @@ export function useCreateConversation() {
         userIds,
       });
     },
-    [
-      createConversationMutation,
-      organizationIds,
-      userIds,
-      me.data?.id,
-      myOrganization.data?.id,
-    ]
+    [createConversationMutation, me.data?.id, myOrganization.data?.id]
   );
 
   return {createConversation, isLoading, isMutating};
