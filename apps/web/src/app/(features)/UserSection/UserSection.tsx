@@ -4,7 +4,6 @@ import {useAuth} from '@clerk/nextjs';
 import {Popover, Transition} from '@headlessui/react';
 import {Fragment, use} from 'react';
 import {Avatar, Button, CardBase} from 'ui';
-import {useBreakpoint} from 'hooks';
 import {usePathname} from 'next/navigation';
 import {PlusCircleIcon} from '@heroicons/react/24/solid';
 import {getIsPublic} from '../../../features/AppLayout/features/Header/constants';
@@ -23,8 +22,6 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
   const me = use(mePromise);
   const hasUnseenConversation = use(hasUnseenConversationPromise);
   const isPublicPage = getIsPublic(pathname ?? '/');
-  const size = useBreakpoint();
-  const canShowLabel = size !== 'sm';
 
   const onSignOutClick = async () => {
     await signOut();
@@ -72,7 +69,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                       }
                       data-testid="header-user-button"
                     >
-                      {canShowLabel ? me.firstName : null}
+                      {me.firstName}
                     </Button>
                   );
                 }}

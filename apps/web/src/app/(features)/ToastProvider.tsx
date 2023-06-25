@@ -1,8 +1,19 @@
 'use client';
 
 import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/24/solid';
-import {ToastBar, Toaster} from 'react-hot-toast';
+import dynamic from 'next/dynamic';
 import {cn} from 'utils';
+
+const Toaster = dynamic(() => import('react-hot-toast').then(c => c.Toaster), {
+  ssr: false,
+});
+
+const ToastBar = dynamic(
+  () => import('react-hot-toast').then(c => c.ToastBar),
+  {
+    ssr: false,
+  }
+);
 
 export function ToastProvider() {
   return (

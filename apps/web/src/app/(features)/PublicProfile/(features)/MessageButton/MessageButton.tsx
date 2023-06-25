@@ -1,6 +1,5 @@
 'use client';
 
-import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
 import {Button} from 'ui';
 import {api} from '../../../../../trpc/client';
 import {useParams} from 'next/dist/client/components/navigation';
@@ -18,7 +17,6 @@ export function MessageButton({}: Props) {
   return (
     <Button
       size="sm"
-      iconLeft={<ChatBubbleBottomCenterTextIcon />}
       variant="neutral"
       isLoading={isPending}
       onClick={async () => {

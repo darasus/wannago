@@ -31,9 +31,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
               <div>{children}</div>
             </div>
           </div>
+          <Tools />
+          <ToastProvider />
         </body>
-        <Tools />
-        <ToastProvider />
       </html>
     </ClerkProvider>
   );

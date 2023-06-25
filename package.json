@@ -88,7 +88,7 @@
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.43.2",
-    "react-hot-toast": "^2.4.0",
+    "react-hot-toast": "^2.4.1",
     "react-stately": "3.19.0",
     "recharts": "^2.5.0",
     "server-only": "^0.0.1",
