@@ -32,18 +32,19 @@ export function MessageButton({}: Props) {
           // TODO move this to procedure
           if (!me?.id && !myOrganization?.id) {
             toast.error('To be able to message anyone you need to login first');
-            void undefined;
+            return undefined;
           }
 
           if (me?.id === params?.userId) {
             toast.error('You cannot message yourself');
-            void undefined;
+            return undefined;
           }
           if (
             myOrganization?.id &&
             myOrganization?.id === params?.organizationId
           ) {
-            void toast.error('You cannot message your own organization');
+            toast.error('You cannot message your own organization');
+            return undefined;
           }
 
           if (typeof params?.userId === 'string') {
@@ -54,14 +55,18 @@ export function MessageButton({}: Props) {
             organizationIds.push(params?.organizationId);
           }
 
-          const conversation = await api.conversation.createConversation.mutate(
-            {
+          const conversation = await api.conversation.createConversation
+            .mutate({
               userIds,
               organizationIds,
-            }
-          );
+            })
+            .catch(error => {
+              toast.error(error.message);
+            });
 
-          router.push(`/messages/${conversation.id}`);
+          if (conversation?.id) {
+            router.push(`/messages/${conversation.id}`);
+          }
         });
       }}
       className="w-full md:w-40"

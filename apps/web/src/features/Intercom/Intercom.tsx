@@ -1,3 +1,5 @@
+'use client';
+
 import {useEffect} from 'react';
 import {useMyUserQuery} from 'hooks';
 import {useAuth} from '@clerk/nextjs';

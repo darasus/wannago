@@ -4,6 +4,7 @@ import {useParams, useRouter} from 'next/navigation';
 import {use, useTransition} from 'react';
 import {Button} from 'ui';
 import {RouterOutputs, api} from '../../../../../trpc/client';
+import {toast} from 'react-hot-toast';
 
 interface Props {
   amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
@@ -24,10 +25,14 @@ export function FollowButton({amFollowingPromise}: Props) {
         variant="danger"
         onClick={() => {
           startTransition(async () => {
-            await api.follow.unfollow.mutate({
-              organizationId,
-              userId,
-            });
+            await api.follow.unfollow
+              .mutate({
+                organizationId,
+                userId,
+              })
+              .catch(error => {
+                toast.error(error.message);
+              });
             router.refresh();
           });
         }}
@@ -46,10 +51,14 @@ export function FollowButton({amFollowingPromise}: Props) {
       variant="neutral"
       onClick={() => {
         startTransition(async () => {
-          await api.follow.follow.mutate({
-            organizationId,
-            userId,
-          });
+          await api.follow.follow
+            .mutate({
+              organizationId,
+              userId,
+            })
+            .catch(error => {
+              toast.error(error.message);
+            });
           router.refresh();
         });
       }}
