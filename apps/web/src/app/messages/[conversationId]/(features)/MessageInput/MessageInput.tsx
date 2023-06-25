@@ -1,31 +1,34 @@
-import {useRouter} from 'next/router';
+'use client';
+
 import {useForm} from 'react-hook-form';
-import {trpc} from 'trpc/src/trpc';
 import {Input} from '../../../../../components/Input/Input/Input';
-import {useMyUserQuery} from 'hooks';
 import {Button} from 'ui';
+import {useParams} from 'next/navigation';
+import {User} from '@prisma/client';
+import {api} from '../../../../../trpc/client';
+import {useRouter} from 'next/navigation';
 
 interface Form {
   text: string;
 }
 
-export function MessageInput() {
-  const me = useMyUserQuery();
+interface Props {
+  me: User;
+}
+
+export function MessageInput({me}: Props) {
   const router = useRouter();
-  const conversationId = router.query.conversationId as string;
+  const params = useParams();
+  const conversationId = params?.conversationId as string;
   const form = useForm<Form>();
-  const {mutateAsync} = trpc.conversation.sendMessage.useMutation();
-  const {refetch} = trpc.conversation.getConversationById.useQuery({
-    conversationId,
-  });
 
   const handleSubmit = form.handleSubmit(async data => {
-    await mutateAsync({
+    await api.conversation.sendMessage.mutate({
       conversationId,
       text: data.text,
-      senderId: me.data?.id as string,
+      senderId: me?.id as string,
     });
-    await refetch();
+    router.refresh();
     form.reset();
   });
 

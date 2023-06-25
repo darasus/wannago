@@ -1,21 +1,23 @@
-import {useMyUserQuery} from 'hooks';
 import Link from 'next/link';
-import {trpc} from 'trpc/src/trpc';
-import {CardBase, LoadingBlock, Text} from 'ui';
+import {CardBase, Text} from 'ui';
 import {getConversationMembers} from 'utils';
+import {api} from '../../../../trpc/server';
+import {User} from '@prisma/client';
 
-export function Conversations() {
-  const me = useMyUserQuery();
-  const conversations = trpc.conversation.getMyConversations.useQuery();
+interface Props {
+  me: User;
+}
+
+export async function Conversations({me}: Props) {
+  const conversations = await api.conversation.getMyConversations.query();
 
   return (
     <CardBase innerClassName="flex flex-col gap-4">
-      {conversations.isInitialLoading && <LoadingBlock />}
-      {conversations.data?.length === 0 && (
+      {conversations?.length === 0 && (
         <Text className="text-center">No conversations yet...</Text>
       )}
-      {conversations.data?.map(c => {
-        const conversationMember = getConversationMembers(c, me.data);
+      {conversations?.map(c => {
+        const conversationMember = getConversationMembers(c, me);
 
         return (
           <Link

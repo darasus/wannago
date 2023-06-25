@@ -1,46 +1,23 @@
 import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
-import {useMarkConversationAsSeen, useMyUserQuery} from 'hooks';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
 import React, {Fragment} from 'react';
-import {trpc} from 'trpc/src/trpc';
-import {
-  Avatar,
-  Button,
-  CardBase,
-  Container,
-  LoadingBlock,
-  PageHeader,
-  Text,
-} from 'ui';
+import {Avatar, Button, CardBase, Container, PageHeader, Text} from 'ui';
 import {formatDate, getConversationMembers} from 'utils';
-import {MessageInput} from './features/MessageInput/MessageInput';
+import {MessageInput} from './(features)/MessageInput/MessageInput';
+import {api} from '../../../trpc/server';
 
-export default function ConversationPage() {
-  const me = useMyUserQuery();
-  const router = useRouter();
-  const conversationId = router.query.conversationId as string;
-  const {mutate} = useMarkConversationAsSeen();
-  const conversation = trpc.conversation.getConversationById.useQuery(
-    {
-      conversationId,
-    },
-    {
-      enabled: Boolean(conversationId),
-      onSuccess: () => {
-        mutate({conversationId});
-      },
-    }
-  );
+export default async function ConversationPage({
+  params: {conversationId},
+}: {
+  params: {conversationId: string};
+}) {
+  const me = await api.user.me.query();
+  await api.conversation.markConversationAsSeen.mutate({conversationId});
+  const conversation = await api.conversation.getConversationById.query({
+    conversationId,
+  });
 
-  const conversationMembers = getConversationMembers(
-    conversation.data,
-    me.data
-  );
-
-  if (conversation.isLoading) {
-    return <LoadingBlock />;
-  }
+  const conversationMembers = getConversationMembers(conversation, me);
 
   return (
     <Container className="flex flex-col gap-4" maxSize="sm">
@@ -68,11 +45,11 @@ export default function ConversationPage() {
         }
       />
       <CardBase>
-        {conversation.data?.messages.length === 0 && (
+        {conversation?.messages.length === 0 && (
           <Text className="text-center">No messages yet...</Text>
         )}
         <div className="flex flex-col gap-2">
-          {conversation.data?.messages.map(message => {
+          {conversation?.messages.map(message => {
             return (
               <div
                 key={message.id}
@@ -105,9 +82,7 @@ export default function ConversationPage() {
           })}
         </div>
       </CardBase>
-      <CardBase>
-        <MessageInput />
-      </CardBase>
+      <CardBase>{me && <MessageInput me={me} />}</CardBase>
     </Container>
   );
 }
