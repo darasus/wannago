@@ -29,6 +29,7 @@ export function Menu({size = 'md', options, activeHref, testId, as}: Props) {
           size={size}
           iconLeft={<ChevronDownIcon />}
           data-testid={testId || 'select-button'}
+          variant="neutral"
         >
           {(activeHref &&
             options.find(option => option.href?.startsWith(activeHref))
