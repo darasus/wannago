@@ -1,11 +1,11 @@
 'use client';
 
-import {Text} from 'ui';
+import {LoadingBlock} from 'ui';
 
 export default function Loading() {
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
-      <Text>Loading...</Text>
+    <div className="w-screen flex justify-center items-center py-8">
+      <LoadingBlock />
     </div>
   );
 }

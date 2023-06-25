@@ -1,4 +1,4 @@
-import {Button, CardBase, Logo, Text} from 'ui';
+import {Button, CardBase, LoadingBlock, Logo} from 'ui';
 import {UserSection} from '../UserSection/UserSection';
 import {auth} from '@clerk/nextjs';
 import {api} from '../../../trpc/server';
@@ -22,7 +22,7 @@ export async function Header() {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-4">
             {showUserProfile && (
-              <Suspense fallback={<Text>Loading...</Text>}>
+              <Suspense fallback={<LoadingBlock />}>
                 <UserSection
                   mePromise={api.user.me.query()}
                   hasUnseenConversationPromise={api.conversation.getUserHasUnseenConversation.query()}
