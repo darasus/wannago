@@ -1,7 +1,11 @@
-import {Button, Container, PageHeader} from 'ui';
+import {Button, Container, LoadingBlock, PageHeader} from 'ui';
 import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
 import {api} from '../../../../trpc/server';
-import {OrganizationSettings} from './(features)/OrganizationSettings/OrganizationSettings';
+import {OrganizationDetailsSettings} from './(features)/OrganizationDetailsSettings/OrganizationDetailsSettings';
+import {TeamMembersSettings} from './(features)/TeamMemberSettings/TeamMembersSettings';
+import {Suspense} from 'react';
+import {OrganizationSubscription} from './(features)/OrganizationSubscription/OrganizationSubscription';
+import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
 
 // TODO: create description text explaining why you need to create a team
 
@@ -36,10 +40,17 @@ export default async function OrganizationSettingsPage() {
             Back to organizations
           </Button>
           <PageHeader title={`${organization?.name} settings`} />
-          <OrganizationSettings
-            organization={organization}
-            mySubscriptionPromise={mySubscriptionPromise}
-          />
+          <div className="flex flex-col gap-4">
+            <OrganizationDetailsSettings organization={organization} />
+            <TeamMembersSettings organization={organization} />
+            <Suspense fallback={<LoadingBlock />}>
+              <OrganizationSubscription
+                organization={organization}
+                mySubscriptionPromise={mySubscriptionPromise}
+              />
+            </Suspense>
+            <StripeAccountLinkSettings type="BUSINESS" />
+          </div>
         </div>
       </Container>
     </>

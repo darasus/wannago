@@ -32,7 +32,7 @@ export function PricingPlan({
       return '/organizations';
     }
     if (isSignedIn && (planId === 'pro' || planId === 'starter')) {
-      return '/settings/personal';
+      return '/settings';
     }
 
     return '/register';

@@ -1,11 +1,15 @@
-import {useMyUserQuery, useUpdateUserMutation} from 'hooks';
+'use client';
+
 import {FormProvider, useForm} from 'react-hook-form';
 import {Button, CardBase, Toggle} from 'ui';
 import {FileInput} from '../../../../components/Input/FileInput/FileInput';
 import {Input} from '../../../../components/Input/Input/Input';
 import {UserSubscription} from './features/UserSubscription/UserSubscription';
-import {StripeAccountLinkSettings} from '../StripeAccountLinkSettings/StripeAccountLinkSettings';
 import {Currency} from '@prisma/client';
+import {RouterOutputs} from 'api';
+import {api} from '../../../../trpc/client';
+import {useRouter} from 'next/navigation';
+import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
 
 interface UserForm {
   firstName: string;
@@ -15,29 +19,36 @@ interface UserForm {
   profileImageSrc: string;
 }
 
-export function UserSettings() {
-  const user = useMyUserQuery();
-  const updateUser = useUpdateUserMutation();
+interface Props {
+  user: RouterOutputs['user']['me'];
+  mySubscriptionPromise: Promise<
+    RouterOutputs['subscriptionPlan']['getMySubscription']
+  >;
+}
+
+export function UserSettings({user, mySubscriptionPromise}: Props) {
+  const router = useRouter();
   const form = useForm<UserForm>({
     defaultValues: {
-      firstName: user.data?.firstName || '',
-      lastName: user.data?.lastName || '',
-      email: user.data?.email || '',
-      profileImageSrc: user.data?.profileImageSrc || '',
-      currency: user.data?.preferredCurrency || 'USD',
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      email: user?.email || '',
+      profileImageSrc: user?.profileImageSrc || '',
+      currency: user?.preferredCurrency || 'USD',
     },
   });
 
   const onSubmit = form.handleSubmit(async data => {
-    if (user.data?.id) {
-      await updateUser.mutateAsync({
+    if (user?.id) {
+      await api.user.update.mutate({
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
         profileImageSrc: data.profileImageSrc,
-        userId: user.data.id,
+        userId: user.id,
         currency: data.currency,
       });
+      router.refresh();
     }
   });
 
@@ -124,7 +135,12 @@ export function UserSettings() {
             </div>
           </form>
         </CardBase>
-        <UserSubscription />
+        {user && (
+          <UserSubscription
+            user={user}
+            mySubscriptionPromise={mySubscriptionPromise}
+          />
+        )}
         <StripeAccountLinkSettings type="PRO" />
       </div>
     </FormProvider>

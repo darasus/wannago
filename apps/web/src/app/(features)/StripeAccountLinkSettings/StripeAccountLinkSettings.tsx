@@ -4,7 +4,7 @@ import {captureException, captureMessage} from '@sentry/nextjs';
 import {useRouter} from 'next/navigation';
 import {toast} from 'react-hot-toast';
 import {Button, CardBase} from 'ui';
-import {api} from '../../../../../../trpc/client';
+import {api} from '../../../trpc/client';
 import {use, useTransition} from 'react';
 
 interface Props {

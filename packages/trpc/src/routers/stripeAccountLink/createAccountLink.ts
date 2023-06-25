@@ -66,7 +66,7 @@ export const createAccountLink = protectedProcedure
 
     const callbackUrl =
       input.type === 'PRO'
-        ? `${getBaseUrl()}/settings/personal`
+        ? `${getBaseUrl()}/settings`
         : `${getBaseUrl()}/organizations/${user?.organization?.id}/settings/`;
 
     const accountLink = await ctx.stripe.client.accountLinks.create({

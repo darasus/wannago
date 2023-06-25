@@ -53,7 +53,7 @@ const createCheckoutSession = protectedProcedure
 
     const callbackUrl =
       input.plan === 'wannago_pro'
-        ? `${getBaseUrl()}/settings/personal`
+        ? `${getBaseUrl()}/settings`
         : `${getBaseUrl()}/organizations/${user?.organization?.id}/settings/`;
 
     const config = await getConfig();
@@ -126,7 +126,7 @@ const createCustomerPortalSession = protectedProcedure
 
     const callbackUrl =
       input.plan === 'wannago_pro'
-        ? `${getBaseUrl()}/settings/personal`
+        ? `${getBaseUrl()}/settings`
         : `${getBaseUrl()}/organizations/${user?.organization?.id}/settings/`;
 
     const portalSession = await ctx.stripe.client.billingPortal.sessions.create(
