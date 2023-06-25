@@ -1,17 +1,10 @@
-import {router, protectedProcedure} from '../trpcServer';
+import {router, protectedProcedure, publicProcedure} from '../trpcServer';
 import {organizationNotFoundError, userNotFoundError} from 'error';
 import {getBaseUrl, invariant} from 'utils';
 import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
 import {get} from '@vercel/edge-config';
 import {env} from 'server-env';
-
-type ProductPlan = 'wannago_pro' | 'wannago_business';
-
-const callbackUrlMap: Record<ProductPlan, string> = {
-  wannago_pro: `${getBaseUrl()}/settings/personal`,
-  wannago_business: `${getBaseUrl()}/settings/team`,
-};
 
 const priceSchema = z.object({
   price_ids: z.object({
@@ -30,12 +23,16 @@ const createCheckoutSession = protectedProcedure
   .mutation(async ({ctx, input}) => {
     let stripeCustomerId: string | undefined;
     let email: string | undefined;
+    const user = await ctx.prisma.user.findFirst({
+      where: {
+        externalId: ctx.auth.userId,
+      },
+      include: {
+        organization: true,
+      },
+    });
 
     if (input.plan === 'wannago_pro') {
-      const user = await ctx.actions.getUserByExternalId({
-        externalId: ctx.auth.userId,
-      });
-
       invariant(user, userNotFoundError);
 
       stripeCustomerId = user.stripeCustomerId || undefined;
@@ -43,14 +40,10 @@ const createCheckoutSession = protectedProcedure
     }
 
     if (input.plan === 'wannago_business') {
-      const organization = await ctx.actions.getOrganizationByUserExternalId({
-        externalId: ctx.auth.userId,
-      });
+      invariant(user?.organization, organizationNotFoundError);
 
-      invariant(organization, organizationNotFoundError);
-
-      stripeCustomerId = organization.stripeCustomerId || undefined;
-      email = organization.email || undefined;
+      stripeCustomerId = user.organization.stripeCustomerId || undefined;
+      email = user.organization.email || undefined;
     }
 
     invariant(
@@ -58,7 +51,11 @@ const createCheckoutSession = protectedProcedure
       new TRPCError({code: 'BAD_REQUEST', message: 'Email is required'})
     );
 
-    const callbackUrl = callbackUrlMap[input.plan];
+    const callbackUrl =
+      input.plan === 'wannago_pro'
+        ? `${getBaseUrl()}/settings/personal`
+        : `${getBaseUrl()}/organizations/${user?.organization?.id}/settings/`;
+
     const config = await getConfig();
 
     const session = await ctx.stripe.client.checkout.sessions.create({
@@ -94,26 +91,25 @@ const createCustomerPortalSession = protectedProcedure
   .mutation(async ({ctx, input}) => {
     let stripeCustomerId: string | undefined;
 
-    if (input.plan === 'wannago_pro') {
-      const user = await ctx.prisma.user.findFirst({
-        where: {
-          externalId: ctx.auth.userId,
-        },
-      });
+    const user = await ctx.prisma.user.findFirst({
+      where: {
+        externalId: ctx.auth.userId,
+      },
+      include: {
+        organization: true,
+      },
+    });
 
+    if (input.plan === 'wannago_pro') {
       invariant(user, userNotFoundError);
 
       stripeCustomerId = user.stripeCustomerId || undefined;
     }
 
     if (input.plan === 'wannago_business') {
-      const organization = await ctx.actions.getOrganizationByUserExternalId({
-        externalId: ctx.auth.userId,
-      });
+      invariant(user?.organization, organizationNotFoundError);
 
-      invariant(organization, organizationNotFoundError);
-
-      stripeCustomerId = organization.stripeCustomerId || undefined;
+      stripeCustomerId = user.organization.stripeCustomerId || undefined;
     }
 
     invariant(
@@ -128,7 +124,10 @@ const createCustomerPortalSession = protectedProcedure
       stripeCustomerId
     );
 
-    const callbackUrl = callbackUrlMap[input.plan];
+    const callbackUrl =
+      input.plan === 'wannago_pro'
+        ? `${getBaseUrl()}/settings/personal`
+        : `${getBaseUrl()}/organizations/${user?.organization?.id}/settings/`;
 
     const portalSession = await ctx.stripe.client.billingPortal.sessions.create(
       {
@@ -140,17 +139,21 @@ const createCustomerPortalSession = protectedProcedure
     return portalSession.url;
   });
 
-const getMySubscription = protectedProcedure
+const getMySubscription = publicProcedure
   .input(
     z.object({
       type: z.enum(['PRO', 'BUSINESS']),
     })
   )
   .query(async ({ctx, input}) => {
+    console.log('>>>> ctx.auth?.userId', ctx.auth?.userId);
+    if (ctx.auth?.userId) {
+    }
+
     if (input.type === 'PRO') {
       const user = await ctx.prisma.user.findFirst({
         where: {
-          externalId: ctx.auth.userId,
+          externalId: ctx.auth?.userId,
         },
         include: {
           subscription: true,
@@ -167,7 +170,7 @@ const getMySubscription = protectedProcedure
         where: {
           users: {
             some: {
-              externalId: ctx.auth.userId,
+              externalId: ctx.auth?.userId,
             },
           },
         },

@@ -64,9 +64,10 @@ export const createAccountLink = protectedProcedure
       });
     }
 
-    const callbackUrl = `${getBaseUrl()}/settings/${
-      input.type === 'BUSINESS' ? 'team' : 'personal'
-    }`;
+    const callbackUrl =
+      input.type === 'PRO'
+        ? `${getBaseUrl()}/settings/personal`
+        : `${getBaseUrl()}/organizations/${user?.organization?.id}/settings/`;
 
     const accountLink = await ctx.stripe.client.accountLinks.create({
       account: stripeLinkedAccountId,

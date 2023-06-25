@@ -122,6 +122,8 @@ export async function createContext(opts?: {
 
   if (opts?.req) {
     auth = getAuth(opts?.req);
+  } else {
+    console.log('>>>> opts?.req', opts?.req.nextUrl);
   }
 
   const innerContext: CreateInnerContextOptions = await createContextInner({
