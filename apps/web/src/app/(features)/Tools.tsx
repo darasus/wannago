@@ -1,7 +1,8 @@
 import {env} from 'client-env';
-import {Amplitude} from '../../features/Amplitude/Amplitude';
-import {Intercom} from '../../features/Intercom/Intercom';
-import {Sentry} from '../../features/Sentry/Sentry';
+import {Amplitude} from './Amplitude/Amplitude';
+import {Intercom} from './Intercom/Intercom';
+import {Sentry} from './Sentry/Sentry';
+import {GoogleAnalytics} from './GoogleAnalytics/GoogleAnalytics';
 
 export function Tools() {
   return (
@@ -11,6 +12,7 @@ export function Tools() {
           <Amplitude />
           <Sentry />
           <Intercom />
+          <GoogleAnalytics />
         </>
       )}
     </>

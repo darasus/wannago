@@ -1,4 +1,5 @@
 export {useAmplitude} from './src/useAmplitude';
+export {useAmplitudeAppDir} from './src/useAmplitudeAppDir';
 export {useAttendeeCount} from './src/useAttendeeCount';
 export {useBreakpoint} from './src/useBreakpoint';
 export {useConfetti} from './src/useConfetti';
