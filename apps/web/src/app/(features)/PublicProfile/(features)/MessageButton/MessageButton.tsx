@@ -1,0 +1,73 @@
+'use client';
+
+import {ChatBubbleBottomCenterTextIcon} from '@heroicons/react/24/outline';
+import {Button} from 'ui';
+import {api} from '../../../../../trpc/client';
+import {useParams} from 'next/dist/client/components/navigation';
+import {useRouter} from 'next/navigation';
+import {toast} from 'react-hot-toast';
+import {useTransition} from 'react';
+
+interface Props {}
+
+export function MessageButton({}: Props) {
+  const router = useRouter();
+  const params = useParams();
+  const [isPending, startTransition] = useTransition();
+
+  return (
+    <Button
+      size="sm"
+      iconLeft={<ChatBubbleBottomCenterTextIcon />}
+      variant="neutral"
+      isLoading={isPending}
+      onClick={async () => {
+        startTransition(async () => {
+          const me = await api.user.me.query();
+          const myOrganization =
+            await api.organization.getMyOrganization.query();
+          const organizationIds = [] as string[];
+          const userIds = [me?.id] as string[];
+
+          // TODO move this to procedure
+          if (!me?.id && !myOrganization?.id) {
+            toast.error('To be able to message anyone you need to login first');
+            void undefined;
+          }
+
+          if (me?.id === params?.userId) {
+            toast.error('You cannot message yourself');
+            void undefined;
+          }
+          if (
+            myOrganization?.id &&
+            myOrganization?.id === params?.organizationId
+          ) {
+            void toast.error('You cannot message your own organization');
+          }
+
+          if (typeof params?.userId === 'string') {
+            userIds.push(params?.userId);
+          }
+
+          if (typeof params?.organizationId === 'string') {
+            organizationIds.push(params?.organizationId);
+          }
+
+          const conversation = await api.conversation.createConversation.mutate(
+            {
+              userIds,
+              organizationIds,
+            }
+          );
+
+          router.push(`/messages/${conversation.id}`);
+        });
+      }}
+      className="w-full md:w-40"
+      data-testid="message-button"
+    >
+      Message
+    </Button>
+  );
+}
