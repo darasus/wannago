@@ -1,20 +1,29 @@
-import {useMyOrganizationMembersQuery, useMyOrganizationQuery} from 'hooks';
-import {useState} from 'react';
-import {Button, CardBase, LoadingBlock} from 'ui';
+'use client';
+
+import {use, useState} from 'react';
+import {Button, CardBase} from 'ui';
 import {CreateMemberModal} from '../CreateMemberModal/CreateMemberModal';
 import {TeamMember} from '../TeamMember/TeamMember';
+import {Organization} from '@prisma/client';
+import {api} from '../../../../../../trpc/client';
 
-export function TeamMembersSettings() {
-  const organization = useMyOrganizationQuery();
+interface Props {
+  organization: Organization;
+}
+
+export function TeamMembersSettings({organization}: Props) {
   const [isAddMemberDialogModalOpen, setIsAddMemberDialogModalOpen] =
     useState(false);
-  const members = useMyOrganizationMembersQuery();
+  const members = use(api.organization.getMyOrganizationMembers.query());
 
-  if (!organization.data) return null;
+  if (!organization) {
+    return null;
+  }
 
   return (
     <>
       <CreateMemberModal
+        organization={organization}
         isOpen={isAddMemberDialogModalOpen}
         onClose={() => setIsAddMemberDialogModalOpen(false)}
       />
@@ -31,10 +40,15 @@ export function TeamMembersSettings() {
             </Button>
           }
         >
-          {members.isLoading && <LoadingBlock />}
           <div className="flex flex-col gap-y-2">
-            {members.data?.map(member => {
-              return <TeamMember key={member.id} member={member} />;
+            {members.map(member => {
+              return (
+                <TeamMember
+                  key={member.id}
+                  member={member}
+                  organization={organization}
+                />
+              );
             })}
           </div>
         </CardBase>

@@ -29,7 +29,7 @@ export function PricingPlan({
 
   const getRedirectUrl = () => {
     if (isSignedIn && planId === 'business') {
-      return '/settings/team';
+      return '/organizations';
     }
     if (isSignedIn && (planId === 'pro' || planId === 'starter')) {
       return '/settings/personal';

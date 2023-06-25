@@ -1,11 +1,15 @@
+'use client';
+
 import {captureException} from '@sentry/nextjs';
-import {useAddOrganizationMemberMutation, useMyOrganizationQuery} from 'hooks';
 import {useForm} from 'react-hook-form';
 import {Button, Modal} from 'ui';
-import {Input} from '../../../../../components/Input/Input/Input';
+import {Input} from '../../../../../../components/Input/Input/Input';
+import {Organization} from '@prisma/client';
+import {api} from '../../../../../../trpc/client';
 
 interface Props {
   isOpen: boolean;
+  organization: Organization;
   onClose: () => void;
 }
 
@@ -13,23 +17,19 @@ interface Form {
   email: string;
 }
 
-export function CreateMemberModal({isOpen, onClose}: Props) {
-  const organization = useMyOrganizationQuery();
-  const addOrganizationMember = useAddOrganizationMemberMutation();
+export function CreateMemberModal({isOpen, onClose, organization}: Props) {
   const form = useForm<Form>();
 
   const handleSubmit = form.handleSubmit(async data => {
-    if (organization.data?.id) {
-      await addOrganizationMember
-        .mutateAsync({
-          userEmail: data.email,
-          organizationId: organization.data.id,
-        })
-        .catch((error: any) => {
-          captureException(error);
-        });
-      onClose();
-    }
+    await api.organization.addOrganizationMember
+      .mutate({
+        userEmail: data.email,
+        organizationId: organization.id,
+      })
+      .catch((error: any) => {
+        captureException(error);
+      });
+    onClose();
   });
 
   return (
