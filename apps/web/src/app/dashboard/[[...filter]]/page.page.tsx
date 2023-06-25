@@ -3,7 +3,6 @@ import {Container, LoadingBlock, PageHeader} from 'ui';
 import {z} from 'zod';
 import {api} from '../../../trpc/server';
 import {EventFilter} from './(features)/EventFilter';
-import {unstable_cache} from 'next/cache';
 import {Suspense} from 'react';
 import {EventsList} from './(features)/EventsList';
 
@@ -18,25 +17,10 @@ export default async function Dashboard(props: {
   params: {filter: string | undefined; past: string | undefined};
 }) {
   const eventType = filterSchema.parse(props.params.filter)[0];
-  // const router = useRouter();
-  // const [onlyPast, setOnlyPast] = useState(false);
-  // const eventType = filterSchema.parse(router.query.filter)[0] || 'all';
-  const events = unstable_cache(
-    () => {
-      return api.event.getMyEvents.query({
-        eventType: eventType === 'past' ? 'all' : eventType,
-        onlyPast: eventType === 'past',
-      });
-    },
-    [eventType],
-    {tags: ['my-events']}
-  )();
-  // const {data, isLoading, isFetching} = useMyEventsQuery({
-  //   eventType,
-  //   onlyPast,
-  // });
-  // const haveNoEvents = data?.length === 0;
-  // const isGettingCards = isLoading || isFetching;
+  const events = api.event.getMyEvents.query({
+    eventType: eventType === 'past' ? 'all' : eventType,
+    onlyPast: eventType === 'past',
+  });
 
   return (
     <>
