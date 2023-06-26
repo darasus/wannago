@@ -3,8 +3,11 @@ import {SectionContainer} from './SectionContainer';
 import {SectionHeader} from './SectionHeader';
 import {PricingPlan} from './PricingPlan';
 import {ShieldCheckIcon} from '@heroicons/react/24/solid';
+import {api} from '../../trpc/server';
 
-export function Pricing() {
+export async function Pricing() {
+  const currency = await api.payments.getCurrency.query();
+
   return (
     <SectionContainer id="pricing">
       <Container maxSize="lg" className="my-0">
@@ -20,6 +23,7 @@ export function Pricing() {
             features={['Up to 5 events', 'Up to 50 attendees']}
             type="general"
             planId="starter"
+            currency={currency}
           />
           <PricingPlan
             type="featured"
@@ -34,6 +38,7 @@ export function Pricing() {
               'Sell tickets (extra fees apply)',
               'Many more upcoming features...',
             ]}
+            currency={currency}
           />
           <PricingPlan
             type="highlighted"
@@ -50,6 +55,7 @@ export function Pricing() {
               'Sell tickets (extra fees apply)',
               'Many more upcoming features...',
             ]}
+            currency={currency}
           />
           <PricingPlan
             type="general"
@@ -64,6 +70,7 @@ export function Pricing() {
               'Custom integration',
               'Priority support',
             ]}
+            currency={currency}
           />
         </div>
         <div className="flex items-center justify-center mt-8 px-4">

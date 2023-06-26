@@ -1,13 +1,13 @@
 import Head from 'next/head';
 import {Hero} from '../components/Marketing/Hero';
 import {CallToAction} from '../components/Marketing/CallToAction';
-import {Pricing} from '../components/Marketing/Pricing';
 import {Faqs} from '../components/Marketing/Faqs';
 import {Footer} from '../components/Marketing/Footer';
 import {Features} from '../components/Marketing/Features';
 import {HowDoesItWork} from '../components/Marketing/HowDoesItWork';
+import {Pricing} from '../components/Marketing/Pricing';
 
-function HomePage() {
+export default function HomePage() {
   return (
     <>
       <Head>
@@ -31,5 +31,3 @@ function HomePage() {
     </>
   );
 }
-
-export default HomePage;

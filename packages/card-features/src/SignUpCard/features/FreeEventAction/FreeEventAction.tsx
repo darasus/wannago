@@ -1,18 +1,16 @@
+'use state';
+
 import {useAuth} from '@clerk/nextjs';
 import {Event} from '@prisma/client';
-import {
-  useAmplitude,
-  useAttendeeCount,
-  useConfetti,
-  useConfirmDialog,
-} from 'hooks';
-import {useState} from 'react';
+import {useAmplitudeAppDir, useConfetti, useConfirmDialog} from 'hooks';
+import {use, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
-import {trpc} from 'trpc/src/trpc';
 import {Badge, Button} from 'ui';
 import {Switch} from '../../../../../../apps/web/src/components/Input/Switch/Switch';
 import {AuthModal} from '../AuthModal/AuthModal';
+import {api} from '../../../../../../apps/web/src/trpc/client';
+import {useRouter} from 'next/navigation';
 
 interface Props {
   event: Event;
@@ -23,54 +21,32 @@ interface EventSignUpForm {
 }
 
 export function FreeEventAction({event}: Props) {
+  const router = useRouter();
   const {confetti} = useConfetti();
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useAmplitudeAppDir();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const auth = useAuth();
-  const signUp = trpc.event.getMySignUp.useQuery(
-    {eventId: event.id},
-    {
-      retry: false,
-      enabled: auth.isSignedIn,
-    }
-  );
-  const joinEvent = trpc.event.joinEvent.useMutation({
-    onError(error) {
-      toast.error(error.message);
-    },
-    onSuccess: () => {
-      logEvent('event_sign_up_submitted', {
-        eventId: event.id,
-      });
-      toast.success('Signed up! Check your email for more details!');
-      confetti();
-    },
-  });
-  const cancelEventSignUp = trpc.event.cancelEvent.useMutation({
-    onError(error) {
-      toast.error(error.message);
-    },
-    onSuccess: () => {
-      logEvent('event_sign_up_cancel_submitted', {
-        eventId: event.id,
-      });
-      toast.success('Sign up is cancelled!');
-    },
-  });
+  const signUp = use(api.event.getMySignUp.query({eventId: event.id}));
+
   const {modal: cancelModal, open: openCancelModal} = useConfirmDialog({
     title: 'Confirm cancellation',
     description: 'Are you sure you want to cancel your attendance?',
     onConfirm: async () => {
-      await cancelEventSignUp.mutateAsync({
+      await api.event.cancelEvent
+        .mutate({
+          eventId: event.id,
+        })
+        .catch(error => {
+          toast.error(error.message);
+        });
+      logEvent('event_sign_up_cancel_submitted', {
         eventId: event.id,
       });
-      await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
+      toast.success('Sign up is cancelled!');
+      router.refresh();
     },
   });
   const form = useForm<EventSignUpForm>();
-  const attendeeCount = useAttendeeCount({
-    eventId: event.id,
-  });
 
   const onJoinSubmit = form.handleSubmit(async data => {
     if (!auth.isSignedIn) {
@@ -83,11 +59,20 @@ export function FreeEventAction({event}: Props) {
     }
 
     try {
-      await joinEvent.mutateAsync({
+      await api.event.joinEvent
+        .mutate({
+          eventId: event.id,
+          hasPlusOne: data.hasPlusOne,
+        })
+        .catch(error => {
+          toast.error(error.message);
+        });
+      logEvent('event_sign_up_submitted', {
         eventId: event.id,
-        hasPlusOne: data.hasPlusOne,
       });
-      await Promise.all([signUp.refetch(), attendeeCount.refetch()]);
+      toast.success('Signed up! Check your email for more details!');
+      confetti();
+      router.refresh();
     } catch (error) {}
   });
 
@@ -95,8 +80,8 @@ export function FreeEventAction({event}: Props) {
     openCancelModal();
   });
 
-  const amSignedUp = Boolean(signUp && signUp.data?.status === 'REGISTERED');
-  const amInvited = Boolean(signUp && signUp.data?.status === 'INVITED');
+  const amSignedUp = Boolean(signUp && signUp?.status === 'REGISTERED');
+  const amInvited = Boolean(signUp && signUp?.status === 'INVITED');
 
   if (amSignedUp) {
     return (

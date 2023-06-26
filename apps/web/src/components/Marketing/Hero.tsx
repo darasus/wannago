@@ -1,3 +1,5 @@
+'use client';
+
 import {useRouter} from 'next/navigation';
 import {forwardRef} from 'react';
 import {titleFontClassName} from '../../fonts';

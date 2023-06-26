@@ -1,14 +1,14 @@
-import {trpc} from 'trpc/src/trpc';
 import {AnimateRender} from './AnimateRender';
 
 import {EventView} from '../../features/EventView/EventView';
+import {use} from 'react';
+import {api} from '../../trpc/client';
 import {LoadingBlock} from 'ui';
 
 export default function EventPreview() {
-  const {data: event, isInitialLoading} =
-    trpc.event.getRandomExample.useQuery();
+  const event = use(api.event.getRandomExample.query());
 
-  if (!event || isInitialLoading) {
+  if (!event) {
     return <LoadingBlock />;
   }
 
