@@ -1,10 +1,12 @@
+'use client';
+
 import Head from 'next/head';
 import {useRouter} from 'next/navigation';
-import {useCallback} from 'react';
 import {Container} from 'ui';
-import {Register} from 'auth-features';
+import {Login} from 'auth-features';
+import {useCallback} from 'react';
 
-function RegisterPage() {
+function LoginPage() {
   const router = useRouter();
 
   const handleOnDone = useCallback(() => {
@@ -14,13 +16,13 @@ function RegisterPage() {
   return (
     <>
       <Head>
-        <title>Sign up | WannaGo</title>
+        <title>Login | WannaGo</title>
       </Head>
       <Container maxSize="xs" className="py-4">
-        <Register onDone={handleOnDone} />
+        <Login onDone={handleOnDone} />
       </Container>
     </>
   );
 }
 
-export default RegisterPage;
+export default LoginPage;

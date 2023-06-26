@@ -1,13 +1,15 @@
+'use client';
+
 import {useSignIn} from '@clerk/nextjs';
 import {ClerkAPIError} from '@clerk/types';
-import {useMyUserQuery} from 'hooks';
 import {useRouter} from 'next/navigation';
-import {useCallback, useEffect, useState} from 'react';
+import {use, useCallback, useEffect, useState} from 'react';
 import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {CardBase, LoadingBlock, Button, Text} from 'ui';
 import {cn, sleep} from 'utils';
 import {Input} from '../../../../apps/web/src/components/Input/Input/Input';
 import {titleFont} from '../../../../apps/web/src/fonts';
+import {api} from '../../../../apps/web/src/trpc/client';
 
 interface TEmailForm {
   email: string;
@@ -33,7 +35,7 @@ export function Login({
   redirectToDashboard,
 }: Props) {
   const router = useRouter();
-  const me = useMyUserQuery();
+  const me = use(api.user.me.query());
   const {setSession, isLoaded} = useSignIn();
   const [step, setStep] = useState<'email' | 'code'>('email');
   const emailForm = useForm<TEmailForm>();
@@ -42,13 +44,13 @@ export function Login({
   });
 
   const ready = useCallback(async (): Promise<any> => {
-    const {data} = await me.refetch();
+    const data = await api.user.me.query();
 
     if (!data?.id) {
       await sleep(1000);
       return ready();
     }
-  }, [me]);
+  }, []);
 
   const handleOnDone = useCallback(
     async (createdSessionId: string) => {
