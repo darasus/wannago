@@ -1,15 +1,15 @@
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {useRouter} from 'next/navigation';
 import {FormProvider} from 'react-hook-form';
-import {useAmplitude} from 'hooks';
 import {trackEventCreateConversion} from 'lib/src/gtag';
 import {trpc} from 'trpc/src/trpc';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 import {toast} from 'react-hot-toast';
+import {useAmplitudeAppDir} from 'hooks';
 
 export function AddEventForm() {
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useAmplitudeAppDir();
   const router = useRouter();
   const {push} = useRouter();
   const createMutation = trpc.event.create.useMutation({

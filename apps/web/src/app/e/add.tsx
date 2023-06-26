@@ -1,11 +1,10 @@
 import Head from 'next/head';
 import {AddEventForm} from '../../features/EventForm/AddEventForm';
 import {Button, Container, PageHeader} from 'ui';
-import {withProtected} from '../../utils/withAuthProtect';
 import {SparklesIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/navigation';
 
-function EventAddPage() {
+export default function EventAddPage() {
   const router = useRouter();
 
   return (
@@ -29,5 +28,3 @@ function EventAddPage() {
     </>
   );
 }
-
-export default withProtected(EventAddPage);

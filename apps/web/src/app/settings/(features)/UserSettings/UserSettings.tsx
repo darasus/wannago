@@ -4,12 +4,12 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {Button, CardBase, Toggle} from 'ui';
 import {FileInput} from '../../../../components/Input/FileInput/FileInput';
 import {Input} from '../../../../components/Input/Input/Input';
-import {UserSubscription} from './features/UserSubscription/UserSubscription';
 import {Currency} from '@prisma/client';
 import {RouterOutputs} from 'api';
 import {api} from '../../../../trpc/client';
 import {useRouter} from 'next/navigation';
 import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
+import {UserSubscription} from './(features)/UserSubscription/UserSubscription';
 
 interface UserForm {
   firstName: string;

@@ -1,9 +1,8 @@
 import {api} from '../../trpc/server';
-import {withProtected} from '../../utils/withAuthProtect';
 
 import {AdminDashboard} from './(features)/AdminDashboard/AdminDashboard';
 
-async function AdminPage() {
+export default async function AdminPage() {
   const [
     dailySignUps,
     dailyCreatedEvents,
@@ -43,5 +42,3 @@ async function AdminPage() {
     />
   );
 }
-
-export default withProtected(AdminPage);
