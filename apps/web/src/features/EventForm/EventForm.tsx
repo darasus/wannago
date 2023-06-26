@@ -1,5 +1,7 @@
+'use client';
+
 import {isBefore, isEqual} from 'date-fns';
-import {FormEventHandler, useEffect, useState} from 'react';
+import {FormEventHandler, use, useEffect, useState} from 'react';
 import {
   Controller,
   useFieldArray,
@@ -13,13 +15,10 @@ import {LocationInput} from '../../components/Input/LocationInput/LocationInput'
 import {RichTextarea} from '../../components/Input/RichTextarea/RichTextarea';
 import {Form} from './types';
 import {SparklesIcon} from '@heroicons/react/24/solid';
-import {
-  useGenerateEventDescription,
-  useMyOrganizationQuery,
-  useMyUserQuery,
-} from 'hooks';
+import {useGenerateEventDescription} from 'hooks';
 import {InputWrapper} from 'ui';
 import {Textarea} from '../../components/Input/Input/Textarea';
+import {api} from '../../trpc/client';
 
 interface Props {
   onSubmit: FormEventHandler;
@@ -29,16 +28,16 @@ interface Props {
 }
 
 export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
-  const me = useMyUserQuery();
-  const organization = useMyOrganizationQuery();
+  const me = use(api.user.me.query());
+  const organization = use(api.organization.getMyOrganization.query());
   const options = [
     {
-      label: `${me.data?.firstName} ${me.data?.lastName}`,
-      value: `${me.data?.id}`,
+      label: `${me?.firstName} ${me?.lastName}`,
+      value: `${me?.id}`,
     },
     {
-      label: `${organization.data?.name}`,
-      value: `${organization.data?.id}`,
+      label: `${organization?.name}`,
+      value: `${organization?.id}`,
     },
   ];
 

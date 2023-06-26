@@ -2,17 +2,17 @@
 
 import {Event, Ticket} from '@prisma/client';
 import {SignUpCard as _SignUpCard} from 'cards';
-import {useAttendeeCount} from 'hooks';
 import {Container} from 'ui';
 import {FreeEventAction} from './features/FreeEventAction/FreeEventAction';
 import {PaidEventAction} from './features/PaidEventAction/PaidEventAction';
+import {api} from '../../../../apps/web/src/trpc/client';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
 }
 
-export function SignUpCard({event}: Props) {
-  const attendeeCount = useAttendeeCount({
+export async function SignUpCard({event}: Props) {
+  const attendeeCount = await api.event.getNumberOfAttendees.query({
     eventId: event.id,
   });
 
@@ -22,7 +22,7 @@ export function SignUpCard({event}: Props) {
   return (
     <>
       <Container className="w-full p-0 m-0">
-        <_SignUpCard numberOfAttendees={attendeeCount?.data?.count ?? 0}>
+        <_SignUpCard numberOfAttendees={attendeeCount?.count ?? 0}>
           {isFreeEvent && <FreeEventAction event={event} />}
           {isPaidEvent && <PaidEventAction event={event} />}
         </_SignUpCard>

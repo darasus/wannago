@@ -1,4 +1,6 @@
-import {useState} from 'react';
+'use client';
+
+import {useState, useTransition} from 'react';
 import {Button, Modal} from 'ui';
 
 interface Props {
@@ -8,16 +10,16 @@ interface Props {
 }
 
 export function useConfirmDialog({title, description, onConfirm}: Props) {
+  const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async () => {
-    setIsLoading(true);
-    try {
-      await onConfirm();
-    } catch (error) {}
-    setIsOpen(false);
-    setIsLoading(false);
+    startTransition(async () => {
+      try {
+        await onConfirm();
+      } catch (error) {}
+      setIsOpen(false);
+    });
   };
 
   const modal = (
@@ -34,7 +36,7 @@ export function useConfirmDialog({title, description, onConfirm}: Props) {
         <Button
           variant="danger"
           onClick={onSubmit}
-          isLoading={isLoading}
+          isLoading={isPending}
           data-testid="confirm-dialog-confirm-button"
         >
           Confirm
@@ -45,5 +47,5 @@ export function useConfirmDialog({title, description, onConfirm}: Props) {
 
   const open = () => setIsOpen(true);
 
-  return {modal, open};
+  return {modal, open, isPending};
 }

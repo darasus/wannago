@@ -1,13 +1,13 @@
 import {Event, Organization, Ticket, User} from '@prisma/client';
-import {getBaseUrl} from 'utils';
 import {
   DateCard,
-  UrlCard,
   LocationCard,
   OrganizerCard,
   SignUpCard,
+  UrlCard,
 } from 'card-features';
 import {InfoCard} from 'cards';
+import {getBaseUrl} from 'utils';
 
 interface Props {
   event: Event & {

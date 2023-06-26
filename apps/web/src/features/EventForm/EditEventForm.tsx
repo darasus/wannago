@@ -1,26 +1,22 @@
-import {useRouter} from 'next/router';
+'use client';
+
+import {useRouter} from 'next/navigation';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 import {FormProvider} from 'react-hook-form';
 import {zonedTimeToUtc} from 'date-fns-tz';
-import {trpc} from 'trpc/src/trpc';
-import {useAmplitude, useEventId, useEventQuery} from 'hooks';
+import {useAmplitudeAppDir} from 'hooks';
 import {PageHeader} from 'ui';
+import {Event, Ticket} from '@prisma/client';
+import {api} from '../../trpc/client';
 
-export function EditEventForm() {
-  const {eventShortId} = useEventId();
-  const {data: event} = useEventQuery({eventShortId});
-  const {logEvent} = useAmplitude();
+interface Props {
+  event: Event & {tickets: Ticket[]};
+}
+
+export function EditEventForm({event}: Props) {
+  const {logEvent} = useAmplitudeAppDir();
   const router = useRouter();
-  const {push} = useRouter();
-  const updateMutation = trpc.event.update.useMutation({
-    onSuccess: data => {
-      logEvent('event_updated', {
-        eventId: data?.id,
-      });
-      push(`/e/${data.shortId}`);
-    },
-  });
   const form = useEventForm({
     event,
   });
@@ -29,8 +25,8 @@ export function EditEventForm() {
     logEvent('event_update_submitted');
 
     if (event?.id) {
-      await updateMutation
-        .mutateAsync({
+      await api.event.update
+        .mutate({
           ...data,
           tickets: data.tickets.map(ticket => ({
             ...ticket,
@@ -48,6 +44,12 @@ export function EditEventForm() {
             Intl.DateTimeFormat().resolvedOptions().timeZone
           ),
           maxNumberOfAttendees: data.maxNumberOfAttendees || 0,
+        })
+        .then(data => {
+          logEvent('event_updated', {
+            eventId: data?.id,
+          });
+          router.push(`/e/${data.shortId}`);
         })
         .catch(() => {
           form.trigger();

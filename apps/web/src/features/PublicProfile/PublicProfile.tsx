@@ -2,7 +2,7 @@ import {Event} from '@prisma/client';
 import {EventCard} from 'cards';
 import {useFollow} from 'hooks';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {Avatar, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
 import {FollowButton} from './features/FollowButton/FollowButton';
 import {MessageButton} from './features/MessageButton/MessageButton';

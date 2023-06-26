@@ -1,13 +1,15 @@
-import {ComponentType, forwardRef, Fragment, useState} from 'react';
+'use client';
+
+import {ComponentType, forwardRef, Fragment, use, useState} from 'react';
 import {Input} from '../Input/Input';
 import {useFormContext, useWatch} from 'react-hook-form';
 import {Form} from '../../../features/EventForm/types';
-import {trpc} from 'trpc/src/trpc';
 import {Combobox, Transition} from '@headlessui/react';
 import {CheckIcon} from '@heroicons/react/24/solid';
 import {useDebounce} from 'hooks';
 import {CardBase} from 'ui';
 import {cn} from 'utils';
+import {api} from '../../../trpc/client';
 
 type ExtractProps<T> = T extends ComponentType<infer P> ? P : T;
 
@@ -25,14 +27,10 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
       name: 'address',
     });
     const debouncedValue = useDebounce(address);
-    const {data, isFetching} = trpc.maps.searchPlaces.useQuery(
-      {
+    const data = use(
+      api.maps.searchPlaces.query({
         query: debouncedValue as string,
-      },
-      {
-        enabled: !!debouncedValue,
-        keepPreviousData: !!debouncedValue,
-      }
+      })
     );
 
     return (
@@ -45,7 +43,8 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
                 {...props}
                 as={Input}
                 autoComplete="off"
-                isLoading={isFetching}
+                // isLoading={isFetching}
+                isLoading={false}
               />
             </div>
             <Transition

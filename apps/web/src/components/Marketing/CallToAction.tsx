@@ -1,4 +1,4 @@
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {Button} from 'ui';
 import {Container} from 'ui';
 import {SectionHeader} from './SectionHeader';

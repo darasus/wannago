@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {useCallback} from 'react';
 import {Container} from 'ui';
 import {Register} from 'auth-features';

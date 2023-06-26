@@ -3,7 +3,7 @@
 import {Event, Organization, User} from '@prisma/client';
 import {OrganizerCard as OrganizerCardView} from 'cards';
 import {useCreateConversation} from 'hooks';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {Button} from 'ui';
 
 interface Props {
@@ -24,7 +24,7 @@ export function OrganizerCard({event}: Props) {
     });
 
     if (conversation) {
-      router.push(`/messages/${conversation.id}`);
+      router.push(`/messages/${conversation?.id}`);
     }
   };
 

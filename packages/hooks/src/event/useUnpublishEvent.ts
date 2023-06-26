@@ -1,37 +1,28 @@
 import {TRPCClientError} from '@trpc/client';
 import {toast} from 'react-hot-toast';
-import {trpc} from 'trpc/src/trpc';
-import {useAmplitude} from '../useAmplitude';
 import {useConfirmDialog} from '../useConfirmDialog';
-import {useEventId} from './useEventId';
+import {api} from '../../../../apps/web/src/trpc/client';
+import {useRouter} from 'next/navigation';
+import {useAmplitudeAppDir} from '../useAmplitudeAppDir';
 
 interface Props {
   eventId?: string;
 }
 
 export function useUnpublishEvent({eventId}: Props) {
-  const {logEvent} = useAmplitude();
-  const {eventShortId} = useEventId();
-  const {mutateAsync, isLoading} = trpc.event.publish.useMutation({
-    onSuccess: () => {
-      toast.success(`Event is successfully unpublished!`);
-    },
-  });
+  const router = useRouter();
+  const {logEvent} = useAmplitudeAppDir();
 
-  const {refetch} = trpc.event.getByShortId.useQuery(
-    {id: eventShortId!},
-    {enabled: !!eventShortId}
-  );
-
-  const {modal, open} = useConfirmDialog({
+  const {modal, open, isPending} = useConfirmDialog({
     title: 'Are you sure you want to unpublish event?',
     description:
       'This event will not be available to anyone when visiting public link.',
     onConfirm: async () => {
       if (eventId) {
-        await mutateAsync({eventId, isPublished: false});
+        await api.event.publish.mutate({eventId, isPublished: false});
+        toast.success(`Event is successfully unpublished!`);
         logEvent('event_unpublished', {eventId});
-        await refetch();
+        router.refresh();
       } else {
         throw new TRPCClientError('Event ID is not provided');
       }
@@ -42,5 +33,5 @@ export function useUnpublishEvent({eventId}: Props) {
     open();
   };
 
-  return {modal, onUnpublishClick, isUnpublishing: isLoading};
+  return {modal, onUnpublishClick, isUnpublishing: isPending};
 }

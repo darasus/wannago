@@ -1,4 +1,4 @@
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 
 export const useEventId = (): {eventShortId: string | null} => {
   const router = useRouter();

@@ -1,3 +1,5 @@
+'use client';
+
 import {loggerLink} from '@trpc/client';
 import {experimental_createTRPCNextAppDirClient} from '@trpc/next/app-dir/client';
 import superjson from 'superjson';

@@ -1,6 +1,6 @@
 import {useAuth} from '@clerk/nextjs';
 import {CheckCircleIcon} from '@heroicons/react/24/solid';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {Button, CardBase, Text} from 'ui';
 import {cn, formatCents} from 'utils';
 import {titleFont} from '../../fonts';

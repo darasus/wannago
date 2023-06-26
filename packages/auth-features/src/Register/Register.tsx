@@ -1,7 +1,7 @@
 import {useSignUp} from '@clerk/nextjs';
 import {ClerkAPIError} from '@clerk/types';
 import {useMyUserQuery} from 'hooks';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {useCallback, useEffect, useState} from 'react';
 import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {CardBase, LoadingBlock, Button, Text} from 'ui';

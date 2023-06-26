@@ -1,3 +1,5 @@
+'use client';
+
 import {httpLink, loggerLink} from '@trpc/client';
 import {createTRPCNext} from '@trpc/next';
 import {AppRouter} from './routers/_app';

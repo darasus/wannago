@@ -1,6 +1,6 @@
 import {UserPlusIcon, UserMinusIcon} from '@heroicons/react/24/outline';
 import {useFollow} from 'hooks';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {Button} from 'ui';
 
 export function FollowButton() {

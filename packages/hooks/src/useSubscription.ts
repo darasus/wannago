@@ -1,6 +1,6 @@
 import {captureException} from '@sentry/nextjs';
 import {TRPCClientError} from '@trpc/client';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {useCallback} from 'react';
 import {trpc} from 'trpc/src/trpc';
 

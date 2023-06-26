@@ -1,12 +1,14 @@
+'use client';
+
 import {useAuth} from '@clerk/nextjs';
 import {Event, Ticket} from '@prisma/client';
-import {useState} from 'react';
+import {use, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {trpc} from 'trpc/src/trpc';
 import {Badge, Button} from 'ui';
 import {formatCents} from 'utils';
 import {AuthModal} from '../AuthModal/AuthModal';
 import {TicketSelectorModal} from '../TicketSelectorModal/TicketSelectorModal';
+import {api} from '../../../../../../apps/web/src/trpc/client';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -18,9 +20,11 @@ export function PaidEventAction({event}: Props) {
     useState(false);
   const auth = useAuth();
   const form = useForm();
-  const myTickets = trpc.event.getMyTicketsByEvent.useQuery({
-    eventShortId: event.shortId,
-  });
+  const myTickets = use(
+    api.event.getMyTicketsByEvent.query({
+      eventShortId: event.shortId,
+    })
+  );
 
   const onJoinSubmit = form.handleSubmit(async data => {
     if (!auth.isSignedIn) {
@@ -60,7 +64,7 @@ export function PaidEventAction({event}: Props) {
         className="flex items-center gap-x-2 w-full"
         onSubmit={onJoinSubmit}
       >
-        {myTickets.data && myTickets.data?.length > 0 && (
+        {myTickets && myTickets?.length > 0 && (
           <Button
             size="sm"
             variant="neutral"

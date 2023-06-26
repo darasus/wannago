@@ -1,5 +1,5 @@
 import {zonedTimeToUtc} from 'date-fns-tz';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {FormProvider} from 'react-hook-form';
 import {useAmplitude} from 'hooks';
 import {trackEventCreateConversion} from 'lib/src/gtag';

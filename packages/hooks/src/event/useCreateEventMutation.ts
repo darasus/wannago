@@ -1,4 +1,4 @@
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {toast} from 'react-hot-toast';
 import {trpc} from 'trpc/src/trpc';
 import {useAmplitude} from '../useAmplitude';
