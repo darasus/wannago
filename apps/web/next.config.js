@@ -88,5 +88,11 @@ module.exports = withMDX(
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options.
     silent: true,
+    org: 'darasus-bv',
+    project: 'wannago',
+    widenClientFileUpload: true,
+    tunnelRoute: '/monitoring',
+    hideSourceMaps: true,
+    disableLogger: true,
   })
 );

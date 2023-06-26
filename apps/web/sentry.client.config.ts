@@ -8,5 +8,11 @@ Sentry.init({
   enabled: process.env.VERCEL_ENV === 'production',
   replaysSessionSampleRate: 1.0,
   replaysOnErrorSampleRate: 1.0,
-  integrations: [new Sentry.Replay()],
+  integrations: [
+    new Sentry.Replay({
+      maskAllText: false,
+      blockAllMedia: true,
+    }),
+  ],
+  debug: false,
 });

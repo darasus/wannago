@@ -41,3 +41,5 @@ yarn-error.log*
 
 .react-email
 tsconfig.tsbuildinfo
+# Sentry Auth Token
+.sentryclirc
