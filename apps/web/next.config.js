@@ -31,7 +31,6 @@ const moduleExports = {
     hideSourceMaps: true,
   },
   reactStrictMode: true,
-  pageExtensions: ['page.tsx', 'page.ts', 'page.mdx', 'api.ts', 'api.tsx'],
   experimental: {
     serverActions: true,
   },
