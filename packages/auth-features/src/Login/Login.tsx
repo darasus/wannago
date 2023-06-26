@@ -48,9 +48,10 @@ export function Login({
 
     if (!data?.id) {
       await sleep(1000);
+      router.refresh();
       return ready();
     }
-  }, []);
+  }, [router]);
 
   const handleOnDone = useCallback(
     async (createdSessionId: string) => {

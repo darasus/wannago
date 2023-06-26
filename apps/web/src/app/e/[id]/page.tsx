@@ -1,5 +1,5 @@
 import {Container} from 'ui';
-import {api} from '../../../trpc/server';
+import {api, getMe} from '../../../trpc/server';
 import {notFound} from 'next/navigation';
 import {ManageEventButton} from './(features)/ManageEventButton/ManageEventButton';
 import {EventView} from '../../../features/EventView/EventView';
@@ -17,7 +17,7 @@ export default async function EventPage({
 }: {
   params: {id: string};
 }) {
-  const me = await api.user.me.query();
+  const me = await getMe();
   const event = await api.event.getByShortId.query({id: id});
   const isMyEvent = await api.event.getIsMyEvent.query({
     eventShortId: id,

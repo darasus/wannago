@@ -18,7 +18,7 @@ import {SparklesIcon} from '@heroicons/react/24/solid';
 import {useGenerateEventDescription} from 'hooks';
 import {InputWrapper} from 'ui';
 import {Textarea} from '../../components/Input/Input/Textarea';
-import {api} from '../../trpc/client';
+import {api, getMe} from '../../trpc/client';
 
 interface Props {
   onSubmit: FormEventHandler;
@@ -28,7 +28,7 @@ interface Props {
 }
 
 export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
-  const me = use(api.user.me.query());
+  const me = use(getMe());
   const organization = use(api.organization.getMyOrganization.query());
   const options = [
     {

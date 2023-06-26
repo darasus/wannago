@@ -29,7 +29,6 @@
     "utils": "workspace:*",
     "hooks": "workspace:*",
     "lib": "workspace:*",
-    "trpc": "workspace:*",
     "cards": "workspace:*",
     "ui": "workspace:*"
   }

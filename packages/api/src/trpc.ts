@@ -9,10 +9,11 @@
 
 import type {NextRequest} from 'next/server';
 import type {SignedInAuthObject, SignedOutAuthObject} from '@clerk/nextjs/api';
-import {getAuth} from '@clerk/nextjs/server';
 import {initTRPC, TRPCError} from '@trpc/server';
 import superjson from 'superjson';
 import {ZodError} from 'zod';
+import {captureException} from '@sentry/nextjs';
+import {createContext} from './context';
 
 /**
  * 1. CONTEXT
@@ -44,40 +45,43 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
 };
 
 /**
- * This is the actual context you'll use in your router. It will be used to
- * process every request that goes through your tRPC endpoint
- * @link https://trpc.io/docs/context
- */
-export const createTRPCContext = (opts: {req: NextRequest}) => {
-  let auth = null;
-
-  if (opts?.req) {
-    auth = getAuth(opts?.req);
-  }
-
-  return createInnerTRPCContext({
-    auth,
-    req: opts.req,
-  });
-};
-
-/**
  * 2. INITIALIZATION
  *
  * This is where the trpc api is initialized, connecting the context and
  * transformer
  */
-export const t = initTRPC.context<typeof createTRPCContext>().create({
+export const t = initTRPC.context<typeof createContext>().create({
   transformer: superjson,
-  errorFormatter({shape, error}) {
-    return {
+  errorFormatter({shape, error, ctx, path, input, type}) {
+    const e = {
       ...shape,
       data: {
         ...shape.data,
         zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
+          error.code === 'BAD_REQUEST' && error.cause instanceof ZodError
+            ? error.cause.flatten()
+            : null,
       },
     };
+
+    captureException(error, scope => {
+      scope.setUser({
+        id: ctx?.auth?.userId || undefined,
+      });
+      if (path) {
+        scope.setContext('path', {path});
+      }
+      if (input) {
+        scope.setContext('input', {input});
+      }
+      if (type) {
+        scope.setContext('type', {type});
+      }
+
+      return scope;
+    });
+
+    return e;
   },
 });
 
@@ -104,10 +108,6 @@ export const mergeRouters = t.mergeRouters;
  */
 export const publicProcedure = t.procedure;
 
-/**
- * Reusable middleware that enforces users are logged in before running the
- * procedure
- */
 const enforceUserIsAuthed = t.middleware(({ctx, next}) => {
   if (!ctx.auth?.userId) {
     throw new TRPCError({code: 'UNAUTHORIZED'});
@@ -122,13 +122,23 @@ const enforceUserIsAuthed = t.middleware(({ctx, next}) => {
   });
 });
 
-/**
- * Protected (authed) procedure
- *
- * If you want a query or mutation to ONLY be accessible to logged in users, use
- * this. It verifies the session is valid and guarantees ctx.session.user is not
- * null
- *
- * @see https://trpc.io/docs/procedures
- */
+const enforceUserIsAdmin = t.middleware(async ({ctx, next}) => {
+  const user = await ctx.prisma.user.findFirst({
+    where: {
+      externalId: ctx.auth?.userId,
+    },
+  });
+
+  if (user?.type === 'ADMIN') {
+    return next({
+      ctx: {
+        auth: ctx.auth,
+      },
+    });
+  }
+
+  throw new TRPCError({code: 'UNAUTHORIZED'});
+});
+
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const adminProcedure = t.procedure.use(enforceUserIsAdmin);

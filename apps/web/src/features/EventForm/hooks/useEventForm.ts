@@ -5,7 +5,7 @@ import {useForm} from 'react-hook-form';
 import {formatDate} from 'utils';
 import {Form} from '../types';
 import {use, useEffect} from 'react';
-import {api} from '../../../trpc/client';
+import {getMe} from '../../../trpc/client';
 
 const formatDateForInput = (date: Date | string) => {
   return formatDate(new Date(date), "yyyy-MM-dd'T'HH:mm");
@@ -15,7 +15,7 @@ export function useEventForm(props?: {
   event?: (Event & {tickets: Ticket[]}) | null;
 }) {
   const {event} = props || {};
-  const me = use(api.user.me.query());
+  const me = use(getMe());
   const createdByIdDefault = event?.userId || event?.organizationId || me?.id;
 
   const form = useForm<Form>({

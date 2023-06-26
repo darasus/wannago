@@ -15,7 +15,6 @@
     "inngest-client": "workspace:*",
     "error": "workspace:*",
     "types": "workspace:*",
-    "trpc": "workspace:*",
     "const": "workspace:*",
     "email": "workspace:*",
     "lib": "workspace:*",

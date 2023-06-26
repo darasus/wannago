@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "utils": "workspace:*",
-    "trpc": "workspace:*",
     "ui": "workspace:*"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import {createContext} from 'trpc/src/context';
+import {createContext} from 'api/src/context';
 import {
   baseEventHandlerSchema,
   handleEventSignUpEmailInputSchema,
@@ -11,8 +11,9 @@ import {
   handleEventCancelSignUpEmailInputSchema,
   handleOrganizerEventSignUpNotificationEmailInputSchema,
 } from 'email-input-validation';
-import {emailHandlerRouter} from 'trpc/src/routers/emailHandler';
+import {emailHandlerRouter} from 'api/src/routers/emailHandler';
 import {EmailType} from 'types';
+import {NextRequest} from 'next/server';
 
 export default async function handle(
   req: NextApiRequest,
@@ -22,7 +23,7 @@ export default async function handle(
     res.status(405).json({error: 'Method Not Allowed'});
   }
 
-  const ctx = await createContext({req, res});
+  const ctx = await createContext({req: req as unknown as NextRequest});
   const caller = emailHandlerRouter.createCaller(ctx);
 
   const input = baseEventHandlerSchema.parse(req.body);

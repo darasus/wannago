@@ -2,30 +2,16 @@ import {zonedTimeToUtc} from 'date-fns-tz';
 import {useRouter} from 'next/navigation';
 import {FormProvider} from 'react-hook-form';
 import {trackEventCreateConversion} from 'lib/src/gtag';
-import {trpc} from 'trpc/src/trpc';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 import {toast} from 'react-hot-toast';
 import {useAmplitudeAppDir} from 'hooks';
+import {api} from '../../trpc/client';
 
 export function AddEventForm() {
   const {logEvent} = useAmplitudeAppDir();
   const router = useRouter();
   const {push} = useRouter();
-  const createMutation = trpc.event.create.useMutation({
-    onSuccess(data) {
-      logEvent('event_created', {
-        eventId: data?.id,
-      });
-      if (data?.id) {
-        push(`/e/${data.shortId}`);
-      }
-    },
-    onError(error) {
-      toast.error(error.message);
-    },
-  });
-  const utils = trpc.useContext();
   const form = useEventForm();
   const {handleSubmit} = form;
 
@@ -33,8 +19,8 @@ export function AddEventForm() {
     logEvent('event_create_submitted');
     trackEventCreateConversion();
 
-    await createMutation
-      .mutateAsync({
+    await api.event.create
+      .mutate({
         ...data,
         tickets: data.tickets.map(ticket => ({
           ...ticket,
@@ -51,10 +37,16 @@ export function AddEventForm() {
           Intl.DateTimeFormat().resolvedOptions().timeZone
         ),
       })
-      .then(async res => {
-        await utils.event.getByShortId.prefetch({id: res.shortId});
+      .then(data => {
+        logEvent('event_created', {
+          eventId: data?.id,
+        });
+        if (data?.id) {
+          push(`/e/${data.shortId}`);
+        }
       })
-      .catch(() => {
+      .catch(error => {
+        toast.error(error.message);
         form.trigger();
       });
   });

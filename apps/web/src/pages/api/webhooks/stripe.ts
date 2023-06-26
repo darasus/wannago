@@ -2,8 +2,8 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import {buffer} from 'micro';
 import {Stripe} from 'lib';
 import Cors from 'micro-cors';
-import {createContext} from 'trpc/src/context';
-import {stripeWebhookHandlerRouter} from 'trpc/src/routers/stripeWebhookHandler';
+import {createContext} from 'api/src/context';
+import {stripeWebhookHandlerRouter} from 'api/src/routers/stripeWebhookHandler';
 import {
   baseEventHandlerSchema,
   handleCheckoutSessionCompletedInputSchema,
@@ -11,6 +11,7 @@ import {
   handleCustomerSubscriptionUpdatedInputSchema,
 } from 'stripe-webhook-input-validation';
 import {captureException} from '@sentry/nextjs';
+import {NextRequest} from 'next/server';
 
 const cors = Cors({
   allowMethods: ['POST', 'HEAD'],
@@ -30,7 +31,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const stripe = new Stripe();
   const buf = await buffer(req);
   const sig = req.headers['stripe-signature'] as string;
-  const ctx = await createContext({req, res});
+  const ctx = await createContext({req: req as unknown as NextRequest});
   const caller = stripeWebhookHandlerRouter.createCaller(ctx);
 
   try {

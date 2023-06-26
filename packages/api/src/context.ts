@@ -12,24 +12,24 @@ import {Stripe} from 'lib/src/stripe';
 import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
 import {SignedInAuthObject, SignedOutAuthObject} from '@clerk/clerk-sdk-node';
 import {getCurrencyFromHeaders} from 'utils';
-import {getEvents} from 'trpc/src/actions/getEvents';
-import {getUserByExternalId} from 'trpc/src/actions/getUserByExternalId';
-import {getUserById} from 'trpc/src/actions/getUserById';
-import {getOrganizationById} from 'trpc/src/actions/getOrganizationById';
-import {getEvent} from 'trpc/src/actions/getEvent';
-import {getOrganizerByEventId} from 'trpc/src/actions/getOrganizerByEventId';
-import {getOrganizationByUserId} from 'trpc/src/actions/getOrganizationByUserId';
-import {getOrganizationByUserExternalId} from 'trpc/src/actions/getOrganizationByUserExternalId';
-import {getUserByEmail} from 'trpc/src/actions/getUserByEmail';
-import {getOrganizationWithMembersByOrganizationId} from 'trpc/src/actions/getOrganizationWithMembersByOrganizationId';
-import {canModifyEvent} from 'trpc/src/actions/canModifyEvent';
-import {getOrganizerByEmail} from 'trpc/src/actions/getOrganizerByEmail';
-import {generateEventFromPrompt} from 'trpc/src/actions/generateEventFromPrompt';
-import {generateImageFromPrompt} from 'trpc/src/actions/generateImageFromPrompt';
-import {assertCanCreateEvent} from 'trpc/src/assertions/assertCanCreateEvent';
-import {assertCanJoinEvent} from 'trpc/src/assertions/assertCanJoinEvent';
-import {assertCanPurchaseTickets} from 'trpc/src/assertions/assertCanPurchaseTickets';
-import {assertCanAddOrganizationMember} from 'trpc/src/assertions/assertCanAddOrganizationMember';
+import {getEvents} from './actions/getEvents';
+import {getUserByExternalId} from './actions/getUserByExternalId';
+import {getUserById} from './actions/getUserById';
+import {getOrganizationById} from './actions/getOrganizationById';
+import {getEvent} from './actions/getEvent';
+import {getOrganizerByEventId} from './actions/getOrganizerByEventId';
+import {getOrganizationByUserId} from './actions/getOrganizationByUserId';
+import {getOrganizationByUserExternalId} from './actions/getOrganizationByUserExternalId';
+import {getUserByEmail} from './actions/getUserByEmail';
+import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizationWithMembersByOrganizationId';
+import {canModifyEvent} from './actions/canModifyEvent';
+import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
+import {generateEventFromPrompt} from './actions/generateEventFromPrompt';
+import {generateImageFromPrompt} from './actions/generateImageFromPrompt';
+import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
+import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
+import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
+import {assertCanAddOrganizationMember} from './assertions/assertCanAddOrganizationMember';
 import {Inngest, EventSchemas} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
 import {NextRequest} from 'next/server';
@@ -122,8 +122,6 @@ export async function createContext(opts?: {
 
   if (opts?.req) {
     auth = getAuth(opts?.req);
-  } else {
-    console.log('>>>> opts?.req', opts?.req.nextUrl);
   }
 
   const innerContext: CreateInnerContextOptions = await createContextInner({
