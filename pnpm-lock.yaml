@@ -16,7 +16,7 @@ importers:
         version: 4.10.2
       '@clerk/nextjs':
         specifier: ^4.19.0
-        version: 4.19.0(next@13.4.8-canary.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.19.0(next@13.4.8-canary.3)(react-dom@18.2.0)(react@18.2.0)
       '@googlemaps/google-maps-services-js':
         specifier: ^3.3.27
         version: 3.3.27
@@ -64,7 +64,7 @@ importers:
         version: 3.18.1(react@18.2.0)
       '@sentry/nextjs':
         specifier: ^7.56.0
-        version: 7.56.0(next@13.4.8-canary.2)(react@18.2.0)(webpack@5.88.0)
+        version: 7.56.0(next@13.4.8-canary.3)(react@18.2.0)(webpack@5.88.0)
       '@sentry/profiling-node':
         specifier: ^1.0.6
         version: 1.0.6
@@ -109,7 +109,7 @@ importers:
         version: 10.32.0(@trpc/server@10.32.0)
       '@trpc/next':
         specifier: ^10.32.0
-        version: 10.32.0(@tanstack/react-query@4.29.5)(@trpc/client@10.32.0)(@trpc/react-query@10.32.0)(@trpc/server@10.32.0)(next@13.4.8-canary.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 10.32.0(@tanstack/react-query@4.29.5)(@trpc/client@10.32.0)(@trpc/react-query@10.32.0)(@trpc/server@10.32.0)(next@13.4.8-canary.3)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/react-query':
         specifier: ^10.32.0
         version: 10.32.0(@tanstack/react-query@4.29.5)(@trpc/client@10.32.0)(@trpc/server@10.32.0)(react-dom@18.2.0)(react@18.2.0)
@@ -201,8 +201,8 @@ importers:
         specifier: ^2.1.3
         version: 2.1.3
       next:
-        specifier: 13.4.8-canary.2
-        version: 13.4.8-canary.2(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.8-canary.3
+        version: 13.4.8-canary.3(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
       openai:
         specifier: ^3.2.1
         version: 3.2.1
@@ -983,7 +983,7 @@ packages:
       '@babel/traverse': 7.22.5(supports-color@5.5.0)
       '@babel/types': 7.22.5
       convert-source-map: 1.9.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.0
@@ -1065,7 +1065,7 @@ packages:
       '@babel/core': 7.22.5
       '@babel/helper-compilation-targets': 7.22.5(@babel/core@7.22.5)
       '@babel/helper-plugin-utils': 7.22.5
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       lodash.debounce: 4.0.8
       resolve: 1.22.2
       semver: 6.3.0
@@ -2259,7 +2259,7 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@clerk/nextjs@4.19.0(next@13.4.8-canary.2)(react-dom@18.2.0)(react@18.2.0):
+  /@clerk/nextjs@4.19.0(next@13.4.8-canary.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-k7BUhu2hV924UOf3bzS/3KnNJWONzUQtWxaeJMHnd8AgS2X2j7iP32Sp5aPL5Jg2+n9h2lyI5A5obgbQhLeo5g==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -2271,7 +2271,7 @@ packages:
       '@clerk/clerk-react': 4.17.0(react@18.2.0)
       '@clerk/clerk-sdk-node': 4.10.2
       '@clerk/types': 3.40.0
-      next: 13.4.8-canary.2(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.8-canary.3(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
       path-to-regexp: 6.2.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -2811,7 +2811,7 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       espree: 9.5.2
       globals: 13.20.0
       ignore: 5.2.4
@@ -2944,7 +2944,7 @@ packages:
     engines: {node: '>=10.10.0'}
     dependencies:
       '@humanwhocodes/object-schema': 1.2.1
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -3071,7 +3071,7 @@ packages:
     resolution: {integrity: sha512-YnBq0JlDWMEkTOK+tMo5yEVR0f5V//6qMLToGcLhTyM9g9i+IDFn51Z+5q2hLk7RdG4NBPgbcCXYi2w4RKsPeg==}
     engines: {node: ^12.16.0 || >=13.7.0}
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       picocolors: 1.0.0
     transitivePeerDependencies:
       - supports-color
@@ -3235,8 +3235,8 @@ packages:
       tslib: 2.5.3
     dev: false
 
-  /@next/env@13.4.8-canary.2:
-    resolution: {integrity: sha512-/6ga2WeCpe4uW5QtXZnlYjNPXiRBVd12AoCNeD/JUh9h+0qdn5hpzSHStICcTvPH4ZgCd/s2mTOQdj49EuBftw==}
+  /@next/env@13.4.8-canary.3:
+    resolution: {integrity: sha512-Aiw5QVVZFNMdn5nNIXHiZ65dHHFGKQQRw474hWhEWq2BYxpMueQ/0nb/A+AfprNx1qBxl9BTSanU3ZBd3U8rrA==}
     dev: false
 
   /@next/eslint-plugin-next@13.4.6:
@@ -3265,8 +3265,8 @@ packages:
       source-map: 0.7.4
     dev: false
 
-  /@next/swc-darwin-arm64@13.4.8-canary.2:
-    resolution: {integrity: sha512-BY+IsB3686LcOYovW+uW57W6DO0tADRpUKT6YdDQrEaEoc+qvLPCwyMzzi+M5h71JBd1NCzpgKN1nzpfn6oIVw==}
+  /@next/swc-darwin-arm64@13.4.8-canary.3:
+    resolution: {integrity: sha512-o3cS1WujKlESW49jx8z/tZJaKSREaOx+3mIPxJnznZqJap3zJZ1f7MJHvnNXBPp8sIEszROwqdB5JeCjD6bqfw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -3274,8 +3274,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-darwin-x64@13.4.8-canary.2:
-    resolution: {integrity: sha512-e8rSNpxuqjpRpwslZCYMN/vBIaPfB24QxtnSQ94A6r3Mz4WboL202tS8V5AgAoJngWn1Z9X0wH/IRBlwN6je+g==}
+  /@next/swc-darwin-x64@13.4.8-canary.3:
+    resolution: {integrity: sha512-cMUXFqoyrHzu/TjswS4vQimWossScC0iWkKpJe5g4unkw2ex3bNjYZUNaPCOThd1I7aVeuxmuQeNfYCb2upCjg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -3283,8 +3283,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-gnu@13.4.8-canary.2:
-    resolution: {integrity: sha512-TwCfJXK3IenbFx5eE0hxTPiC7q0Uh115qdcZ3nUbUf3C3nX+hinaMiy7XQQ/OwmRphM0HfpCjQyssd7P704ywA==}
+  /@next/swc-linux-arm64-gnu@13.4.8-canary.3:
+    resolution: {integrity: sha512-o9v/aUCW03Ny351zE5QJX4UUVGth1+bncI7q+TSDMEeGF21eg+3vRjNcEf9Xlh65NcLWDfWQEC9FNeAc0ifOdw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -3292,8 +3292,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-musl@13.4.8-canary.2:
-    resolution: {integrity: sha512-UikK90tInX0myUDAYKdI0V9Uyvsp1qsvF2nn29yOH+5wDVxiUBXx90UQpJFCFI0OUq1GyVCXEvzDhbXLPSp9Bg==}
+  /@next/swc-linux-arm64-musl@13.4.8-canary.3:
+    resolution: {integrity: sha512-aZX87ebf0V4fMw/6VZU4dfIKnFFUpeNLVdUj806fvqIxQlMOaXGCrL5KRMcJ2q2VvYggqjsK29y9K5D1orOqng==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -3301,8 +3301,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-gnu@13.4.8-canary.2:
-    resolution: {integrity: sha512-XuVEqU8d1N66zVyxo2P/UKsbj8kZ7q0mVxvd4Xf/I+1C4JE2huCuvmxmyvk87Eov+zKoAbf4dmYMZylM2ImlZA==}
+  /@next/swc-linux-x64-gnu@13.4.8-canary.3:
+    resolution: {integrity: sha512-oFCM1SiGHN5o1SxfnCAac/TDuQVWrYRIbnx1jhgwOodLMoAdUJqHzq6Igt8jd7hqxKKoYoAK+hTugN4dg0aFTw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -3310,8 +3310,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-musl@13.4.8-canary.2:
-    resolution: {integrity: sha512-s4xKbqTLAPoM5bPy2pVQR1iUxjzbUSKKxfCEbU+PVFEW/BnMENAqRvvNNzuGRqGmq+d2vhGACMfWpVGxLXprLQ==}
+  /@next/swc-linux-x64-musl@13.4.8-canary.3:
+    resolution: {integrity: sha512-wTXCGzOGPuvC8xJOou+YqmebU4rgeYzwGcgCvEGm0N9x+KgxzUPpXlKeRaWHU0P/MK7HdtluiONKe2dyY4KIqw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -3319,8 +3319,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-arm64-msvc@13.4.8-canary.2:
-    resolution: {integrity: sha512-pj2Y8iHBUF6aARQSvm3mLF+edJ7+RG0Yw2oHktRbhxESFyQP1I6U40cUD3lAfowtZmSmu4iQQC+Pd9r8dnsAgw==}
+  /@next/swc-win32-arm64-msvc@13.4.8-canary.3:
+    resolution: {integrity: sha512-aiUlgcKgzlyeoDu0I2x1HTjZL/gyNCEwKciVcdEXOiX9lH73IQyFZW5f+KJWr8r8jg7gnEKfw9jmAyz4fnC8FA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -3328,8 +3328,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-ia32-msvc@13.4.8-canary.2:
-    resolution: {integrity: sha512-JeTz5T5LI9+2SOGEq9KRRAZ6zX9OtpLq9bv9DT4SR0EPVHvn6Ky8SB3S/HDcxkLTSZdfqQOWrTbAfIn17mf9gQ==}
+  /@next/swc-win32-ia32-msvc@13.4.8-canary.3:
+    resolution: {integrity: sha512-uwn0DytO8e8rf7v/NUrqEJSnRZdjJ0RxwhJbpjs8bTt4FOJsE/erG7ELU22Ivb8SZB75c/xaUoJTJV8662k3rQ==}
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
@@ -3337,8 +3337,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-x64-msvc@13.4.8-canary.2:
-    resolution: {integrity: sha512-bMrs44eI+sCyIkasopXQrIwUzE4kKYiFQwrAZ/FIU1joV2IcGu8mPM2skk6E4XmAfUheql4CzvUe9fyypGIRpg==}
+  /@next/swc-win32-x64-msvc@13.4.8-canary.3:
+    resolution: {integrity: sha512-kquNlv5umjybRrK4hKojwQpoXC9L9eaujeHbqeToHdVPzNRh1DH/MhVF4UF+7AUYgiW9Nl3OKBO0R+pza++05g==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -3372,7 +3372,7 @@ packages:
     resolution: {integrity: sha512-8KG5RD0GVP4ydEzRn/I4BNDuxDtqVbOdm8675T49OIG/NGhaK0pjPX7ZcDlvKYbA+ulvVK3ztfcF4uBdOxuJbQ==}
     dependencies:
       '@gar/promisify': 1.1.3
-      semver: 7.5.3
+      semver: 7.3.8
     dev: true
 
   /@npmcli/fs@3.1.0:
@@ -3527,14 +3527,14 @@ packages:
     dependencies:
       asn1js: 3.0.5
       pvtsutils: 1.3.2
-      tslib: 2.5.3
+      tslib: 2.4.1
     dev: false
 
   /@peculiar/json-schema@1.1.12:
     resolution: {integrity: sha512-coUfuoMeIB7B8/NMekxaDzLhaYmp0HZNPEjYRm9goRou8UZIC3z21s0sL9AWoCw4EG876QyO3kYrc61WNF9B/w==}
     engines: {node: '>=8.0.0'}
     dependencies:
-      tslib: 2.5.3
+      tslib: 2.4.1
     dev: false
 
   /@peculiar/webcrypto@1.4.1:
@@ -3544,7 +3544,7 @@ packages:
       '@peculiar/asn1-schema': 2.3.6
       '@peculiar/json-schema': 1.1.12
       pvtsutils: 1.3.2
-      tslib: 2.5.3
+      tslib: 2.4.1
       webcrypto-core: 1.7.7
     dev: false
 
@@ -5660,7 +5660,7 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@sentry/nextjs@7.56.0(next@13.4.8-canary.2)(react@18.2.0)(webpack@5.88.0):
+  /@sentry/nextjs@7.56.0(next@13.4.8-canary.3)(react@18.2.0)(webpack@5.88.0):
     resolution: {integrity: sha512-s/HX6e3r8dS/683mbKfJymKg2DSqfQBeMRMxfp34Lg7Pzed/VLE9JLPkZq7BcS7leD0XQEflyxGYBKEq8iqeKA==}
     engines: {node: '>=8'}
     peerDependencies:
@@ -5680,7 +5680,7 @@ packages:
       '@sentry/utils': 7.56.0
       '@sentry/webpack-plugin': 1.20.0
       chalk: 3.0.0
-      next: 13.4.8-canary.2(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.8-canary.3(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       rollup: 2.78.0
       stacktrace-parser: 0.1.10
@@ -6213,7 +6213,7 @@ packages:
       '@trpc/server': 10.32.0
     dev: false
 
-  /@trpc/next@10.32.0(@tanstack/react-query@4.29.5)(@trpc/client@10.32.0)(@trpc/react-query@10.32.0)(@trpc/server@10.32.0)(next@13.4.8-canary.2)(react-dom@18.2.0)(react@18.2.0):
+  /@trpc/next@10.32.0(@tanstack/react-query@4.29.5)(@trpc/client@10.32.0)(@trpc/react-query@10.32.0)(@trpc/server@10.32.0)(next@13.4.8-canary.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-qJ3yvJDTVmiOOPW1x/FCpmOvtcMJXnP2t3EbcUFrqwgH+D1KdbU2Kk1iSa89Gwy/BBEmXUxaKkWoM3e4Id80gw==}
     peerDependencies:
       '@tanstack/react-query': ^4.18.0
@@ -6228,7 +6228,7 @@ packages:
       '@trpc/client': 10.32.0(@trpc/server@10.32.0)
       '@trpc/react-query': 10.32.0(@tanstack/react-query@4.29.5)(@trpc/client@10.32.0)(@trpc/server@10.32.0)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 10.32.0
-      next: 13.4.8-canary.2(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.8-canary.3(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
@@ -6649,7 +6649,7 @@ packages:
       '@typescript-eslint/scope-manager': 5.60.0
       '@typescript-eslint/types': 5.60.0
       '@typescript-eslint/typescript-estree': 5.60.0(typescript@5.1.3)
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       eslint: 8.43.0
       typescript: 5.1.3
     transitivePeerDependencies:
@@ -6680,7 +6680,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.60.0
       '@typescript-eslint/visitor-keys': 5.60.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.3
@@ -6970,7 +6970,7 @@ packages:
       recast: 0.21.5
       remark-frontmatter: 4.0.1
       remark-mdx-frontmatter: 1.1.1
-      semver: 7.5.3
+      semver: 7.3.8
       sort-package-json: 1.57.0
       tar-fs: 2.1.1
       tsconfig-paths: 4.2.0
@@ -7186,7 +7186,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -7194,7 +7194,7 @@ packages:
     resolution: {integrity: sha512-Zn4cw2NEqd+9fiSVWMscnjyQ1a8Yfoc5oBajLeo5w+YBHgDUcEBY2hS4YpTz6iN5f/2zQiktcuM6tS8x1p9dpA==}
     engines: {node: '>= 8.0.0'}
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       depd: 1.1.2
       humanize-ms: 1.2.1
     transitivePeerDependencies:
@@ -7205,7 +7205,7 @@ packages:
     resolution: {integrity: sha512-7Epl1Blf4Sy37j4v9f9FjICCh4+KAQOyXgHEwlyBiAQLbhKdq/i2QQU3amQalS/wPhdPzDXPL5DMR5bkn+YeWg==}
     engines: {node: '>= 8.0.0'}
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       depd: 2.0.0
       humanize-ms: 1.2.1
     transitivePeerDependencies:
@@ -7423,7 +7423,7 @@ packages:
     dependencies:
       pvtsutils: 1.3.2
       pvutils: 1.1.3
-      tslib: 2.5.3
+      tslib: 2.4.1
     dev: false
 
   /assert-plus@1.0.0:
@@ -7948,10 +7948,6 @@ packages:
   /caniuse-lite@1.0.30001489:
     resolution: {integrity: sha512-x1mgZEXK8jHIfAxm+xgdpHpk50IN3z3q3zP261/WS+uvePxW8izXuCu6AHz0lkuYTlATDehiZ/tNyYBdSQsOUQ==}
     dev: true
-
-  /caniuse-lite@1.0.30001507:
-    resolution: {integrity: sha512-SFpUDoSLCaE5XYL2jfqe9ova/pbQHEmbheDf5r4diNwbAgR3qxM9NQtfsiSscjqoya5K7kFcHPUQ+VsUkIJR4A==}
-    dev: false
 
   /caniuse-lite@1.0.30001508:
     resolution: {integrity: sha512-sdQZOJdmt3GJs1UMNpCCCyeuS2IEGLXnHyAo9yIO5JJDjbjoVRij4M1qep6P6gFpptD1PqIYgzM+gwJbOi92mw==}
@@ -8618,7 +8614,6 @@ packages:
     dependencies:
       ms: 2.1.2
       supports-color: 8.1.1
-    dev: true
 
   /decimal.js-light@2.5.1:
     resolution: {integrity: sha512-qIMFpTMZmny+MMIitAB6D7iVPEorVw6YQRWkvarTkT4tBeSLLiHzcwj6q0MmYSFCiVpiqPJTJEYIrpcPzVEIvg==}
@@ -9452,7 +9447,7 @@ packages:
       eslint: '*'
       eslint-plugin-import: '*'
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       enhanced-resolve: 5.15.0
       eslint: 8.43.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.60.0)(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5)(eslint@8.43.0)
@@ -9664,7 +9659,7 @@ packages:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.0
@@ -10403,7 +10398,7 @@ packages:
     dependencies:
       '@tootallnate/once': 1.1.2
       data-uri-to-buffer: 3.0.1
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       file-uri-to-path: 2.0.0
       fs-extra: 8.1.0
       ftp: 0.3.10
@@ -10544,7 +10539,7 @@ packages:
       '@types/glob': 7.2.0
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.2.12
+      fast-glob: 3.2.11
       glob: 7.2.3
       ignore: 5.2.4
       merge2: 1.4.1
@@ -10824,7 +10819,7 @@ packages:
     dependencies:
       '@tootallnate/once': 1.1.2
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -10835,7 +10830,7 @@ packages:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -10870,7 +10865,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -11959,7 +11954,7 @@ packages:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
     engines: {node: '>=8'}
     dependencies:
-      semver: 6.3.0
+      semver: 6.1.1
     dev: true
 
   /make-error@1.3.6:
@@ -12702,7 +12697,7 @@ packages:
     resolution: {integrity: sha512-6Mj0yHLdUZjHnOPgr5xfWIMqMWS12zDN6iws9SLuSz76W8jTtAv24MN4/CL7gJrl5vtxGInkkqDv/JIoRsQOvA==}
     dependencies:
       '@types/debug': 4.1.7
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       decode-named-character-reference: 1.0.2
       micromark-core-commonmark: 1.0.6
       micromark-factory-space: 1.0.0
@@ -12725,7 +12720,7 @@ packages:
     resolution: {integrity: sha512-uD66tJj54JLYq0De10AhWycZWGQNUvDI55xPgk2sQM5kn1JYlhbCMTtEeT27+vAhW2FBQxLlOmS3pmA7/2z4aA==}
     dependencies:
       '@types/debug': 4.1.8
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       decode-named-character-reference: 1.0.2
       micromark-core-commonmark: 1.1.0
       micromark-factory-space: 1.1.0
@@ -12993,8 +12988,8 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: true
 
-  /next@13.4.8-canary.2(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-r23iNPx+ONJs0lky56d9oSq8OfEMOVUTOFr+rnyVv8Dj1r3LUJxnOuzyNwDakYwvgaxnVi0Nv+n+d2evXNOPFA==}
+  /next@13.4.8-canary.3(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-6B1pIzV8ZtrBE3VH6vtAZ2XY1oTaP+U/dRc9Bf5uxrIHT+j1RvjEJNETlmYBVWJ70A27bXf4jigO8wqyTTu0Ow==}
     engines: {node: '>=16.8.0'}
     hasBin: true
     peerDependencies:
@@ -13011,10 +13006,10 @@ packages:
       sass:
         optional: true
     dependencies:
-      '@next/env': 13.4.8-canary.2
+      '@next/env': 13.4.8-canary.3
       '@swc/helpers': 0.5.1
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001507
+      caniuse-lite: 1.0.30001508
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -13022,15 +13017,15 @@ packages:
       watchpack: 2.4.0
       zod: 3.21.4
     optionalDependencies:
-      '@next/swc-darwin-arm64': 13.4.8-canary.2
-      '@next/swc-darwin-x64': 13.4.8-canary.2
-      '@next/swc-linux-arm64-gnu': 13.4.8-canary.2
-      '@next/swc-linux-arm64-musl': 13.4.8-canary.2
-      '@next/swc-linux-x64-gnu': 13.4.8-canary.2
-      '@next/swc-linux-x64-musl': 13.4.8-canary.2
-      '@next/swc-win32-arm64-msvc': 13.4.8-canary.2
-      '@next/swc-win32-ia32-msvc': 13.4.8-canary.2
-      '@next/swc-win32-x64-msvc': 13.4.8-canary.2
+      '@next/swc-darwin-arm64': 13.4.8-canary.3
+      '@next/swc-darwin-x64': 13.4.8-canary.3
+      '@next/swc-linux-arm64-gnu': 13.4.8-canary.3
+      '@next/swc-linux-arm64-musl': 13.4.8-canary.3
+      '@next/swc-linux-x64-gnu': 13.4.8-canary.3
+      '@next/swc-linux-x64-musl': 13.4.8-canary.3
+      '@next/swc-win32-arm64-msvc': 13.4.8-canary.3
+      '@next/swc-win32-ia32-msvc': 13.4.8-canary.3
+      '@next/swc-win32-x64-msvc': 13.4.8-canary.3
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
@@ -13051,7 +13046,7 @@ packages:
     resolution: {integrity: sha512-7GGVawqyHF4pfd0YFybhv/eM9JwTtPqx0mAanQ146O3FlSh3pA24zf9IRQTOsfTSqXTNzPSP5iagAJ94jjuVog==}
     engines: {node: '>=10'}
     dependencies:
-      semver: 7.5.3
+      semver: 7.3.8
     dev: false
 
   /node-abi@3.45.0:
@@ -13492,7 +13487,7 @@ packages:
     dependencies:
       '@tootallnate/once': 1.1.2
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       get-uri: 3.0.2
       http-proxy-agent: 4.0.1
       https-proxy-agent: 5.0.1
@@ -14158,7 +14153,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       http-proxy-agent: 4.0.1
       https-proxy-agent: 5.0.1
       lru-cache: 5.1.1
@@ -14212,7 +14207,7 @@ packages:
   /pvtsutils@1.3.2:
     resolution: {integrity: sha512-+Ipe2iNUyrZz+8K/2IOo+kKikdtfhRKzNpQbruF2URmqPtoqAs8g3xS7TJvFF2GcPXjh7DkqMnpVveRFq4PgEQ==}
     dependencies:
-      tslib: 2.5.3
+      tslib: 2.4.1
     dev: false
 
   /pvutils@1.1.3:
@@ -15294,7 +15289,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       socks: 2.7.1
     transitivePeerDependencies:
       - supports-color
@@ -15305,7 +15300,7 @@ packages:
     engines: {node: '>= 10'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       socks: 2.7.1
     transitivePeerDependencies:
       - supports-color
@@ -16598,7 +16593,7 @@ packages:
     hasBin: true
     dependencies:
       cac: 6.7.14
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4(supports-color@8.1.1)
       mlly: 1.4.0
       pathe: 1.1.1
       picocolors: 1.0.0
@@ -16685,7 +16680,7 @@ packages:
       '@peculiar/json-schema': 1.1.12
       asn1js: 3.0.5
       pvtsutils: 1.3.2
-      tslib: 2.5.3
+      tslib: 2.4.1
     dev: false
 
   /webidl-conversions@3.0.1:
