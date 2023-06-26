@@ -20,6 +20,7 @@ export default authMiddleware({
 });
 
 export const config = {
+  // matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
   matcher: [
     '/((?!static|_next/static|_next/image|favicon.ico).*)',
     '/((?!.*\\..*|_next).*)',
