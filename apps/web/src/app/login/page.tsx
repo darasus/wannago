@@ -1,6 +1,5 @@
 'use client';
 
-import Head from 'next/head';
 import {useRouter} from 'next/navigation';
 import {Container} from 'ui';
 import {Login} from 'auth-features';
@@ -15,9 +14,6 @@ function LoginPage() {
 
   return (
     <>
-      <Head>
-        <title>Login | WannaGo</title>
-      </Head>
       <Container maxSize="xs" className="py-4">
         <Login onDone={handleOnDone} />
       </Container>

@@ -1,7 +1,6 @@
 'use client';
 
 import {EventRegistrationStatus, User} from '@prisma/client';
-import Head from 'next/head';
 import {useParams, useRouter} from 'next/navigation';
 import {Button, CardBase, PageHeader, Text} from 'ui';
 import {toast} from 'react-hot-toast';
@@ -83,6 +82,10 @@ function UserRow({user, eventShortId}: UserRowProps) {
   );
 }
 
+export const metadata = {
+  title: 'Attendees | WannaGo',
+};
+
 export function EventInvite() {
   const params = useParams();
   const eventShortId = params?.id as string;
@@ -94,9 +97,6 @@ export function EventInvite() {
 
   return (
     <>
-      <Head>
-        <title>{`Attendees | WannaGo`}</title>
-      </Head>
       <div className="flex flex-col gap-y-4">
         <PageHeader title="Invite attendees" />
         <div>

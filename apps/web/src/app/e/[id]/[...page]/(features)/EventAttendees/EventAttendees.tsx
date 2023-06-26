@@ -1,7 +1,6 @@
 'use client';
 
 import {EventSignUp, User} from '@prisma/client';
-import Head from 'next/head';
 import {CardBase, Button, Text, PageHeader, TicketList} from 'ui';
 import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 import {useConfirmDialog} from 'hooks';
@@ -80,6 +79,10 @@ function Item({eventSignUp, refetch}: ItemProps) {
   );
 }
 
+export const metadata = {
+  title: 'Attendees | WannaGo',
+};
+
 export function EventAttendees() {
   const router = useRouter();
   const params = useParams();
@@ -92,9 +95,6 @@ export function EventAttendees() {
 
   return (
     <>
-      <Head>
-        <title>{`Attendees | WannaGo`}</title>
-      </Head>
       <div className="flex flex-col gap-4">
         <PageHeader title="Event attendees" />
         <div className="flex gap-2">

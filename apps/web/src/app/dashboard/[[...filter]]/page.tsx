@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import {Container, LoadingBlock, PageHeader} from 'ui';
 import {z} from 'zod';
 import {api} from '../../../trpc/server';
@@ -13,6 +12,10 @@ const filterSchema = z.array(
     .default('all')
 );
 
+export const metadata = {
+  title: 'Dashboard | WannaGo',
+};
+
 export default async function Dashboard(props: {
   params: {filter: string | undefined; past: string | undefined};
 }) {
@@ -23,18 +26,13 @@ export default async function Dashboard(props: {
   });
 
   return (
-    <>
-      <Head>
-        <title>Dashboard | WannaGo</title>
-      </Head>
-      <Container maxSize="sm" className="flex flex-col gap-y-4 md:px-4">
-        <PageHeader title="My events">
-          <EventFilter />
-        </PageHeader>
-        <Suspense fallback={<LoadingBlock />}>
-          <EventsList events={events} eventType={eventType} />
-        </Suspense>
-      </Container>
-    </>
+    <Container maxSize="sm" className="flex flex-col gap-y-4 md:px-4">
+      <PageHeader title="My events">
+        <EventFilter />
+      </PageHeader>
+      <Suspense fallback={<LoadingBlock />}>
+        <EventsList events={events} eventType={eventType} />
+      </Suspense>
+    </Container>
   );
 }
