@@ -1,9 +1,7 @@
 import {createTRPCRouter, protectedProcedure} from '../trpc';
 import {z} from 'zod';
-import {EmailType} from 'types';
 import {invariant} from 'utils';
 import {eventNotFoundError, organizerNotFoundError} from 'error';
-import {handleMessageToAllAttendeesEmailInputSchema} from 'email-input-validation';
 
 const messageEventParticipants = protectedProcedure
   .input(
@@ -30,14 +28,14 @@ const messageEventParticipants = protectedProcedure
 
     invariant(organizer, organizerNotFoundError);
 
-    await ctx.mailQueue.addMessage({
-      body: {
+    await ctx.inngest.send({
+      name: 'email/message.to.all.attendees',
+      data: {
         eventId: event.id,
         subject: input.subject,
         message: input.message,
         organizerId: organizer.id,
-        type: EmailType.MessageToAllAttendees,
-      } satisfies z.infer<typeof handleMessageToAllAttendeesEmailInputSchema>,
+      },
     });
   });
 

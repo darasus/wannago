@@ -27,11 +27,13 @@ export const LocationInput = forwardRef<HTMLInputElement, Props>(
       name: 'address',
     });
     const debouncedValue = useDebounce(address);
-    const data = use(
-      api.maps.searchPlaces.query({
-        query: debouncedValue as string,
-      })
-    );
+    const data = debouncedValue
+      ? use(
+          api.maps.searchPlaces.query({
+            query: debouncedValue as string,
+          })
+        )
+      : null;
 
     return (
       <div>

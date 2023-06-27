@@ -4,12 +4,11 @@ import {fetchRequestHandler} from '@trpc/server/adapters/fetch';
 import {lambdaRouter} from 'api/src/lambda';
 import {createContext} from 'api/src/context';
 
-// Stripe is incompatible with Edge runtimes due to using Node.js events
-// export const runtime = "edge";
+export const runtime = 'nodejs';
 
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
-    endpoint: '/api/trpc-new/lambda',
+    endpoint: '/api/trpc/lambda',
     router: lambdaRouter,
     req: req,
     createContext: async () => createContext({req}),

@@ -6,7 +6,6 @@ import {
 import {Currency, PrismaClient} from '@prisma/client';
 import {prisma} from 'database';
 import {Postmark} from 'lib/src/postmark';
-import {MailQueue} from 'lib/src/mailQueue';
 import {CacheService} from 'lib/src/cache';
 import {Stripe} from 'lib/src/stripe';
 import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
@@ -24,8 +23,6 @@ import {getUserByEmail} from './actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizationWithMembersByOrganizationId';
 import {canModifyEvent} from './actions/canModifyEvent';
 import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
-import {generateEventFromPrompt} from './actions/generateEventFromPrompt';
-import {generateImageFromPrompt} from './actions/generateImageFromPrompt';
 import {assertCanCreateEvent} from './assertions/assertCanCreateEvent';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
 import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
@@ -47,8 +44,6 @@ const actions = {
   getOrganizationWithMembersByOrganizationId,
   canModifyEvent,
   getOrganizerByEmail,
-  generateEventFromPrompt,
-  generateImageFromPrompt,
 } as const;
 
 const assertions = {
@@ -73,7 +68,6 @@ interface CreateInnerContextOptions {
   timezone: string;
   currency: Currency;
   postmark: Postmark;
-  mailQueue: MailQueue;
   googleMaps: GoogleMapsClient;
   cache: CacheService;
   stripe: Stripe;
@@ -93,7 +87,6 @@ export async function createContextInner(_opts: CreateInnerContextOptions) {
     timezone: _opts.timezone,
     currency: _opts.currency,
     postmark: _opts.postmark,
-    mailQueue: _opts.mailQueue,
     googleMaps: _opts.googleMaps,
     cache: _opts.cache,
     stripe: _opts.stripe,
@@ -132,7 +125,6 @@ export async function createContext(opts?: {
     currency,
     inngest,
     postmark: new Postmark(),
-    mailQueue: new MailQueue(),
     googleMaps: new GoogleMapsClient(),
     cache: new CacheService(),
     stripe: new Stripe(),

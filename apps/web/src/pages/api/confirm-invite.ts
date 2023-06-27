@@ -1,12 +1,8 @@
 import {prisma} from 'database';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {z} from 'zod';
-import {MailQueue} from 'lib';
 import {getBaseUrl} from 'utils';
-import {EmailType} from 'types';
-import {handleEventSignUpEmailInputSchema} from 'email-input-validation';
-
-const mailQueue = new MailQueue();
+import {inngest} from 'inngest-client';
 
 const scheme = z.object({
   eventShortId: z.string(),
@@ -56,12 +52,12 @@ export default async function handler(
   });
 
   if (eventSignUp?.user) {
-    await mailQueue.addMessage({
-      body: {
+    await inngest.send({
+      name: 'email/event.sign.up',
+      data: {
         eventId: eventSignUp.event.id,
         userId: eventSignUp.user.id,
-        type: EmailType.EventSignUp,
-      } satisfies z.infer<typeof handleEventSignUpEmailInputSchema>,
+      },
     });
   }
 

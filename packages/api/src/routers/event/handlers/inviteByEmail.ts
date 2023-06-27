@@ -1,8 +1,6 @@
 import {User} from '@prisma/client';
 import {TRPCError} from '@trpc/server';
-import {handleEventInviteEmailInputSchema} from 'email-input-validation';
 import {eventNotFoundError} from 'error';
-import {EmailType} from 'types';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
@@ -97,12 +95,12 @@ export const inviteByEmail = protectedProcedure
       },
     });
 
-    await ctx.mailQueue.addMessage({
-      body: {
+    await ctx.inngest.send({
+      name: 'email/event.invite',
+      data: {
         eventId: event.id,
         userId: user.id,
-        type: EmailType.EventInvite,
-      } satisfies z.infer<typeof handleEventInviteEmailInputSchema>,
+      },
     });
 
     return {success: true};

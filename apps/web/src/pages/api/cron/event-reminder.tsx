@@ -7,7 +7,7 @@ import {z} from 'zod';
 import {EventReminder} from 'email';
 import {render} from 'email';
 import {getBaseUrl} from 'utils';
-import {Postmark} from 'lib';
+import {Postmark} from 'lib/src/postmark';
 import {formatDate} from 'utils';
 
 const schema = z.object({

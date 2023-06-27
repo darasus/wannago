@@ -1,5 +1,5 @@
 import * as validation from './validation';
-import {Postmark} from 'lib';
+import {Postmark} from 'lib/src/postmark';
 import {render} from 'email';
 import {LoginCode} from 'email';
 

@@ -1,7 +1,7 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import fs from 'fs';
 import formidable from 'formidable';
-import {ImageUpload} from 'lib';
+import {ImageUpload} from 'lib/src/ImageUpload';
 
 export const config = {
   api: {

@@ -12,6 +12,7 @@
     "module": "esnext",
     "noEmit": true,
     "resolveJsonModule": true,
-    "target": "es2015"
+    "target": "es2015",
+    "skipLibCheck": true
   }
 }

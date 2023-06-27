@@ -146,10 +146,6 @@ const getMySubscription = publicProcedure
     })
   )
   .query(async ({ctx, input}) => {
-    console.log('>>>> ctx.auth?.userId', ctx.auth?.userId);
-    if (ctx.auth?.userId) {
-    }
-
     if (input.type === 'PRO') {
       const user = await ctx.prisma.user.findFirst({
         where: {

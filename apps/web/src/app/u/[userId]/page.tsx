@@ -43,8 +43,6 @@ export default async function ProfilePage({
   const user = await userPromise;
   const events = await eventsPromise;
 
-  console.log('>>> user', user);
-
   if (!user) {
     return null;
   }

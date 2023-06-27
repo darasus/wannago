@@ -1,10 +1,5 @@
 import {TRPCError} from '@trpc/server';
-import {
-  handleEventSignUpEmailInputSchema,
-  handleOrganizerEventSignUpNotificationEmailInputSchema,
-} from 'email-input-validation';
 import {userNotFoundError} from 'error';
-import {EmailType} from 'types';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
@@ -131,21 +126,19 @@ export const joinEvent = protectedProcedure
     }
 
     await Promise.all([
-      ctx.mailQueue.addMessage({
-        body: {
+      await ctx.inngest.send({
+        name: 'email/organizer.event.sign.up.notification',
+        data: {
           eventId: input.eventId,
           userId: user.id,
-          type: EmailType.OrganizerEventSignUpNotification,
-        } satisfies z.infer<
-          typeof handleOrganizerEventSignUpNotificationEmailInputSchema
-        >,
+        },
       }),
-      ctx.mailQueue.addMessage({
-        body: {
+      await ctx.inngest.send({
+        name: 'email/event.sign.up',
+        data: {
           eventId: input.eventId,
           userId: user.id,
-          type: EmailType.EventSignUp,
-        } satisfies z.infer<typeof handleEventSignUpEmailInputSchema>,
+        },
       }),
     ]);
 

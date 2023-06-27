@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {buffer} from 'micro';
-import {Stripe} from 'lib';
+import {Stripe} from 'lib/src/stripe';
 import Cors from 'micro-cors';
 import {createContext} from 'api/src/context';
 import {stripeWebhookHandlerRouter} from 'api/src/routers/stripeWebhookHandler';

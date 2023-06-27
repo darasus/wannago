@@ -1,4 +1,4 @@
-import {Stripe} from 'lib';
+import {Stripe} from 'lib/src/stripe';
 import {PrismaClient} from '@prisma/client';
 
 export interface ActionParams {
@@ -52,6 +52,49 @@ export type EventsStoreType = {
     data: {
       eventId: string;
       userId: string;
+    };
+  };
+  'email/event.sign.up': {
+    data: {
+      eventId: string;
+      userId: string;
+    };
+  };
+  'email/event.invite': {
+    data: {
+      eventId: string;
+      userId: string;
+    };
+  };
+  'email/message.to.all.attendees': {
+    data: {
+      eventId: string;
+      organizerId: string;
+      message: string;
+      subject: string;
+    };
+  };
+  'email/after.register.no.created.event.follow.up.email': {
+    data: {
+      userId: string;
+    };
+  };
+  'email/event.cancel.invite': {
+    data: {
+      userId: string;
+      eventId: string;
+    };
+  };
+  'email/event.cancel.sign.up': {
+    data: {
+      userId: string;
+      eventId: string;
+    };
+  };
+  'email/organizer.event.sign.up.notification': {
+    data: {
+      userId: string;
+      eventId: string;
     };
   };
   'stripe/tickets.purchased': {

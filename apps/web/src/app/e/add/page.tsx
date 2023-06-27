@@ -1,13 +1,15 @@
-import {AddEventForm} from '../../features/EventForm/AddEventForm';
+'use client';
+
+import {AddEventForm} from '../../../features/EventForm/AddEventForm';
 import {Button, Container, PageHeader} from 'ui';
 import {SparklesIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/navigation';
 
-export const metadata = {
-  return: {
-    title: 'Add event | WannaGo',
-  },
-};
+// export const metadata = {
+//   return: {
+//     title: 'Add event | WannaGo',
+//   },
+// };
 
 export default function EventAddPage() {
   const router = useRouter();

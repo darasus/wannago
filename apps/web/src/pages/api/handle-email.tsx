@@ -4,7 +4,6 @@ import {
   baseEventHandlerSchema,
   handleEventSignUpEmailInputSchema,
   handleEventInviteEmailInputSchema,
-  handleMessageToOrganizerEmailInputSchema,
   handleMessageToAllAttendeesEmailInputSchema,
   handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema,
   handleEventCancelInviteEmailInputSchema,
@@ -37,12 +36,6 @@ export default async function handle(
   if (input.type === EmailType.EventInvite) {
     await caller.handleEventInviteEmail(
       handleEventInviteEmailInputSchema.parse(input)
-    );
-  }
-
-  if (input.type === EmailType.MessageToOrganizer) {
-    await caller.handleMessageToOrganizerEmail(
-      handleMessageToOrganizerEmailInputSchema.parse(input)
     );
   }
 
