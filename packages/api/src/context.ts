@@ -66,9 +66,7 @@ interface CreateInnerContextOptions {
   timezone: string;
   currency: Currency;
   postmark: Postmark;
-  // googleMaps: GoogleMapsClient;
   cache: CacheService;
-  // stripe: Stripe;
   inngest: InngestType;
 }
 
@@ -85,9 +83,7 @@ export async function createContextInner(_opts: CreateInnerContextOptions) {
     timezone: _opts.timezone,
     currency: _opts.currency,
     postmark: _opts.postmark,
-    // googleMaps: _opts.googleMaps,
     cache: _opts.cache,
-    // stripe: _opts.stripe,
     inngest: _opts.inngest,
   };
 }
@@ -123,9 +119,7 @@ export async function createContext(opts?: {
     currency,
     inngest,
     postmark: new Postmark(),
-    // googleMaps: new GoogleMapsClient(),
     cache: new CacheService(),
-    // stripe: new Stripe(),
   });
 
   return {
