@@ -7,8 +7,6 @@ import {Currency, PrismaClient} from '@prisma/client';
 import {prisma} from 'database';
 import {Postmark} from 'lib/src/postmark';
 import {CacheService} from 'lib/src/cache';
-import {Stripe} from 'lib/src/stripe';
-import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
 import {SignedInAuthObject, SignedOutAuthObject} from '@clerk/clerk-sdk-node';
 import {getCurrencyFromHeaders} from 'utils';
 import {getEvents} from './actions/getEvents';
@@ -68,9 +66,9 @@ interface CreateInnerContextOptions {
   timezone: string;
   currency: Currency;
   postmark: Postmark;
-  googleMaps: GoogleMapsClient;
+  // googleMaps: GoogleMapsClient;
   cache: CacheService;
-  stripe: Stripe;
+  // stripe: Stripe;
   inngest: InngestType;
 }
 
@@ -87,9 +85,9 @@ export async function createContextInner(_opts: CreateInnerContextOptions) {
     timezone: _opts.timezone,
     currency: _opts.currency,
     postmark: _opts.postmark,
-    googleMaps: _opts.googleMaps,
+    // googleMaps: _opts.googleMaps,
     cache: _opts.cache,
-    stripe: _opts.stripe,
+    // stripe: _opts.stripe,
     inngest: _opts.inngest,
   };
 }
@@ -125,9 +123,9 @@ export async function createContext(opts?: {
     currency,
     inngest,
     postmark: new Postmark(),
-    googleMaps: new GoogleMapsClient(),
+    // googleMaps: new GoogleMapsClient(),
     cache: new CacheService(),
-    stripe: new Stripe(),
+    // stripe: new Stripe(),
   });
 
   return {

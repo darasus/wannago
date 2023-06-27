@@ -1,5 +1,4 @@
-import {env} from 'server-env';
-import {generateShortId, invariant} from 'utils';
+import {generateShortId, geocode, invariant} from 'utils';
 import {protectedProcedure} from '../../../trpc';
 import {eventInput} from '../validation';
 import {TRPCError} from '@trpc/server';
@@ -27,12 +26,7 @@ export const create = protectedProcedure
       let geocodeResponse = null;
 
       if (address) {
-        geocodeResponse = await ctx.googleMaps.geocode({
-          params: {
-            key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-            address,
-          },
-        });
+        geocodeResponse = await geocode(address);
       }
 
       const [user, organization, subscription, userEventCount] =

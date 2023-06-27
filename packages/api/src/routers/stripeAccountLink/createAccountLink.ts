@@ -2,10 +2,12 @@ import {organizationNotFoundError, userNotFoundError} from 'error';
 import {getBaseUrl, invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
+import {Stripe} from 'lib/src/stripe';
 
 export const createAccountLink = protectedProcedure
   .input(z.object({type: z.enum(['PRO', 'BUSINESS'])}))
   .mutation(async ({ctx, input}) => {
+    const stripe = new Stripe().client;
     const user = await ctx.actions.getUserByExternalId({
       externalId: ctx.auth.userId,
       includeOrganization: true,
@@ -23,7 +25,7 @@ export const createAccountLink = protectedProcedure
     }
 
     if (!stripeLinkedAccountId) {
-      const account = await ctx.stripe.client.accounts.create({
+      const account = await stripe.accounts.create({
         type: 'express',
         business_type: input.type === 'BUSINESS' ? 'company' : 'individual',
         ...(input.type === 'BUSINESS' ? {} : {}),
@@ -69,7 +71,7 @@ export const createAccountLink = protectedProcedure
         ? `${getBaseUrl()}/settings`
         : `${getBaseUrl()}/organizations/${user?.organization?.id}/settings/`;
 
-    const accountLink = await ctx.stripe.client.accountLinks.create({
+    const accountLink = await stripe.accountLinks.create({
       account: stripeLinkedAccountId,
       refresh_url: callbackUrl,
       return_url: callbackUrl,

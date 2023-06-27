@@ -1,6 +1,6 @@
 import {createTRPCRouter, protectedProcedure} from '../trpc';
 import {z} from 'zod';
-import {env} from 'client-env';
+import {geocode, placeAutocomplete} from 'utils';
 
 const searchPlaces = protectedProcedure
   .input(
@@ -9,12 +9,7 @@ const searchPlaces = protectedProcedure
     })
   )
   .query(async ({input, ctx}) => {
-    const result = await ctx.googleMaps.placeAutocomplete({
-      params: {
-        key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-        input: input.query,
-      },
-    });
+    const result = await placeAutocomplete(input.query);
 
     return result.data;
   });
@@ -22,12 +17,7 @@ const searchPlaces = protectedProcedure
 const getGeolocation = protectedProcedure
   .input(z.object({address: z.string()}))
   .query(async ({ctx, input}) => {
-    const result = await ctx.googleMaps.geocode({
-      params: {
-        key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-        address: input.address,
-      },
-    });
+    const result = await geocode(input.address);
 
     return result.data;
   });

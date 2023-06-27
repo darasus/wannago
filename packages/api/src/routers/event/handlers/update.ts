@@ -1,7 +1,7 @@
-import {env} from 'server-env';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
 import {eventInput} from '../validation';
+import {geocode} from 'utils';
 
 export const update = protectedProcedure
   .input(eventInput.extend({eventId: z.string().uuid()}))
@@ -29,12 +29,7 @@ export const update = protectedProcedure
       let geocodeResponse = null;
 
       if (address) {
-        geocodeResponse = await ctx.googleMaps.geocode({
-          params: {
-            key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-            address,
-          },
-        });
+        geocodeResponse = await geocode(address);
       }
 
       const [user, organization] = await Promise.all([

@@ -27,3 +27,4 @@ export {getConversationMembers} from './src/getConversationMembers';
 export {generateShortId} from './src/generateShortId';
 export {formatCents} from './src/formatCents';
 export {getCurrencyFromHeaders} from './src/getCurrencyFromHeaders';
+export {geocode, placeAutocomplete} from './src/maps';

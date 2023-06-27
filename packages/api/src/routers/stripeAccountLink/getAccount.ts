@@ -2,6 +2,7 @@ import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
+import {Stripe} from 'lib/src/stripe';
 
 export const getAccount = protectedProcedure
   .input(
@@ -10,6 +11,7 @@ export const getAccount = protectedProcedure
     })
   )
   .query(async ({ctx, input}) => {
+    const stripe = new Stripe().client;
     const user = await ctx.actions.getUserByExternalId({
       externalId: ctx.auth.userId,
       includeOrganization: true,
@@ -38,7 +40,7 @@ export const getAccount = protectedProcedure
       stripeLinkedAccountId = user.organization?.stripeLinkedAccountId;
     }
 
-    const account = await ctx.stripe.client.accounts.retrieve(
+    const account = await stripe.accounts.retrieve(
       {
         expand: ['external_accounts'],
       },

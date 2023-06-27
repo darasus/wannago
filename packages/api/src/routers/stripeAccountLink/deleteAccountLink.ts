@@ -3,6 +3,7 @@ import {organizationNotFoundError, userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
+import {Stripe} from 'lib/src/stripe';
 
 export const deleteAccountLink = protectedProcedure
   .input(
@@ -11,6 +12,8 @@ export const deleteAccountLink = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
+    const stripe = new Stripe().client;
+
     const user = await ctx.actions.getUserByExternalId({
       externalId: ctx.auth.userId,
       includeOrganization: true,
@@ -26,7 +29,7 @@ export const deleteAccountLink = protectedProcedure
         })
       );
 
-      await ctx.stripe.client.accounts.del(user.stripeLinkedAccountId);
+      await stripe.accounts.del(user.stripeLinkedAccountId);
 
       await ctx.prisma.user.update({
         where: {
@@ -51,7 +54,7 @@ export const deleteAccountLink = protectedProcedure
         })
       );
 
-      await ctx.stripe.client.accounts.del(user.organization.id);
+      await stripe.accounts.del(user.organization.id);
 
       await ctx.prisma.organization.update({
         where: {

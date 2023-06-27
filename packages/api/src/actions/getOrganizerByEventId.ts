@@ -1,4 +1,3 @@
-import {TRPCError} from '@trpc/server';
 import {eventNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';

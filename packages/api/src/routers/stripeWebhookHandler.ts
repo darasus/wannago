@@ -10,6 +10,7 @@ import {invariant, isOrganization, isUser} from 'utils';
 import {organizerNotFoundError, userNotFoundError} from 'error';
 import {z} from 'zod';
 import {TicketSale} from '@prisma/client';
+import {Stripe} from 'lib/src/stripe';
 
 const handleCustomerSubscriptionCreated = publicProcedure
   .input(handleCustomerSubscriptionCreatedInputSchema)
@@ -20,9 +21,10 @@ const handleCustomerSubscriptionCreated = publicProcedure
 const handleCustomerSubscriptionUpdated = publicProcedure
   .input(handleCustomerSubscriptionUpdatedInputSchema)
   .query(async ({ctx, input}) => {
+    const stripe = new Stripe().client;
     if (input.data.object.status !== 'active') return {success: true};
 
-    const customer = (await ctx.stripe.client.customers.retrieve(
+    const customer = (await stripe.customers.retrieve(
       input.data.object.customer
     )) as s.Stripe.Customer;
 
@@ -135,9 +137,11 @@ const handleCustomerSubscriptionUpdated = publicProcedure
 const handleCustomerSubscriptionDeleted = publicProcedure
   .input(handleCustomerSubscriptionDeletedInputSchema)
   .query(async ({ctx, input}) => {
+    const stripe = new Stripe().client;
+
     if (input.data.object.status !== 'canceled') return {success: true};
 
-    const customer = (await ctx.stripe.client.customers.retrieve(
+    const customer = (await stripe.customers.retrieve(
       input.data.object.customer
     )) as s.Stripe.Customer;
 
@@ -170,9 +174,11 @@ const checkoutCompleteMetadataSchema = z.array(
 const handleCheckoutSessionCompleted = publicProcedure
   .input(handleCheckoutSessionCompletedInputSchema)
   .query(async ({ctx, input}) => {
+    const stripe = new Stripe().client;
+
     if (input.data.object.status !== 'complete') return {success: true};
 
-    const customer = (await ctx.stripe.client.customers.retrieve(
+    const customer = (await stripe.customers.retrieve(
       input.data.object.customer
     )) as s.Stripe.Customer;
 

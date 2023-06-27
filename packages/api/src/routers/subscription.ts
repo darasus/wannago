@@ -5,6 +5,7 @@ import {z} from 'zod';
 import {TRPCError} from '@trpc/server';
 import {get} from '@vercel/edge-config';
 import {env} from 'server-env';
+import {Stripe} from 'lib/src/stripe';
 
 const priceSchema = z.object({
   price_ids: z.object({
@@ -21,6 +22,8 @@ const getConfig = async () => {
 const createCheckoutSession = protectedProcedure
   .input(z.object({plan: z.enum(['wannago_pro', 'wannago_business'])}))
   .mutation(async ({ctx, input}) => {
+    const stripe = new Stripe().client;
+
     let stripeCustomerId: string | undefined;
     let email: string | undefined;
     const user = await ctx.prisma.user.findFirst({
@@ -58,7 +61,7 @@ const createCheckoutSession = protectedProcedure
 
     const config = await getConfig();
 
-    const session = await ctx.stripe.client.checkout.sessions.create({
+    const session = await stripe.checkout.sessions.create({
       customer: stripeCustomerId,
       customer_email: stripeCustomerId ? undefined : email,
       customer_update: stripeCustomerId
@@ -89,6 +92,8 @@ const createCheckoutSession = protectedProcedure
 const createCustomerPortalSession = protectedProcedure
   .input(z.object({plan: z.enum(['wannago_pro', 'wannago_business'])}))
   .mutation(async ({ctx, input}) => {
+    const stripe = new Stripe().client;
+
     let stripeCustomerId: string | undefined;
 
     const user = await ctx.prisma.user.findFirst({
@@ -120,21 +125,17 @@ const createCustomerPortalSession = protectedProcedure
       })
     );
 
-    const customer = await ctx.stripe.client.customers.retrieve(
-      stripeCustomerId
-    );
+    const customer = await stripe.customers.retrieve(stripeCustomerId);
 
     const callbackUrl =
       input.plan === 'wannago_pro'
         ? `${getBaseUrl()}/settings`
         : `${getBaseUrl()}/organizations/${user?.organization?.id}/settings/`;
 
-    const portalSession = await ctx.stripe.client.billingPortal.sessions.create(
-      {
-        customer: customer.id,
-        return_url: callbackUrl,
-      }
-    );
+    const portalSession = await stripe.billingPortal.sessions.create({
+      customer: customer.id,
+      return_url: callbackUrl,
+    });
 
     return portalSession.url;
   });
