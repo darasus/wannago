@@ -1,15 +1,14 @@
 'use client';
 
-import {useSignUp} from '@clerk/nextjs';
+import {useAuth, useSignUp} from '@clerk/nextjs';
 import {ClerkAPIError} from '@clerk/types';
 import {useRouter} from 'next/navigation';
-import {use, useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {CardBase, LoadingBlock, Button, Text} from 'ui';
 import {cn, sleep} from 'utils';
 import {Input} from '../../../../apps/web/src/components/Input/Input/Input';
 import {titleFont} from '../../../../apps/web/src/fonts';
-import {api} from '../../../../apps/web/src/trpc/client';
 
 interface CodeForm {
   code: string;
@@ -28,31 +27,34 @@ export interface APIResponseError {
 interface Props {
   onDone?: () => void;
   onLoginClick?: () => void;
-  redirectToDashboard?: boolean;
 }
 
-export function Register({onDone, onLoginClick, redirectToDashboard}: Props) {
-  const me = use(api.user.me.query());
+export function Register({onDone, onLoginClick}: Props) {
   const {setSession, isLoaded} = useSignUp();
+  const {getToken} = useAuth();
   const router = useRouter();
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
   const userInfoForm = useForm<UserInfoForm>();
   const codeForm = useForm<CodeForm>({mode: 'onSubmit'});
 
   const ready = useCallback(async (): Promise<any> => {
-    const data = await api.user.me.query();
+    const token = await getToken();
 
-    if (!data?.id) {
+    if (!token) {
       await sleep(1000);
       return ready();
     }
-  }, []);
+  }, [getToken]);
 
   const handleOnDone = async (createdSessionId: string): Promise<any> => {
     await setSession?.(createdSessionId);
     await ready();
 
-    onDone?.();
+    if (onDone) {
+      onDone?.();
+    } else {
+      window.location.href = '/dashboard';
+    }
   };
 
   const handleLoginClick = useCallback(() => {

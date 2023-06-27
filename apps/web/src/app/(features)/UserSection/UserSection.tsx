@@ -25,6 +25,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
 
   const onSignOutClick = async () => {
     await signOut();
+    window.location.href = '/';
   };
 
   if (isPublicPage) {

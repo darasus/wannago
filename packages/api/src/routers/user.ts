@@ -9,6 +9,14 @@ const getUserById = publicProcedure
     });
   });
 
+const getUserByExternalId = publicProcedure
+  .input(z.object({externalId: z.string()}))
+  .query(async ({ctx, input}) => {
+    return ctx.actions.getUserByExternalId({
+      externalId: input.externalId,
+    });
+  });
+
 const me = publicProcedure.query(async ({ctx}) => {
   if (!ctx.auth?.userId) {
     return null;
@@ -47,6 +55,7 @@ const update = protectedProcedure
 
 export const userRouter = createTRPCRouter({
   getUserById,
+  getUserByExternalId,
   me,
   update,
 });
