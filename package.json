@@ -95,7 +95,7 @@
     "server-only": "^0.0.1",
     "sharp": "^0.31.3",
     "stripe": "^11.16.0",
-    "superjson": "^1.12.2",
+    "superjson": "^1.12.4",
     "tailwind-merge": "^1.10.0",
     "timeago.js": "^4.0.2",
     "typed.js": "^2.0.15",
