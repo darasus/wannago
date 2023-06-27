@@ -56,8 +56,8 @@ export const update = protectedProcedure
           featuredImageHeight,
           featuredImageWidth,
           featuredImagePreviewSrc,
-          longitude: geocodeResponse?.data.results[0].geometry.location.lng,
-          latitude: geocodeResponse?.data.results[0].geometry.location.lat,
+          longitude: geocodeResponse?.results[0].geometry.location.lng,
+          latitude: geocodeResponse?.results[0].geometry.location.lat,
           ...(user && {
             user: {
               connect: {

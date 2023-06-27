@@ -8,7 +8,7 @@ import {
   mergeProps,
   useFocusRing,
 } from 'react-aria';
-import {ChevronDownIcon} from '@heroicons/react/24/solid';
+import ChevronDownIcon from '@heroicons/react/24/solid/ChevronDownIcon';
 import {ListBox} from './ListBox';
 import {cva} from 'class-variance-authority';
 import {InputWrapper, InputWrapperProps} from '../InputWrapper/InputWrapper';

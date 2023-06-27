@@ -1,7 +1,7 @@
 'use client';
 
 import {isBefore, isEqual} from 'date-fns';
-import {FormEventHandler, use, useEffect, useState} from 'react';
+import {FormEventHandler, useEffect, useState} from 'react';
 import {
   Controller,
   useFieldArray,
@@ -18,27 +18,37 @@ import {SparklesIcon} from '@heroicons/react/24/solid';
 import {useGenerateEventDescription} from 'hooks';
 import {InputWrapper} from 'ui';
 import {Textarea} from '../../components/Input/Input/Textarea';
-import {api, getMe} from '../../trpc/client';
+import {Organization, User} from '@prisma/client';
 
 interface Props {
   onSubmit: FormEventHandler;
   isLoading?: boolean;
   isEdit?: boolean;
   onCancelClick: () => void;
+  me: User;
+  organization: Organization | null;
 }
 
-export function EventForm({onSubmit, isEdit, onCancelClick}: Props) {
-  const me = use(getMe());
-  const organization = use(api.organization.getMyOrganization.query());
+export function EventForm({
+  onSubmit,
+  isEdit,
+  onCancelClick,
+  me,
+  organization,
+}: Props) {
   const options = [
     {
       label: `${me?.firstName} ${me?.lastName}`,
       value: `${me?.id}`,
     },
-    {
-      label: `${organization?.name}`,
-      value: `${organization?.id}`,
-    },
+    ...(organization
+      ? [
+          {
+            label: `${organization?.name}`,
+            value: `${organization?.id}`,
+          },
+        ]
+      : []),
   ];
 
   const {

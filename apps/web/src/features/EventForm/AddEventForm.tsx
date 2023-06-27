@@ -1,3 +1,5 @@
+'use client';
+
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {useRouter} from 'next/navigation';
 import {FormProvider} from 'react-hook-form';
@@ -7,12 +9,18 @@ import {useEventForm} from './hooks/useEventForm';
 import {toast} from 'react-hot-toast';
 import {useAmplitudeAppDir} from 'hooks';
 import {api} from '../../trpc/client';
+import {Organization, User} from '@prisma/client';
 
-export function AddEventForm() {
+interface Props {
+  me: User;
+  organization: Organization | null;
+}
+
+export function AddEventForm({me, organization}: Props) {
   const {logEvent} = useAmplitudeAppDir();
   const router = useRouter();
   const {push} = useRouter();
-  const form = useEventForm();
+  const form = useEventForm({me});
   const {handleSubmit} = form;
 
   const onSubmit = handleSubmit(async data => {
@@ -54,6 +62,8 @@ export function AddEventForm() {
   return (
     <FormProvider {...form}>
       <EventForm
+        me={me}
+        organization={organization}
         onSubmit={onSubmit}
         onCancelClick={() => router.push(`/dashboard`)}
       />

@@ -7,18 +7,21 @@ import {FormProvider} from 'react-hook-form';
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {useAmplitudeAppDir} from 'hooks';
 import {PageHeader} from 'ui';
-import {Event, Ticket} from '@prisma/client';
+import {Event, Organization, Ticket, User} from '@prisma/client';
 import {api} from '../../trpc/client';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
+  me: User;
+  organization: Organization | null;
 }
 
-export function EditEventForm({event}: Props) {
+export function EditEventForm({event, me, organization}: Props) {
   const {logEvent} = useAmplitudeAppDir();
   const router = useRouter();
   const form = useEventForm({
     event,
+    me,
   });
 
   const onSubmit = form.handleSubmit(async data => {
@@ -64,6 +67,8 @@ export function EditEventForm({event}: Props) {
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-12">
             <EventForm
+              me={me}
+              organization={organization}
               onSubmit={onSubmit}
               isEdit
               onCancelClick={() => router.push(`/e/${event?.shortId}`)}

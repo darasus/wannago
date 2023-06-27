@@ -1,33 +1,26 @@
-'use client';
-
 import {AddEventForm} from '../../../features/EventForm/AddEventForm';
-import {Button, Container, PageHeader} from 'ui';
-import {SparklesIcon} from '@heroicons/react/24/solid';
-import {useRouter} from 'next/navigation';
+import {Container, PageHeader} from 'ui';
+import {api, getMe} from '../../../trpc/server';
 
-// export const metadata = {
-//   return: {
-//     title: 'Add event | WannaGo',
-//   },
-// };
+export const metadata = {
+  title: 'Add event | WannaGo',
+};
 
-export default function EventAddPage() {
-  const router = useRouter();
+export default async function EventAddPage() {
+  const [me, organization] = await Promise.all([
+    getMe(),
+    api.organization.getMyOrganization.query(),
+  ]);
+
+  if (!me) {
+    return null;
+  }
 
   return (
     <>
       <Container maxSize="sm" className="md:px-4">
-        <PageHeader title="Create new event" className="mb-4">
-          <Button
-            iconLeft={<SparklesIcon className="text-brand-500" />}
-            size="sm"
-            variant="neutral"
-            onClick={() => {
-              router.push('/e/assistant');
-            }}
-          >{`I'm feeling lazy`}</Button>
-        </PageHeader>
-        <AddEventForm />
+        <PageHeader title="Create new event" className="mb-4" />
+        <AddEventForm me={me} organization={organization} />
       </Container>
     </>
   );

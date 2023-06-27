@@ -11,7 +11,7 @@ const searchPlaces = protectedProcedure
   .query(async ({input, ctx}) => {
     const result = await placeAutocomplete(input.query);
 
-    return result.data;
+    return result;
   });
 
 const getGeolocation = protectedProcedure
@@ -19,7 +19,7 @@ const getGeolocation = protectedProcedure
   .query(async ({ctx, input}) => {
     const result = await geocode(input.address);
 
-    return result.data;
+    return result;
   });
 
 export const mapsRouter = createTRPCRouter({

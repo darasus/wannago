@@ -23,11 +23,7 @@ export const create = protectedProcedure
       },
       ctx,
     }) => {
-      let geocodeResponse = null;
-
-      if (address) {
-        geocodeResponse = await geocode(address);
-      }
+      const geocodeResponse = await geocode(address);
 
       const [user, organization, subscription, userEventCount] =
         await Promise.all([
@@ -94,8 +90,8 @@ export const create = protectedProcedure
           featuredImageHeight,
           featuredImageWidth,
           featuredImagePreviewSrc,
-          longitude: geocodeResponse?.data.results[0].geometry.location.lng,
-          latitude: geocodeResponse?.data.results[0].geometry.location.lat,
+          longitude: geocodeResponse?.results[0].geometry.location.lng,
+          latitude: geocodeResponse?.results[0].geometry.location.lat,
           preferredCurrency,
           ...(organization?.id
             ? {
