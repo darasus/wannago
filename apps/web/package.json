@@ -21,7 +21,6 @@
     "client-env": "workspace:*",
     "server-env": "workspace:*",
     "types": "workspace:*",
-    "email-input-validation": "workspace:*",
     "stripe-webhook-input-validation": "workspace:*",
     "email": "workspace:*",
     "card-features": "workspace:*",

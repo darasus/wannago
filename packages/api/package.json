@@ -9,7 +9,6 @@
   "dependencies": {
     "server-env": "workspace:*",
     "client-env": "workspace:*",
-    "email-input-validation": "workspace:*",
     "stripe-webhook-input-validation": "workspace:*",
     "utils": "workspace:*",
     "inngest-client": "workspace:*",
