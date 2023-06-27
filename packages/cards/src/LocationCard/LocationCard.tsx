@@ -6,7 +6,7 @@ interface Props {
   address: string | null;
   latitude: number;
   longitude: number;
-  onGetDirectionsClick: () => void;
+  onGetDirectionsClick?: () => void;
 }
 
 export function LocationCard({

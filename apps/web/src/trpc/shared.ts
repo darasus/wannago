@@ -4,7 +4,7 @@ import {httpBatchLink} from '@trpc/client';
 import type {AppRouter} from 'api';
 import {getBaseUrl} from 'utils';
 
-const lambdas = ['maps', 'subscriptionPlan', 'payments', 'stripeAccountLink'];
+const lambdas = ['subscriptionPlan', 'payments', 'stripeAccountLink'];
 
 export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
   (runtime => {

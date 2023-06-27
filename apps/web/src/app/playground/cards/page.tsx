@@ -83,22 +83,13 @@ export default function CardsPage() {
         <EventCard event={event} />
       </Section>
       <Section>
-        <DateCard
-          onAddToCalendarClick={async () => {
-            'use server';
-          }}
-          startDate={event.startDate}
-          endDate={event.endDate}
-        />
+        <DateCard startDate={event.startDate} endDate={event.endDate} />
       </Section>
       <Section>
         <LocationCard
           address={event.address}
           latitude={event.latitude!}
           longitude={event.longitude!}
-          onGetDirectionsClick={async () => {
-            'use server';
-          }}
         />
       </Section>
       <Section>

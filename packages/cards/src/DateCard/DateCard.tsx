@@ -5,7 +5,7 @@ import {formatDate, isSameDay, getRelativeTime} from 'utils';
 import {Button, Badge, CardBase, Text} from 'ui';
 
 interface Props {
-  onAddToCalendarClick: () => void;
+  onAddToCalendarClick?: () => void;
   startDate: Date;
   endDate: Date;
 }

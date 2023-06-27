@@ -1,5 +1,3 @@
-'use server';
-
 import {headers} from 'next/headers';
 import {loggerLink} from '@trpc/client';
 import {experimental_createTRPCNextAppDirServer} from '@trpc/next/app-dir/server';
