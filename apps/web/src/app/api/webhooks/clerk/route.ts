@@ -1,14 +1,6 @@
-import {NextApiRequest, NextApiResponse} from 'next';
 import {baseScheme, user, email} from 'clerk-webhook-handler';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== 'POST') {
-    res.status(405).json({error: 'Method Not Allowed'});
-  }
-
+export async function POST(req: Request) {
   const input = baseScheme.parse(req.body);
 
   if (input.type === 'user.created') {
@@ -24,5 +16,5 @@ export default async function handler(
     await email.created(input);
   }
 
-  return res.status(200).json({success: true});
+  return new Response(JSON.stringify({success: true}));
 }

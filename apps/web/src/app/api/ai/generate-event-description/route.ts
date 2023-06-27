@@ -4,7 +4,7 @@ export const config = {
   runtime: 'edge',
 };
 
-const handler = async (req: Request): Promise<Response> => {
+export async function GET(req: Request) {
   try {
     const {prompt} = (await req.json()) as {
       prompt?: string;
@@ -23,6 +23,4 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error) {
     return new Response('Something went wrong.', {status: 400});
   }
-};
-
-export default handler;
+}
