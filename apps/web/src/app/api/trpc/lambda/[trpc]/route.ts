@@ -1,6 +1,5 @@
 import type {NextRequest} from 'next/server';
 import {fetchRequestHandler} from '@trpc/server/adapters/fetch';
-
 import {lambdaRouter} from 'api/src/lambda';
 import {createContext} from 'api/src/context';
 
@@ -11,7 +10,7 @@ const handler = (req: NextRequest) =>
     endpoint: '/api/trpc/lambda',
     router: lambdaRouter,
     req: req,
-    createContext: async () => createContext({req}),
+    createContext: () => createContext({req}),
     onError: ({error}) => {
       console.log('Error in tRPC handler (lambda)');
       console.error(error);

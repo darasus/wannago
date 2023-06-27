@@ -27,7 +27,7 @@ import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
 import {assertCanAddOrganizationMember} from './assertions/assertCanAddOrganizationMember';
 import {Inngest, EventSchemas} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
-import {NextRequest} from 'next/server';
+import type {NextRequest} from 'next/server';
 
 const actions = {
   getEvents,
@@ -75,7 +75,9 @@ interface CreateContextOptions extends CreateInnerContextOptions {
   assertions: Assertions;
 }
 
-export async function createContextInner(_opts: CreateInnerContextOptions) {
+export function createContextInner(
+  _opts: CreateInnerContextOptions
+): CreateInnerContextOptions {
   return {
     auth: _opts.auth,
     clerk: _opts.clerk,
@@ -98,20 +100,15 @@ const inngest = new Inngest({
 });
 export type InngestType = typeof inngest;
 
-export async function createContext(opts?: {
+export async function createContext(opts: {
   req: NextRequest;
 }): Promise<Context> {
-  const timezone = opts?.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
+  const timezone = opts.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
   // TODO: get currency
   const currency = getCurrencyFromHeaders(undefined);
+  const auth = getAuth(opts.req);
 
-  let auth = null;
-
-  if (opts?.req) {
-    auth = getAuth(opts?.req);
-  }
-
-  const innerContext: CreateInnerContextOptions = await createContextInner({
+  const innerContext = createContextInner({
     auth,
     clerk,
     prisma,
@@ -122,8 +119,7 @@ export async function createContext(opts?: {
     cache: new CacheService(),
   });
 
-  return {
-    ...innerContext,
+  return Object.assign(innerContext, {
     actions: Object.values(actions).reduce<Actions>((acc, action) => {
       return {...acc, [action.name]: action(innerContext)};
     }, {} as Actions),
@@ -133,5 +129,5 @@ export async function createContext(opts?: {
       },
       {} as Assertions
     ),
-  };
+  });
 }
