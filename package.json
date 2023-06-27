@@ -12,7 +12,7 @@
     "email:dev": "turbo run dev --filter email",
     "test:e2e": "turbo run test:e2e --filter web-e2e",
     "test:e2e:dev": "turbo run test:e2e:dev --filter web-e2e",
-    "postinstall": "prisma generate --schema packages/database/prisma/schema.prisma",
+    "postinstall": "prisma generate --schema packages/database/prisma/schema.prisma --data-proxy",
     "pull:env": "vercel pull"
   },
   "dependencies": {
