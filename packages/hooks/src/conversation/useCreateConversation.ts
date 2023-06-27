@@ -1,14 +1,17 @@
 'use client';
 
-import {use, useCallback, useTransition} from 'react';
+import {useCallback, useTransition} from 'react';
 import {toast} from 'react-hot-toast';
 import {api} from '../../../../apps/web/src/trpc/client';
-import {Conversation} from '@prisma/client';
+import {Conversation, Organization, User} from '@prisma/client';
 
-export function useCreateConversation() {
+interface Props {
+  me: User | null;
+  myOrganization: Organization | null;
+}
+
+export function useCreateConversation({me, myOrganization}: Props) {
   const [isPending, startTransition] = useTransition();
-  const me = use(api.user.me.query());
-  const myOrganization = use(api.organization.getMyOrganization.query());
 
   const createConversation = useCallback(
     ({
@@ -59,7 +62,6 @@ export function useCreateConversation() {
 
   return {
     createConversation,
-    isLoading: !me || !myOrganization,
     isMutating: isPending,
   };
 }

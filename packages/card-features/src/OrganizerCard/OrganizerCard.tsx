@@ -11,11 +11,16 @@ interface Props {
     user: User | null;
     organization: Organization | null;
   };
+  me: User | null;
+  myOrganization: Organization | null;
 }
 
-export function OrganizerCard({event}: Props) {
+export function OrganizerCard({event, me, myOrganization}: Props) {
   const router = useRouter();
-  const {createConversation, isLoading} = useCreateConversation();
+  const {createConversation, isMutating} = useCreateConversation({
+    me,
+    myOrganization,
+  });
 
   const onMessageOrganizerClick = async () => {
     const conversation = await createConversation({
@@ -50,7 +55,7 @@ export function OrganizerCard({event}: Props) {
           onClick={onMessageOrganizerClick}
           variant="link-gray"
           size="xs"
-          isLoading={isLoading}
+          isLoading={isMutating}
         >
           Message organizer
         </Button>

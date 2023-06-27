@@ -17,11 +17,14 @@ export default async function EventPage({
 }: {
   params: {id: string};
 }) {
-  const me = await getMe();
-  const event = await api.event.getByShortId.query({id: id});
-  const isMyEvent = await api.event.getIsMyEvent.query({
-    eventShortId: id,
-  });
+  const [me, event, isMyEvent, myOrganization] = await Promise.all([
+    getMe(),
+    api.event.getByShortId.query({id: id}),
+    api.event.getIsMyEvent.query({
+      eventShortId: id,
+    }),
+    api.organization.getMyOrganization.query(),
+  ]);
 
   if (!event) {
     return notFound();
@@ -34,7 +37,12 @@ export default async function EventPage({
   return (
     <Container className="flex flex-col gap-4" maxSize="sm">
       {isMyEvent.isMyEvent && <ManageEventButton event={event} />}
-      <EventView event={event} isMyEvent={isMyEvent?.isMyEvent} />
+      <EventView
+        event={event}
+        isMyEvent={isMyEvent?.isMyEvent}
+        me={me}
+        myOrganization={myOrganization}
+      />
     </Container>
   );
 }
