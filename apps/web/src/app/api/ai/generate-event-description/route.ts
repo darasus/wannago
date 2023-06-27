@@ -1,8 +1,6 @@
 import {OpenAIStream, OpenAIStreamPayload} from 'lib/src/OpenAI';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 export async function GET(req: Request) {
   try {
