@@ -25,14 +25,9 @@ export interface APIResponseError {
 interface Props {
   onDone?: () => void;
   onCreateAccountClick?: () => void;
-  redirectToDashboard?: boolean;
 }
 
-export function Login({
-  onDone,
-  onCreateAccountClick,
-  redirectToDashboard,
-}: Props) {
+export function Login({onDone, onCreateAccountClick}: Props) {
   const router = useRouter();
   const {getToken} = useAuth();
   const {setSession, isLoaded} = useSignIn();

@@ -1,7 +1,7 @@
 import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
 import {Button, Container, Text} from 'ui';
 import {EventInfo} from './(features)/EventInfo/EventInfo';
-import {api} from '../../../../trpc/server';
+import {api, getMe} from '../../../../trpc/server';
 import {notFound} from 'next/navigation';
 import {EditEventForm} from '../../../../features/EventForm/EditEventForm';
 import {EventAttendees} from './(features)/EventAttendees/EventAttendees';
@@ -13,10 +13,18 @@ export default async function EventPages({
 }: {
   params: {id: string; page: string[]};
 }) {
-  const event = await api.event.getByShortId.query({id: id});
-  const isMyEvent = await api.event.getIsMyEvent.query({
-    eventShortId: id,
-  });
+  const [me, event, isMyEvent, myOrganization] = await Promise.all([
+    getMe(),
+    api.event.getByShortId.query({id: id}),
+    api.event.getIsMyEvent.query({
+      eventShortId: id,
+    }),
+    api.organization.getMyOrganization.query(),
+  ]);
+
+  if (!me) {
+    return null;
+  }
 
   if (!event) {
     return notFound();
@@ -38,7 +46,13 @@ export default async function EventPages({
           {isMyEvent?.isMyEvent && (
             <>
               {page[0] === 'info' && <EventInfo event={event} />}
-              {page[0] === 'edit' && <EditEventForm event={event} />}
+              {page[0] === 'edit' && (
+                <EditEventForm
+                  event={event}
+                  me={me}
+                  organization={myOrganization}
+                />
+              )}
               {page[0] === 'attendees' && <EventAttendees />}
               {page[0] === 'invite' && <EventInvite />}
             </>

@@ -14,7 +14,7 @@ export default function EventPreview() {
 
   return (
     <AnimateRender>
-      <EventView event={event} />
+      <EventView event={event} me={null} myOrganization={null} />
     </AnimateRender>
   );
 }
