@@ -1,9 +1,9 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
-import {forwardRef} from 'react';
+import {Suspense, forwardRef} from 'react';
 import {titleFontClassName} from '../../fonts';
-import {Button} from 'ui';
+import {Button, LoadingBlock} from 'ui';
 import {Container} from 'ui';
 import {cn} from 'utils';
 import {useAuth} from '@clerk/nextjs';
@@ -53,7 +53,9 @@ export const Hero = forwardRef(function Hero(
           </Button>
         </div>
         <div className="flex justify-center relative w-full max-w-2xl m-auto">
-          <EventPreview />
+          <Suspense fallback={<LoadingBlock />}>
+            <EventPreview />
+          </Suspense>
         </div>
       </Container>
     </div>
