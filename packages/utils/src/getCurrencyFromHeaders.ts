@@ -1,5 +1,4 @@
 import {Currency} from '@prisma/client';
-import {IncomingHttpHeaders} from 'http2';
 
 const usdRegions = ['US', 'TL', 'EC', 'SV', 'FM', 'MH', 'PW', 'PA', 'ZW'];
 const eurRegions = [
@@ -26,13 +25,11 @@ const eurRegions = [
 const gbpRegions = ['GB', 'GG', 'IM', 'JE'];
 
 export function getCurrencyFromHeaders(
-  headers: IncomingHttpHeaders | undefined
+  countryRegion: string | undefined | null
 ): Currency | 'USD' {
-  if (!headers) {
+  if (!countryRegion) {
     return 'USD';
   }
-
-  const countryRegion = headers['x-vercel-ip-country'] as string;
 
   if (usdRegions.includes(countryRegion)) {
     return 'USD';

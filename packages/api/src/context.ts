@@ -102,8 +102,9 @@ export type InngestType = typeof inngest;
 
 export function createContext(opts: {req: NextRequest}): Context {
   const timezone = opts.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
-  // TODO: get currency
-  const currency = getCurrencyFromHeaders(undefined);
+  const currency = getCurrencyFromHeaders(
+    opts.req.headers.get('x-vercel-ip-country')
+  );
   const auth = getAuth(opts.req);
 
   const innerContext = createContextInner({
