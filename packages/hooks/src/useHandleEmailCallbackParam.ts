@@ -1,3 +1,6 @@
+'use client';
+
+import {useSearchParams} from 'next/navigation';
 import {useRouter} from 'next/router';
 import {useEffect, useMemo} from 'react';
 import {toast} from 'react-hot-toast';
@@ -14,7 +17,8 @@ const parseQuery = z
   .nullable();
 
 export function useHandleEmailCallbackParam() {
-  const {query, push} = useRouter();
+  const query = useSearchParams();
+  const {push} = useRouter();
 
   const q = useMemo(() => {
     return parseQuery.parse(query);

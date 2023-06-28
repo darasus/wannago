@@ -2,11 +2,11 @@
 
 import {use, useEffect} from 'react';
 import {useAuth} from '@clerk/nextjs';
-import {api} from '../../../trpc/client';
+import {getMe} from '../../../trpc/client';
 
 export function Intercom() {
   const auth = useAuth();
-  const user = use(api.user.me.query());
+  const user = use(getMe());
 
   useEffect(() => {
     if (auth?.userId) {

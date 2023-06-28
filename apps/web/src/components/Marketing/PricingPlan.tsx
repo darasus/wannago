@@ -1,10 +1,12 @@
+'use client';
+
 import {useAuth} from '@clerk/nextjs';
 import {CheckCircleIcon} from '@heroicons/react/24/solid';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {Button, CardBase, Text} from 'ui';
 import {cn, formatCents} from 'utils';
 import {titleFont} from '../../fonts';
-import {useGetCurrencyQuery} from 'hooks';
+import {Currency} from '@prisma/client';
 
 interface Props {
   type: 'general' | 'featured' | 'highlighted';
@@ -13,6 +15,7 @@ interface Props {
   price: number;
   planId: 'starter' | 'pro' | 'business' | 'enterprise';
   features: string[];
+  currency: Currency;
 }
 
 export function PricingPlan({
@@ -22,8 +25,8 @@ export function PricingPlan({
   price,
   features,
   type,
+  currency,
 }: Props) {
-  const currency = useGetCurrencyQuery();
   const {isSignedIn} = useAuth();
   const router = useRouter();
 
@@ -61,9 +64,7 @@ export function PricingPlan({
         </div>
         <div>
           <Text className={cn(titleFont.className, 'text-5xl tracking-tight')}>
-            {planId === 'enterprise'
-              ? 'Custom'
-              : formatCents(price, currency.data)}
+            {planId === 'enterprise' ? 'Custom' : formatCents(price, currency)}
           </Text>
         </div>
         <div className={cn('flex flex-col gap-y-3 text-sm')}>

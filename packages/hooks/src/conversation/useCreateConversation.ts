@@ -1,17 +1,17 @@
-import {useCallback} from 'react';
+'use client';
+
+import {useCallback, useTransition} from 'react';
 import {toast} from 'react-hot-toast';
-import {trpc} from 'trpc/src/trpc';
-import {useMyOrganizationQuery} from '../organization/useMyOrganizationQuery';
-import {useMyUserQuery} from '../user/useMyUserQuery';
+import {api} from '../../../../apps/web/src/trpc/client';
+import {Conversation, Organization, User} from '@prisma/client';
 
-export function useCreateConversation() {
-  const me = useMyUserQuery();
-  const myOrganization = useMyOrganizationQuery();
-  const createConversationMutation =
-    trpc.conversation.createConversation.useMutation();
+interface Props {
+  me: User | null;
+  myOrganization: Organization | null;
+}
 
-  const isMutating = createConversationMutation.isLoading;
-  const isLoading = me.isInitialLoading || myOrganization.isInitialLoading;
+export function useCreateConversation({me, myOrganization}: Props) {
+  const [isPending, startTransition] = useTransition();
 
   const createConversation = useCallback(
     ({
@@ -20,41 +20,48 @@ export function useCreateConversation() {
     }: {
       userId: string | null | undefined;
       organizationId: string | null | undefined;
-    }) => {
-      const organizationIds = [] as string[];
-      const userIds = [me.data?.id] as string[];
+    }): Promise<Conversation> => {
+      return new Promise(resolve => {
+        const organizationIds = [] as string[];
+        const userIds = [me?.id] as string[];
 
-      if (!me.data?.id && !myOrganization.data?.id) {
-        toast.error('To be able to message anyone you need to login first');
-        return;
-      }
+        if (!me?.id && !myOrganization?.id) {
+          toast.error('To be able to message anyone you need to login first');
+          return;
+        }
 
-      if (me.data?.id === userId) {
-        toast.error('You cannot message yourself');
-        return;
-      }
-      if (
-        myOrganization.data?.id &&
-        myOrganization.data?.id === organizationId
-      ) {
-        toast.error('You cannot message your own organization');
-        return;
-      }
+        if (me?.id === userId) {
+          toast.error('You cannot message yourself');
+          return;
+        }
+        if (myOrganization?.id && myOrganization?.id === organizationId) {
+          toast.error('You cannot message your own organization');
+          return;
+        }
 
-      if (userId) {
-        userIds.push(userId);
-      }
-      if (organizationId) {
-        organizationIds.push(organizationId);
-      }
+        if (userId) {
+          userIds.push(userId);
+        }
+        if (organizationId) {
+          organizationIds.push(organizationId);
+        }
 
-      return createConversationMutation.mutateAsync({
-        organizationIds,
-        userIds,
+        startTransition(async () => {
+          const conversation = await api.conversation.createConversation.mutate(
+            {
+              organizationIds,
+              userIds,
+            }
+          );
+          resolve(conversation);
+        });
       });
     },
-    [createConversationMutation, me.data?.id, myOrganization.data?.id]
+    [me?.id, myOrganization?.id]
   );
 
-  return {createConversation, isLoading, isMutating};
+  return {
+    createConversation,
+    isMutating: isPending,
+  };
 }

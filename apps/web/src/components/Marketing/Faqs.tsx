@@ -1,3 +1,5 @@
+'use client';
+
 import {useState} from 'react';
 import {Button, CardBase, Text} from 'ui';
 import {Container} from 'ui';

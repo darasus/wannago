@@ -10,7 +10,6 @@
     "cards": "workspace:*",
     "auth-features": "workspace:*",
     "utils": "workspace:*",
-    "trpc": "workspace:*",
     "ui": "workspace:*",
     "hooks": "workspace:*"
   },

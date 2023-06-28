@@ -1,3 +1,5 @@
+'use client';
+
 import ky from 'ky';
 import {useCallback, useState} from 'react';
 import {z} from 'zod';

@@ -1,24 +1,24 @@
-import type {HttpBatchLinkOptions, HTTPHeaders, TRPCLink} from '@trpc/client';
+import type {HTTPBatchLinkOptions, HTTPHeaders, TRPCLink} from '@trpc/client';
 import {httpBatchLink} from '@trpc/client';
 
 import type {AppRouter} from 'api';
 import {getBaseUrl} from 'utils';
 
-const lambdas = ['stripe', 'ingestion'];
+const lambdas = ['subscriptionPlan', 'payments', 'stripeAccountLink'];
 
 export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
   (runtime => {
     const sharedOpts = {
       headers: opts?.headers,
-    } satisfies Partial<HttpBatchLinkOptions>;
+    } satisfies Partial<HTTPBatchLinkOptions>;
 
     const edgeLink = httpBatchLink({
       ...sharedOpts,
-      url: `${getBaseUrl()}/api/trpc-new/edge`,
+      url: `${getBaseUrl()}/api/trpc/edge`,
     })(runtime);
     const lambdaLink = httpBatchLink({
       ...sharedOpts,
-      url: `${getBaseUrl()}/api/trpc-new/lambda`,
+      url: `${getBaseUrl()}/api/trpc/lambda`,
     })(runtime);
 
     return ctx => {
@@ -29,7 +29,6 @@ export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
         ...ctx,
         op: {...ctx.op, path: path.join('.')},
       };
-      // return endpoint === 'edge' ? edgeLink(newCtx) : lambdaLink(newCtx);
-      return lambdaLink(newCtx);
+      return endpoint === 'edge' ? edgeLink(newCtx) : lambdaLink(newCtx);
     };
   }) satisfies TRPCLink<AppRouter>;

@@ -1,7 +1,8 @@
-import {useSignUp} from '@clerk/nextjs';
+'use client';
+
+import {useAuth, useSignUp} from '@clerk/nextjs';
 import {ClerkAPIError} from '@clerk/types';
-import {useMyUserQuery} from 'hooks';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {useCallback, useEffect, useState} from 'react';
 import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {CardBase, LoadingBlock, Button, Text} from 'ui';
@@ -26,31 +27,34 @@ export interface APIResponseError {
 interface Props {
   onDone?: () => void;
   onLoginClick?: () => void;
-  redirectToDashboard?: boolean;
 }
 
-export function Register({onDone, onLoginClick, redirectToDashboard}: Props) {
-  const me = useMyUserQuery();
+export function Register({onDone, onLoginClick}: Props) {
   const {setSession, isLoaded} = useSignUp();
+  const {getToken} = useAuth();
   const router = useRouter();
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
   const userInfoForm = useForm<UserInfoForm>();
   const codeForm = useForm<CodeForm>({mode: 'onSubmit'});
 
   const ready = useCallback(async (): Promise<any> => {
-    const {data} = await me.refetch();
+    const token = await getToken();
 
-    if (!data?.id) {
+    if (!token) {
       await sleep(1000);
       return ready();
     }
-  }, [me]);
+  }, [getToken]);
 
   const handleOnDone = async (createdSessionId: string): Promise<any> => {
     await setSession?.(createdSessionId);
     await ready();
 
-    onDone?.();
+    if (onDone) {
+      onDone?.();
+    } else {
+      window.location.href = '/dashboard';
+    }
   };
 
   const handleLoginClick = useCallback(() => {

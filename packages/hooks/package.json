@@ -7,7 +7,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "trpc": "workspace:*",
     "ui": "workspace:*",
     "client-env": "workspace:*",
     "utils": "workspace:*"

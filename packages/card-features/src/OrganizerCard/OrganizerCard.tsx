@@ -3,7 +3,7 @@
 import {Event, Organization, User} from '@prisma/client';
 import {OrganizerCard as OrganizerCardView} from 'cards';
 import {useCreateConversation} from 'hooks';
-import {useRouter} from 'next/router';
+import {useRouter} from 'next/navigation';
 import {Button} from 'ui';
 
 interface Props {
@@ -11,11 +11,16 @@ interface Props {
     user: User | null;
     organization: Organization | null;
   };
+  me: User | null;
+  myOrganization: Organization | null;
 }
 
-export function OrganizerCard({event}: Props) {
+export function OrganizerCard({event, me, myOrganization}: Props) {
   const router = useRouter();
-  const {createConversation, isLoading} = useCreateConversation();
+  const {createConversation, isMutating} = useCreateConversation({
+    me,
+    myOrganization,
+  });
 
   const onMessageOrganizerClick = async () => {
     const conversation = await createConversation({
@@ -24,7 +29,7 @@ export function OrganizerCard({event}: Props) {
     });
 
     if (conversation) {
-      router.push(`/messages/${conversation.id}`);
+      router.push(`/messages/${conversation?.id}`);
     }
   };
 
@@ -50,7 +55,7 @@ export function OrganizerCard({event}: Props) {
           onClick={onMessageOrganizerClick}
           variant="link-gray"
           size="xs"
-          isLoading={isLoading}
+          isLoading={isMutating}
         >
           Message organizer
         </Button>

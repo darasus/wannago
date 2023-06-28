@@ -1,3 +1,5 @@
+'use client';
+
 import JSConfetti from 'js-confetti';
 
 export function useConfetti() {

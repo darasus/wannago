@@ -6,6 +6,7 @@ import {useParams} from 'next/dist/client/components/navigation';
 import {useRouter} from 'next/navigation';
 import {toast} from 'react-hot-toast';
 import {useTransition} from 'react';
+import {getMe} from '../../../../../trpc/client';
 
 interface Props {}
 
@@ -21,7 +22,7 @@ export function MessageButton({}: Props) {
       isLoading={isPending}
       onClick={async () => {
         startTransition(async () => {
-          const me = await api.user.me.query();
+          const me = await getMe();
           const myOrganization =
             await api.organization.getMyOrganization.query();
           const organizationIds = [] as string[];

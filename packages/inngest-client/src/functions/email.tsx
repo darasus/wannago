@@ -1,9 +1,23 @@
 import {formatDate, getBaseUrl, invariant, isOrganization, isUser} from 'utils';
 import {inngest} from '../client';
 import {subHours, isFuture} from 'date-fns';
-import {TicketPurchaseSuccess, render} from 'email';
+import {
+  AfterRegisterNoCreatedEventFollowUpEmail,
+  EventCancelInvite,
+  EventCancelSignUp,
+  EventInvite,
+  EventSignUp,
+  MessageToAttendees,
+  OrganizerEventSignUpNotification,
+  TicketPurchaseSuccess,
+  render,
+} from 'email';
 import {EventReminder} from 'email';
-import {eventNotFoundError, userNotFoundError} from 'error';
+import {
+  eventNotFoundError,
+  organizerNotFoundError,
+  userNotFoundError,
+} from 'error';
 
 export const emailReminderScheduled = inngest.createFunction(
   {
@@ -197,5 +211,351 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
         });
       }
     );
+  }
+);
+
+export const eventSignUp = inngest.createFunction(
+  {
+    name: 'Event Sign Up',
+  },
+  {event: 'email/event.sign.up'},
+  async ctx => {
+    const event = await ctx.prisma.event.findUnique({
+      where: {id: ctx.event.data.eventId},
+      include: {
+        user: true,
+        organization: true,
+      },
+    });
+
+    invariant(event, eventNotFoundError);
+
+    const organizer = event.user || event.organization;
+
+    invariant(organizer, organizerNotFoundError);
+
+    const user = await ctx.prisma.user.findUnique({
+      where: {id: ctx.event.data.userId},
+    });
+
+    invariant(user, userNotFoundError);
+
+    const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-signup`);
+    cancelEventUrl.searchParams.append('eventShortId', event.shortId);
+    cancelEventUrl.searchParams.append('email', user.email);
+
+    const organizerName = isUser(organizer)
+      ? `${organizer.firstName} ${organizer.lastName}`
+      : `${organizer.name}`;
+
+    await ctx.postmark.sendToTransactionalStream({
+      replyTo: 'WannaGo Team <hi@wannago.app>',
+      to: user.email,
+      subject: `Thanks for signing up for "${event.title}"!`,
+      htmlString: render(
+        <EventSignUp
+          title={event.title}
+          address={event.address || 'none'}
+          eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
+          cancelEventUrl={cancelEventUrl.toString()}
+          startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
+          endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
+          organizerName={organizerName}
+        />
+      ),
+    });
+  }
+);
+
+export const eventInvite = inngest.createFunction(
+  {
+    name: 'Event Invote',
+  },
+  {event: 'email/event.invite'},
+  async ctx => {
+    const event = await ctx.prisma.event.findUnique({
+      where: {id: ctx.event.data.eventId},
+      include: {
+        user: true,
+        organization: true,
+      },
+    });
+
+    invariant(event, eventNotFoundError);
+
+    const user = await ctx.prisma.user.findUnique({
+      where: {id: ctx.event.data.userId},
+    });
+
+    invariant(user, userNotFoundError);
+
+    const organizer = event.user || event.organization;
+
+    invariant(organizer, organizerNotFoundError);
+
+    const eventUrl = new URL(`${getBaseUrl()}/e/${event.shortId}`);
+    const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-invite`);
+    cancelEventUrl.searchParams.append('eventShortId', event.shortId);
+    cancelEventUrl.searchParams.append('email', user.email);
+
+    const organizerName = isUser(organizer)
+      ? `${organizer.firstName} ${organizer.lastName}`
+      : `${organizer.name}`;
+
+    await ctx.postmark.sendToTransactionalStream({
+      replyTo: 'WannaGo Team <hi@wannago.app>',
+      to: user.email,
+      subject: `You're invited to: "${event.title}"!`,
+      htmlString: render(
+        <EventInvite
+          title={event.title}
+          address={event.address || 'none'}
+          eventUrl={eventUrl.toString()}
+          cancelEventUrl={cancelEventUrl.toString()}
+          startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
+          endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
+          organizerName={organizerName}
+        />
+      ),
+    });
+  }
+);
+
+export const messageToAllAttendees = inngest.createFunction(
+  {
+    name: 'Message To All Attendees',
+  },
+  {event: 'email/message.to.all.attendees'},
+  async ctx => {
+    const event = await ctx.prisma.event.findFirst({
+      where: {
+        id: ctx.event.data.eventId,
+      },
+      include: {
+        user: true,
+        organization: true,
+      },
+    });
+
+    invariant(event, eventNotFoundError);
+
+    const organizer = event.user || event.organization;
+
+    invariant(organizer, organizerNotFoundError);
+
+    const signUps = await ctx.prisma.eventSignUp.findMany({
+      where: {
+        eventId: ctx.event.data.eventId,
+        status: 'REGISTERED',
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    const name = isUser(organizer)
+      ? `${organizer.firstName} ${organizer.lastName}`
+      : organizer.name;
+
+    await Promise.all(
+      signUps
+        .map(signUp => signUp.user)
+        .map(async user => {
+          const messageData = {
+            replyTo: `${name} <${organizer.email}>`,
+            to: user.email,
+            subject: `Message from event organizer: "${event.title}"`,
+            htmlString: render(
+              <MessageToAttendees
+                eventUrl={`${getBaseUrl()}/e/${event?.shortId}`}
+                message={ctx.event.data.message}
+                eventTitle={event.title}
+                subject={ctx.event.data.subject}
+              />
+            ),
+          };
+
+          await ctx.postmark.sendToTransactionalStream(messageData);
+        })
+    );
+  }
+);
+
+export const afterRegisterNoCreatedEventFollowUpEmail = inngest.createFunction(
+  {
+    name: 'After Register No Created Event Follow Up Email',
+  },
+  {event: 'email/after.register.no.created.event.follow.up.email'},
+  async ctx => {
+    await ctx.step.sleep(1000 * 60 * 60 * 24 * 2);
+
+    const user = await ctx.prisma.user.findUnique({
+      where: {id: ctx.event.data.userId},
+    });
+
+    invariant(user, userNotFoundError);
+
+    const eventCount = await ctx.prisma.event.count({
+      where: {
+        organizationId: user.organizationId,
+      },
+    });
+
+    const hasNoEvents = eventCount === 0;
+
+    if (hasNoEvents && user?.firstName) {
+      await ctx.postmark.sendToBroadcastStream({
+        replyTo: 'WannaGo Team <hi@wannago.app>',
+        to: user.email,
+        subject: 'We would love to hear your feedback',
+        htmlString: render(
+          <AfterRegisterNoCreatedEventFollowUpEmail
+            firstName={user?.firstName}
+          />
+        ),
+      });
+    }
+  }
+);
+
+export const eventCancelInvite = inngest.createFunction(
+  {
+    name: 'Event Cancel Invite',
+  },
+  {event: 'email/event.cancel.invite'},
+  async ctx => {
+    const event = await ctx.prisma.event.findUnique({
+      where: {id: ctx.event.data.eventId},
+      include: {
+        user: true,
+        organization: true,
+      },
+    });
+
+    invariant(event, eventNotFoundError);
+
+    const organizer = event.user || event.organization;
+
+    invariant(organizer, organizerNotFoundError);
+
+    const user = await ctx.prisma.user.findUnique({
+      where: {id: ctx.event.data.userId},
+    });
+
+    invariant(user, userNotFoundError);
+
+    const url = new URL(`${getBaseUrl()}/e/${event.shortId}`);
+    const organizerName = isUser(organizer)
+      ? `${organizer.firstName} ${organizer.lastName}`
+      : `${organizer.name}`;
+
+    await ctx.postmark.sendToTransactionalStream({
+      replyTo: 'WannaGo Team <hi@wannago.app>',
+      to: user.email,
+      subject: `Your invite has been cancelled...`,
+      htmlString: render(
+        <EventCancelInvite
+          title={event.title}
+          address={event.address || 'none'}
+          eventUrl={url.toString()}
+          startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
+          endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
+          organizerName={organizerName || ''}
+        />
+      ),
+    });
+  }
+);
+
+export const eventCancelSignUp = inngest.createFunction(
+  {
+    name: 'Event Cancel Sign Up',
+  },
+  {event: 'email/event.cancel.sign.up'},
+  async ctx => {
+    const event = await ctx.prisma.event.findUnique({
+      where: {id: ctx.event.data.eventId},
+      include: {
+        user: true,
+        organization: true,
+      },
+    });
+
+    invariant(event, eventNotFoundError);
+
+    const organizer = event.user || event.organization;
+
+    invariant(organizer, organizerNotFoundError);
+
+    const user = await ctx.prisma.user.findUnique({
+      where: {id: ctx.event.data.userId},
+    });
+
+    invariant(user, userNotFoundError);
+
+    const url = new URL(`${getBaseUrl()}/e/${event.shortId}}`);
+    const organizerName = isUser(organizer)
+      ? `${organizer.firstName} ${organizer.lastName}`
+      : `${organizer.name}`;
+
+    await ctx.postmark.sendToTransactionalStream({
+      replyTo: 'WannaGo Team <hi@wannago.app>',
+      to: user.email,
+      subject: `Your sign up has been cancelled...`,
+      htmlString: render(
+        <EventCancelSignUp
+          title={event.title}
+          address={event.address || 'none'}
+          eventUrl={url.toString()}
+          startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
+          endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
+          organizerName={organizerName}
+        />
+      ),
+    });
+  }
+);
+
+export const organizerEventSignUpNotification = inngest.createFunction(
+  {
+    name: 'Organizer Event Sign Up Notification',
+  },
+  {event: 'email/organizer.event.sign.up.notification'},
+  async ctx => {
+    const user = await ctx.prisma.user.findUnique({
+      where: {id: ctx.event.data.userId},
+    });
+
+    invariant(user, userNotFoundError);
+
+    const event = await ctx.prisma.event.findFirst({
+      where: {
+        id: ctx.event.data.eventId,
+      },
+      include: {
+        user: true,
+        organization: true,
+      },
+    });
+
+    invariant(event, eventNotFoundError);
+
+    const organizer = event.user || event.organization;
+
+    invariant(organizer, organizerNotFoundError);
+
+    await ctx.postmark.sendToOrganizerEventSignUpNotificationStream({
+      replyTo: 'WannaGo Team <hi@wannago.app>',
+      //TODO: '' should not be allowed
+      to: organizer?.email || '',
+      subject: 'Your event has new sign up!',
+      htmlString: render(
+        <OrganizerEventSignUpNotification
+          eventTitle={event.title}
+          eventAttendeesUrl={`${getBaseUrl()}/e/${event.shortId}/attendees`}
+          userFullName={`${user.firstName} ${user.lastName}`}
+        />
+      ),
+    });
   }
 );

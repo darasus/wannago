@@ -1,13 +1,13 @@
 import {Event, Organization, Ticket, User} from '@prisma/client';
-import {getBaseUrl} from 'utils';
 import {
   DateCard,
-  UrlCard,
   LocationCard,
   OrganizerCard,
   SignUpCard,
+  UrlCard,
 } from 'card-features';
 import {InfoCard} from 'cards';
+import {getBaseUrl} from 'utils';
 
 interface Props {
   event: Event & {
@@ -17,9 +17,17 @@ interface Props {
   };
   isLoadingImage?: boolean;
   isMyEvent?: boolean;
+  me: User | null;
+  myOrganization: Organization | null;
 }
 
-export function EventView({event, isLoadingImage, isMyEvent}: Props) {
+export function EventView({
+  event,
+  isLoadingImage,
+  isMyEvent,
+  me,
+  myOrganization,
+}: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="sticky top-4 z-20">
@@ -27,7 +35,11 @@ export function EventView({event, isLoadingImage, isMyEvent}: Props) {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="items-stretch">
-          <OrganizerCard event={event} />
+          <OrganizerCard
+            event={event}
+            me={me}
+            myOrganization={myOrganization}
+          />
         </div>
         <div className="items-stretch">
           <UrlCard

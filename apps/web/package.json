@@ -8,7 +8,7 @@
     "build": "dotenv -e ../../.vercel/.env.development.local -- next build",
     "start": "dotenv -e ../../.vercel/.env.development.local -- next start",
     "lint": "next lint",
-    "vercel-build": "npx prisma generate && next build"
+    "vercel-build": "npx prisma generate --data-proxy && next build"
   },
   "dependencies": {
     "clerk-webhook-handler": "workspace:*",
@@ -21,7 +21,6 @@
     "client-env": "workspace:*",
     "server-env": "workspace:*",
     "types": "workspace:*",
-    "email-input-validation": "workspace:*",
     "stripe-webhook-input-validation": "workspace:*",
     "email": "workspace:*",
     "card-features": "workspace:*",
@@ -29,7 +28,6 @@
     "utils": "workspace:*",
     "hooks": "workspace:*",
     "lib": "workspace:*",
-    "trpc": "workspace:*",
     "cards": "workspace:*",
     "ui": "workspace:*"
   }

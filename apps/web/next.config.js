@@ -31,9 +31,8 @@ const moduleExports = {
     hideSourceMaps: true,
   },
   reactStrictMode: true,
-  pageExtensions: ['page.tsx', 'page.ts', 'page.mdx', 'api.ts', 'api.tsx'],
   experimental: {
-    serverActions: true,
+    mdxRs: true,
   },
   images: {
     domains: [
@@ -47,16 +46,25 @@ const moduleExports = {
     ],
   },
   transpilePackages: [
-    'database',
-    'client-env',
-    'server-env',
-    'email',
-    'utils',
-    'hooks',
-    'lib',
-    'trpc',
+    'api',
+    'auth-features',
+    'card-features',
     'cards',
+    'clerk-webhook-handler',
+    'client-env',
+    'config',
+    'database',
+    'email',
+    'error',
+    'hooks',
+    'inngest-client',
+    'lib',
+    'server-env',
+    'stripe-webhook-input-validation',
+    'tokens',
+    'types',
     'ui',
+    'utils',
   ],
   webpack(config) {
     config.experiments = {
@@ -89,5 +97,11 @@ module.exports = withMDX(
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options.
     silent: true,
+    org: 'darasus-bv',
+    project: 'wannago',
+    widenClientFileUpload: true,
+    tunnelRoute: '/monitoring',
+    hideSourceMaps: true,
+    disableLogger: true,
   })
 );

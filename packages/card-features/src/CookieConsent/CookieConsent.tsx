@@ -1,3 +1,5 @@
+'use client';
+
 import {useEffect, useState} from 'react';
 import {Button, CardBase, Text} from 'ui';
 import {useLocalStorage} from 'usehooks-ts';

@@ -1,3 +1,5 @@
+'use client';
+
 import {useEffect, useState} from 'react';
 import {init} from '@amplitude/analytics-browser';
 import {env} from 'client-env';

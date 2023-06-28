@@ -1,6 +1,7 @@
 import {EventSchemas, Inngest, InngestMiddleware} from 'inngest';
 import {prisma} from 'database';
-import {Stripe, Postmark} from 'lib';
+import {Stripe} from 'lib/src/stripe';
+import {Postmark} from 'lib/src/postmark';
 import {EventsStoreType} from './types';
 import {payoutAvailableBalanceToConnectedAccount} from './actions/payoutAvailableBalanceToConnectedAccount';
 import {getNumberOfPurchasedTickets} from './actions/getNumberOfPurchasedTickets';

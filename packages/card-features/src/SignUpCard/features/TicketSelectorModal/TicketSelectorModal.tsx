@@ -1,13 +1,15 @@
+'use client';
+
 import {Button, Modal, Text} from 'ui';
 import {Event, Ticket} from '@prisma/client';
 import {Input} from '../../../../../../apps/web/src/components/Input/Input/Input';
 import {formatCents} from 'utils';
 import {useForm} from 'react-hook-form';
-import {trpc} from 'trpc/src/trpc';
-import {useRouter} from 'next/router';
-import {toast} from 'react-hot-toast';
-import {useMyUserQuery} from 'hooks';
+import {useRouter} from 'next/navigation';
 import {TRPCClientError} from '@trpc/client';
+import {use} from 'react';
+import {api} from '../../../../../../apps/web/src/trpc/client';
+import {toast} from 'react-hot-toast';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -21,7 +23,7 @@ interface Form {
 }
 
 export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
-  const me = useMyUserQuery();
+  const me = use(api.user.me.query());
   const router = useRouter();
   const form = useForm<Form>({defaultValues: {}});
   const total = Object.entries(form.watch()).reduce(
@@ -40,28 +42,27 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
     },
     0
   );
-  const createPaymentSession = trpc.payments.createCheckoutSession.useMutation({
-    onError: error => {
-      toast.error(error.message);
-    },
-  });
 
   const handleSubmit = form.handleSubmit(async data => {
     try {
-      if (!me.data?.id) {
+      if (!me?.id) {
         throw new TRPCClientError('You must be logged in to buy tickets');
       }
 
-      const responseUrl = await createPaymentSession.mutateAsync({
-        userId: me.data.id,
-        tickets: Object.entries(data)
-          .filter(([, quantity]) => Boolean(quantity))
-          .map(([ticketId, quantity]) => ({
-            ticketId,
-            quantity: Number(quantity) || 0,
-          })),
-        eventId: event.id,
-      });
+      const responseUrl = await api.payments.createCheckoutSession
+        .mutate({
+          userId: me.id,
+          tickets: Object.entries(data)
+            .filter(([, quantity]) => Boolean(quantity))
+            .map(([ticketId, quantity]) => ({
+              ticketId,
+              quantity: Number(quantity) || 0,
+            })),
+          eventId: event.id,
+        })
+        .catch(error => {
+          toast.error(error.message);
+        });
 
       if (!responseUrl) {
         return;
@@ -112,7 +113,7 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
               </Text>
             </div>
           </div>
-          <Button type="submit" isLoading={createPaymentSession.isLoading}>
+          <Button type="submit" isLoading={form.formState.isSubmitting}>
             Buy
           </Button>
         </div>

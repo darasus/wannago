@@ -1,3 +1,5 @@
+'use client';
+
 import resolveConfig from 'tailwindcss/resolveConfig';
 import {useState, useEffect} from 'react';
 import throttle from 'lodash.throttle';

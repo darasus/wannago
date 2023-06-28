@@ -1,3 +1,5 @@
+'use client';
+
 import {useState} from 'react';
 import {Modal} from 'ui';
 import {Login, Register} from 'auth-features';
@@ -20,7 +22,6 @@ export function AuthModal({isOpen, onClose, onDone}: Props) {
             onClose();
             onDone?.();
           }}
-          redirectToDashboard={false}
         />
       )}
       {step === 'register' && (
@@ -30,7 +31,6 @@ export function AuthModal({isOpen, onClose, onDone}: Props) {
             onClose();
             onDone?.();
           }}
-          redirectToDashboard={false}
         />
       )}
     </Modal>

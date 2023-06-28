@@ -1,3 +1,5 @@
+'use client';
+
 import {useAuth} from '@clerk/nextjs';
 import {useEffect, useState} from 'react';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import {UrlCard as UrlCardView} from 'cards';
-import {useCopyClipboard, useAmplitude} from 'hooks';
+import {useCopyClipboard, useAmplitudeAppDir} from 'hooks';
 import {Button} from 'ui';
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 export function UrlCard({url, eventId}: Props) {
   const [isCopied, copy] = useCopyClipboard(url);
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useAmplitudeAppDir();
 
   const onCopyUrlClick = () => {
     logEvent('copy_event_url_button_clicked', {eventId});

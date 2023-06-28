@@ -1,12 +1,6 @@
 import {prisma} from 'database';
 import * as validation from './validation';
-import {MailQueue} from 'lib';
-import {EmailType} from 'types';
-import {z} from 'zod';
-import {handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema} from 'email-input-validation';
 import {inngest} from 'inngest-client';
-
-const mailQueue = new MailQueue();
 
 export const user = {
   created: async (input: validation.Input) => {
@@ -55,14 +49,11 @@ export const user = {
 
       userId = user.id;
 
-      await mailQueue.addMessage({
-        body: {
+      await inngest.send({
+        name: 'email/after.register.no.created.event.follow.up.email',
+        data: {
           userId: user.id,
-          type: EmailType.AfterRegisterNoCreatedEventFollowUpEmail,
-        } satisfies z.infer<
-          typeof handleAfterRegisterNoCreatedEventFollowUpEmailInputSchema
-        >,
-        delay: 60 * 60 * 24 * 2,
+        },
       });
     }
 

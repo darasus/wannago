@@ -9,13 +9,11 @@
   "dependencies": {
     "server-env": "workspace:*",
     "client-env": "workspace:*",
-    "email-input-validation": "workspace:*",
     "stripe-webhook-input-validation": "workspace:*",
     "utils": "workspace:*",
     "inngest-client": "workspace:*",
     "error": "workspace:*",
     "types": "workspace:*",
-    "trpc": "workspace:*",
     "const": "workspace:*",
     "email": "workspace:*",
     "lib": "workspace:*",
