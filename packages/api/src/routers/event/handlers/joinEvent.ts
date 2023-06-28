@@ -3,6 +3,7 @@ import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
+import {assertCanJoinEvent} from '../../../assertions/assertCanJoinEvent';
 
 export const joinEvent = protectedProcedure
   .input(
@@ -81,7 +82,7 @@ export const joinEvent = protectedProcedure
       });
     }
 
-    ctx.assertions.assertCanJoinEvent({
+    assertCanJoinEvent(ctx)({
       numberOfRegisteredUsers,
       numberOfInvitedUsers,
       event,

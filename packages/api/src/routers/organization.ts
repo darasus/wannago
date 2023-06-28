@@ -7,6 +7,7 @@ import {getUserByExternalId} from '../actions/getUserByExternalId';
 import {getOrganizationByUserExternalId} from '../actions/getOrganizationByUserExternalId';
 import {getUserByEmail} from '../actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from '../actions/getOrganizationWithMembersByOrganizationId';
+import {assertCanAddOrganizationMember} from '../assertions/assertCanAddOrganizationMember';
 
 const create = protectedProcedure
   .input(
@@ -162,7 +163,7 @@ const addOrganizationMember = protectedProcedure
       },
     });
 
-    ctx.assertions.assertCanAddOrganizationMember({
+    assertCanAddOrganizationMember(ctx)({
       subscription: businessSubscription,
     });
 

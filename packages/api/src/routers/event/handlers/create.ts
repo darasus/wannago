@@ -2,6 +2,7 @@ import {generateShortId, geocode, invariant} from 'utils';
 import {protectedProcedure} from '../../../trpc';
 import {eventInput} from '../validation';
 import {TRPCError} from '@trpc/server';
+import {assertCanCreateEvent} from '../../../assertions/assertCanCreateEvent';
 
 export const create = protectedProcedure
   .input(eventInput)
@@ -58,7 +59,7 @@ export const create = protectedProcedure
           }),
         ]);
 
-      ctx.assertions.assertCanCreateEvent({
+      assertCanCreateEvent(ctx)({
         user,
         organization,
         subscription,
