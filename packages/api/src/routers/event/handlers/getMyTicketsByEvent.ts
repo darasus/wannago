@@ -2,6 +2,7 @@ import {eventNotFoundError, userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
+import {getUserByExternalId} from '../../../actions/getUserByExternalId';
 
 export const getMyTicketsByEvent = protectedProcedure
   .input(
@@ -10,7 +11,7 @@ export const getMyTicketsByEvent = protectedProcedure
     })
   )
   .query(async ({ctx, input}) => {
-    const user = await ctx.actions.getUserByExternalId({
+    const user = await getUserByExternalId(ctx)({
       externalId: ctx.auth.userId,
     });
     const event = await ctx.prisma.event.findUnique({

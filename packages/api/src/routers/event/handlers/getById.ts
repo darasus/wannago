@@ -1,5 +1,6 @@
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
+import {canModifyEvent} from '../../../actions/canModifyEvent';
 
 export const getById = protectedProcedure
   .input(
@@ -8,7 +9,7 @@ export const getById = protectedProcedure
     })
   )
   .query(async ({input: {eventId}, ctx}) => {
-    await ctx.actions.canModifyEvent({eventId});
+    await canModifyEvent(ctx)({eventId});
 
     return ctx.prisma.event.findFirst({
       where: {

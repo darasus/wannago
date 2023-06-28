@@ -11,6 +11,8 @@ import {organizerNotFoundError, userNotFoundError} from 'error';
 import {z} from 'zod';
 import {TicketSale} from '@prisma/client';
 import {Stripe} from 'lib/src/stripe';
+import {getOrganizerByEmail} from '../actions/getOrganizerByEmail';
+import {getUserByExternalId} from '../actions/getUserByExternalId';
 
 const handleCustomerSubscriptionCreated = publicProcedure
   .input(handleCustomerSubscriptionCreatedInputSchema)
@@ -30,7 +32,7 @@ const handleCustomerSubscriptionUpdated = publicProcedure
 
     invariant(customer.email, 'Customer email is required');
 
-    const organizer = await ctx.actions.getOrganizerByEmail({
+    const organizer = await getOrganizerByEmail(ctx)({
       email: customer.email,
     });
 
@@ -147,7 +149,7 @@ const handleCustomerSubscriptionDeleted = publicProcedure
 
     invariant(customer.email, 'Customer email is required');
 
-    const organizer = await ctx.actions.getOrganizerByEmail({
+    const organizer = await getOrganizerByEmail(ctx)({
       email: customer.email,
     });
 
@@ -184,7 +186,7 @@ const handleCheckoutSessionCompleted = publicProcedure
 
     invariant(customer.email, 'Customer email is required');
 
-    const user = await ctx.actions.getUserByExternalId({
+    const user = await getUserByExternalId(ctx)({
       externalId: input.data.object.metadata.externalUserId,
     });
 

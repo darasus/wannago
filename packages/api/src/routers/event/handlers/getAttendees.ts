@@ -3,6 +3,7 @@ import {omit} from 'ramda';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
+import {canModifyEvent} from '../../../actions/canModifyEvent';
 
 export const getAttendees = protectedProcedure
   .input(z.object({eventShortId: z.string()}))
@@ -15,7 +16,7 @@ export const getAttendees = protectedProcedure
 
     invariant(event, eventNotFoundError);
 
-    await ctx.actions.canModifyEvent({eventId: event.id});
+    await canModifyEvent(ctx)({eventId: event.id});
 
     const eventSignUps = await ctx.prisma.eventSignUp.findMany({
       where: {

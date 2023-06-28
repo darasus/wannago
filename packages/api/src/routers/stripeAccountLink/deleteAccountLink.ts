@@ -4,6 +4,7 @@ import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
 import {Stripe} from 'lib/src/stripe';
+import {getUserByExternalId} from '../../actions/getUserByExternalId';
 
 export const deleteAccountLink = protectedProcedure
   .input(
@@ -14,7 +15,7 @@ export const deleteAccountLink = protectedProcedure
   .mutation(async ({ctx, input}) => {
     const stripe = new Stripe().client;
 
-    const user = await ctx.actions.getUserByExternalId({
+    const user = await getUserByExternalId(ctx)({
       externalId: ctx.auth.userId,
       includeOrganization: true,
     });

@@ -2,6 +2,7 @@ import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
 import {eventInput} from '../validation';
 import {geocode} from 'utils';
+import {canModifyEvent} from '../../../actions/canModifyEvent';
 
 export const update = protectedProcedure
   .input(eventInput.extend({eventId: z.string().uuid()}))
@@ -24,7 +25,7 @@ export const update = protectedProcedure
       },
       ctx,
     }) => {
-      await ctx.actions.canModifyEvent({eventId});
+      await canModifyEvent(ctx)({eventId});
 
       let geocodeResponse = null;
 

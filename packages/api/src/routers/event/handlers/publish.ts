@@ -1,11 +1,12 @@
 import {env} from 'server-env';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
+import {canModifyEvent} from '../../../actions/canModifyEvent';
 
 export const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
   .mutation(async ({input, ctx}) => {
-    await ctx.actions.canModifyEvent({eventId: input.eventId});
+    await canModifyEvent(ctx)({eventId: input.eventId});
 
     const result = await ctx.prisma.event.update({
       where: {id: input.eventId},

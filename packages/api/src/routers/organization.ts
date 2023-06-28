@@ -3,6 +3,10 @@ import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {createTRPCRouter, publicProcedure, protectedProcedure} from '../trpc';
+import {getUserByExternalId} from '../actions/getUserByExternalId';
+import {getOrganizationByUserExternalId} from '../actions/getOrganizationByUserExternalId';
+import {getUserByEmail} from '../actions/getUserByEmail';
+import {getOrganizationWithMembersByOrganizationId} from '../actions/getOrganizationWithMembersByOrganizationId';
 
 const create = protectedProcedure
   .input(
@@ -14,7 +18,7 @@ const create = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const user = await ctx.actions.getUserByExternalId({
+    const user = await getUserByExternalId(ctx)({
       externalId: ctx.auth.userId,
       includeOrganization: true,
     });
@@ -73,7 +77,7 @@ const getMyOrganization = publicProcedure.query(async ({ctx}) => {
     return null;
   }
 
-  return ctx.actions.getOrganizationByUserExternalId({
+  return getOrganizationByUserExternalId(ctx)({
     externalId: ctx.auth.userId,
   });
 });
@@ -117,7 +121,7 @@ const remove = protectedProcedure
   });
 
 const getMyOrganizationMembers = protectedProcedure.query(async ({ctx}) => {
-  const organization = await ctx.actions.getOrganizationByUserExternalId({
+  const organization = await getOrganizationByUserExternalId(ctx)({
     externalId: ctx.auth.userId,
   });
 
@@ -140,7 +144,7 @@ const addOrganizationMember = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const user = await ctx.actions.getUserByEmail({
+    const user = await getUserByEmail(ctx)({
       email: input.userEmail,
     });
 
@@ -186,10 +190,9 @@ const removeOrganizationMember = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const organization =
-      await ctx.actions.getOrganizationWithMembersByOrganizationId({
-        id: input.organizationId,
-      });
+    const organization = await getOrganizationWithMembersByOrganizationId(ctx)({
+      id: input.organizationId,
+    });
 
     invariant(organization, 'Organization not found');
 
