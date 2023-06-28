@@ -31,11 +31,12 @@ export function EditEventForm({event, me, organization}: Props) {
       await api.event.update
         .mutate({
           ...data,
-          tickets: data.tickets.map(ticket => ({
-            ...ticket,
-            price: Number(ticket.price) * 100,
-            maxQuantity: Number(ticket.maxQuantity),
-          })),
+          tickets:
+            data.tickets?.map(ticket => ({
+              ...ticket,
+              price: Number(ticket.price) * 100,
+              maxQuantity: Number(ticket.maxQuantity),
+            })) || [],
           description: data.description === '<p></p>' ? null : data.description,
           eventId: event.id,
           startDate: zonedTimeToUtc(

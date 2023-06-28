@@ -6,8 +6,8 @@ import {forwardRef, HTMLAttributes, useEffect} from 'react';
 import {FieldError, useFormContext} from 'react-hook-form';
 import {cn} from 'utils';
 import {Form} from '../../../features/EventForm/types';
-import {InputWrapper} from 'ui';
 import {EditorMenu} from './EditorMenu';
+import {inputClassName} from 'ui/src/components/Input/Input';
 
 interface Props extends HTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -69,50 +69,36 @@ export const RichTextarea = forwardRef<HTMLInputElement, Props>(
 
     return (
       <>
-        <InputWrapper
-          label={label}
-          error={error}
-          data-testid={dataTestId}
-          isOptional={isOptional}
+        <input ref={ref} {...props} className="hidden" />
+        <div
+          className={cn(
+            'flex flex-col border-2 gap-y-2 rounded-3xl py-2 px-3 max-w-full min-h-[200px]',
+            inputClassName
+          )}
         >
-          <input ref={ref} {...props} className="hidden" />
-          <div
-            className={cn(
-              'flex flex-col border-2 gap-y-2 rounded-3xl py-2 px-3 max-w-full min-h-[200px]',
-              {
-                '!ring-1 !border-2 !border-gray-500 !ring-gray-500':
-                  editor?.isFocused,
-                'border-gray-300': !error,
-                'border-red-300': error,
-                'border-brand-500 ring-brand-500': editor?.isFocused && !!error,
-                'border-red-500 ring-red-500': editor?.isFocused && error,
-              }
-            )}
-          >
-            {editor && (
-              <EditorMenu
-                editor={editor}
-                additionalEditorMenu={additionalEditorMenu}
-              />
-            )}
-            <EditorContent
-              data-testid={dataTestId}
-              className={cn(
-                'border-none',
-                'prose',
-                'text-md',
-                'prose-h1:m-0 prose-h2:m-0 prose-h3:m-0',
-                'prose-p:m-0',
-                'prose-ul:m-0',
-                'prose-li:m-0'
-              )}
+          {editor && (
+            <EditorMenu
               editor={editor}
-              onSubmit={e => {
-                e.preventDefault();
-              }}
+              additionalEditorMenu={additionalEditorMenu}
             />
-          </div>
-        </InputWrapper>
+          )}
+          <EditorContent
+            data-testid={dataTestId}
+            className={cn(
+              'border-none',
+              'prose',
+              'text-md',
+              'prose-h1:m-0 prose-h2:m-0 prose-h3:m-0',
+              'prose-p:m-0',
+              'prose-ul:m-0',
+              'prose-li:m-0'
+            )}
+            editor={editor}
+            onSubmit={e => {
+              e.preventDefault();
+            }}
+          />
+        </div>
       </>
     );
   }

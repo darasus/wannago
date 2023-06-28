@@ -1,141 +1,120 @@
+'use client';
+
 import * as React from 'react';
-import type {AriaSelectProps} from '@react-types/select';
-import {useSelectState} from 'react-stately';
-import {
-  useSelect,
-  HiddenSelect,
-  useButton,
-  mergeProps,
-  useFocusRing,
-} from 'react-aria';
-import ChevronDownIcon from '@heroicons/react/24/solid/ChevronDownIcon';
-import {ListBox} from './ListBox';
-import {cva} from 'class-variance-authority';
-import {InputWrapper, InputWrapperProps} from '../InputWrapper/InputWrapper';
+import * as SelectPrimitive from '@radix-ui/react-select';
+import {Check, ChevronDown} from 'lucide-react';
 import {cn} from 'utils';
-import {ButtonSize} from '../Button/types';
-import {Text} from '../Text/Text';
-import {Popover} from './Popover';
 
-export {Item as SelectItem} from 'react-stately';
+const Select = SelectPrimitive.Root;
 
-const select = cva(
-  [
-    'relative',
-    'cursor-pointer',
-    // base text styles
-    'text-gray-800 font-bold',
-    // base borders styles
-    'rounded-full border-2 border-gray-800',
-    'disabled:opacity-50 disabled:pointer-events-none',
-  ],
-  {
-    variants: {
-      size: {
-        xs: ['text-xs'],
-        sm: ['text-sm'],
-        md: ['text-base'],
-        lg: ['text-md'],
-      },
-    },
-    compoundVariants: [
-      {
-        size: 'xs',
-        class: 'gap-x-1',
-      },
-      {
-        size: ['sm', 'md', 'lg'],
-        class: 'gap-x-2',
-      },
-      {
-        size: 'xs',
-        class: 'h-6 px-2',
-      },
-      {
-        size: 'sm',
-        class: 'h-8 px-2',
-      },
-      {
-        size: 'md',
-        class: 'h-11 px-4',
-      },
-      {
-        size: 'lg',
-        class: 'h-16 px-6',
-      },
-    ],
-  }
-);
+const SelectGroup = SelectPrimitive.Group;
 
-export function Select<T extends object>(
-  props: AriaSelectProps<T> &
-    InputWrapperProps & {size?: ButtonSize; className?: string}
-) {
-  // Create state based on the incoming props
-  let state = useSelectState(props);
+const SelectValue = SelectPrimitive.Value;
 
-  // Get props for child elements from useSelect
-  let ref = React.useRef(null);
-  let {labelProps, triggerProps, valueProps, menuProps} = useSelect(
-    props,
-    state,
-    ref
-  );
+const SelectTrigger = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
+>(({className, children, ...props}, ref) => (
+  <SelectPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      'flex h-10 w-full items-center justify-between rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <SelectPrimitive.Icon asChild>
+      <ChevronDown className="h-4 w-4 opacity-50" />
+    </SelectPrimitive.Icon>
+  </SelectPrimitive.Trigger>
+));
+SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
-  // Get props for the button based on the trigger props from useSelect
-  let {buttonProps} = useButton(triggerProps, ref);
-
-  let {focusProps, isFocusVisible} = useFocusRing();
-
-  return (
-    <InputWrapper
-      label={props.label}
-      description={props.description}
-      error={props.error}
-      containerClassName={cn('inline-flex', props.className)}
+const SelectContent = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
+>(({className, children, position = 'popper', ...props}, ref) => (
+  <SelectPrimitive.Portal>
+    <SelectPrimitive.Content
+      ref={ref}
+      className={cn(
+        'relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+        position === 'popper' &&
+          'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
+        className
+      )}
+      position={position}
+      {...props}
     >
-      <HiddenSelect
-        state={state}
-        triggerRef={ref}
-        label={props.label}
-        name={props.name}
-      />
-      <button
-        {...mergeProps(buttonProps, focusProps)}
-        ref={ref}
+      <SelectPrimitive.Viewport
         className={cn(
-          `w-full relative flex flex-row items-center justify-between rounded-3xl overflow-hidden border-2 outline-none`,
-          select({
-            size: props.size || 'md',
-          }),
-          {
-            'border-brand-100': isFocusVisible,
-            'border-gray-300': !isFocusVisible,
-            'bg-gray-100': state.isOpen,
-            'bg-white': !state.isOpen,
-          }
+          'p-1',
+          position === 'popper' &&
+            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
         )}
       >
-        <Text {...valueProps}>
-          {state.selectedItem ? state.selectedItem.rendered : 'Select option'}
-        </Text>
-        <ChevronDownIcon
-          className={cn('w-5 h-5', {
-            'border-brand-100': isFocusVisible,
-            'text-gray-500': !isFocusVisible,
-          })}
-        />
-      </button>
-      {state.isOpen && (
-        <Popover
-          state={state}
-          triggerRef={ref}
-          placement="bottom end"
-          className="w-52"
-        >
-          <ListBox {...menuProps} state={state} />
-        </Popover>
-      )}
-    </InputWrapper>
-  );
-}
+        {children}
+      </SelectPrimitive.Viewport>
+    </SelectPrimitive.Content>
+  </SelectPrimitive.Portal>
+));
+SelectContent.displayName = SelectPrimitive.Content.displayName;
+
+const SelectLabel = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
+>(({className, ...props}, ref) => (
+  <SelectPrimitive.Label
+    ref={ref}
+    className={cn('py-1.5 pl-8 pr-2 text-sm font-semibold', className)}
+    {...props}
+  />
+));
+SelectLabel.displayName = SelectPrimitive.Label.displayName;
+
+const SelectItem = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
+>(({className, children, ...props}, ref) => (
+  <SelectPrimitive.Item
+    ref={ref}
+    className={cn(
+      'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      className
+    )}
+    {...props}
+  >
+    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+      <SelectPrimitive.ItemIndicator>
+        <Check className="h-4 w-4" />
+      </SelectPrimitive.ItemIndicator>
+    </span>
+
+    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+  </SelectPrimitive.Item>
+));
+SelectItem.displayName = SelectPrimitive.Item.displayName;
+
+const SelectSeparator = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
+>(({className, ...props}, ref) => (
+  <SelectPrimitive.Separator
+    ref={ref}
+    className={cn('-mx-1 my-1 h-px bg-muted', className)}
+    {...props}
+  />
+));
+SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
+
+export {
+  Select,
+  SelectGroup,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+};
