@@ -12,7 +12,7 @@ export function UrlCard({action, url, publicEventUrl}: Props) {
   return (
     <CardBase className="h-full">
       <div className="flex items-center mb-2">
-        <Badge color="gray" className="mr-2" size="xs">
+        <Badge variant="outline" className="mr-1">
           Invite
         </Badge>
         {action}
@@ -23,8 +23,8 @@ export function UrlCard({action, url, publicEventUrl}: Props) {
             <LinkIcon className="h-5 w-5" />
           </div>
         </Link>
-        <Button variant="link" href={url} as="a">
-          {publicEventUrl}
+        <Button variant="link" asChild>
+          <Link href={url}>{publicEventUrl}</Link>
         </Button>
       </div>
     </CardBase>

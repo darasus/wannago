@@ -26,9 +26,9 @@ export function UrlCard({url, eventId}: Props) {
   const action = (
     <Button
       onClick={onCopyUrlClick}
-      variant="link-gray"
+      variant="link"
       disabled={isCopied}
-      size="xs"
+      size="sm"
     >
       {isCopied ? 'Copied!' : 'Copy url'}
     </Button>

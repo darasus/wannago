@@ -10,6 +10,7 @@ import {api} from '../../../../trpc/client';
 import {useRouter} from 'next/navigation';
 import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
 import {UserSubscription} from './(features)/UserSubscription/UserSubscription';
+import {useLoadingToast} from 'hooks';
 
 interface UserForm {
   firstName: string;
@@ -51,6 +52,8 @@ export function UserSettings({user, mySubscriptionPromise}: Props) {
       router.refresh();
     }
   });
+
+  useLoadingToast({isLoading: form.formState.isSubmitting});
 
   return (
     <FormProvider {...form}>
@@ -127,7 +130,6 @@ export function UserSettings({user, mySubscriptionPromise}: Props) {
                   type="submit"
                   disabled={form.formState.isSubmitting}
                   data-testid="user-settings-submit-button"
-                  isLoading={form.formState.isSubmitting}
                 >
                   Save
                 </Button>

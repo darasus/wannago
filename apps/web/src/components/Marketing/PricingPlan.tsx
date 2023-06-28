@@ -96,7 +96,7 @@ export function PricingPlan({
         </div>
         <Button
           onClick={onClick}
-          variant={type === 'highlighted' ? 'neutral' : 'primary'}
+          variant={type === 'highlighted' ? 'outline' : 'default'}
         >
           {planId === 'enterprise' ? 'Contact sales' : 'Get started'}
         </Button>

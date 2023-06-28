@@ -7,6 +7,7 @@ import {useParams} from 'next/navigation';
 import {User} from '@prisma/client';
 import {api} from '../../../../../trpc/client';
 import {useRouter} from 'next/navigation';
+import {useLoadingToast} from 'hooks';
 
 interface Form {
   text: string;
@@ -32,6 +33,8 @@ export function MessageInput({me}: Props) {
     form.reset();
   });
 
+  useLoadingToast({isLoading: form.formState.isSubmitting});
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="flex gap-2">
@@ -45,7 +48,7 @@ export function MessageInput({me}: Props) {
         </div>
         <Button
           type="submit"
-          isLoading={form.formState.isSubmitting}
+          disabled={form.formState.isSubmitting}
           data-testid="message-form-submit-button"
         >
           Send

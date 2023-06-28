@@ -2,7 +2,7 @@
 
 import {Event, Organization, User} from '@prisma/client';
 import {OrganizerCard as OrganizerCardView} from 'cards';
-import {useCreateConversation} from 'hooks';
+import {useCreateConversation, useLoadingToast} from 'hooks';
 import {useRouter} from 'next/navigation';
 import {Button} from 'ui';
 
@@ -45,6 +45,8 @@ export function OrganizerCard({event, me, myOrganization}: Props) {
     ? `/u/${event.user?.id}`
     : `/o/${event.organization?.id}`;
 
+  useLoadingToast({isLoading: isMutating});
+
   return (
     <OrganizerCardView
       name={organizerName}
@@ -53,9 +55,9 @@ export function OrganizerCard({event, me, myOrganization}: Props) {
       action={
         <Button
           onClick={onMessageOrganizerClick}
-          variant="link-gray"
-          size="xs"
-          isLoading={isMutating}
+          variant="link"
+          size="sm"
+          disabled={isMutating}
         >
           Message organizer
         </Button>

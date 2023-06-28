@@ -7,6 +7,7 @@ import {EditEventForm} from '../../../../features/EventForm/EditEventForm';
 import {EventAttendees} from './(features)/EventAttendees/EventAttendees';
 import {EventInvite} from './(features)/EventInvite/EventInvite';
 import {MyTickets} from './(features)/MyTickets/MyTickets';
+import Link from 'next/link';
 
 export default async function EventPages({
   params: {id, page},
@@ -33,14 +34,11 @@ export default async function EventPages({
   return (
     <Container maxSize="sm">
       <div className="flex flex-col gap-4">
-        <Button
-          variant="neutral"
-          iconLeft={<ArrowLeftCircleIcon />}
-          href={`/e/${event?.shortId}`}
-          as="a"
-          data-testid="back-to-event-button"
-        >
-          <Text truncate>{`Back to "${event?.title}"`}</Text>
+        <Button variant="outline" asChild data-testid="back-to-event-button">
+          <Link href={`/e/${event?.shortId}`}>
+            <ArrowLeftCircleIcon />
+            <Text truncate>{`Back to "${event?.title}"`}</Text>
+          </Link>
         </Button>
         <div>
           {isMyEvent?.isMyEvent && (

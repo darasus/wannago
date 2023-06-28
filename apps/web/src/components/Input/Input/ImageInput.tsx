@@ -63,7 +63,7 @@ export function ImageInput({onChange, defaultValue, error}: Props) {
           />
 
           <div className="h-full flex flex-col justify-center items-center gap-y-2">
-            <Button variant="neutral" size="sm">
+            <Button variant="outline" size="sm">
               Select file
             </Button>
             <p className="text-center">or just drop image here...</p>
@@ -81,7 +81,7 @@ export function ImageInput({onChange, defaultValue, error}: Props) {
               />
             </div>
             <Button
-              variant="neutral"
+              variant="outline"
               size="sm"
               className="absolute bottom-5 right-5 z-50"
               onClick={handleRemove}

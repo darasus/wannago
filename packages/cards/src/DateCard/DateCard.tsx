@@ -30,14 +30,10 @@ export function DateCard({endDate, startDate, onAddToCalendarClick}: Props) {
       {isShow && (
         <>
           <div className="mb-2">
-            <Badge color="gray" className="mr-2" size="xs">
+            <Badge variant={'outline'} className="mr-1">
               When
             </Badge>
-            <Button
-              onClick={onAddToCalendarClick}
-              variant="link-gray"
-              size="xs"
-            >
+            <Button onClick={onAddToCalendarClick} variant="link" size="sm">
               Add to calendar
             </Button>
           </div>

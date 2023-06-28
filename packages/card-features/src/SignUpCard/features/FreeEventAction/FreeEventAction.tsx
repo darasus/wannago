@@ -2,7 +2,12 @@
 
 import {useAuth} from '@clerk/nextjs';
 import {Event} from '@prisma/client';
-import {useAmplitudeAppDir, useConfetti, useConfirmDialog} from 'hooks';
+import {
+  useAmplitudeAppDir,
+  useConfetti,
+  useConfirmDialog,
+  useLoadingToast,
+} from 'hooks';
 import {use, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
@@ -83,22 +88,19 @@ export function FreeEventAction({event}: Props) {
   const amSignedUp = Boolean(signUp && signUp?.status === 'REGISTERED');
   const amInvited = Boolean(signUp && signUp?.status === 'INVITED');
 
+  useLoadingToast({isLoading: form.formState.isSubmitting});
+
   if (amSignedUp) {
     return (
       <>
         {cancelModal}
         <form className="flex items-center gap-x-4" onSubmit={onCancelSubmit}>
           <div className="flex items-center gap-x-2">
-            <Badge
-              size="xs"
-              color="green"
-              data-testid="event-signup-success-label"
-            >{`You're signed up!`}</Badge>
+            <Badge data-testid="event-signup-success-label">{`You're signed up!`}</Badge>
             <Button
               type="submit"
               disabled={form.formState.isSubmitting}
-              isLoading={form.formState.isSubmitting}
-              variant="neutral"
+              variant="outline"
               size="sm"
               data-testid="cancel-signup-button"
             >
@@ -114,15 +116,13 @@ export function FreeEventAction({event}: Props) {
       <form className="flex items-center gap-x-4" onSubmit={onJoinSubmit}>
         <div className="flex items-center gap-x-2">
           <Badge
-            size="xs"
-            color="yellow"
+            variant={'outline'}
             data-testid="event-signup-success-label"
           >{`You're invited!`}</Badge>
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
-            isLoading={form.formState.isSubmitting}
-            variant="neutral"
+            variant="outline"
             size="sm"
             data-testid="cancel-signup-button"
           >
@@ -158,7 +158,6 @@ export function FreeEventAction({event}: Props) {
         <Button
           type="submit"
           disabled={form.formState.isSubmitting}
-          isLoading={form.formState.isSubmitting}
           size="sm"
           data-testid="attend-button"
         >

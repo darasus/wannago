@@ -12,7 +12,7 @@ import {
 } from 'ui';
 import {Input} from '../../components/Input/Input/Input';
 
-const sizes = ['xs', 'sm', 'md', 'lg'] as const;
+const sizes = ['sm', 'lg'] as const;
 
 const items = [
   {
@@ -41,83 +41,47 @@ export default function PlaygroundPage() {
           return (
             <div key={size} className="flex items-center gap-4">
               <Button size={size}>Default</Button>
-              <Button size={size} variant="primary">
+              <Button size={size} variant="default">
                 Primary
               </Button>
-              <Button
-                size={size}
-                variant="primary"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
+              <Button size={size} variant="default">
+                <ArrowDownCircleIcon />
                 Primary with icon
               </Button>
               <Button size={size} variant="secondary">
                 Secondary
               </Button>
-              <Button
-                size={size}
-                variant="secondary"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
-                Secondary with icon
+              <Button size={size} variant="outline">
+                <ArrowDownCircleIcon /> Secondary with icon
               </Button>
-              <Button size={size} variant="neutral">
+              <Button size={size} variant="outline">
                 Neutral
               </Button>
-              <Button
-                size={size}
-                variant="neutral"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
+              <Button size={size} variant="outline">
+                <ArrowDownCircleIcon />
                 Neutral with icon
               </Button>
               <Button size={size} variant="link">
                 Link
               </Button>
-              <Button
-                size={size}
-                variant="link"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
+              <Button size={size} variant="link">
+                <ArrowDownCircleIcon />
                 Link with icon
               </Button>
-              <Button size={size} variant="link-gray">
+              <Button size={size} variant="link">
                 Link gray
               </Button>
-              <Button
-                size={size}
-                variant="link-gray"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
+              <Button size={size} variant="link">
+                <ArrowDownCircleIcon />
                 Link gray with icon
               </Button>
-              <Button size={size} variant="success">
-                Success
-              </Button>
-              <Button
-                size={size}
-                variant="success"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
-                Success with icon
-              </Button>
-              <Button size={size} variant="danger">
+              <Button size={size} variant="destructive">
                 Danger
               </Button>
-              <Button
-                size={size}
-                variant="danger"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
+              <Button size={size} variant="destructive">
+                <ArrowDownCircleIcon />
                 Danger with icon
               </Button>
-              <Button size={size} variant="danger" isLoading>
-                Danger with spinner
-              </Button>
-              <Button size={size} isLoading>
-                Loading
-              </Button>
-              <Button size={size} iconLeft={<ArrowDownCircleIcon />} />
             </div>
           );
         })}
@@ -133,21 +97,9 @@ export default function PlaygroundPage() {
           return (
             <div className="flex gap-4">
               {(
-                [
-                  'gray',
-                  'yellow',
-                  'green',
-                  'indigo',
-                  'purple',
-                  'pink',
-                  'red',
-                ] as const
-              ).map(color => {
-                return (
-                  <Badge size={size} color={color}>
-                    Hello
-                  </Badge>
-                );
+                ['default', 'secondary', 'destructive', 'outline'] as const
+              ).map(variant => {
+                return <Badge variant={variant}>Hello</Badge>;
               })}
             </div>
           );

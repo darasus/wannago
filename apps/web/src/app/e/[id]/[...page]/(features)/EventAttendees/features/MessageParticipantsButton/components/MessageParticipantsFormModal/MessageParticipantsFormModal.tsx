@@ -4,6 +4,7 @@ import {UseFormRegister} from 'react-hook-form';
 import {Button, Modal} from 'ui';
 import {Input} from '../../../../../../../../../../components/Input/Input/Input';
 import {Textarea} from '../../../../../../../../../../components/Input/Input/Textarea';
+import {useLoadingToast} from 'hooks';
 
 interface Props {
   isOpen: boolean;
@@ -20,6 +21,8 @@ export function MessageParticipantsFormModal({
   onClose,
   onSubmit,
 }: Props) {
+  useLoadingToast({isLoading: isSubmitting});
+
   return (
     <Modal
       isOpen={isOpen}
@@ -44,13 +47,13 @@ export function MessageParticipantsFormModal({
           </div>
           <div className="flex justify-start gap-x-2">
             <Button
-              isLoading={isSubmitting}
+              disabled={isSubmitting}
               type="submit"
               data-testid="message-attendees-form-submit"
             >
               Send
             </Button>
-            <Button onClick={onClose} variant="neutral">
+            <Button onClick={onClose} variant="outline">
               Cancel
             </Button>
           </div>

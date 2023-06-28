@@ -35,11 +35,11 @@ export function UserSubscription({user, mySubscriptionPromise}: Props) {
             {hasPaidSubscription && (
               <>
                 <Text>WannaGo</Text>
-                <Badge color={hasPaidSubscription ? 'green' : 'gray'} size="xs">
+                <Badge variant={hasPaidSubscription ? 'default' : 'outline'}>
                   {subscriptionTypeLabel}
                 </Badge>
                 {subscription?.cancelAt && (
-                  <Badge size="xs">
+                  <Badge>
                     {`Expires ${formatDate(
                       subscription?.cancelAt,
                       'd MMM yyyy'
@@ -54,7 +54,7 @@ export function UserSubscription({user, mySubscriptionPromise}: Props) {
             {!hasPaidSubscription && (
               <>
                 <Button
-                  size="xs"
+                  size="sm"
                   onClick={async () => {
                     await api.subscriptionPlan.createCheckoutSession
                       .mutate({plan: subscriptionMap['PRO']})
@@ -68,7 +68,7 @@ export function UserSubscription({user, mySubscriptionPromise}: Props) {
                         }
                       });
                   }}
-                  variant="success"
+                  variant="default"
                 >
                   Upgrade to PRO
                 </Button>
@@ -76,8 +76,8 @@ export function UserSubscription({user, mySubscriptionPromise}: Props) {
             )}
             {user.stripeCustomerId && (
               <Button
-                size="xs"
-                variant="neutral"
+                size="sm"
+                variant="outline"
                 onClick={async () => {
                   await api.subscriptionPlan.createCustomerPortalSession
                     .mutate({

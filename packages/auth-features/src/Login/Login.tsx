@@ -9,6 +9,7 @@ import {CardBase, LoadingBlock, Button, Text} from 'ui';
 import {cn, sleep} from 'utils';
 import {Input} from '../../../../apps/web/src/components/Input/Input/Input';
 import {titleFont} from '../../../../apps/web/src/fonts';
+import {useLoadingToast} from 'hooks';
 
 interface TEmailForm {
   email: string;
@@ -93,7 +94,7 @@ export function Login({onDone, onCreateAccountClick}: Props) {
         )}
       </CardBase>
       <Text className="text-center">- OR -</Text>
-      <Button onClick={handleLoginClick} variant="neutral">
+      <Button onClick={handleLoginClick} variant="outline">
         Create account
       </Button>
     </div>
@@ -130,6 +131,8 @@ function EmailForm({goToNextStep}: EmailFormProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useLoadingToast({isLoading: form.formState.isSubmitting});
+
   return (
     <form onSubmit={submit}>
       <div className="flex flex-col gap-4">
@@ -148,7 +151,7 @@ function EmailForm({goToNextStep}: EmailFormProps) {
         />
         <Button
           type="submit"
-          isLoading={form.formState.isSubmitting}
+          disabled={form.formState.isSubmitting}
           data-testid="login-email-form-submit"
         >
           Submit
@@ -201,6 +204,8 @@ function CodeForm({onDone, email}: CodeFormProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
+  useLoadingToast({isLoading: form.formState.isSubmitting});
+
   return (
     <form onSubmit={submit}>
       <div className="flex flex-col gap-4">
@@ -238,7 +243,7 @@ function CodeForm({onDone, email}: CodeFormProps) {
 
         <Button
           type="submit"
-          isLoading={form.formState.isSubmitting}
+          disabled={form.formState.isSubmitting}
           data-testid="login-code-form-submit"
         >
           Submit

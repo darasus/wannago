@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import {Button, CardBase, Text} from 'ui';
 import {useLocalStorage} from 'usehooks-ts';
@@ -39,8 +40,8 @@ export function CookieConsent() {
           </Text>
         </div>
         <div className="flex items-center">
-          <Button variant="link" size="sm" as="a" href="/cookie-policy">
-            Cookie Policy
+          <Button variant="link" size="sm" asChild>
+            <Link href="/cookie-policy">Cookie Policy</Link>
           </Button>
           <div className="grow" />
           <Button size="sm" onClick={handleAccept}>

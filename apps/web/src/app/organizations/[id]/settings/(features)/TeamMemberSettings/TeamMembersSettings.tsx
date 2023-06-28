@@ -32,8 +32,8 @@ export function TeamMembersSettings({organization}: Props) {
           title={'Team members'}
           titleChildren={
             <Button
-              size="xs"
-              variant="neutral"
+              size="sm"
+              variant="outline"
               onClick={() => setIsAddMemberDialogModalOpen(true)}
             >
               Add member

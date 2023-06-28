@@ -6,6 +6,7 @@ import {toast} from 'react-hot-toast';
 import {Button, CardBase} from 'ui';
 import {api} from '../../../trpc/client';
 import {use, useTransition} from 'react';
+import {useLoadingToast} from 'hooks';
 
 interface Props {
   type: 'PRO' | 'BUSINESS';
@@ -68,6 +69,10 @@ export function StripeAccountLinkSettings({type}: Props) {
     }
   };
 
+  useLoadingToast({
+    isLoading: isCreateAccountLinkPending || isUpdateAccountLinkPending,
+  });
+
   if (subscription?.type !== type) {
     return null;
   }
@@ -82,7 +87,7 @@ export function StripeAccountLinkSettings({type}: Props) {
           <div className="flex gap-2">
             <Button
               onClick={handleUpdateAccountLink}
-              isLoading={isUpdateAccountLinkPending}
+              disabled={isUpdateAccountLinkPending}
               size="sm"
             >
               View account
@@ -93,7 +98,7 @@ export function StripeAccountLinkSettings({type}: Props) {
       {!account && (
         <Button
           onClick={handleCreateAccountLink}
-          isLoading={isCreateAccountLinkPending}
+          disabled={isCreateAccountLinkPending}
           size="sm"
         >
           Link Stripe account

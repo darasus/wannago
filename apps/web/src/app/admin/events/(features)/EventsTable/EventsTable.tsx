@@ -61,13 +61,11 @@ export function EventsTable({events}: EventsTableProps) {
   return (
     <Container maxSize="full">
       <div className="flex flex-col gap-4">
-        <Button
-          variant="neutral"
-          iconLeft={<ArrowLeftCircleIcon />}
-          href="/admin"
-          as="a"
-        >
-          Back to admin home
+        <Button variant="outline" asChild>
+          <Link href="/admin">
+            <ArrowLeftCircleIcon />
+            Back to admin home
+          </Link>
         </Button>
         <PageHeader title={'All events'} />
         <Table>

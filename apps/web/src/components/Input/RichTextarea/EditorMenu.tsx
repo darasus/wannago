@@ -47,9 +47,9 @@ export function EditorMenu({editor, additionalEditorMenu}: Props) {
         return (
           <Button
             key={item.label}
-            size="xs"
+            size="sm"
             onClick={item.onClick}
-            variant={item.isActive ? 'primary' : 'neutral'}
+            variant={item.isActive ? 'default' : 'outline'}
           >
             {item.label}
           </Button>

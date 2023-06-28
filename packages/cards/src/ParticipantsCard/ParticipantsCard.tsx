@@ -23,7 +23,7 @@ export function ParticipantsCard({
       <CardBase isBlur={!isPublished}>
         <div>
           <div className="mb-2">
-            <Badge color="gray" className="mr-2" size="xs">
+            <Badge variant="outline" className="mr-1">
               Attend
             </Badge>
             {/* <Button variant="link">Invite</Button> */}

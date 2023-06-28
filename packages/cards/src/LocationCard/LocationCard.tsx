@@ -19,10 +19,10 @@ export function LocationCard({
   return (
     <CardBase className="h-full">
       <div className="mb-2">
-        <Badge color="gray" className="mr-2" size="xs">
+        <Badge variant="outline" className="mr-1">
           Where
         </Badge>
-        <Button onClick={onGetDirectionsClick} variant="link-gray" size="xs">
+        <Button onClick={onGetDirectionsClick} variant="link" size="sm">
           Get directions
         </Button>
       </div>

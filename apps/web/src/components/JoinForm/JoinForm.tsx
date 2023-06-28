@@ -6,6 +6,7 @@ import type {JoinForm as JoinFormType} from '../../types/forms';
 import {Button} from 'ui';
 import {Input} from '../Input/Input/Input';
 import {Switch} from '../Input/Switch/Switch';
+import {useLoadingToast} from 'hooks';
 
 interface Props {
   onSubmit: FormEventHandler;
@@ -17,6 +18,8 @@ export function JoinForm({onSubmit}: Props) {
     formState: {errors, isSubmitting, defaultValues},
     control,
   } = useFormContext<JoinFormType>();
+
+  useLoadingToast({isLoading: isSubmitting});
 
   return (
     <form onSubmit={onSubmit}>
@@ -50,7 +53,7 @@ export function JoinForm({onSubmit}: Props) {
           />
         </div>
         <div className="col-span-4">
-          <Button type="submit" isLoading={isSubmitting} className="w-full">
+          <Button type="submit" disabled={isSubmitting} className="w-full">
             Join
           </Button>
         </div>

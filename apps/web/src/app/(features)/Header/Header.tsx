@@ -5,6 +5,7 @@ import {api, getMe} from '../../../trpc/server';
 import {Suspense} from 'react';
 import {DesktopMenu} from '../../(components)/DesktopMenu';
 import {MobileMenu} from '../../(components)/MobileMenu';
+import Link from 'next/link';
 
 export async function Header() {
   const authData = auth();
@@ -31,14 +32,13 @@ export async function Header() {
             )}
             {showAuthButtons && (
               <Button
-                as="a"
-                href="/login"
+                asChild
                 className="hidden md:flex"
-                variant="secondary"
+                variant="default"
                 size="sm"
                 data-testid="login-button"
               >
-                <span>Sign in</span>
+                <Link href="/login">Sign in</Link>
               </Button>
             )}
           </div>

@@ -1,5 +1,5 @@
 import {Organization, User} from '@prisma/client';
-import {useConfirmDialog} from 'hooks';
+import {useConfirmDialog, useLoadingToast} from 'hooks';
 import {useCallback, useTransition} from 'react';
 import {Badge, Button, Text} from 'ui';
 import {api} from '../../../../../../trpc/client';
@@ -31,18 +31,19 @@ export function TeamMember({member, organization}: Props) {
     },
   });
 
+  useLoadingToast({isLoading: isPending});
+
   return (
     <>
       {modal}
       <div className="flex gap-2 items-center">
         <Text className="text-sm">{`${member.firstName} ${member.lastName}`}</Text>
-        <Badge size="xs">Admin</Badge>
+        <Badge>Admin</Badge>
         <Button
-          variant="danger"
-          size="xs"
+          variant="destructive"
+          size="sm"
           onClick={open}
           disabled={isPending}
-          isLoading={isPending}
         >
           Remove
         </Button>

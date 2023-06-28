@@ -8,6 +8,7 @@ import {toast} from 'react-hot-toast';
 import {Input} from '../../../../../../../../components/Input/Input/Input';
 import {useParams, useRouter} from 'next/navigation';
 import {api} from '../../../../../../../../trpc/client';
+import {useLoadingToast} from 'hooks';
 
 export function EventInviteButton() {
   const [on, set] = useState(false);
@@ -35,6 +36,8 @@ export function EventInviteButton() {
       router.refresh();
     }
   });
+
+  useLoadingToast({isLoading: isSubmitting});
 
   return (
     <>
@@ -74,7 +77,7 @@ export function EventInviteButton() {
             <div className="col-span-4">
               <Button
                 type="submit"
-                isLoading={isSubmitting}
+                disabled={isSubmitting}
                 className="w-full"
                 data-testid="invite-by-email-submit-button"
               >
@@ -86,7 +89,7 @@ export function EventInviteButton() {
       </Modal>
       <Button
         size="sm"
-        variant="neutral"
+        variant="outline"
         onClick={() => set(true)}
         data-testid="invite-by-email-open-modal-button"
       >

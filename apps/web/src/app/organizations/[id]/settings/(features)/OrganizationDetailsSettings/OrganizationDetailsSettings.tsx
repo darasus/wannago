@@ -8,6 +8,7 @@ import {FileInput} from '../../../../../../components/Input/FileInput/FileInput'
 import {Input} from '../../../../../../components/Input/Input/Input';
 import {api} from '../../../../../../trpc/client';
 import {Currency, Organization} from '@prisma/client';
+import {useLoadingToast} from 'hooks';
 
 interface OrganizationForm {
   name: string | null;
@@ -45,6 +46,8 @@ export function OrganizationDetailsSettings({organization}: Props) {
       } catch (error) {}
     }
   });
+
+  useLoadingToast({isLoading: form.formState.isSubmitting});
 
   return (
     <CardBase>
@@ -98,7 +101,7 @@ export function OrganizationDetailsSettings({organization}: Props) {
             <div className="flex gap-2">
               <Button
                 type="submit"
-                isLoading={form.formState.isSubmitting}
+                disabled={form.formState.isSubmitting}
                 data-testid="team-settings-form-input-submit-button"
               >
                 Save

@@ -21,13 +21,10 @@ export default async function ConversationPage({
 
   return (
     <Container className="flex flex-col gap-4" maxSize="sm">
-      <Button
-        as="a"
-        href="/messages"
-        variant="neutral"
-        iconLeft={<ArrowLeftCircleIcon />}
-      >
-        Back to conversations
+      <Button asChild variant="outline">
+        <Link href="/messages">
+          <ArrowLeftCircleIcon /> Back to conversations
+        </Link>
       </Button>
       <PageHeader
         title={

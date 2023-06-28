@@ -1,5 +1,6 @@
 import {UserIcon, Cog6ToothIcon} from '@heroicons/react/24/solid';
 import {Organization} from '@prisma/client';
+import Link from 'next/link';
 import {o} from 'ramda';
 import {CardBase, Avatar, Button, Text} from 'ui';
 
@@ -20,19 +21,23 @@ export function OrganizationCard({organization}: OrganizationCardProps) {
         <Text>{organization.name}</Text>
         <div className="grow" />
         <Button
-          as="a"
-          href={`/o/${organization.id}`}
-          iconLeft={<UserIcon />}
-          variant="neutral"
+          asChild
+          variant="outline"
           data-testid="organization-item-card-profile-button"
-        />
+        >
+          <Link href={`/o/${organization.id}`}>
+            <UserIcon />
+          </Link>
+        </Button>
         <Button
-          as="a"
-          href={`/organizations/${organization.id}/settings`}
-          iconLeft={<Cog6ToothIcon />}
-          variant="neutral"
+          asChild
+          variant="outline"
           data-testid="organization-item-card-settings-button"
-        />
+        >
+          <Link href={`/organizations/${organization.id}/settings`}>
+            <Cog6ToothIcon />
+          </Link>
+        </Button>
       </div>
     </CardBase>
   );

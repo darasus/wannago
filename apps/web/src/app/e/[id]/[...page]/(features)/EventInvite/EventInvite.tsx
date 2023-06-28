@@ -5,7 +5,7 @@ import {useParams, useRouter} from 'next/navigation';
 import {Button, CardBase, PageHeader, Text} from 'ui';
 import {toast} from 'react-hot-toast';
 import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
-import {useConfirmDialog} from 'hooks';
+import {useConfirmDialog, useLoadingToast} from 'hooks';
 import {EventInviteButton} from './features/EventInviteButton/EventInviteButton';
 import {api} from '../../../../../../trpc/client';
 import {use} from 'react';
@@ -36,15 +36,16 @@ export function InviteButton({
     },
   });
 
+  useLoadingToast({isLoading: isPending});
+
   return (
     <>
       {modal}
       <Button
-        isLoading={isPending}
         onClick={open}
-        variant="neutral"
+        variant="outline"
         size="sm"
-        disabled={disabled}
+        disabled={disabled || isPending}
         data-testid="invite-by-email-button"
       >
         Invite

@@ -92,9 +92,7 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
         )}
         <div className="flex flex-col gap-y-2">
           <div>
-            <Badge color="gray" className="mr-2" size="xs">
-              What
-            </Badge>
+            <Badge variant="outline">What</Badge>
             {/* <Button variant="link">Share</Button> */}
           </div>
           <h1

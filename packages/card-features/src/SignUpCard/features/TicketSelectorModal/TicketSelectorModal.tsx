@@ -10,6 +10,7 @@ import {TRPCClientError} from '@trpc/client';
 import {use} from 'react';
 import {api} from '../../../../../../apps/web/src/trpc/client';
 import {toast} from 'react-hot-toast';
+import {useLoadingToast} from 'hooks';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -72,6 +73,8 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
     } catch (error) {}
   });
 
+  useLoadingToast({isLoading: form.formState.isSubmitting});
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit}>
@@ -113,7 +116,7 @@ export function TicketSelectorModal({isOpen, onClose, onDone, event}: Props) {
               </Text>
             </div>
           </div>
-          <Button type="submit" isLoading={form.formState.isSubmitting}>
+          <Button type="submit" disabled={form.formState.isSubmitting}>
             Buy
           </Button>
         </div>

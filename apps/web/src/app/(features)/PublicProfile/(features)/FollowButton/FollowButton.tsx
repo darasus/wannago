@@ -5,6 +5,7 @@ import {use, useTransition} from 'react';
 import {Button} from 'ui';
 import {RouterOutputs, api} from '../../../../../trpc/client';
 import {toast} from 'react-hot-toast';
+import {useLoadingToast} from 'hooks';
 
 interface Props {
   amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
@@ -18,11 +19,13 @@ export function FollowButton({amFollowingPromise}: Props) {
   const userId = params?.userId as string | undefined;
   const amFollowing = use(amFollowingPromise);
 
+  useLoadingToast({isLoading: isPending});
+
   if (amFollowing) {
     return (
       <Button
         size="sm"
-        variant="danger"
+        variant="destructive"
         onClick={() => {
           startTransition(async () => {
             await api.follow.unfollow
@@ -36,7 +39,7 @@ export function FollowButton({amFollowingPromise}: Props) {
             router.refresh();
           });
         }}
-        isLoading={isPending}
+        disabled={isPending}
         className="w-full md:w-40"
         data-testid="unfollow-button"
       >
@@ -48,7 +51,7 @@ export function FollowButton({amFollowingPromise}: Props) {
   return (
     <Button
       size="sm"
-      variant="neutral"
+      variant="outline"
       onClick={() => {
         startTransition(async () => {
           await api.follow.follow
@@ -62,7 +65,7 @@ export function FollowButton({amFollowingPromise}: Props) {
           router.refresh();
         });
       }}
-      isLoading={isPending}
+      disabled={isPending}
       className="w-full md:w-40"
       data-testid="follow-button"
     >

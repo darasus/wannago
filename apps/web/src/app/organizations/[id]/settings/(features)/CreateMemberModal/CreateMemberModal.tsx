@@ -6,6 +6,7 @@ import {Button, Modal} from 'ui';
 import {Input} from '../../../../../../components/Input/Input/Input';
 import {Organization} from '@prisma/client';
 import {api} from '../../../../../../trpc/client';
+import {useLoadingToast} from 'hooks';
 
 interface Props {
   isOpen: boolean;
@@ -32,13 +33,15 @@ export function CreateMemberModal({isOpen, onClose, organization}: Props) {
     onClose();
   });
 
+  useLoadingToast({isLoading: form.formState.isSubmitting});
+
   return (
     <Modal title="Add member" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
           <Input type="email" {...form.register('email')} label="Email" />
           <div>
-            <Button type="submit" isLoading={form.formState.isSubmitting}>
+            <Button type="submit" disabled={form.formState.isSubmitting}>
               Add
             </Button>
           </div>

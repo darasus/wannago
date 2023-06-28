@@ -37,7 +37,7 @@ export function InputWrapper({
           >
             {label}
             {isOptional && (
-              <Badge size="xxs" className="ml-1 mt-[2px]">
+              <Badge variant="outline" className="ml-1 mt-[2px]">
                 Optional
               </Badge>
             )}

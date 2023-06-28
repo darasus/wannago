@@ -7,6 +7,7 @@ import {useRouter} from 'next/navigation';
 import {toast} from 'react-hot-toast';
 import {useTransition} from 'react';
 import {getMe} from '../../../../../trpc/client';
+import {useLoadingToast} from 'hooks';
 
 interface Props {}
 
@@ -15,11 +16,13 @@ export function MessageButton({}: Props) {
   const params = useParams();
   const [isPending, startTransition] = useTransition();
 
+  useLoadingToast({isLoading: isPending});
+
   return (
     <Button
       size="sm"
-      variant="neutral"
-      isLoading={isPending}
+      variant="outline"
+      disabled={isPending}
       onClick={async () => {
         startTransition(async () => {
           const me = await getMe();

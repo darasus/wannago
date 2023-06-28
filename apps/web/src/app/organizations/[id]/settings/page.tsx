@@ -6,6 +6,7 @@ import {TeamMembersSettings} from './(features)/TeamMemberSettings/TeamMembersSe
 import {Suspense} from 'react';
 import {OrganizationSubscription} from './(features)/OrganizationSubscription/OrganizationSubscription';
 import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
+import Link from 'next/link';
 
 // TODO: create description text explaining why you need to create a team
 
@@ -31,13 +32,11 @@ export default async function OrganizationSettingsPage() {
     <>
       <Container maxSize="sm">
         <div className="flex flex-col gap-4">
-          <Button
-            variant="neutral"
-            iconLeft={<ArrowLeftCircleIcon />}
-            href="/organizations"
-            as="a"
-          >
-            Back to organizations
+          <Button variant="outline" asChild>
+            <Link href="/organizations">
+              <ArrowLeftCircleIcon />
+              Back to organizations
+            </Link>
           </Button>
           <PageHeader title={`${organization?.name} settings`} />
           <div className="flex flex-col gap-4">

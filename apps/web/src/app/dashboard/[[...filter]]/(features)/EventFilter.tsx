@@ -42,7 +42,7 @@ export function EventFilter() {
         ]}
       />
       <Button
-        variant={isPast ? 'primary' : 'neutral'}
+        variant={isPast ? 'default' : 'outline'}
         size="sm"
         onClick={handleOnClick}
       >

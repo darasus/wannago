@@ -3,15 +3,7 @@ import {RouterOutputs} from 'api';
 import {EventCard} from 'cards';
 import Link from 'next/link';
 import {Suspense} from 'react';
-import {
-  Avatar,
-  Button,
-  CardBase,
-  Container,
-  LoadingBlock,
-  PageHeader,
-  Text,
-} from 'ui';
+import {Avatar, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
 import {MessageButton} from './(features)/MessageButton/MessageButton';
 import {FollowButton} from './(features)/FollowButton/FollowButton';
 
@@ -76,7 +68,7 @@ export async function PublicProfile({
           </div>
           <div className="flex flex-col justify-center md:justify-start gap-2">
             <MessageButton />
-            <Suspense fallback={<Button variant="neutral" isLoading />}>
+            <Suspense>
               <FollowButton amFollowingPromise={amFollowingPromise} />
             </Suspense>
           </div>

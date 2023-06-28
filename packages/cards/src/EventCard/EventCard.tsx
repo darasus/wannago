@@ -42,7 +42,7 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
             {event.organization?.name ||
               `${event.user?.firstName} ${event.user?.lastName}`}
           </Text>
-          <Badge color={isUpcoming ? 'green' : 'gray'} size="xs">
+          <Badge variant={isUpcoming ? 'default' : 'outline'}>
             {isUpcoming ? 'Upcoming' : 'Past'}
           </Badge>
           <Text className="text-sm text-gray-600 whitespace-nowrap">
@@ -57,13 +57,9 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
               {showPublishStatus && (
                 <div className="absolute left-4 top-4 z-10">
                   {event.isPublished ? (
-                    <Badge color="green" size="xs">
-                      Published
-                    </Badge>
+                    <Badge>Published</Badge>
                   ) : (
-                    <Badge color="gray" size="xs">
-                      Draft
-                    </Badge>
+                    <Badge variant={'outline'}>Draft</Badge>
                   )}
                 </div>
               )}

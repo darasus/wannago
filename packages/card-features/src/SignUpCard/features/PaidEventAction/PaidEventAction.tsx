@@ -9,6 +9,8 @@ import {formatCents} from 'utils';
 import {AuthModal} from '../AuthModal/AuthModal';
 import {TicketSelectorModal} from '../TicketSelectorModal/TicketSelectorModal';
 import {api} from '../../../../../../apps/web/src/trpc/client';
+import Link from 'next/link';
+import {useLoadingToast} from 'hooks';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -47,6 +49,8 @@ export function PaidEventAction({event}: Props) {
     event.preferredCurrency
   );
 
+  useLoadingToast({isLoading: form.formState.isSubmitting});
+
   return (
     <>
       <AuthModal
@@ -67,26 +71,24 @@ export function PaidEventAction({event}: Props) {
         {myTickets && myTickets?.length > 0 && (
           <Button
             size="sm"
-            variant="neutral"
+            variant="outline"
             data-testid="my-tickets-button"
-            as="a"
-            href={`/e/${event.shortId}/my-tickets`}
+            asChild
           >
-            {`My tickets`}
+            <Link href={`/e/${event.shortId}/my-tickets`}>{`My tickets`}</Link>
           </Button>
         )}
         <Button
           type="submit"
           disabled={form.formState.isSubmitting}
-          isLoading={form.formState.isSubmitting}
           size="sm"
           data-testid="buy-ticket-button"
         >
           {`Buy ticket`}
         </Button>
         <Badge
+          variant={'outline'}
           className="hidden md:flex"
-          size="sm"
         >{`from ${formattedPrice}`}</Badge>
       </form>
     </>

@@ -15,7 +15,7 @@ import {LocationInput} from '../../components/Input/LocationInput/LocationInput'
 import {RichTextarea} from '../../components/Input/RichTextarea/RichTextarea';
 import {Form} from './types';
 import {SparklesIcon} from '@heroicons/react/24/solid';
-import {useGenerateEventDescription} from 'hooks';
+import {useGenerateEventDescription, useLoadingToast} from 'hooks';
 import {InputWrapper} from 'ui';
 import {Textarea} from '../../components/Input/Input/Textarea';
 import {Organization, User} from '@prisma/client';
@@ -82,13 +82,14 @@ export function EventForm({
     }
   }, [generatedOutput, setValue]);
 
+  useLoadingToast({
+    isLoading,
+    text: 'Generating event description...',
+  });
+
   const items = [
     {
-      label: (
-        <Badge color="gray" size="xs">
-          Who
-        </Badge>
-      ),
+      label: <Badge variant="outline">Who</Badge>,
       content: (
         <Controller
           name="createdById"
@@ -121,11 +122,7 @@ export function EventForm({
       ),
     },
     {
-      label: (
-        <Badge color="gray" size="xs">
-          What
-        </Badge>
-      ),
+      label: <Badge variant="outline">What</Badge>,
       content: (
         <>
           <Input
@@ -148,13 +145,11 @@ export function EventForm({
             placeholder={`Type your description here or press "Generate" to let AI do the work for you...`}
             additionalEditorMenu={
               <Button
-                size="xs"
+                size="sm"
                 onClick={onClickGenerate}
-                iconLeft={<SparklesIcon />}
-                disabled={!title || title.length < 10}
-                isLoading={isLoading}
+                disabled={!title || title.length < 10 || isLoading}
               >
-                Generate
+                <SparklesIcon /> Generate
               </Button>
             }
             {...register('description')}
@@ -170,11 +165,7 @@ export function EventForm({
       ),
     },
     {
-      label: (
-        <Badge color="gray" size="xs">
-          When
-        </Badge>
-      ),
+      label: <Badge variant="outline">When</Badge>,
       content: (
         <div className="grid grid-cols-2 gap-2">
           <Input
@@ -207,11 +198,7 @@ export function EventForm({
       ),
     },
     {
-      label: (
-        <Badge color="gray" size="xs">
-          Where
-        </Badge>
-      ),
+      label: <Badge variant="outline">Where</Badge>,
       content: (
         <LocationInput
           label="Address"
@@ -227,13 +214,11 @@ export function EventForm({
       label: (
         <>
           <div className="flex gap-2">
-            <Badge color="gray" size="xs">
-              Attend
-            </Badge>
+            <Badge variant="outline">Attend</Badge>
             <div className="flex gap-1">
               <Button
-                size="xs"
-                variant={attendType === 'free' ? 'primary' : 'neutral'}
+                size="sm"
+                variant={attendType === 'free' ? 'default' : 'outline'}
                 onClick={() => {
                   setAttendType('free');
                   fields.forEach((_, index) => {
@@ -244,12 +229,12 @@ export function EventForm({
                 Free
               </Button>
               <Button
-                size="xs"
+                size="sm"
                 onClick={() => {
                   setAttendType('paid');
                   setValue('maxNumberOfAttendees', 0);
                 }}
-                variant={attendType === 'paid' ? 'primary' : 'neutral'}
+                variant={attendType === 'paid' ? 'default' : 'outline'}
               >
                 Paid
               </Button>
@@ -302,7 +287,7 @@ export function EventForm({
                           />
                         </div>
                         <Button
-                          variant="danger"
+                          variant="destructive"
                           size="sm"
                           onClick={() => {
                             remove(index);
@@ -324,7 +309,7 @@ export function EventForm({
                     id: '',
                   });
                 }}
-                variant="neutral"
+                variant="outline"
                 size="sm"
               >
                 Add another ticket
@@ -335,6 +320,8 @@ export function EventForm({
       ),
     },
   ];
+
+  useLoadingToast({isLoading: isSubmitting});
 
   return (
     <>
@@ -352,14 +339,13 @@ export function EventForm({
             <CardBase>
               <div className="flex gap-x-2">
                 <Button
-                  isLoading={isSubmitting}
                   disabled={isSubmitting}
                   type="submit"
                   data-testid="event-form-submit-button"
                 >
                   {isEdit ? 'Save' : 'Save as draft'}
                 </Button>
-                <Button onClick={onCancelClick} variant="neutral">
+                <Button onClick={onCancelClick} variant="outline">
                   Cancel
                 </Button>
               </div>

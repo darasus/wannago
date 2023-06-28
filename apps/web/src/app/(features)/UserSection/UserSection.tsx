@@ -41,15 +41,16 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
       <Button
         className="flex md:hidden"
         onClick={() => router.push('/e/add')}
-        iconLeft={<PlusCircleIcon />}
         data-testid="add-event-button-mini"
-      />
+      >
+        <PlusCircleIcon />
+      </Button>
       <Button
         className="hidden md:flex"
         onClick={() => router.push('/e/add')}
-        iconLeft={<PlusCircleIcon />}
         data-testid="add-event-button"
       >
+        <PlusCircleIcon />
         Create event
       </Button>
       {me && (
@@ -59,17 +60,12 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
               <Popover.Button as="div" data-testid="header-user-section-button">
                 {() => {
                   return (
-                    <Button
-                      variant="neutral"
-                      iconLeft={
-                        <Avatar
-                          className="h-6 w-6"
-                          src={me.profileImageSrc}
-                          alt={'avatar'}
-                        />
-                      }
-                      data-testid="header-user-button"
-                    >
+                    <Button variant="outline" data-testid="header-user-button">
+                      <Avatar
+                        className="h-6 w-6"
+                        src={me.profileImageSrc}
+                        alt={'avatar'}
+                      />
                       {me.firstName}
                     </Button>
                   );
@@ -89,7 +85,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                     return (
                       <CardBase innerClassName="flex flex-col gap-y-2 w-40">
                         <Button
-                          variant="neutral"
+                          variant="outline"
                           size="sm"
                           onClick={() => {
                             router.push('/dashboard');
@@ -99,7 +95,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                           Dashboard
                         </Button>
                         <Button
-                          variant="neutral"
+                          variant="outline"
                           size="sm"
                           data-testid="profile-button"
                           onClick={() => {
@@ -110,7 +106,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                           Profile
                         </Button>
                         <Button
-                          variant="neutral"
+                          variant="outline"
                           size="sm"
                           data-testid="organizations-button"
                           onClick={() => {
@@ -121,7 +117,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                           Organizations
                         </Button>
                         <Button
-                          variant="neutral"
+                          variant="outline"
                           size="sm"
                           onClick={() => {
                             router.push('/settings');
@@ -131,18 +127,19 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                           Settings
                         </Button>
                         <Button
-                          variant="neutral"
+                          variant="outline"
                           size="sm"
                           onClick={() => {
                             router.push('/messages');
                             close();
                           }}
-                          hasNotificationBadge={hasUnseenConversation}
+                          // TODO
+                          // hasNotificationBadge={hasUnseenConversation}
                         >
                           Messages
                         </Button>
                         <Button
-                          variant="danger"
+                          variant="destructive"
                           onClick={() => {
                             onSignOutClick();
                             close();

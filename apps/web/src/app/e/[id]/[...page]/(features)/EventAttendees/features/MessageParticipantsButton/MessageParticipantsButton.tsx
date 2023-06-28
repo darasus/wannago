@@ -56,12 +56,12 @@ export function MessageParticipantsButton() {
       />
       <Button
         onClick={handleOnClick}
-        variant="neutral"
-        iconLeft={<EnvelopeIcon />}
+        variant="outline"
         size="sm"
         title="Message attendees"
         data-testid="message-attendees-button"
       >
+        <EnvelopeIcon />
         Message attendees
       </Button>
     </>

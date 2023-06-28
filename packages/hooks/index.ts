@@ -15,3 +15,4 @@ export {usePublishEvent} from './src/event/usePublishEvent';
 export {useRemoveEvent} from './src/event/useRemoveEvent';
 export {useGenerateEventDescription} from './src/useGenerateEventDescription';
 export {useCreateConversation} from './src/conversation/useCreateConversation';
+export {useLoadingToast} from './src/useLoadingToast';

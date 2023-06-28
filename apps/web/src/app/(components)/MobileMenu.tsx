@@ -11,6 +11,7 @@ import {
 } from '../../features/AppLayout/features/Header/constants';
 import {useAuth} from '@clerk/nextjs';
 import {usePathname} from 'next/navigation';
+import Link from 'next/link';
 
 export function MobileMenu() {
   const pathname = usePathname();
@@ -28,10 +29,7 @@ export function MobileMenu() {
       <Popover>
         <Popover.Button data-testid="mobile-nav-button" as={Fragment}>
           {({open}) => (
-            <Button
-              iconLeft={open ? <XMarkIcon /> : <Bars3Icon />}
-              variant="neutral"
-            />
+            <Button size="icon">{open ? <XMarkIcon /> : <Bars3Icon />}</Button>
           )}
         </Popover.Button>
         <Transition.Root className="z-10">
@@ -55,14 +53,13 @@ export function MobileMenu() {
                       {navItems.map((item, i) => (
                         <Button
                           key={i}
-                          as="a"
-                          variant="neutral"
-                          href={item.href}
+                          asChild
+                          variant="outline"
                           onClick={() => {
                             close();
                           }}
                         >
-                          {item.label}
+                          <Link href={item.href}>{item.label}</Link>
                         </Button>
                       ))}
                     </div>
@@ -71,26 +68,24 @@ export function MobileMenu() {
                         <hr className="my-2 border-[1px] border-gray-800" />
                         <div className="flex gap-x-2">
                           <Button
-                            as="a"
+                            asChild
                             variant="secondary"
                             data-testid="mobile-login-button"
-                            href={'/login'}
                             onClick={() => {
                               close();
                             }}
                           >
-                            Login
+                            <Link href={'/login'}>Login</Link>
                           </Button>
                           <Button
-                            as="a"
-                            variant="primary"
+                            asChild
+                            variant="default"
                             data-testid="mobile-register-button"
-                            href={'/register'}
                             onClick={() => {
                               close();
                             }}
                           >
-                            Register
+                            <Link href={'/register'}>Register</Link>
                           </Button>
                         </div>
                       </>

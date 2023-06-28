@@ -100,7 +100,7 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
           />
 
           <div className="h-full flex flex-col justify-center items-center gap-y-2">
-            <Button variant="neutral" size="sm">
+            <Button variant="outline" size="sm">
               Select file
             </Button>
             <p className="text-center">or just drop image here...</p>
@@ -123,7 +123,7 @@ export const FileInput = forwardRef<HTMLInputElement, Props>(function FileInput(
               />
             </div>
             <Button
-              variant="neutral"
+              variant="outline"
               size="sm"
               className="absolute bottom-5 right-5 z-50"
               onClick={handleRemoveImage}
