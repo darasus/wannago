@@ -100,9 +100,7 @@ const inngest = new Inngest({
 });
 export type InngestType = typeof inngest;
 
-export async function createContext(opts: {
-  req: NextRequest;
-}): Promise<Context> {
+export function createContext(opts: {req: NextRequest}): Context {
   const timezone = opts.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
   // TODO: get currency
   const currency = getCurrencyFromHeaders(undefined);
