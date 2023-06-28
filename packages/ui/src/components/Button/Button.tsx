@@ -1,232 +1,55 @@
-import Link, {LinkProps} from 'next/link';
-import {ButtonHTMLAttributes, forwardRef, PropsWithChildren} from 'react';
-import {cn} from '../../../../utils';
-import {Spinner} from '../Spinner/Spinner';
-import {ButtonSize, ButtonVariant} from './types';
-import {cva} from 'class-variance-authority';
+import * as React from 'react';
+import {Slot} from '@radix-ui/react-slot';
+import {cva, type VariantProps} from 'class-variance-authority';
+import {cn} from 'utils';
 
-type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>> & {
-  size?: ButtonSize;
-  variant?: ButtonVariant;
-  className?: string;
-  iconLeft?: React.ReactNode;
-  isLoading?: boolean;
-  as?: 'button' | 'label' | 'a';
-  htmlFor?: string;
-  href?: LinkProps['href'];
-  target?: '_blank';
-  hasNotificationBadge?: boolean;
-};
-
-const button = cva(
-  [
-    'relative',
-    'cursor-pointer',
-    // base text styles
-    'text-gray-800 font-bold',
-    // base borders styles
-    'rounded-full border-2 border-gray-800',
-    'disabled:opacity-50 disabled:pointer-events-none',
-  ],
+const buttonVariants = cva(
+  'inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
-      intent: {
-        primary: [
-          'text-slate-50 bg-brand-500 hover:bg-brand-600 focus:ring-brand-1000',
-        ],
-        secondary: [
-          'text-slate-50 bg-brand-100 hover:bg-brand-200 focus:ring-brand-500',
-        ],
-        success: [
-          'text-gray-50 bg-green-600 hover:bg-green-700 focus:ring-green-500',
-        ],
-        danger: [
-          'text-red-500 bg-gray-50 hover:bg-gray-200 focus:ring-brand-500',
-        ],
-        neutral: ['bg-gray-50 hover:bg-gray-200 focus:ring-brand-500'],
-        link: [],
-        'link-gray': [
-          'text-gray-400 !border-gray-400 hover:text-gray-800 hover:!border-gray-800',
-        ],
+      variant: {
+        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        destructive:
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+        outline:
+          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+        secondary:
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        xs: ['text-xs'],
-        sm: ['text-sm'],
-        md: ['text-base'],
-        lg: ['text-md'],
+        default: 'h-10 px-4 py-2',
+        sm: 'h-9 rounded-md px-3',
+        lg: 'h-11 rounded-md px-8',
+        icon: 'h-10 w-10',
       },
-      hasChildren: {yes: [], no: []},
     },
-    compoundVariants: [
-      {
-        size: 'xs',
-        class: 'gap-x-1',
-      },
-      {
-        size: ['sm', 'md', 'lg'],
-        class: 'gap-x-2',
-      },
-      {
-        intent: ['primary', 'secondary', 'neutral', 'danger', 'success'],
-        class:
-          'inline-flex items-center justify-center shrink-0 focus:outline-none focus:ring-2 focus:ring-offset-2',
-      },
-      {
-        intent: ['link', 'link-gray'],
-        class:
-          'inline-flex items-center border-t-0 border-l-0 border-r-0 rounded-none border-0 border-b-2 leading-none font-bold',
-      },
-      {
-        intent: ['primary', 'secondary', 'neutral', 'danger', 'success'],
-        size: 'xs',
-        class: 'h-6 px-2',
-      },
-      {
-        intent: ['primary', 'secondary', 'neutral', 'danger', 'success'],
-        size: 'sm',
-        class: 'h-8 px-2',
-      },
-      {
-        intent: ['primary', 'secondary', 'neutral', 'danger', 'success'],
-        size: 'md',
-        class: 'h-11 px-4',
-      },
-      {
-        intent: ['primary', 'secondary', 'neutral', 'danger', 'success'],
-        size: 'lg',
-        class: 'h-16 px-6',
-      },
-      {
-        hasChildren: 'no',
-        size: ['xs'],
-        class: 'w-6',
-      },
-      {
-        hasChildren: 'no',
-        size: ['sm'],
-        class: 'w-8',
-      },
-      {
-        hasChildren: 'no',
-        size: ['md'],
-        class: 'w-11',
-      },
-      {
-        hasChildren: 'no',
-        size: ['lg'],
-        class: 'w-16',
-      },
-    ],
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+    },
   }
 );
 
-const icon = cva(['text-gray-800 shrink-0'], {
-  variants: {
-    intent: {
-      primary: ['text-gray-50'],
-      secondary: ['text-gray-50'],
-      success: ['text-gray-50'],
-      danger: ['text-red-500'],
-      neutral: [],
-      link: [],
-      'link-gray': ['text-gray-400'],
-    },
-    size: {
-      xs: ['h-4 w-4'],
-      sm: ['h-5 w-5'],
-      md: ['h-6 w-6'],
-      lg: ['h-6 w-6'],
-    },
-  },
-  compoundVariants: [],
-});
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+}
 
-export const Button = forwardRef<HTMLButtonElement, Props>(function Button(
-  {
-    size = 'md',
-    variant = 'primary',
-    children,
-    className,
-    iconLeft,
-    isLoading,
-    as = 'button',
-    disabled,
-    hasNotificationBadge,
-    ...props
-  },
-  ref
-) {
-  const isXs = size === 'xs';
-  const isSm = size === 'sm';
-  const isMd = size === 'md';
-  const isLg = size === 'lg';
-
-  return (
-    <Component
-      as={as}
-      ref={ref}
-      type="button"
-      disabled={disabled || isLoading}
-      {...props}
-      className={cn(
-        button({
-          intent: variant,
-          size,
-          hasChildren: Boolean(children) ? 'yes' : 'no',
-        }),
-        className
-      )}
-    >
-      {hasNotificationBadge && (
-        <div className="w-4 h-4 bg-red-500 rounded-full absolute top-0 right-0 -translate-y-[20%] translate-x-[20%]" />
-      )}
-      {isLoading ? (
-        <Spinner
-          className={cn({
-            'h-4 w-4': isXs,
-            'h-5 w-5': isSm,
-            'h-6 w-6': isMd || isLg,
-          })}
-        />
-      ) : (
-        <>
-          {
-            (iconLeft &&= (
-              <div className={cn(icon({intent: variant, size}))}>
-                {iconLeft}
-              </div>
-            ))
-          }
-          {children && <span className="truncate">{children}</span>}
-        </>
-      )}
-    </Component>
-  );
-});
-
-const Component = forwardRef(function Component(
-  {as, children, ...props}: any,
-  ref: any
-) {
-  if (as === 'label') {
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({className, variant, size, asChild = false, ...props}, ref) => {
+    const Comp = asChild ? Slot : 'button';
     return (
-      <label ref={ref} {...props}>
-        {children}
-      </label>
+      <Comp
+        className={cn(buttonVariants({variant, size, className}))}
+        ref={ref}
+        {...props}
+      />
     );
   }
+);
+Button.displayName = 'Button';
 
-  if (as === 'a') {
-    return (
-      <Link ref={ref} {...props}>
-        {children}
-      </Link>
-    );
-  }
-
-  return (
-    <button ref={ref} {...props}>
-      {children}
-    </button>
-  );
-});
+export {Button, buttonVariants};
