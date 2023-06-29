@@ -81,9 +81,11 @@ export default function PlaygroundPage() {
       <Section>
         <Input label="Hello" placeholder="Placeholder..." isLoading />
       </Section>
+
       <Section>
         <Accordion items={items} />
       </Section>
+
       <Section>
         {(["xs", "sm", "md", "lg"] as const).map((size) => {
           return (
