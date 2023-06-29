@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import {Badge, CardBase, Button, Avatar} from 'ui';
+import Link from "next/link";
+import { CardBase, Button, Avatar } from "ui";
 
 interface Props {
   name: string;
@@ -15,14 +15,8 @@ export function OrganizerCard({
   action,
 }: Props) {
   return (
-    <CardBase>
+    <CardBase title={"Who"} titleChildren={action}>
       <div>
-        <div className="flex items-center mb-2">
-          <Badge variant="outline" className="mr-1">
-            Who
-          </Badge>
-          {action}
-        </div>
         <div className="flex items-center gap-x-2">
           <div className="flex shrink-0  items-center overflow-hidden relative justify-center rounded-full safari-rounded-border-fix">
             <Avatar className="h-10 w-10" src={profileImageSrc} alt="avatar" />

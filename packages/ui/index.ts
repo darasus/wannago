@@ -24,7 +24,23 @@ export { TextAnimation } from "./src/components/TextAnimation/TextAnimation";
 export { Toggle } from "./src/components/Toggle/Toggle";
 export { LoadingWave } from "./src/components/LoadingWave/LoadingWave";
 export { LoadingBlock } from "./src/components/LoadingBlock/LoadingBlock";
-export { Menu } from "./src/components/Menu/Menu";
+export {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "./src/components/Menu/Menu";
 export { NotFoundMessage } from "./src/components/NotFoundMessage/NotFoundMessage";
 export { InfoIconWithTooltip } from "./src/components/InfoIconWithTooltip/InfoIconWithTooltip";
 export { TicketList } from "./src/components/TicketList/TicketList";

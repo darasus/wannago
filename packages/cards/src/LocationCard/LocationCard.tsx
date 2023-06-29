@@ -1,6 +1,6 @@
-import {Badge, Button, CardBase} from 'ui';
-import {LocationImage} from 'ui/src/components/LocationImage/LocationImage';
-import {Text} from 'ui';
+import { Button, CardBase } from "ui";
+import { LocationImage } from "ui/src/components/LocationImage/LocationImage";
+import { Text } from "ui";
 
 interface Props {
   address: string | null;
@@ -17,15 +17,15 @@ export function LocationCard({
 }: Props) {
   if (!address) return null;
   return (
-    <CardBase className="h-full">
-      <div className="mb-2">
-        <Badge variant="outline" className="mr-1">
-          Where
-        </Badge>
+    <CardBase
+      className="h-full"
+      title="Where"
+      titleChildren={
         <Button onClick={onGetDirectionsClick} variant="link" size="sm">
           Get directions
         </Button>
-      </div>
+      }
+    >
       <div className="flex">
         <Text title={address} className="font-bold truncate">
           {address}
