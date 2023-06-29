@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   ChevronDownIcon,
@@ -9,28 +9,28 @@ import {
   TrashIcon,
   UserPlusIcon,
   UsersIcon,
-} from '@heroicons/react/24/outline';
-import {Event} from '@prisma/client';
-import {usePublishEvent, useRemoveEvent, useUnpublishEvent} from 'hooks';
-import {usePathname, useParams} from 'next/navigation';
-import {forwardRef} from 'react';
-import {Button, Menu} from 'ui';
+} from "@heroicons/react/24/outline";
+import { Event } from "@prisma/client";
+import { usePublishEvent, useRemoveEvent, useUnpublishEvent } from "hooks";
+import { usePathname, useParams } from "next/navigation";
+import { forwardRef } from "react";
+import { Button, Menu } from "ui";
 
 interface Props {
   event: Event;
 }
 
-export function ManageEventButton({event}: Props) {
+export function ManageEventButton({ event }: Props) {
   const params = useParams();
   const pathname = usePathname();
   const shortId = params?.id as string;
-  const {modal: removeEventModal, onRemoveClick} = useRemoveEvent({
+  const { modal: removeEventModal, onRemoveClick } = useRemoveEvent({
     eventId: event?.id,
   });
-  const {modal: publishModal, onPublishClick} = usePublishEvent({
+  const { modal: publishModal, onPublishClick } = usePublishEvent({
     eventId: event?.id,
   });
-  const {modal: unpublishModal, onUnpublishClick} = useUnpublishEvent({
+  const { modal: unpublishModal, onUnpublishClick } = useUnpublishEvent({
     eventId: event?.id,
   });
 
@@ -43,10 +43,10 @@ export function ManageEventButton({event}: Props) {
         {...props}
         ref={ref}
         className="w-full"
-        iconLeft={<ChevronDownIcon />}
         size="md"
         data-testid="manage-event-button"
       >
+        <ChevronDownIcon />
         Manage event
       </Button>
     );
@@ -61,35 +61,35 @@ export function ManageEventButton({event}: Props) {
         <Menu
           testId="manage-event-menu"
           size="sm"
-          activeHref={pathname ?? '/'}
+          activeHref={pathname ?? "/"}
           as={ButtonWIthRef}
           options={[
             {
-              label: 'Event info',
+              label: "Event info",
               href: `/e/${shortId}/info`,
               iconLeft: <InformationCircleIcon />,
             },
             {
-              label: 'Edit event',
+              label: "Edit event",
               href: `/e/${shortId}/edit`,
               iconLeft: <PencilIcon />,
             },
             {
-              label: 'Event attendees',
+              label: "Event attendees",
               href: `/e/${shortId}/attendees`,
               iconLeft: <UsersIcon />,
             },
             {
-              label: 'Invite attendees',
+              label: "Invite attendees",
               href: `/e/${shortId}/invite`,
               iconLeft: <UserPlusIcon />,
             },
             ...(!event?.isPublished
               ? [
                   {
-                    label: 'Publish event',
+                    label: "Publish event",
                     onClick: onPublishClick,
-                    variant: 'success',
+                    variant: "success",
                     iconLeft: <RocketLaunchIcon />,
                   } as const,
                 ]
@@ -97,18 +97,18 @@ export function ManageEventButton({event}: Props) {
             ...(event?.isPublished
               ? [
                   {
-                    label: 'Unpublish event',
+                    label: "Unpublish event",
                     onClick: onUnpublishClick,
-                    variant: 'danger',
+                    variant: "danger",
                     iconLeft: <InboxArrowDownIcon />,
                   } as const,
                 ]
               : []),
 
             {
-              label: 'Remove event',
+              label: "Remove event",
               onClick: onRemoveClick,
-              variant: 'danger',
+              variant: "danger",
               iconLeft: <TrashIcon />,
             },
           ]}

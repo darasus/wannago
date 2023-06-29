@@ -1,30 +1,31 @@
-'use client';
+"use client";
 
-import {Event, Ticket, User} from '@prisma/client';
-import {useForm} from 'react-hook-form';
-import {useEffect} from 'react';
-import {z} from 'zod';
-import {zodResolver} from '@hookform/resolvers/zod';
+import { Event, Ticket, User } from "@prisma/client";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export const eventFormSchema = z.object({
-  createdById: z.string().default(''),
-  title: z.string().default(''),
+  createdById: z.string().default(""),
+  title: z.string().default(""),
   description: z.string().optional(),
+  featuredImage: z.string(),
   featuredImageSrc: z.string().optional(),
   featuredImageHeight: z.number().optional(),
   featuredImageWidth: z.number().optional(),
   featuredImagePreviewSrc: z.string().optional(),
   startDate: z.date({
-    required_error: 'Start date is required.',
+    required_error: "Start date is required.",
   }),
   startTime: z.date({
-    required_error: 'Start time is required.',
+    required_error: "Start time is required.",
   }),
   endDate: z.date({
-    required_error: 'End date is required.',
+    required_error: "End date is required.",
   }),
   endTime: z.date({
-    required_error: 'End time is required.',
+    required_error: "End time is required.",
   }),
   address: z.string(),
   maxNumberOfAttendees: z.number().optional().default(0),
@@ -42,10 +43,10 @@ export const eventFormSchema = z.object({
 });
 
 export function useEventForm(props: {
-  event?: (Event & {tickets: Ticket[]}) | null;
+  event?: (Event & { tickets: Ticket[] }) | null;
   me: User;
 }) {
-  const {event} = props || {};
+  const { event } = props || {};
   const createdByIdDefault =
     event?.userId || event?.organizationId || props.me.id;
 
@@ -63,7 +64,7 @@ export function useEventForm(props: {
       featuredImageWidth: event?.featuredImageWidth || undefined,
       featuredImagePreviewSrc: event?.featuredImagePreviewSrc || undefined,
       tickets:
-        event?.tickets?.map(ticket => {
+        event?.tickets?.map((ticket) => {
           return {
             id: ticket.id,
             title: ticket.title,
@@ -76,11 +77,11 @@ export function useEventForm(props: {
     },
   });
 
-  const createdByIdValue = form.watch('createdById');
+  const createdByIdValue = form.watch("createdById");
 
   useEffect(() => {
     if (!createdByIdValue && createdByIdDefault) {
-      form.setValue('createdById', createdByIdDefault);
+      form.setValue("createdById", createdByIdDefault);
     }
   }, [createdByIdDefault, createdByIdValue, form]);
 

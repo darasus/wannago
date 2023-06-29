@@ -1,13 +1,13 @@
-import Link from '@tiptap/extension-link';
-import Placeholder from '@tiptap/extension-placeholder';
-import {EditorContent, useEditor} from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import {forwardRef, HTMLAttributes, useEffect} from 'react';
-import {FieldError, useFormContext} from 'react-hook-form';
-import {cn} from 'utils';
-import {Form} from '../../../features/EventForm/types';
-import {EditorMenu} from './EditorMenu';
-import {inputClassName} from 'ui/src/components/Input/Input';
+import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { HTMLAttributes, useEffect } from "react";
+import { FieldError, useFormContext } from "react-hook-form";
+import { cn } from "utils";
+import { Form } from "../../../features/EventForm/types";
+import { EditorMenu } from "./EditorMenu";
+import { inputClassName } from "ui/src/components/Input/Input";
 
 interface Props extends HTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -18,88 +18,80 @@ interface Props extends HTMLAttributes<HTMLInputElement> {
   isGenerating?: boolean;
 }
 
-export const RichTextarea = forwardRef<HTMLInputElement, Props>(
-  function RichTextarea(
-    {
-      label,
-      error,
-      dataTestId,
-      isOptional,
-      additionalEditorMenu,
-      isGenerating,
-      ...props
-    },
-    ref
-  ) {
-    const {
-      formState: {defaultValues},
-      setValue,
-      watch,
-    } = useFormContext<Form>();
+export function RichTextarea({
+  label,
+  error,
+  dataTestId,
+  isOptional,
+  additionalEditorMenu,
+  isGenerating,
+  ...props
+}: Props) {
+  const {
+    formState: { defaultValues },
+    setValue,
+    watch,
+  } = useFormContext<Form>();
 
-    const value = watch('description');
+  const value = watch("description");
 
-    const editor = useEditor({
-      extensions: [
-        StarterKit,
-        Link.configure({
-          openOnClick: false,
-          protocols: ['http', 'https', 'mailto'],
-        }),
-        Placeholder.configure({
-          placeholder: props.placeholder,
-        }),
-      ],
-      content: defaultValues?.description || '',
-      onUpdate: ({editor}) => {
-        if (editor?.isEmpty) {
-          setValue('description', '');
-        } else {
-          setValue('description', editor.getHTML());
-        }
-      },
-    });
-
-    useEffect(() => {
-      if (isGenerating) {
-        editor?.commands.setContent(value);
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Link.configure({
+        openOnClick: false,
+        protocols: ["http", "https", "mailto"],
+      }),
+      Placeholder.configure({
+        placeholder: props.placeholder,
+      }),
+    ],
+    content: defaultValues?.description || "",
+    onUpdate: ({ editor }) => {
+      if (editor?.isEmpty) {
+        setValue("description", "");
+      } else {
+        setValue("description", editor.getHTML());
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [value]);
+    },
+  });
 
-    return (
-      <>
-        <input ref={ref} {...props} className="hidden" />
-        <div
-          className={cn(
-            'flex flex-col border-2 gap-y-2 rounded-3xl py-2 px-3 max-w-full min-h-[200px]',
-            inputClassName
-          )}
-        >
-          {editor && (
-            <EditorMenu
-              editor={editor}
-              additionalEditorMenu={additionalEditorMenu}
-            />
-          )}
-          <EditorContent
-            data-testid={dataTestId}
-            className={cn(
-              'border-none',
-              'prose',
-              'text-md',
-              'prose-h1:m-0 prose-h2:m-0 prose-h3:m-0',
-              'prose-p:m-0',
-              'prose-ul:m-0',
-              'prose-li:m-0'
-            )}
-            editor={editor}
-            onSubmit={e => {
-              e.preventDefault();
-            }}
-          />
-        </div>
-      </>
-    );
-  }
-);
+  useEffect(() => {
+    if (isGenerating) {
+      editor?.commands.setContent(value);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  return (
+    <div
+      className={cn(
+        "flex flex-col border-2 gap-y-2 rounded-3xl py-2 px-3 max-w-full min-h-[200px]",
+        inputClassName
+      )}
+    >
+      {editor && (
+        <EditorMenu
+          editor={editor}
+          additionalEditorMenu={additionalEditorMenu}
+        />
+      )}
+      <EditorContent
+        data-testid={dataTestId}
+        className={cn(
+          "border-none",
+          "prose",
+          "text-md",
+          "prose-h1:m-0 prose-h2:m-0 prose-h3:m-0",
+          "prose-p:m-0",
+          "prose-ul:m-0",
+          "prose-li:m-0"
+        )}
+        editor={editor}
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      />
+    </div>
+  );
+}
