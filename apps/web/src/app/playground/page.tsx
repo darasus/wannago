@@ -78,6 +78,7 @@ export default function PlaygroundPage() {
           );
         })}
       </Section>
+
       <Section>
         <Input label="Hello" placeholder="Placeholder..." isLoading />
       </Section>
