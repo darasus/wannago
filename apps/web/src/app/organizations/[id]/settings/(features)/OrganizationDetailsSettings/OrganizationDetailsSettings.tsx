@@ -1,45 +1,59 @@
-'use client';
+"use client";
 
-import {useRouter} from 'next/navigation';
-import {useForm, FormProvider} from 'react-hook-form';
-import toast from 'react-hot-toast';
-import {CardBase, Toggle, Button} from 'ui';
-import {FileInput} from '../../../../../../components/Input/FileInput/FileInput';
-import {Input} from '../../../../../../components/Input/Input/Input';
-import {api} from '../../../../../../trpc/client';
-import {Currency, Organization} from '@prisma/client';
-import {useLoadingToast} from 'hooks';
+import { useRouter } from "next/navigation";
+import { useForm, FormProvider } from "react-hook-form";
+import toast from "react-hot-toast";
+import {
+  CardBase,
+  Button,
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  Input,
+  FormMessage,
+  RadioGroup,
+  RadioGroupItem,
+} from "ui";
+import { FileInput } from "../../../../../../components/Input/FileInput/FileInput";
+import { api } from "../../../../../../trpc/client";
+import { Currency, Organization } from "@prisma/client";
+import { useLoadingToast } from "hooks";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface OrganizationForm {
-  name: string | null;
-  logoSrc: string | null;
-  email: string | null;
-  currency: Currency | null;
-}
+const organizationSettingsFormScheme = z.object({
+  name: z.string(),
+  logoSrc: z.string(),
+  email: z.string().email(),
+  currency: z.nativeEnum(Currency),
+});
 
 interface Props {
   organization: Organization;
 }
 
-export function OrganizationDetailsSettings({organization}: Props) {
+export function OrganizationDetailsSettings({ organization }: Props) {
   const router = useRouter();
-  const form = useForm<OrganizationForm>({
+  const form = useForm<z.infer<typeof organizationSettingsFormScheme>>({
+    resolver: zodResolver(organizationSettingsFormScheme),
     defaultValues: {
-      name: organization.name || null,
-      logoSrc: organization.logoSrc || null,
-      email: organization.email || null,
-      currency: organization.preferredCurrency || null,
+      name: organization.name,
+      logoSrc: organization.logoSrc,
+      email: organization.email,
+      currency: organization.preferredCurrency,
     },
   });
 
-  const handleSubmit = form.handleSubmit(async data => {
-    const {name, logoSrc, email, currency} = data;
+  const handleSubmit = form.handleSubmit(async (data) => {
+    const { name, logoSrc, email, currency } = data;
 
     if (name && logoSrc && email && currency) {
       try {
         await api.organization.create
-          .mutate({logoSrc, name, email, currency})
-          .catch(error => {
+          .mutate({ logoSrc, name, email, currency })
+          .catch((error) => {
             toast.error(error.message);
           });
         router.refresh();
@@ -47,69 +61,107 @@ export function OrganizationDetailsSettings({organization}: Props) {
     }
   });
 
-  useLoadingToast({isLoading: form.formState.isSubmitting});
+  useLoadingToast({ isLoading: form.formState.isSubmitting });
 
   return (
     <CardBase>
-      <form onSubmit={handleSubmit}>
-        <FormProvider {...form}>
-          <div className="flex flex-col gap-4">
-            <Input
-              type="text"
-              {...form.register('name', {
-                required: {
-                  value: true,
-                  message: 'Name is required',
-                },
-              })}
-              error={form.formState.errors.name}
-              label="Name"
-              data-testid="team-settings-form-input-name"
-            />
-            <Input
-              type="email"
-              {...form.register('email', {
-                required: {
-                  value: true,
-                  message: 'Email is required',
-                },
-              })}
-              error={form.formState.errors.email}
-              label="Email"
-              data-testid="team-settings-form-input-email"
-            />
-            <FileInput
-              {...form.register('logoSrc', {
-                required: {
-                  value: true,
-                  message: 'Logo is required',
-                },
-              })}
-              error={form.formState.errors.logoSrc}
-            />
-            <Toggle
-              options={[
-                {label: 'USD', value: 'USD'},
-                {label: 'EUR', value: 'EUR'},
-                {label: 'GBP', value: 'GBP'},
-              ]}
-              label="Default Currency"
-              {...form.register('currency')}
-              data-testid="email-input"
-              error={form.formState.errors.currency}
-            />
-            <div className="flex gap-2">
-              <Button
-                type="submit"
-                disabled={form.formState.isSubmitting}
-                data-testid="team-settings-form-input-submit-button"
-              >
-                Save
-              </Button>
+      <Form {...form}>
+        <form onSubmit={handleSubmit}>
+          <FormProvider {...form}>
+            <div className="flex flex-col gap-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Business name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="logoSrc"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Profile picture</FormLabel>
+                    <FormControl>
+                      <FileInput
+                        value={{ src: field.value, height: null, width: null }}
+                        onChange={(value) => {
+                          field.onChange(value?.src || null);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="currency"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Preferred currency</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex flex-col space-y-1"
+                      >
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="USD" />
+                          </FormControl>
+                          <FormLabel className="font-normal">USD</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="EUR" />
+                          </FormControl>
+                          <FormLabel className="font-normal">EUR</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="GBP" />
+                          </FormControl>
+                          <FormLabel className="font-normal">GBP</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex gap-2">
+                <Button
+                  type="submit"
+                  disabled={form.formState.isSubmitting}
+                  data-testid="team-settings-form-input-submit-button"
+                >
+                  Save
+                </Button>
+              </div>
             </div>
-          </div>
-        </FormProvider>
-      </form>
+          </FormProvider>
+        </form>
+      </Form>
     </CardBase>
   );
 }
