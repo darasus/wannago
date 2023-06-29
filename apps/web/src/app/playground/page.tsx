@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Accordion,
-  Badge,
-  Button,
-  Container,
-  LoadingWave,
-  Select,
-  SelectItem,
-} from "ui";
+import { Accordion, Badge, Button, Container, LoadingWave } from "ui";
 import { Input } from "../../components/Input/Input/Input";
 import { ChevronDown } from "lucide-react";
 
@@ -107,16 +99,6 @@ export default function PlaygroundPage() {
       </Section>
       <Section>
         <LoadingWave />
-      </Section>
-      <Section>
-        <Select label="Favorite Animal">
-          <SelectItem key="red panda">Red Panda</SelectItem>
-          <SelectItem key="cat">Cat</SelectItem>
-          <SelectItem key="dog">Dog</SelectItem>
-          <SelectItem key="aardvark">Aardvark</SelectItem>
-          <SelectItem key="kangaroo">Kangaroo</SelectItem>
-          <SelectItem key="snake">Snake</SelectItem>
-        </Select>
       </Section>
     </Container>
   );
