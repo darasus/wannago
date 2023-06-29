@@ -32,9 +32,9 @@ export default async function OrganizationSettingsPage() {
     <>
       <Container maxSize="sm">
         <div className="flex flex-col gap-4">
-          <Button variant="outline" asChild>
+          <Button asChild>
             <Link href="/organizations">
-              <ChevronLeft />
+              <ChevronLeft className="w-4 h-4 mr-2" />
               Back to organizations
             </Link>
           </Button>

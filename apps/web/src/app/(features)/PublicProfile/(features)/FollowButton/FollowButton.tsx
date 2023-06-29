@@ -1,17 +1,18 @@
-'use client';
+"use client";
 
-import {useParams, useRouter} from 'next/navigation';
-import {use, useTransition} from 'react';
-import {Button} from 'ui';
-import {RouterOutputs, api} from '../../../../../trpc/client';
-import {toast} from 'react-hot-toast';
-import {useLoadingToast} from 'hooks';
+import { useParams, useRouter } from "next/navigation";
+import { use, useTransition } from "react";
+import { Button } from "ui";
+import { RouterOutputs, api } from "../../../../../trpc/client";
+import { toast } from "react-hot-toast";
+import { useLoadingToast } from "hooks";
+import { UserMinus, UserPlus } from "lucide-react";
 
 interface Props {
-  amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
+  amFollowingPromise: Promise<RouterOutputs["follow"]["amFollowing"]>;
 }
 
-export function FollowButton({amFollowingPromise}: Props) {
+export function FollowButton({ amFollowingPromise }: Props) {
   const router = useRouter();
   const params = useParams();
   const [isPending, startTransition] = useTransition();
@@ -19,7 +20,7 @@ export function FollowButton({amFollowingPromise}: Props) {
   const userId = params?.userId as string | undefined;
   const amFollowing = use(amFollowingPromise);
 
-  useLoadingToast({isLoading: isPending});
+  useLoadingToast({ isLoading: isPending });
 
   if (amFollowing) {
     return (
@@ -33,7 +34,7 @@ export function FollowButton({amFollowingPromise}: Props) {
                 organizationId,
                 userId,
               })
-              .catch(error => {
+              .catch((error) => {
                 toast.error(error.message);
               });
             router.refresh();
@@ -43,6 +44,7 @@ export function FollowButton({amFollowingPromise}: Props) {
         className="w-full md:w-40"
         data-testid="unfollow-button"
       >
+        <UserMinus className="w-4 h-4 mr-2" />
         Unfollow
       </Button>
     );
@@ -59,7 +61,7 @@ export function FollowButton({amFollowingPromise}: Props) {
               organizationId,
               userId,
             })
-            .catch(error => {
+            .catch((error) => {
               toast.error(error.message);
             });
           router.refresh();
@@ -69,6 +71,7 @@ export function FollowButton({amFollowingPromise}: Props) {
       className="w-full md:w-40"
       data-testid="follow-button"
     >
+      <UserPlus className="w-4 h-4 mr-2" />
       Follow
     </Button>
   );

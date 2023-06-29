@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import {Button} from 'ui';
-import {api} from '../../../../../trpc/client';
-import {useParams} from 'next/dist/client/components/navigation';
-import {useRouter} from 'next/navigation';
-import {toast} from 'react-hot-toast';
-import {useTransition} from 'react';
-import {getMe} from '../../../../../trpc/client';
-import {useLoadingToast} from 'hooks';
+import { Button } from "ui";
+import { api } from "../../../../../trpc/client";
+import { useParams } from "next/dist/client/components/navigation";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import { useTransition } from "react";
+import { getMe } from "../../../../../trpc/client";
+import { useLoadingToast } from "hooks";
+import { SendIcon } from "lucide-react";
 
 interface Props {}
 
@@ -16,7 +17,7 @@ export function MessageButton({}: Props) {
   const params = useParams();
   const [isPending, startTransition] = useTransition();
 
-  useLoadingToast({isLoading: isPending});
+  useLoadingToast({ isLoading: isPending });
 
   return (
     <Button
@@ -33,27 +34,27 @@ export function MessageButton({}: Props) {
 
           // TODO move this to procedure
           if (!me?.id && !myOrganization?.id) {
-            toast.error('To be able to message anyone you need to login first');
+            toast.error("To be able to message anyone you need to login first");
             return undefined;
           }
 
           if (me?.id === params?.userId) {
-            toast.error('You cannot message yourself');
+            toast.error("You cannot message yourself");
             return undefined;
           }
           if (
             myOrganization?.id &&
             myOrganization?.id === params?.organizationId
           ) {
-            toast.error('You cannot message your own organization');
+            toast.error("You cannot message your own organization");
             return undefined;
           }
 
-          if (typeof params?.userId === 'string') {
+          if (typeof params?.userId === "string") {
             userIds.push(params?.userId);
           }
 
-          if (typeof params?.organizationId === 'string') {
+          if (typeof params?.organizationId === "string") {
             organizationIds.push(params?.organizationId);
           }
 
@@ -62,7 +63,7 @@ export function MessageButton({}: Props) {
               userIds,
               organizationIds,
             })
-            .catch(error => {
+            .catch((error) => {
               toast.error(error.message);
             });
 
@@ -74,6 +75,7 @@ export function MessageButton({}: Props) {
       className="w-full md:w-40"
       data-testid="message-button"
     >
+      <SendIcon className="w-4 h-4 mr-2" />
       Message
     </Button>
   );

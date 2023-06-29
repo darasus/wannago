@@ -1,19 +1,26 @@
-import {Event} from '@prisma/client';
-import {RouterOutputs} from 'api';
-import {EventCard} from 'cards';
-import Link from 'next/link';
-import {Suspense} from 'react';
-import {Avatar, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
-import {MessageButton} from './(features)/MessageButton/MessageButton';
-import {FollowButton} from './(features)/FollowButton/FollowButton';
+import { Event } from "@prisma/client";
+import { RouterOutputs } from "api";
+import { EventCard } from "cards";
+import Link from "next/link";
+import { Suspense } from "react";
+import {
+  Avatar,
+  CardBase,
+  Container,
+  LoadingBlock,
+  PageHeader,
+  Text,
+} from "ui";
+import { MessageButton } from "./(features)/MessageButton/MessageButton";
+import { FollowButton } from "./(features)/FollowButton/FollowButton";
 
 interface Props {
   isLoadingEvents?: boolean;
   profileImageSrc?: string | null;
   events: Event[];
   name: string;
-  followCountsPromise: Promise<RouterOutputs['follow']['getFollowCounts']>;
-  amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
+  followCountsPromise: Promise<RouterOutputs["follow"]["getFollowCounts"]>;
+  amFollowingPromise: Promise<RouterOutputs["follow"]["amFollowing"]>;
 }
 
 export async function PublicProfile({
@@ -33,7 +40,7 @@ export async function PublicProfile({
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <Avatar
               className="shrink-0 h-40 w-40"
-              imageClassName="rounded-3xl"
+              imageClassName="rounded-md"
               src={profileImageSrc}
               alt={`avatar`}
               height={1000}
@@ -81,7 +88,7 @@ export async function PublicProfile({
         )}
         {events && events?.length > 0 && (
           <div className="flex flex-col gap-4">
-            {events.map(event => {
+            {events.map((event) => {
               return (
                 <Link
                   href={`/e/${event.shortId}`}

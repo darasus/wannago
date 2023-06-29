@@ -21,7 +21,7 @@ export default async function ConversationPage({
 
   return (
     <Container className="flex flex-col gap-4" maxSize="sm">
-      <Button asChild variant="outline">
+      <Button asChild>
         <Link href="/messages">
           <ChevronLeft /> Back to conversations
         </Link>
