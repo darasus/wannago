@@ -1,12 +1,12 @@
-import {Button, Container, LoadingBlock, PageHeader} from 'ui';
-import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
-import {api} from '../../../../trpc/server';
-import {OrganizationDetailsSettings} from './(features)/OrganizationDetailsSettings/OrganizationDetailsSettings';
-import {TeamMembersSettings} from './(features)/TeamMemberSettings/TeamMembersSettings';
-import {Suspense} from 'react';
-import {OrganizationSubscription} from './(features)/OrganizationSubscription/OrganizationSubscription';
-import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
-import Link from 'next/link';
+import { Button, Container, LoadingBlock, PageHeader } from "ui";
+import { api } from "../../../../trpc/server";
+import { OrganizationDetailsSettings } from "./(features)/OrganizationDetailsSettings/OrganizationDetailsSettings";
+import { TeamMembersSettings } from "./(features)/TeamMemberSettings/TeamMembersSettings";
+import { Suspense } from "react";
+import { OrganizationSubscription } from "./(features)/OrganizationSubscription/OrganizationSubscription";
+import { StripeAccountLinkSettings } from "../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings";
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 
 // TODO: create description text explaining why you need to create a team
 
@@ -20,7 +20,7 @@ export const generateMetadata = async () => {
 
 export default async function OrganizationSettingsPage() {
   const mySubscriptionPromise = api.subscriptionPlan.getMySubscription.query({
-    type: 'BUSINESS',
+    type: "BUSINESS",
   });
   const organization = await api.organization.getMyOrganization.query();
 
@@ -34,7 +34,7 @@ export default async function OrganizationSettingsPage() {
         <div className="flex flex-col gap-4">
           <Button variant="outline" asChild>
             <Link href="/organizations">
-              <ArrowLeftCircleIcon />
+              <ChevronLeft />
               Back to organizations
             </Link>
           </Button>

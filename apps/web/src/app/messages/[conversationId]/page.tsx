@@ -1,18 +1,18 @@
-import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
-import Link from 'next/link';
-import React, {Fragment} from 'react';
-import {Avatar, Button, CardBase, Container, PageHeader, Text} from 'ui';
-import {formatDate, getConversationMembers} from 'utils';
-import {MessageInput} from './(features)/MessageInput/MessageInput';
-import {api, getMe} from '../../../trpc/server';
+import Link from "next/link";
+import React, { Fragment } from "react";
+import { Avatar, Button, CardBase, Container, PageHeader, Text } from "ui";
+import { formatDate, getConversationMembers } from "utils";
+import { MessageInput } from "./(features)/MessageInput/MessageInput";
+import { api, getMe } from "../../../trpc/server";
+import { ChevronLeft } from "lucide-react";
 
 export default async function ConversationPage({
-  params: {conversationId},
+  params: { conversationId },
 }: {
-  params: {conversationId: string};
+  params: { conversationId: string };
 }) {
   const me = await getMe();
-  await api.conversation.markConversationAsSeen.mutate({conversationId});
+  await api.conversation.markConversationAsSeen.mutate({ conversationId });
   const conversation = await api.conversation.getConversationById.query({
     conversationId,
   });
@@ -23,19 +23,19 @@ export default async function ConversationPage({
     <Container className="flex flex-col gap-4" maxSize="sm">
       <Button asChild variant="outline">
         <Link href="/messages">
-          <ArrowLeftCircleIcon /> Back to conversations
+          <ChevronLeft /> Back to conversations
         </Link>
       </Button>
       <PageHeader
         title={
           <>
             <Text>Conversation with </Text>
-            {conversationMembers.map(({label, href}, i) => (
+            {conversationMembers.map(({ label, href }, i) => (
               <Fragment key={href}>
                 <Link className="underline" href={href}>
                   {label}
                 </Link>
-                {conversationMembers.length - 1 === i ? '' : ' & '}
+                {conversationMembers.length - 1 === i ? "" : " & "}
               </Fragment>
             ))}
           </>
@@ -46,7 +46,7 @@ export default async function ConversationPage({
           <Text className="text-center">No messages yet...</Text>
         )}
         <div className="flex flex-col gap-2">
-          {conversation?.messages.map(message => {
+          {conversation?.messages.map((message) => {
             return (
               <div
                 key={message.id}
@@ -66,7 +66,7 @@ export default async function ConversationPage({
                         <b>{message.user?.firstName}</b>
                       </Text>
                       <Text className="text-xs text-gray-400">
-                        {formatDate(message.createdAt, 'hh:mm, MMM d')}
+                        {formatDate(message.createdAt, "hh:mm, MMM d")}
                       </Text>
                     </div>
                     <div className="p-2" data-testid="message-text">

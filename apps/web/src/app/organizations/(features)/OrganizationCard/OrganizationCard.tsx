@@ -1,14 +1,14 @@
-import {UserIcon, Cog6ToothIcon} from '@heroicons/react/24/solid';
-import {Organization} from '@prisma/client';
-import Link from 'next/link';
-import {o} from 'ramda';
-import {CardBase, Avatar, Button, Text} from 'ui';
+import { UserIcon, CogIcon } from "lucide-react";
+import { Organization } from "@prisma/client";
+import Link from "next/link";
+import { o } from "ramda";
+import { CardBase, Avatar, Button, Text } from "ui";
 
 interface OrganizationCardProps {
-  organization: Pick<Organization, 'id' | 'logoSrc' | 'name'>;
+  organization: Pick<Organization, "id" | "logoSrc" | "name">;
 }
 
-export function OrganizationCard({organization}: OrganizationCardProps) {
+export function OrganizationCard({ organization }: OrganizationCardProps) {
   return (
     <CardBase data-testid="organization-item-card">
       <div className="flex gap-4 items-center">
@@ -24,6 +24,7 @@ export function OrganizationCard({organization}: OrganizationCardProps) {
           asChild
           variant="outline"
           data-testid="organization-item-card-profile-button"
+          size="icon"
         >
           <Link href={`/o/${organization.id}`}>
             <UserIcon />
@@ -33,9 +34,10 @@ export function OrganizationCard({organization}: OrganizationCardProps) {
           asChild
           variant="outline"
           data-testid="organization-item-card-settings-button"
+          size="icon"
         >
           <Link href={`/organizations/${organization.id}/settings`}>
-            <Cog6ToothIcon />
+            <CogIcon />
           </Link>
         </Button>
       </div>

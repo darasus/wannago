@@ -1,37 +1,41 @@
-'use client';
+"use client";
 
-import {useAuth} from '@clerk/nextjs';
-import {Popover, Transition} from '@headlessui/react';
-import {Fragment, use} from 'react';
-import {Avatar, Button, CardBase} from 'ui';
-import {usePathname} from 'next/navigation';
-import {PlusCircleIcon} from '@heroicons/react/24/solid';
-import {getIsPublic} from '../../../features/AppLayout/features/Header/constants';
-import {useRouter} from 'next/navigation';
-import {User} from '@prisma/client';
+import { useAuth } from "@clerk/nextjs";
+import { Popover, Transition } from "@headlessui/react";
+import { Fragment, use } from "react";
+import { Avatar, Button, CardBase } from "ui";
+import { usePathname } from "next/navigation";
+import { getIsPublic } from "../../../features/AppLayout/features/Header/constants";
+import { useRouter } from "next/navigation";
+import { User } from "@prisma/client";
+import { PlusCircle } from "lucide-react";
 
 interface Props {
   mePromise: Promise<User | null>;
   hasUnseenConversationPromise: Promise<boolean>;
 }
 
-export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
+export function UserSection({
+  mePromise,
+  hasUnseenConversationPromise,
+}: Props) {
   const router = useRouter();
   const pathname = usePathname();
-  const {signOut} = useAuth();
+  const { signOut } = useAuth();
   const me = use(mePromise);
+  // TODO
   const hasUnseenConversation = use(hasUnseenConversationPromise);
-  const isPublicPage = getIsPublic(pathname ?? '/');
+  const isPublicPage = getIsPublic(pathname ?? "/");
 
   const onSignOutClick = async () => {
     await signOut();
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   if (isPublicPage) {
     return (
       <div className="flex gap-2">
-        <Button onClick={() => router.push('/dashboard')}>Dashboard</Button>
+        <Button onClick={() => router.push("/dashboard")}>Dashboard</Button>
       </div>
     );
   }
@@ -40,17 +44,17 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
     <div className="flex gap-2">
       <Button
         className="flex md:hidden"
-        onClick={() => router.push('/e/add')}
+        onClick={() => router.push("/e/add")}
         data-testid="add-event-button-mini"
       >
-        <PlusCircleIcon />
+        <PlusCircle />
       </Button>
       <Button
         className="hidden md:flex"
-        onClick={() => router.push('/e/add')}
+        onClick={() => router.push("/e/add")}
         data-testid="add-event-button"
       >
-        <PlusCircleIcon />
+        <PlusCircle />
         Create event
       </Button>
       {me && (
@@ -64,7 +68,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                       <Avatar
                         className="h-6 w-6"
                         src={me.profileImageSrc}
-                        alt={'avatar'}
+                        alt={"avatar"}
                       />
                       {me.firstName}
                     </Button>
@@ -81,14 +85,14 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                 leaveTo="opacity-0 translate-y-1"
               >
                 <Popover.Panel className="absolute right-0 mt-3 max-w-sm">
-                  {({close}) => {
+                  {({ close }) => {
                     return (
                       <CardBase innerClassName="flex flex-col gap-y-2 w-40">
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => {
-                            router.push('/dashboard');
+                            router.push("/dashboard");
                             close();
                           }}
                         >
@@ -110,7 +114,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                           size="sm"
                           data-testid="organizations-button"
                           onClick={() => {
-                            router.push('/organizations');
+                            router.push("/organizations");
                             close();
                           }}
                         >
@@ -120,7 +124,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                           variant="outline"
                           size="sm"
                           onClick={() => {
-                            router.push('/settings');
+                            router.push("/settings");
                             close();
                           }}
                         >
@@ -130,7 +134,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
                           variant="outline"
                           size="sm"
                           onClick={() => {
-                            router.push('/messages');
+                            router.push("/messages");
                             close();
                           }}
                           // TODO
