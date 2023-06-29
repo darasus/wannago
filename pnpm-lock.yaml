@@ -293,6 +293,9 @@ importers:
       tailwind-merge:
         specifier: ^1.10.0
         version: 1.10.0
+      tailwindcss-animate:
+        specifier: ^1.0.6
+        version: 1.0.6(tailwindcss@3.3.2)
       timeago.js:
         specifier: ^4.0.2
         version: 4.0.2
@@ -16196,6 +16199,14 @@ packages:
 
   /tailwind-merge@1.10.0:
     resolution: {integrity: sha512-WFnDXSS4kFTZwjKg5/oZSGzBRU/l+qcbv5NVTzLUQvJ9yovDAP05h0F2+ZFW0Lw9EcgRoc2AfURUdZvnEFrXKg==}
+    dev: false
+
+  /tailwindcss-animate@1.0.6(tailwindcss@3.3.2):
+    resolution: {integrity: sha512-4WigSGMvbl3gCCact62ZvOngA+PRqhAn7si3TQ3/ZuPuQZcIEtVap+ENSXbzWhpojKB8CpvnIsrwBu8/RnHtuw==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || insiders'
+    dependencies:
+      tailwindcss: 3.3.2(ts-node@10.9.1)
     dev: false
 
   /tailwindcss@3.3.2(ts-node@10.9.1):

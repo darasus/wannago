@@ -58,7 +58,7 @@ export function useEventForm(props: {
       endDate: event?.endDate || new Date(),
       description: event?.description || undefined,
       address: event?.address || undefined,
-      maxNumberOfAttendees: event?.maxNumberOfAttendees || undefined,
+      maxNumberOfAttendees: event?.maxNumberOfAttendees || 0,
       featuredImageSrc: event?.featuredImageSrc || undefined,
       featuredImageHeight: event?.featuredImageHeight || undefined,
       featuredImageWidth: event?.featuredImageWidth || undefined,
