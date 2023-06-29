@@ -7,7 +7,6 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  InputWrapper,
   Tabs,
   TabsContent,
   TabsList,
@@ -54,50 +53,82 @@ export function Attend() {
       </TabsContent>
       <TabsContent value="paid">
         <>
-          <InputWrapper label="Tickets">
-            <div className="flex flex-col gap-2">
-              {fields.map((field, index) => {
-                return (
-                  <div
-                    className="flex flex-col border-2 border-gray-300 rounded-3xl gap-2 p-4"
-                    key={field.id}
-                  >
-                    <Input
-                      placeholder={"Title"}
-                      {...form.register(`tickets.${index}.title`)}
-                    />
-                    <Textarea
-                      placeholder="Description"
-                      {...form.register(`tickets.${index}.description`)}
-                    />
-                    <div className="grid grid-cols-2 gap-2">
-                      <Input
-                        placeholder="Price"
-                        type="number"
-                        {...form.register(`tickets.${index}.price`)}
+          <div className="flex flex-col gap-2 mb-2">
+            {fields.map((field, index) => {
+              return (
+                <div
+                  className="flex flex-col bg-muted rounded-md gap-2 p-4"
+                  key={field.id}
+                >
+                  <FormItem>
+                    <FormLabel className="flex gap-2 items-center">
+                      Ticket title
+                    </FormLabel>
+                    <FormControl key={field.id}>
+                      <FormField
+                        control={form.control}
+                        name={`tickets.${index}.title`}
+                        render={({ field }) => <Input {...field} />}
                       />
-                      <Input
-                        placeholder="Max quantity"
-                        type="number"
-                        {...form.register(`tickets.${index}.maxQuantity`)}
+                    </FormControl>
+                  </FormItem>
+                  <FormItem>
+                    <FormLabel className="flex gap-2 items-center">
+                      Ticket description
+                    </FormLabel>
+                    <FormControl key={field.id}>
+                      <FormField
+                        control={form.control}
+                        name={`tickets.${index}.description`}
+                        render={({ field }) => <Textarea {...field} />}
                       />
-                    </div>
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => {
-                        remove(index);
-                      }}
-                    >
-                      Remove
-                    </Button>
+                    </FormControl>
+                  </FormItem>
+                  <div className="grid grid-cols-2 gap-2">
+                    <FormItem>
+                      <FormLabel className="flex gap-2 items-center">
+                        Price
+                      </FormLabel>
+                      <FormControl key={field.id}>
+                        <FormField
+                          control={form.control}
+                          name={`tickets.${index}.price`}
+                          render={({ field }) => <Input {...field} />}
+                        />
+                      </FormControl>
+                    </FormItem>
+                    <FormItem>
+                      <FormLabel className="flex gap-2 items-center">
+                        Max quantity
+                      </FormLabel>
+                      <FormControl key={field.id}>
+                        <FormField
+                          control={form.control}
+                          name={`tickets.${index}.maxQuantity`}
+                          render={({ field }) => (
+                            <Input type="number" {...field} />
+                          )}
+                        />
+                      </FormControl>
+                    </FormItem>
                   </div>
-                );
-              })}
-            </div>
-          </InputWrapper>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => {
+                      remove(index);
+                    }}
+                  >
+                    Remove
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
           <Button
-            onClick={() => {
+            className="w-full"
+            onClick={(e) => {
+              e.preventDefault();
               append({
                 maxQuantity: "0",
                 price: "0",
@@ -108,8 +139,9 @@ export function Attend() {
             variant="outline"
             size="sm"
           >
-            Add another ticket
+            Add ticket
           </Button>
+          <FormMessage />
         </>
       </TabsContent>
     </Tabs>

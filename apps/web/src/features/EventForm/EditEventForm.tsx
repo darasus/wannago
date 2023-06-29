@@ -1,43 +1,43 @@
-'use client';
+"use client";
 
-import {useRouter} from 'next/navigation';
-import {EventForm} from './EventForm';
-import {useEventForm} from './hooks/useEventForm';
-import {FormProvider} from 'react-hook-form';
-import {zonedTimeToUtc} from 'date-fns-tz';
-import {useAmplitudeAppDir} from 'hooks';
-import {PageHeader} from 'ui';
-import {Event, Organization, Ticket, User} from '@prisma/client';
-import {api} from '../../trpc/client';
+import { useRouter } from "next/navigation";
+import { EventForm } from "./EventForm";
+import { useEventForm } from "./hooks/useEventForm";
+import { FormProvider } from "react-hook-form";
+import { zonedTimeToUtc } from "date-fns-tz";
+import { useAmplitudeAppDir } from "hooks";
+import { PageHeader } from "ui";
+import { Event, Organization, Ticket, User } from "@prisma/client";
+import { api } from "../../trpc/client";
 
 interface Props {
-  event: Event & {tickets: Ticket[]};
+  event: Event & { tickets: Ticket[] };
   me: User;
   organization: Organization | null;
 }
 
-export function EditEventForm({event, me, organization}: Props) {
-  const {logEvent} = useAmplitudeAppDir();
+export function EditEventForm({ event, me, organization }: Props) {
+  const { logEvent } = useAmplitudeAppDir();
   const router = useRouter();
   const form = useEventForm({
     event,
     me,
   });
 
-  const onSubmit = form.handleSubmit(async data => {
-    logEvent('event_update_submitted');
+  const onSubmit = form.handleSubmit(async (data) => {
+    logEvent("event_update_submitted");
 
     if (event?.id) {
       await api.event.update
         .mutate({
           ...data,
           tickets:
-            data.tickets?.map(ticket => ({
+            data.tickets?.map((ticket) => ({
               ...ticket,
               price: Number(ticket.price) * 100,
               maxQuantity: Number(ticket.maxQuantity),
             })) || [],
-          description: data.description === '<p></p>' ? null : data.description,
+          description: data.description === "<p></p>" ? null : data.description,
           eventId: event.id,
           startDate: zonedTimeToUtc(
             data.startDate,
@@ -49,8 +49,8 @@ export function EditEventForm({event, me, organization}: Props) {
           ),
           maxNumberOfAttendees: data.maxNumberOfAttendees || 0,
         })
-        .then(data => {
-          logEvent('event_updated', {
+        .then((data) => {
+          logEvent("event_updated", {
             eventId: data?.id,
           });
           router.push(`/e/${data.shortId}`);
@@ -69,9 +69,8 @@ export function EditEventForm({event, me, organization}: Props) {
           <div className="col-span-12 md:col-span-12">
             <EventForm
               me={me}
-              organization={organization}
+              myOrganization={organization}
               onSubmit={onSubmit}
-              isEdit
               onCancelClick={() => router.push(`/e/${event?.shortId}`)}
             />
           </div>

@@ -10,7 +10,7 @@ export const eventFormSchema = z.object({
   createdById: z.string().default(""),
   title: z.string().default(""),
   description: z.string().optional(),
-  featuredImage: z.string(),
+  featuredImage: z.string().optional(),
   featuredImageSrc: z.string().optional(),
   featuredImageHeight: z.number().optional(),
   featuredImageWidth: z.number().optional(),
@@ -18,14 +18,8 @@ export const eventFormSchema = z.object({
   startDate: z.date({
     required_error: "Start date is required.",
   }),
-  startTime: z.date({
-    required_error: "Start time is required.",
-  }),
   endDate: z.date({
     required_error: "End date is required.",
-  }),
-  endTime: z.date({
-    required_error: "End time is required.",
   }),
   address: z.string(),
   maxNumberOfAttendees: z.number().optional().default(0),
