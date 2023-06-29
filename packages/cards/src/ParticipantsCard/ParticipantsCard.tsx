@@ -1,7 +1,7 @@
-import {FormEventHandler} from 'react';
-import {Badge, CardBase} from 'ui';
-import {JoinForm} from '../../../../apps/web/src/components/JoinForm/JoinForm';
-import {Text, Tooltip} from 'ui';
+import { FormEventHandler } from "react";
+import { Badge, CardBase } from "ui";
+import { JoinForm } from "../../../../apps/web/src/components/JoinForm/JoinForm";
+import { Text, Tooltip } from "ui";
 
 interface Props {
   onSubmit: FormEventHandler;
@@ -16,11 +16,11 @@ export function ParticipantsCard({
 }: Props) {
   const tooltipText = isPublished
     ? undefined
-    : 'To enable sign-ups, please publish the event first.';
+    : "To enable sign-ups, please publish the event first.";
 
   return (
     <Tooltip text={tooltipText}>
-      <CardBase isBlur={!isPublished}>
+      <CardBase>
         <div>
           <div className="mb-2">
             <Badge variant="outline" className="mr-1">
