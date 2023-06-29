@@ -2,7 +2,14 @@
 
 import {useRouter} from 'next/navigation';
 import {usePathname} from 'next/navigation';
-import {Button, Menu} from 'ui';
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from 'ui';
 
 export function EventFilter() {
   const router = useRouter();
@@ -17,30 +24,38 @@ export function EventFilter() {
     }
   };
 
+  const options = [
+    ['All', '/dashboard/all'],
+    ['Attending', '/dashboard/attending'],
+    ['Following', '/dashboard/following'],
+    ['Organizing', '/dashboard/organizing'],
+  ];
+
   return (
     <>
-      <Menu
-        activeHref={pathname ?? '/'}
-        size="sm"
-        options={[
-          {
-            label: 'All',
-            href: '/dashboard/all',
-          },
-          {
-            label: 'Attending',
-            href: '/dashboard/attending',
-          },
-          {
-            label: 'Following',
-            href: '/dashboard/following',
-          },
-          {
-            label: 'Organizing',
-            href: '/dashboard/organizing',
-          },
-        ]}
-      />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="sm">
+            Filter
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+          <DropdownMenuGroup>
+            {options.map(([label, url]) => {
+              return (
+                <DropdownMenuItem
+                  key={url}
+                  onClick={() => {
+                    router.push(url);
+                  }}
+                >
+                  <span>{label}</span>
+                </DropdownMenuItem>
+              );
+            })}
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
       <Button
         variant={isPast ? 'default' : 'outline'}
         size="sm"
