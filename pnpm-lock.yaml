@@ -23,9 +23,6 @@ importers:
       '@headlessui/react':
         specifier: 1.7.4
         version: 1.7.4(react-dom@18.2.0)(react@18.2.0)
-      '@heroicons/react':
-        specifier: ^2.0.16
-        version: 2.0.16(react@18.2.0)
       '@hookform/resolvers':
         specifier: ^2.9.11
         version: 2.9.11(react-hook-form@7.43.2)
@@ -2952,14 +2949,6 @@ packages:
       client-only: 0.0.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /@heroicons/react@2.0.16(react@18.2.0):
-    resolution: {integrity: sha512-x89rFxH3SRdYaA+JCXwfe+RkE1SFTo9GcOkZettHer71Y3T7V+ogKmfw5CjTazgS3d0ClJ7p1NA+SP7VQLQcLw==}
-    peerDependencies:
-      react: '>= 16'
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /@hookform/resolvers@2.9.11(react-hook-form@7.43.2):

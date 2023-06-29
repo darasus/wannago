@@ -3,9 +3,8 @@ import {SectionHeader} from './SectionHeader';
 import {SectionContainer} from './SectionContainer';
 import {titleFontClassName} from '../../fonts';
 import {cn} from 'utils';
-import {ArrowRightIcon} from '@heroicons/react/24/outline';
 import {Fragment} from 'react';
-import {ArrowDownIcon} from '@heroicons/react/24/solid';
+import {ChevronDown, ChevronRight} from 'lucide-react';
 
 const items = [
   {
@@ -51,8 +50,8 @@ export function HowDoesItWork() {
               <Item feature={feature} />
               {items.length - 1 === i ? null : (
                 <>
-                  <ArrowRightIcon className="hidden md:block shrink-0 w-12 h-1w-12" />
-                  <ArrowDownIcon className="md:hidden shrink-0 w-12 h-1w-12" />
+                  <ChevronRight className="hidden md:block shrink-0 w-12 h-1w-12" />
+                  <ChevronDown className="md:hidden shrink-0 w-12 h-1w-12" />
                 </>
               )}
             </Fragment>

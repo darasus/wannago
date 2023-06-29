@@ -1,4 +1,4 @@
-import {ExclamationCircleIcon} from '@heroicons/react/24/solid';
+import {AlertCircle} from 'lucide-react';
 import {PropsWithChildren} from 'react';
 import {FieldError} from 'react-hook-form';
 import {cn} from 'utils';
@@ -52,7 +52,7 @@ export function InputWrapper({
           {children}
           {hasError && (
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-              <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+              <AlertCircle className="h-5 w-5 text-red-500" />
             </div>
           )}
         </div>

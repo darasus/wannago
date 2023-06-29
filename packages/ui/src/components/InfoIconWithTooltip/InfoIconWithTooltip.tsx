@@ -1,4 +1,4 @@
-import {InformationCircleIcon} from '@heroicons/react/24/solid';
+import {InfoIcon} from 'lucide-react';
 import {useState} from 'react';
 import {cn} from 'utils';
 import {Modal} from '../Modal/Modal';
@@ -18,7 +18,7 @@ export function InfoIconWithTooltip({className, text}: Props) {
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         {text}
       </Modal>
-      <InformationCircleIcon
+      <InfoIcon
         className={cn('h-[15px] w-[15px] block cursor-pointer', className)}
         onClick={openModal}
       />

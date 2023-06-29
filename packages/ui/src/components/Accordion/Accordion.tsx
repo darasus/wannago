@@ -1,4 +1,4 @@
-import {ChevronDownIcon} from '@heroicons/react/24/solid';
+import {ChevronDownIcon} from 'lucide-react';
 import {motion, AnimatePresence} from 'framer-motion';
 import {useState} from 'react';
 

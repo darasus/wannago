@@ -1,12 +1,12 @@
 'use client';
 
 import {useAuth} from '@clerk/nextjs';
-import {CheckCircleIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/navigation';
 import {Button, CardBase, Text} from 'ui';
 import {cn, formatCents} from 'utils';
 import {titleFont} from '../../fonts';
 import {Currency} from '@prisma/client';
+import {CheckCircleIcon} from 'lucide-react';
 
 interface Props {
   type: 'general' | 'featured' | 'highlighted';

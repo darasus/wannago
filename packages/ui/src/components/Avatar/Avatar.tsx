@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import {ComponentProps} from 'react';
 import {cloudflareImageLoader, cn} from 'utils';
-import {UserIcon} from '@heroicons/react/24/solid';
+import {UserIcon} from 'lucide-react';
 
 interface Props extends Omit<ComponentProps<typeof Image>, 'src'> {
   className?: string;
