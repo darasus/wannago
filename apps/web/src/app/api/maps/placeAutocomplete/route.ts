@@ -6,8 +6,6 @@ import {invariant} from 'utils';
 export async function POST(req: Request) {
   const {query} = await req.json();
 
-  console.log('>>> query', query);
-
   invariant(typeof query === 'string', '`query` must be a string');
 
   const googleMaps = new GoogleMapsClient();
