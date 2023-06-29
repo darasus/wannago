@@ -1,45 +1,56 @@
-'use client';
+"use client";
 
-import {FormProvider, useForm} from 'react-hook-form';
-import {Button, CardBase, Toggle} from 'ui';
-import {FileInput} from '../../../../components/Input/FileInput/FileInput';
-import {Input} from '../../../../components/Input/Input/Input';
-import {Currency} from '@prisma/client';
-import {RouterOutputs} from 'api';
-import {api} from '../../../../trpc/client';
-import {useRouter} from 'next/navigation';
-import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
-import {UserSubscription} from './(features)/UserSubscription/UserSubscription';
-import {useLoadingToast} from 'hooks';
+import { FormProvider, useForm } from "react-hook-form";
+import {
+  Button,
+  CardBase,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  RadioGroup,
+  RadioGroupItem,
+  Input,
+} from "ui";
+import { FileInput } from "ui/src/components/FileInput/FileInput";
+import { Currency } from "@prisma/client";
+import { RouterOutputs } from "api";
+import { api } from "../../../../trpc/client";
+import { useRouter } from "next/navigation";
+import { StripeAccountLinkSettings } from "../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings";
+import { UserSubscription } from "./(features)/UserSubscription/UserSubscription";
+import { useLoadingToast } from "hooks";
+import { z } from "zod";
 
-interface UserForm {
-  firstName: string;
-  lastName: string;
-  email: string;
-  currency: Currency;
-  profileImageSrc: string;
-}
+const userProfileSettingsFormScheme = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string().email(),
+  currency: z.nativeEnum(Currency),
+  profileImageSrc: z.string(),
+});
 
 interface Props {
-  user: RouterOutputs['user']['me'];
+  user: RouterOutputs["user"]["me"];
   mySubscriptionPromise: Promise<
-    RouterOutputs['subscriptionPlan']['getMySubscription']
+    RouterOutputs["subscriptionPlan"]["getMySubscription"]
   >;
 }
 
-export function UserSettings({user, mySubscriptionPromise}: Props) {
+export function UserSettings({ user, mySubscriptionPromise }: Props) {
   const router = useRouter();
-  const form = useForm<UserForm>({
+  const form = useForm<z.infer<typeof userProfileSettingsFormScheme>>({
     defaultValues: {
-      firstName: user?.firstName || '',
-      lastName: user?.lastName || '',
-      email: user?.email || '',
-      profileImageSrc: user?.profileImageSrc || '',
-      currency: user?.preferredCurrency || 'USD',
+      firstName: user?.firstName || "",
+      lastName: user?.lastName || "",
+      email: user?.email || "",
+      profileImageSrc: user?.profileImageSrc || "",
+      currency: user?.preferredCurrency || "USD",
     },
   });
 
-  const onSubmit = form.handleSubmit(async data => {
+  const onSubmit = form.handleSubmit(async (data) => {
     if (user?.id) {
       await api.user.update.mutate({
         firstName: data.firstName,
@@ -53,7 +64,7 @@ export function UserSettings({user, mySubscriptionPromise}: Props) {
     }
   });
 
-  useLoadingToast({isLoading: form.formState.isSubmitting});
+  useLoadingToast({ isLoading: form.formState.isSubmitting });
 
   return (
     <FormProvider {...form}>
@@ -61,70 +72,99 @@ export function UserSettings({user, mySubscriptionPromise}: Props) {
         <CardBase>
           <form onSubmit={onSubmit}>
             <div className="flex flex-col gap-y-4">
-              <div>
-                <Input
-                  type="text"
-                  label="First name"
-                  {...form.register('firstName', {
-                    required: {
-                      value: true,
-                      message: 'First name is required',
-                    },
-                  })}
-                  data-testid="first-name-input"
-                  error={form.formState.errors.firstName}
-                />
-              </div>
-              <div>
-                <Input
-                  type="text"
-                  label="Last name"
-                  {...form.register('lastName', {
-                    required: {
-                      value: true,
-                      message: 'Last name is required',
-                    },
-                  })}
-                  data-testid="last-name-input"
-                  error={form.formState.errors.lastName}
-                />
-              </div>
-              <div>
-                <Input
-                  type="email"
-                  label="Email"
-                  {...form.register('email', {
-                    required: {
-                      value: true,
-                      message: 'Email is required',
-                    },
-                  })}
-                  data-testid="email-input"
-                  disabled
-                  error={form.formState.errors.email}
-                />
-              </div>
-              <div>
-                <FormProvider {...form}>
-                  <FileInput
-                    {...form.register('profileImageSrc')}
-                    error={form.formState.errors.profileImageSrc}
-                  />
-                </FormProvider>
-              </div>
-              <div>
-                <Toggle
-                  options={[
-                    {label: 'USD', value: 'USD'},
-                    {label: 'EUR', value: 'EUR'},
-                    {label: 'GBP', value: 'GBP'},
-                  ]}
-                  label="Default Currency"
-                  {...form.register('currency')}
-                  data-testid="email-input"
-                  error={form.formState.errors.currency}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last name</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="profileImageSrc"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Profile picture</FormLabel>
+                    <FormControl>
+                      <FileInput
+                        value={{ src: field.value, height: null, width: null }}
+                        onChange={(value) => {
+                          field.onChange(value?.src || null);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="currency"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Preferred currency</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex flex-col space-y-1"
+                      >
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="USD" />
+                          </FormControl>
+                          <FormLabel className="font-normal">USD</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="EUR" />
+                          </FormControl>
+                          <FormLabel className="font-normal">EUR</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="GBP" />
+                          </FormControl>
+                          <FormLabel className="font-normal">GBP</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <div>
                 <Button
                   type="submit"

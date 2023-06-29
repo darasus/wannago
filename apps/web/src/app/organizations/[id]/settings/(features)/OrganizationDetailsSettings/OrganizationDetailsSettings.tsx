@@ -16,7 +16,7 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from "ui";
-import { FileInput } from "../../../../../../components/Input/FileInput/FileInput";
+import { FileInput } from "ui/src/components/FileInput/FileInput";
 import { api } from "../../../../../../trpc/client";
 import { Currency, Organization } from "@prisma/client";
 import { useLoadingToast } from "hooks";

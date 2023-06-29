@@ -2,8 +2,9 @@ import NextImage from "next/image";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { cn } from "utils";
-import { useUploadImage } from "hooks";
-import { Button, Spinner } from "ui";
+import { Button } from "../Button/Button";
+import { Spinner } from "../Spinner/Spinner";
+import { useUploadImage } from "../../../../hooks/index";
 
 interface Value {
   src: string;
