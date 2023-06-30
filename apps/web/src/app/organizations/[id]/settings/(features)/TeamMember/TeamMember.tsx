@@ -1,5 +1,5 @@
 import { Organization, User } from "@prisma/client";
-import { useConfirmDialog, useLoadingToast } from "hooks";
+import { useConfirmDialog } from "hooks";
 import { useCallback, useTransition } from "react";
 import { Badge, Button, Text } from "ui";
 import { api } from "../../../../../../trpc/client";
@@ -31,8 +31,6 @@ export function TeamMember({ member, organization }: Props) {
     },
   });
 
-  useLoadingToast({ isLoading: isPending });
-
   return (
     <>
       {modal}
@@ -44,6 +42,7 @@ export function TeamMember({ member, organization }: Props) {
           size="sm"
           onClick={open}
           disabled={isPending}
+          isLoading={isPending}
         >
           Remove
         </Button>

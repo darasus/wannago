@@ -20,7 +20,6 @@ import { api } from "../../../../trpc/client";
 import { useRouter } from "next/navigation";
 import { StripeAccountLinkSettings } from "../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings";
 import { UserSubscription } from "./(features)/UserSubscription/UserSubscription";
-import { useLoadingToast } from "hooks";
 import { z } from "zod";
 
 const userProfileSettingsFormScheme = z.object({
@@ -63,8 +62,6 @@ export function UserSettings({ user, mySubscriptionPromise }: Props) {
       router.refresh();
     }
   });
-
-  useLoadingToast({ isLoading: form.formState.isSubmitting });
 
   return (
     <FormProvider {...form}>
@@ -169,6 +166,7 @@ export function UserSettings({ user, mySubscriptionPromise }: Props) {
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
+                  isLoading={form.formState.isSubmitting}
                   data-testid="user-settings-submit-button"
                 >
                   Save

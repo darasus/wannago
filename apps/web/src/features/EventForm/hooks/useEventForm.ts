@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { parseISO } from "date-fns";
 
 export const eventFormSchema = z.object({
   createdById: z.string().default(""),
@@ -48,8 +49,14 @@ export function useEventForm(props: {
     resolver: zodResolver(eventFormSchema),
     defaultValues: {
       title: event?.title,
-      startDate: event?.startDate || new Date(),
-      endDate: event?.endDate || new Date(),
+      startDate:
+        (typeof event?.startDate === "string"
+          ? parseISO(event?.startDate)
+          : event?.startDate) || new Date(),
+      endDate:
+        (typeof event?.endDate === "string"
+          ? parseISO(event?.endDate)
+          : event?.endDate) || new Date(),
       description: event?.description || undefined,
       address: event?.address || undefined,
       maxNumberOfAttendees: event?.maxNumberOfAttendees || 0,

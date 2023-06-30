@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
-import {useAuth, useSignIn} from '@clerk/nextjs';
-import {ClerkAPIError} from '@clerk/types';
-import {useRouter} from 'next/navigation';
-import {useCallback, useEffect, useState} from 'react';
-import {FormProvider, useForm, useFormContext} from 'react-hook-form';
-import {CardBase, LoadingBlock, Button, Text} from 'ui';
-import {cn, sleep} from 'utils';
-import {Input} from '../../../../apps/web/src/components/Input/Input/Input';
-import {titleFont} from '../../../../apps/web/src/fonts';
-import {useLoadingToast} from 'hooks';
+import { useAuth, useSignIn } from "@clerk/nextjs";
+import { ClerkAPIError } from "@clerk/types";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { CardBase, LoadingBlock, Button, Text } from "ui";
+import { cn, sleep } from "utils";
+import { Input } from "../../../../apps/web/src/components/Input/Input/Input";
+import { titleFont } from "../../../../apps/web/src/fonts";
 
 interface TEmailForm {
   email: string;
@@ -28,14 +27,14 @@ interface Props {
   onCreateAccountClick?: () => void;
 }
 
-export function Login({onDone, onCreateAccountClick}: Props) {
+export function Login({ onDone, onCreateAccountClick }: Props) {
   const router = useRouter();
-  const {getToken} = useAuth();
-  const {setSession, isLoaded} = useSignIn();
-  const [step, setStep] = useState<'email' | 'code'>('email');
+  const { getToken } = useAuth();
+  const { setSession, isLoaded } = useSignIn();
+  const [step, setStep] = useState<"email" | "code">("email");
   const emailForm = useForm<TEmailForm>();
   const codeForm = useForm<TCodeForm>({
-    mode: 'onSubmit',
+    mode: "onSubmit",
   });
 
   const ready = useCallback(async (): Promise<any> => {
@@ -55,7 +54,7 @@ export function Login({onDone, onCreateAccountClick}: Props) {
       if (onDone) {
         onDone?.();
       } else {
-        window.location.href = '/dashboard';
+        window.location.href = "/dashboard";
       }
     },
     [ready, setSession, onDone]
@@ -65,26 +64,26 @@ export function Login({onDone, onCreateAccountClick}: Props) {
     if (onCreateAccountClick) {
       onCreateAccountClick();
     } else {
-      router.push('/register');
+      router.push("/register");
     }
   }, [router, onCreateAccountClick]);
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Text className={cn('text-4xl', titleFont.className)}>Login</Text>
+      <Text className={cn("text-4xl", titleFont.className)}>Login</Text>
       <CardBase className="w-full">
         {isLoaded ? (
           <>
-            {step === 'email' && (
+            {step === "email" && (
               <FormProvider {...emailForm}>
-                <EmailForm goToNextStep={() => setStep('code')} />
+                <EmailForm goToNextStep={() => setStep("code")} />
               </FormProvider>
             )}
-            {step === 'code' && (
+            {step === "code" && (
               <FormProvider {...codeForm}>
                 <CodeForm
                   onDone={handleOnDone}
-                  email={emailForm.watch('email')}
+                  email={emailForm.watch("email")}
                 />
               </FormProvider>
             )}
@@ -105,33 +104,31 @@ interface EmailFormProps {
   goToNextStep: () => void;
 }
 
-function EmailForm({goToNextStep}: EmailFormProps) {
+function EmailForm({ goToNextStep }: EmailFormProps) {
   const form = useFormContext<TEmailForm>();
-  const {signIn} = useSignIn();
+  const { signIn } = useSignIn();
 
-  const submit = form.handleSubmit(async data => {
+  const submit = form.handleSubmit(async (data) => {
     try {
       await signIn?.create({
         identifier: data.email,
-        strategy: 'email_code',
+        strategy: "email_code",
       });
       goToNextStep();
     } catch (error: any) {
       const e = error as APIResponseError;
 
-      form.setError('email', {
-        type: 'manual',
+      form.setError("email", {
+        type: "manual",
         message: parseError(e),
       });
     }
   });
 
   useEffect(() => {
-    form.setFocus('email');
+    form.setFocus("email");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useLoadingToast({isLoading: form.formState.isSubmitting});
 
   return (
     <form onSubmit={submit}>
@@ -139,10 +136,10 @@ function EmailForm({goToNextStep}: EmailFormProps) {
         <Input
           type="email"
           label="Email"
-          {...form.register('email', {
+          {...form.register("email", {
             required: {
               value: true,
-              message: 'Email is required',
+              message: "Email is required",
             },
           })}
           error={form.formState.errors.email}
@@ -152,6 +149,7 @@ function EmailForm({goToNextStep}: EmailFormProps) {
         <Button
           type="submit"
           disabled={form.formState.isSubmitting}
+          isLoading={form.formState.isSubmitting}
           data-testid="login-email-form-submit"
         >
           Submit
@@ -166,34 +164,34 @@ interface CodeFormProps {
   onDone: (createdSessionId: string) => Promise<void>;
 }
 
-function CodeForm({onDone, email}: CodeFormProps) {
+function CodeForm({ onDone, email }: CodeFormProps) {
   const form = useFormContext<TCodeForm>();
-  const code = form.watch('code');
-  const {signIn} = useSignIn();
+  const code = form.watch("code");
+  const { signIn } = useSignIn();
 
-  const submit = form.handleSubmit(async data => {
+  const submit = form.handleSubmit(async (data) => {
     try {
       const signInAttempt = await signIn?.attemptFirstFactor({
-        strategy: 'email_code',
+        strategy: "email_code",
         code: data.code,
       });
 
       if (
-        signInAttempt?.status === 'complete' &&
+        signInAttempt?.status === "complete" &&
         signInAttempt?.createdSessionId
       ) {
         await onDone(signInAttempt?.createdSessionId);
       }
     } catch (error: any) {
-      form.setError('code', {
-        type: 'manual',
+      form.setError("code", {
+        type: "manual",
         message: parseError(error as APIResponseError),
       });
     }
   });
 
   useEffect(() => {
-    form.setFocus('code');
+    form.setFocus("code");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -204,8 +202,6 @@ function CodeForm({onDone, email}: CodeFormProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
-  useLoadingToast({isLoading: form.formState.isSubmitting});
-
   return (
     <form onSubmit={submit}>
       <div className="flex flex-col gap-4">
@@ -213,26 +209,26 @@ function CodeForm({onDone, email}: CodeFormProps) {
           type="number"
           description={`Enter the code sent to ${email}`}
           label="Code"
-          {...form.register('code', {
-            validate: value => {
+          {...form.register("code", {
+            validate: (value) => {
               try {
-                if (!value) return 'Code is required';
+                if (!value) return "Code is required";
 
-                if (typeof value === 'string') {
+                if (typeof value === "string") {
                   const length = value.length;
                   if (length > 6 || length < 6) {
-                    return 'Code must be 6 characters long';
+                    return "Code must be 6 characters long";
                   }
                 }
                 const n = Number(value);
 
-                if (typeof n === 'number' && !isNaN(n)) {
+                if (typeof n === "number" && !isNaN(n)) {
                   return true;
                 } else {
-                  return 'Code must be a number';
+                  return "Code must be a number";
                 }
               } catch (error) {
-                return 'Code must be a number';
+                return "Code must be a number";
               }
             },
           })}
@@ -244,6 +240,7 @@ function CodeForm({onDone, email}: CodeFormProps) {
         <Button
           type="submit"
           disabled={form.formState.isSubmitting}
+          isLoading={form.formState.isSubmitting}
           data-testid="login-code-form-submit"
         >
           Submit
@@ -255,11 +252,11 @@ function CodeForm({onDone, email}: CodeFormProps) {
 
 export function parseError(err: APIResponseError): string {
   if (!err) {
-    return '';
+    return "";
   }
 
   if (err.errors) {
-    return err.errors[0].longMessage || '';
+    return err.errors[0].longMessage || "";
   }
 
   throw err;

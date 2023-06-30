@@ -7,7 +7,6 @@ import { snakeCase } from "change-case";
 import { useParams } from "next/navigation";
 import { use, useTransition } from "react";
 import { api } from "../../../../../../../../trpc/client";
-import { useLoadingToast } from "hooks";
 
 export function ExportAttendeesCSV() {
   const [isPending, startTransition] = useTransition();
@@ -29,16 +28,14 @@ export function ExportAttendeesCSV() {
     });
   };
 
-  useLoadingToast({ isLoading: isPending });
-
   return (
     <Button
-      variant="outline"
       onClick={handleDownloadCsvClick}
       size="sm"
       title={"Export CSV"}
       data-testid="export-csv-button"
       disabled={isPending}
+      isLoading={isPending}
     >
       Export CSV
     </Button>

@@ -55,7 +55,6 @@ export function MessageParticipantsButton() {
       />
       <Button
         onClick={handleOnClick}
-        variant="outline"
         size="sm"
         title="Message attendees"
         data-testid="message-attendees-button"

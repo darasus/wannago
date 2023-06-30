@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import {EventRegistrationStatus, User} from '@prisma/client';
-import {useParams, useRouter} from 'next/navigation';
-import {Button, CardBase, PageHeader, Text} from 'ui';
-import {toast} from 'react-hot-toast';
-import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
-import {useConfirmDialog, useLoadingToast} from 'hooks';
-import {EventInviteButton} from './features/EventInviteButton/EventInviteButton';
-import {api} from '../../../../../../trpc/client';
-import {use} from 'react';
+import { EventRegistrationStatus, User } from "@prisma/client";
+import { useParams, useRouter } from "next/navigation";
+import { Button, CardBase, PageHeader, Text } from "ui";
+import { toast } from "react-hot-toast";
+import { EventRegistrationStatusBadge } from "ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge";
+import { useConfirmDialog } from "hooks";
+import { EventInviteButton } from "./features/EventInviteButton/EventInviteButton";
+import { api } from "../../../../../../trpc/client";
+import { use } from "react";
 
 interface InviteButtonProps {
   eventShortId: string;
@@ -22,21 +22,19 @@ export function InviteButton({
   disabled,
 }: InviteButtonProps) {
   const router = useRouter();
-  const {open, modal, isPending} = useConfirmDialog({
+  const { open, modal, isPending } = useConfirmDialog({
     title: `Invite ${user.firstName} ${user.lastName}?`,
     description: `Are you sure you want to invite ${user.firstName} ${user.lastName} to the event? We will send invitation to this email address: ${user.email}`,
     onConfirm: async () => {
       await api.event.invitePastAttendee
-        .mutate({userId: user.id, eventShortId})
-        .catch(error => {
+        .mutate({ userId: user.id, eventShortId })
+        .catch((error) => {
           toast.error(error.message);
         });
       toast.success(`User is successfully invited!`);
       router.refresh();
     },
   });
-
-  useLoadingToast({isLoading: isPending});
 
   return (
     <>
@@ -46,6 +44,7 @@ export function InviteButton({
         variant="outline"
         size="sm"
         disabled={disabled || isPending}
+        isLoading={disabled || isPending}
         data-testid="invite-by-email-button"
       >
         Invite
@@ -55,11 +54,11 @@ export function InviteButton({
 }
 
 interface UserRowProps {
-  user: User & {status: EventRegistrationStatus | null};
+  user: User & { status: EventRegistrationStatus | null };
   eventShortId: string;
 }
 
-function UserRow({user, eventShortId}: UserRowProps) {
+function UserRow({ user, eventShortId }: UserRowProps) {
   return (
     <>
       <CardBase
@@ -84,7 +83,7 @@ function UserRow({user, eventShortId}: UserRowProps) {
 }
 
 export const metadata = {
-  title: 'Attendees | WannaGo',
+  title: "Attendees | WannaGo",
 };
 
 export function EventInvite() {
@@ -108,7 +107,7 @@ export function EventInvite() {
             <Text>{`You don't have users to invite yet...`}</Text>
           </div>
         )}
-        {allAttendees?.map(user => {
+        {allAttendees?.map((user) => {
           return (
             <UserRow key={user.id} user={user} eventShortId={eventShortId} />
           );

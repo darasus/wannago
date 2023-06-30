@@ -19,7 +19,6 @@ import {
 import { FileInput } from "ui/src/components/FileInput/FileInput";
 import { api } from "../../../../../../trpc/client";
 import { Currency, Organization } from "@prisma/client";
-import { useLoadingToast } from "hooks";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -60,8 +59,6 @@ export function OrganizationDetailsSettings({ organization }: Props) {
       } catch (error) {}
     }
   });
-
-  useLoadingToast({ isLoading: form.formState.isSubmitting });
 
   return (
     <CardBase>
@@ -153,6 +150,7 @@ export function OrganizationDetailsSettings({ organization }: Props) {
                 <Button
                   type="submit"
                   disabled={form.formState.isSubmitting}
+                  isLoading={form.formState.isSubmitting}
                   data-testid="team-settings-form-input-submit-button"
                 >
                   Save

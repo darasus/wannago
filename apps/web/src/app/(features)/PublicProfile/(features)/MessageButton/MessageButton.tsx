@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { useTransition } from "react";
 import { getMe } from "../../../../../trpc/client";
-import { useLoadingToast } from "hooks";
 import { SendIcon } from "lucide-react";
 
 interface Props {}
@@ -17,13 +16,12 @@ export function MessageButton({}: Props) {
   const params = useParams();
   const [isPending, startTransition] = useTransition();
 
-  useLoadingToast({ isLoading: isPending });
-
   return (
     <Button
       size="sm"
       variant="outline"
       disabled={isPending}
+      isLoading={isPending}
       onClick={async () => {
         startTransition(async () => {
           const me = await getMe();

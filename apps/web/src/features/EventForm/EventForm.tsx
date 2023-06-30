@@ -3,7 +3,6 @@
 import { FormEventHandler } from "react";
 import { FormProvider, useFormContext } from "react-hook-form";
 import { Button, CardBase, Form } from "ui";
-import { useLoadingToast } from "hooks";
 import { Organization, User } from "@prisma/client";
 import { z } from "zod";
 import { eventFormSchema } from "./hooks/useEventForm";
@@ -52,8 +51,6 @@ export function EventForm({
     },
   ];
 
-  useLoadingToast({ isLoading: form.formState.isSubmitting });
-
   return (
     <>
       <div className="md:sticky md:top-4">
@@ -73,12 +70,19 @@ export function EventForm({
                 <div className="flex gap-x-2">
                   <Button
                     disabled={form.formState.isSubmitting}
+                    isLoading={form.formState.isSubmitting}
                     type="submit"
                     data-testid="event-form-submit-button"
                   >
                     {"Save"}
                   </Button>
-                  <Button onClick={onCancelClick} variant="outline">
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onCancelClick();
+                    }}
+                    variant="outline"
+                  >
                     Cancel
                   </Button>
                 </div>

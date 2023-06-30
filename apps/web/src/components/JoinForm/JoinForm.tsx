@@ -1,25 +1,22 @@
-'use client';
+"use client";
 
-import {FormEventHandler} from 'react';
-import {useFormContext} from 'react-hook-form';
-import type {JoinForm as JoinFormType} from '../../types/forms';
-import {Button} from 'ui';
-import {Input} from '../Input/Input/Input';
-import {Switch} from '../Input/Switch/Switch';
-import {useLoadingToast} from 'hooks';
+import { FormEventHandler } from "react";
+import { useFormContext } from "react-hook-form";
+import type { JoinForm as JoinFormType } from "../../types/forms";
+import { Button } from "ui";
+import { Input } from "../Input/Input/Input";
+import { Switch } from "../Input/Switch/Switch";
 
 interface Props {
   onSubmit: FormEventHandler;
 }
 
-export function JoinForm({onSubmit}: Props) {
+export function JoinForm({ onSubmit }: Props) {
   const {
     register,
-    formState: {errors, isSubmitting, defaultValues},
+    formState: { errors, isSubmitting, defaultValues },
     control,
   } = useFormContext<JoinFormType>();
-
-  useLoadingToast({isLoading: isSubmitting});
 
   return (
     <form onSubmit={onSubmit}>
@@ -27,8 +24,8 @@ export function JoinForm({onSubmit}: Props) {
         <div className="col-span-6">
           <Input
             placeholder="First name"
-            {...register('firstName', {
-              required: 'First name is required',
+            {...register("firstName", {
+              required: "First name is required",
             })}
             error={errors.firstName}
           />
@@ -36,8 +33,8 @@ export function JoinForm({onSubmit}: Props) {
         <div className="col-span-6">
           <Input
             placeholder="Last name"
-            {...register('lastName', {
-              required: 'Last name is required',
+            {...register("lastName", {
+              required: "Last name is required",
             })}
             error={errors.lastName}
           />
@@ -46,14 +43,19 @@ export function JoinForm({onSubmit}: Props) {
           <Input
             type="email"
             placeholder="Email"
-            {...register('email', {
-              required: 'Email is required',
+            {...register("email", {
+              required: "Email is required",
             })}
             error={errors.email}
           />
         </div>
         <div className="col-span-4">
-          <Button type="submit" disabled={isSubmitting} className="w-full">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            isLoading={isSubmitting}
+            className="w-full"
+          >
             Join
           </Button>
         </div>

@@ -5,7 +5,6 @@ import { use, useTransition } from "react";
 import { Button } from "ui";
 import { RouterOutputs, api } from "../../../../../trpc/client";
 import { toast } from "react-hot-toast";
-import { useLoadingToast } from "hooks";
 import { UserMinus, UserPlus } from "lucide-react";
 
 interface Props {
@@ -19,8 +18,6 @@ export function FollowButton({ amFollowingPromise }: Props) {
   const organizationId = params?.organizationId as string | undefined;
   const userId = params?.userId as string | undefined;
   const amFollowing = use(amFollowingPromise);
-
-  useLoadingToast({ isLoading: isPending });
 
   if (amFollowing) {
     return (
@@ -41,6 +38,7 @@ export function FollowButton({ amFollowingPromise }: Props) {
           });
         }}
         disabled={isPending}
+        isLoading={isPending}
         className="w-full md:w-40"
         data-testid="unfollow-button"
       >

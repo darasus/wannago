@@ -1,14 +1,13 @@
-'use client';
+"use client";
 
-import {useState} from 'react';
-import {useForm} from 'react-hook-form';
-import {Button, Modal} from 'ui';
-import {AdminInviteForm} from '../../../../../../../../types/forms';
-import {toast} from 'react-hot-toast';
-import {Input} from '../../../../../../../../components/Input/Input/Input';
-import {useParams, useRouter} from 'next/navigation';
-import {api} from '../../../../../../../../trpc/client';
-import {useLoadingToast} from 'hooks';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Button, Modal } from "ui";
+import { AdminInviteForm } from "../../../../../../../../types/forms";
+import { toast } from "react-hot-toast";
+import { Input } from "../../../../../../../../components/Input/Input/Input";
+import { useParams, useRouter } from "next/navigation";
+import { api } from "../../../../../../../../trpc/client";
 
 export function EventInviteButton() {
   const [on, set] = useState(false);
@@ -20,24 +19,22 @@ export function EventInviteButton() {
     handleSubmit,
     reset,
     register,
-    formState: {isSubmitting, errors},
+    formState: { isSubmitting, errors },
   } = useForm<AdminInviteForm>();
 
-  const onSubmit = handleSubmit(async data => {
+  const onSubmit = handleSubmit(async (data) => {
     if (eventShortId) {
       await api.event.inviteByEmail
-        .mutate({...data, eventShortId})
-        .catch(error => {
+        .mutate({ ...data, eventShortId })
+        .catch((error) => {
           toast.error(error.message);
         });
-      toast.success('Invitation sent!');
+      toast.success("Invitation sent!");
       reset();
       set(false);
       router.refresh();
     }
   });
-
-  useLoadingToast({isLoading: isSubmitting});
 
   return (
     <>
@@ -47,8 +44,8 @@ export function EventInviteButton() {
             <div className="col-span-6">
               <Input
                 placeholder="First name"
-                {...register('firstName', {
-                  required: 'First name is required',
+                {...register("firstName", {
+                  required: "First name is required",
                 })}
                 error={errors.firstName}
                 data-testid="invite-by-email-first-name-input"
@@ -57,8 +54,8 @@ export function EventInviteButton() {
             <div className="col-span-6">
               <Input
                 placeholder="Last name"
-                {...register('lastName', {
-                  required: 'Last name is required',
+                {...register("lastName", {
+                  required: "Last name is required",
                 })}
                 error={errors.lastName}
                 data-testid="invite-by-email-last-name-input"
@@ -67,8 +64,8 @@ export function EventInviteButton() {
             <div className="col-span-12">
               <Input
                 placeholder="Email"
-                {...register('email', {
-                  required: 'Email is required',
+                {...register("email", {
+                  required: "Email is required",
                 })}
                 error={errors.email}
                 data-testid="invite-by-email-email-input"
@@ -78,6 +75,7 @@ export function EventInviteButton() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
+                isLoading={isSubmitting}
                 className="w-full"
                 data-testid="invite-by-email-submit-button"
               >
