@@ -46,7 +46,7 @@ export function DateCard({ endDate, startDate, onAddToCalendarClick }: Props) {
           <Text className="font-bold">{timeRangeString}</Text>
           <div className="mb-2" />
           <div className="flex">
-            <div className="flex flex-col justify-center items-center border-2 border-gray-800 rounded-2xl min-h-[70px] bg-slate-200 aspect-square h-full mr-2 grow">
+            <div className="flex flex-col justify-center items-center border-2 border-gray-800 rounded-md bg-slate-200 h-24 w-24 mr-2 grow">
               <Text className="text-2xl leading-none font-extrabold">
                 {formatDate(new Date(startDate), "dd")}
               </Text>
