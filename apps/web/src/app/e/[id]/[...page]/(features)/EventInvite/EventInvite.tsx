@@ -41,7 +41,6 @@ export function InviteButton({
       {modal}
       <Button
         onClick={open}
-        variant="outline"
         size="sm"
         disabled={disabled || isPending}
         isLoading={disabled || isPending}

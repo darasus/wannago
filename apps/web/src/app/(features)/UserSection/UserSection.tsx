@@ -15,7 +15,8 @@ import { usePathname } from "next/navigation";
 import { getIsPublic } from "../../../features/AppLayout/features/Header/constants";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
-import { PlusCircle } from "lucide-react";
+import { PlusIcon } from "lucide-react";
+import { cn } from "utils";
 
 interface Props {
   mePromise: Promise<User | null>;
@@ -96,14 +97,14 @@ export function UserSection({
         onClick={() => router.push("/e/add")}
         data-testid="add-event-button-mini"
       >
-        <PlusCircle />
+        <PlusIcon />
       </Button>
       <Button
         className="hidden md:flex"
         onClick={() => router.push("/e/add")}
         data-testid="add-event-button"
       >
-        <PlusCircle className="mr-2 w-4 h-4" />
+        <PlusIcon className="mr-2 w-4 h-4" />
         Create event
       </Button>
       {me && (
@@ -121,9 +122,12 @@ export function UserSection({
           <DropdownMenuContent className="w-56">
             <DropdownMenuGroup>
               {options.map(({ label, ...rest }) => {
+                const isRed = label === "Logout";
                 return (
                   <DropdownMenuItem key={label} {...rest}>
-                    <span>{label}</span>
+                    <span className={cn({ "text-red-500": isRed })}>
+                      {label}
+                    </span>
                   </DropdownMenuItem>
                 );
               })}
