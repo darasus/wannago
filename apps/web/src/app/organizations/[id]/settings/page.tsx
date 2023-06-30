@@ -1,12 +1,12 @@
-import { Button, Container, LoadingBlock, PageHeader } from "ui";
-import { api } from "../../../../trpc/server";
-import { OrganizationDetailsSettings } from "./(features)/OrganizationDetailsSettings/OrganizationDetailsSettings";
-import { TeamMembersSettings } from "./(features)/TeamMemberSettings/TeamMembersSettings";
-import { Suspense } from "react";
-import { OrganizationSubscription } from "./(features)/OrganizationSubscription/OrganizationSubscription";
-import { StripeAccountLinkSettings } from "../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import {Button, Container, LoadingBlock, PageHeader} from 'ui';
+import {api} from '../../../../trpc/server-http';
+import {OrganizationDetailsSettings} from './(features)/OrganizationDetailsSettings/OrganizationDetailsSettings';
+import {TeamMembersSettings} from './(features)/TeamMemberSettings/TeamMembersSettings';
+import {Suspense} from 'react';
+import {OrganizationSubscription} from './(features)/OrganizationSubscription/OrganizationSubscription';
+import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
+import Link from 'next/link';
+import {ChevronLeft} from 'lucide-react';
 
 // TODO: create description text explaining why you need to create a team
 
@@ -20,7 +20,7 @@ export const generateMetadata = async () => {
 
 export default async function OrganizationSettingsPage() {
   const mySubscriptionPromise = api.subscriptionPlan.getMySubscription.query({
-    type: "BUSINESS",
+    type: 'BUSINESS',
   });
   const organization = await api.organization.getMyOrganization.query();
 

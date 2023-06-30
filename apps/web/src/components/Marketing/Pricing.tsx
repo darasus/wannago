@@ -2,7 +2,7 @@ import {Container, Text} from 'ui';
 import {SectionContainer} from './SectionContainer';
 import {SectionHeader} from './SectionHeader';
 import {PricingPlan} from './PricingPlan';
-import {api} from '../../trpc/server';
+import {api} from '../../trpc/server-http';
 import {ShieldCheck} from 'lucide-react';
 
 export async function Pricing() {

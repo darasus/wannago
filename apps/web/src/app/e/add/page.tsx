@@ -1,14 +1,14 @@
-import { AddEventForm } from "../../../features/EventForm/AddEventForm";
-import { Container, PageHeader } from "ui";
-import { api, getMe } from "../../../trpc/server";
+import {AddEventForm} from '../../../features/EventForm/AddEventForm';
+import {Container, PageHeader} from 'ui';
+import {api} from '../../../trpc/server-http';
 
 export const metadata = {
-  title: "Add event | WannaGo",
+  title: 'Add event | WannaGo',
 };
 
 export default async function EventAddPage() {
   const [me, organization] = await Promise.all([
-    getMe(),
+    api.user.me.query(),
     api.organization.getMyOrganization.query(),
   ]);
 

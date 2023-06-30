@@ -1,7 +1,7 @@
 import {Button, CardBase, LoadingBlock, Logo} from 'ui';
 import {UserSection} from '../UserSection/UserSection';
 import {auth} from '@clerk/nextjs';
-import {api, getMe} from '../../../trpc/server';
+import {api} from '../../../trpc/server-http';
 import {Suspense} from 'react';
 import {DesktopMenu} from '../../(components)/DesktopMenu';
 import {MobileMenu} from '../../(components)/MobileMenu';
@@ -25,7 +25,7 @@ export async function Header() {
             {showUserProfile && (
               <Suspense fallback={<LoadingBlock />}>
                 <UserSection
-                  mePromise={getMe()}
+                  mePromise={api.user.me.query()}
                   hasUnseenConversationPromise={api.conversation.getUserHasUnseenConversation.query()}
                 />
               </Suspense>

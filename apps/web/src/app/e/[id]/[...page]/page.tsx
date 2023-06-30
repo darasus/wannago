@@ -1,22 +1,24 @@
-import { Button, Container, Text } from "ui";
-import { EventInfo } from "./(features)/EventInfo/EventInfo";
-import { api, getMe } from "../../../../trpc/server";
-import { notFound } from "next/navigation";
-import { EditEventForm } from "../../../../features/EventForm/EditEventForm";
-import { EventAttendees } from "./(features)/EventAttendees/EventAttendees";
-import { EventInvite } from "./(features)/EventInvite/EventInvite";
-import { MyTickets } from "./(features)/MyTickets/MyTickets";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import {Button, Container, Text} from 'ui';
+import {EventInfo} from './(features)/EventInfo/EventInfo';
+import {api} from '../../../../trpc/server-http';
+import {notFound} from 'next/navigation';
+import {EditEventForm} from '../../../../features/EventForm/EditEventForm';
+import {EventAttendees} from './(features)/EventAttendees/EventAttendees';
+import {EventInvite} from './(features)/EventInvite/EventInvite';
+import {MyTickets} from './(features)/MyTickets/MyTickets';
+import Link from 'next/link';
+import {ChevronLeft} from 'lucide-react';
+
+export const fetchCache = 'force-no-store';
 
 export default async function EventPages({
-  params: { id, page },
+  params: {id, page},
 }: {
-  params: { id: string; page: string[] };
+  params: {id: string; page: string[]};
 }) {
   const [me, event, isMyEvent, myOrganization] = await Promise.all([
-    getMe(),
-    api.event.getByShortId.query({ id: id }),
+    api.user.me.query(),
+    api.event.getByShortId.query({id: id}),
     api.event.getIsMyEvent.query({
       eventShortId: id,
     }),
@@ -43,19 +45,19 @@ export default async function EventPages({
         <div>
           {isMyEvent?.isMyEvent && (
             <>
-              {page[0] === "info" && <EventInfo event={event} />}
-              {page[0] === "edit" && (
+              {page[0] === 'info' && <EventInfo event={event} />}
+              {page[0] === 'edit' && (
                 <EditEventForm
                   event={event}
                   me={me}
                   organization={myOrganization}
                 />
               )}
-              {page[0] === "attendees" && <EventAttendees />}
-              {page[0] === "invite" && <EventInvite />}
+              {page[0] === 'attendees' && <EventAttendees />}
+              {page[0] === 'invite' && <EventInvite />}
             </>
           )}
-          {page[0] === "my-tickets" && <MyTickets />}
+          {page[0] === 'my-tickets' && <MyTickets />}
         </div>
       </div>
     </Container>

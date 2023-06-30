@@ -1,11 +1,11 @@
-"use state";
+'use client';
 
-import { useAuth } from "@clerk/nextjs";
-import { Event } from "@prisma/client";
-import { useAmplitudeAppDir, useConfetti, useConfirmDialog } from "hooks";
-import { use, useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
+import {useAuth} from '@clerk/nextjs';
+import {Event} from '@prisma/client';
+import {useAmplitudeAppDir, useConfetti, useConfirmDialog} from 'hooks';
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {toast} from 'react-hot-toast';
 import {
   Badge,
   Button,
@@ -15,10 +15,11 @@ import {
   FormItem,
   FormLabel,
   Switch,
-} from "ui";
-import { AuthModal } from "../AuthModal/AuthModal";
-import { api } from "../../../../../../apps/web/src/trpc/client";
-import { useRouter } from "next/navigation";
+} from 'ui';
+import {AuthModal} from '../AuthModal/AuthModal';
+import {api} from '../../../../../../apps/web/src/trpc/client';
+import {useRouter} from 'next/navigation';
+import {useQuery} from '@tanstack/react-query';
 
 interface Props {
   event: Event;
@@ -28,35 +29,43 @@ interface EventSignUpForm {
   hasPlusOne: boolean;
 }
 
-export function FreeEventAction({ event }: Props) {
+export function FreeEventAction({event}: Props) {
   const router = useRouter();
-  const { confetti } = useConfetti();
-  const { logEvent } = useAmplitudeAppDir();
+  const {confetti} = useConfetti();
+  const {logEvent} = useAmplitudeAppDir();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const auth = useAuth();
-  const signUp = use(api.event.getMySignUp.query({ eventId: event.id }));
+  const signUp = useQuery({
+    queryKey: [],
+    queryFn: () => api.event.getMySignUp.query({eventId: event.id}),
+  });
 
-  const { modal: cancelModal, open: openCancelModal } = useConfirmDialog({
-    title: "Confirm cancellation",
-    description: "Are you sure you want to cancel your attendance?",
+  const {modal: cancelModal, open: openCancelModal} = useConfirmDialog({
+    title: 'Confirm cancellation',
+    description: 'Are you sure you want to cancel your attendance?',
     onConfirm: async () => {
       await api.event.cancelEvent
         .mutate({
           eventId: event.id,
         })
-        .then(() => {
-          logEvent("event_sign_up_cancel_submitted", {
+        .then(async () => {
+          logEvent('event_sign_up_cancel_submitted', {
             eventId: event.id,
           });
-          toast.success("Sign up is cancelled!");
+          toast.success('Sign up is cancelled!');
           router.refresh();
+          signUp.refetch();
         })
         .catch((error) => {
           toast.error(error.message);
         });
     },
   });
-  const form = useForm<EventSignUpForm>();
+  const form = useForm<EventSignUpForm>({
+    defaultValues: {
+      hasPlusOne: false,
+    },
+  });
 
   const onJoinSubmit = form.handleSubmit(async (data) => {
     if (!auth.isSignedIn) {
@@ -68,22 +77,21 @@ export function FreeEventAction({ event }: Props) {
       }
     }
 
-    console.log(data.hasPlusOne);
-
     await api.event.joinEvent
       .mutate({
         eventId: event.id,
         hasPlusOne: data.hasPlusOne,
       })
-      .then(() => {
-        toast.success("Signed up! Check your email for more details!");
+      .then(async () => {
+        toast.success('Signed up! Check your email for more details!');
         confetti();
         router.refresh();
+        signUp.refetch();
       })
       .catch((error) => {
         toast.error(error.message);
       });
-    logEvent("event_sign_up_submitted", {
+    logEvent('event_sign_up_submitted', {
       eventId: event.id,
     });
   });
@@ -92,8 +100,8 @@ export function FreeEventAction({ event }: Props) {
     openCancelModal();
   });
 
-  const amSignedUp = Boolean(signUp && signUp?.status === "REGISTERED");
-  const amInvited = Boolean(signUp && signUp?.status === "INVITED");
+  const amSignedUp = Boolean(signUp && signUp.data?.status === 'REGISTERED');
+  const amInvited = Boolean(signUp && signUp.data?.status === 'INVITED');
 
   if (amSignedUp) {
     return (
@@ -121,7 +129,7 @@ export function FreeEventAction({ event }: Props) {
       <form className="flex items-center gap-x-4" onSubmit={onJoinSubmit}>
         <div className="flex items-center gap-x-2">
           <Badge
-            variant={"outline"}
+            variant={'outline'}
             data-testid="event-signup-success-label"
           >{`You're invited!`}</Badge>
           <Button
@@ -154,7 +162,7 @@ export function FreeEventAction({ event }: Props) {
             <FormField
               name="hasPlusOne"
               control={form.control}
-              render={({ field }) => {
+              render={({field}) => {
                 return (
                   <FormItem className="flex items-center space-y-0 gap-1">
                     <FormControl>

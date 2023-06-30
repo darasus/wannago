@@ -3,11 +3,12 @@
 import {Organization} from '@prisma/client';
 import {Badge, Button, CardBase, Text} from 'ui';
 import {formatDate} from 'utils';
-import {RouterOutputs, api} from '../../../../../../trpc/client';
+import {api} from '../../../../../../trpc/client';
 import {use} from 'react';
 import {useRouter} from 'next/navigation';
 import {captureException} from '@sentry/nextjs';
 import {TRPCClientError} from '@trpc/client';
+import {type RouterOutputs} from 'api';
 
 interface Props {
   organization: Organization;
@@ -61,7 +62,7 @@ export function OrganizationSubscription({
                   onClick={async () => {
                     await api.subscriptionPlan.createCheckoutSession
                       .mutate({plan: subscriptionMap['BUSINESS']})
-                      .then(url => {
+                      .then((url) => {
                         if (url) {
                           router.push(url);
                         } else {
@@ -86,7 +87,7 @@ export function OrganizationSubscription({
                     .mutate({
                       plan: subscriptionMap['BUSINESS'],
                     })
-                    .then(url => {
+                    .then((url) => {
                       if (url) {
                         router.push(url);
                       } else {

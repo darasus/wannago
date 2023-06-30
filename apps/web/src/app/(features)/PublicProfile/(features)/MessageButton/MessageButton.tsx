@@ -1,13 +1,12 @@
-"use client";
+'use client';
 
-import { Button } from "ui";
-import { api } from "../../../../../trpc/client";
-import { useParams } from "next/dist/client/components/navigation";
-import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { useTransition } from "react";
-import { getMe } from "../../../../../trpc/client";
-import { SendIcon } from "lucide-react";
+import {Button} from 'ui';
+import {useParams} from 'next/dist/client/components/navigation';
+import {useRouter} from 'next/navigation';
+import {toast} from 'react-hot-toast';
+import {useTransition} from 'react';
+import {api} from '../../../../../trpc/client';
+import {SendIcon} from 'lucide-react';
 
 interface Props {}
 
@@ -24,7 +23,7 @@ export function MessageButton({}: Props) {
       isLoading={isPending}
       onClick={async () => {
         startTransition(async () => {
-          const me = await getMe();
+          const me = await api.user.me.query();
           const myOrganization =
             await api.organization.getMyOrganization.query();
           const organizationIds = [] as string[];
@@ -32,27 +31,27 @@ export function MessageButton({}: Props) {
 
           // TODO move this to procedure
           if (!me?.id && !myOrganization?.id) {
-            toast.error("To be able to message anyone you need to login first");
+            toast.error('To be able to message anyone you need to login first');
             return undefined;
           }
 
           if (me?.id === params?.userId) {
-            toast.error("You cannot message yourself");
+            toast.error('You cannot message yourself');
             return undefined;
           }
           if (
             myOrganization?.id &&
             myOrganization?.id === params?.organizationId
           ) {
-            toast.error("You cannot message your own organization");
+            toast.error('You cannot message your own organization');
             return undefined;
           }
 
-          if (typeof params?.userId === "string") {
+          if (typeof params?.userId === 'string') {
             userIds.push(params?.userId);
           }
 
-          if (typeof params?.organizationId === "string") {
+          if (typeof params?.organizationId === 'string') {
             organizationIds.push(params?.organizationId);
           }
 

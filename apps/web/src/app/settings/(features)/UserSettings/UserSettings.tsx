@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { FormProvider, useForm } from "react-hook-form";
+import {FormProvider, useForm} from 'react-hook-form';
 import {
   Button,
   CardBase,
@@ -12,15 +12,15 @@ import {
   RadioGroup,
   RadioGroupItem,
   Input,
-} from "ui";
-import { FileInput } from "ui/src/components/FileInput/FileInput";
-import { Currency } from "@prisma/client";
-import { RouterOutputs } from "api";
-import { api } from "../../../../trpc/client";
-import { useRouter } from "next/navigation";
-import { StripeAccountLinkSettings } from "../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings";
-import { UserSubscription } from "./(features)/UserSubscription/UserSubscription";
-import { z } from "zod";
+} from 'ui';
+import {FileInput} from 'ui/src/components/FileInput/FileInput';
+import {Currency} from '@prisma/client';
+import {type RouterOutputs} from 'api';
+import {api} from '../../../../trpc/client';
+import {useRouter} from 'next/navigation';
+import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
+import {UserSubscription} from './(features)/UserSubscription/UserSubscription';
+import {z} from 'zod';
 
 const userProfileSettingsFormScheme = z.object({
   firstName: z.string(),
@@ -31,21 +31,21 @@ const userProfileSettingsFormScheme = z.object({
 });
 
 interface Props {
-  user: RouterOutputs["user"]["me"];
+  user: RouterOutputs['user']['me'];
   mySubscriptionPromise: Promise<
-    RouterOutputs["subscriptionPlan"]["getMySubscription"]
+    RouterOutputs['subscriptionPlan']['getMySubscription']
   >;
 }
 
-export function UserSettings({ user, mySubscriptionPromise }: Props) {
+export function UserSettings({user, mySubscriptionPromise}: Props) {
   const router = useRouter();
   const form = useForm<z.infer<typeof userProfileSettingsFormScheme>>({
     defaultValues: {
-      firstName: user?.firstName || "",
-      lastName: user?.lastName || "",
-      email: user?.email || "",
-      profileImageSrc: user?.profileImageSrc || "",
-      currency: user?.preferredCurrency || "USD",
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      email: user?.email || '',
+      profileImageSrc: user?.profileImageSrc || '',
+      currency: user?.preferredCurrency || 'USD',
     },
   });
 
@@ -72,7 +72,7 @@ export function UserSettings({ user, mySubscriptionPromise }: Props) {
               <FormField
                 control={form.control}
                 name="firstName"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>First name</FormLabel>
                     <FormControl>
@@ -85,7 +85,7 @@ export function UserSettings({ user, mySubscriptionPromise }: Props) {
               <FormField
                 control={form.control}
                 name="lastName"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>Last name</FormLabel>
                     <FormControl>
@@ -98,7 +98,7 @@ export function UserSettings({ user, mySubscriptionPromise }: Props) {
               <FormField
                 control={form.control}
                 name="email"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
@@ -111,12 +111,12 @@ export function UserSettings({ user, mySubscriptionPromise }: Props) {
               <FormField
                 control={form.control}
                 name="profileImageSrc"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>Profile picture</FormLabel>
                     <FormControl>
                       <FileInput
-                        value={{ src: field.value, height: null, width: null }}
+                        value={{src: field.value, height: null, width: null}}
                         onChange={(value) => {
                           field.onChange(value?.src || null);
                         }}
@@ -129,7 +129,7 @@ export function UserSettings({ user, mySubscriptionPromise }: Props) {
               <FormField
                 control={form.control}
                 name="currency"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>Preferred currency</FormLabel>
                     <FormControl>

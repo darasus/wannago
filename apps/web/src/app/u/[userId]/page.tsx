@@ -1,5 +1,5 @@
 import {PublicProfile} from '../../(features)/PublicProfile/PublicProfile';
-import {api} from '../../../trpc/server';
+import {api} from '../../../trpc/server-http';
 
 export const generateMetadata = async ({
   params: {userId},
