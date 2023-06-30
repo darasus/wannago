@@ -22,13 +22,11 @@ export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
     const edgeLink = experimental_nextHttpLink({
       ...sharedOpts,
       url: `${getBaseUrl()}/api/trpc/edge`,
-      fetch: (input, init) => fetch(input, {...init, cache: 'no-store'}),
     })(runtime);
 
     const lambdaLink = experimental_nextHttpLink({
       ...sharedOpts,
       url: `${getBaseUrl()}/api/trpc/lambda`,
-      fetch: (input, init) => fetch(input, {...init, cache: 'no-store'}),
     })(runtime);
 
     return (ctx) => {

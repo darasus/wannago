@@ -6,6 +6,7 @@ import {AppRouter} from 'api';
 import {cookies, headers} from 'next/headers';
 import superjson from 'superjson';
 import {endingLink} from './shared';
+import {omit} from 'ramda';
 
 export const api = experimental_createTRPCNextAppDirServer<AppRouter>({
   config() {
@@ -17,7 +18,15 @@ export const api = experimental_createTRPCNextAppDirServer<AppRouter>({
         }),
         endingLink({
           headers: {
-            ...Object.fromEntries(headers().entries()),
+            ...omit(
+              [
+                'Content-Length',
+                'content-length',
+                'Content-Type',
+                'content-type',
+              ],
+              Object.fromEntries(headers().entries())
+            ),
             cookie: cookies().toString(),
             'x-trpc-source': 'rsc-http',
           },

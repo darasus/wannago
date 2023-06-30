@@ -6,15 +6,18 @@ import {Container} from 'ui';
 import {FreeEventAction} from './features/FreeEventAction/FreeEventAction';
 import {PaidEventAction} from './features/PaidEventAction/PaidEventAction';
 import {api} from '../../../../apps/web/src/trpc/client';
+import {use} from 'react';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
 }
 
-export async function SignUpCard({event}: Props) {
-  const attendeeCount = await api.event.getNumberOfAttendees.query({
-    eventId: event.id,
-  });
+export function SignUpCard({event}: Props) {
+  const attendeeCount = use(
+    api.event.getNumberOfAttendees.query({
+      eventId: event.id,
+    })
+  );
 
   const isFreeEvent = event.tickets.length === 0;
   const isPaidEvent = event.tickets.length > 0;

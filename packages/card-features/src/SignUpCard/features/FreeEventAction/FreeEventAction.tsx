@@ -17,16 +17,16 @@ import {
   Switch,
 } from 'ui';
 import {AuthModal} from '../AuthModal/AuthModal';
-import {api} from '../../../../../../apps/web/src/trpc/client';
 import {useRouter} from 'next/navigation';
 import {useQuery} from '@tanstack/react-query';
-
-interface Props {
-  event: Event;
-}
+import {cancelEvent, getMySignUp, joinEvent} from './actions';
 
 interface EventSignUpForm {
   hasPlusOne: boolean;
+}
+
+interface Props {
+  event: Event;
 }
 
 export function FreeEventAction({event}: Props) {
@@ -37,24 +37,23 @@ export function FreeEventAction({event}: Props) {
   const auth = useAuth();
   const signUp = useQuery({
     queryKey: [],
-    queryFn: () => api.event.getMySignUp.query({eventId: event.id}),
+    queryFn: () => getMySignUp({eventId: event.id}),
   });
 
   const {modal: cancelModal, open: openCancelModal} = useConfirmDialog({
     title: 'Confirm cancellation',
     description: 'Are you sure you want to cancel your attendance?',
     onConfirm: async () => {
-      await api.event.cancelEvent
-        .mutate({
-          eventId: event.id,
-        })
+      await cancelEvent({
+        eventId: event.id,
+      })
         .then(async () => {
           logEvent('event_sign_up_cancel_submitted', {
             eventId: event.id,
           });
           toast.success('Sign up is cancelled!');
           router.refresh();
-          signUp.refetch();
+          await signUp.refetch();
         })
         .catch((error) => {
           toast.error(error.message);
@@ -77,16 +76,14 @@ export function FreeEventAction({event}: Props) {
       }
     }
 
-    await api.event.joinEvent
-      .mutate({
-        eventId: event.id,
-        hasPlusOne: data.hasPlusOne,
-      })
+    await joinEvent({
+      eventId: event.id,
+      hasPlusOne: data.hasPlusOne,
+    })
       .then(async () => {
         toast.success('Signed up! Check your email for more details!');
         confetti();
-        router.refresh();
-        signUp.refetch();
+        await signUp.refetch();
       })
       .catch((error) => {
         toast.error(error.message);
