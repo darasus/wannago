@@ -2,12 +2,27 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Modal } from "ui";
-import { AdminInviteForm } from "../../../../../../../../types/forms";
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Modal,
+} from "ui";
 import { toast } from "react-hot-toast";
-import { Input } from "../../../../../../../../components/Input/Input/Input";
 import { useParams, useRouter } from "next/navigation";
 import { api } from "../../../../../../../../trpc/client";
+import { z } from "zod";
+
+const formScheme = z.object({
+  firstName: z.string().nonempty(),
+  lastName: z.string().nonempty(),
+  email: z.string().email(),
+});
 
 export function EventInviteButton() {
   const [on, set] = useState(false);
@@ -15,12 +30,12 @@ export function EventInviteButton() {
   const eventShortId = params?.id as string;
   const router = useRouter();
 
+  const form = useForm<z.infer<typeof formScheme>>();
   const {
     handleSubmit,
     reset,
-    register,
-    formState: { isSubmitting, errors },
-  } = useForm<AdminInviteForm>();
+    formState: { isSubmitting },
+  } = form;
 
   const onSubmit = handleSubmit(async (data) => {
     if (eventShortId) {
@@ -39,51 +54,77 @@ export function EventInviteButton() {
   return (
     <>
       <Modal title="Invite by email" isOpen={on} onClose={() => set(false)}>
-        <form onSubmit={onSubmit}>
-          <div className="grid grid-cols-12 gap-2 grow mr-2">
-            <div className="col-span-6">
-              <Input
-                placeholder="First name"
-                {...register("firstName", {
-                  required: "First name is required",
-                })}
-                error={errors.firstName}
-                data-testid="invite-by-email-first-name-input"
-              />
+        <Form {...form}>
+          <form onSubmit={onSubmit}>
+            <div className="grid grid-cols-12 gap-2 grow mr-2">
+              <div className="col-span-6">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>First name</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          data-testid="invite-by-email-first-name-input"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="col-span-6">
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Last name</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          data-testid="invite-by-email-last-name-input"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="col-span-12">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          data-testid="invite-by-email-email-input"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="col-span-4">
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  isLoading={isSubmitting}
+                  className="w-full"
+                  data-testid="invite-by-email-submit-button"
+                >
+                  Invite
+                </Button>
+              </div>
             </div>
-            <div className="col-span-6">
-              <Input
-                placeholder="Last name"
-                {...register("lastName", {
-                  required: "Last name is required",
-                })}
-                error={errors.lastName}
-                data-testid="invite-by-email-last-name-input"
-              />
-            </div>
-            <div className="col-span-12">
-              <Input
-                placeholder="Email"
-                {...register("email", {
-                  required: "Email is required",
-                })}
-                error={errors.email}
-                data-testid="invite-by-email-email-input"
-              />
-            </div>
-            <div className="col-span-4">
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                isLoading={isSubmitting}
-                className="w-full"
-                data-testid="invite-by-email-submit-button"
-              >
-                Invite
-              </Button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </Form>
       </Modal>
       <Button
         size="sm"

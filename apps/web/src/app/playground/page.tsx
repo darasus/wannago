@@ -1,7 +1,6 @@
 "use client";
 
 import { Accordion, Badge, Button, Container, LoadingWave } from "ui";
-import { Input } from "../../components/Input/Input/Input";
 import { ChevronDown } from "lucide-react";
 
 const sizes = ["sm", "lg"] as const;
@@ -80,7 +79,7 @@ export default function PlaygroundPage() {
       </Section>
 
       <Section>
-        <Input label="Hello" placeholder="Placeholder..." isLoading />
+        {/* <Input label="Hello" placeholder="Placeholder..." isLoading /> */}
       </Section>
 
       <Section>

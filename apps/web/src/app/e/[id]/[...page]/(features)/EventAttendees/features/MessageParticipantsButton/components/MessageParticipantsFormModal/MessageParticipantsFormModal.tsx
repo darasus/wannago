@@ -1,9 +1,7 @@
 "use client";
 
 import { UseFormRegister } from "react-hook-form";
-import { Button, Modal } from "ui";
-import { Input } from "../../../../../../../../../../components/Input/Input/Input";
-import { Textarea } from "../../../../../../../../../../components/Input/Input/Textarea";
+import { Button, Input, Modal, Textarea } from "ui";
 
 interface Props {
   isOpen: boolean;
