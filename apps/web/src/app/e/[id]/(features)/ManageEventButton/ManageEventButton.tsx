@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import {Event} from '@prisma/client';
-import {usePublishEvent, useRemoveEvent, useUnpublishEvent} from 'hooks';
+import { Event } from "@prisma/client";
+import { usePublishEvent, useRemoveEvent, useUnpublishEvent } from "hooks";
 import {
   ChevronDown,
   DownloadCloud,
@@ -11,8 +11,8 @@ import {
   UploadCloud,
   UserPlus,
   Users,
-} from 'lucide-react';
-import {useParams, useRouter} from 'next/navigation';
+} from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
 import {
   Button,
   DropdownMenu,
@@ -22,23 +22,23 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from 'ui';
+} from "ui";
 
 interface Props {
   event: Event;
 }
 
-export function ManageEventButton({event}: Props) {
+export function ManageEventButton({ event }: Props) {
   const router = useRouter();
   const params = useParams();
   const shortId = params?.id as string;
-  const {modal: removeEventModal, onRemoveClick} = useRemoveEvent({
+  const { modal: removeEventModal, onRemoveClick } = useRemoveEvent({
     eventId: event?.id,
   });
-  const {modal: publishModal, onPublishClick} = usePublishEvent({
+  const { modal: publishModal, onPublishClick } = usePublishEvent({
     eventId: event?.id,
   });
-  const {modal: unpublishModal, onUnpublishClick} = useUnpublishEvent({
+  const { modal: unpublishModal, onUnpublishClick } = useUnpublishEvent({
     eventId: event?.id,
   });
 
@@ -52,7 +52,7 @@ export function ManageEventButton({event}: Props) {
           <DropdownMenuTrigger asChild>
             <Button
               className="w-full"
-              size={'lg'}
+              size={"lg"}
               data-testid="manage-event-button"
             >
               <ChevronDown className="mr-2 h-4 w-4" />
@@ -64,6 +64,7 @@ export function ManageEventButton({event}: Props) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem
+                data-testid="select-option-button"
                 onClick={() => {
                   router.push(`/e/${shortId}/info`);
                 }}
@@ -72,6 +73,7 @@ export function ManageEventButton({event}: Props) {
                 <span>Info</span>
               </DropdownMenuItem>
               <DropdownMenuItem
+                data-testid="select-option-button"
                 onClick={() => {
                   router.push(`/e/${shortId}/edit`);
                 }}
@@ -80,6 +82,7 @@ export function ManageEventButton({event}: Props) {
                 <span>Edit</span>
               </DropdownMenuItem>
               <DropdownMenuItem
+                data-testid="select-option-button"
                 onClick={() => {
                   router.push(`/e/${shortId}/attendees`);
                 }}
@@ -88,6 +91,7 @@ export function ManageEventButton({event}: Props) {
                 <span>Attendees</span>
               </DropdownMenuItem>
               <DropdownMenuItem
+                data-testid="select-option-button"
                 onClick={() => {
                   router.push(`/e/${shortId}/invite`);
                 }}
@@ -96,18 +100,27 @@ export function ManageEventButton({event}: Props) {
                 <span>Invite</span>
               </DropdownMenuItem>
               {!event?.isPublished && (
-                <DropdownMenuItem onClick={onPublishClick}>
+                <DropdownMenuItem
+                  onClick={onPublishClick}
+                  data-testid="select-option-button"
+                >
                   <UploadCloud className="mr-2 h-4 w-4 text-green-600" />
                   <span className="text-green-600">Publish</span>
                 </DropdownMenuItem>
               )}
               {event?.isPublished && (
-                <DropdownMenuItem onClick={onUnpublishClick}>
+                <DropdownMenuItem
+                  onClick={onUnpublishClick}
+                  data-testid="select-option-button"
+                >
                   <DownloadCloud className="mr-2 h-4 w-4 text-destructive" />
                   <span className="text-destructive">Unpublish</span>
                 </DropdownMenuItem>
               )}
-              <DropdownMenuItem onClick={onRemoveClick}>
+              <DropdownMenuItem
+                onClick={onRemoveClick}
+                data-testid="select-option-button"
+              >
                 <Trash2 className="mr-2 h-4 w-4 text-destructive" />
                 <span className="text-destructive">Remove</span>
               </DropdownMenuItem>
