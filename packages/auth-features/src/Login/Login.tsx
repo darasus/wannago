@@ -5,18 +5,29 @@ import { ClerkAPIError } from "@clerk/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { CardBase, LoadingBlock, Button, Text } from "ui";
+import {
+  CardBase,
+  LoadingBlock,
+  Button,
+  Text,
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  Input,
+  FormMessage,
+} from "ui";
 import { cn, sleep } from "utils";
-import { Input } from "../../../../apps/web/src/components/Input/Input/Input";
 import { titleFont } from "../../../../apps/web/src/fonts";
+import { z } from "zod";
 
-interface TEmailForm {
-  email: string;
-}
-
-interface TCodeForm {
-  code: string;
-}
+const emailFormScheme = z.object({
+  email: z.string().email(),
+});
+const codeFormScheme = z.object({
+  code: z.string().length(6),
+});
 
 export interface APIResponseError {
   errors: ClerkAPIError[];
@@ -32,8 +43,8 @@ export function Login({ onDone, onCreateAccountClick }: Props) {
   const { getToken } = useAuth();
   const { setSession, isLoaded } = useSignIn();
   const [step, setStep] = useState<"email" | "code">("email");
-  const emailForm = useForm<TEmailForm>();
-  const codeForm = useForm<TCodeForm>({
+  const emailForm = useForm<z.infer<typeof emailFormScheme>>();
+  const codeForm = useForm<z.infer<typeof codeFormScheme>>({
     mode: "onSubmit",
   });
 
@@ -105,7 +116,7 @@ interface EmailFormProps {
 }
 
 function EmailForm({ goToNextStep }: EmailFormProps) {
-  const form = useFormContext<TEmailForm>();
+  const form = useFormContext<z.infer<typeof emailFormScheme>>();
   const { signIn } = useSignIn();
 
   const submit = form.handleSubmit(async (data) => {
@@ -131,31 +142,37 @@ function EmailForm({ goToNextStep }: EmailFormProps) {
   }, []);
 
   return (
-    <form onSubmit={submit}>
-      <div className="flex flex-col gap-4">
-        <Input
-          type="email"
-          label="Email"
-          {...form.register("email", {
-            required: {
-              value: true,
-              message: "Email is required",
-            },
-          })}
-          error={form.formState.errors.email}
-          autoComplete="email"
-          data-testid="login-email-input"
-        />
-        <Button
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          isLoading={form.formState.isSubmitting}
-          data-testid="login-email-form-submit"
-        >
-          Submit
-        </Button>
-      </div>
-    </form>
+    <Form {...form}>
+      <form onSubmit={submit}>
+        <div className="flex flex-col gap-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    data-testid="login-email-input"
+                    autoComplete="email"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            isLoading={form.formState.isSubmitting}
+            data-testid="login-email-form-submit"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
 
@@ -165,7 +182,7 @@ interface CodeFormProps {
 }
 
 function CodeForm({ onDone, email }: CodeFormProps) {
-  const form = useFormContext<TCodeForm>();
+  const form = useFormContext<z.infer<typeof codeFormScheme>>();
   const code = form.watch("code");
   const { signIn } = useSignIn();
 
@@ -203,50 +220,38 @@ function CodeForm({ onDone, email }: CodeFormProps) {
   }, [code]);
 
   return (
-    <form onSubmit={submit}>
-      <div className="flex flex-col gap-4">
-        <Input
-          type="number"
-          description={`Enter the code sent to ${email}`}
-          label="Code"
-          {...form.register("code", {
-            validate: (value) => {
-              try {
-                if (!value) return "Code is required";
-
-                if (typeof value === "string") {
-                  const length = value.length;
-                  if (length > 6 || length < 6) {
-                    return "Code must be 6 characters long";
-                  }
-                }
-                const n = Number(value);
-
-                if (typeof n === "number" && !isNaN(n)) {
-                  return true;
-                } else {
-                  return "Code must be a number";
-                }
-              } catch (error) {
-                return "Code must be a number";
-              }
-            },
-          })}
-          error={form.formState.errors.code}
-          autoComplete="off"
-          data-testid="login-code-input"
-        />
-
-        <Button
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          isLoading={form.formState.isSubmitting}
-          data-testid="login-code-form-submit"
-        >
-          Submit
-        </Button>
-      </div>
-    </form>
+    <Form {...form}>
+      <form onSubmit={submit}>
+        <div className="flex flex-col gap-4">
+          <FormField
+            control={form.control}
+            name="code"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    data-testid="login-code-input"
+                    autoComplete="off"
+                    type="number"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            isLoading={form.formState.isSubmitting}
+            data-testid="login-code-form-submit"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
 

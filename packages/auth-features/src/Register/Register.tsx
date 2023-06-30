@@ -5,20 +5,32 @@ import { ClerkAPIError } from "@clerk/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { CardBase, LoadingBlock, Button, Text } from "ui";
+import {
+  CardBase,
+  LoadingBlock,
+  Button,
+  Text,
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  Input,
+  FormMessage,
+} from "ui";
 import { cn, sleep } from "utils";
-import { Input } from "../../../../apps/web/src/components/Input/Input/Input";
 import { titleFont } from "../../../../apps/web/src/fonts";
+import { z } from "zod";
 
-interface CodeForm {
-  code: string;
-}
+const codeFormScheme = z.object({
+  code: z.string().length(6),
+});
 
-interface UserInfoForm {
-  email: string;
-  firstName: string;
-  lastName: string;
-}
+const infoFormScheme = z.object({
+  email: z.string().email(),
+  firstName: z.string(),
+  lastName: z.string(),
+});
 
 export interface APIResponseError {
   errors: ClerkAPIError[];
@@ -34,8 +46,10 @@ export function Register({ onDone, onLoginClick }: Props) {
   const { getToken } = useAuth();
   const router = useRouter();
   const [step, setStep] = useState<"user_info" | "code">("user_info");
-  const userInfoForm = useForm<UserInfoForm>();
-  const codeForm = useForm<CodeForm>({ mode: "onSubmit" });
+  const userInfoForm = useForm<z.infer<typeof infoFormScheme>>();
+  const codeForm = useForm<z.infer<typeof codeFormScheme>>({
+    mode: "onSubmit",
+  });
 
   const ready = useCallback(async (): Promise<any> => {
     const token = await getToken();
@@ -105,7 +119,7 @@ interface UserFormProps {
 
 function UserForm({ goToNextStep }: UserFormProps) {
   const { signUp } = useSignUp();
-  const form = useFormContext<UserInfoForm>();
+  const form = useFormContext<z.infer<typeof infoFormScheme>>();
 
   const submit = form.handleSubmit(async (data) => {
     try {
@@ -136,59 +150,65 @@ function UserForm({ goToNextStep }: UserFormProps) {
   }, []);
 
   return (
-    <form onSubmit={submit}>
-      <div className="flex flex-col gap-4">
-        <div className="grid grid-cols-2 gap-4">
-          <Input
-            type="text"
-            label="First name"
-            {...form.register("firstName", {
-              required: {
-                value: true,
-                message: "First name is required",
-              },
-            })}
-            error={form.formState.errors.firstName}
-            autoComplete="given-name"
-            data-testid="register-first-name-input"
+    <Form {...form}>
+      <form onSubmit={submit}>
+        <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>First name</FormLabel>
+                  <FormControl>
+                    <Input {...field} data-testid="register-first-name-input" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Last name</FormLabel>
+                  <FormControl>
+                    <Input {...field} data-testid="register-last-name-input" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    autoComplete="email"
+                    data-testid="register-email-input"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          <Input
-            type="text"
-            label="Last name"
-            {...form.register("lastName", {
-              required: {
-                value: true,
-                message: "Last name is required",
-              },
-            })}
-            error={form.formState.errors.lastName}
-            autoComplete="family-name"
-            data-testid="register-last-name-input"
-          />
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            isLoading={form.formState.isSubmitting}
+            data-testid="register-user-info-form-submit"
+          >
+            Submit
+          </Button>
         </div>
-        <Input
-          type="email"
-          label="Email"
-          {...form.register("email", {
-            required: {
-              value: true,
-              message: "Email is required",
-            },
-          })}
-          error={form.formState.errors.email}
-          autoComplete="email"
-          data-testid="register-email-input"
-        />
-        <Button
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          isLoading={form.formState.isSubmitting}
-          data-testid="register-user-info-form-submit"
-        >
-          Submit
-        </Button>
-      </div>
-    </form>
+      </form>
+    </Form>
   );
 }
 
@@ -199,7 +219,7 @@ interface CodeFormProps {
 
 function CodeForm({ onDone, email }: CodeFormProps) {
   const { signUp } = useSignUp();
-  const form = useFormContext<CodeForm>();
+  const form = useFormContext<z.infer<typeof codeFormScheme>>();
   const code = form.watch("code");
 
   const submit = form.handleSubmit(async (data) => {
@@ -236,50 +256,38 @@ function CodeForm({ onDone, email }: CodeFormProps) {
   }, [code]);
 
   return (
-    <form onSubmit={submit}>
-      <div className="flex flex-col gap-4">
-        <Input
-          type="text"
-          description={`Enter the code sent to ${email}`}
-          label="Code"
-          {...form.register("code", {
-            validate: (value) => {
-              try {
-                if (!value) return "Code is required";
-
-                if (typeof value === "string") {
-                  const length = value.length;
-                  if (length > 6 || length < 6) {
-                    return "Code must be 6 characters long";
-                  }
-                }
-                const n = Number(value);
-
-                if (typeof n === "number" && !isNaN(n)) {
-                  return true;
-                } else {
-                  return "Code must be a number";
-                }
-              } catch (error) {
-                return "Code must be a number";
-              }
-            },
-          })}
-          error={form.formState.errors.code}
-          autoComplete="off"
-          data-testid="register-code-input"
-        />
-
-        <Button
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          isLoading={form.formState.isSubmitting}
-          data-testid="register-code-form-submit"
-        >
-          Submit
-        </Button>
-      </div>
-    </form>
+    <Form {...form}>
+      <form onSubmit={submit}>
+        <div className="flex flex-col gap-4">
+          <FormField
+            control={form.control}
+            name="code"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    autoComplete="off"
+                    data-testid="register-code-input"
+                    type="number"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            isLoading={form.formState.isSubmitting}
+            data-testid="register-code-form-submit"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
 

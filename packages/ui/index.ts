@@ -95,3 +95,5 @@ export {
 } from "./src/components/Tabs/Tabs";
 export { RadioGroup, RadioGroupItem } from "./src/components/Radio/Radio";
 export { FileInput } from "./src/components/FileInput/FileInput";
+export { RichTextarea } from "./src/components/RichTextarea/RichTextarea";
+export { Switch } from "./src/components/Switch/Switch";

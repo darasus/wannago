@@ -10,7 +10,7 @@ import {
   Input,
   Spinner,
 } from "ui";
-import { RichTextarea } from "../../../components/Input/RichTextarea/RichTextarea";
+import { RichTextarea } from "ui/src/components/RichTextarea/RichTextarea";
 import { useFormContext } from "react-hook-form";
 import { eventFormSchema } from "../hooks/useEventForm";
 import { z } from "zod";

@@ -5,9 +5,9 @@ import StarterKit from "@tiptap/starter-kit";
 import { HTMLAttributes, useEffect } from "react";
 import { FieldError, useFormContext } from "react-hook-form";
 import { cn } from "utils";
-import { Form } from "../../../features/EventForm/types";
+import { Form } from "../../../../../apps/web/src/features/EventForm/types";
 import { EditorMenu } from "./EditorMenu";
-import { inputClassName } from "ui/src/components/Input/Input";
+import { inputClassName } from "../Input/Input";
 
 interface Props extends HTMLAttributes<HTMLInputElement> {
   label?: string;

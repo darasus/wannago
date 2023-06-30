@@ -6,8 +6,16 @@ import { useAmplitudeAppDir, useConfetti, useConfirmDialog } from "hooks";
 import { use, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Badge, Button } from "ui";
-import { Switch } from "../../../../../../apps/web/src/components/Input/Switch/Switch";
+import {
+  Badge,
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  Switch,
+} from "ui";
 import { AuthModal } from "../AuthModal/AuthModal";
 import { api } from "../../../../../../apps/web/src/trpc/client";
 import { useRouter } from "next/navigation";
@@ -59,6 +67,8 @@ export function FreeEventAction({ event }: Props) {
         return;
       }
     }
+
+    console.log(data.hasPlusOne);
 
     await api.event.joinEvent
       .mutate({
@@ -135,31 +145,44 @@ export function FreeEventAction({ event }: Props) {
         onClose={() => setIsAuthModalOpen(false)}
         onDone={onJoinSubmit}
       />
-      <form
-        className="flex items-center gap-x-4 w-full"
-        onSubmit={onJoinSubmit}
-      >
-        <div>
-          <Switch
-            name="hasPlusOne"
-            control={form.control}
-            defaultValue={form.formState.defaultValues?.hasPlusOne || false}
-          >
-            <span>
-              <span className="hidden md:inline">Bring </span>+1
-            </span>
-          </Switch>
-        </div>
-        <Button
-          type="submit"
-          disabled={form.formState.isSubmitting}
-          isLoading={form.formState.isSubmitting}
-          size="sm"
-          data-testid="attend-button"
+      <Form {...form}>
+        <form
+          className="flex items-center gap-x-4 w-full"
+          onSubmit={onJoinSubmit}
         >
-          Attend
-        </Button>
-      </form>
+          <div>
+            <FormField
+              name="hasPlusOne"
+              control={form.control}
+              render={({ field }) => {
+                return (
+                  <FormItem className="flex items-center space-y-0 gap-1">
+                    <FormControl>
+                      <Switch
+                        id="bring-one"
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel htmlFor="bring-one">
+                      <span className="hidden md:inline">Bring </span>+1
+                    </FormLabel>
+                  </FormItem>
+                );
+              }}
+            />
+          </div>
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            isLoading={form.formState.isSubmitting}
+            size="sm"
+            data-testid="attend-button"
+          >
+            Attend
+          </Button>
+        </form>
+      </Form>
     </>
   );
 }
