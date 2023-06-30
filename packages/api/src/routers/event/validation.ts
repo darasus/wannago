@@ -1,4 +1,4 @@
-import {z} from 'zod';
+import { z } from "zod";
 
 export const eventInput = z.object({
   createdById: z.string().uuid(),
@@ -15,7 +15,7 @@ export const eventInput = z.object({
     .number()
     .or(z.string())
     .transform((val): number => {
-      if (typeof val === 'number') {
+      if (typeof val === "number") {
         return val;
       }
       return isNaN(Number(val)) ? 0 : Number(val);

@@ -7,9 +7,9 @@ import { Spinner } from "../Spinner/Spinner";
 import { useUploadImage } from "../../../../hooks/index";
 
 interface Value {
-  src: string;
-  height: number | null;
-  width: number | null;
+  src: string | null | undefined;
+  height: number | null | undefined;
+  width: number | null | undefined;
 }
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
   onChange: (value: Value | null) => void;
 }
 
-export function FileInput({ value, onChange }: Props) {
+export function FileInput({ value, onChange, ...props }: Props) {
   const { isLoading, handleFileUpload } = useUploadImage();
 
   const onDrop = useCallback(

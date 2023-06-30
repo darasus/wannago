@@ -1,9 +1,9 @@
-import {AddEventForm} from '../../../features/EventForm/AddEventForm';
-import {Container, PageHeader} from 'ui';
-import {api, getMe} from '../../../trpc/server';
+import { AddEventForm } from "../../../features/EventForm/AddEventForm";
+import { Container, PageHeader } from "ui";
+import { api, getMe } from "../../../trpc/server";
 
 export const metadata = {
-  title: 'Add event | WannaGo',
+  title: "Add event | WannaGo",
 };
 
 export default async function EventAddPage() {

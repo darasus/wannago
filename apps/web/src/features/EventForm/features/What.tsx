@@ -1,6 +1,7 @@
-import {SparklesIcon, CheckCircle2} from 'lucide-react';
+import { SparklesIcon, CheckCircle2 } from "lucide-react";
 import {
   Button,
+  FileInput,
   FormControl,
   FormField,
   FormItem,
@@ -8,19 +9,20 @@ import {
   FormMessage,
   Input,
   Spinner,
-} from 'ui';
-import {RichTextarea} from '../../../components/Input/RichTextarea/RichTextarea';
-import {useFormContext} from 'react-hook-form';
-import {eventFormSchema} from '../hooks/useEventForm';
-import {z} from 'zod';
-import {useGenerateEventDescription, useUploadImage} from 'hooks';
-import {useCallback, useEffect} from 'react';
+} from "ui";
+import { RichTextarea } from "../../../components/Input/RichTextarea/RichTextarea";
+import { useFormContext } from "react-hook-form";
+import { eventFormSchema } from "../hooks/useEventForm";
+import { z } from "zod";
+import { useGenerateEventDescription, useUploadImage } from "hooks";
+import { useCallback, useEffect } from "react";
 
 export function What() {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
-  const {generate, generatedOutput, isLoading} = useGenerateEventDescription();
-  const title = form.watch('title');
-  const featuredImageSrc = form.watch('featuredImageSrc');
+  const { generate, generatedOutput, isLoading } =
+    useGenerateEventDescription();
+  const title = form.watch("title");
+  const featuredImageSrc = form.watch("featuredImageSrc");
 
   const onClickGenerate = () => {
     generate(title);
@@ -28,22 +30,22 @@ export function What() {
 
   useEffect(() => {
     if (generatedOutput) {
-      form.setValue('description', generatedOutput);
+      form.setValue("description", generatedOutput);
     }
   }, [generatedOutput, form]);
 
-  const {isLoading: isUploadingImage, handleFileUpload} = useUploadImage();
+  const { isLoading: isUploadingImage, handleFileUpload } = useUploadImage();
 
   const handleImageUpload = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) {
-        handleFileUpload(file).then(data => {
+        handleFileUpload(file).then((data) => {
           if (data) {
-            form.setValue('featuredImageSrc', data.url);
-            form.setValue('featuredImageHeight', data.height);
-            form.setValue('featuredImageWidth', data.width);
-            form.setValue('featuredImagePreviewSrc', data.imageSrcBase64);
+            form.setValue("featuredImageSrc", data.url);
+            form.setValue("featuredImageHeight", data.height);
+            form.setValue("featuredImageWidth", data.width);
+            form.setValue("featuredImagePreviewSrc", data.imageSrcBase64);
           }
         });
       }
@@ -56,11 +58,11 @@ export function What() {
       <FormField
         control={form.control}
         name="title"
-        render={({field}) => (
+        render={({ field }) => (
           <FormItem>
             <FormLabel>Title</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input {...field} data-testid="event-form-title" />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -69,7 +71,7 @@ export function What() {
       <FormField
         control={form.control}
         name="description"
-        render={({field}) => (
+        render={({ field }) => (
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
@@ -96,8 +98,8 @@ export function What() {
       />
       <FormField
         control={form.control}
-        name="featuredImage"
-        render={({field}) => (
+        name="featuredImageSrc"
+        render={({ field }) => (
           <FormItem>
             <FormLabel className="flex gap-2 items-center">
               Featured image {isUploadingImage && <Spinner />}
@@ -106,7 +108,18 @@ export function What() {
               )}
             </FormLabel>
             <FormControl>
-              <Input type="file" {...field} onChange={handleImageUpload} />
+              <FileInput
+                value={{ src: field.value, height: null, width: null }}
+                onChange={(value) => {
+                  field.onChange(value?.src);
+                  if (value?.height) {
+                    form.setValue("featuredImageHeight", value?.height);
+                  }
+                  if (value?.width) {
+                    form.setValue("featuredImageWidth", value?.width);
+                  }
+                }}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>

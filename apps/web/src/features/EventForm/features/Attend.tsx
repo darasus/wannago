@@ -44,7 +44,11 @@ export function Attend() {
             <FormItem>
               <FormLabel>Max number of attendees</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input
+                  type="number"
+                  {...field}
+                  data-testid="event-form-max-attendees"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

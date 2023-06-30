@@ -43,6 +43,7 @@ export function Where() {
                     "justify-between",
                     !field.value && "text-muted-foreground"
                   )}
+                  data-testid="event-form-address-button"
                 >
                   {field.value || "Search location..."}
                   {searchLocation.result.isFetching ? (
@@ -61,6 +62,7 @@ export function Where() {
                   onValueChange={(value) => {
                     searchLocation.setValue(value);
                   }}
+                  data-testid="event-form-address"
                 />
                 <CommandEmpty>No framework found.</CommandEmpty>
                 <CommandGroup>
@@ -71,6 +73,7 @@ export function Where() {
                       onSelect={(value) => {
                         field.onChange(value);
                       }}
+                      data-testid="location-input-option"
                     >
                       <Check
                         className={cn(

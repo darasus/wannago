@@ -23,7 +23,7 @@ export const eventFormSchema = z.object({
     required_error: "End date is required.",
   }),
   address: z.string(),
-  maxNumberOfAttendees: z.number().optional().default(0),
+  maxNumberOfAttendees: z.string().optional().default("0"),
   tickets: z
     .array(
       z.object({
@@ -59,7 +59,7 @@ export function useEventForm(props: {
           : event?.endDate) || new Date(),
       description: event?.description || undefined,
       address: event?.address || undefined,
-      maxNumberOfAttendees: event?.maxNumberOfAttendees || 0,
+      maxNumberOfAttendees: String(event?.maxNumberOfAttendees) || "0",
       featuredImageSrc: event?.featuredImageSrc || undefined,
       featuredImageHeight: event?.featuredImageHeight || undefined,
       featuredImageWidth: event?.featuredImageWidth || undefined,

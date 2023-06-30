@@ -37,6 +37,7 @@ export function When() {
                 onChange={(value) => {
                   field.onChange(value.toDate("UTC"));
                 }}
+                data-testid="event-form-start-date"
               />
             </FormControl>
             <FormMessage />
@@ -64,6 +65,7 @@ export function When() {
                 onChange={(value) => {
                   field.onChange(value.toDate("UTC"));
                 }}
+                data-testid="event-form-end-date"
               />
             </FormControl>
             <FormMessage />
