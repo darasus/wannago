@@ -31,7 +31,12 @@ export function DateCard({ endDate, startDate, onAddToCalendarClick }: Props) {
       innerClassName="flex flex-col h-full"
       title={"When"}
       titleChildren={
-        <Button onClick={onAddToCalendarClick} variant="link" size="sm">
+        <Button
+          onClick={onAddToCalendarClick}
+          variant="link"
+          size="sm"
+          className="p-0 h-auto"
+        >
           Add to calendar
         </Button>
       }

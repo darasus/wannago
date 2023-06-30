@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import {useEffect} from 'react';
-import {toast} from 'react-hot-toast';
+import { useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 export function useLoadingToast({
   isLoading,
@@ -13,7 +13,7 @@ export function useLoadingToast({
   useEffect(() => {
     let toastId: string | undefined;
     if (isLoading) {
-      toastId = toast.loading('Loading...');
+      toastId = toast.loading("Loading...");
     } else {
       toast.dismiss(toastId);
       toastId = undefined;

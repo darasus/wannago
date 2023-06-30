@@ -1,19 +1,18 @@
-'use client';
+"use client";
 
-import {CardBase, Badge, PageHeader} from 'ui';
-import {Text, Tooltip} from 'ui';
-import {formatTimeago} from 'utils';
-import {getBaseUrl} from 'utils';
-import React, {use} from 'react';
-import {cn} from 'utils';
-import {Event} from '@prisma/client';
-import {api} from '../../../../../../trpc/client';
+import { CardBase, Badge, PageHeader } from "ui";
+import { Text, Tooltip } from "ui";
+import { formatTimeago } from "utils";
+import { getBaseUrl } from "utils";
+import React, { use } from "react";
+import { Event } from "@prisma/client";
+import { api } from "../../../../../../trpc/client";
 
 interface Props {
   event: Event;
 }
 
-export function EventInfo({event}: Props) {
+export function EventInfo({ event }: Props) {
   const attendeesCount = use(
     api.event.getNumberOfAttendees.query({
       eventId: event.id,
@@ -22,54 +21,52 @@ export function EventInfo({event}: Props) {
 
   const publicEventUrl = event?.isPublished
     ? `${getBaseUrl()}/e/${event?.shortId}`
-        .replace('https://www.', '')
-        .replace('http://', '')
+        .replace("https://www.", "")
+        .replace("http://", "")
     : `${getBaseUrl()}/e/abcdef`
-        .replace('https://www.', '')
-        .replace('http://', '');
+        .replace("https://www.", "")
+        .replace("http://", "");
 
   const values: {
     label: string;
     value: JSX.Element | string;
-    badgeColor?: 'green' | 'yellow';
+    badgeColor?: "green" | "yellow";
     dataTestId?: string;
   }[] = [
     {
-      label: 'Status',
-      value: event?.isPublished ? 'Published' : 'Draft',
-      badgeColor: event?.isPublished ? 'green' : 'yellow',
-      dataTestId: 'event-status-label',
+      label: "Status",
+      value: event?.isPublished ? "Published" : "Draft",
+      badgeColor: event?.isPublished ? "green" : "yellow",
+      dataTestId: "event-status-label",
     },
     {
-      label: 'Created',
-      value: event?.createdAt ? formatTimeago(event?.createdAt) : '',
+      label: "Created",
+      value: event?.createdAt ? formatTimeago(event?.createdAt) : "",
     },
     {
-      label: 'Updated',
-      value: event?.updatedAt ? formatTimeago(event?.updatedAt) : '',
+      label: "Updated",
+      value: event?.updatedAt ? formatTimeago(event?.updatedAt) : "",
     },
     {
-      label: 'Attendees',
+      label: "Attendees",
       value:
-        typeof attendeesCount?.count === 'number'
+        typeof attendeesCount?.count === "number"
           ? event?.maxNumberOfAttendees && event?.maxNumberOfAttendees > 0
             ? `${attendeesCount?.count} of max ${event?.maxNumberOfAttendees}`
             : `${attendeesCount?.count}`
-          : 'Loading...',
+          : "Loading...",
     },
     {
-      label: 'Public url',
+      label: "Public url",
       value: (
         <Tooltip
           text={
             event?.isPublished
               ? undefined
-              : 'To see the public link, please publish the event first.'
+              : "To see the public link, please publish the event first."
           }
         >
-          <span className={cn({'blur-[3px]': !event?.isPublished})}>
-            {publicEventUrl}
-          </span>
+          <span>{publicEventUrl}</span>
         </Tooltip>
       ),
     },
@@ -79,16 +76,17 @@ export function EventInfo({event}: Props) {
     <div className="flex flex-col gap-4">
       <PageHeader title="Event info" />
       <CardBase>
-        <div className="flex items-center">
-          <Badge className="mr-2 mb-2">Info</Badge>
-        </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
             {values.map((v, i) => {
               return (
                 <div key={i} className="flex items-center gap-x-1">
                   <Text className="text-xs">{`${v.label}:`}</Text>
-                  <Badge color={v.badgeColor} data-testid={v?.dataTestId}>
+                  <Badge
+                    color={v.badgeColor}
+                    data-testid={v?.dataTestId}
+                    variant={"secondary"}
+                  >
                     {v.value}
                   </Badge>
                 </div>

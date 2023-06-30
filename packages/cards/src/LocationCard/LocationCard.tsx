@@ -21,7 +21,12 @@ export function LocationCard({
       className="h-full"
       title="Where"
       titleChildren={
-        <Button onClick={onGetDirectionsClick} variant="link" size="sm">
+        <Button
+          onClick={onGetDirectionsClick}
+          variant="link"
+          size="sm"
+          className="p-0 h-auto"
+        >
           Get directions
         </Button>
       }

@@ -1,7 +1,6 @@
 import { forwardRef, PropsWithChildren } from "react";
 import { cn } from "../../../../utils";
 import { LoadingBlock } from "../LoadingBlock/LoadingBlock";
-import { Badge } from "../Badge/Badge";
 
 interface BadgeItem {
   badgeContent: React.ReactNode;
@@ -41,8 +40,10 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
       )}
     >
       {title && (
-        <div className="flex items-center bg-slate-100 rounded-t-md px-6 py-2 border-b border-slate-200">
-          <Badge variant={"outline"}>{title}</Badge>
+        <div className="flex items-center gap-2 bg-slate-100 rounded-t-md border-b border-slate-200">
+          <div className="border-r bg-slate-50 p-2 pl-4 text-sm rounded-tl-md font-bold uppercase">
+            {title}
+          </div>
           {titleChildren}
         </div>
       )}
@@ -52,7 +53,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
             <div
               key={index}
               className={cn(
-                "flex justify-center items-center border-2 border-gray-800 rounded-3xl px-1 py-[1px]",
+                "flex justify-center items-center border-2 border-gray-800 rounded-3xl px-2 py-1",
                 {
                   "bg-green-300": badgeColor === "green",
                   "bg-white": badgeColor === "white",
@@ -65,7 +66,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
           ))}
         </div>
       )}
-      <div className={cn("p-6", innerClassName)}>{children}</div>
+      <div className={cn("p-4", innerClassName)}>{children}</div>
       <div
         className={cn(
           "absolute top-0 bottom-0 left-0 right-0",
