@@ -1,7 +1,8 @@
 import {baseScheme, user, email} from 'clerk-webhook-handler';
 
 export async function POST(req: Request) {
-  const input = baseScheme.parse(req.body);
+  const body = await req.json();
+  const input = baseScheme.parse(body);
 
   if (input.type === 'user.created') {
     await user.created(input);
