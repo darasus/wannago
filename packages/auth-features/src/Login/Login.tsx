@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useAuth, useSignIn } from "@clerk/nextjs";
-import { ClerkAPIError } from "@clerk/types";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import {useAuth, useSignIn} from '@clerk/nextjs';
+import {ClerkAPIError} from '@clerk/types';
+import {useRouter} from 'next/navigation';
+import {useCallback, useEffect, useState} from 'react';
+import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {
   CardBase,
   LoadingBlock,
@@ -17,10 +17,11 @@ import {
   FormControl,
   Input,
   FormMessage,
-} from "ui";
-import { cn, sleep } from "utils";
-import { titleFont } from "../../../../apps/web/src/fonts";
-import { z } from "zod";
+  FormDescription,
+} from 'ui';
+import {cn, sleep} from 'utils';
+import {titleFont} from '../../../../apps/web/src/fonts';
+import {z} from 'zod';
 
 const emailFormScheme = z.object({
   email: z.string().email(),
@@ -38,14 +39,14 @@ interface Props {
   onCreateAccountClick?: () => void;
 }
 
-export function Login({ onDone, onCreateAccountClick }: Props) {
+export function Login({onDone, onCreateAccountClick}: Props) {
   const router = useRouter();
-  const { getToken } = useAuth();
-  const { setSession, isLoaded } = useSignIn();
-  const [step, setStep] = useState<"email" | "code">("email");
+  const {getToken} = useAuth();
+  const {setSession, isLoaded} = useSignIn();
+  const [step, setStep] = useState<'email' | 'code'>('email');
   const emailForm = useForm<z.infer<typeof emailFormScheme>>();
   const codeForm = useForm<z.infer<typeof codeFormScheme>>({
-    mode: "onSubmit",
+    mode: 'onSubmit',
   });
 
   const ready = useCallback(async (): Promise<any> => {
@@ -65,7 +66,7 @@ export function Login({ onDone, onCreateAccountClick }: Props) {
       if (onDone) {
         onDone?.();
       } else {
-        window.location.href = "/dashboard";
+        window.location.href = '/dashboard';
       }
     },
     [ready, setSession, onDone]
@@ -75,26 +76,26 @@ export function Login({ onDone, onCreateAccountClick }: Props) {
     if (onCreateAccountClick) {
       onCreateAccountClick();
     } else {
-      router.push("/register");
+      router.push('/register');
     }
   }, [router, onCreateAccountClick]);
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Text className={cn("text-4xl", titleFont.className)}>Login</Text>
+      <Text className={cn('text-4xl', titleFont.className)}>Login</Text>
       <CardBase className="w-full">
         {isLoaded ? (
           <>
-            {step === "email" && (
+            {step === 'email' && (
               <FormProvider {...emailForm}>
-                <EmailForm goToNextStep={() => setStep("code")} />
+                <EmailForm goToNextStep={() => setStep('code')} />
               </FormProvider>
             )}
-            {step === "code" && (
+            {step === 'code' && (
               <FormProvider {...codeForm}>
                 <CodeForm
                   onDone={handleOnDone}
-                  email={emailForm.watch("email")}
+                  email={emailForm.watch('email')}
                 />
               </FormProvider>
             )}
@@ -115,29 +116,29 @@ interface EmailFormProps {
   goToNextStep: () => void;
 }
 
-function EmailForm({ goToNextStep }: EmailFormProps) {
+function EmailForm({goToNextStep}: EmailFormProps) {
   const form = useFormContext<z.infer<typeof emailFormScheme>>();
-  const { signIn } = useSignIn();
+  const {signIn} = useSignIn();
 
   const submit = form.handleSubmit(async (data) => {
     try {
       await signIn?.create({
         identifier: data.email,
-        strategy: "email_code",
+        strategy: 'email_code',
       });
       goToNextStep();
     } catch (error: any) {
       const e = error as APIResponseError;
 
-      form.setError("email", {
-        type: "manual",
+      form.setError('email', {
+        type: 'manual',
         message: parseError(e),
       });
     }
   });
 
   useEffect(() => {
-    form.setFocus("email");
+    form.setFocus('email');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -148,9 +149,9 @@ function EmailForm({ goToNextStep }: EmailFormProps) {
           <FormField
             control={form.control}
             name="email"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -181,34 +182,34 @@ interface CodeFormProps {
   onDone: (createdSessionId: string) => Promise<void>;
 }
 
-function CodeForm({ onDone, email }: CodeFormProps) {
+function CodeForm({onDone, email}: CodeFormProps) {
   const form = useFormContext<z.infer<typeof codeFormScheme>>();
-  const code = form.watch("code");
-  const { signIn } = useSignIn();
+  const code = form.watch('code');
+  const {signIn} = useSignIn();
 
   const submit = form.handleSubmit(async (data) => {
     try {
       const signInAttempt = await signIn?.attemptFirstFactor({
-        strategy: "email_code",
+        strategy: 'email_code',
         code: data.code,
       });
 
       if (
-        signInAttempt?.status === "complete" &&
+        signInAttempt?.status === 'complete' &&
         signInAttempt?.createdSessionId
       ) {
         await onDone(signInAttempt?.createdSessionId);
       }
     } catch (error: any) {
-      form.setError("code", {
-        type: "manual",
+      form.setError('code', {
+        type: 'manual',
         message: parseError(error as APIResponseError),
       });
     }
   });
 
   useEffect(() => {
-    form.setFocus("code");
+    form.setFocus('code');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -226,9 +227,9 @@ function CodeForm({ onDone, email }: CodeFormProps) {
           <FormField
             control={form.control}
             name="code"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Code</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -237,6 +238,7 @@ function CodeForm({ onDone, email }: CodeFormProps) {
                     type="number"
                   />
                 </FormControl>
+                <FormDescription>{`We sent code to ${email}`}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -257,11 +259,11 @@ function CodeForm({ onDone, email }: CodeFormProps) {
 
 export function parseError(err: APIResponseError): string {
   if (!err) {
-    return "";
+    return '';
   }
 
   if (err.errors) {
-    return err.errors[0].longMessage || "";
+    return err.errors[0].longMessage || '';
   }
 
   throw err;

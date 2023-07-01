@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useAuth, useSignUp } from "@clerk/nextjs";
-import { ClerkAPIError } from "@clerk/types";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import {useAuth, useSignUp} from '@clerk/nextjs';
+import {ClerkAPIError} from '@clerk/types';
+import {useRouter} from 'next/navigation';
+import {useCallback, useEffect, useState} from 'react';
+import {FormProvider, useForm, useFormContext} from 'react-hook-form';
 import {
   CardBase,
   LoadingBlock,
@@ -17,10 +17,11 @@ import {
   FormControl,
   Input,
   FormMessage,
-} from "ui";
-import { cn, sleep } from "utils";
-import { titleFont } from "../../../../apps/web/src/fonts";
-import { z } from "zod";
+  FormDescription,
+} from 'ui';
+import {cn, sleep} from 'utils';
+import {titleFont} from '../../../../apps/web/src/fonts';
+import {z} from 'zod';
 
 const codeFormScheme = z.object({
   code: z.string().length(6),
@@ -41,14 +42,14 @@ interface Props {
   onLoginClick?: () => void;
 }
 
-export function Register({ onDone, onLoginClick }: Props) {
-  const { setSession, isLoaded } = useSignUp();
-  const { getToken } = useAuth();
+export function Register({onDone, onLoginClick}: Props) {
+  const {setSession, isLoaded} = useSignUp();
+  const {getToken} = useAuth();
   const router = useRouter();
-  const [step, setStep] = useState<"user_info" | "code">("user_info");
+  const [step, setStep] = useState<'user_info' | 'code'>('user_info');
   const userInfoForm = useForm<z.infer<typeof infoFormScheme>>();
   const codeForm = useForm<z.infer<typeof codeFormScheme>>({
-    mode: "onSubmit",
+    mode: 'onSubmit',
   });
 
   const ready = useCallback(async (): Promise<any> => {
@@ -67,7 +68,7 @@ export function Register({ onDone, onLoginClick }: Props) {
     if (onDone) {
       onDone?.();
     } else {
-      window.location.href = "/dashboard";
+      window.location.href = '/dashboard';
     }
   };
 
@@ -75,28 +76,28 @@ export function Register({ onDone, onLoginClick }: Props) {
     if (onLoginClick) {
       onLoginClick();
     } else {
-      router.push("/login");
+      router.push('/login');
     }
   }, [router, onLoginClick]);
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Text className={cn("text-4xl", titleFont.className)}>
+      <Text className={cn('text-4xl', titleFont.className)}>
         Create account
       </Text>
       <CardBase className="w-full">
         {isLoaded ? (
           <>
-            {step === "user_info" && (
+            {step === 'user_info' && (
               <FormProvider {...userInfoForm}>
-                <UserForm goToNextStep={() => setStep("code")} />
+                <UserForm goToNextStep={() => setStep('code')} />
               </FormProvider>
             )}
-            {step === "code" && (
+            {step === 'code' && (
               <FormProvider {...codeForm}>
                 <CodeForm
                   onDone={handleOnDone}
-                  email={userInfoForm.watch("email")}
+                  email={userInfoForm.watch('email')}
                 />
               </FormProvider>
             )}
@@ -117,8 +118,8 @@ interface UserFormProps {
   goToNextStep: () => void;
 }
 
-function UserForm({ goToNextStep }: UserFormProps) {
-  const { signUp } = useSignUp();
+function UserForm({goToNextStep}: UserFormProps) {
+  const {signUp} = useSignUp();
   const form = useFormContext<z.infer<typeof infoFormScheme>>();
 
   const submit = form.handleSubmit(async (data) => {
@@ -129,15 +130,15 @@ function UserForm({ goToNextStep }: UserFormProps) {
         lastName: data.lastName,
       });
       await signUpAttempt?.prepareEmailAddressVerification({
-        strategy: "email_code",
+        strategy: 'email_code',
       });
       goToNextStep();
     } catch (error: any) {
       const e = error as APIResponseError;
 
-      if (e.errors[0].meta?.paramName === "email_address") {
-        form.setError("email", {
-          type: "manual",
+      if (e.errors[0].meta?.paramName === 'email_address') {
+        form.setError('email', {
+          type: 'manual',
           message: parseError(e),
         });
       }
@@ -145,7 +146,7 @@ function UserForm({ goToNextStep }: UserFormProps) {
   });
 
   useEffect(() => {
-    form.setFocus("firstName");
+    form.setFocus('firstName');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -157,7 +158,7 @@ function UserForm({ goToNextStep }: UserFormProps) {
             <FormField
               control={form.control}
               name="firstName"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>First name</FormLabel>
                   <FormControl>
@@ -170,7 +171,7 @@ function UserForm({ goToNextStep }: UserFormProps) {
             <FormField
               control={form.control}
               name="lastName"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Last name</FormLabel>
                   <FormControl>
@@ -184,7 +185,7 @@ function UserForm({ goToNextStep }: UserFormProps) {
           <FormField
             control={form.control}
             name="email"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
@@ -217,10 +218,10 @@ interface CodeFormProps {
   onDone: (createdSessionId: string) => Promise<void>;
 }
 
-function CodeForm({ onDone, email }: CodeFormProps) {
-  const { signUp } = useSignUp();
+function CodeForm({onDone, email}: CodeFormProps) {
+  const {signUp} = useSignUp();
   const form = useFormContext<z.infer<typeof codeFormScheme>>();
-  const code = form.watch("code");
+  const code = form.watch('code');
 
   const submit = form.handleSubmit(async (data) => {
     try {
@@ -229,22 +230,22 @@ function CodeForm({ onDone, email }: CodeFormProps) {
       });
 
       if (
-        signUpAttempt?.verifications.emailAddress.status === "verified" &&
-        signUpAttempt.status === "complete" &&
+        signUpAttempt?.verifications.emailAddress.status === 'verified' &&
+        signUpAttempt.status === 'complete' &&
         signUpAttempt.createdSessionId
       ) {
         await onDone(signUpAttempt.createdSessionId);
       }
     } catch (error: any) {
-      form.setError("code", {
-        type: "manual",
+      form.setError('code', {
+        type: 'manual',
         message: parseError(error as APIResponseError),
       });
     }
   });
 
   useEffect(() => {
-    form.setFocus("code");
+    form.setFocus('code');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -262,9 +263,9 @@ function CodeForm({ onDone, email }: CodeFormProps) {
           <FormField
             control={form.control}
             name="code"
-            render={({ field }) => (
+            render={({field}) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Code</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -273,6 +274,7 @@ function CodeForm({ onDone, email }: CodeFormProps) {
                     type="number"
                   />
                 </FormControl>
+                <FormDescription>{`We sent code to ${email}`}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -293,11 +295,11 @@ function CodeForm({ onDone, email }: CodeFormProps) {
 
 export function parseError(err: APIResponseError): string {
   if (!err) {
-    return "";
+    return '';
   }
 
   if (err.errors) {
-    return err.errors[0].longMessage || "";
+    return err.errors[0].longMessage || '';
   }
 
   throw err;
