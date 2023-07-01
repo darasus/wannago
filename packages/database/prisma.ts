@@ -16,4 +16,20 @@ if (process.env.NODE_ENV === 'production') {
   prisma = (global as any).prisma;
 }
 
+prisma.$use(async (params, next) => {
+  const before = Date.now();
+
+  const result = await next(params);
+
+  const after = Date.now();
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log(
+      `[PRISMA_QUERY] ${params.model}.${params.action} took ${after - before}ms`
+    );
+  }
+
+  return result;
+});
+
 export {prisma};
