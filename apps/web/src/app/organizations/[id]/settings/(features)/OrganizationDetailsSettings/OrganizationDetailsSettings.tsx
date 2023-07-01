@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { useForm, FormProvider } from "react-hook-form";
-import toast from "react-hot-toast";
+import {useRouter} from 'next/navigation';
+import {useForm, FormProvider} from 'react-hook-form';
+import toast from 'react-hot-toast';
 import {
   CardBase,
   Button,
@@ -15,12 +15,12 @@ import {
   FormMessage,
   RadioGroup,
   RadioGroupItem,
-} from "ui";
-import { FileInput } from "ui/src/components/FileInput/FileInput";
-import { api } from "../../../../../../trpc/client";
-import { Currency, Organization } from "@prisma/client";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from 'ui';
+import {FileInput} from 'ui/src/components/FileInput/FileInput';
+import {api} from '../../../../../../trpc/client';
+import {Currency, Organization} from '@prisma/client';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 const organizationSettingsFormScheme = z.object({
   name: z.string(),
@@ -33,7 +33,7 @@ interface Props {
   organization: Organization;
 }
 
-export function OrganizationDetailsSettings({ organization }: Props) {
+export function OrganizationDetailsSettings({organization}: Props) {
   const router = useRouter();
   const form = useForm<z.infer<typeof organizationSettingsFormScheme>>({
     resolver: zodResolver(organizationSettingsFormScheme),
@@ -46,12 +46,15 @@ export function OrganizationDetailsSettings({ organization }: Props) {
   });
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    const { name, logoSrc, email, currency } = data;
+    const {name, logoSrc, email, currency} = data;
 
     if (name && logoSrc && email && currency) {
       try {
         await api.organization.create
-          .mutate({ logoSrc, name, email, currency })
+          .mutate({logoSrc, name, email, currency})
+          .then(() => {
+            toast.success('Organization settings updated!');
+          })
           .catch((error) => {
             toast.error(error.message);
           });
@@ -69,11 +72,14 @@ export function OrganizationDetailsSettings({ organization }: Props) {
               <FormField
                 control={form.control}
                 name="name"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>Business name</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input
+                        {...field}
+                        data-testid="team-settings-form-input-name"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -82,11 +88,14 @@ export function OrganizationDetailsSettings({ organization }: Props) {
               <FormField
                 control={form.control}
                 name="email"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input
+                        {...field}
+                        data-testid="team-settings-form-input-email"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -95,12 +104,12 @@ export function OrganizationDetailsSettings({ organization }: Props) {
               <FormField
                 control={form.control}
                 name="logoSrc"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>Profile picture</FormLabel>
                     <FormControl>
                       <FileInput
-                        value={{ src: field.value, height: null, width: null }}
+                        value={{src: field.value, height: null, width: null}}
                         onChange={(value) => {
                           field.onChange(value?.src || null);
                         }}
@@ -113,7 +122,7 @@ export function OrganizationDetailsSettings({ organization }: Props) {
               <FormField
                 control={form.control}
                 name="currency"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>Preferred currency</FormLabel>
                     <FormControl>

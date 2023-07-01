@@ -76,7 +76,7 @@ export function UserSettings({user, mySubscriptionPromise}: Props) {
                   <FormItem>
                     <FormLabel>First name</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} data-testid="first-name-input" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,7 +89,7 @@ export function UserSettings({user, mySubscriptionPromise}: Props) {
                   <FormItem>
                     <FormLabel>Last name</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} data-testid="last-name-input" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -102,7 +102,7 @@ export function UserSettings({user, mySubscriptionPromise}: Props) {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} data-testid="email-input" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
