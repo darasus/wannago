@@ -31,12 +31,26 @@ export function EventFilter() {
     ['Organizing', '/dashboard/organizing'],
   ];
 
+  const getLabel = () => {
+    const label = options.find(([label]) => {
+      if (pathname?.includes(label.toLowerCase())) {
+        return label;
+      }
+    })?.[0];
+
+    if (label) {
+      return label;
+    }
+
+    return 'Filter';
+  };
+
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild data-testid="filter-button">
           <Button variant="outline" size="sm">
-            Filter
+            {getLabel()}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">

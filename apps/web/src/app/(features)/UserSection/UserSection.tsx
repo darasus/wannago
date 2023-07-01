@@ -93,6 +93,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
         className="flex md:hidden"
         onClick={() => router.push('/e/add')}
         data-testid="add-event-button-mini"
+        size="icon"
       >
         <Plus />
       </Button>

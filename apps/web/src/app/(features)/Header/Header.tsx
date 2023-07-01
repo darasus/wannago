@@ -19,9 +19,9 @@ export async function Header() {
           <div className="flex items-center gap-x-4 md:gap-x-8">
             <Logo href={authData.userId ? '/dashboard' : '/'} />
             <DesktopMenu />
-            <MobileMenu />
           </div>
-          <div className="flex items-center gap-x-5 md:gap-x-4">
+          <div className="flex items-center gap-x-4 md:gap-x-4">
+            <MobileMenu />
             {showUserProfile && (
               <Suspense fallback={<LoadingBlock />}>
                 <UserSection
