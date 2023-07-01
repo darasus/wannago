@@ -40,14 +40,3 @@ export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
       return endpoint === 'edge' ? edgeLink(newCtx) : lambdaLink(newCtx);
     };
   }) satisfies TRPCLink<AppRouter>;
-
-// batch: true,
-// url: '', // URL is fixed in endingLink
-// revalidate: 0,
-// headers() {
-// return {
-// ...Object.fromEntries(headers().entries()),
-// cookie: cookies().toString(),
-// 'x-trpc-source': 'rsc-http',
-// };
-// },
