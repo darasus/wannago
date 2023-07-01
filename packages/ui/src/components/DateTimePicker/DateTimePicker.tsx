@@ -1,6 +1,6 @@
 'use client';
 
-import {CalendarIcon} from 'lucide-react';
+import {Calendar as CalendarIcon} from 'lucide-react';
 import React, {useRef, useState} from 'react';
 import {
   DateValue,
@@ -37,7 +37,7 @@ const DateTimePicker = React.forwardRef<
 
   useInteractOutside({
     ref: contentRef,
-    onInteractOutside: e => {
+    onInteractOutside: (e) => {
       setOpen(false);
     },
   });
@@ -60,6 +60,7 @@ const DateTimePicker = React.forwardRef<
             className="rounded-l-none"
             disabled={props.isDisabled}
             onClick={() => setOpen(true)}
+            data-testid="calendar-button"
           >
             <CalendarIcon className="h-4 w-4 opacity-50" />
           </Button>

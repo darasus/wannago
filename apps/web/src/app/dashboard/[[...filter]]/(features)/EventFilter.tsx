@@ -34,7 +34,7 @@ export function EventFilter() {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger asChild data-testid="filter-button">
           <Button variant="outline" size="sm">
             Filter
           </Button>
@@ -48,6 +48,7 @@ export function EventFilter() {
                   onClick={() => {
                     router.push(url);
                   }}
+                  data-testid="filter-option-button"
                 >
                   <span>{label}</span>
                 </DropdownMenuItem>

@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { Event, Ticket, User } from "@prisma/client";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { parseISO } from "date-fns";
+import {Event, Ticket, User} from '@prisma/client';
+import {useForm} from 'react-hook-form';
+import {useEffect} from 'react';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {parseISO} from 'date-fns';
 
 export const eventFormSchema = z.object({
-  createdById: z.string().default(""),
-  title: z.string().default(""),
+  createdById: z.string(),
+  title: z.string(),
   description: z.string().optional(),
   featuredImage: z.string().optional(),
   featuredImageSrc: z.string().optional(),
@@ -17,13 +17,13 @@ export const eventFormSchema = z.object({
   featuredImageWidth: z.number().optional(),
   featuredImagePreviewSrc: z.string().optional(),
   startDate: z.date({
-    required_error: "Start date is required.",
+    required_error: 'Start date is required.',
   }),
   endDate: z.date({
-    required_error: "End date is required.",
+    required_error: 'End date is required.',
   }),
   address: z.string(),
-  maxNumberOfAttendees: z.string().optional().default("0"),
+  maxNumberOfAttendees: z.string().optional().default('0'),
   tickets: z
     .array(
       z.object({
@@ -38,28 +38,28 @@ export const eventFormSchema = z.object({
 });
 
 export function useEventForm(props: {
-  event?: (Event & { tickets: Ticket[] }) | null;
+  event?: (Event & {tickets: Ticket[]}) | null;
   me: User;
 }) {
-  const { event } = props || {};
+  const {event} = props || {};
   const createdByIdDefault =
     event?.userId || event?.organizationId || props.me.id;
 
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: {
-      title: event?.title,
+      title: event?.title || '',
       startDate:
-        (typeof event?.startDate === "string"
+        (typeof event?.startDate === 'string'
           ? parseISO(event?.startDate)
           : event?.startDate) || new Date(),
       endDate:
-        (typeof event?.endDate === "string"
+        (typeof event?.endDate === 'string'
           ? parseISO(event?.endDate)
           : event?.endDate) || new Date(),
       description: event?.description || undefined,
       address: event?.address || undefined,
-      maxNumberOfAttendees: String(event?.maxNumberOfAttendees) || "0",
+      maxNumberOfAttendees: String(event?.maxNumberOfAttendees) || '0',
       featuredImageSrc: event?.featuredImageSrc || undefined,
       featuredImageHeight: event?.featuredImageHeight || undefined,
       featuredImageWidth: event?.featuredImageWidth || undefined,
@@ -78,11 +78,11 @@ export function useEventForm(props: {
     },
   });
 
-  const createdByIdValue = form.watch("createdById");
+  const createdByIdValue = form.watch('createdById');
 
   useEffect(() => {
     if (!createdByIdValue && createdByIdDefault) {
-      form.setValue("createdById", createdByIdDefault);
+      form.setValue('createdById', createdByIdDefault);
     }
   }, [createdByIdDefault, createdByIdValue, form]);
 

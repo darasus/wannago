@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import {ComponentProps} from 'react';
 import {cloudflareImageLoader, cn} from 'utils';
-import {UserIcon} from 'lucide-react';
+import {User} from 'lucide-react';
 
 interface Props extends Omit<ComponentProps<typeof Image>, 'src'> {
   className?: string;
@@ -47,7 +47,7 @@ export function Avatar({
             imageClassName
           )}
         >
-          <UserIcon className="h-2/3 w-2/4" />
+          <User className="h-2/3 w-2/4" />
         </div>
       )}
     </div>

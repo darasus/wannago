@@ -1,21 +1,20 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
+import {useForm} from 'react-hook-form';
 import {
   Button,
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
   Input,
-} from "ui";
-import { useParams } from "next/navigation";
-import { User } from "@prisma/client";
-import { api } from "../../../../../trpc/client";
-import { useRouter } from "next/navigation";
-import { z } from "zod";
+} from 'ui';
+import {useParams} from 'next/navigation';
+import {User} from '@prisma/client';
+import {api} from '../../../../../trpc/client';
+import {useRouter} from 'next/navigation';
+import {z} from 'zod';
 
 interface Props {
   me: User;
@@ -25,7 +24,7 @@ const formScheme = z.object({
   text: z.string().nonempty(),
 });
 
-export function MessageInput({ me }: Props) {
+export function MessageInput({me}: Props) {
   const router = useRouter();
   const params = useParams();
   const conversationId = params?.conversationId as string;
@@ -49,11 +48,14 @@ export function MessageInput({ me }: Props) {
             <FormField
               control={form.control}
               name="text"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
-                  <FormLabel>Type your message here...</FormLabel>
                   <FormControl>
-                    <Input {...field} data-testid="message-input" />
+                    <Input
+                      {...field}
+                      data-testid="message-input"
+                      placeholder="Type your message here..."
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

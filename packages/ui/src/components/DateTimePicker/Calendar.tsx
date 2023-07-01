@@ -7,7 +7,7 @@ import {
   getLocalTimeZone,
   getWeeksInMonth,
 } from '@internationalized/date';
-import {ChevronLeftIcon, ChevronRightIcon} from 'lucide-react';
+import {ChevronLeft, ChevronRight} from 'lucide-react';
 import React, {useMemo} from 'react';
 import {
   CalendarProps,
@@ -57,8 +57,9 @@ function Calendar(props: CalendarProps<DateValue>) {
           className={cn(
             'absolute left-1 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100'
           )}
+          data-testid="calendar-prev-month-button"
         >
-          <ChevronLeftIcon className="w-4 h-4" />
+          <ChevronLeft className="w-4 h-4" />
         </Button>
         <div className="text-sm font-medium">{title}</div>
         <Button
@@ -68,8 +69,9 @@ function Calendar(props: CalendarProps<DateValue>) {
           className={cn(
             'absolute right-1 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100'
           )}
+          data-testid="calendar-next-month-button"
         >
-          <ChevronRightIcon className="w-4 h-4" />
+          <ChevronRight className="w-4 h-4" />
         </Button>
       </div>
       <CalendarGrid state={state} />
@@ -106,7 +108,7 @@ function CalendarGrid({state, ...props}: CalendarGridProps) {
         </tr>
       </thead>
       <tbody>
-        {[...new Array(weeksInMonth).keys()].map(weekIndex => (
+        {[...new Array(weeksInMonth).keys()].map((weekIndex) => (
           <tr className="flex w-full mt-2" key={weekIndex}>
             {state
               .getDatesInWeek(weekIndex)
@@ -158,6 +160,7 @@ function CalendarCell({state, date}: CalendarCellProps) {
         type="button"
         variant={'ghost'}
         ref={ref}
+        data-testid="calendar-date-button"
         className={cn(
           buttonProps.className,
           'h-9 w-9',

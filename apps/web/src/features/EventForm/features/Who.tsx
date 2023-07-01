@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import {useFormContext} from 'react-hook-form';
 import {
   FormControl,
   FormField,
@@ -12,17 +12,17 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "ui";
-import { z } from "zod";
-import { eventFormSchema } from "../hooks/useEventForm";
-import { Organization, User } from "@prisma/client";
+} from 'ui';
+import {z} from 'zod';
+import {eventFormSchema} from '../hooks/useEventForm';
+import {Organization, User} from '@prisma/client';
 
 interface Props {
   me: User;
   myOrganization?: Organization | null;
 }
 
-export function Who({ me, myOrganization }: Props) {
+export function Who({me, myOrganization}: Props) {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
 
   const options = [
@@ -44,7 +44,7 @@ export function Who({ me, myOrganization }: Props) {
     <FormField
       control={form.control}
       name="createdById"
-      render={({ field }) => (
+      render={({field}) => (
         <FormItem>
           <FormLabel>Created by</FormLabel>
           <FormControl>
@@ -54,16 +54,13 @@ export function Who({ me, myOrganization }: Props) {
                 field.onChange(value);
               }}
             >
-              <SelectTrigger>
-                <SelectValue
-                  placeholder="Select profile"
-                  data-testid="event-form-created-by-input"
-                />
+              <SelectTrigger data-testid="event-form-created-by-input">
+                <SelectValue placeholder="Select profile" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Select profile</SelectLabel>
-                  {options.map(({ label, value }) => {
+                  {options.map(({label, value}) => {
                     return (
                       <SelectItem
                         key={value}

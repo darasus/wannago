@@ -1,4 +1,4 @@
-import {ChevronDownIcon} from 'lucide-react';
+import {ChevronDown} from 'lucide-react';
 import {motion, AnimatePresence} from 'framer-motion';
 import {useState} from 'react';
 
@@ -36,7 +36,7 @@ export function Accordion({items, defaultExpandedIndex}: Props) {
                   initial={false}
                   animate={{rotate: isExpanded ? '0deg' : '180deg'}}
                 >
-                  <ChevronDownIcon className="h-4 w-4" />
+                  <ChevronDown className="h-4 w-4" />
                 </motion.div>
               </div>
             </motion.header>

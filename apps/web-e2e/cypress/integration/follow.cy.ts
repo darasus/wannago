@@ -18,8 +18,8 @@ describe('Follow', () => {
     cy.get('[data-testid="follower-count"]').should('have.text', '1');
     cy.wait(2000);
     cy.visit('/dashboard');
-    cy.get('[data-testid="select-button"]').click();
-    cy.get('[data-testid="select-option-button"]')
+    cy.get('[data-testid="filter-button"]').click();
+    cy.get('[data-testid="filter-option-button"]')
       .contains('Following')
       .click();
     cy.reload();
@@ -40,8 +40,8 @@ describe('Follow', () => {
     cy.get('[data-testid="follower-count"]').should('have.text', '1');
     cy.wait(2000);
     cy.visit('/dashboard');
-    cy.get('[data-testid="select-button"]').click();
-    cy.get('[data-testid="select-option-button"]')
+    cy.get('[data-testid="filter-button"]').click();
+    cy.get('[data-testid="filter-option-button"]')
       .contains('Following')
       .click();
     cy.reload();

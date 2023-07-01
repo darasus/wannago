@@ -16,7 +16,11 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
   {event, showPublishStatus = false},
   ref
 ) {
-  const isUpcoming = isFuture(event.startDate);
+  const isUpcoming = isFuture(
+    typeof event.startDate === 'string'
+      ? new Date(event.startDate)
+      : event.startDate
+  );
   const {
     featuredImageHeight,
     featuredImageWidth,

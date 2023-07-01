@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useAuth } from "@clerk/nextjs";
-import { use } from "react";
+import {useAuth} from '@clerk/nextjs';
+import {use} from 'react';
 import {
   Avatar,
   Button,
@@ -10,83 +10,80 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "ui";
-import { usePathname } from "next/navigation";
-import { getIsPublic } from "../../../features/AppLayout/features/Header/constants";
-import { useRouter } from "next/navigation";
-import { User } from "@prisma/client";
-import { PlusIcon } from "lucide-react";
-import { cn } from "utils";
+} from 'ui';
+import {usePathname} from 'next/navigation';
+import {getIsPublic} from '../../../features/AppLayout/features/Header/constants';
+import {useRouter} from 'next/navigation';
+import {User} from '@prisma/client';
+import {Plus} from 'lucide-react';
+import {cn} from 'utils';
 
 interface Props {
   mePromise: Promise<User | null>;
   hasUnseenConversationPromise: Promise<boolean>;
 }
 
-export function UserSection({
-  mePromise,
-  hasUnseenConversationPromise,
-}: Props) {
+export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
   const router = useRouter();
   const pathname = usePathname();
-  const { signOut } = useAuth();
+  const {signOut} = useAuth();
   const me = use(mePromise);
   // TODO
   const hasUnseenConversation = use(hasUnseenConversationPromise);
-  const isPublicPage = getIsPublic(pathname ?? "/");
+  const isPublicPage = getIsPublic(pathname ?? '/');
 
   const onSignOutClick = async () => {
     await signOut();
-    window.location.href = "/";
+    window.location.href = '/';
   };
 
   if (isPublicPage) {
     return (
       <div className="flex gap-2">
-        <Button onClick={() => router.push("/dashboard")}>Dashboard</Button>
+        <Button onClick={() => router.push('/dashboard')}>Dashboard</Button>
       </div>
     );
   }
 
   const options = [
     {
-      label: "Dashboard",
+      label: 'Dashboard',
       onClick: () => {
-        router.push("/dashboard");
+        router.push('/dashboard');
       },
     },
     {
-      label: "Profile",
+      label: 'Profile',
       onClick: () => {
         router.push(`/u/${me?.id}`);
       },
-      "data-testid": "profile-button",
+      'data-testid': 'profile-button',
     },
     {
-      label: "Organizations",
+      label: 'Organizations',
       onClick: () => {
         router.push(`/organizations`);
       },
-      "data-testid": "organizations-button",
+      'data-testid': 'organizations-button',
     },
     {
-      label: "Settings",
+      label: 'Settings',
       onClick: () => {
         router.push(`/settings`);
       },
     },
     {
-      label: "Messages",
+      label: 'Messages',
       onClick: () => {
         router.push(`/messages`);
       },
     },
     {
-      label: "Logout",
+      label: 'Logout',
       onClick: () => {
         onSignOutClick();
       },
-      "data-testid": "logout-button",
+      'data-testid': 'logout-button',
     },
   ];
 
@@ -94,17 +91,17 @@ export function UserSection({
     <div className="flex gap-2">
       <Button
         className="flex md:hidden"
-        onClick={() => router.push("/e/add")}
+        onClick={() => router.push('/e/add')}
         data-testid="add-event-button-mini"
       >
-        <PlusIcon />
+        <Plus />
       </Button>
       <Button
         className="hidden md:flex"
-        onClick={() => router.push("/e/add")}
+        onClick={() => router.push('/e/add')}
         data-testid="add-event-button"
       >
-        <PlusIcon className="mr-2 w-4 h-4" />
+        <Plus className="mr-2 w-4 h-4" />
         Create event
       </Button>
       {me && (
@@ -114,20 +111,18 @@ export function UserSection({
               <Avatar
                 className="h-6 w-6 mr-2"
                 src={me.profileImageSrc}
-                alt={"avatar"}
+                alt={'avatar'}
               />
               {me.firstName}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
             <DropdownMenuGroup>
-              {options.map(({ label, ...rest }) => {
-                const isRed = label === "Logout";
+              {options.map(({label, ...rest}) => {
+                const isRed = label === 'Logout';
                 return (
                   <DropdownMenuItem key={label} {...rest}>
-                    <span className={cn({ "text-red-500": isRed })}>
-                      {label}
-                    </span>
+                    <span className={cn({'text-red-500': isRed})}>{label}</span>
                   </DropdownMenuItem>
                 );
               })}

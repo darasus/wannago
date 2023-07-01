@@ -1,6 +1,6 @@
-import * as React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDownIcon } from "lucide-react";
+import * as React from 'react';
+import {motion, AnimatePresence} from 'framer-motion';
+import {ChevronDown} from 'lucide-react';
 
 interface Props {
   index: number;
@@ -29,9 +29,9 @@ export const Accordion = ({
         <motion.div
           className="flex items-center justify-center bg-gray-100 h-7 w-7 rounded-full mr-2 shrink-0"
           initial={false}
-          animate={{ rotate: isOpen ? "0deg" : "180deg" }}
+          animate={{rotate: isOpen ? '0deg' : '180deg'}}
         >
-          <ChevronDownIcon className="h-5 w-5" />
+          <ChevronDown className="h-5 w-5" />
         </motion.div>
         {title}
       </motion.header>
@@ -43,10 +43,10 @@ export const Accordion = ({
             animate="open"
             exit="collapsed"
             variants={{
-              open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 },
+              open: {opacity: 1, height: 'auto'},
+              collapsed: {opacity: 0, height: 0},
             }}
-            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+            transition={{duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98]}}
           >
             <div className="py-4 ml-10">{content}</div>
           </motion.section>

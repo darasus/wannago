@@ -6,7 +6,7 @@ import {useRouter} from 'next/navigation';
 import {toast} from 'react-hot-toast';
 import {useTransition} from 'react';
 import {api} from '../../../../../trpc/client';
-import {SendIcon} from 'lucide-react';
+import {Send} from 'lucide-react';
 
 interface Props {}
 
@@ -72,7 +72,7 @@ export function MessageButton({}: Props) {
       className="w-full md:w-40"
       data-testid="message-button"
     >
-      <SendIcon className="w-4 h-4 mr-2" />
+      <Send className="w-4 h-4 mr-2" />
       Message
     </Button>
   );
