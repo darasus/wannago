@@ -49,9 +49,8 @@ export function PricingPlan({
     <>
       <CardBase
         className={cn({
-          'bg-gray-500': type === 'featured',
-          'bg-gradient-to-br from-brand-100 to-brand-400':
-            type === 'highlighted',
+          'bg-gradient-to-br from-gray-700 to-gray-900':
+            type === 'highlighted' || type === 'featured',
         })}
         innerClassName={cn('flex flex-col h-full gap-4', {
           'text-gray-50': type === 'featured' || type === 'highlighted',
