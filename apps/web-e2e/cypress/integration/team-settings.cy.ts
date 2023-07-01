@@ -6,7 +6,7 @@ describe('Team', () => {
   it('can update team', () => {
     cy.login();
     cy.visit('/dashboard');
-    cy.get('[data-testid="header-user-section-button"]').click();
+    cy.get('[data-testid="header-user-button"]').click();
     cy.get('[data-testid="organizations-button"]').click();
     cy.get('[data-testid="organization-item-card-settings-button"]').click();
     cy.get('[data-testid="team-settings-form-input-name"]')

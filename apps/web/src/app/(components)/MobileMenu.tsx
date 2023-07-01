@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import {Fragment} from 'react';
-import {Popover, Transition} from '@headlessui/react';
-import {Button, CardBase} from 'ui';
-import {XMarkIcon} from '@heroicons/react/24/outline';
-import {Bars3Icon} from '@heroicons/react/24/solid';
+import { Fragment } from "react";
+import { Popover, Transition } from "@headlessui/react";
+import { Button, CardBase } from "ui";
 import {
   getIsPublic,
   navItems,
-} from '../../features/AppLayout/features/Header/constants';
-import {useAuth} from '@clerk/nextjs';
-import {usePathname} from 'next/navigation';
+} from "../../features/AppLayout/features/Header/constants";
+import { useAuth } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
 
 export function MobileMenu() {
   const pathname = usePathname();
-  const isPublic = getIsPublic(pathname ?? '/');
+  const isPublic = getIsPublic(pathname ?? "/");
   const auth = useAuth();
 
   if (!isPublic) {
@@ -27,12 +27,7 @@ export function MobileMenu() {
     <div className="-mr-1 md:hidden">
       <Popover>
         <Popover.Button data-testid="mobile-nav-button" as={Fragment}>
-          {({open}) => (
-            <Button
-              iconLeft={open ? <XMarkIcon /> : <Bars3Icon />}
-              variant="neutral"
-            />
-          )}
+          {({ open }) => <Button size="icon">{open ? <X /> : <Menu />}</Button>}
         </Popover.Button>
         <Transition.Root className="z-10">
           <Transition.Child
@@ -48,21 +43,20 @@ export function MobileMenu() {
               as={CardBase}
               className="absolute z-50 inset-x-0 top-20 flex origin-top flex-col tracking-tight -mx-4"
             >
-              {({close}) => {
+              {({ close }) => {
                 return (
                   <>
                     <div className="flex flex-col items-start gap-y-2">
                       {navItems.map((item, i) => (
                         <Button
                           key={i}
-                          as="a"
-                          variant="neutral"
-                          href={item.href}
+                          asChild
+                          variant="outline"
                           onClick={() => {
                             close();
                           }}
                         >
-                          {item.label}
+                          <Link href={item.href}>{item.label}</Link>
                         </Button>
                       ))}
                     </div>
@@ -71,26 +65,24 @@ export function MobileMenu() {
                         <hr className="my-2 border-[1px] border-gray-800" />
                         <div className="flex gap-x-2">
                           <Button
-                            as="a"
+                            asChild
                             variant="secondary"
                             data-testid="mobile-login-button"
-                            href={'/login'}
                             onClick={() => {
                               close();
                             }}
                           >
-                            Login
+                            <Link href={"/login"}>Login</Link>
                           </Button>
                           <Button
-                            as="a"
-                            variant="primary"
+                            asChild
+                            variant="default"
                             data-testid="mobile-register-button"
-                            href={'/register'}
                             onClick={() => {
                               close();
                             }}
                           >
-                            Register
+                            <Link href={"/register"}>Register</Link>
                           </Button>
                         </div>
                       </>

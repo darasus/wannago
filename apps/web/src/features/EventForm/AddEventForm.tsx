@@ -30,11 +30,12 @@ export function AddEventForm({me, organization}: Props) {
     await api.event.create
       .mutate({
         ...data,
-        tickets: data.tickets.map(ticket => ({
-          ...ticket,
-          price: Number(ticket.price) * 100,
-          maxQuantity: Number(ticket.maxQuantity),
-        })),
+        tickets:
+          data.tickets?.map(ticket => ({
+            ...ticket,
+            price: Number(ticket.price) * 100,
+            maxQuantity: Number(ticket.maxQuantity),
+          })) || [],
         description: data.description === '<p></p>' ? null : data.description,
         startDate: zonedTimeToUtc(
           data.startDate,
@@ -63,7 +64,7 @@ export function AddEventForm({me, organization}: Props) {
     <FormProvider {...form}>
       <EventForm
         me={me}
-        organization={organization}
+        myOrganization={organization}
         onSubmit={onSubmit}
         onCancelClick={() => router.push(`/dashboard`)}
       />

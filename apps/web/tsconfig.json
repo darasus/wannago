@@ -11,5 +11,11 @@
       }
     ]
   },
-  "include": ["src", "next-env.d.ts", ".next/types/**/*.ts"]
+  "include": [
+    "src",
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "../../packages/ui/src/components/FileInput",
+    "../../packages/ui/src/components/RichTextarea"
+  ]
 }

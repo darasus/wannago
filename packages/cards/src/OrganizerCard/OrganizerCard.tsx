@@ -1,9 +1,10 @@
-import {Badge, CardBase, Button, Avatar} from 'ui';
+import Link from "next/link";
+import { CardBase, Button, Avatar } from "ui";
 
 interface Props {
   name: string;
   profileImageSrc: string | undefined | null;
-  profilePath: string | undefined;
+  profilePath: string;
   action?: React.ReactNode;
 }
 
@@ -14,20 +15,14 @@ export function OrganizerCard({
   action,
 }: Props) {
   return (
-    <CardBase>
+    <CardBase title={"Who"} titleChildren={action}>
       <div>
-        <div className="flex items-center mb-2">
-          <Badge color="gray" size="xs" className="mr-2">
-            Who
-          </Badge>
-          {action}
-        </div>
         <div className="flex items-center gap-x-2">
           <div className="flex shrink-0  items-center overflow-hidden relative justify-center rounded-full safari-rounded-border-fix">
             <Avatar className="h-10 w-10" src={profileImageSrc} alt="avatar" />
           </div>
-          <Button as={'a'} href={profilePath} title={name} variant="link">
-            {name}
+          <Button asChild title={name} variant="link" className="p-0 h-auto">
+            <Link href={profilePath}>{name}</Link>
           </Button>
         </div>
       </div>

@@ -1,17 +1,17 @@
-import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import React, {Fragment} from 'react';
 import {Avatar, Button, CardBase, Container, PageHeader, Text} from 'ui';
 import {formatDate, getConversationMembers} from 'utils';
 import {MessageInput} from './(features)/MessageInput/MessageInput';
-import {api, getMe} from '../../../trpc/server';
+import {api} from '../../../trpc/server-http';
+import {ChevronLeft} from 'lucide-react';
 
 export default async function ConversationPage({
   params: {conversationId},
 }: {
   params: {conversationId: string};
 }) {
-  const me = await getMe();
+  const me = await api.user.me.query();
   await api.conversation.markConversationAsSeen.mutate({conversationId});
   const conversation = await api.conversation.getConversationById.query({
     conversationId,
@@ -21,13 +21,10 @@ export default async function ConversationPage({
 
   return (
     <Container className="flex flex-col gap-4" maxSize="sm">
-      <Button
-        as="a"
-        href="/messages"
-        variant="neutral"
-        iconLeft={<ArrowLeftCircleIcon />}
-      >
-        Back to conversations
+      <Button asChild>
+        <Link href="/messages">
+          <ChevronLeft /> Back to conversations
+        </Link>
       </Button>
       <PageHeader
         title={
@@ -49,7 +46,7 @@ export default async function ConversationPage({
           <Text className="text-center">No messages yet...</Text>
         )}
         <div className="flex flex-col gap-2">
-          {conversation?.messages.map(message => {
+          {conversation?.messages.map((message) => {
             return (
               <div
                 key={message.id}

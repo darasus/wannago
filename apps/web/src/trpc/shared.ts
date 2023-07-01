@@ -1,5 +1,5 @@
 import type {HTTPBatchLinkOptions, HTTPHeaders, TRPCLink} from '@trpc/client';
-import {httpBatchLink} from '@trpc/client';
+import {experimental_nextHttpLink} from '@trpc/next/app-dir/links/nextHttp';
 
 import type {AppRouter} from 'api';
 import {getBaseUrl} from 'utils';
@@ -7,21 +7,29 @@ import {getBaseUrl} from 'utils';
 const lambdas = ['subscriptionPlan', 'payments', 'stripeAccountLink'];
 
 export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
-  (runtime => {
+  ((runtime) => {
     const sharedOpts = {
       headers: opts?.headers,
-    } satisfies Partial<HTTPBatchLinkOptions>;
+      batch: true,
+      revalidate: 0,
+    } satisfies Partial<
+      HTTPBatchLinkOptions & {
+        batch?: boolean;
+        revalidate?: number | false;
+      }
+    >;
 
-    const edgeLink = httpBatchLink({
+    const edgeLink = experimental_nextHttpLink({
       ...sharedOpts,
       url: `${getBaseUrl()}/api/trpc/edge`,
     })(runtime);
-    const lambdaLink = httpBatchLink({
+
+    const lambdaLink = experimental_nextHttpLink({
       ...sharedOpts,
       url: `${getBaseUrl()}/api/trpc/lambda`,
     })(runtime);
 
-    return ctx => {
+    return (ctx) => {
       const path = ctx.op.path.split('.') as [string, ...string[]];
       const endpoint = lambdas.includes(path[0]) ? 'lambda' : 'edge';
 
@@ -32,3 +40,14 @@ export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
       return endpoint === 'edge' ? edgeLink(newCtx) : lambdaLink(newCtx);
     };
   }) satisfies TRPCLink<AppRouter>;
+
+// batch: true,
+// url: '', // URL is fixed in endingLink
+// revalidate: 0,
+// headers() {
+// return {
+// ...Object.fromEntries(headers().entries()),
+// cookie: cookies().toString(),
+// 'x-trpc-source': 'rsc-http',
+// };
+// },

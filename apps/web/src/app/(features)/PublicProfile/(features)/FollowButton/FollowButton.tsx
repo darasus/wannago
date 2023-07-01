@@ -3,8 +3,10 @@
 import {useParams, useRouter} from 'next/navigation';
 import {use, useTransition} from 'react';
 import {Button} from 'ui';
-import {RouterOutputs, api} from '../../../../../trpc/client';
+import {api} from '../../../../../trpc/client';
 import {toast} from 'react-hot-toast';
+import {UserMinus, UserPlus} from 'lucide-react';
+import {type RouterOutputs} from 'api';
 
 interface Props {
   amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
@@ -22,7 +24,7 @@ export function FollowButton({amFollowingPromise}: Props) {
     return (
       <Button
         size="sm"
-        variant="danger"
+        variant="destructive"
         onClick={() => {
           startTransition(async () => {
             await api.follow.unfollow
@@ -30,16 +32,18 @@ export function FollowButton({amFollowingPromise}: Props) {
                 organizationId,
                 userId,
               })
-              .catch(error => {
+              .catch((error) => {
                 toast.error(error.message);
               });
             router.refresh();
           });
         }}
+        disabled={isPending}
         isLoading={isPending}
         className="w-full md:w-40"
         data-testid="unfollow-button"
       >
+        <UserMinus className="w-4 h-4 mr-2" />
         Unfollow
       </Button>
     );
@@ -48,7 +52,7 @@ export function FollowButton({amFollowingPromise}: Props) {
   return (
     <Button
       size="sm"
-      variant="neutral"
+      variant="outline"
       onClick={() => {
         startTransition(async () => {
           await api.follow.follow
@@ -56,16 +60,17 @@ export function FollowButton({amFollowingPromise}: Props) {
               organizationId,
               userId,
             })
-            .catch(error => {
+            .catch((error) => {
               toast.error(error.message);
             });
           router.refresh();
         });
       }}
-      isLoading={isPending}
+      disabled={isPending}
       className="w-full md:w-40"
       data-testid="follow-button"
     >
+      <UserPlus className="w-4 h-4 mr-2" />
       Follow
     </Button>
   );

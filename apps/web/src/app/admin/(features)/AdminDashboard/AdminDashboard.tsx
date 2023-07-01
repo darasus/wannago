@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import {
   ResponsiveContainer,
   LineChart,
@@ -39,8 +40,8 @@ export function AdminDashboard({
           className="lg:col-span-4"
           title="Total users count"
           titleChildren={
-            <Button variant="neutral" size="xs" as="a" href="/admin/users">
-              View all users
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/admin/users">View all users</Link>
             </Button>
           }
         >
@@ -50,8 +51,8 @@ export function AdminDashboard({
           className="lg:col-span-4"
           title="Total events count"
           titleChildren={
-            <Button variant="neutral" size="xs" as="a" href="/admin/events">
-              View all events
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/admin/events">View all events</Link>
             </Button>
           }
         >
@@ -61,13 +62,8 @@ export function AdminDashboard({
           title="Total organizations count"
           className="lg:col-span-4"
           titleChildren={
-            <Button
-              variant="neutral"
-              size="xs"
-              as="a"
-              href="/admin/organizations"
-            >
-              View all organizations
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/admin/organizations">View all organizations</Link>
             </Button>
           }
         >

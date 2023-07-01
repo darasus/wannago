@@ -1,14 +1,22 @@
 'use client';
 
 import {useAuth} from '@clerk/nextjs';
-import {Popover, Transition} from '@headlessui/react';
-import {Fragment, use} from 'react';
-import {Avatar, Button, CardBase} from 'ui';
+import {use} from 'react';
+import {
+  Avatar,
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from 'ui';
 import {usePathname} from 'next/navigation';
-import {PlusCircleIcon} from '@heroicons/react/24/solid';
 import {getIsPublic} from '../../../features/AppLayout/features/Header/constants';
 import {useRouter} from 'next/navigation';
 import {User} from '@prisma/client';
+import {Plus} from 'lucide-react';
+import {cn} from 'utils';
 
 interface Props {
   mePromise: Promise<User | null>;
@@ -20,6 +28,7 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
   const pathname = usePathname();
   const {signOut} = useAuth();
   const me = use(mePromise);
+  // TODO
   const hasUnseenConversation = use(hasUnseenConversationPromise);
   const isPublicPage = getIsPublic(pathname ?? '/');
 
@@ -36,130 +45,90 @@ export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
     );
   }
 
+  const options = [
+    {
+      label: 'Dashboard',
+      onClick: () => {
+        router.push('/dashboard');
+      },
+    },
+    {
+      label: 'Profile',
+      onClick: () => {
+        router.push(`/u/${me?.id}`);
+      },
+      'data-testid': 'profile-button',
+    },
+    {
+      label: 'Organizations',
+      onClick: () => {
+        router.push(`/organizations`);
+      },
+      'data-testid': 'organizations-button',
+    },
+    {
+      label: 'Settings',
+      onClick: () => {
+        router.push(`/settings`);
+      },
+    },
+    {
+      label: 'Messages',
+      onClick: () => {
+        router.push(`/messages`);
+      },
+    },
+    {
+      label: 'Logout',
+      onClick: () => {
+        onSignOutClick();
+      },
+      'data-testid': 'logout-button',
+    },
+  ];
+
   return (
     <div className="flex gap-2">
       <Button
         className="flex md:hidden"
         onClick={() => router.push('/e/add')}
-        iconLeft={<PlusCircleIcon />}
         data-testid="add-event-button-mini"
-      />
+      >
+        <Plus />
+      </Button>
       <Button
         className="hidden md:flex"
         onClick={() => router.push('/e/add')}
-        iconLeft={<PlusCircleIcon />}
         data-testid="add-event-button"
       >
+        <Plus className="mr-2 w-4 h-4" />
         Create event
       </Button>
       {me && (
-        <Popover className="relative z-50">
-          {() => (
-            <>
-              <Popover.Button as="div" data-testid="header-user-section-button">
-                {() => {
-                  return (
-                    <Button
-                      variant="neutral"
-                      iconLeft={
-                        <Avatar
-                          className="h-6 w-6"
-                          src={me.profileImageSrc}
-                          alt={'avatar'}
-                        />
-                      }
-                      data-testid="header-user-button"
-                    >
-                      {me.firstName}
-                    </Button>
-                  );
-                }}
-              </Popover.Button>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-200"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-              >
-                <Popover.Panel className="absolute right-0 mt-3 max-w-sm">
-                  {({close}) => {
-                    return (
-                      <CardBase innerClassName="flex flex-col gap-y-2 w-40">
-                        <Button
-                          variant="neutral"
-                          size="sm"
-                          onClick={() => {
-                            router.push('/dashboard');
-                            close();
-                          }}
-                        >
-                          Dashboard
-                        </Button>
-                        <Button
-                          variant="neutral"
-                          size="sm"
-                          data-testid="profile-button"
-                          onClick={() => {
-                            router.push(`/u/${me.id}`);
-                            close();
-                          }}
-                        >
-                          Profile
-                        </Button>
-                        <Button
-                          variant="neutral"
-                          size="sm"
-                          data-testid="organizations-button"
-                          onClick={() => {
-                            router.push('/organizations');
-                            close();
-                          }}
-                        >
-                          Organizations
-                        </Button>
-                        <Button
-                          variant="neutral"
-                          size="sm"
-                          onClick={() => {
-                            router.push('/settings');
-                            close();
-                          }}
-                        >
-                          Settings
-                        </Button>
-                        <Button
-                          variant="neutral"
-                          size="sm"
-                          onClick={() => {
-                            router.push('/messages');
-                            close();
-                          }}
-                          hasNotificationBadge={hasUnseenConversation}
-                        >
-                          Messages
-                        </Button>
-                        <Button
-                          variant="danger"
-                          onClick={() => {
-                            onSignOutClick();
-                            close();
-                          }}
-                          data-testid="logout-button"
-                          size="sm"
-                        >
-                          Logout
-                        </Button>
-                      </CardBase>
-                    );
-                  }}
-                </Popover.Panel>
-              </Transition>
-            </>
-          )}
-        </Popover>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" data-testid="header-user-button">
+              <Avatar
+                className="h-6 w-6 mr-2"
+                src={me.profileImageSrc}
+                alt={'avatar'}
+              />
+              {me.firstName}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuGroup>
+              {options.map(({label, ...rest}) => {
+                const isRed = label === 'Logout';
+                return (
+                  <DropdownMenuItem key={label} {...rest}>
+                    <span className={cn({'text-red-500': isRed})}>{label}</span>
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       )}
     </div>
   );

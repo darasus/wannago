@@ -60,7 +60,7 @@ function Item({eventSignUp, refetch}: ItemProps) {
             {Object.entries(eventSignUp.tickets).length === 0 && (
               <Button
                 size="sm"
-                variant="neutral"
+                variant="outline"
                 onClick={open}
                 disabled={eventSignUp.status === 'CANCELLED'}
               >

@@ -3,11 +3,12 @@
 import {User} from '@prisma/client';
 import {Badge, Button, CardBase, Text} from 'ui';
 import {formatDate} from 'utils';
-import {RouterOutputs, api} from '../../../../../../trpc/client';
+import {api} from '../../../../../../trpc/client';
 import {use} from 'react';
 import {useRouter} from 'next/navigation';
 import {captureException} from '@sentry/nextjs';
 import {TRPCClientError} from '@trpc/client';
+import type {RouterOutputs} from 'api';
 
 interface Props {
   user: User;
@@ -35,11 +36,11 @@ export function UserSubscription({user, mySubscriptionPromise}: Props) {
             {hasPaidSubscription && (
               <>
                 <Text>WannaGo</Text>
-                <Badge color={hasPaidSubscription ? 'green' : 'gray'} size="xs">
+                <Badge variant={hasPaidSubscription ? 'default' : 'outline'}>
                   {subscriptionTypeLabel}
                 </Badge>
                 {subscription?.cancelAt && (
-                  <Badge size="xs">
+                  <Badge>
                     {`Expires ${formatDate(
                       subscription?.cancelAt,
                       'd MMM yyyy'
@@ -54,11 +55,11 @@ export function UserSubscription({user, mySubscriptionPromise}: Props) {
             {!hasPaidSubscription && (
               <>
                 <Button
-                  size="xs"
+                  size="sm"
                   onClick={async () => {
                     await api.subscriptionPlan.createCheckoutSession
                       .mutate({plan: subscriptionMap['PRO']})
-                      .then(url => {
+                      .then((url) => {
                         if (url) {
                           router.push(url);
                         } else {
@@ -68,7 +69,7 @@ export function UserSubscription({user, mySubscriptionPromise}: Props) {
                         }
                       });
                   }}
-                  variant="success"
+                  variant="default"
                 >
                   Upgrade to PRO
                 </Button>
@@ -76,14 +77,14 @@ export function UserSubscription({user, mySubscriptionPromise}: Props) {
             )}
             {user.stripeCustomerId && (
               <Button
-                size="xs"
-                variant="neutral"
+                size="sm"
+                variant="outline"
                 onClick={async () => {
                   await api.subscriptionPlan.createCustomerPortalSession
                     .mutate({
                       plan: subscriptionMap['PRO'],
                     })
-                    .then(url => {
+                    .then((url) => {
                       if (url) {
                         router.push(url);
                       } else {

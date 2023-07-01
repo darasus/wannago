@@ -1,9 +1,9 @@
 import {Container, PageHeader} from 'ui';
-import {api, getMe} from '../../trpc/server';
+import {api} from '../../trpc/server-http';
 import {UserSettings} from './(features)/UserSettings/UserSettings';
 
 export const generateMetadata = async () => {
-  const user = await getMe();
+  const user = await api.user.me.query();
 
   return {
     title: `${user?.firstName} ${user?.lastName} settings | WannaGo`,
@@ -11,7 +11,7 @@ export const generateMetadata = async () => {
 };
 
 export default async function SettingsPage() {
-  const user = await getMe();
+  const user = await api.user.me.query();
   const mySubscriptionPromise = api.subscriptionPlan.getMySubscription.query({
     type: 'PRO',
   });

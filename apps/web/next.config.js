@@ -33,6 +33,12 @@ const moduleExports = {
   reactStrictMode: true,
   experimental: {
     mdxRs: true,
+    serverActions: true,
+  },
+  modularizeImports: {
+    'lucide-react': {
+      transform: 'lucide-react/dist/esm/icons/{{ kebabCase member }}',
+    },
   },
   images: {
     domains: [

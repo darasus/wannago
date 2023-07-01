@@ -2,8 +2,8 @@ import {Container, Text} from 'ui';
 import {SectionContainer} from './SectionContainer';
 import {SectionHeader} from './SectionHeader';
 import {PricingPlan} from './PricingPlan';
-import {ShieldCheckIcon} from '@heroicons/react/24/solid';
-import {api} from '../../trpc/server';
+import {api} from '../../trpc/server-http';
+import {ShieldCheck} from 'lucide-react';
 
 export async function Pricing() {
   const currency = await api.payments.getCurrency.query();
@@ -75,7 +75,7 @@ export async function Pricing() {
         </div>
         <div className="flex items-center justify-center mt-8 px-4">
           <div className="flex items-center gap-2">
-            <ShieldCheckIcon className="w-24 h-1w-24 md:w-7 md:h-7 text-green-500" />
+            <ShieldCheck className="w-24 h-1w-24 md:w-7 md:h-7 text-green-500" />
             <Text className="text-xl font-bold custom-underline leading-tight">
               All plans include{' '}
               <span className="underline">30-day money back guarantee</span>

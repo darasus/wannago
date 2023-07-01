@@ -1,12 +1,12 @@
 'use client';
 
 import {Button} from 'ui';
-import {api} from '../../../../../trpc/client';
 import {useParams} from 'next/dist/client/components/navigation';
 import {useRouter} from 'next/navigation';
 import {toast} from 'react-hot-toast';
 import {useTransition} from 'react';
-import {getMe} from '../../../../../trpc/client';
+import {api} from '../../../../../trpc/client';
+import {Send} from 'lucide-react';
 
 interface Props {}
 
@@ -18,11 +18,12 @@ export function MessageButton({}: Props) {
   return (
     <Button
       size="sm"
-      variant="neutral"
+      variant="outline"
+      disabled={isPending}
       isLoading={isPending}
       onClick={async () => {
         startTransition(async () => {
-          const me = await getMe();
+          const me = await api.user.me.query();
           const myOrganization =
             await api.organization.getMyOrganization.query();
           const organizationIds = [] as string[];
@@ -59,7 +60,7 @@ export function MessageButton({}: Props) {
               userIds,
               organizationIds,
             })
-            .catch(error => {
+            .catch((error) => {
               toast.error(error.message);
             });
 
@@ -71,6 +72,7 @@ export function MessageButton({}: Props) {
       className="w-full md:w-40"
       data-testid="message-button"
     >
+      <Send className="w-4 h-4 mr-2" />
       Message
     </Button>
   );

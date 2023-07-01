@@ -17,7 +17,6 @@ const statusBadgeMap: Record<
 export function EventRegistrationStatusBadge({status}: Props) {
   return (
     <Badge
-      size="sm"
       color={statusBadgeMap[status].color}
       data-testid="sign-up-status-badge"
     >

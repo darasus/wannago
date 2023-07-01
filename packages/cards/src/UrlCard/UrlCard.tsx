@@ -1,6 +1,6 @@
-import {LinkIcon} from '@heroicons/react/24/solid';
+import {Link as LinkIcon} from 'lucide-react';
 import Link from 'next/link';
-import {Badge, Button, CardBase} from 'ui';
+import {Button, CardBase} from 'ui';
 
 interface Props {
   action?: React.ReactNode;
@@ -10,21 +10,15 @@ interface Props {
 
 export function UrlCard({action, url, publicEventUrl}: Props) {
   return (
-    <CardBase className="h-full">
-      <div className="flex items-center mb-2">
-        <Badge color="gray" className="mr-2" size="xs">
-          Invite
-        </Badge>
-        {action}
-      </div>
-      <div className="flex items-center gap-2">
+    <CardBase className="h-full" title={'Invite'} titleChildren={action}>
+      <div className="flex items-center gap-x-2">
         <Link href={url}>
           <div className="flex justify-center items-center rounded-full h-10 w-10 bg-slate-200 border-2 border-gray-800">
             <LinkIcon className="h-5 w-5" />
           </div>
         </Link>
-        <Button variant="link" href={url} as="a">
-          {publicEventUrl}
+        <Button variant="link" asChild className="p-0 h-auto">
+          <Link href={url}>{publicEventUrl}</Link>
         </Button>
       </div>
     </CardBase>

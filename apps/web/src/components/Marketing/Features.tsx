@@ -1,15 +1,15 @@
 import {CardBase, Container, Text} from 'ui';
 import {SectionHeader} from './SectionHeader';
 import {
-  UserGroupIcon,
-  CalendarDaysIcon,
-  BuildingStorefrontIcon,
-  ChatBubbleLeftEllipsisIcon,
-  EnvelopeOpenIcon,
-  EllipsisHorizontalIcon,
-  VideoCameraIcon,
-  TicketIcon,
-} from '@heroicons/react/24/outline';
+  Building,
+  CalendarDays,
+  Camera,
+  Mail,
+  MessageCircle,
+  MoreHorizontal,
+  Ticket,
+  UserPlus,
+} from 'lucide-react';
 import {SectionContainer} from './SectionContainer';
 import {titleFontClassName} from '../../fonts';
 import {cn} from 'utils';
@@ -19,54 +19,54 @@ const features = [
     summary: 'Profile page',
     description:
       'Let visitors easily connect with your business or subscribe to your events through beautiful profile pages.',
-    icon: CalendarDaysIcon,
+    icon: CalendarDays,
   },
   {
     summary: 'Create',
     description:
       'Easily create a shareable event page with all the details your guests need to know.',
-    icon: CalendarDaysIcon,
+    icon: CalendarDays,
   },
   {
     summary: 'Sell',
     description:
       'Experience hassle-free ticket sales. WannaGo ensures a smooth process for all.',
-    icon: TicketIcon,
+    icon: Ticket,
   },
   {
     summary: 'Engage',
     description:
       'Streamlined organizer-to-guest engagement through personalized email invitations, event updates, and interactive RSVP.',
-    icon: VideoCameraIcon,
+    icon: Camera,
   },
   {
     summary: 'Invite',
     description:
       "Whether it's your friends, family, coworkers or Twitter followers we let you choose who you want to invite.",
-    icon: UserGroupIcon,
+    icon: UserPlus,
   },
   {
     summary: 'Attract',
     description:
       'You can upload photo, add relevant details with time and location or dress code and any special instructions all wrapped in a beautiful design.',
-    icon: BuildingStorefrontIcon,
+    icon: Building,
   },
   {
     summary: 'Converse',
     description:
       "Send reminders, messages or announcements to your guests to make sure they don't miss out or let them ask questions.",
-    icon: ChatBubbleLeftEllipsisIcon,
+    icon: MessageCircle,
   },
   {
     summary: 'Join',
     description: `Keep track of who is attending with our easy-to-use RSVPs. See at a glance who has confirmed and who's still on the fence.`,
-    icon: EnvelopeOpenIcon,
+    icon: Mail,
   },
   {
     summary: 'More',
     description:
       'Explore WannaGo and let us know how we can improve your experience with us.',
-    icon: EllipsisHorizontalIcon,
+    icon: MoreHorizontal,
   },
 ];
 
@@ -105,7 +105,7 @@ export function Features() {
           description="We provide the tools you need to build your audience and sell tickets while you focus on what's important"
         />
         <div className="grid lg:grid-cols-12 gap-4 items-stretch">
-          {features.map(feature => (
+          {features.map((feature) => (
             <div key={feature.summary} className="col-span-4">
               <Feature feature={feature} className="mx-auto max-w-2xl" />
             </div>

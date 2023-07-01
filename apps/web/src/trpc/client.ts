@@ -1,11 +1,14 @@
 'use client';
 
 import {loggerLink} from '@trpc/client';
-import {experimental_createTRPCNextAppDirClient} from '@trpc/next/app-dir/client';
+import {
+  experimental_createActionHook,
+  experimental_createTRPCNextAppDirClient,
+  experimental_serverActionLink,
+} from '@trpc/next/app-dir/client';
+import {AppRouter} from 'api';
 import superjson from 'superjson';
-import type {AppRouter} from 'api';
 import {endingLink} from './shared';
-import {cache} from 'react';
 
 export const api = experimental_createTRPCNextAppDirClient<AppRouter>({
   config() {
@@ -13,7 +16,7 @@ export const api = experimental_createTRPCNextAppDirClient<AppRouter>({
       transformer: superjson,
       links: [
         loggerLink({
-          enabled: opts =>
+          enabled: (opts) =>
             process.env.NODE_ENV === 'development' ||
             (opts.direction === 'down' && opts.result instanceof Error),
         }),
@@ -23,8 +26,7 @@ export const api = experimental_createTRPCNextAppDirClient<AppRouter>({
   },
 });
 
-export {type RouterInputs, type RouterOutputs} from 'api';
-
-export const getMe = cache(() => {
-  return api.user.me.query();
+export const useAction = experimental_createActionHook({
+  links: [loggerLink(), experimental_serverActionLink()],
+  transformer: superjson,
 });

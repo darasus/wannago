@@ -1,15 +1,36 @@
-'use client';
+"use client";
 
-import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/24/solid';
-import dynamic from 'next/dynamic';
-import {cn} from 'utils';
+import dynamic from "next/dynamic";
+import { cn } from "utils";
 
-const Toaster = dynamic(() => import('react-hot-toast').then(c => c.Toaster), {
-  ssr: false,
-});
+const Toaster = dynamic(
+  () => import("react-hot-toast").then((c) => c.Toaster),
+  {
+    ssr: false,
+  }
+);
 
 const ToastBar = dynamic(
-  () => import('react-hot-toast').then(c => c.ToastBar),
+  () => import("react-hot-toast").then((c) => c.ToastBar),
+  {
+    ssr: false,
+  }
+);
+
+const CheckmarkIcon = dynamic(
+  () => import("react-hot-toast").then((c) => c.CheckmarkIcon),
+  {
+    ssr: false,
+  }
+);
+const ErrorIcon = dynamic(
+  () => import("react-hot-toast").then((c) => c.ErrorIcon),
+  {
+    ssr: false,
+  }
+);
+const LoaderIcon = dynamic(
+  () => import("react-hot-toast").then((c) => c.LoaderIcon),
   {
     ssr: false,
   }
@@ -22,43 +43,50 @@ export function ToastProvider() {
         duration: 5000,
       }}
     >
-      {t => (
+      {(t) => (
         <ToastBar
           toast={t}
           style={{
             padding: 0,
-            backgroundColor: 'transparent',
-            boxShadow: 'none',
+            backgroundColor: "transparent",
+            boxShadow: "none",
           }}
         >
-          {({message}) => (
+          {({ message }) => (
             <div
               className={cn(
-                'p-4 flex items-center max-w-md w-full border-2 border-gray-800 bg-white rounded-3xl'
+                "p-4 flex items-center max-w-md w-full border-2 border-gray-800 bg-white rounded-md"
               )}
               data-testid={
-                t.type === 'success' ? 'toast-success' : 'toast-success'
+                t.type === "success" ? "toast-success" : "toast-success"
               }
             >
               <div
                 className={cn(
-                  'flex justify-center items-center shrink-0 h-7 w-7 rounded-full mr-2 border',
+                  "flex justify-center items-center shrink-0 h-7 w-7 rounded-full mr-2 border",
                   {
-                    'bg-green-600 border-green-700': t.type === 'success',
-                    'bg-red-600 border-red-700': t.type === 'error',
+                    "bg-green-400 border-green-500": t.type === "success",
+                    "bg-red-400 border-red-500": t.type === "error",
+                    "bg-gray-400 border-gray-500": t.type === "loading",
                   }
                 )}
               >
-                {t.type === 'success' && (
-                  <CheckCircleIcon
+                {t.type === "success" && (
+                  <CheckmarkIcon
                     className="h-6 w-6 m-0 text-gray-50"
-                    style={{marginRight: 0}}
+                    style={{ marginRight: 0 }}
                   />
                 )}
-                {t.type === 'error' && (
-                  <XCircleIcon
+                {t.type === "error" && (
+                  <ErrorIcon
                     className="h-6 w-6 m-0 text-gray-50"
-                    style={{marginRight: 0}}
+                    style={{ marginRight: 0 }}
+                  />
+                )}
+                {t.type === "loading" && (
+                  <LoaderIcon
+                    className="h-6 w-6 m-0 text-gray-50"
+                    style={{ marginRight: 0 }}
                   />
                 )}
               </div>

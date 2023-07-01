@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
-import {Event} from '@prisma/client';
+import { Event } from "@prisma/client";
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from '@tanstack/react-table';
-import Link from 'next/link';
+} from "@tanstack/react-table";
+import { ArrowLeftCircle } from "lucide-react";
+import Link from "next/link";
 import {
   Container,
   Button,
@@ -19,31 +19,31 @@ import {
   Th,
   TBody,
   Td,
-} from 'ui';
-import {formatDate} from 'utils';
+} from "ui";
+import { formatDate } from "utils";
 
 const columnHelper = createColumnHelper<Event>();
 
 const columns = [
-  columnHelper.accessor('title', {
-    cell: info => (
+  columnHelper.accessor("title", {
+    cell: (info) => (
       <Link
         href={`/e/${info.row.original.shortId}`}
         className="underline"
-        target={'_blank'}
+        target={"_blank"}
       >
         {info.getValue()}
       </Link>
     ),
   }),
-  columnHelper.accessor('shortId', {
-    cell: info => info.getValue(),
+  columnHelper.accessor("shortId", {
+    cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('isPublished', {
-    cell: info => (info.getValue() ? 'Published' : 'Draft'),
+  columnHelper.accessor("isPublished", {
+    cell: (info) => (info.getValue() ? "Published" : "Draft"),
   }),
-  columnHelper.accessor('createdAt', {
-    cell: info => formatDate(info.getValue(), 'dd MMM, HH:mm'),
+  columnHelper.accessor("createdAt", {
+    cell: (info) => formatDate(info.getValue(), "dd MMM, HH:mm"),
   }),
 ];
 
@@ -51,7 +51,7 @@ interface EventsTableProps {
   events: Event[];
 }
 
-export function EventsTable({events}: EventsTableProps) {
+export function EventsTable({ events }: EventsTableProps) {
   const table = useReactTable({
     data: events,
     columns,
@@ -61,20 +61,18 @@ export function EventsTable({events}: EventsTableProps) {
   return (
     <Container maxSize="full">
       <div className="flex flex-col gap-4">
-        <Button
-          variant="neutral"
-          iconLeft={<ArrowLeftCircleIcon />}
-          href="/admin"
-          as="a"
-        >
-          Back to admin home
+        <Button variant="outline" asChild>
+          <Link href="/admin">
+            <ArrowLeftCircle />
+            Back to admin home
+          </Link>
         </Button>
-        <PageHeader title={'All events'} />
+        <PageHeader title={"All events"} />
         <Table>
           <THead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup) => (
               <TRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
+                {headerGroup.headers.map((header) => (
                   <Th key={header.id}>
                     {header.isPlaceholder
                       ? null
@@ -88,9 +86,9 @@ export function EventsTable({events}: EventsTableProps) {
             ))}
           </THead>
           <TBody>
-            {table.getRowModel().rows.map(row => (
+            {table.getRowModel().rows.map((row) => (
               <TRow key={row.id}>
-                {row.getVisibleCells().map(cell => (
+                {row.getVisibleCells().map((cell) => (
                   <Td key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Td>

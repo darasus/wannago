@@ -1,12 +1,12 @@
 'use client';
 
 import {useAuth} from '@clerk/nextjs';
-import {CheckCircleIcon} from '@heroicons/react/24/solid';
 import {useRouter} from 'next/navigation';
 import {Button, CardBase, Text} from 'ui';
 import {cn, formatCents} from 'utils';
 import {titleFont} from '../../fonts';
 import {Currency} from '@prisma/client';
+import {CheckCircle} from 'lucide-react';
 
 interface Props {
   type: 'general' | 'featured' | 'highlighted';
@@ -70,7 +70,7 @@ export function PricingPlan({
         <div className={cn('flex flex-col gap-y-3 text-sm')}>
           {features.map((feature: any) => (
             <div key={feature} className="flex items-center gap-1">
-              <CheckCircleIcon
+              <CheckCircle
                 className={cn('h-4 w-4 text-green-500', {
                   'text-gray-50': type === 'highlighted',
                 })}
@@ -96,7 +96,7 @@ export function PricingPlan({
         </div>
         <Button
           onClick={onClick}
-          variant={type === 'highlighted' ? 'neutral' : 'primary'}
+          variant={type === 'highlighted' ? 'outline' : 'default'}
         >
           {planId === 'enterprise' ? 'Contact sales' : 'Get started'}
         </Button>

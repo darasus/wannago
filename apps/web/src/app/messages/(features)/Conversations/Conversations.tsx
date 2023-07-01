@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import {CardBase, Text} from 'ui';
 import {getConversationMembers} from 'utils';
-import {api} from '../../../../trpc/server';
+import {api} from '../../../../trpc/server-http';
 import {User} from '@prisma/client';
 
 interface Props {
@@ -16,7 +16,7 @@ export async function Conversations({me}: Props) {
       {conversations?.length === 0 && (
         <Text className="text-center">No conversations yet...</Text>
       )}
-      {conversations?.map(c => {
+      {conversations?.map((c) => {
         const conversationMember = getConversationMembers(c, me);
 
         return (

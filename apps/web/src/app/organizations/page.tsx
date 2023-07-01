@@ -1,6 +1,6 @@
 import {Button, Container, PageHeader} from 'ui';
 import {OrganizationCard} from './(features)/OrganizationCard/OrganizationCard';
-import {api} from '../../trpc/server';
+import {api} from '../../trpc/server-http';
 
 export const metadata = {
   title: 'Organizations | WannaGo',
@@ -15,7 +15,7 @@ export default async function SettingsPage() {
         <div className="flex flex-col gap-y-4">
           <PageHeader title={'Organizations'} />
           <div>
-            {organizations?.map(o => (
+            {organizations?.map((o) => (
               <OrganizationCard organization={o} />
             ))}
           </div>

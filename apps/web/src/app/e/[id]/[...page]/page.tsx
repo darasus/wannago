@@ -1,26 +1,31 @@
-import {ArrowLeftCircleIcon} from '@heroicons/react/24/solid';
 import {Button, Container, Text} from 'ui';
 import {EventInfo} from './(features)/EventInfo/EventInfo';
-import {api, getMe} from '../../../../trpc/server';
+import {api} from '../../../../trpc/server-http';
 import {notFound} from 'next/navigation';
 import {EditEventForm} from '../../../../features/EventForm/EditEventForm';
 import {EventAttendees} from './(features)/EventAttendees/EventAttendees';
 import {EventInvite} from './(features)/EventInvite/EventInvite';
 import {MyTickets} from './(features)/MyTickets/MyTickets';
+import Link from 'next/link';
+import {ChevronLeft} from 'lucide-react';
+
+export const fetchCache = 'force-no-store';
 
 export default async function EventPages({
   params: {id, page},
 }: {
   params: {id: string; page: string[]};
 }) {
-  const [me, event, isMyEvent, myOrganization] = await Promise.all([
-    getMe(),
-    api.event.getByShortId.query({id: id}),
-    api.event.getIsMyEvent.query({
-      eventShortId: id,
-    }),
-    api.organization.getMyOrganization.query(),
-  ]);
+  const [me, event, isMyEvent, myOrganization, allAttendees] =
+    await Promise.all([
+      api.user.me.query(),
+      api.event.getByShortId.query({id: id}),
+      api.event.getIsMyEvent.query({
+        eventShortId: id,
+      }),
+      api.organization.getMyOrganization.query(),
+      api.event.getAllEventsAttendees.query({eventShortId: id}),
+    ]);
 
   if (!me) {
     return null;
@@ -33,14 +38,11 @@ export default async function EventPages({
   return (
     <Container maxSize="sm">
       <div className="flex flex-col gap-4">
-        <Button
-          variant="neutral"
-          iconLeft={<ArrowLeftCircleIcon />}
-          href={`/e/${event?.shortId}`}
-          as="a"
-          data-testid="back-to-event-button"
-        >
-          <Text truncate>{`Back to "${event?.title}"`}</Text>
+        <Button asChild size="lg" data-testid="back-to-event-button">
+          <Link href={`/e/${event?.shortId}`}>
+            <ChevronLeft />
+            <Text truncate>{`Back to "${event?.title}"`}</Text>
+          </Link>
         </Button>
         <div>
           {isMyEvent?.isMyEvent && (
@@ -54,7 +56,9 @@ export default async function EventPages({
                 />
               )}
               {page[0] === 'attendees' && <EventAttendees />}
-              {page[0] === 'invite' && <EventInvite />}
+              {page[0] === 'invite' && (
+                <EventInvite allAttendees={allAttendees} eventShortId={id} />
+              )}
             </>
           )}
           {page[0] === 'my-tickets' && <MyTickets />}

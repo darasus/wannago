@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import {EventCard} from 'cards';
 import {Container, PageHeader} from 'ui';
-import {api} from '../../trpc/server';
+import {api} from '../../trpc/server-http';
 
 export const metadata = {
   title: 'Examples | WannaGo',
@@ -15,7 +15,7 @@ export default async function ExamplesPage() {
       <Container className="flex flex-col gap-4">
         <PageHeader title="Examples" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {examples?.map(event => {
+          {examples?.map((event) => {
             return (
               <Link
                 href={`/e/${event.shortId}`}

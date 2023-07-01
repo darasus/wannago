@@ -1,10 +1,11 @@
 import {Button, CardBase, LoadingBlock, Logo} from 'ui';
 import {UserSection} from '../UserSection/UserSection';
 import {auth} from '@clerk/nextjs';
-import {api, getMe} from '../../../trpc/server';
+import {api} from '../../../trpc/server-http';
 import {Suspense} from 'react';
 import {DesktopMenu} from '../../(components)/DesktopMenu';
 import {MobileMenu} from '../../(components)/MobileMenu';
+import Link from 'next/link';
 
 export async function Header() {
   const authData = auth();
@@ -24,21 +25,20 @@ export async function Header() {
             {showUserProfile && (
               <Suspense fallback={<LoadingBlock />}>
                 <UserSection
-                  mePromise={getMe()}
+                  mePromise={api.user.me.query()}
                   hasUnseenConversationPromise={api.conversation.getUserHasUnseenConversation.query()}
                 />
               </Suspense>
             )}
             {showAuthButtons && (
               <Button
-                as="a"
-                href="/login"
+                asChild
                 className="hidden md:flex"
-                variant="secondary"
+                variant="default"
                 size="sm"
                 data-testid="login-button"
               >
-                <span>Sign in</span>
+                <Link href="/login">Sign in</Link>
               </Button>
             )}
           </div>

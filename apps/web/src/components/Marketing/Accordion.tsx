@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {motion, AnimatePresence} from 'framer-motion';
-import {ChevronDownIcon} from '@heroicons/react/24/solid';
+import {ChevronDown} from 'lucide-react';
 
 interface Props {
   index: number;
@@ -31,7 +31,7 @@ export const Accordion = ({
           initial={false}
           animate={{rotate: isOpen ? '0deg' : '180deg'}}
         >
-          <ChevronDownIcon className="h-5 w-5" />
+          <ChevronDown className="h-5 w-5" />
         </motion.div>
         {title}
       </motion.header>

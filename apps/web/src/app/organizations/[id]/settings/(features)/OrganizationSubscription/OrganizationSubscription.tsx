@@ -3,11 +3,12 @@
 import {Organization} from '@prisma/client';
 import {Badge, Button, CardBase, Text} from 'ui';
 import {formatDate} from 'utils';
-import {RouterOutputs, api} from '../../../../../../trpc/client';
+import {api} from '../../../../../../trpc/client';
 import {use} from 'react';
 import {useRouter} from 'next/navigation';
 import {captureException} from '@sentry/nextjs';
 import {TRPCClientError} from '@trpc/client';
+import {type RouterOutputs} from 'api';
 
 interface Props {
   organization: Organization;
@@ -38,11 +39,11 @@ export function OrganizationSubscription({
             {hasPaidSubscription && (
               <>
                 <Text>WannaGo</Text>
-                <Badge color={hasPaidSubscription ? 'green' : 'gray'} size="xs">
+                <Badge color={hasPaidSubscription ? 'default' : 'outline'}>
                   {subscriptionTypeLabel}
                 </Badge>
                 {subscription?.cancelAt && (
-                  <Badge size="xs">
+                  <Badge>
                     {`Expires ${formatDate(
                       subscription?.cancelAt,
                       'd MMM yyyy'
@@ -57,11 +58,11 @@ export function OrganizationSubscription({
             {!hasPaidSubscription && (
               <>
                 <Button
-                  size="xs"
+                  size="sm"
                   onClick={async () => {
                     await api.subscriptionPlan.createCheckoutSession
                       .mutate({plan: subscriptionMap['BUSINESS']})
-                      .then(url => {
+                      .then((url) => {
                         if (url) {
                           router.push(url);
                         } else {
@@ -71,7 +72,7 @@ export function OrganizationSubscription({
                         }
                       });
                   }}
-                  variant="success"
+                  variant="default"
                 >
                   Upgrade to BUSINESS
                 </Button>
@@ -79,14 +80,14 @@ export function OrganizationSubscription({
             )}
             {organization.stripeCustomerId && (
               <Button
-                size="xs"
-                variant="neutral"
+                size="sm"
+                variant="outline"
                 onClick={async () => {
                   await api.subscriptionPlan.createCustomerPortalSession
                     .mutate({
                       plan: subscriptionMap['BUSINESS'],
                     })
-                    .then(url => {
+                    .then((url) => {
                       if (url) {
                         router.push(url);
                       } else {

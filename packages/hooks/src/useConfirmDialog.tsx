@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import {useState, useTransition} from 'react';
-import {Button, Modal} from 'ui';
+import { useState, useTransition } from "react";
+import { Button, Modal } from "ui";
 
 interface Props {
   title: string;
@@ -9,7 +9,7 @@ interface Props {
   onConfirm: () => Promise<any>;
 }
 
-export function useConfirmDialog({title, description, onConfirm}: Props) {
+export function useConfirmDialog({ title, description, onConfirm }: Props) {
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,15 +27,16 @@ export function useConfirmDialog({title, description, onConfirm}: Props) {
       <div className="mb-4">{description}</div>
       <div className="flex gap-x-2">
         <Button
-          variant="neutral"
+          variant="outline"
           onClick={() => setIsOpen(false)}
           data-testid="confirm-dialog-cancel-button"
         >
           Cancel
         </Button>
         <Button
-          variant="danger"
+          variant="destructive"
           onClick={onSubmit}
+          disabled={isPending}
           isLoading={isPending}
           data-testid="confirm-dialog-confirm-button"
         >
@@ -47,5 +48,5 @@ export function useConfirmDialog({title, description, onConfirm}: Props) {
 
   const open = () => setIsOpen(true);
 
-  return {modal, open, isPending};
+  return { modal, open, isPending };
 }

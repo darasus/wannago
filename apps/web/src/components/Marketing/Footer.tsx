@@ -3,6 +3,7 @@ import {
   legalNavItems,
   navItems,
 } from '../../features/AppLayout/features/Header/constants';
+import Link from 'next/link';
 
 export function Footer() {
   return (
@@ -19,14 +20,8 @@ export function Footer() {
               {label: 'Twitter', href: 'https://twitter.com/wannagohq'},
             ].map(({href, label}) => {
               return (
-                <Button
-                  key={href}
-                  href={href}
-                  variant="link-gray"
-                  size="sm"
-                  as="a"
-                >
-                  {label}
+                <Button key={href} variant="link" size="sm" asChild>
+                  <Link href={href}>{label}</Link>
                 </Button>
               );
             })}

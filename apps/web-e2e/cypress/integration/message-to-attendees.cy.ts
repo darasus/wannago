@@ -10,14 +10,14 @@ describe('Message to attendees', () => {
     cy.createEvent();
     cy.publishCurrentEvent();
     cy.visit('/dashboard');
-    cy.get('[data-testid="select-button"]').click();
-    cy.get('[data-testid="select-option-button"]')
+    cy.get('[data-testid="filter-button"]').click();
+    cy.get('[data-testid="filter-option-button"]')
       .contains('Organizing')
       .click();
     cy.get('[data-testid="event-card"]').first().click();
     cy.get('[data-testid="manage-event-button"]').click();
     cy.get('[data-testid="select-option-button"]')
-      .contains('Event attendees')
+      .contains('Attendees')
       .click();
     cy.get('[data-testid="message-attendees-button"]').click();
     cy.get('[data-testid="message-attendees-input-subject"]').type(

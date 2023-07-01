@@ -1,17 +1,9 @@
 import {Event} from '@prisma/client';
-import {RouterOutputs} from 'api';
+import {type RouterOutputs} from 'api';
 import {EventCard} from 'cards';
 import Link from 'next/link';
 import {Suspense} from 'react';
-import {
-  Avatar,
-  Button,
-  CardBase,
-  Container,
-  LoadingBlock,
-  PageHeader,
-  Text,
-} from 'ui';
+import {Avatar, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
 import {MessageButton} from './(features)/MessageButton/MessageButton';
 import {FollowButton} from './(features)/FollowButton/FollowButton';
 
@@ -41,7 +33,7 @@ export async function PublicProfile({
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <Avatar
               className="shrink-0 h-40 w-40"
-              imageClassName="rounded-3xl"
+              imageClassName="rounded-md"
               src={profileImageSrc}
               alt={`avatar`}
               height={1000}
@@ -76,7 +68,7 @@ export async function PublicProfile({
           </div>
           <div className="flex flex-col justify-center md:justify-start gap-2">
             <MessageButton />
-            <Suspense fallback={<Button variant="neutral" isLoading />}>
+            <Suspense>
               <FollowButton amFollowingPromise={amFollowingPromise} />
             </Suspense>
           </div>
@@ -89,7 +81,7 @@ export async function PublicProfile({
         )}
         {events && events?.length > 0 && (
           <div className="flex flex-col gap-4">
-            {events.map(event => {
+            {events.map((event) => {
               return (
                 <Link
                   href={`/e/${event.shortId}`}

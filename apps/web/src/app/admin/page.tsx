@@ -1,4 +1,4 @@
-import {api} from '../../trpc/server';
+import {api} from '../../trpc/server-http';
 
 import {AdminDashboard} from './(features)/AdminDashboard/AdminDashboard';
 
@@ -17,14 +17,14 @@ export default async function AdminPage() {
     api.admin.getOrganizationsCount.query(),
   ]);
 
-  const dailySignUpsData = Object.entries(dailySignUps || {}).map(signUp => {
+  const dailySignUpsData = Object.entries(dailySignUps || {}).map((signUp) => {
     return {
       date: signUp[0],
       count: signUp[1] as number,
     };
   });
   const dailyEventsCreatedData = Object.entries(dailyCreatedEvents || {}).map(
-    signUp => {
+    (signUp) => {
       return {
         date: signUp[0],
         count: signUp[1] as number,

@@ -1,55 +1,45 @@
-'use client';
+"use client";
 
+import { Event } from "@prisma/client";
+import { usePublishEvent, useRemoveEvent, useUnpublishEvent } from "hooks";
 import {
-  ChevronDownIcon,
-  InboxArrowDownIcon,
-  InformationCircleIcon,
-  PencilIcon,
-  RocketLaunchIcon,
-  TrashIcon,
-  UserPlusIcon,
-  UsersIcon,
-} from '@heroicons/react/24/outline';
-import {Event} from '@prisma/client';
-import {usePublishEvent, useRemoveEvent, useUnpublishEvent} from 'hooks';
-import {usePathname, useParams} from 'next/navigation';
-import {forwardRef} from 'react';
-import {Button, Menu} from 'ui';
+  ChevronDown,
+  DownloadCloud,
+  Edit,
+  Info,
+  Trash2,
+  UploadCloud,
+  UserPlus,
+  Users,
+} from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "ui";
 
 interface Props {
   event: Event;
 }
 
-export function ManageEventButton({event}: Props) {
+export function ManageEventButton({ event }: Props) {
+  const router = useRouter();
   const params = useParams();
-  const pathname = usePathname();
   const shortId = params?.id as string;
-  const {modal: removeEventModal, onRemoveClick} = useRemoveEvent({
+  const { modal: removeEventModal, onRemoveClick } = useRemoveEvent({
     eventId: event?.id,
   });
-  const {modal: publishModal, onPublishClick} = usePublishEvent({
+  const { modal: publishModal, onPublishClick } = usePublishEvent({
     eventId: event?.id,
   });
-  const {modal: unpublishModal, onUnpublishClick} = useUnpublishEvent({
+  const { modal: unpublishModal, onUnpublishClick } = useUnpublishEvent({
     eventId: event?.id,
-  });
-
-  const ButtonWIthRef = forwardRef<HTMLButtonElement, any>(function ButtonRef(
-    props,
-    ref
-  ) {
-    return (
-      <Button
-        {...props}
-        ref={ref}
-        className="w-full"
-        iconLeft={<ChevronDownIcon />}
-        size="md"
-        data-testid="manage-event-button"
-      >
-        Manage event
-      </Button>
-    );
   });
 
   return (
@@ -58,61 +48,85 @@ export function ManageEventButton({event}: Props) {
       {publishModal}
       {unpublishModal}
       <div className="grow">
-        <Menu
-          testId="manage-event-menu"
-          size="sm"
-          activeHref={pathname ?? '/'}
-          as={ButtonWIthRef}
-          options={[
-            {
-              label: 'Event info',
-              href: `/e/${shortId}/info`,
-              iconLeft: <InformationCircleIcon />,
-            },
-            {
-              label: 'Edit event',
-              href: `/e/${shortId}/edit`,
-              iconLeft: <PencilIcon />,
-            },
-            {
-              label: 'Event attendees',
-              href: `/e/${shortId}/attendees`,
-              iconLeft: <UsersIcon />,
-            },
-            {
-              label: 'Invite attendees',
-              href: `/e/${shortId}/invite`,
-              iconLeft: <UserPlusIcon />,
-            },
-            ...(!event?.isPublished
-              ? [
-                  {
-                    label: 'Publish event',
-                    onClick: onPublishClick,
-                    variant: 'success',
-                    iconLeft: <RocketLaunchIcon />,
-                  } as const,
-                ]
-              : []),
-            ...(event?.isPublished
-              ? [
-                  {
-                    label: 'Unpublish event',
-                    onClick: onUnpublishClick,
-                    variant: 'danger',
-                    iconLeft: <InboxArrowDownIcon />,
-                  } as const,
-                ]
-              : []),
-
-            {
-              label: 'Remove event',
-              onClick: onRemoveClick,
-              variant: 'danger',
-              iconLeft: <TrashIcon />,
-            },
-          ]}
-        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              className="w-full"
+              size={"lg"}
+              data-testid="manage-event-button"
+            >
+              <ChevronDown className="mr-2 h-4 w-4" />
+              Manage event
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>Manage</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                data-testid="select-option-button"
+                onClick={() => {
+                  router.push(`/e/${shortId}/info`);
+                }}
+              >
+                <Info className="mr-2 h-4 w-4" />
+                <span>Info</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                data-testid="select-option-button"
+                onClick={() => {
+                  router.push(`/e/${shortId}/edit`);
+                }}
+              >
+                <Edit className="mr-2 h-4 w-4" />
+                <span>Edit</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                data-testid="select-option-button"
+                onClick={() => {
+                  router.push(`/e/${shortId}/attendees`);
+                }}
+              >
+                <Users className="mr-2 h-4 w-4" />
+                <span>Attendees</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                data-testid="select-option-button"
+                onClick={() => {
+                  router.push(`/e/${shortId}/invite`);
+                }}
+              >
+                <UserPlus className="mr-2 h-4 w-4" />
+                <span>Invite</span>
+              </DropdownMenuItem>
+              {!event?.isPublished && (
+                <DropdownMenuItem
+                  onClick={onPublishClick}
+                  data-testid="select-option-button"
+                >
+                  <UploadCloud className="mr-2 h-4 w-4 text-green-600" />
+                  <span className="text-green-600">Publish</span>
+                </DropdownMenuItem>
+              )}
+              {event?.isPublished && (
+                <DropdownMenuItem
+                  onClick={onUnpublishClick}
+                  data-testid="select-option-button"
+                >
+                  <DownloadCloud className="mr-2 h-4 w-4 text-destructive" />
+                  <span className="text-destructive">Unpublish</span>
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem
+                onClick={onRemoveClick}
+                data-testid="select-option-button"
+              >
+                <Trash2 className="mr-2 h-4 w-4 text-destructive" />
+                <span className="text-destructive">Remove</span>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );

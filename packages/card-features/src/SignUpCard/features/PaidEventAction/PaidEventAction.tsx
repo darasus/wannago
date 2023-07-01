@@ -1,20 +1,21 @@
-'use client';
+"use client";
 
-import {useAuth} from '@clerk/nextjs';
-import {Event, Ticket} from '@prisma/client';
-import {use, useState} from 'react';
-import {useForm} from 'react-hook-form';
-import {Badge, Button} from 'ui';
-import {formatCents} from 'utils';
-import {AuthModal} from '../AuthModal/AuthModal';
-import {TicketSelectorModal} from '../TicketSelectorModal/TicketSelectorModal';
-import {api} from '../../../../../../apps/web/src/trpc/client';
+import { useAuth } from "@clerk/nextjs";
+import { Event, Ticket } from "@prisma/client";
+import { use, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Badge, Button } from "ui";
+import { formatCents } from "utils";
+import { AuthModal } from "../AuthModal/AuthModal";
+import { TicketSelectorModal } from "../TicketSelectorModal/TicketSelectorModal";
+import { api } from "../../../../../../apps/web/src/trpc/client";
+import Link from "next/link";
 
 interface Props {
-  event: Event & {tickets: Ticket[]};
+  event: Event & { tickets: Ticket[] };
 }
 
-export function PaidEventAction({event}: Props) {
+export function PaidEventAction({ event }: Props) {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isTicketSelectorModalOpen, setIsTicketSelectorModalOpen] =
     useState(false);
@@ -26,7 +27,7 @@ export function PaidEventAction({event}: Props) {
     })
   );
 
-  const onJoinSubmit = form.handleSubmit(async data => {
+  const onJoinSubmit = form.handleSubmit(async (data) => {
     if (!auth.isSignedIn) {
       const token = await auth.getToken();
 
@@ -67,12 +68,11 @@ export function PaidEventAction({event}: Props) {
         {myTickets && myTickets?.length > 0 && (
           <Button
             size="sm"
-            variant="neutral"
+            variant="outline"
             data-testid="my-tickets-button"
-            as="a"
-            href={`/e/${event.shortId}/my-tickets`}
+            asChild
           >
-            {`My tickets`}
+            <Link href={`/e/${event.shortId}/my-tickets`}>{`My tickets`}</Link>
           </Button>
         )}
         <Button
@@ -85,8 +85,8 @@ export function PaidEventAction({event}: Props) {
           {`Buy ticket`}
         </Button>
         <Badge
+          variant={"outline"}
           className="hidden md:flex"
-          size="sm"
         >{`from ${formattedPrice}`}</Badge>
       </form>
     </>

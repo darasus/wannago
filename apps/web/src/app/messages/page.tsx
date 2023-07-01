@@ -1,9 +1,9 @@
 import {Container, PageHeader} from 'ui';
 import {Conversations} from './(features)/Conversations/Conversations';
-import {getMe} from '../../trpc/server';
+import {api} from '../../trpc/server-http';
 
 export default async function MessagesPage() {
-  const me = await getMe();
+  const me = await api.user.me.query();
 
   if (!me) {
     return null;

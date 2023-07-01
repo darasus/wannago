@@ -1,34 +1,25 @@
-'use client';
+"use client";
 
-import {ArrowDownCircleIcon} from '@heroicons/react/24/solid';
-import {
-  Accordion,
-  Badge,
-  Button,
-  Container,
-  LoadingWave,
-  Select,
-  SelectItem,
-} from 'ui';
-import {Input} from '../../components/Input/Input/Input';
+import { Accordion, Badge, Button, Container, LoadingWave } from "ui";
+import { ChevronDown } from "lucide-react";
 
-const sizes = ['xs', 'sm', 'md', 'lg'] as const;
+const sizes = ["sm", "lg"] as const;
 
 const items = [
   {
-    label: 'What is Tailwind CSS?',
+    label: "What is Tailwind CSS?",
     content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
   },
   {
-    label: 'What is Tailwind CSS?',
+    label: "What is Tailwind CSS?",
     content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
   },
   {
-    label: 'What is Tailwind CSS?',
+    label: "What is Tailwind CSS?",
     content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
   },
   {
-    label: 'What is Tailwind CSS?',
+    label: "What is Tailwind CSS?",
     content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
   },
 ];
@@ -37,117 +28,72 @@ export default function PlaygroundPage() {
   return (
     <Container maxSize="full" className="flex flex-col gap-4">
       <Section>
-        {sizes.map(size => {
+        {sizes.map((size) => {
           return (
             <div key={size} className="flex items-center gap-4">
               <Button size={size}>Default</Button>
-              <Button size={size} variant="primary">
+              <Button size={size} variant="default">
                 Primary
               </Button>
-              <Button
-                size={size}
-                variant="primary"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
+              <Button size={size} variant="default">
+                <ChevronDown />
                 Primary with icon
               </Button>
               <Button size={size} variant="secondary">
                 Secondary
               </Button>
-              <Button
-                size={size}
-                variant="secondary"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
-                Secondary with icon
+              <Button size={size} variant="outline">
+                <ChevronDown /> Secondary with icon
               </Button>
-              <Button size={size} variant="neutral">
+              <Button size={size} variant="outline">
                 Neutral
               </Button>
-              <Button
-                size={size}
-                variant="neutral"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
+              <Button size={size} variant="outline">
+                <ChevronDown />
                 Neutral with icon
               </Button>
               <Button size={size} variant="link">
                 Link
               </Button>
-              <Button
-                size={size}
-                variant="link"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
+              <Button size={size} variant="link">
+                <ChevronDown />
                 Link with icon
               </Button>
-              <Button size={size} variant="link-gray">
+              <Button size={size} variant="link">
                 Link gray
               </Button>
-              <Button
-                size={size}
-                variant="link-gray"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
+              <Button size={size} variant="link">
+                <ChevronDown />
                 Link gray with icon
               </Button>
-              <Button size={size} variant="success">
-                Success
-              </Button>
-              <Button
-                size={size}
-                variant="success"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
-                Success with icon
-              </Button>
-              <Button size={size} variant="danger">
+              <Button size={size} variant="destructive">
                 Danger
               </Button>
-              <Button
-                size={size}
-                variant="danger"
-                iconLeft={<ArrowDownCircleIcon />}
-              >
+              <Button size={size} variant="destructive">
+                <ChevronDown />
                 Danger with icon
               </Button>
-              <Button size={size} variant="danger" isLoading>
-                Danger with spinner
-              </Button>
-              <Button size={size} isLoading>
-                Loading
-              </Button>
-              <Button size={size} iconLeft={<ArrowDownCircleIcon />} />
             </div>
           );
         })}
       </Section>
+
       <Section>
-        <Input label="Hello" placeholder="Placeholder..." isLoading />
+        {/* <Input label="Hello" placeholder="Placeholder..." isLoading /> */}
       </Section>
+
       <Section>
         <Accordion items={items} />
       </Section>
+
       <Section>
-        {(['xs', 'sm', 'md', 'lg'] as const).map(size => {
+        {(["xs", "sm", "md", "lg"] as const).map((size) => {
           return (
             <div className="flex gap-4">
               {(
-                [
-                  'gray',
-                  'yellow',
-                  'green',
-                  'indigo',
-                  'purple',
-                  'pink',
-                  'red',
-                ] as const
-              ).map(color => {
-                return (
-                  <Badge size={size} color={color}>
-                    Hello
-                  </Badge>
-                );
+                ["default", "secondary", "destructive", "outline"] as const
+              ).map((variant) => {
+                return <Badge variant={variant}>Hello</Badge>;
               })}
             </div>
           );
@@ -156,20 +102,10 @@ export default function PlaygroundPage() {
       <Section>
         <LoadingWave />
       </Section>
-      <Section>
-        <Select label="Favorite Animal">
-          <SelectItem key="red panda">Red Panda</SelectItem>
-          <SelectItem key="cat">Cat</SelectItem>
-          <SelectItem key="dog">Dog</SelectItem>
-          <SelectItem key="aardvark">Aardvark</SelectItem>
-          <SelectItem key="kangaroo">Kangaroo</SelectItem>
-          <SelectItem key="snake">Snake</SelectItem>
-        </Select>
-      </Section>
     </Container>
   );
 }
 
-function Section({children}: {children: React.ReactNode}) {
+function Section({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-4">{children}</div>;
 }

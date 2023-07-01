@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import {captureException} from '@sentry/nextjs';
-import {useForm} from 'react-hook-form';
-import {Button, Modal} from 'ui';
-import {Input} from '../../../../../../components/Input/Input/Input';
-import {Organization} from '@prisma/client';
-import {api} from '../../../../../../trpc/client';
+import { captureException } from "@sentry/nextjs";
+import { useForm } from "react-hook-form";
+import { Button, Input, Modal } from "ui";
+import { Organization } from "@prisma/client";
+import { api } from "../../../../../../trpc/client";
 
 interface Props {
   isOpen: boolean;
@@ -17,10 +16,10 @@ interface Form {
   email: string;
 }
 
-export function CreateMemberModal({isOpen, onClose, organization}: Props) {
+export function CreateMemberModal({ isOpen, onClose, organization }: Props) {
   const form = useForm<Form>();
 
-  const handleSubmit = form.handleSubmit(async data => {
+  const handleSubmit = form.handleSubmit(async (data) => {
     await api.organization.addOrganizationMember
       .mutate({
         userEmail: data.email,
@@ -36,9 +35,13 @@ export function CreateMemberModal({isOpen, onClose, organization}: Props) {
     <Modal title="Add member" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
-          <Input type="email" {...form.register('email')} label="Email" />
+          <Input type="email" {...form.register("email")} placeholder="Email" />
           <div>
-            <Button type="submit" isLoading={form.formState.isSubmitting}>
+            <Button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              isLoading={form.formState.isSubmitting}
+            >
               Add
             </Button>
           </div>

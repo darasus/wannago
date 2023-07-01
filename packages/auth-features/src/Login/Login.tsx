@@ -1,22 +1,33 @@
-'use client';
+"use client";
 
-import {useAuth, useSignIn} from '@clerk/nextjs';
-import {ClerkAPIError} from '@clerk/types';
-import {useRouter} from 'next/navigation';
-import {useCallback, useEffect, useState} from 'react';
-import {FormProvider, useForm, useFormContext} from 'react-hook-form';
-import {CardBase, LoadingBlock, Button, Text} from 'ui';
-import {cn, sleep} from 'utils';
-import {Input} from '../../../../apps/web/src/components/Input/Input/Input';
-import {titleFont} from '../../../../apps/web/src/fonts';
+import { useAuth, useSignIn } from "@clerk/nextjs";
+import { ClerkAPIError } from "@clerk/types";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import {
+  CardBase,
+  LoadingBlock,
+  Button,
+  Text,
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  Input,
+  FormMessage,
+} from "ui";
+import { cn, sleep } from "utils";
+import { titleFont } from "../../../../apps/web/src/fonts";
+import { z } from "zod";
 
-interface TEmailForm {
-  email: string;
-}
-
-interface TCodeForm {
-  code: string;
-}
+const emailFormScheme = z.object({
+  email: z.string().email(),
+});
+const codeFormScheme = z.object({
+  code: z.string().length(6),
+});
 
 export interface APIResponseError {
   errors: ClerkAPIError[];
@@ -27,14 +38,14 @@ interface Props {
   onCreateAccountClick?: () => void;
 }
 
-export function Login({onDone, onCreateAccountClick}: Props) {
+export function Login({ onDone, onCreateAccountClick }: Props) {
   const router = useRouter();
-  const {getToken} = useAuth();
-  const {setSession, isLoaded} = useSignIn();
-  const [step, setStep] = useState<'email' | 'code'>('email');
-  const emailForm = useForm<TEmailForm>();
-  const codeForm = useForm<TCodeForm>({
-    mode: 'onSubmit',
+  const { getToken } = useAuth();
+  const { setSession, isLoaded } = useSignIn();
+  const [step, setStep] = useState<"email" | "code">("email");
+  const emailForm = useForm<z.infer<typeof emailFormScheme>>();
+  const codeForm = useForm<z.infer<typeof codeFormScheme>>({
+    mode: "onSubmit",
   });
 
   const ready = useCallback(async (): Promise<any> => {
@@ -54,7 +65,7 @@ export function Login({onDone, onCreateAccountClick}: Props) {
       if (onDone) {
         onDone?.();
       } else {
-        window.location.href = '/dashboard';
+        window.location.href = "/dashboard";
       }
     },
     [ready, setSession, onDone]
@@ -64,26 +75,26 @@ export function Login({onDone, onCreateAccountClick}: Props) {
     if (onCreateAccountClick) {
       onCreateAccountClick();
     } else {
-      router.push('/register');
+      router.push("/register");
     }
   }, [router, onCreateAccountClick]);
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Text className={cn('text-4xl', titleFont.className)}>Login</Text>
+      <Text className={cn("text-4xl", titleFont.className)}>Login</Text>
       <CardBase className="w-full">
         {isLoaded ? (
           <>
-            {step === 'email' && (
+            {step === "email" && (
               <FormProvider {...emailForm}>
-                <EmailForm goToNextStep={() => setStep('code')} />
+                <EmailForm goToNextStep={() => setStep("code")} />
               </FormProvider>
             )}
-            {step === 'code' && (
+            {step === "code" && (
               <FormProvider {...codeForm}>
                 <CodeForm
                   onDone={handleOnDone}
-                  email={emailForm.watch('email')}
+                  email={emailForm.watch("email")}
                 />
               </FormProvider>
             )}
@@ -93,7 +104,7 @@ export function Login({onDone, onCreateAccountClick}: Props) {
         )}
       </CardBase>
       <Text className="text-center">- OR -</Text>
-      <Button onClick={handleLoginClick} variant="neutral">
+      <Button onClick={handleLoginClick} variant="outline">
         Create account
       </Button>
     </div>
@@ -104,57 +115,64 @@ interface EmailFormProps {
   goToNextStep: () => void;
 }
 
-function EmailForm({goToNextStep}: EmailFormProps) {
-  const form = useFormContext<TEmailForm>();
-  const {signIn} = useSignIn();
+function EmailForm({ goToNextStep }: EmailFormProps) {
+  const form = useFormContext<z.infer<typeof emailFormScheme>>();
+  const { signIn } = useSignIn();
 
-  const submit = form.handleSubmit(async data => {
+  const submit = form.handleSubmit(async (data) => {
     try {
       await signIn?.create({
         identifier: data.email,
-        strategy: 'email_code',
+        strategy: "email_code",
       });
       goToNextStep();
     } catch (error: any) {
       const e = error as APIResponseError;
 
-      form.setError('email', {
-        type: 'manual',
+      form.setError("email", {
+        type: "manual",
         message: parseError(e),
       });
     }
   });
 
   useEffect(() => {
-    form.setFocus('email');
+    form.setFocus("email");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <form onSubmit={submit}>
-      <div className="flex flex-col gap-4">
-        <Input
-          type="email"
-          label="Email"
-          {...form.register('email', {
-            required: {
-              value: true,
-              message: 'Email is required',
-            },
-          })}
-          error={form.formState.errors.email}
-          autoComplete="email"
-          data-testid="login-email-input"
-        />
-        <Button
-          type="submit"
-          isLoading={form.formState.isSubmitting}
-          data-testid="login-email-form-submit"
-        >
-          Submit
-        </Button>
-      </div>
-    </form>
+    <Form {...form}>
+      <form onSubmit={submit}>
+        <div className="flex flex-col gap-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    data-testid="login-email-input"
+                    autoComplete="email"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            isLoading={form.formState.isSubmitting}
+            data-testid="login-email-form-submit"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
 
@@ -163,34 +181,34 @@ interface CodeFormProps {
   onDone: (createdSessionId: string) => Promise<void>;
 }
 
-function CodeForm({onDone, email}: CodeFormProps) {
-  const form = useFormContext<TCodeForm>();
-  const code = form.watch('code');
-  const {signIn} = useSignIn();
+function CodeForm({ onDone, email }: CodeFormProps) {
+  const form = useFormContext<z.infer<typeof codeFormScheme>>();
+  const code = form.watch("code");
+  const { signIn } = useSignIn();
 
-  const submit = form.handleSubmit(async data => {
+  const submit = form.handleSubmit(async (data) => {
     try {
       const signInAttempt = await signIn?.attemptFirstFactor({
-        strategy: 'email_code',
+        strategy: "email_code",
         code: data.code,
       });
 
       if (
-        signInAttempt?.status === 'complete' &&
+        signInAttempt?.status === "complete" &&
         signInAttempt?.createdSessionId
       ) {
         await onDone(signInAttempt?.createdSessionId);
       }
     } catch (error: any) {
-      form.setError('code', {
-        type: 'manual',
+      form.setError("code", {
+        type: "manual",
         message: parseError(error as APIResponseError),
       });
     }
   });
 
   useEffect(() => {
-    form.setFocus('code');
+    form.setFocus("code");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -202,59 +220,48 @@ function CodeForm({onDone, email}: CodeFormProps) {
   }, [code]);
 
   return (
-    <form onSubmit={submit}>
-      <div className="flex flex-col gap-4">
-        <Input
-          type="number"
-          description={`Enter the code sent to ${email}`}
-          label="Code"
-          {...form.register('code', {
-            validate: value => {
-              try {
-                if (!value) return 'Code is required';
-
-                if (typeof value === 'string') {
-                  const length = value.length;
-                  if (length > 6 || length < 6) {
-                    return 'Code must be 6 characters long';
-                  }
-                }
-                const n = Number(value);
-
-                if (typeof n === 'number' && !isNaN(n)) {
-                  return true;
-                } else {
-                  return 'Code must be a number';
-                }
-              } catch (error) {
-                return 'Code must be a number';
-              }
-            },
-          })}
-          error={form.formState.errors.code}
-          autoComplete="off"
-          data-testid="login-code-input"
-        />
-
-        <Button
-          type="submit"
-          isLoading={form.formState.isSubmitting}
-          data-testid="login-code-form-submit"
-        >
-          Submit
-        </Button>
-      </div>
-    </form>
+    <Form {...form}>
+      <form onSubmit={submit}>
+        <div className="flex flex-col gap-4">
+          <FormField
+            control={form.control}
+            name="code"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    data-testid="login-code-input"
+                    autoComplete="off"
+                    type="number"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            isLoading={form.formState.isSubmitting}
+            data-testid="login-code-form-submit"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
 
 export function parseError(err: APIResponseError): string {
   if (!err) {
-    return '';
+    return "";
   }
 
   if (err.errors) {
-    return err.errors[0].longMessage || '';
+    return err.errors[0].longMessage || "";
   }
 
   throw err;
