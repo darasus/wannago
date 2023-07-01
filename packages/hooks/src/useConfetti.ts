@@ -6,7 +6,11 @@ export function useConfetti() {
   const confetti = () => {
     if (typeof window !== 'undefined') {
       const conf = new JSConfetti();
-      conf.addConfetti({confettiNumber: 200, emojiSize: 10});
+      conf.addConfetti({
+        confettiNumber: 200,
+        emojiSize: 50,
+        emojis: ['🎉', '🍭', '🍬', '🥳', '🎊'],
+      });
     }
   };
 
