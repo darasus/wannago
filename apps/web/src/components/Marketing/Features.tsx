@@ -90,7 +90,7 @@ function Feature({feature, className, ...props}: any) {
           'rotate-12'
         )}
       >
-        <feature.icon w={100} h={100} />
+        <feature.icon className="w-32 h-32" />
       </div>
     </CardBase>
   );

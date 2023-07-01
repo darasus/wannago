@@ -69,11 +69,7 @@ export function PricingPlan({
         <div className={cn('flex flex-col gap-y-3 text-sm')}>
           {features.map((feature: any) => (
             <div key={feature} className="flex items-center gap-1">
-              <CheckCircle
-                className={cn('h-4 w-4 text-green-500', {
-                  'text-gray-50': type === 'highlighted',
-                })}
-              />
+              <CheckCircle className={cn('h-4 w-4 text-green-500')} />
               <Text className="font-medium">{feature}</Text>
             </div>
           ))}
@@ -82,8 +78,8 @@ export function PricingPlan({
         <div
           className={cn('flex flex-col border rounded-xl p-2', {
             'border-gray-200 bg-gray-100': type === 'general',
-            'border-gray-800 bg-gray-600': type === 'featured',
-            'border-white/20 bg-white/10': type === 'highlighted',
+            'border-white/20 bg-white/10':
+              type === 'highlighted' || type === 'featured',
           })}
         >
           <div className="flex items-center">
@@ -95,7 +91,14 @@ export function PricingPlan({
         </div>
         <Button
           onClick={onClick}
-          variant={type === 'highlighted' ? 'outline' : 'default'}
+          className={cn({
+            'text-primary': type === 'highlighted' || type === 'featured',
+          })}
+          variant={
+            type === 'highlighted' || type === 'featured'
+              ? 'outline'
+              : 'default'
+          }
         >
           {planId === 'enterprise' ? 'Contact sales' : 'Get started'}
         </Button>
