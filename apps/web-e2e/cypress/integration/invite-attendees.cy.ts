@@ -7,9 +7,7 @@ describe('Invite attendees', () => {
     cy.createEvent();
     cy.publishCurrentEvent();
     cy.get('[data-testid="manage-event-button"]').click();
-    cy.get('[data-testid="select-option-button"]')
-      .contains('Invite attendees')
-      .click();
+    cy.get('[data-testid="select-option-button"]').contains('Invite').click();
     cy.get('[data-testid="invite-by-email-open-modal-button"]').click();
     cy.get('[data-testid="invite-by-email-first-name-input"]').type('John');
     cy.get('[data-testid="invite-by-email-last-name-input"]').type('Doe');

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import {useState} from 'react';
+import {useForm} from 'react-hook-form';
 import {
   Button,
   Form,
@@ -12,11 +12,11 @@ import {
   FormMessage,
   Input,
   Modal,
-} from "ui";
-import { toast } from "react-hot-toast";
-import { useParams, useRouter } from "next/navigation";
-import { api } from "../../../../../../../../trpc/client";
-import { z } from "zod";
+} from 'ui';
+import {toast} from 'react-hot-toast';
+import {useParams, useRouter} from 'next/navigation';
+import {z} from 'zod';
+import {inviteByEmail} from './actions';
 
 const formScheme = z.object({
   firstName: z.string().nonempty(),
@@ -34,17 +34,15 @@ export function EventInviteButton() {
   const {
     handleSubmit,
     reset,
-    formState: { isSubmitting },
+    formState: {isSubmitting},
   } = form;
 
   const onSubmit = handleSubmit(async (data) => {
     if (eventShortId) {
-      await api.event.inviteByEmail
-        .mutate({ ...data, eventShortId })
-        .catch((error) => {
-          toast.error(error.message);
-        });
-      toast.success("Invitation sent!");
+      await inviteByEmail({...data, eventShortId}).catch((error) => {
+        toast.error(error.message);
+      });
+      toast.success('Invitation sent!');
       reset();
       set(false);
       router.refresh();
@@ -61,7 +59,7 @@ export function EventInviteButton() {
                 <FormField
                   control={form.control}
                   name="firstName"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormLabel>First name</FormLabel>
                       <FormControl>
@@ -79,7 +77,7 @@ export function EventInviteButton() {
                 <FormField
                   control={form.control}
                   name="lastName"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormLabel>Last name</FormLabel>
                       <FormControl>
@@ -97,7 +95,7 @@ export function EventInviteButton() {
                 <FormField
                   control={form.control}
                   name="email"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
@@ -128,7 +126,6 @@ export function EventInviteButton() {
       </Modal>
       <Button
         size="sm"
-        variant="outline"
         onClick={() => set(true)}
         data-testid="invite-by-email-open-modal-button"
       >

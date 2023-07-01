@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import {useFormContext} from 'react-hook-form';
 import {
   FormControl,
   FormField,
@@ -15,12 +15,12 @@ import {
   CommandGroup,
   CommandItem,
   FormMessage,
-} from "ui";
-import { z } from "zod";
-import { eventFormSchema } from "../hooks/useEventForm";
-import { cn } from "utils";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { useSearchLocation } from "../hooks/useSearchLocation";
+} from 'ui';
+import {z} from 'zod';
+import {eventFormSchema} from '../hooks/useEventForm';
+import {cn} from 'utils';
+import {Check, ChevronsUpDown} from 'lucide-react';
+import {useSearchLocation} from '../hooks/useSearchLocation';
 
 export function Where() {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
@@ -30,7 +30,7 @@ export function Where() {
     <FormField
       control={form.control}
       name="address"
-      render={({ field }) => (
+      render={({field}) => (
         <FormItem className="flex flex-col">
           <FormLabel>Location</FormLabel>
           <Popover>
@@ -40,12 +40,12 @@ export function Where() {
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "justify-between",
-                    !field.value && "text-muted-foreground"
+                    'justify-between',
+                    !field.value && 'text-muted-foreground'
                   )}
                   data-testid="event-form-address-button"
                 >
-                  {field.value || "Search location..."}
+                  {field.value || 'Search location...'}
                   {searchLocation.result.isFetching ? (
                     <Spinner />
                   ) : (
@@ -64,7 +64,7 @@ export function Where() {
                   }}
                   data-testid="event-form-address"
                 />
-                <CommandEmpty>No framework found.</CommandEmpty>
+                <CommandEmpty>No place found.</CommandEmpty>
                 <CommandGroup>
                   {searchLocation.result.data?.predictions.map((location) => (
                     <CommandItem
@@ -77,10 +77,10 @@ export function Where() {
                     >
                       <Check
                         className={cn(
-                          "mr-2 h-4 w-4",
+                          'mr-2 h-4 w-4',
                           location.description === field.value
-                            ? "opacity-100"
-                            : "opacity-0"
+                            ? 'opacity-100'
+                            : 'opacity-0'
                         )}
                       />
                       {location.description}

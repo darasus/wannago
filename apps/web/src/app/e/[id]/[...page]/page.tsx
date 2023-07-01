@@ -16,14 +16,16 @@ export default async function EventPages({
 }: {
   params: {id: string; page: string[]};
 }) {
-  const [me, event, isMyEvent, myOrganization] = await Promise.all([
-    api.user.me.query(),
-    api.event.getByShortId.query({id: id}),
-    api.event.getIsMyEvent.query({
-      eventShortId: id,
-    }),
-    api.organization.getMyOrganization.query(),
-  ]);
+  const [me, event, isMyEvent, myOrganization, allAttendees] =
+    await Promise.all([
+      api.user.me.query(),
+      api.event.getByShortId.query({id: id}),
+      api.event.getIsMyEvent.query({
+        eventShortId: id,
+      }),
+      api.organization.getMyOrganization.query(),
+      api.event.getAllEventsAttendees.query({eventShortId: id}),
+    ]);
 
   if (!me) {
     return null;
@@ -54,7 +56,9 @@ export default async function EventPages({
                 />
               )}
               {page[0] === 'attendees' && <EventAttendees />}
-              {page[0] === 'invite' && <EventInvite />}
+              {page[0] === 'invite' && (
+                <EventInvite allAttendees={allAttendees} eventShortId={id} />
+              )}
             </>
           )}
           {page[0] === 'my-tickets' && <MyTickets />}
