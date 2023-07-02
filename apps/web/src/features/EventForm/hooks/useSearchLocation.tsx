@@ -1,22 +1,31 @@
 'use client';
 
-import {useQuery} from '@tanstack/react-query';
 import {useDebounce} from 'hooks';
 import {api} from '../../../trpc/client';
-import {useState} from 'react';
+import {useEffect, useState, useTransition} from 'react';
+import type {PlaceAutocompleteResponseData} from '@googlemaps/google-maps-services-js';
 
 export function useSearchLocation() {
+  const [isPending, startTransition] = useTransition();
   const [value, setValue] = useState('');
   const debouncedValue = useDebounce(value);
+  const [state, setState] = useState<PlaceAutocompleteResponseData | null>(
+    null
+  );
 
-  const result = useQuery({
-    queryKey: ['searchPlaces', debouncedValue],
-    queryFn: () =>
-      api.maps.searchPlaces.query({
-        query: debouncedValue,
-      }),
-    enabled: Boolean(debouncedValue),
-  });
+  useEffect(() => {
+    if (debouncedValue) {
+      startTransition(async () => {
+        await api.maps.searchPlaces
+          .query({
+            query: debouncedValue,
+          })
+          .then((res) => {
+            setState(res);
+          });
+      });
+    }
+  }, [debouncedValue]);
 
-  return {result, setValue, value};
+  return {predictions: state?.predictions, setValue, value, isPending};
 }

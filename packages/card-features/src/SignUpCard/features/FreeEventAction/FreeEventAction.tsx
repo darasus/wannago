@@ -3,7 +3,7 @@
 import {useAuth} from '@clerk/nextjs';
 import {Event} from '@prisma/client';
 import {useAmplitudeAppDir, useConfetti, useConfirmDialog} from 'hooks';
-import {useState} from 'react';
+import {use, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
 import {
@@ -18,8 +18,8 @@ import {
 } from 'ui';
 import {AuthModal} from '../AuthModal/AuthModal';
 import {useRouter} from 'next/navigation';
-import {useQuery} from '@tanstack/react-query';
-import {cancelEvent, getMySignUp, joinEvent} from './actions';
+import {cancelEvent, joinEvent} from './actions';
+import {RouterOutputs} from 'api';
 
 interface EventSignUpForm {
   hasPlusOne: boolean;
@@ -27,18 +27,16 @@ interface EventSignUpForm {
 
 interface Props {
   event: Event;
+  mySignUpPromise: Promise<RouterOutputs['event']['getMySignUp']>;
 }
 
-export function FreeEventAction({event}: Props) {
+export function FreeEventAction({event, mySignUpPromise}: Props) {
   const router = useRouter();
   const {confetti} = useConfetti();
   const {logEvent} = useAmplitudeAppDir();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const auth = useAuth();
-  const signUp = useQuery({
-    queryKey: [],
-    queryFn: () => getMySignUp({eventId: event.id}),
-  });
+  const signUp = use(mySignUpPromise);
 
   const {modal: cancelModal, open: openCancelModal} = useConfirmDialog({
     title: 'Confirm cancellation',
@@ -53,7 +51,6 @@ export function FreeEventAction({event}: Props) {
           });
           toast.success('Sign up is cancelled!');
           router.refresh();
-          await signUp.refetch();
         })
         .catch((error) => {
           toast.error(error.message);
@@ -83,7 +80,7 @@ export function FreeEventAction({event}: Props) {
       .then(async () => {
         toast.success('Signed up! Check your email for more details!');
         confetti();
-        await signUp.refetch();
+        router.refresh();
       })
       .catch((error) => {
         toast.error(error.message);
@@ -97,8 +94,8 @@ export function FreeEventAction({event}: Props) {
     openCancelModal();
   });
 
-  const amSignedUp = Boolean(signUp && signUp.data?.status === 'REGISTERED');
-  const amInvited = Boolean(signUp && signUp.data?.status === 'INVITED');
+  const amSignedUp = Boolean(signUp && signUp?.status === 'REGISTERED');
+  const amInvited = Boolean(signUp && signUp?.status === 'INVITED');
 
   if (amSignedUp) {
     return (

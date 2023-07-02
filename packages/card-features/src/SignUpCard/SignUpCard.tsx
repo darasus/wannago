@@ -1,12 +1,11 @@
-'use client';
-
 import {Event, Ticket} from '@prisma/client';
 import {CardBase, Container, Text} from 'ui';
 import {FreeEventAction} from './features/FreeEventAction/FreeEventAction';
 import {PaidEventAction} from './features/PaidEventAction/PaidEventAction';
-import {api} from '../../../../apps/web/src/trpc/client';
+import {api} from '../../../../apps/web/src/trpc/server-http';
 import {RouterOutputs} from 'api';
-import {Suspense, use} from 'react';
+import {Suspense} from 'react';
+import {UserCount} from './features/UserCount/UserCount';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -17,6 +16,10 @@ interface Props {
 export function SignUpCard({event, myTicketPromise, mePromise}: Props) {
   const isFreeEvent = event.tickets.length === 0;
   const isPaidEvent = event.tickets.length > 0;
+  const mySignUpPromise = api.event.getMySignUp.query({eventId: event.id});
+  const numberOfAttendeesPromise = api.event.getNumberOfAttendees.query({
+    eventId: event.id,
+  });
 
   return (
     <>
@@ -26,12 +29,19 @@ export function SignUpCard({event, myTicketPromise, mePromise}: Props) {
             <div className="grow">
               <Text className="text-gray-400">
                 <Suspense fallback="Loading...">
-                  <UserCount eventId={event.id} />
+                  <UserCount
+                    numberOfAttendeesPromise={numberOfAttendeesPromise}
+                  />
                 </Suspense>
               </Text>
             </div>
             <div>
-              {isFreeEvent && <FreeEventAction event={event} />}
+              {isFreeEvent && (
+                <FreeEventAction
+                  mySignUpPromise={mySignUpPromise}
+                  event={event}
+                />
+              )}
               {isPaidEvent && (
                 <PaidEventAction
                   event={event}
@@ -45,14 +55,4 @@ export function SignUpCard({event, myTicketPromise, mePromise}: Props) {
       </Container>
     </>
   );
-}
-
-function UserCount({eventId}: {eventId: string}) {
-  const attendeeCount = use(
-    api.event.getNumberOfAttendees.query({
-      eventId,
-    })
-  );
-
-  return `${attendeeCount?.count ?? 0} attending`;
 }

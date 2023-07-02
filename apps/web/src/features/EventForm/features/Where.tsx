@@ -46,7 +46,7 @@ export function Where() {
                   data-testid="event-form-address-button"
                 >
                   {field.value || 'Search location...'}
-                  {searchLocation.result.isFetching ? (
+                  {searchLocation.isPending ? (
                     <Spinner />
                   ) : (
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -66,7 +66,7 @@ export function Where() {
                 />
                 <CommandEmpty>No place found.</CommandEmpty>
                 <CommandGroup>
-                  {searchLocation.result.data?.predictions.map((location) => (
+                  {searchLocation.predictions?.map((location) => (
                     <CommandItem
                       value={location.description}
                       key={location.place_id}
