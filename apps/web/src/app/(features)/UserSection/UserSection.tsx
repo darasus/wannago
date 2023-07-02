@@ -23,7 +23,7 @@ interface Props {
   hasUnseenConversationPromise: Promise<boolean>;
 }
 
-export function UserSection({mePromise, hasUnseenConversationPromise}: Props) {
+export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const {signOut} = useAuth();

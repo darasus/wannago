@@ -1,8 +1,8 @@
-import {Container} from 'ui';
+import {Container, LoadingBlock} from 'ui';
 import {api} from '../../../trpc/server-http';
-import {notFound} from 'next/navigation';
 import {ManageEventButton} from './(features)/ManageEventButton/ManageEventButton';
 import {EventView} from '../../../features/EventView/EventView';
+import {Suspense} from 'react';
 
 export async function generateMetadata({params: {id}}: {params: {id: string}}) {
   const event = await api.event.getByShortId.query({id});
@@ -17,32 +17,21 @@ export default async function EventPage({
 }: {
   params: {id: string};
 }) {
-  const [me, event, isMyEvent, myOrganization] = await Promise.all([
+  const [me, isMyEvent] = await Promise.all([
     api.user.me.query(),
-    api.event.getByShortId.query({id: id}),
     api.event.getIsMyEvent.query({
       eventShortId: id,
     }),
-    api.organization.getMyOrganization.query(),
   ]);
 
-  if (!event) {
-    return notFound();
-  }
-
-  if (event.isPublished === false && isMyEvent?.isMyEvent === false) {
-    return notFound();
-  }
+  const eventPromise = api.event.getByShortId.query({id});
 
   return (
-    <Container className="flex flex-col gap-4" maxSize="sm">
-      {isMyEvent.isMyEvent && <ManageEventButton event={event} />}
-      <EventView
-        event={event}
-        isMyEvent={isMyEvent?.isMyEvent}
-        me={me}
-        myOrganization={myOrganization}
-      />
-    </Container>
+    <Suspense fallback={<LoadingBlock />}>
+      <Container className="flex flex-col gap-4" maxSize="sm">
+        {isMyEvent && <ManageEventButton eventPromise={eventPromise} />}
+        <EventView eventPromise={eventPromise} isMyEvent={isMyEvent} me={me} />
+      </Container>
+    </Suspense>
   );
 }

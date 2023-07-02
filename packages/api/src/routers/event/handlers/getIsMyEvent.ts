@@ -34,5 +34,5 @@ export const getIsMyEvent = publicProcedure
       (Boolean(user.organization?.id) &&
         event.organizationId === user.organization?.id);
 
-    return {isMyEvent};
+    return isMyEvent;
   });

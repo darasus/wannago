@@ -1,15 +1,14 @@
 import {Event} from '@prisma/client';
 import {EventCard} from 'cards';
 import Link from 'next/link';
-import {use} from 'react';
 
 interface Props {
   events: Promise<Event[]>;
   eventType: any;
 }
 
-export function EventsList({events, eventType}: Props) {
-  const data = use(events);
+export async function EventsList({events, eventType}: Props) {
+  const data = await events;
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -24,7 +23,7 @@ export function EventsList({events, eventType}: Props) {
           </span>
         </div>
       )}
-      {data?.map(event => {
+      {data?.map((event, i) => {
         return (
           <Link
             href={`/e/${event.shortId}`}

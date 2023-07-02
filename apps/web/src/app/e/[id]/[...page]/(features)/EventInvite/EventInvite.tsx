@@ -5,10 +5,12 @@ import {RouterOutputs} from 'api';
 
 interface Props {
   eventShortId: string;
-  allAttendees: RouterOutputs['event']['getAllEventsAttendees'];
+  allAttendeesPromise: Promise<RouterOutputs['event']['getAllEventsAttendees']>;
 }
 
-export function EventInvite({allAttendees, eventShortId}: Props) {
+export async function EventInvite({allAttendeesPromise, eventShortId}: Props) {
+  const allAttendees = await allAttendeesPromise;
+
   return (
     <>
       <div className="flex flex-col gap-y-4">

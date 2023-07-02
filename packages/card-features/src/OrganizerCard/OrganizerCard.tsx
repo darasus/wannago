@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Event, Organization, User } from "@prisma/client";
-import { OrganizerCard as OrganizerCardView } from "cards";
-import { useCreateConversation } from "hooks";
-import { useRouter } from "next/navigation";
-import { Button } from "ui";
+import {Event, Organization, User} from '@prisma/client';
+import {OrganizerCard as OrganizerCardView} from 'cards';
+import {useCreateConversation} from 'hooks';
+import {useRouter} from 'next/navigation';
+import {Button} from 'ui';
 
 interface Props {
   event: Event & {
@@ -12,14 +12,12 @@ interface Props {
     organization: Organization | null;
   };
   me: User | null;
-  myOrganization: Organization | null;
 }
 
-export function OrganizerCard({ event, me, myOrganization }: Props) {
+export function OrganizerCard({event, me}: Props) {
   const router = useRouter();
-  const { createConversation, isMutating } = useCreateConversation({
+  const {createConversation, isMutating} = useCreateConversation({
     me,
-    myOrganization,
   });
 
   const onMessageOrganizerClick = async () => {
@@ -48,7 +46,7 @@ export function OrganizerCard({ event, me, myOrganization }: Props) {
   return (
     <OrganizerCardView
       name={organizerName}
-      profileImageSrc={imageSrc?.includes("gravatar") ? null : imageSrc}
+      profileImageSrc={imageSrc?.includes('gravatar') ? null : imageSrc}
       profilePath={profilePath}
       action={
         <Button

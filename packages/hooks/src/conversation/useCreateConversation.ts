@@ -3,14 +3,15 @@
 import {useCallback, useTransition} from 'react';
 import {toast} from 'react-hot-toast';
 import {api} from '../../../../apps/web/src/trpc/client';
-import {Conversation, Organization, User} from '@prisma/client';
+import {Conversation, User} from '@prisma/client';
+import {useAuth} from '@clerk/nextjs';
 
 interface Props {
   me: User | null;
-  myOrganization: Organization | null;
 }
 
-export function useCreateConversation({me, myOrganization}: Props) {
+export function useCreateConversation({me}: Props) {
+  const auth = useAuth();
   const [isPending, startTransition] = useTransition();
 
   const createConversation = useCallback(
@@ -21,21 +22,17 @@ export function useCreateConversation({me, myOrganization}: Props) {
       userId: string | null | undefined;
       organizationId: string | null | undefined;
     }): Promise<Conversation> => {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         const organizationIds = [] as string[];
         const userIds = [me?.id] as string[];
 
-        if (!me?.id && !myOrganization?.id) {
-          toast.error('To be able to message anyone you need to login first');
+        if (!auth.userId) {
+          toast.error('Please login first');
           return;
         }
 
         if (me?.id === userId) {
-          toast.error('You cannot message yourself');
-          return;
-        }
-        if (myOrganization?.id && myOrganization?.id === organizationId) {
-          toast.error('You cannot message your own organization');
+          toast.error(`You can't message yourself`);
           return;
         }
 
@@ -57,7 +54,7 @@ export function useCreateConversation({me, myOrganization}: Props) {
         });
       });
     },
-    [me?.id, myOrganization?.id]
+    [me?.id, auth.userId]
   );
 
   return {

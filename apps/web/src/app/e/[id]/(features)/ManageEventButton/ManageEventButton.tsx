@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Event } from "@prisma/client";
-import { usePublishEvent, useRemoveEvent, useUnpublishEvent } from "hooks";
+import {RouterOutputs} from 'api';
+import {usePublishEvent, useRemoveEvent, useUnpublishEvent} from 'hooks';
 import {
   ChevronDown,
   DownloadCloud,
@@ -11,8 +11,9 @@ import {
   UploadCloud,
   UserPlus,
   Users,
-} from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+} from 'lucide-react';
+import {useParams, useRouter} from 'next/navigation';
+import {use} from 'react';
 import {
   Button,
   DropdownMenu,
@@ -22,23 +23,24 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "ui";
+} from 'ui';
 
 interface Props {
-  event: Event;
+  eventPromise: Promise<RouterOutputs['event']['getByShortId']>;
 }
 
-export function ManageEventButton({ event }: Props) {
+export function ManageEventButton({eventPromise}: Props) {
+  const event = use(eventPromise);
   const router = useRouter();
   const params = useParams();
   const shortId = params?.id as string;
-  const { modal: removeEventModal, onRemoveClick } = useRemoveEvent({
+  const {modal: removeEventModal, onRemoveClick} = useRemoveEvent({
     eventId: event?.id,
   });
-  const { modal: publishModal, onPublishClick } = usePublishEvent({
+  const {modal: publishModal, onPublishClick} = usePublishEvent({
     eventId: event?.id,
   });
-  const { modal: unpublishModal, onUnpublishClick } = useUnpublishEvent({
+  const {modal: unpublishModal, onUnpublishClick} = useUnpublishEvent({
     eventId: event?.id,
   });
 
@@ -52,7 +54,7 @@ export function ManageEventButton({ event }: Props) {
           <DropdownMenuTrigger asChild>
             <Button
               className="w-full"
-              size={"lg"}
+              size={'lg'}
               data-testid="manage-event-button"
             >
               <ChevronDown className="mr-2 h-4 w-4" />

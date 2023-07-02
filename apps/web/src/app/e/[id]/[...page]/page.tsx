@@ -9,23 +9,23 @@ import {MyTickets} from './(features)/MyTickets/MyTickets';
 import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
 
-export const fetchCache = 'force-no-store';
-
 export default async function EventPages({
   params: {id, page},
 }: {
   params: {id: string; page: string[]};
 }) {
-  const [me, event, isMyEvent, myOrganization, allAttendees] =
-    await Promise.all([
-      api.user.me.query(),
-      api.event.getByShortId.query({id: id}),
-      api.event.getIsMyEvent.query({
-        eventShortId: id,
-      }),
-      api.organization.getMyOrganization.query(),
-      api.event.getAllEventsAttendees.query({eventShortId: id}),
-    ]);
+  const [me, event, isMyEvent, myOrganization] = await Promise.all([
+    api.user.me.query(),
+    api.event.getByShortId.query({id: id}),
+    api.event.getIsMyEvent.query({
+      eventShortId: id,
+    }),
+    api.organization.getMyOrganization.query(),
+  ]);
+
+  const allAttendeesPromise = api.event.getAllEventsAttendees.query({
+    eventShortId: id,
+  });
 
   if (!me) {
     return null;
@@ -45,7 +45,7 @@ export default async function EventPages({
           </Link>
         </Button>
         <div>
-          {isMyEvent?.isMyEvent && (
+          {isMyEvent && (
             <>
               {page[0] === 'info' && <EventInfo event={event} />}
               {page[0] === 'edit' && (
@@ -57,7 +57,10 @@ export default async function EventPages({
               )}
               {page[0] === 'attendees' && <EventAttendees />}
               {page[0] === 'invite' && (
-                <EventInvite allAttendees={allAttendees} eventShortId={id} />
+                <EventInvite
+                  allAttendeesPromise={allAttendeesPromise}
+                  eventShortId={id}
+                />
               )}
             </>
           )}

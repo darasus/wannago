@@ -10,8 +10,8 @@ export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
   ((runtime) => {
     const sharedOpts = {
       headers: opts?.headers,
-      batch: true,
-      revalidate: 0,
+      batch: false,
+      revalidate: false,
     } satisfies Partial<
       HTTPBatchLinkOptions & {
         batch?: boolean;

@@ -1,33 +1,39 @@
-import { Event, Organization, Ticket, User } from "@prisma/client";
+import {User} from '@prisma/client';
+import {RouterOutputs} from 'api';
 import {
   DateCard,
   LocationCard,
   OrganizerCard,
   SignUpCard,
   UrlCard,
-} from "card-features";
-import { InfoCard } from "cards";
-import { getBaseUrl } from "utils";
+} from 'card-features';
+import {InfoCard} from 'cards';
+import {notFound} from 'next/navigation';
+import {getBaseUrl} from 'utils';
 
 interface Props {
-  event: Event & {
-    user: User | null;
-    organization: Organization | null;
-    tickets: Ticket[];
-  };
+  eventPromise: Promise<RouterOutputs['event']['getByShortId']>;
   isLoadingImage?: boolean;
   isMyEvent?: boolean;
   me: User | null;
-  myOrganization: Organization | null;
 }
 
-export function EventView({
-  event,
+export async function EventView({
+  eventPromise,
   isLoadingImage,
   isMyEvent,
   me,
-  myOrganization,
 }: Props) {
+  const event = await eventPromise;
+
+  if (!event) {
+    return notFound();
+  }
+
+  if (event.isPublished === false && isMyEvent === false) {
+    return notFound();
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <div className="sticky top-4 z-20">
@@ -35,11 +41,7 @@ export function EventView({
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="items-stretch">
-          <OrganizerCard
-            event={event}
-            me={me}
-            myOrganization={myOrganization}
-          />
+          <OrganizerCard event={event} me={me} />
         </div>
         <div className="items-stretch">
           <UrlCard
