@@ -9,7 +9,7 @@ import {Currency} from '@prisma/client';
 import {CheckCircle} from 'lucide-react';
 
 interface Props {
-  type: 'general' | 'featured' | 'highlighted';
+  type: 'general' | 'featured';
   name: string;
   description: string;
   price: number;
@@ -49,11 +49,10 @@ export function PricingPlan({
     <>
       <CardBase
         className={cn({
-          'bg-gradient-to-br from-gray-700 to-gray-900':
-            type === 'highlighted' || type === 'featured',
+          'bg-gradient-to-br from-primary/70 to-primary': type === 'featured',
         })}
         innerClassName={cn('flex flex-col h-full gap-4', {
-          'text-gray-50': type === 'featured' || type === 'highlighted',
+          'text-gray-50': type === 'featured',
         })}
       >
         <div>
@@ -76,11 +75,12 @@ export function PricingPlan({
         </div>
         <div className="grow" />
         <div
-          className={cn('flex flex-col border rounded-xl p-2', {
-            'border-gray-200 bg-gray-100': type === 'general',
-            'border-white/20 bg-white/10':
-              type === 'highlighted' || type === 'featured',
-          })}
+          className={cn(
+            'flex flex-col border rounded-xl p-2 border-gray-200 bg-gray-100',
+            {
+              'border-white/20 bg-white/10': type === 'featured',
+            }
+          )}
         >
           <div className="flex items-center">
             <Text className={cn('font-bold text-xs uppercase')}>
@@ -92,13 +92,9 @@ export function PricingPlan({
         <Button
           onClick={onClick}
           className={cn({
-            'text-primary': type === 'highlighted' || type === 'featured',
+            'text-primary': type === 'featured',
           })}
-          variant={
-            type === 'highlighted' || type === 'featured'
-              ? 'outline'
-              : 'default'
-          }
+          variant={type === 'featured' ? 'outline' : 'default'}
         >
           {planId === 'enterprise' ? 'Contact sales' : 'Get started'}
         </Button>

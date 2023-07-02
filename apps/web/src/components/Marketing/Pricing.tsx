@@ -41,7 +41,7 @@ export async function Pricing() {
             currency={currency}
           />
           <PricingPlan
-            type="highlighted"
+            type="general"
             name="Business"
             planId="business"
             price={7900}

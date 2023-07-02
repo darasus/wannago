@@ -1,5 +1,5 @@
-import { HTMLAttributes } from "react";
-import { cn } from "../../../../utils";
+import {HTMLAttributes} from 'react';
+import {cn} from '../../../../utils';
 
 type Props = React.PropsWithChildren &
   HTMLAttributes<HTMLParagraphElement> & {
@@ -7,11 +7,11 @@ type Props = React.PropsWithChildren &
     truncate?: boolean;
   };
 
-export function Text({ children, className, truncate, ...props }: Props) {
+export function Text({children, className, truncate, ...props}: Props) {
   return (
     <p
-      className={cn("text-md inline", className, {
-        "overflow-hidden text-ellipsis whitespace-nowrap": truncate,
+      className={cn('inline', className, {
+        'overflow-hidden text-ellipsis whitespace-nowrap': truncate,
       })}
       {...props}
     >

@@ -13,7 +13,7 @@ export function UrlCard({action, url, publicEventUrl}: Props) {
     <CardBase className="h-full" title={'Invite'} titleChildren={action}>
       <div className="flex items-center gap-x-2">
         <Link href={url}>
-          <div className="flex justify-center items-center rounded-full h-10 w-10 bg-slate-200 border-2 border-gray-800">
+          <div className="flex justify-center items-center rounded-full h-10 w-10 bg-foreground/5 border-2 border-gray-800">
             <LinkIcon className="h-5 w-5" />
           </div>
         </Link>

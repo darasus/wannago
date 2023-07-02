@@ -15,18 +15,16 @@ export function Hero() {
         <h1
           className={cn(
             titleFontClassName,
-            'mx-auto max-w-4xl text-6xl lg:text-7xl tracking-tight text-center',
-            'bg-clip-text bg-gradient-to-br from-gray-500 to-gray-900',
-            'pb-2'
+            'mx-auto max-w-4xl text-6xl lg:text-7xl tracking-tight text-center'
           )}
         >
-          <span className="block text-transparent mb-4">
+          <span className="mb-4">
             Better way to
             <br />
             organize events
           </span>
         </h1>
-        <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-gray-800 text-center">
+        <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-center">
           <span className="font-medium">
             {`Build lasting connections with your attendees. Provide an unforgettable online experience they'll cherish — and eagerly return for.`}
           </span>

@@ -27,7 +27,7 @@ export function SignUpCard({event, myTicketPromise, mePromise}: Props) {
         <CardBase>
           <div className="flex items-center gap-x-2">
             <div className="grow">
-              <Text className="text-gray-400">
+              <Text>
                 <Suspense fallback="Loading...">
                   <UserCount
                     numberOfAttendeesPromise={numberOfAttendeesPromise}
