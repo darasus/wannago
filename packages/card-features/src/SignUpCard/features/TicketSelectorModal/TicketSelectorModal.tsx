@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Button,
@@ -10,30 +10,38 @@ import {
   Input,
   Modal,
   Text,
-} from "ui";
-import { Event, Ticket } from "@prisma/client";
-import { formatCents } from "utils";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { TRPCClientError } from "@trpc/client";
-import { use } from "react";
-import { api } from "../../../../../../apps/web/src/trpc/client";
-import { toast } from "react-hot-toast";
-import { z } from "zod";
+} from 'ui';
+import {Event, Ticket} from '@prisma/client';
+import {formatCents} from 'utils';
+import {useForm} from 'react-hook-form';
+import {useRouter} from 'next/navigation';
+import {TRPCClientError} from '@trpc/client';
+import {use} from 'react';
+import {api} from '../../../../../../apps/web/src/trpc/client';
+import {toast} from 'react-hot-toast';
+import {z} from 'zod';
+import {RouterOutputs} from 'api';
 
 interface Props {
-  event: Event & { tickets: Ticket[] };
+  event: Event & {tickets: Ticket[]};
   isOpen: boolean;
   onClose: () => void;
   onDone?: () => void;
+  mePromise: Promise<RouterOutputs['user']['me']>;
 }
 
 const formScheme = z.record(z.string());
 
-export function TicketSelectorModal({ isOpen, onClose, onDone, event }: Props) {
-  const me = use(api.user.me.query());
+export function TicketSelectorModal({
+  isOpen,
+  onClose,
+  onDone,
+  event,
+  mePromise,
+}: Props) {
+  const me = use(mePromise);
   const router = useRouter();
-  const form = useForm<z.infer<typeof formScheme>>({ defaultValues: {} });
+  const form = useForm<z.infer<typeof formScheme>>({defaultValues: {}});
   const total = Object.entries(form.watch()).reduce(
     (acc: number, [ticketId, quantity]) => {
       if (isNaN(Number(quantity))) {
@@ -54,7 +62,7 @@ export function TicketSelectorModal({ isOpen, onClose, onDone, event }: Props) {
   const handleSubmit = form.handleSubmit(async (data) => {
     try {
       if (!me?.id) {
-        throw new TRPCClientError("You must be logged in to buy tickets");
+        throw new TRPCClientError('You must be logged in to buy tickets');
       }
 
       const responseUrl = await api.payments.createCheckoutSession
@@ -85,7 +93,7 @@ export function TicketSelectorModal({ isOpen, onClose, onDone, event }: Props) {
       <Form {...form}>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4">
-            {event.tickets.map(({ title, price, id, description }) => {
+            {event.tickets.map(({title, price, id, description}) => {
               return (
                 <div key={id} className="flex flex-col gap-2">
                   <div key={id} className="flex items-center gap-4">
@@ -102,7 +110,7 @@ export function TicketSelectorModal({ isOpen, onClose, onDone, event }: Props) {
                     <FormField
                       control={form.control}
                       name={id}
-                      render={({ field }) => (
+                      render={({field}) => (
                         <FormItem>
                           <FormControl>
                             <Input

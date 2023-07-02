@@ -7,13 +7,15 @@ import {FreeEventAction} from './features/FreeEventAction/FreeEventAction';
 import {PaidEventAction} from './features/PaidEventAction/PaidEventAction';
 import {api} from '../../../../apps/web/src/trpc/client';
 import {use} from 'react';
+import {RouterOutputs} from 'api';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
   myTicketPromise: ReturnType<typeof api.event.getMyTicketsByEvent.query>;
+  mePromise: Promise<RouterOutputs['user']['me']>;
 }
 
-export function SignUpCard({event, myTicketPromise}: Props) {
+export function SignUpCard({event, myTicketPromise, mePromise}: Props) {
   const attendeeCount = use(
     api.event.getNumberOfAttendees.query({
       eventId: event.id,
@@ -29,7 +31,11 @@ export function SignUpCard({event, myTicketPromise}: Props) {
         <_SignUpCard numberOfAttendees={attendeeCount?.count ?? 0}>
           {isFreeEvent && <FreeEventAction event={event} />}
           {isPaidEvent && (
-            <PaidEventAction event={event} myTicketPromise={myTicketPromise} />
+            <PaidEventAction
+              event={event}
+              myTicketPromise={myTicketPromise}
+              mePromise={mePromise}
+            />
           )}
         </_SignUpCard>
       </Container>

@@ -9,6 +9,7 @@
   "dependencies": {
     "cards": "workspace:*",
     "auth-features": "workspace:*",
+    "api": "workspace:*",
     "utils": "workspace:*",
     "ui": "workspace:*",
     "hooks": "workspace:*"

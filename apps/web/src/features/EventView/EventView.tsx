@@ -10,6 +10,7 @@ import {InfoCard} from 'cards';
 import {notFound} from 'next/navigation';
 import {getBaseUrl} from 'utils';
 import {api} from '../../trpc/server-http';
+import {RouterOutputs} from 'api';
 
 interface Props {
   eventPromise: Promise<
@@ -22,7 +23,7 @@ interface Props {
   >;
   isLoadingImage?: boolean;
   isMyEvent?: boolean;
-  me: User | null;
+  me: RouterOutputs['user']['me'];
 }
 
 export async function EventView({
@@ -48,7 +49,11 @@ export async function EventView({
   return (
     <div className="flex flex-col gap-4">
       <div className="sticky top-4 z-20">
-        <SignUpCard event={event} myTicketPromise={myTicketPromise} />
+        <SignUpCard
+          event={event}
+          myTicketPromise={myTicketPromise}
+          mePromise={Promise.resolve(me)}
+        />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="items-stretch">

@@ -1,23 +1,31 @@
 'use client';
 
 import {use, useEffect} from 'react';
-import {useAuth} from '@clerk/nextjs';
-import {api} from '../../../trpc/client';
+import {RouterOutputs} from 'api';
 
-export function Intercom() {
-  const auth = useAuth();
-  const user = use(api.user.me.query());
+interface Props {
+  userPromise: Promise<RouterOutputs['user']['me']>;
+}
+
+export function Intercom({userPromise}: Props) {
+  const user = use(userPromise);
 
   useEffect(() => {
-    if (auth?.userId) {
+    if (user?.id) {
       (window as any)?.Intercom?.('update', {
         email: user?.email,
         created_at: 1234567890,
         name: `${user?.firstName} ${user?.lastName}`,
-        user_id: auth?.userId,
+        user_id: user?.externalId,
       });
     }
-  }, [auth?.userId, user?.email, user?.firstName, user?.lastName]);
+  }, [
+    user?.email,
+    user?.firstName,
+    user?.lastName,
+    user?.externalId,
+    user?.id,
+  ]);
 
   return null;
 }

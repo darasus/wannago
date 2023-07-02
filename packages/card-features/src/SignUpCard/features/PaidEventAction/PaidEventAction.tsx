@@ -14,9 +14,10 @@ import Link from 'next/link';
 interface Props {
   event: Event & {tickets: Ticket[]};
   myTicketPromise: ReturnType<typeof api.event.getMyTicketsByEvent.query>;
+  mePromise: ReturnType<typeof api.user.me.query>;
 }
 
-export function PaidEventAction({event, myTicketPromise}: Props) {
+export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isTicketSelectorModalOpen, setIsTicketSelectorModalOpen] =
     useState(false);
@@ -53,6 +54,7 @@ export function PaidEventAction({event, myTicketPromise}: Props) {
         onDone={() => setIsTicketSelectorModalOpen(true)}
       />
       <TicketSelectorModal
+        mePromise={mePromise}
         isOpen={isTicketSelectorModalOpen}
         onClose={() => setIsTicketSelectorModalOpen(false)}
         onDone={() => {}}
