@@ -1,24 +1,9 @@
-'use client';
+import {Login} from './(features)/Login/Login';
 
-import {useRouter} from 'next/navigation';
-import {Container} from 'ui';
-import {Login} from 'auth-features';
-import {useCallback} from 'react';
+export const metadata = {
+  title: 'Login | WannaGo',
+};
 
-function LoginPage() {
-  const router = useRouter();
-
-  const handleOnDone = useCallback(() => {
-    router.push('/dashboard');
-  }, [router]);
-
-  return (
-    <>
-      <Container maxSize="xs" className="py-4">
-        <Login onDone={handleOnDone} />
-      </Container>
-    </>
-  );
+export default function LoginPage() {
+  return <Login />;
 }
-
-export default LoginPage;
