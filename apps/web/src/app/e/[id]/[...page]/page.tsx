@@ -8,6 +8,7 @@ import {EventInvite} from './(features)/EventInvite/EventInvite';
 import {MyTickets} from './(features)/MyTickets/MyTickets';
 import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
+import {Suspense} from 'react';
 
 export default async function EventPages({
   params: {id, page},
@@ -24,6 +25,10 @@ export default async function EventPages({
   ]);
 
   const allAttendeesPromise = api.event.getAllEventsAttendees.query({
+    eventShortId: id,
+  });
+
+  const myTicketPromise = api.event.getMyTicketsByEvent.query({
     eventShortId: id,
   });
 
@@ -44,28 +49,32 @@ export default async function EventPages({
             <Text truncate>{`Back to "${event?.title}"`}</Text>
           </Link>
         </Button>
-        <div>
-          {isMyEvent && (
-            <>
-              {page[0] === 'info' && <EventInfo event={event} />}
-              {page[0] === 'edit' && (
-                <EditEventForm
-                  event={event}
-                  me={me}
-                  organization={myOrganization}
-                />
-              )}
-              {page[0] === 'attendees' && <EventAttendees />}
-              {page[0] === 'invite' && (
-                <EventInvite
-                  allAttendeesPromise={allAttendeesPromise}
-                  eventShortId={id}
-                />
-              )}
-            </>
-          )}
-          {page[0] === 'my-tickets' && <MyTickets />}
-        </div>
+        <Suspense>
+          <div>
+            {isMyEvent && (
+              <>
+                {page[0] === 'info' && <EventInfo event={event} />}
+                {page[0] === 'edit' && (
+                  <EditEventForm
+                    event={event}
+                    me={me}
+                    organization={myOrganization}
+                  />
+                )}
+                {page[0] === 'attendees' && <EventAttendees />}
+                {page[0] === 'invite' && (
+                  <EventInvite
+                    allAttendeesPromise={allAttendeesPromise}
+                    eventShortId={id}
+                  />
+                )}
+              </>
+            )}
+            {page[0] === 'my-tickets' && (
+              <MyTickets myTicketPromise={myTicketPromise} />
+            )}
+          </div>
+        </Suspense>
       </div>
     </Container>
   );

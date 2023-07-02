@@ -13,19 +13,16 @@ import Link from 'next/link';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
+  myTicketPromise: ReturnType<typeof api.event.getMyTicketsByEvent.query>;
 }
 
-export function PaidEventAction({event}: Props) {
+export function PaidEventAction({event, myTicketPromise}: Props) {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isTicketSelectorModalOpen, setIsTicketSelectorModalOpen] =
     useState(false);
   const auth = useAuth();
   const form = useForm();
-  const myTickets = use(
-    api.event.getMyTicketsByEvent.query({
-      eventShortId: event.shortId,
-    })
-  );
+  const myTickets = use(myTicketPromise);
 
   const onJoinSubmit = form.handleSubmit(async (data) => {
     if (!auth.isSignedIn) {

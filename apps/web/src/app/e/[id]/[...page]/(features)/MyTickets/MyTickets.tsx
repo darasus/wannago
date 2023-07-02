@@ -1,20 +1,18 @@
 'use client';
 
-import {useParams, usePathname} from 'next/navigation';
+import {usePathname} from 'next/navigation';
 import {use, useEffect} from 'react';
 import {toast} from 'react-hot-toast';
 import {CardBase, PageHeader, Text, TicketList} from 'ui';
 import {api} from '../../../../../../trpc/client';
 
-export function MyTickets() {
-  const params = useParams();
+interface Props {
+  myTicketPromise: ReturnType<typeof api.event.getMyTicketsByEvent.query>;
+}
+
+export function MyTickets({myTicketPromise}: Props) {
   const pathname = usePathname();
-  const id = params?.id as string;
-  const tickets = use(
-    api.event.getMyTicketsByEvent.query({
-      eventShortId: id,
-    })
-  );
+  const tickets = use(myTicketPromise);
 
   useEffect(() => {
     if (tickets && tickets?.length > 0 && pathname?.includes('/success')) {

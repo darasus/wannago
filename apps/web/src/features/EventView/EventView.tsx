@@ -10,6 +10,7 @@ import {
 import {InfoCard} from 'cards';
 import {notFound} from 'next/navigation';
 import {getBaseUrl} from 'utils';
+import {api} from '../../trpc/server-http';
 
 interface Props {
   eventPromise: Promise<RouterOutputs['event']['getByShortId']>;
@@ -34,10 +35,14 @@ export async function EventView({
     return notFound();
   }
 
+  const myTicketPromise = api.event.getMyTicketsByEvent.query({
+    eventShortId: event.shortId,
+  });
+
   return (
     <div className="flex flex-col gap-4">
       <div className="sticky top-4 z-20">
-        <SignUpCard event={event} />
+        <SignUpCard event={event} myTicketPromise={myTicketPromise} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="items-stretch">

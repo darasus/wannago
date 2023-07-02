@@ -10,9 +10,10 @@ import {use} from 'react';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
+  myTicketPromise: ReturnType<typeof api.event.getMyTicketsByEvent.query>;
 }
 
-export function SignUpCard({event}: Props) {
+export function SignUpCard({event, myTicketPromise}: Props) {
   const attendeeCount = use(
     api.event.getNumberOfAttendees.query({
       eventId: event.id,
@@ -27,7 +28,9 @@ export function SignUpCard({event}: Props) {
       <Container className="w-full p-0 m-0">
         <_SignUpCard numberOfAttendees={attendeeCount?.count ?? 0}>
           {isFreeEvent && <FreeEventAction event={event} />}
-          {isPaidEvent && <PaidEventAction event={event} />}
+          {isPaidEvent && (
+            <PaidEventAction event={event} myTicketPromise={myTicketPromise} />
+          )}
         </_SignUpCard>
       </Container>
     </>
