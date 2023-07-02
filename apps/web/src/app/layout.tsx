@@ -18,7 +18,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <ReactQueryProvider>
         <html lang="en">
           <head>
-            <Scripts />
             <link rel="shortcut icon" href={`${getBaseUrl()}/api/favicon`} />
             <meta
               content="width=device-width, initial-scale=1"
@@ -39,6 +38,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             <Tools />
             <ToastProvider />
           </body>
+          <Scripts />
         </html>
       </ReactQueryProvider>
     </ClerkProvider>
