@@ -1,16 +1,20 @@
 import {eventNotFoundError, userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
-import {protectedProcedure} from '../../../trpc';
+import {publicProcedure} from '../../../trpc';
 import {getUserByExternalId} from '../../../actions/getUserByExternalId';
 
-export const getMyTicketsByEvent = protectedProcedure
+export const getMyTicketsByEvent = publicProcedure
   .input(
     z.object({
       eventShortId: z.string(),
     })
   )
   .query(async ({ctx, input}) => {
+    if (!ctx.auth?.userId) {
+      return null;
+    }
+
     const user = await getUserByExternalId(ctx)({
       externalId: ctx.auth.userId,
     });
@@ -37,7 +41,7 @@ export const getMyTicketsByEvent = protectedProcedure
     });
 
     const response = tickets
-      .map(ticket => {
+      .map((ticket) => {
         return {
           id: ticket.id,
           title: ticket.title,
@@ -49,7 +53,7 @@ export const getMyTicketsByEvent = protectedProcedure
           ),
         };
       })
-      .filter(ticket => ticket.quantity > 0);
+      .filter((ticket) => ticket.quantity > 0);
 
     if (response.length === 0) {
       return null;
