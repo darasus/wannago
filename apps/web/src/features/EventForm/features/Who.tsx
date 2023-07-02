@@ -46,7 +46,7 @@ export function Who({me, myOrganization}: Props) {
       name="createdById"
       render={({field}) => (
         <FormItem>
-          <FormLabel>Created by</FormLabel>
+          <FormLabel>Create as</FormLabel>
           <FormControl>
             <Select
               value={field.value}
