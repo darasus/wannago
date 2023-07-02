@@ -1,4 +1,4 @@
-import {Button, Container, Text} from 'ui';
+import {Button, Container, LoadingBlock, Text} from 'ui';
 import {EventInfo} from './(features)/EventInfo/EventInfo';
 import {api} from '../../../../trpc/server-http';
 import {notFound} from 'next/navigation';
@@ -53,7 +53,11 @@ export default async function EventPages({
           <div>
             {isMyEvent && (
               <>
-                {page[0] === 'info' && <EventInfo event={event} />}
+                {page[0] === 'info' && (
+                  <Suspense fallback={<LoadingBlock />}>
+                    <EventInfo event={event} />
+                  </Suspense>
+                )}
                 {page[0] === 'edit' && (
                   <EditEventForm
                     event={event}
@@ -61,12 +65,18 @@ export default async function EventPages({
                     organization={myOrganization}
                   />
                 )}
-                {page[0] === 'attendees' && <EventAttendees />}
+                {page[0] === 'attendees' && (
+                  <Suspense fallback={<LoadingBlock />}>
+                    <EventAttendees />
+                  </Suspense>
+                )}
                 {page[0] === 'invite' && (
-                  <EventInvite
-                    allAttendeesPromise={allAttendeesPromise}
-                    eventShortId={id}
-                  />
+                  <Suspense fallback={<LoadingBlock />}>
+                    <EventInvite
+                      allAttendeesPromise={allAttendeesPromise}
+                      eventShortId={id}
+                    />
+                  </Suspense>
                 )}
               </>
             )}

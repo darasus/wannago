@@ -16,6 +16,10 @@ const publicRoutes = [
 
 export default authMiddleware({
   publicRoutes: (req) => {
+    if (req.nextUrl.pathname.includes('inngest')) {
+      return true;
+    }
+
     if (req.nextUrl.pathname === '/') {
       return true;
     }

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { CardBase, InfoIconWithTooltip, LoadingBlock } from "ui";
-import { cn } from "utils";
-import { cloudflareImageLoader } from "utils";
-import { Event } from "@prisma/client";
+import Image from 'next/image';
+import {CardBase, InfoIconWithTooltip, LoadingBlock} from 'ui';
+import {cn} from 'utils';
+import {cloudflareImageLoader} from 'utils';
+import {Event} from '@prisma/client';
 
 interface Props {
   event: Event;
@@ -12,7 +12,7 @@ interface Props {
   isMyEvent?: boolean;
 }
 
-export function InfoCard({ event, isLoadingImage, isMyEvent }: Props) {
+export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
   const {
     description,
     title,
@@ -34,12 +34,12 @@ export function InfoCard({ event, isLoadingImage, isMyEvent }: Props) {
         ...(event.isPublished
           ? ([
               {
-                badgeColor: "green",
+                badgeColor: 'green',
                 badgeContent: (
                   <div className="flex gap-[2px]">
                     <span className="text-xs uppercase font-bold">
                       Published
-                    </span>{" "}
+                    </span>{' '}
                     <InfoIconWithTooltip text="Your event is published and can be shared." />
                   </div>
                 ),
@@ -47,10 +47,10 @@ export function InfoCard({ event, isLoadingImage, isMyEvent }: Props) {
             ] as const)
           : ([
               {
-                badgeColor: "yellow",
+                badgeColor: 'yellow',
                 badgeContent: (
                   <div className="flex gap-[2px]">
-                    <span className="text-xs uppercase font-bold">Draft</span>{" "}
+                    <span className="text-xs uppercase font-bold">Draft</span>{' '}
                     <InfoIconWithTooltip text="Your event is not published yet. To be able to share your event please publish it first." />
                   </div>
                 ),
@@ -61,7 +61,7 @@ export function InfoCard({ event, isLoadingImage, isMyEvent }: Props) {
 
   return (
     <>
-      <CardBase badges={badges} title={"What"}>
+      <CardBase badges={badges} title={'What'}>
         {isLoadingImage && (
           <div className="flex flex-col items-center overflow-hidden relative justify-center bg-gray-300 rounded-3xl safari-rounded-border-fix mb-4 aspect-square">
             <LoadingBlock />
@@ -70,7 +70,7 @@ export function InfoCard({ event, isLoadingImage, isMyEvent }: Props) {
         {canRenderImage && (
           <div
             className={cn(
-              "overflow-hidden relative justify-center bg-slate-700 rounded-3xl safari-rounded-border-fix mb-4"
+              'overflow-hidden relative justify-center bg-slate-700 rounded-md safari-rounded-border-fix mb-4'
             )}
           >
             <Image
@@ -82,10 +82,10 @@ export function InfoCard({ event, isLoadingImage, isMyEvent }: Props) {
               width={featuredImageWidth}
               height={featuredImageHeight}
               blurDataURL={featuredImagePreviewSrc}
-              placeholder={"blur"}
+              placeholder={'blur'}
               sizes="320 640 750 1000"
               style={{
-                width: "100%",
+                width: '100%',
               }}
             />
           </div>
@@ -101,16 +101,16 @@ export function InfoCard({ event, isLoadingImage, isMyEvent }: Props) {
             <>
               <div
                 className={cn(
-                  "prose",
-                  "prose-h1:text-gray-900 prose-h2:text-gray-900 prose-h3:text-gray-900 prose-h4:text-gray-900 prose-h5:text-gray-900 prose-h6:text-gray-900",
-                  "prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-pre:rounded-md prose-pre:text-gray-900",
-                  "prose-a:text-brand-700",
-                  "prose-p:break-words"
+                  'prose',
+                  'prose-h1:text-gray-900 prose-h2:text-gray-900 prose-h3:text-gray-900 prose-h4:text-gray-900 prose-h5:text-gray-900 prose-h6:text-gray-900',
+                  'prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-pre:rounded-md prose-pre:text-gray-900',
+                  'prose-a:text-brand-700',
+                  'prose-p:break-words'
                 )}
               >
                 <div
                   className="text-body"
-                  dangerouslySetInnerHTML={{ __html: description }}
+                  dangerouslySetInnerHTML={{__html: description}}
                 />
               </div>
             </>

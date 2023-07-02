@@ -40,8 +40,8 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
       )}
     >
       {title && (
-        <div className="flex items-center gap-2 bg-foreground/5 rounded-t-md border-b border-foreground/10">
-          <div className="border-r border-foreground/10 bg-foreground/5 p-2 pl-4 text-sm rounded-tl-md font-bold uppercase">
+        <div className="flex items-center gap-2 bg-muted rounded-t-md border-b border-foreground/5">
+          <div className="border-r border-foreground/5 bg-muted p-2 pl-4 text-sm rounded-tl-md font-bold uppercase">
             {title}
           </div>
           {titleChildren}

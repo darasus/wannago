@@ -55,7 +55,7 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
           featuredImagePreviewSrc &&
           featuredImageWidth &&
           featuredImageHeight && (
-            <div className="grow overflow-hidden relative justify-center bg-black rounded-3xl aspect-video safari-rounded-border-fix">
+            <div className="grow overflow-hidden relative justify-center bg-black rounded-md aspect-video safari-rounded-border-fix">
               {showPublishStatus && (
                 <div className="absolute left-4 top-4 z-10">
                   {event.isPublished ? (
