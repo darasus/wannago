@@ -1,5 +1,4 @@
-import {User} from '@prisma/client';
-import {RouterOutputs} from 'api';
+import {Event, Organization, Ticket, User} from '@prisma/client';
 import {
   DateCard,
   LocationCard,
@@ -13,7 +12,14 @@ import {getBaseUrl} from 'utils';
 import {api} from '../../trpc/server-http';
 
 interface Props {
-  eventPromise: Promise<RouterOutputs['event']['getByShortId']>;
+  eventPromise: Promise<
+    | (Event & {
+        tickets: Ticket[];
+        user: User | null;
+        organization: Organization | null;
+      })
+    | null
+  >;
   isLoadingImage?: boolean;
   isMyEvent?: boolean;
   me: User | null;

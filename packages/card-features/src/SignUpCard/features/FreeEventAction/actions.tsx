@@ -25,6 +25,8 @@ export async function cancelEvent({eventId}: {eventId: string}) {
   });
 
   await api.event.getMySignUp.revalidate();
+  await api.event.getByShortId.revalidate();
+  await api.event.getById.revalidate();
 }
 
 export async function getMySignUp({eventId}: {eventId: string}) {
