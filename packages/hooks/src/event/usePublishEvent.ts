@@ -4,7 +4,7 @@ import {useConfirmDialog} from '../useConfirmDialog';
 import {TRPCClientError} from '@trpc/client';
 import {useRouter} from 'next/navigation';
 import {api} from '../../../../apps/web/src/trpc/client';
-import {useAmplitudeAppDir} from '../useAmplitudeAppDir';
+import {useAmplitude} from '../useAmplitude';
 
 interface Props {
   eventId?: string;
@@ -13,7 +13,7 @@ interface Props {
 export function usePublishEvent({eventId}: Props) {
   const router = useRouter();
   const {confetti} = useConfetti();
-  const {logEvent} = useAmplitudeAppDir();
+  const {logEvent} = useAmplitude();
 
   const {modal, open, isPending} = useConfirmDialog({
     title: 'Are you sure you want to publish event?',

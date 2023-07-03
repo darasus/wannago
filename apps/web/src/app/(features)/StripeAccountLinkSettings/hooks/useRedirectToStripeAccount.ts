@@ -4,10 +4,10 @@ import {useTransition} from 'react';
 import {api} from '../../../../trpc/client';
 import {toast} from 'react-hot-toast';
 import {captureException} from '@sentry/nextjs';
-import {useAmplitudeAppDir} from 'hooks';
+import {useAmplitude} from 'hooks';
 
 export function useRedirectToStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
-  const {logEvent} = useAmplitudeAppDir();
+  const {logEvent} = useAmplitude();
   const [isPending, startTransition] = useTransition();
 
   const redirectToStripeAccount = async () => {

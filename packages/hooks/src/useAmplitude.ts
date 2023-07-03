@@ -30,7 +30,7 @@ interface Options {
   extra?: Record<string, unknown>;
 }
 
-export function useAmplitudeAppDir() {
+export function useAmplitude() {
   const pathname = usePathname();
 
   const logEvent = useCallback(

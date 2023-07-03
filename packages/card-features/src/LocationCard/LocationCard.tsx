@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { LocationCard as LocationCardView } from "cards";
-import { useAmplitudeAppDir } from "hooks";
+import {LocationCard as LocationCardView} from 'cards';
+import {useAmplitude} from 'hooks';
 
 interface Props {
   address: string;
@@ -10,10 +10,10 @@ interface Props {
   eventId: string;
 }
 
-export function LocationCard({ address, longitude, latitude, eventId }: Props) {
-  const { logEvent } = useAmplitudeAppDir();
+export function LocationCard({address, longitude, latitude, eventId}: Props) {
+  const {logEvent} = useAmplitude();
   const onGetDirectionsClick = () => {
-    logEvent("get_directions_button_clicked", { eventId });
+    logEvent('get_directions_button_clicked', {eventId});
     window?.open(`https://www.google.com/maps/search/${address}`);
   };
 

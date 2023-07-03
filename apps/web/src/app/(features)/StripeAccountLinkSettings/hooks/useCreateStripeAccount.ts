@@ -5,10 +5,10 @@ import {api} from '../../../../trpc/client';
 import {toast} from 'react-hot-toast';
 import {captureException} from '@sentry/nextjs';
 import {useRouter} from 'next/navigation';
-import {useAmplitudeAppDir} from 'hooks';
+import {useAmplitude} from 'hooks';
 
 export function useCreateStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
-  const {logEvent} = useAmplitudeAppDir();
+  const {logEvent} = useAmplitude();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 

@@ -3,14 +3,14 @@ import {useRouter} from 'next/navigation';
 import {toast} from 'react-hot-toast';
 import {useConfirmDialog} from '../useConfirmDialog';
 import {api} from '../../../../apps/web/src/trpc/client';
-import {useAmplitudeAppDir} from '../useAmplitudeAppDir';
+import {useAmplitude} from '../useAmplitude';
 
 interface Props {
   eventId?: string;
 }
 
 export function useRemoveEvent({eventId}: Props) {
-  const {logEvent} = useAmplitudeAppDir();
+  const {logEvent} = useAmplitude();
   const router = useRouter();
 
   const {modal, open, isPending} = useConfirmDialog({

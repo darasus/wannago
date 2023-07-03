@@ -7,7 +7,7 @@ import {trackEventCreateConversion} from 'lib/src/gtag';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 import {toast} from 'react-hot-toast';
-import {useAmplitudeAppDir} from 'hooks';
+import {useAmplitude} from 'hooks';
 import {api} from '../../trpc/client';
 import {Organization, User} from '@prisma/client';
 
@@ -17,13 +17,13 @@ interface Props {
 }
 
 export function AddEventForm({me, organization}: Props) {
-  const {logEvent} = useAmplitudeAppDir();
+  const {logEvent} = useAmplitude();
   const router = useRouter();
   const {push} = useRouter();
   const form = useEventForm({me});
   const {handleSubmit} = form;
 
-  const onSubmit = handleSubmit(async data => {
+  const onSubmit = handleSubmit(async (data) => {
     logEvent('event_create_submitted');
     trackEventCreateConversion();
 
@@ -31,7 +31,7 @@ export function AddEventForm({me, organization}: Props) {
       .mutate({
         ...data,
         tickets:
-          data.tickets?.map(ticket => ({
+          data.tickets?.map((ticket) => ({
             ...ticket,
             price: Number(ticket.price) * 100,
             maxQuantity: Number(ticket.maxQuantity),
@@ -46,7 +46,7 @@ export function AddEventForm({me, organization}: Props) {
           Intl.DateTimeFormat().resolvedOptions().timeZone
         ),
       })
-      .then(data => {
+      .then((data) => {
         logEvent('event_created', {
           eventId: data?.id,
         });
@@ -54,7 +54,7 @@ export function AddEventForm({me, organization}: Props) {
           push(`/e/${data.shortId}`);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         toast.error(error.message);
         form.trigger();
       });

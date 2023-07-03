@@ -3,7 +3,7 @@ import {toast} from 'react-hot-toast';
 import {useConfirmDialog} from '../useConfirmDialog';
 import {api} from '../../../../apps/web/src/trpc/client';
 import {useRouter} from 'next/navigation';
-import {useAmplitudeAppDir} from '../useAmplitudeAppDir';
+import {useAmplitude} from '../useAmplitude';
 
 interface Props {
   eventId?: string;
@@ -11,7 +11,7 @@ interface Props {
 
 export function useUnpublishEvent({eventId}: Props) {
   const router = useRouter();
-  const {logEvent} = useAmplitudeAppDir();
+  const {logEvent} = useAmplitude();
 
   const {modal, open, isPending} = useConfirmDialog({
     title: 'Are you sure you want to unpublish event?',

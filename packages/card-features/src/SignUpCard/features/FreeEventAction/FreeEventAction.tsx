@@ -2,7 +2,7 @@
 
 import {useAuth} from '@clerk/nextjs';
 import {Event} from '@prisma/client';
-import {useAmplitudeAppDir, useConfetti, useConfirmDialog} from 'hooks';
+import {useAmplitude, useConfetti, useConfirmDialog} from 'hooks';
 import {use, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
@@ -33,7 +33,7 @@ interface Props {
 export function FreeEventAction({event, mySignUpPromise}: Props) {
   const router = useRouter();
   const {confetti} = useConfetti();
-  const {logEvent} = useAmplitudeAppDir();
+  const {logEvent} = useAmplitude();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const auth = useAuth();
   const signUp = use(mySignUpPromise);
