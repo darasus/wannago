@@ -105,9 +105,7 @@ export function Login({onDone, onCreateAccountClick}: Props) {
         )}
       </CardBase>
       <Text className="text-center">- OR -</Text>
-      <Button onClick={handleLoginClick} variant="outline">
-        Create account
-      </Button>
+      <Button onClick={handleLoginClick}>Create account</Button>
     </div>
   );
 }

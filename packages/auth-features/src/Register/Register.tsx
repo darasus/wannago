@@ -107,9 +107,7 @@ export function Register({onDone, onLoginClick}: Props) {
         )}
       </CardBase>
       <Text className="text-center">- OR -</Text>
-      <Button onClick={handleLoginClick} variant="outline">
-        Login
-      </Button>
+      <Button onClick={handleLoginClick}>Login</Button>
     </div>
   );
 }
