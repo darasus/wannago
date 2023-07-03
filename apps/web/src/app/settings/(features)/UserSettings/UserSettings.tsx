@@ -19,7 +19,6 @@ import {type RouterOutputs} from 'api';
 import {api} from '../../../../trpc/client';
 import {useRouter} from 'next/navigation';
 import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
-import {UserSubscription} from './(features)/UserSubscription/UserSubscription';
 import {z} from 'zod';
 
 const userProfileSettingsFormScheme = z.object({
@@ -32,12 +31,9 @@ const userProfileSettingsFormScheme = z.object({
 
 interface Props {
   user: RouterOutputs['user']['me'];
-  mySubscriptionPromise: Promise<
-    RouterOutputs['subscriptionPlan']['getMySubscription']
-  >;
 }
 
-export function UserSettings({user, mySubscriptionPromise}: Props) {
+export function UserSettings({user}: Props) {
   const router = useRouter();
   const form = useForm<z.infer<typeof userProfileSettingsFormScheme>>({
     defaultValues: {
@@ -175,12 +171,6 @@ export function UserSettings({user, mySubscriptionPromise}: Props) {
             </div>
           </form>
         </CardBase>
-        {user && (
-          <UserSubscription
-            user={user}
-            mySubscriptionPromise={mySubscriptionPromise}
-          />
-        )}
         <StripeAccountLinkSettings type="PRO" />
       </div>
     </FormProvider>

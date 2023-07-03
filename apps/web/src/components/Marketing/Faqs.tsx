@@ -6,9 +6,10 @@ import {Container} from 'ui';
 import {SectionHeader} from './SectionHeader';
 import {SectionContainer} from './SectionContainer';
 import Link from 'next/link';
-import {cn} from 'utils';
+import {cn, formatCents, formatPercent} from 'utils';
 import {titleFontClassName} from '../../fonts';
 import {AnimatePresence, motion} from 'framer-motion';
+import {feeAmount, feePercent} from 'const';
 
 const faqs = [
   {
@@ -39,7 +40,9 @@ const faqs = [
   },
   {
     question: 'How much is the fee per sold ticket?',
-    answer: `We charge a 10% fee for every ticket sold. However there is extra card processing fee charged by Stripe.`,
+    answer: `We charge ${formatCents(feeAmount, 'USD')} + ${formatPercent(
+      feePercent
+    )} fee for every ticket sold.`,
   },
   {
     question: 'How do I invite people to my event?',

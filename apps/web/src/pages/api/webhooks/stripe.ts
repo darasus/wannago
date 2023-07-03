@@ -7,8 +7,6 @@ import {stripeWebhookHandlerRouter} from 'api/src/routers/stripeWebhookHandler';
 import {
   baseEventHandlerSchema,
   handleCheckoutSessionCompletedInputSchema,
-  handleCustomerSubscriptionDeletedInputSchema,
-  handleCustomerSubscriptionUpdatedInputSchema,
 } from 'stripe-webhook-input-validation';
 import {captureException} from '@sentry/nextjs';
 import {NextRequest} from 'next/server';
@@ -37,18 +35,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const event = stripe.constructEvent(buf.toString(), sig);
     const input = baseEventHandlerSchema.parse(event);
-
-    if (input.type === 'customer.subscription.updated') {
-      await caller.handleCustomerSubscriptionUpdated(
-        handleCustomerSubscriptionUpdatedInputSchema.parse(event)
-      );
-    }
-
-    if (input.type === 'customer.subscription.deleted') {
-      await caller.handleCustomerSubscriptionDeleted(
-        handleCustomerSubscriptionDeletedInputSchema.parse(event)
-      );
-    }
 
     if (input.type === 'checkout.session.completed') {
       await caller.handleCheckoutSessionCompleted(

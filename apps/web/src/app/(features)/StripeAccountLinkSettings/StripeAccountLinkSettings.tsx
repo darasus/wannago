@@ -1,79 +1,32 @@
-"use client";
+'use client';
 
-import { captureException, captureMessage } from "@sentry/nextjs";
-import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { Button, CardBase } from "ui";
-import { api } from "../../../trpc/client";
-import { use, useTransition } from "react";
+import {Button, CardBase} from 'ui';
+import {api} from '../../../trpc/client';
+import {use} from 'react';
+import {useRedirectToStripeAccount} from './hooks/useRedirectToStripeAccount';
+import {useCreateStripeAccount} from './hooks/useCreateStripeAccount';
 
 interface Props {
-  type: "PRO" | "BUSINESS";
+  type: 'PRO' | 'BUSINESS';
 }
 
-export function StripeAccountLinkSettings({ type }: Props) {
-  const [isCreateAccountLinkPending, startCreateAccountLinkTransition] =
-    useTransition();
-  const [isUpdateAccountLinkPending, startUpdateAccountLinkTransition] =
-    useTransition();
-  const router = useRouter();
-  const subscription = use(
-    api.subscriptionPlan.getMySubscription.query({ type })
-  );
+export function StripeAccountLinkSettings({type}: Props) {
+  const {isLoading: isRedirecting, redirectToStripeAccount} =
+    useRedirectToStripeAccount({
+      type,
+    });
+  const {createAccountLink, isLoading: isCreating} = useCreateStripeAccount({
+    type,
+  });
+
   const account = use(
     api.stripeAccountLink.getAccount.query({
       type,
     })
   );
 
-  const handleCreateAccountLink = async () => {
-    try {
-      const url = await api.stripeAccountLink.createAccountLink
-        .mutate({ type })
-        .catch((error) => {
-          toast.error(error.message);
-        });
-
-      if (url) {
-        captureMessage(url);
-        router.push(url);
-      }
-    } catch (error) {
-      captureException(error, {
-        extra: {
-          type,
-          function: "createAccountLink",
-        },
-      });
-    }
-  };
-
-  const handleUpdateAccountLink = async () => {
-    try {
-      const url = await api.stripeAccountLink.getAccountLink
-        .mutate({ type })
-        .catch((error) => {
-          toast.error(error.message);
-        });
-      if (url) {
-        window.open(url, "_blank");
-      }
-    } catch (error) {
-      captureException(error, {
-        extra: {
-          type,
-          function: "getAccountLink",
-        },
-      });
-    }
-  };
-
-  if (subscription?.type !== type) {
-    return null;
-  }
-
   return (
-    <CardBase title={account ? "Linked Stripe account" : "Link Stripe account"}>
+    <CardBase title={account ? 'Linked Stripe account' : 'Link Stripe account'}>
       {account && (
         <div className="flex flex-col gap-2">
           <div>
@@ -81,21 +34,21 @@ export function StripeAccountLinkSettings({ type }: Props) {
           </div>
           <div className="flex gap-2">
             <Button
-              onClick={handleUpdateAccountLink}
-              disabled={isUpdateAccountLinkPending}
-              isLoading={isUpdateAccountLinkPending}
+              onClick={redirectToStripeAccount}
+              disabled={isRedirecting}
+              isLoading={isRedirecting}
               size="sm"
             >
-              View account
+              View Stripe account
             </Button>
           </div>
         </div>
       )}
       {!account && (
         <Button
-          onClick={handleCreateAccountLink}
-          disabled={isCreateAccountLinkPending}
-          isLoading={isCreateAccountLinkPending}
+          onClick={createAccountLink}
+          disabled={isCreating}
+          isLoading={isCreating}
           size="sm"
         >
           Link Stripe account

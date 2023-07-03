@@ -1,9 +1,11 @@
-import {Container, Text} from 'ui';
+import {Button, CardBase, Container, Text} from 'ui';
 import {SectionContainer} from './SectionContainer';
 import {SectionHeader} from './SectionHeader';
-import {PricingPlan} from './PricingPlan';
 import {api} from '../../trpc/server-http';
-import {ShieldCheck} from 'lucide-react';
+import {cn, formatCents, formatPercent} from 'utils';
+import {titleFont} from '../../fonts';
+import {CheckCircle} from 'lucide-react';
+import {feeAmount, feePercent} from 'const';
 
 export async function Pricing() {
   const currency = await api.payments.getCurrency.query();
@@ -15,72 +17,45 @@ export async function Pricing() {
           title="Simple pricing, for everyone."
           description={`Straightforward pricing without hidden fees.`}
         />
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 m-auto">
-          <PricingPlan
-            name="Starter"
-            price={0}
-            description="Anyone running small and private events, or just starting up."
-            features={['Up to 5 events', 'Up to 50 attendees']}
-            type="general"
-            planId="starter"
-            currency={currency}
-          />
-          <PricingPlan
-            type="featured"
-            name="Pro"
-            planId="pro"
-            price={2900}
-            description="Those who run one or more events a month and promote personal brand."
-            features={[
-              'Unlimited events',
-              'Unlimited attendees',
-              'Generative AI assistant',
-              'Sell tickets (extra fees apply)',
-              'Many more upcoming features...',
-            ]}
-            currency={currency}
-          />
-          <PricingPlan
-            type="general"
-            name="Business"
-            planId="business"
-            price={7900}
-            description="Small and medium sized businesses that want to build lasting relationship with their customers."
-            features={[
-              'Organization profile',
-              'Unlimited team members',
-              'Unlimited events',
-              'Unlimited attendees',
-              'Generative AI assistant',
-              'Sell tickets (extra fees apply)',
-              'Many more upcoming features...',
-            ]}
-            currency={currency}
-          />
-          <PricingPlan
-            type="general"
-            name="Enterprise"
-            planId="enterprise"
-            price={0}
-            description="Large organizations with special needs."
-            features={[
-              'Everything in Business',
-              'SSO',
-              'Custom permissions',
-              'Custom integration',
-              'Priority support',
-            ]}
-            currency={currency}
-          />
-        </div>
-        <div className="flex items-center justify-center mt-8 px-4">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-24 h-1w-24 md:w-7 md:h-7 text-green-500" />
-            <Text className="text-xl font-bold custom-underline leading-tight">
-              All plans include{' '}
-              <span className="underline">30-day money back guarantee</span>
-            </Text>
-          </div>
+        <div className="flex justify-center">
+          <CardBase>
+            <div className="flex flex-col h-full gap-4 w-72">
+              <div>
+                <Text className={cn('mt-4 text-4xl', titleFont.className)}>
+                  Standard
+                </Text>
+              </div>
+              <div>
+                <Text
+                  className={cn(titleFont.className, 'text-5xl tracking-tight')}
+                >
+                  {`${formatCents(feeAmount, currency)} + ${formatPercent(
+                    feePercent
+                  )}`}
+                </Text>
+                <div />
+                <Text className="text-sm text-gray-500">Per sold ticket</Text>
+              </div>
+              <div className={cn('flex flex-col gap-y-3 text-sm')}>
+                {[
+                  'Unlimited events',
+                  'Unlimited attendees',
+                  'Profile pages',
+                  'Organization profiles',
+                  'Unlimited organization members',
+                  'Generative AI assistant',
+                  'No fees for free events',
+                ].map((feature: any) => (
+                  <div key={feature} className="flex items-center gap-1">
+                    <CheckCircle className={cn('h-4 w-4 text-green-500')} />
+                    <Text className="font-medium">{feature}</Text>
+                  </div>
+                ))}
+              </div>
+              <div className="grow" />
+              <Button>Get started</Button>
+            </div>
+          </CardBase>
         </div>
       </Container>
     </SectionContainer>

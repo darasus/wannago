@@ -2,7 +2,6 @@ import {generateShortId, geocode, invariant} from 'utils';
 import {protectedProcedure} from '../../../trpc';
 import {eventInput} from '../validation';
 import {TRPCError} from '@trpc/server';
-import {assertCanCreateEvent} from '../../../assertions/assertCanCreateEvent';
 
 export const create = protectedProcedure
   .input(eventInput)
@@ -26,45 +25,12 @@ export const create = protectedProcedure
     }) => {
       const geocodeResponse = await geocode(address);
 
-      const [user, organization, subscription, userEventCount] =
-        await Promise.all([
-          ctx.prisma.user.findUnique({
-            where: {id: createdById},
-          }),
-          ctx.prisma.organization.findUnique({where: {id: createdById}}),
-          ctx.prisma.subscription.findFirst({
-            where: {
-              OR: [
-                {
-                  user: {
-                    some: {
-                      id: createdById,
-                    },
-                  },
-                },
-                {
-                  organization: {
-                    some: {
-                      id: createdById,
-                    },
-                  },
-                },
-              ],
-            },
-          }),
-          ctx.prisma.event.count({
-            where: {
-              userId: createdById,
-            },
-          }),
-        ]);
-
-      assertCanCreateEvent(ctx)({
-        user,
-        organization,
-        subscription,
-        userEventCount,
-      });
+      const [user, organization] = await Promise.all([
+        ctx.prisma.user.findUnique({
+          where: {id: createdById},
+        }),
+        ctx.prisma.organization.findUnique({where: {id: createdById}}),
+      ]);
 
       const preferredCurrency = user?.id
         ? user.preferredCurrency
@@ -109,7 +75,7 @@ export const create = protectedProcedure
 
       if (tickets.length > 0) {
         await ctx.prisma.ticket.createMany({
-          data: tickets.map(ticket => ({
+          data: tickets.map((ticket) => ({
             title: ticket.title,
             price: ticket.price,
             maxQuantity: ticket.maxQuantity,

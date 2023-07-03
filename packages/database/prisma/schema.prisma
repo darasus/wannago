@@ -90,8 +90,6 @@ model User {
   type                  UserType               @default(USER)
   events                Event[]                @relation(name: "EventUser")
   disabled              Boolean                @default(false)
-  subscription          Subscription?          @relation(fields: [subscriptionId], references: [id])
-  subscriptionId        String?
   stripeCustomerId      String?
   stripeLinkedAccountId String?
   messages              Message[]              @relation(name: "UserMessage")
@@ -103,7 +101,6 @@ model User {
   preferredCurrency     Currency
 
   @@index([organizationId])
-  @@index([subscriptionId])
 }
 
 model Organization {
@@ -114,8 +111,6 @@ model Organization {
   email                 String                 @unique
   logoSrc               String
   disabled              Boolean                @default(false)
-  subscription          Subscription?          @relation(fields: [subscriptionId], references: [id])
-  subscriptionId        String?
   stripeCustomerId      String?
   stripeLinkedAccountId String?
   messages              Message[]              @relation(name: "OrganizationMessage")
@@ -123,8 +118,6 @@ model Organization {
   lastSeens             ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
   followers             Follow[]               @relation(name: "FollowingOrganization")
   preferredCurrency     Currency
-
-  @@index([subscriptionId])
 }
 
 model EventSignUp {
@@ -152,22 +145,6 @@ enum EventRegistrationStatus {
 enum UserType {
   ADMIN
   USER
-}
-
-enum SubscriptionType {
-  PRO
-  BUSINESS
-}
-
-model Subscription {
-  id           String           @id @default(uuid())
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @default(now()) @updatedAt
-  type         SubscriptionType
-  expiresAt    DateTime?
-  cancelAt     DateTime?
-  user         User[]
-  organization Organization[]
 }
 
 model Conversation {

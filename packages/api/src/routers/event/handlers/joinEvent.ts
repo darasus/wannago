@@ -18,14 +18,6 @@ export const joinEvent = protectedProcedure
       where: {
         externalId: ctx.auth.userId,
       },
-      include: {
-        subscription: true,
-        organization: {
-          include: {
-            subscription: true,
-          },
-        },
-      },
     });
 
     invariant(user, userNotFoundError);
@@ -85,12 +77,7 @@ export const joinEvent = protectedProcedure
 
     assertCanJoinEvent(ctx)({
       numberOfRegisteredUsers,
-      numberOfInvitedUsers,
       event,
-      organizer: event.user || event.organization,
-      subscription: event.user
-        ? user.subscription
-        : user.organization?.subscription,
     });
 
     if (!existingSignUp) {

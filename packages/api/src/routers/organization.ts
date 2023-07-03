@@ -7,7 +7,6 @@ import {getUserByExternalId} from '../actions/getUserByExternalId';
 import {getOrganizationByUserExternalId} from '../actions/getOrganizationByUserExternalId';
 import {getUserByEmail} from '../actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from '../actions/getOrganizationWithMembersByOrganizationId';
-import {assertCanAddOrganizationMember} from '../assertions/assertCanAddOrganizationMember';
 
 const create = protectedProcedure
   .input(
@@ -147,24 +146,6 @@ const addOrganizationMember = protectedProcedure
   .mutation(async ({ctx, input}) => {
     const user = await getUserByEmail(ctx)({
       email: input.userEmail,
-    });
-
-    const businessSubscription = await ctx.prisma.subscription.findFirst({
-      where: {
-        organization: {
-          some: {
-            users: {
-              some: {
-                id: user?.id,
-              },
-            },
-          },
-        },
-      },
-    });
-
-    assertCanAddOrganizationMember(ctx)({
-      subscription: businessSubscription,
     });
 
     invariant(user, userNotFoundError);

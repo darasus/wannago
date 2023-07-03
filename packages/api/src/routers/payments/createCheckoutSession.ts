@@ -5,6 +5,7 @@ import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
 import {Stripe} from 'lib/src/stripe';
 import {assertCanPurchaseTickets} from '../../assertions/assertCanPurchaseTickets';
+import {feeAmount, feePercent} from 'const';
 
 export const createCheckoutSession = protectedProcedure
   .input(
@@ -102,13 +103,14 @@ export const createCheckoutSession = protectedProcedure
     const selectedTickets = await ctx.prisma.ticket.findMany({
       where: {
         id: {
-          in: input.tickets.map(ticket => ticket.ticketId),
+          in: input.tickets.map((ticket) => ticket.ticketId),
         },
       },
     });
 
     const totalAmount = input.tickets.reduce((acc, ticket) => {
-      const {price} = selectedTickets.find(t => t.id === ticket.ticketId) || {};
+      const {price} =
+        selectedTickets.find((t) => t.id === ticket.ticketId) || {};
 
       if (!price) {
         return acc;
@@ -132,9 +134,10 @@ export const createCheckoutSession = protectedProcedure
           }
         : undefined,
       billing_address_collection: 'auto',
-      line_items: selectedTickets.map(ticket => {
+      line_items: selectedTickets.map((ticket) => {
         return {
-          quantity: input.tickets.find(t => t.ticketId === ticket.id)?.quantity,
+          quantity: input.tickets.find((t) => t.ticketId === ticket.id)
+            ?.quantity,
           price_data: {
             product_data: {
               name: ticket.title,
@@ -155,7 +158,7 @@ export const createCheckoutSession = protectedProcedure
         externalUserId: ctx.auth.userId,
         eventId: input.eventId,
         tickets: JSON.stringify(
-          input.tickets.map(t => {
+          input.tickets.map((t) => {
             return {
               ticketId: t.ticketId,
               quantity: t.quantity,
@@ -164,7 +167,7 @@ export const createCheckoutSession = protectedProcedure
         ),
       },
       payment_intent_data: {
-        application_fee_amount: getTicketSalePlatformFee(totalAmount),
+        application_fee_amount: calculateFee(totalAmount),
         transfer_data: {
           destination: stripeLinkedAccountId,
         },
@@ -174,6 +177,8 @@ export const createCheckoutSession = protectedProcedure
     return session.url;
   });
 
-function getTicketSalePlatformFee(totalAmountForTickets: number): number {
-  return Math.round((totalAmountForTickets * 0.1 + Number.EPSILON) * 100) / 100;
+function calculateFee(totalAmountInCents: number) {
+  const feeInCents = totalAmountInCents * feePercent + feeAmount;
+
+  return Math.round(feeInCents);
 }

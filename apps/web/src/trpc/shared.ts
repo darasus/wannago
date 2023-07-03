@@ -4,7 +4,7 @@ import {experimental_nextHttpLink} from '@trpc/next/app-dir/links/nextHttp';
 import type {AppRouter} from 'api';
 import {getBaseUrl} from 'utils';
 
-const lambdas = ['subscriptionPlan', 'payments', 'stripeAccountLink'];
+const lambdas = ['payments', 'stripeAccountLink'];
 
 export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
   ((runtime) => {

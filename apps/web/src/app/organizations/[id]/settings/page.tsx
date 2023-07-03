@@ -1,9 +1,7 @@
-import {Button, Container, LoadingBlock, PageHeader} from 'ui';
+import {Button, Container, PageHeader} from 'ui';
 import {api} from '../../../../trpc/server-http';
 import {OrganizationDetailsSettings} from './(features)/OrganizationDetailsSettings/OrganizationDetailsSettings';
 import {TeamMembersSettings} from './(features)/TeamMemberSettings/TeamMembersSettings';
-import {Suspense} from 'react';
-import {OrganizationSubscription} from './(features)/OrganizationSubscription/OrganizationSubscription';
 import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
 import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
@@ -19,9 +17,6 @@ export const generateMetadata = async () => {
 };
 
 export default async function OrganizationSettingsPage() {
-  const mySubscriptionPromise = api.subscriptionPlan.getMySubscription.query({
-    type: 'BUSINESS',
-  });
   const organization = await api.organization.getMyOrganization.query();
 
   if (!organization) {
@@ -42,12 +37,6 @@ export default async function OrganizationSettingsPage() {
           <div className="flex flex-col gap-4">
             <OrganizationDetailsSettings organization={organization} />
             <TeamMembersSettings organization={organization} />
-            <Suspense fallback={<LoadingBlock />}>
-              <OrganizationSubscription
-                organization={organization}
-                mySubscriptionPromise={mySubscriptionPromise}
-              />
-            </Suspense>
             <StripeAccountLinkSettings type="BUSINESS" />
           </div>
         </div>

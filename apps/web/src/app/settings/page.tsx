@@ -12,20 +12,12 @@ export const generateMetadata = async () => {
 
 export default async function SettingsPage() {
   const user = await api.user.me.query();
-  const mySubscriptionPromise = api.subscriptionPlan.getMySubscription.query({
-    type: 'PRO',
-  });
 
   return (
     <Container maxSize="sm">
       <div className="flex flex-col gap-y-4">
         <PageHeader title={'Settings'}></PageHeader>
-        {user && (
-          <UserSettings
-            user={user}
-            mySubscriptionPromise={mySubscriptionPromise}
-          />
-        )}
+        {user && <UserSettings user={user} />}
       </div>
     </Container>
   );

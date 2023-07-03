@@ -7,3 +7,6 @@ export const exampleEventIds = [
   // dev
   'pg15re',
 ];
+
+export const feeAmount = 50;
+export const feePercent = 0.05;
