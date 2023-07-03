@@ -150,9 +150,9 @@ export function Faqs() {
           title="FAQs"
           description={
             <>
-              {`If you can't find what you're looking for, send us a `}
+              {`If you can't find what you're looking for, send us a `}{' '}
               <Button
-                className="text-md"
+                className="text-md p-0"
                 variant="link"
                 onClick={() => {
                   (window as any)?.Intercom?.('showNewMessage');
