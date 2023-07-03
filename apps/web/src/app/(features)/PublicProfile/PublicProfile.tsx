@@ -24,8 +24,6 @@ export async function PublicProfile({
   followCountsPromise,
   amFollowingPromise,
 }: Props) {
-  const followCounts = await followCountsPromise;
-
   return (
     <>
       <Container maxSize="sm" className="flex flex-col gap-y-4">
@@ -33,7 +31,6 @@ export async function PublicProfile({
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <Avatar
               className="shrink-0 h-40 w-40"
-              imageClassName="rounded-md"
               src={profileImageSrc}
               alt={`avatar`}
               height={1000}
@@ -50,7 +47,7 @@ export async function PublicProfile({
                 <div>
                   <Text className="font-bold" data-testid="follower-count">
                     <Suspense fallback="Loading...">
-                      {followCounts?.followerCount || 0}
+                      {(await followCountsPromise)?.followerCount || 0}
                     </Suspense>
                   </Text>
                   <Text className=""> followers</Text>
@@ -58,19 +55,19 @@ export async function PublicProfile({
                 <div>
                   <Text className="font-bold">
                     <Suspense fallback="Loading...">
-                      {followCounts?.followingCount || 0}
+                      {(await followCountsPromise)?.followingCount || 0}
                     </Suspense>
                   </Text>
                   <Text> following</Text>
                 </div>
               </div>
+              <div className="flex gap-2 justify-start mt-4">
+                <Suspense>
+                  <FollowButton amFollowingPromise={amFollowingPromise} />
+                </Suspense>
+                <MessageButton />
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col justify-center md:justify-start gap-2">
-            <MessageButton />
-            <Suspense>
-              <FollowButton amFollowingPromise={amFollowingPromise} />
-            </Suspense>
           </div>
         </CardBase>
         {isLoadingEvents && <LoadingBlock />}

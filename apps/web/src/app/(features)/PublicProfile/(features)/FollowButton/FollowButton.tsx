@@ -5,7 +5,6 @@ import {use, useTransition} from 'react';
 import {Button} from 'ui';
 import {api} from '../../../../../trpc/client';
 import {toast} from 'react-hot-toast';
-import {UserMinus, UserPlus} from 'lucide-react';
 import {type RouterOutputs} from 'api';
 
 interface Props {
@@ -24,7 +23,7 @@ export function FollowButton({amFollowingPromise}: Props) {
     return (
       <Button
         size="sm"
-        variant="destructive"
+        variant="outline"
         onClick={() => {
           startTransition(async () => {
             await api.follow.unfollow
@@ -40,10 +39,9 @@ export function FollowButton({amFollowingPromise}: Props) {
         }}
         disabled={isPending}
         isLoading={isPending}
-        className="w-full md:w-40"
+        className="text-red-500"
         data-testid="unfollow-button"
       >
-        <UserMinus className="w-4 h-4 mr-2" />
         Unfollow
       </Button>
     );
@@ -67,10 +65,8 @@ export function FollowButton({amFollowingPromise}: Props) {
         });
       }}
       disabled={isPending}
-      className="w-full md:w-40"
       data-testid="follow-button"
     >
-      <UserPlus className="w-4 h-4 mr-2" />
       Follow
     </Button>
   );
