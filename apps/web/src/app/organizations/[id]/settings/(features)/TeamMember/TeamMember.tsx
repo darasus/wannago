@@ -1,21 +1,21 @@
-import { Organization, User } from "@prisma/client";
-import { useConfirmDialog } from "hooks";
-import { useCallback, useTransition } from "react";
-import { Badge, Button, Text } from "ui";
-import { api } from "../../../../../../trpc/client";
+import {Organization, User} from '@prisma/client';
+import {useConfirmDialog} from 'hooks';
+import {useCallback, useTransition} from 'react';
+import {Badge, Button, Text} from 'ui';
+import {removeMember} from './actions';
 
 interface Props {
   member: User;
   organization: Organization;
 }
 
-export function TeamMember({ member, organization }: Props) {
+export function TeamMember({member, organization}: Props) {
   const [isPending, startTransition] = useTransition();
 
   const handleRemove = useCallback(async () => {
     startTransition(async () => {
       if (organization.id) {
-        await api.organization.removeOrganizationMember.mutate({
+        await removeMember({
           userId: member.id,
           organizationId: organization.id,
         });
@@ -23,8 +23,8 @@ export function TeamMember({ member, organization }: Props) {
     });
   }, [member, organization?.id]);
 
-  const { modal, open } = useConfirmDialog({
-    title: "Are you sure you want to remove team member?",
+  const {modal, open} = useConfirmDialog({
+    title: 'Are you sure you want to remove team member?',
     description: `This team member will no longer be able to access you team's events`,
     onConfirm: async () => {
       await handleRemove();

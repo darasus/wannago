@@ -1,20 +1,23 @@
-"use client";
+'use client';
 
-import { use, useState } from "react";
-import { Button, CardBase } from "ui";
-import { CreateMemberModal } from "../CreateMemberModal/CreateMemberModal";
-import { TeamMember } from "../TeamMember/TeamMember";
-import { Organization } from "@prisma/client";
-import { api } from "../../../../../../trpc/client";
+import {use, useState} from 'react';
+import {Button, CardBase} from 'ui';
+import {CreateMemberModal} from '../CreateMemberModal/CreateMemberModal';
+import {TeamMember} from '../TeamMember/TeamMember';
+import {Organization} from '@prisma/client';
+import {RouterOutputs} from 'api';
 
 interface Props {
   organization: Organization;
+  membersPromise: Promise<
+    RouterOutputs['organization']['getMyOrganizationMembers']
+  >;
 }
 
-export function TeamMembersSettings({ organization }: Props) {
+export function TeamMembersSettings({organization, membersPromise}: Props) {
   const [isAddMemberDialogModalOpen, setIsAddMemberDialogModalOpen] =
     useState(false);
-  const members = use(api.organization.getMyOrganizationMembers.query());
+  const members = use(membersPromise);
 
   if (!organization) {
     return null;
@@ -29,7 +32,7 @@ export function TeamMembersSettings({ organization }: Props) {
       />
       <div className="flex flex-col gap-4">
         <CardBase
-          title={"Team members"}
+          title={'Team members'}
           titleChildren={
             <Button
               size="sm"
