@@ -152,10 +152,10 @@ export function Faqs() {
             <>
               {`If you can't find what you're looking for, send us a `}{' '}
               <Button
-                className="text-md p-0"
+                className="text-md p-0 underline"
                 variant="link"
                 onClick={() => {
-                  (window as any)?.Intercom?.('showNewMessage');
+                  (window as any)?.MissiveChat?.open();
                 }}
               >
                 feedback

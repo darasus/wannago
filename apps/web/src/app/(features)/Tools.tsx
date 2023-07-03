@@ -1,6 +1,5 @@
 import {env} from 'client-env';
 import {Amplitude} from './Amplitude/Amplitude';
-import {Intercom} from './Intercom/Intercom';
 import {Sentry} from './Sentry/Sentry';
 import {GoogleAnalytics} from './GoogleAnalytics/GoogleAnalytics';
 import {api} from '../../trpc/server-http';
@@ -14,7 +13,6 @@ export async function Tools() {
         <>
           <Amplitude />
           <Sentry />
-          <Intercom userPromise={userPromise} />
           <GoogleAnalytics />
         </>
       )}

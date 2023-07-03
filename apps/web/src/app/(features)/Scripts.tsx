@@ -1,9 +1,10 @@
-'use client';
-
 import {env} from 'client-env';
 import Script from 'next/script';
+import {api} from '../../trpc/server-http';
 
-export function Scripts() {
+export async function Scripts() {
+  const user = await api.user.me.query();
+
   return (
     <>
       {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
@@ -23,19 +24,6 @@ export function Scripts() {
         </>
       )}
       {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
-        <Script
-          id="intercom"
-          strategy="afterInteractive"
-          src="https://widget.intercom.io/widget/iafdg58b"
-          onLoad={() => {
-            (window as any)?.Intercom?.('boot', {
-              api_base: 'https://api-iam.intercom.io',
-              app_id: 'iafdg58b',
-            });
-          }}
-        />
-      )}
-      {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
         <Script id="hotjar" strategy="afterInteractive">
           {`
             (function(h,o,t,j,a,r){
@@ -47,6 +35,27 @@ export function Scripts() {
                 a.appendChild(r);
             })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
           `}
+        </Script>
+      )}
+      {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
+        <Script id="missive" strategy="afterInteractive">
+          {`
+          (function(d, w) {
+            w.MissiveChatConfig = ${JSON.stringify({
+              id: '5d2852fc-1fbb-4290-8597-7d9a254f4ded',
+              user: {
+                user: user?.firstName ? user?.firstName : undefined,
+                email: user?.email || undefined,
+                avatarUrl: user?.profileImageSrc || undefined,
+              },
+            })};
+        
+            var s = d.createElement('script');
+            s.async = true;
+            s.src = 'https://webchat.missiveapp.com/' + w.MissiveChatConfig.id + '/missive.js';
+            if (d.head) d.head.appendChild(s);
+          })(document, window);
+        `}
         </Script>
       )}
     </>
