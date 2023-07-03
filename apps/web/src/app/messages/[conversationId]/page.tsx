@@ -50,11 +50,11 @@ export default async function ConversationPage({
             return (
               <div
                 key={message.id}
-                className="flex items-center bg-gray-100 rounded-lg p-2"
+                className="flex items-center bg-gray-100 rounded-md p-4"
               >
                 <div className="grow">
                   <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                       <Avatar
                         className="w-5 h-5"
                         src={message.user?.profileImageSrc}
@@ -65,13 +65,12 @@ export default async function ConversationPage({
                       <Text>
                         <b>{message.user?.firstName}</b>
                       </Text>
+                      <div className="grow" />
                       <Text className="text-xs text-gray-400">
                         {formatDate(message.createdAt, 'hh:mm, MMM d')}
                       </Text>
                     </div>
-                    <div className="p-2" data-testid="message-text">
-                      {message.text}
-                    </div>
+                    <div data-testid="message-text">{message.text}</div>
                   </div>
                 </div>
               </div>

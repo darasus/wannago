@@ -12,9 +12,8 @@ import {
 } from 'ui';
 import {useParams} from 'next/navigation';
 import {User} from '@prisma/client';
-import {api} from '../../../../../trpc/client';
-import {useRouter} from 'next/navigation';
 import {z} from 'zod';
+import {sendMessage} from './actions';
 
 interface Props {
   me: User;
@@ -25,19 +24,21 @@ const formScheme = z.object({
 });
 
 export function MessageInput({me}: Props) {
-  const router = useRouter();
   const params = useParams();
   const conversationId = params?.conversationId as string;
-  const form = useForm<z.infer<typeof formScheme>>();
+  const form = useForm<z.infer<typeof formScheme>>({
+    defaultValues: {
+      text: '',
+    },
+  });
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    await api.conversation.sendMessage.mutate({
+    await sendMessage({
       conversationId,
       text: data.text,
       senderId: me?.id as string,
     });
-    router.refresh();
-    form.reset();
+    form.resetField('text');
   });
 
   return (

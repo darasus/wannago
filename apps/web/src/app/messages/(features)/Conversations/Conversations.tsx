@@ -22,7 +22,7 @@ export async function Conversations({me}: Props) {
         return (
           <Link
             key={c.id}
-            className="flex flex-col hover:bg-gray-100 rounded-xl -m-2 py-2 px-3"
+            className="flex flex-col hover:bg-muted rounded-md -m-2 py-2 px-3"
             href={`/messages/${c.id}`}
           >
             <Text className="font-bold">
