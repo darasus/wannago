@@ -1,6 +1,6 @@
 import {Button, Container, PageHeader} from 'ui';
 import {api} from '../../../../trpc/server-http';
-import {OrganizationDetailsSettings} from './(features)/OrganizationDetailsSettings/OrganizationDetailsSettings';
+import {OrganizationForm} from '../../(features)/OrganizationForm/OrganizationForm';
 import {TeamMembersSettings} from './(features)/TeamMemberSettings/TeamMembersSettings';
 import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
 import Link from 'next/link';
@@ -35,7 +35,7 @@ export default async function OrganizationSettingsPage() {
           </Button>
           <PageHeader title={`${organization?.name} settings`} />
           <div className="flex flex-col gap-4">
-            <OrganizationDetailsSettings organization={organization} />
+            <OrganizationForm organization={organization} />
             <TeamMembersSettings organization={organization} />
             <StripeAccountLinkSettings type="BUSINESS" />
           </div>

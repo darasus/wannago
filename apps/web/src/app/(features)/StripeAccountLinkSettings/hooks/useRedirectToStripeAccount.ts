@@ -4,11 +4,18 @@ import {useTransition} from 'react';
 import {api} from '../../../../trpc/client';
 import {toast} from 'react-hot-toast';
 import {captureException} from '@sentry/nextjs';
+import {useAmplitudeAppDir} from 'hooks';
 
 export function useRedirectToStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
+  const {logEvent} = useAmplitudeAppDir();
   const [isPending, startTransition] = useTransition();
 
   const redirectToStripeAccount = async () => {
+    logEvent('view_stripe_account_button_clicked', {
+      extra: {
+        type,
+      },
+    });
     try {
       startTransition(async () => {
         const url = await api.stripeAccountLink.getAccountLink

@@ -1,6 +1,7 @@
-import {Button, Container, PageHeader} from 'ui';
+import {Button, Container, PageHeader, Text} from 'ui';
 import {OrganizationCard} from './(features)/OrganizationCard/OrganizationCard';
 import {api} from '../../trpc/server-http';
+import Link from 'next/link';
 
 export const metadata = {
   title: 'Organizations | WannaGo',
@@ -18,8 +19,20 @@ export default async function SettingsPage() {
             {organizations?.map((o) => (
               <OrganizationCard organization={o} />
             ))}
+            {organizations?.length === 0 && (
+              <div className="text-center">
+                <Text>
+                  {`You don't have any organizations yet. Create one by clicking
+                  button bellow.`}
+                </Text>
+              </div>
+            )}
           </div>
-          {organizations?.length === 0 && <Button>Create organization</Button>}
+          {organizations?.length === 0 && (
+            <Button asChild>
+              <Link href="/organizations/add">Create organization</Link>
+            </Button>
+          )}
         </div>
       </Container>
     </>

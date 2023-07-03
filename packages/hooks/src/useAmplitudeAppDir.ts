@@ -7,6 +7,8 @@ type EventType =
   | 'add_to_calendar_button_clicked'
   | 'copy_event_url_button_clicked'
   | 'get_started_button_clicked'
+  | 'link_stripe_account_button_clicked'
+  | 'view_stripe_account_button_clicked'
   | 'page_viewed'
   | 'user_logged_in'
   | 'user_logged_out'
@@ -25,6 +27,7 @@ type EventType =
 interface Options {
   pathname?: string;
   eventId?: string;
+  extra?: Record<string, unknown>;
 }
 
 export function useAmplitudeAppDir() {
@@ -35,6 +38,7 @@ export function useAmplitudeAppDir() {
       track({
         event_type: eventType,
         event_properties: {
+          ...options?.extra,
           pathname: options?.pathname ?? pathname,
           event_id: options?.eventId,
         },

@@ -17,7 +17,7 @@ import {
   RadioGroupItem,
 } from 'ui';
 import {FileInput} from 'ui/src/components/FileInput/FileInput';
-import {api} from '../../../../../../trpc/client';
+import {api} from '../../../../trpc/client';
 import {Currency, Organization} from '@prisma/client';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -30,18 +30,19 @@ const organizationSettingsFormScheme = z.object({
 });
 
 interface Props {
-  organization: Organization;
+  organization?: Organization;
 }
 
-export function OrganizationDetailsSettings({organization}: Props) {
+export function OrganizationForm({organization}: Props) {
+  const isCreating = !organization;
   const router = useRouter();
   const form = useForm<z.infer<typeof organizationSettingsFormScheme>>({
     resolver: zodResolver(organizationSettingsFormScheme),
     defaultValues: {
-      name: organization.name,
-      logoSrc: organization.logoSrc,
-      email: organization.email,
-      currency: organization.preferredCurrency,
+      name: organization?.name,
+      logoSrc: organization?.logoSrc,
+      email: organization?.email,
+      currency: organization?.preferredCurrency,
     },
   });
 
@@ -52,8 +53,15 @@ export function OrganizationDetailsSettings({organization}: Props) {
       try {
         await api.organization.create
           .mutate({logoSrc, name, email, currency})
-          .then(() => {
-            toast.success('Organization settings updated!');
+          .then((res) => {
+            toast.success(
+              isCreating
+                ? 'Organization is created!'
+                : 'Organization settings updated!'
+            );
+            if (isCreating) {
+              router.push(`/organizations/${res.id}/settings`);
+            }
           })
           .catch((error) => {
             toast.error(error.message);
