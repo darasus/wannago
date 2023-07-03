@@ -1,4 +1,4 @@
-import {Button, CardBase, Container, Text} from 'ui';
+import {CardBase, Container, Text} from 'ui';
 import {SectionContainer} from './SectionContainer';
 import {SectionHeader} from './SectionHeader';
 import {api} from '../../trpc/server-http';
@@ -6,6 +6,7 @@ import {cn, formatCents, formatPercent} from 'utils';
 import {titleFont} from '../../fonts';
 import {CheckCircle} from 'lucide-react';
 import {feeAmount, feePercent} from 'const';
+import {GetStartedButton} from './GetStartedButton';
 
 export async function Pricing() {
   const currency = await api.payments.getCurrency.query();
@@ -53,7 +54,7 @@ export async function Pricing() {
                 ))}
               </div>
               <div className="grow" />
-              <Button>Get started</Button>
+              <GetStartedButton />
             </div>
           </CardBase>
         </div>
