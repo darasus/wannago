@@ -6,19 +6,28 @@ import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSe
 import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
 import {Suspense} from 'react';
+import {updateOrganization} from './actions';
 
 // TODO: create description text explaining why you need to create a team
 
-export const generateMetadata = async () => {
-  const organization = await api.organization.getMyOrganization.query();
+export const generateMetadata = async ({params}: {params: {id: string}}) => {
+  const organization = await api.organization.getOrganizationById.query({
+    organizationId: params.id,
+  });
 
   return {
     title: `${organization?.name} settings | WannaGo`,
   };
 };
 
-export default async function OrganizationSettingsPage() {
-  const organization = await api.organization.getMyOrganization.query();
+export default async function OrganizationSettingsPage({
+  params,
+}: {
+  params: {id: string};
+}) {
+  const organization = await api.organization.getOrganizationById.query({
+    organizationId: params.id,
+  });
 
   if (!organization) {
     return null;
@@ -38,7 +47,16 @@ export default async function OrganizationSettingsPage() {
           </Button>
           <PageHeader title={`${organization?.name} settings`} />
           <div className="flex flex-col gap-4">
-            <OrganizationForm organization={organization} />
+            <OrganizationForm
+              organization={organization}
+              onSubmit={async (args) => {
+                'use server';
+                return updateOrganization({
+                  ...args,
+                  organizationId: organization.id,
+                });
+              }}
+            />
             <Suspense
               fallback={
                 <CardBase>
@@ -51,7 +69,7 @@ export default async function OrganizationSettingsPage() {
                 membersPromise={membersPromise}
               />
             </Suspense>
-            <StripeAccountLinkSettings type="BUSINESS" />
+            <StripeAccountLinkSettings organizerId={organization.id} />
           </div>
         </div>
       </Container>

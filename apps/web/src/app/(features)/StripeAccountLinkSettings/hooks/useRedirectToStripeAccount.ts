@@ -5,24 +5,26 @@ import {api} from '../../../../trpc/client';
 import {toast} from 'react-hot-toast';
 import {captureException} from '@sentry/nextjs';
 import {useAmplitude} from 'hooks';
-import {useParams} from 'next/navigation';
 
-export function useRedirectToStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
-  const params = useParams();
+export function useRedirectToStripeAccount({
+  organizerId,
+}: {
+  organizerId: string;
+}) {
   const {logEvent} = useAmplitude();
   const [isPending, startTransition] = useTransition();
 
   const redirectToStripeAccount = async () => {
     logEvent('view_stripe_account_button_clicked', {
       extra: {
-        type,
+        organizerId,
       },
     });
     try {
       startTransition(async () => {
         const url = await api.stripeAccountLink.getAccountLink
           .mutate({
-            organizerId: (params?.organizationId || params?.userId) as string,
+            organizerId,
           })
           .catch((error) => {
             toast.error(error.message);
@@ -34,7 +36,7 @@ export function useRedirectToStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
     } catch (error) {
       captureException(error, {
         extra: {
-          type,
+          organizerId,
           function: 'getAccountLink',
         },
       });

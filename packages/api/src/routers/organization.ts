@@ -41,6 +41,39 @@ const create = protectedProcedure
     });
   });
 
+const update = protectedProcedure
+  .input(
+    z.object({
+      organizationId: z.string().uuid(),
+      name: z.string(),
+      logoSrc: z.string().url(),
+      email: z.string().email(),
+      currency: z.enum(['USD', 'EUR', 'GBP']),
+    })
+  )
+  .mutation(async ({ctx, input}) => {
+    const user = await ctx.prisma.user.findFirst({
+      where: {
+        externalId: ctx.auth.userId,
+      },
+    });
+
+    invariant(user, userNotFoundError);
+
+    return ctx.prisma.organization.update({
+      where: {
+        id: input.organizationId,
+      },
+      data: {
+        name: input.name,
+        logoSrc: input.logoSrc,
+        disabled: false,
+        email: input.email,
+        preferredCurrency: input.currency,
+      },
+    });
+  });
+
 const getOrganizationById = publicProcedure
   .input(z.object({organizationId: z.string().uuid()}))
   .query(async ({ctx, input}) => {
@@ -184,6 +217,7 @@ const removeOrganizationMember = protectedProcedure
 
 export const organizationRouter = createTRPCRouter({
   create,
+  update,
   remove,
   getMyOrganization,
   getMyOrganizationMembers,

@@ -17,32 +17,34 @@ import {
   RadioGroupItem,
 } from 'ui';
 import {FileInput} from 'ui/src/components/FileInput/FileInput';
-import {api} from '../../../../trpc/client';
 import {Currency, Organization} from '@prisma/client';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 
 const organizationSettingsFormScheme = z.object({
   name: z.string(),
-  logoSrc: z.string(),
+  logoSrc: z.string().url('Logo is required'),
   email: z.string().email(),
   currency: z.nativeEnum(Currency),
 });
 
 interface Props {
   organization?: Organization;
+  onSubmit: (
+    args: z.infer<typeof organizationSettingsFormScheme>
+  ) => Promise<Organization>;
 }
 
-export function OrganizationForm({organization}: Props) {
+export function OrganizationForm({organization, onSubmit}: Props) {
   const isCreating = !organization;
   const router = useRouter();
   const form = useForm<z.infer<typeof organizationSettingsFormScheme>>({
     resolver: zodResolver(organizationSettingsFormScheme),
     defaultValues: {
-      name: organization?.name,
-      logoSrc: organization?.logoSrc,
-      email: organization?.email,
-      currency: organization?.preferredCurrency,
+      name: organization?.name || '',
+      logoSrc: organization?.logoSrc || '',
+      email: organization?.email || '',
+      currency: organization?.preferredCurrency || Currency.USD,
     },
   });
 
@@ -51,8 +53,7 @@ export function OrganizationForm({organization}: Props) {
 
     if (name && logoSrc && email && currency) {
       try {
-        await api.organization.create
-          .mutate({logoSrc, name, email, currency})
+        await onSubmit({logoSrc, name, email, currency})
           .then((res) => {
             toast.success(
               isCreating
