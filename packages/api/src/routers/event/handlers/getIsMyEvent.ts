@@ -1,7 +1,5 @@
-import {invariant} from 'utils';
 import {z} from 'zod';
 import {publicProcedure} from '../../../trpc';
-import {forbiddenError} from 'error';
 
 export const getIsMyEvent = publicProcedure
   .input(
@@ -10,6 +8,10 @@ export const getIsMyEvent = publicProcedure
     })
   )
   .query(async ({input, ctx}) => {
+    if (!ctx.auth?.userId) {
+      return false;
+    }
+
     const event = await ctx.prisma.event.findFirst({
       where: {
         shortId: input.eventShortId,
@@ -32,7 +34,5 @@ export const getIsMyEvent = publicProcedure
       },
     });
 
-    invariant(ctx.auth?.userId && event, forbiddenError);
-
-    return true;
+    return !!event;
   });
