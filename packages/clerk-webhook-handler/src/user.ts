@@ -15,7 +15,7 @@ export const user = {
           },
           {
             email: {
-              in: data.email_addresses.map(e => e.email_address),
+              in: data.email_addresses.map((e) => e.email_address),
             },
           },
         ],
@@ -71,7 +71,7 @@ export const user = {
     });
 
     const email = data.email_addresses.find(
-      e =>
+      (e) =>
         e.verification?.status === 'verified' &&
         e.id === data.primary_email_address_id
     );
@@ -95,28 +95,24 @@ export const user = {
       where: {
         externalId: data.id,
       },
+      include: {
+        organizations: true,
+      },
     });
 
     if (user) {
-      const organization = await prisma.organization.findFirst({
-        where: {
-          id: user.organizationId!,
-        },
-        include: {
-          users: true,
-        },
-      });
-
       await prisma.user.delete({
         where: {
           id: user.id,
         },
       });
 
-      if (organization?.users.length === 1) {
-        await prisma.organization.delete({
+      if (user.organizations.length > 0) {
+        await prisma.organization.deleteMany({
           where: {
-            id: organization.id,
+            id: {
+              in: user.organizations.map((o) => o.id),
+            },
           },
         });
       }

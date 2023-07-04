@@ -3,7 +3,6 @@ import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {createTRPCRouter, publicProcedure, protectedProcedure} from '../trpc';
-import {getUserByExternalId} from '../actions/getUserByExternalId';
 import {getOrganizationByUserExternalId} from '../actions/getOrganizationByUserExternalId';
 import {getUserByEmail} from '../actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from '../actions/getOrganizationWithMembersByOrganizationId';
@@ -18,48 +17,28 @@ const create = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const user = await getUserByExternalId(ctx)({
-      externalId: ctx.auth.userId,
-      includeOrganization: true,
+    const user = await ctx.prisma.user.findFirst({
+      where: {
+        externalId: ctx.auth.userId,
+      },
     });
 
-    invariant(
-      user,
-      new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'User not found',
-      })
-    );
+    invariant(user, userNotFoundError);
 
-    if (!user.organization) {
-      return ctx.prisma.organization.create({
-        data: {
-          name: input.name,
-          logoSrc: input.logoSrc,
-          disabled: false,
-          email: input.email,
-          preferredCurrency: input.currency,
-          users: {
-            connect: {
-              id: user.id,
-            },
+    return ctx.prisma.organization.create({
+      data: {
+        name: input.name,
+        logoSrc: input.logoSrc,
+        disabled: false,
+        email: input.email,
+        preferredCurrency: input.currency,
+        users: {
+          connect: {
+            id: user.id,
           },
         },
-      });
-    } else {
-      return ctx.prisma.organization.update({
-        where: {
-          id: user?.organization.id,
-        },
-        data: {
-          name: input.name,
-          logoSrc: input.logoSrc,
-          disabled: false,
-          email: input.email,
-          preferredCurrency: input.currency,
-        },
-      });
-    }
+      },
+    });
   });
 
 const getOrganizationById = publicProcedure
@@ -131,7 +110,11 @@ const getMyOrganizationMembers = protectedProcedure.query(async ({ctx}) => {
 
   return ctx.prisma.user.findMany({
     where: {
-      organizationId: organization.id,
+      organizations: {
+        some: {
+          id: organization.id,
+        },
+      },
     },
   });
 });
@@ -190,8 +173,10 @@ const removeOrganizationMember = protectedProcedure
         id: input.userId,
       },
       data: {
-        organization: {
-          disconnect: true,
+        organizations: {
+          disconnect: {
+            id: input.organizationId,
+          },
         },
       },
     });

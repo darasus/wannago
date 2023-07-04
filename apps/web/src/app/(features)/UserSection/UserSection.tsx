@@ -28,7 +28,6 @@ export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
   const pathname = usePathname();
   const {signOut} = useAuth();
   const me = use(mePromise);
-  // TODO
   const hasUnseenConversation = use(hasUnseenConversationPromise);
   const isPublicPage = getIsPublic(pathname ?? '/');
 
@@ -73,7 +72,14 @@ export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
       },
     },
     {
-      label: 'Messages',
+      label: (
+        <span className="relative">
+          Messages{' '}
+          {hasUnseenConversation && (
+            <span className="text-red-400">{`(new)`}</span>
+          )}
+        </span>
+      ),
       onClick: () => {
         router.push(`/messages`);
       },
@@ -108,21 +114,28 @@ export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
       {me && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" data-testid="header-user-button">
+            <Button
+              variant="outline"
+              data-testid="header-user-button"
+              className="relative"
+            >
               <Avatar
                 className="h-6 w-6 mr-2"
                 src={me.profileImageSrc}
                 alt={'avatar'}
               />
+              {hasUnseenConversation && (
+                <div className="h-4 w-4 bg-red-400 rounded-full absolute -top-1 -right-1" />
+              )}
               {me.firstName}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
             <DropdownMenuGroup>
-              {options.map(({label, ...rest}) => {
+              {options.map(({label, ...rest}, i) => {
                 const isRed = label === 'Logout';
                 return (
-                  <DropdownMenuItem key={label} {...rest}>
+                  <DropdownMenuItem key={i} {...rest}>
                     <span className={cn({'text-red-500': isRed})}>{label}</span>
                   </DropdownMenuItem>
                 );

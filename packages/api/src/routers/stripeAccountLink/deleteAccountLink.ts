@@ -1,40 +1,39 @@
 import {TRPCError} from '@trpc/server';
-import {organizationNotFoundError, userNotFoundError} from 'error';
-import {invariant} from 'utils';
+import {organizerNotFoundError} from 'error';
+import {invariant, isOrganization, isUser} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
 import {Stripe} from 'lib/src/stripe';
-import {getUserByExternalId} from '../../actions/getUserByExternalId';
+import {getOrganizerById} from '../../actions/getOrganizerById';
 
 export const deleteAccountLink = protectedProcedure
   .input(
     z.object({
-      type: z.enum(['PRO', 'BUSINESS']),
+      organizerId: z.string().uuid(),
     })
   )
   .mutation(async ({ctx, input}) => {
     const stripe = new Stripe().client;
 
-    const user = await getUserByExternalId(ctx)({
-      externalId: ctx.auth.userId,
-      includeOrganization: true,
+    const organizer = await getOrganizerById(ctx)({
+      id: ctx.auth.userId,
     });
 
-    if (input.type === 'PRO') {
-      invariant(user, userNotFoundError);
-      invariant(
-        user.stripeLinkedAccountId,
-        new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'User does not have a linked account',
-        })
-      );
+    invariant(organizer, organizerNotFoundError);
+    invariant(
+      organizer.stripeLinkedAccountId,
+      new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'User does not have a linked account',
+      })
+    );
 
-      await stripe.accounts.del(user.stripeLinkedAccountId);
+    await stripe.accounts.del(organizer.stripeLinkedAccountId);
 
+    if (isUser(organizer)) {
       await ctx.prisma.user.update({
         where: {
-          id: user.id,
+          id: organizer.id,
         },
         data: {
           stripeLinkedAccountId: null,
@@ -44,22 +43,10 @@ export const deleteAccountLink = protectedProcedure
       return {success: true};
     }
 
-    if (input.type === 'BUSINESS') {
-      invariant(user, userNotFoundError);
-      invariant(user.organization, organizationNotFoundError);
-      invariant(
-        user.organization.stripeLinkedAccountId,
-        new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Organization does not have a linked account',
-        })
-      );
-
-      await stripe.accounts.del(user.organization.id);
-
+    if (isOrganization(organizer)) {
       await ctx.prisma.organization.update({
         where: {
-          id: user.organization.id,
+          id: organizer.id,
         },
         data: {
           stripeLinkedAccountId: null,

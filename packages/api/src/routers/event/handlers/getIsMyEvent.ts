@@ -1,7 +1,7 @@
-import {userNotFoundError, eventNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {publicProcedure} from '../../../trpc';
+import {forbiddenError} from 'error';
 
 export const getIsMyEvent = publicProcedure
   .input(
@@ -10,29 +10,29 @@ export const getIsMyEvent = publicProcedure
     })
   )
   .query(async ({input, ctx}) => {
-    const user = await ctx.prisma.user.findFirst({
-      where: {
-        externalId: ctx.auth?.userId,
-      },
-      include: {
-        organization: true,
-      },
-    });
-
-    invariant(user, userNotFoundError);
-
     const event = await ctx.prisma.event.findFirst({
       where: {
         shortId: input.eventShortId,
+        OR: [
+          {
+            user: {
+              externalId: ctx.auth?.userId,
+            },
+          },
+          {
+            organization: {
+              users: {
+                some: {
+                  externalId: ctx.auth?.userId,
+                },
+              },
+            },
+          },
+        ],
       },
     });
 
-    invariant(event, eventNotFoundError);
+    invariant(ctx.auth?.userId && event, forbiddenError);
 
-    const isMyEvent =
-      event.userId === user.id ||
-      (Boolean(user.organization?.id) &&
-        event.organizationId === user.organization?.id);
-
-    return isMyEvent;
+    return true;
   });

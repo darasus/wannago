@@ -14,18 +14,26 @@ const createConversation = protectedProcedure
   .mutation(async ({ctx, input}) => {
     const existingConversation = await ctx.prisma.conversation.findFirst({
       where: {
-        users: {
-          every: {
-            id: {in: input.userIds},
-          },
-        },
-        organizations: {
-          every: {
-            id: {in: input.organizationIds},
-          },
-        },
+        AND: [
+          ...input.userIds.map((id) => ({
+            users: {
+              every: {
+                id,
+              },
+            },
+          })),
+          ...input.organizationIds.map((id) => ({
+            organizations: {
+              every: {
+                id,
+              },
+            },
+          })),
+        ],
       },
     });
+
+    console.log({existingConversation});
 
     if (existingConversation) {
       return existingConversation;
@@ -33,12 +41,20 @@ const createConversation = protectedProcedure
 
     const conversation = await ctx.prisma.conversation.create({
       data: {
-        users: {
-          connect: input.userIds.map(id => ({id})),
-        },
-        organizations: {
-          connect: input.organizationIds.map(id => ({id})),
-        },
+        ...(input.userIds.length > 0
+          ? {
+              users: {
+                connect: input.userIds.map((id) => ({id})),
+              },
+            }
+          : {}),
+        ...(input.organizationIds.length > 0
+          ? {
+              organizations: {
+                connect: input.organizationIds.map((id) => ({id})),
+              },
+            }
+          : {}),
       },
     });
 
@@ -139,7 +155,7 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
       externalId: ctx.auth?.userId,
     },
     include: {
-      organization: true,
+      organizations: true,
     },
   });
 
@@ -155,15 +171,13 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
             },
           },
         },
-        user?.organization?.id
-          ? {
-              organizations: {
-                some: {
-                  id: user?.organization?.id,
-                },
-              },
-            }
-          : {},
+        ...(user?.organizations?.map((o) => ({
+          organizations: {
+            some: {
+              id: o.id,
+            },
+          },
+        })) || []),
       ],
     },
     include: {
@@ -179,8 +193,8 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
     },
   });
 
-  return conversations.map(c => {
-    const lastSeen = c.lastSeen?.find(ls => {
+  return conversations.map((c) => {
+    const lastSeen = c.lastSeen?.find((ls) => {
       return ls.userId === user?.id;
     });
 
@@ -201,7 +215,7 @@ const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
       externalId: ctx.auth?.userId,
     },
     include: {
-      organization: true,
+      organizations: true,
     },
   });
 
@@ -244,16 +258,15 @@ const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
     return true;
   }
 
-  const hasUnseen = conversations.some(conversation => {
-    return conversation.messages.some(message => {
+  const hasUnseen = conversations.some((conversation) => {
+    return conversation.messages.some((message) => {
       if (message.user?.id && user?.id && message.user?.id === user?.id) {
         return false;
       }
 
       if (
         message.organization?.id &&
-        user?.organization?.id &&
-        message.organization?.id === user?.organization?.id
+        user?.organizations.some((o) => o.id === message.organization?.id)
       ) {
         return false;
       }
@@ -279,9 +292,6 @@ const markConversationAsSeen = protectedProcedure
     const user = await ctx.prisma.user.findFirst({
       where: {
         externalId: ctx.auth?.userId,
-      },
-      include: {
-        organization: true,
       },
     });
     const conversationLastSeen =

@@ -5,12 +5,14 @@ import {api} from '../../../trpc/client';
 import {use} from 'react';
 import {useRedirectToStripeAccount} from './hooks/useRedirectToStripeAccount';
 import {useCreateStripeAccount} from './hooks/useCreateStripeAccount';
+import {useParams} from 'next/dist/client/components/navigation';
 
 interface Props {
   type: 'PRO' | 'BUSINESS';
 }
 
 export function StripeAccountLinkSettings({type}: Props) {
+  const params = useParams();
   const {isLoading: isRedirecting, redirectToStripeAccount} =
     useRedirectToStripeAccount({
       type,
@@ -21,7 +23,7 @@ export function StripeAccountLinkSettings({type}: Props) {
 
   const account = use(
     api.stripeAccountLink.getAccount.query({
-      type,
+      organizerId: (params?.organizationId || params?.userId) as string,
     })
   );
 

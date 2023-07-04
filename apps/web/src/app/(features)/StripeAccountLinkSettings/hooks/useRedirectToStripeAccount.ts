@@ -5,8 +5,10 @@ import {api} from '../../../../trpc/client';
 import {toast} from 'react-hot-toast';
 import {captureException} from '@sentry/nextjs';
 import {useAmplitude} from 'hooks';
+import {useParams} from 'next/navigation';
 
 export function useRedirectToStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
+  const params = useParams();
   const {logEvent} = useAmplitude();
   const [isPending, startTransition] = useTransition();
 
@@ -19,7 +21,9 @@ export function useRedirectToStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
     try {
       startTransition(async () => {
         const url = await api.stripeAccountLink.getAccountLink
-          .mutate({type})
+          .mutate({
+            organizerId: (params?.organizationId || params?.userId) as string,
+          })
           .catch((error) => {
             toast.error(error.message);
           });

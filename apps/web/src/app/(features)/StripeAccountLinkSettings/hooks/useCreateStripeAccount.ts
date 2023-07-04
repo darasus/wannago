@@ -4,10 +4,11 @@ import {useTransition} from 'react';
 import {api} from '../../../../trpc/client';
 import {toast} from 'react-hot-toast';
 import {captureException} from '@sentry/nextjs';
-import {useRouter} from 'next/navigation';
+import {useParams, useRouter} from 'next/navigation';
 import {useAmplitude} from 'hooks';
 
 export function useCreateStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
+  const params = useParams();
   const {logEvent} = useAmplitude();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -21,7 +22,9 @@ export function useCreateStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
     try {
       startTransition(async () => {
         const url = await api.stripeAccountLink.createAccountLink
-          .mutate({type})
+          .mutate({
+            organizerId: (params?.organizationId || params?.userId) as string,
+          })
           .catch((error) => {
             toast.error(error.message);
           });

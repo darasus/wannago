@@ -3,7 +3,7 @@ import {ActionContext} from '../context';
 
 const validation = z.object({
   externalId: z.string(),
-  includeOrganization: z.boolean().nullable().optional(),
+  includeOrganizations: z.boolean().nullable().optional(),
 });
 
 export function getUserByExternalId(ctx: ActionContext) {
@@ -13,7 +13,7 @@ export function getUserByExternalId(ctx: ActionContext) {
         externalId: input.externalId,
       },
       include: {
-        organization: input.includeOrganization ?? false,
+        organizations: input.includeOrganizations ?? false,
       },
     });
 

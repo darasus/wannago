@@ -84,8 +84,7 @@ model User {
   firstName             String
   lastName              String
   profileImageSrc       String?
-  organization          Organization?          @relation(name: "UserOrganization", fields: [organizationId], references: [id])
-  organizationId        String?
+  organizations         Organization[]         @relation(name: "UserOrganizations")
   eventSignUps          EventSignUp[]          @relation(name: "EventSignUpUser")
   type                  UserType               @default(USER)
   events                Event[]                @relation(name: "EventUser")
@@ -99,13 +98,11 @@ model User {
   following             Follow[]               @relation(name: "FollowerUser")
   ticketSale            TicketSale[]
   preferredCurrency     Currency
-
-  @@index([organizationId])
 }
 
 model Organization {
   id                    String                 @id @default(uuid())
-  users                 User[]                 @relation(name: "UserOrganization")
+  users                 User[]                 @relation(name: "UserOrganizations")
   events                Event[]                @relation(name: "EventOrganization")
   name                  String                 @db.VarChar(255)
   email                 String                 @unique
