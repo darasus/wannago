@@ -1,35 +1,28 @@
-import {organizationNotFoundError, userNotFoundError} from 'error';
-import {getBaseUrl, invariant} from 'utils';
+import {organizerNotFoundError} from 'error';
+import {getBaseUrl, invariant, isOrganization, isUser} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
 import {Stripe} from 'lib/src/stripe';
-import {getUserByExternalId} from '../../actions/getUserByExternalId';
+import {getOrganizerById} from '../../actions/getOrganizerById';
 
 export const createAccountLink = protectedProcedure
-  .input(z.object({type: z.enum(['PRO', 'BUSINESS'])}))
+  .input(z.object({organizerId: z.string().uuid()}))
   .mutation(async ({ctx, input}) => {
     const stripe = new Stripe().client;
-    const user = await getUserByExternalId(ctx)({
-      externalId: ctx.auth.userId,
-      includeOrganization: true,
+    const organizer = await getOrganizerById(ctx)({
+      id: input.organizerId,
     });
-    invariant(user, userNotFoundError);
+    invariant(organizer, organizerNotFoundError);
 
     let stripeLinkedAccountId = '';
 
-    if (input.type === 'PRO' && user.stripeLinkedAccountId) {
-      stripeLinkedAccountId = user.stripeLinkedAccountId;
-    }
-
-    if (input.type === 'BUSINESS' && user.organization?.stripeLinkedAccountId) {
-      stripeLinkedAccountId = user.organization?.stripeLinkedAccountId;
+    if (organizer.stripeLinkedAccountId) {
+      stripeLinkedAccountId = organizer.stripeLinkedAccountId;
     }
 
     if (!stripeLinkedAccountId) {
       const account = await stripe.accounts.create({
         type: 'express',
-        business_type: input.type === 'BUSINESS' ? 'company' : 'individual',
-        ...(input.type === 'BUSINESS' ? {} : {}),
         default_currency: ctx.currency.toLowerCase(),
         settings: {
           payouts: {
@@ -43,10 +36,10 @@ export const createAccountLink = protectedProcedure
       stripeLinkedAccountId = account.id;
     }
 
-    if (input.type === 'PRO') {
+    if (isUser(organizer)) {
       await ctx.prisma.user.update({
         where: {
-          id: user.id,
+          id: organizer.id,
         },
         data: {
           stripeLinkedAccountId,
@@ -54,12 +47,10 @@ export const createAccountLink = protectedProcedure
       });
     }
 
-    if (input.type === 'BUSINESS') {
-      invariant(user.organization, organizationNotFoundError);
-
+    if (isOrganization(organizer)) {
       await ctx.prisma.organization.update({
         where: {
-          id: user.organization.id,
+          id: organizer.id,
         },
         data: {
           stripeLinkedAccountId,
@@ -67,10 +58,9 @@ export const createAccountLink = protectedProcedure
       });
     }
 
-    const callbackUrl =
-      input.type === 'PRO'
-        ? `${getBaseUrl()}/settings`
-        : `${getBaseUrl()}/organizations/${user?.organization?.id}/settings/`;
+    const callbackUrl = isUser(organizer)
+      ? `${getBaseUrl()}/settings`
+      : `${getBaseUrl()}/organizations/${organizer.id}/settings`;
 
     const accountLink = await stripe.accountLinks.create({
       account: stripeLinkedAccountId,

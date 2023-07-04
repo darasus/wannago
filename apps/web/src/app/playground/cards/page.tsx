@@ -48,7 +48,6 @@ const event: Event & {user: User} = {
     disabled: false,
     type: 'USER',
     externalId: '1',
-    organizationId: null,
     stripeCustomerId: null,
     stripeLinkedAccountId: null,
     preferredCurrency: 'USD',

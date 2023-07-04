@@ -15,13 +15,14 @@ export const getMyEvents = protectedProcedure
         externalId: ctx.auth.userId,
       },
       include: {
-        organization: true,
+        organizations: true,
       },
     });
 
-    const authorIds = [user?.id, user?.organization?.id].filter(
-      Boolean
-    ) as string[];
+    const authorIds = [
+      user?.id,
+      ...(user?.organizations.map((o) => o.id) || []),
+    ].filter(Boolean) as string[];
 
     return getEvents(ctx)({
       authorIds,

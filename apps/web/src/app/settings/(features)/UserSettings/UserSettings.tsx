@@ -171,7 +171,7 @@ export function UserSettings({user}: Props) {
             </div>
           </form>
         </CardBase>
-        <StripeAccountLinkSettings type="PRO" />
+        {user?.id && <StripeAccountLinkSettings organizerId={user.id} />}
       </div>
     </FormProvider>
   );

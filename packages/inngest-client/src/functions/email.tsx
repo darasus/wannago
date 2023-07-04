@@ -29,7 +29,7 @@ export const emailReminderScheduled = inngest.createFunction(
     ],
   },
   {event: 'email/reminder.scheduled'},
-  async ctx => {
+  async (ctx) => {
     const event = await ctx.step.run('Fetch event', () => {
       return ctx.prisma.event.findUnique({
         where: {
@@ -73,9 +73,9 @@ export const emailReminderScheduled = inngest.createFunction(
       // if free event
       if (event.eventSignUps.length > 0) {
         const events = event.eventSignUps
-          .filter(signUp => signUp.status === 'REGISTERED')
-          .map(signUp => signUp.user)
-          .map(user => {
+          .filter((signUp) => signUp.status === 'REGISTERED')
+          .map((signUp) => signUp.user)
+          .map((user) => {
             return {
               name: 'email/reminder.sent',
               data: {userId: user.id, eventId: event.id},
@@ -88,8 +88,8 @@ export const emailReminderScheduled = inngest.createFunction(
       // if paid event
       if (event.ticketSales.length > 0) {
         const events = event.ticketSales
-          .map(sale => sale.user)
-          .map(user => {
+          .map((sale) => sale.user)
+          .map((user) => {
             return {
               name: 'email/reminder.sent',
               data: {userId: user.id, eventId: event.id},
@@ -107,7 +107,7 @@ export const emailReminderSent = inngest.createFunction(
     name: 'Email Reminder Sent',
   },
   {event: 'email/reminder.sent'},
-  async ctx => {
+  async (ctx) => {
     const event = await ctx.step.run('Fetch event', () => {
       return ctx.prisma.event.findUnique({
         where: {id: ctx.event.data.eventId},
@@ -157,7 +157,7 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
     name: 'Ticket Purchase Email Sent',
   },
   {event: 'email/ticket-purchase-email.sent'},
-  async ctx => {
+  async (ctx) => {
     const event = await ctx.step.run('Fetch event', () =>
       ctx.prisma.event.findUnique({
         where: {id: ctx.event.data.eventId},
@@ -219,7 +219,7 @@ export const eventSignUp = inngest.createFunction(
     name: 'Event Sign Up',
   },
   {event: 'email/event.sign.up'},
-  async ctx => {
+  async (ctx) => {
     const event = await ctx.prisma.event.findUnique({
       where: {id: ctx.event.data.eventId},
       include: {
@@ -272,7 +272,7 @@ export const eventInvite = inngest.createFunction(
     name: 'Event Invote',
   },
   {event: 'email/event.invite'},
-  async ctx => {
+  async (ctx) => {
     const event = await ctx.prisma.event.findUnique({
       where: {id: ctx.event.data.eventId},
       include: {
@@ -326,7 +326,7 @@ export const messageToAllAttendees = inngest.createFunction(
     name: 'Message To All Attendees',
   },
   {event: 'email/message.to.all.attendees'},
-  async ctx => {
+  async (ctx) => {
     const event = await ctx.prisma.event.findFirst({
       where: {
         id: ctx.event.data.eventId,
@@ -359,8 +359,8 @@ export const messageToAllAttendees = inngest.createFunction(
 
     await Promise.all(
       signUps
-        .map(signUp => signUp.user)
-        .map(async user => {
+        .map((signUp) => signUp.user)
+        .map(async (user) => {
           const messageData = {
             replyTo: `${name} <${organizer.email}>`,
             to: user.email,
@@ -386,20 +386,26 @@ export const afterRegisterNoCreatedEventFollowUpEmail = inngest.createFunction(
     name: 'After Register No Created Event Follow Up Email',
   },
   {event: 'email/after.register.no.created.event.follow.up.email'},
-  async ctx => {
+  async (ctx) => {
     await ctx.step.sleep(1000 * 60 * 60 * 24 * 2);
 
     const user = await ctx.prisma.user.findUnique({
       where: {id: ctx.event.data.userId},
+      include: {
+        events: true,
+        organizations: {
+          include: {events: true},
+        },
+      },
     });
 
     invariant(user, userNotFoundError);
 
-    const eventCount = await ctx.prisma.event.count({
-      where: {
-        organizationId: user.organizationId,
-      },
-    });
+    const eventCount =
+      user.events.length +
+      user.organizations.reduce((prev, next) => {
+        return prev + next.events.length;
+      }, 0);
 
     const hasNoEvents = eventCount === 0;
 
@@ -423,7 +429,7 @@ export const eventCancelInvite = inngest.createFunction(
     name: 'Event Cancel Invite',
   },
   {event: 'email/event.cancel.invite'},
-  async ctx => {
+  async (ctx) => {
     const event = await ctx.prisma.event.findUnique({
       where: {id: ctx.event.data.eventId},
       include: {
@@ -472,7 +478,7 @@ export const eventCancelSignUp = inngest.createFunction(
     name: 'Event Cancel Sign Up',
   },
   {event: 'email/event.cancel.sign.up'},
-  async ctx => {
+  async (ctx) => {
     const event = await ctx.prisma.event.findUnique({
       where: {id: ctx.event.data.eventId},
       include: {
@@ -521,7 +527,7 @@ export const organizerEventSignUpNotification = inngest.createFunction(
     name: 'Organizer Event Sign Up Notification',
   },
   {event: 'email/organizer.event.sign.up.notification'},
-  async ctx => {
+  async (ctx) => {
     const user = await ctx.prisma.user.findUnique({
       where: {id: ctx.event.data.userId},
     });

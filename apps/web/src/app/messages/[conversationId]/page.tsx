@@ -12,7 +12,11 @@ export default async function ConversationPage({
   params: {conversationId: string};
 }) {
   const me = await api.user.me.query();
-  await api.conversation.markConversationAsSeen.mutate({conversationId});
+  await api.conversation.markConversationAsSeen
+    .mutate({conversationId})
+    .then(async () => {
+      await api.conversation.getUserHasUnseenConversation.revalidate();
+    });
   const conversation = await api.conversation.getConversationById.query({
     conversationId,
   });

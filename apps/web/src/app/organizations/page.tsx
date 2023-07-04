@@ -15,24 +15,20 @@ export default async function SettingsPage() {
       <Container maxSize="sm">
         <div className="flex flex-col gap-y-4">
           <PageHeader title={'Organizations'} />
-          <div>
-            {organizations?.map((o) => (
-              <OrganizationCard organization={o} />
-            ))}
-            {organizations?.length === 0 && (
-              <div className="text-center">
-                <Text>
-                  {`You don't have any organizations yet. Create one by clicking
-                  button bellow.`}
-                </Text>
-              </div>
-            )}
-          </div>
+          {organizations?.map((o) => (
+            <OrganizationCard organization={o} />
+          ))}
           {organizations?.length === 0 && (
-            <Button asChild>
-              <Link href="/organizations/add">Create organization</Link>
-            </Button>
+            <div className="text-center">
+              <Text>
+                {`You don't have any organizations yet. Create one by clicking
+                  button bellow.`}
+              </Text>
+            </div>
           )}
+          <Button asChild>
+            <Link href="/organizations/add">Create organization</Link>
+          </Button>
         </div>
       </Container>
     </>

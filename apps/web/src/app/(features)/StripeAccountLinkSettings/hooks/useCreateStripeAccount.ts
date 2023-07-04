@@ -7,7 +7,7 @@ import {captureException} from '@sentry/nextjs';
 import {useRouter} from 'next/navigation';
 import {useAmplitude} from 'hooks';
 
-export function useCreateStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
+export function useCreateStripeAccount({organizerId}: {organizerId: string}) {
   const {logEvent} = useAmplitude();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -15,13 +15,15 @@ export function useCreateStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
   const createAccountLink = async () => {
     logEvent('link_stripe_account_button_clicked', {
       extra: {
-        type,
+        organizerId,
       },
     });
     try {
       startTransition(async () => {
         const url = await api.stripeAccountLink.createAccountLink
-          .mutate({type})
+          .mutate({
+            organizerId,
+          })
           .catch((error) => {
             toast.error(error.message);
           });
@@ -33,7 +35,7 @@ export function useCreateStripeAccount({type}: {type: 'PRO' | 'BUSINESS'}) {
     } catch (error) {
       captureException(error, {
         extra: {
-          type,
+          organizerId,
           function: 'createAccountLink',
         },
       });

@@ -11,37 +11,30 @@ export function canModifyEvent(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
     const {eventId} = validation.parse(input);
 
-    const [event, user] = await Promise.all([
-      ctx.prisma.event.findFirst({
-        where: {
-          id: eventId,
-        },
-        include: {
-          organization: true,
-          user: true,
-        },
-      }),
-      ctx.prisma.user.findFirst({
-        where: {
-          externalId: ctx.auth?.userId,
-        },
-        include: {
-          organization: true,
-        },
-      }),
-    ]);
+    const event = await ctx.prisma.event.findFirst({
+      where: {
+        id: eventId,
+        OR: [
+          {
+            user: {
+              externalId: ctx.auth?.userId,
+            },
+          },
+          {
+            organization: {
+              users: {
+                some: {
+                  externalId: ctx.auth?.userId,
+                },
+              },
+            },
+          },
+        ],
+      },
+    });
 
-    const userId = user?.id;
-    const eventUserId = event?.user?.id;
+    invariant(ctx.auth?.userId && event, forbiddenError);
 
-    const organizationId = user?.organization?.id;
-    const eventOrganizationId = event?.organization?.id;
-
-    invariant(userId || organizationId, forbiddenError);
-
-    const isMyEvent =
-      userId === eventUserId || organizationId === eventOrganizationId;
-
-    invariant(isMyEvent, forbiddenError);
+    return true;
   };
 }

@@ -7,21 +7,21 @@ import {useRedirectToStripeAccount} from './hooks/useRedirectToStripeAccount';
 import {useCreateStripeAccount} from './hooks/useCreateStripeAccount';
 
 interface Props {
-  type: 'PRO' | 'BUSINESS';
+  organizerId: string;
 }
 
-export function StripeAccountLinkSettings({type}: Props) {
+export function StripeAccountLinkSettings({organizerId}: Props) {
   const {isLoading: isRedirecting, redirectToStripeAccount} =
     useRedirectToStripeAccount({
-      type,
+      organizerId,
     });
   const {createAccountLink, isLoading: isCreating} = useCreateStripeAccount({
-    type,
+    organizerId,
   });
 
   const account = use(
     api.stripeAccountLink.getAccount.query({
-      type,
+      organizerId,
     })
   );
 

@@ -1,44 +1,27 @@
-import {userNotFoundError} from 'error';
+import {organizerNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
 import {Stripe} from 'lib/src/stripe';
-import {getUserByExternalId} from '../../actions/getUserByExternalId';
+import {getOrganizerById} from '../../actions/getOrganizerById';
 
 export const getAccount = protectedProcedure
   .input(
     z.object({
-      type: z.enum(['PRO', 'BUSINESS']),
+      organizerId: z.string().uuid(),
     })
   )
   .query(async ({ctx, input}) => {
     const stripe = new Stripe().client;
-    const user = await getUserByExternalId(ctx)({
-      externalId: ctx.auth.userId,
-      includeOrganization: true,
+
+    const organizer = await getOrganizerById(ctx)({
+      id: input.organizerId,
     });
 
-    invariant(user, userNotFoundError);
+    invariant(organizer, organizerNotFoundError);
 
-    if (input.type === 'PRO' && !user.stripeLinkedAccountId) {
+    if (!organizer.stripeLinkedAccountId) {
       return null;
-    }
-
-    if (
-      input.type === 'BUSINESS' &&
-      !user.organization?.stripeLinkedAccountId
-    ) {
-      return null;
-    }
-
-    let stripeLinkedAccountId = '';
-
-    if (input.type === 'PRO' && user.stripeLinkedAccountId) {
-      stripeLinkedAccountId = user.stripeLinkedAccountId;
-    }
-
-    if (input.type === 'BUSINESS' && user.organization?.stripeLinkedAccountId) {
-      stripeLinkedAccountId = user.organization?.stripeLinkedAccountId;
     }
 
     const account = await stripe.accounts.retrieve(
@@ -46,7 +29,7 @@ export const getAccount = protectedProcedure
         expand: ['external_accounts'],
       },
       {
-        stripeAccount: stripeLinkedAccountId,
+        stripeAccount: organizer.stripeLinkedAccountId,
       }
     );
 
