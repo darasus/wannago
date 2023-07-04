@@ -21,10 +21,16 @@ export function usePublishEvent({eventId}: Props) {
       'This event will be available to everyone when visiting public link.',
     onConfirm: async () => {
       if (eventId) {
-        await api.event.publish.mutate({eventId, isPublished: true});
-        toast.success(`Event is successfully published!`);
-        confetti();
-        logEvent('event_published', {eventId});
+        await api.event.publish
+          .mutate({eventId, isPublished: true})
+          .then(() => {
+            toast.success(`Event is successfully published!`);
+            confetti();
+            logEvent('event_published', {eventId});
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          });
         router.refresh();
       } else {
         throw new TRPCClientError('Event ID is not provided');

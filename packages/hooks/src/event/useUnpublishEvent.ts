@@ -19,9 +19,15 @@ export function useUnpublishEvent({eventId}: Props) {
       'This event will not be available to anyone when visiting public link.',
     onConfirm: async () => {
       if (eventId) {
-        await api.event.publish.mutate({eventId, isPublished: false});
-        toast.success(`Event is successfully unpublished!`);
-        logEvent('event_unpublished', {eventId});
+        await api.event.publish
+          .mutate({eventId, isPublished: false})
+          .then(() => {
+            toast.success(`Event is successfully unpublished!`);
+            logEvent('event_unpublished', {eventId});
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          });
         router.refresh();
       } else {
         throw new TRPCClientError('Event ID is not provided');

@@ -29,3 +29,8 @@ export const forbiddenError = new TRPCError({
   code: 'FORBIDDEN',
   message: 'Not allowed to perform this action',
 });
+
+export const stripeAccountLinkNotFound = new TRPCError({
+  code: 'BAD_REQUEST',
+  message: 'You need to link Stripe account first',
+});

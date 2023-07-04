@@ -19,10 +19,16 @@ export function useRemoveEvent({eventId}: Props) {
       'This is irreversible and all event related data will be removed.',
     onConfirm: async () => {
       if (eventId) {
-        await api.event.remove.mutate({eventId});
-        toast.success(`Event is successfully removed!`);
-        router.push('/dashboard');
-        logEvent('event_deleted', {eventId});
+        await api.event.remove
+          .mutate({eventId})
+          .then(() => {
+            toast.success(`Event is successfully removed!`);
+            router.push('/dashboard');
+            logEvent('event_deleted', {eventId});
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          });
       } else {
         throw new TRPCClientError('Event ID is not provided');
       }
