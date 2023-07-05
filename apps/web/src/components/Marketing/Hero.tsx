@@ -11,7 +11,7 @@ import {api} from '../../trpc/server-http';
 export function Hero() {
   return (
     <div className="relative overflow-hidden">
-      <Container className="py-20 lg:py-32 mb-0 relative z-10 md:pointer-events-none overflow-hidden">
+      <Container className="py-20 lg:py-32 mb-0 relative z-10 overflow-hidden">
         <h1
           className={cn(
             titleFontClassName,
@@ -36,7 +36,7 @@ export function Hero() {
             </Link>
           </Button>
         </div>
-        <div className="flex justify-center relative w-full max-w-2xl m-auto">
+        <div className="flex justify-center relative w-full max-w-2xl m-auto pointer-events-none">
           <Suspense fallback={<LoadingBlock />}>
             <EventPreview eventPromise={api.event.getRandomExample.query()} />
           </Suspense>
