@@ -1,27 +1,27 @@
 'use client';
-export {Avatar} from './src/components/Avatar/Avatar';
-export {Accordion} from './src/components/Accordion/Accordion';
-export {Button} from './src/components/Button/Button';
-export {Badge} from './src/components/Badge/Badge';
-export {Container} from './src/components/Container/Container';
-export {CardBase} from './src/components/CardBase/CardBase';
-export {Text} from './src/components/Text/Text';
-export {Tooltip} from './src/components/Tooltip/Tooltip';
-export {Modal} from './src/components/Modal/Modal';
-export {Logo, LogoView} from './src/components/Logo/Logo';
-export {PageHeader} from './src/components/PageHeader/PageHeader';
-export {Spinner} from './src/components/Spinner/Spinner';
-export {Table} from './src/components/Table/Table';
-export {TBody} from './src/components/Table/TBody';
-export {TRow} from './src/components/Table/TRow';
-export {THead} from './src/components/Table/THead';
-export {Th} from './src/components/Table/Th';
-export {Td} from './src/components/Table/Td';
-export {LocationImage} from './src/components/LocationImage/LocationImage';
-export {EventRegistrationStatusBadge} from './src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
-export {TextAnimation} from './src/components/TextAnimation/TextAnimation';
-export {LoadingWave} from './src/components/LoadingWave/LoadingWave';
-export {LoadingBlock} from './src/components/LoadingBlock/LoadingBlock';
+export {Avatar} from './src/Avatar/Avatar';
+export {Accordion} from './src/Accordion/Accordion';
+export {Button} from './src/Button/Button';
+export {Badge} from './src/Badge/Badge';
+export {Container} from './src/Container/Container';
+export {CardBase} from './src/CardBase/CardBase';
+export {Text} from './src/Text/Text';
+export {Tooltip} from './src/Tooltip/Tooltip';
+export {Modal} from './src/Modal/Modal';
+export {Logo, LogoView} from './src/Logo/Logo';
+export {PageHeader} from './src/PageHeader/PageHeader';
+export {Spinner} from './src/Spinner/Spinner';
+export {Table} from './src/Table/Table';
+export {TBody} from './src/Table/TBody';
+export {TRow} from './src/Table/TRow';
+export {THead} from './src/Table/THead';
+export {Th} from './src/Table/Th';
+export {Td} from './src/Table/Td';
+export {LocationImage} from './src/LocationImage/LocationImage';
+export {EventRegistrationStatusBadge} from './src/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
+export {TextAnimation} from './src/TextAnimation/TextAnimation';
+export {LoadingWave} from './src/LoadingWave/LoadingWave';
+export {LoadingBlock} from './src/LoadingBlock/LoadingBlock';
 export {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -38,12 +38,12 @@ export {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from './src/components/Menu/Menu';
-export {NotFoundMessage} from './src/components/NotFoundMessage/NotFoundMessage';
-export {InfoIconWithTooltip} from './src/components/InfoIconWithTooltip/InfoIconWithTooltip';
-export {TicketList} from './src/components/TicketList/TicketList';
-export {InputWrapper} from './src/components/InputWrapper/InputWrapper';
-export {AnimateRender} from './src/components/AnimateRender/AnimateRender';
+} from './src/Menu/Menu';
+export {NotFoundMessage} from './src/NotFoundMessage/NotFoundMessage';
+export {InfoIconWithTooltip} from './src/InfoIconWithTooltip/InfoIconWithTooltip';
+export {TicketList} from './src/TicketList/TicketList';
+export {InputWrapper} from './src/InputWrapper/InputWrapper';
+export {AnimateRender} from './src/AnimateRender/AnimateRender';
 export {
   Select,
   SelectContent,
@@ -53,7 +53,7 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from './src/components/Select/Select';
+} from './src/Select/Select';
 export {
   Form,
   FormControl,
@@ -63,15 +63,11 @@ export {
   FormLabel,
   FormMessage,
   useFormField,
-} from './src/components/Form/Form';
-export {DatePicker} from './src/components/DatePicker/DatePicker';
-export {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from './src/components/Popover/Popover';
-export {Input} from './src/components/Input/Input';
-export {Textarea} from './src/components/Textarea/Textarea';
+} from './src/Form/Form';
+export {DatePicker} from './src/DatePicker/DatePicker';
+export {Popover, PopoverContent, PopoverTrigger} from './src/Popover/Popover';
+export {Input} from './src/Input/Input';
+export {Textarea} from './src/Textarea/Textarea';
 export {
   Command,
   CommandDialog,
@@ -82,18 +78,13 @@ export {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from './src/components/Command/Command';
-export {TimeInput} from './src/components/TimeInput/TimeInput';
-export {DateTimePicker} from './src/components/DateTimePicker/DateTimePicker';
-export {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from './src/components/Tabs/Tabs';
-export {RadioGroup, RadioGroupItem} from './src/components/Radio/Radio';
-export {FileInput} from './src/components/FileInput/FileInput';
-export {RichTextarea} from './src/components/RichTextarea/RichTextarea';
-export {Switch} from './src/components/Switch/Switch';
-export {Title} from './src/components/Title/Title';
-export {Icons} from './src/components/Icons/Icons';
+} from './src/Command/Command';
+export {TimeInput} from './src/TimeInput/TimeInput';
+export {DateTimePicker} from './src/DateTimePicker/DateTimePicker';
+export {Tabs, TabsContent, TabsList, TabsTrigger} from './src/Tabs/Tabs';
+export {RadioGroup, RadioGroupItem} from './src/Radio/Radio';
+export {FileInput} from './src/FileInput/FileInput';
+export {RichTextarea} from './src/RichTextarea/RichTextarea';
+export {Switch} from './src/Switch/Switch';
+export {Title} from './src/Title/Title';
+export {Icons} from './src/Icons/Icons';

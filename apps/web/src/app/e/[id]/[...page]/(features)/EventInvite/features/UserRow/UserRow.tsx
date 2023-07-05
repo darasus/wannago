@@ -1,6 +1,6 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
 import {CardBase, Text} from 'ui';
-import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
+import {EventRegistrationStatusBadge} from 'ui';
 import {InviteButton} from '../InviteButton/InviteButton';
 
 interface UserRowProps {

@@ -9,7 +9,7 @@ import {
   FormMessage,
   Input,
 } from 'ui';
-import {RichTextarea} from 'ui/src/components/RichTextarea/RichTextarea';
+import {RichTextarea} from 'ui';
 import {useFormContext} from 'react-hook-form';
 import {eventFormSchema} from '../hooks/useEventForm';
 import {z} from 'zod';

@@ -1,5 +1,5 @@
 import {ReactNode} from 'react';
-import {titleFontClassName} from '../../../../../apps/web/src/fonts';
+import {titleFontClassName} from '../../../../apps/web/src/fonts';
 import {cn} from 'utils';
 
 interface Props {

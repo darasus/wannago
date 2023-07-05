@@ -13,7 +13,7 @@ import {
   RadioGroupItem,
   Input,
 } from 'ui';
-import {FileInput} from 'ui/src/components/FileInput/FileInput';
+import {FileInput} from 'ui';
 import {Currency} from '@prisma/client';
 import {type RouterOutputs} from 'api';
 import {api} from '../../../../trpc/client';

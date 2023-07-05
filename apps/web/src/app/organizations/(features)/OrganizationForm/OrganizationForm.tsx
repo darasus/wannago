@@ -16,7 +16,7 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from 'ui';
-import {FileInput} from 'ui/src/components/FileInput/FileInput';
+import {FileInput} from 'ui';
 import {Currency, Organization} from '@prisma/client';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';

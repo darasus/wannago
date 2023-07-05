@@ -1,6 +1,6 @@
-import { Button, CardBase } from "ui";
-import { LocationImage } from "ui/src/components/LocationImage/LocationImage";
-import { Text } from "ui";
+import {Button, CardBase} from 'ui';
+import {LocationImage} from 'ui';
+import {Text} from 'ui';
 
 interface Props {
   address: string;

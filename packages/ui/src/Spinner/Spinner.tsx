@@ -1,13 +1,13 @@
-import { cn } from "../../../../utils";
+import {cn} from 'utils';
 
 interface Props {
   className?: string;
 }
 
-export function Spinner({ className = "h-3 w-3" }: Props) {
+export function Spinner({className = 'h-3 w-3'}: Props) {
   return (
     <svg
-      className={cn("animate-spin block", className)}
+      className={cn('animate-spin block', className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

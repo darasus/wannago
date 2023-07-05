@@ -1,5 +1,5 @@
 import {forwardRef, PropsWithChildren} from 'react';
-import {cn} from '../../../../utils';
+import {cn} from 'utils';
 import {LoadingBlock} from '../LoadingBlock/LoadingBlock';
 
 interface BadgeItem {

@@ -1,8 +1,14 @@
 'use client';
 
 import {EventSignUp, User} from '@prisma/client';
-import {CardBase, Button, Text, PageHeader, TicketList} from 'ui';
-import {EventRegistrationStatusBadge} from 'ui/src/components/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
+import {
+  CardBase,
+  Button,
+  Text,
+  PageHeader,
+  TicketList,
+  EventRegistrationStatusBadge,
+} from 'ui';
 import {useConfirmDialog} from 'hooks';
 import {use, useCallback} from 'react';
 import {MessageParticipantsButton} from './features/MessageParticipantsButton/MessageParticipantsButton';
@@ -106,7 +112,7 @@ export function EventAttendees() {
             <Text>No attendees yet...</Text>
           </div>
         )}
-        {attendees?.map(eventSignUp => {
+        {attendees?.map((eventSignUp) => {
           return (
             <Item
               key={eventSignUp.user.id}

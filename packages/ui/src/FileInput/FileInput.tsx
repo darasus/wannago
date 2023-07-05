@@ -1,10 +1,10 @@
-import NextImage from "next/image";
-import React, { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
-import { cn } from "utils";
-import { Button } from "../Button/Button";
-import { Spinner } from "../Spinner/Spinner";
-import { useUploadImage } from "../../../../hooks/index";
+import NextImage from 'next/image';
+import React, {useCallback} from 'react';
+import {useDropzone} from 'react-dropzone';
+import {cn} from 'utils';
+import {Button} from '../Button/Button';
+import {Spinner} from '../Spinner/Spinner';
+import {useUploadImage} from 'hooks';
 
 interface Value {
   src: string | null | undefined;
@@ -17,8 +17,8 @@ interface Props {
   onChange: (value: Value | null) => void;
 }
 
-export function FileInput({ value, onChange, ...props }: Props) {
-  const { isLoading, handleFileUpload } = useUploadImage();
+export function FileInput({value, onChange, ...props}: Props) {
+  const {isLoading, handleFileUpload} = useUploadImage();
 
   const onDrop = useCallback(
     (droppedFiles: File[]) => {
@@ -36,13 +36,13 @@ export function FileInput({ value, onChange, ...props }: Props) {
     [handleFileUpload, onChange]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({
     onDrop,
     accept: {
-      "image/png": [".png"],
-      "image/jpg": [".jpg", ".jpeg"],
-      "image/webp": [".webp"],
-      "image/gif": [".gif"],
+      'image/png': ['.png'],
+      'image/jpg': ['.jpg', '.jpeg'],
+      'image/webp': ['.webp'],
+      'image/gif': ['.gif'],
     },
   });
 
@@ -54,12 +54,12 @@ export function FileInput({ value, onChange, ...props }: Props) {
   return (
     <div
       className={cn(
-        "flex flex-col relative justify-center items-center border-dashed h-48 overflow-hidden",
-        "rounded-md border border-input bg-background",
-        { "bg-gray-200": isDragActive }
+        'flex flex-col relative justify-center items-center border-dashed h-48 overflow-hidden',
+        'rounded-md border border-input bg-background',
+        {'bg-gray-200': isDragActive}
       )}
     >
-      <div {...getRootProps()} className={cn("h-full w-full")}>
+      <div {...getRootProps()} className={cn('h-full w-full')}>
         <input multiple={false} {...getInputProps()} data-testid="file-input" />
 
         {!isLoading && !value?.src && (
@@ -90,7 +90,7 @@ export function FileInput({ value, onChange, ...props }: Props) {
               alt=""
               src={value?.src}
               fill
-              style={{ objectFit: "contain" }}
+              style={{objectFit: 'contain'}}
             />
           </div>
           <Button
