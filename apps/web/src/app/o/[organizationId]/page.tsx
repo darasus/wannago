@@ -1,5 +1,7 @@
+import {Suspense} from 'react';
 import {PublicProfile} from '../../(features)/PublicProfile/PublicProfile';
 import {api} from '../../../trpc/server-http';
+import {LoadingBlock} from 'ui';
 
 export const generateMetadata = async ({
   params: {organizationId},
@@ -44,20 +46,14 @@ export default async function ProfilePage({
     }),
   ];
 
-  const organization = await organizationPromise;
-  const events = await eventsPromise;
-
-  if (!organization) {
-    return null;
-  }
-
   return (
-    <PublicProfile
-      events={events || []}
-      name={`${organization.name}`}
-      profileImageSrc={organization.logoSrc}
-      followCountsPromise={followCountsPromise}
-      amFollowingPromise={amFollowingPromise}
-    />
+    <Suspense fallback={<LoadingBlock />}>
+      <PublicProfile
+        eventsPromise={eventsPromise}
+        organizationPromise={organizationPromise}
+        followCountsPromise={followCountsPromise}
+        amFollowingPromise={amFollowingPromise}
+      />
+    </Suspense>
   );
 }

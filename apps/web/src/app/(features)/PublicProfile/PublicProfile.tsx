@@ -10,7 +10,10 @@ import {notFound} from 'next/navigation';
 interface Props {
   isLoadingEvents?: boolean;
   eventsPromise: Promise<RouterOutputs['event']['getPublicEvents']>;
-  userPromise: Promise<RouterOutputs['user']['getUserById']>;
+  userPromise?: Promise<RouterOutputs['user']['getUserById']>;
+  organizationPromise?: Promise<
+    RouterOutputs['organization']['getOrganizationById']
+  >;
   followCountsPromise: Promise<RouterOutputs['follow']['getFollowCounts']>;
   amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
 }
@@ -21,12 +24,40 @@ export async function PublicProfile({
   userPromise,
   followCountsPromise,
   amFollowingPromise,
+  organizationPromise,
 }: Props) {
-  const [events, user] = await Promise.all([eventsPromise, userPromise]);
+  const [events, user, organization] = await Promise.all([
+    eventsPromise,
+    userPromise,
+    organizationPromise,
+  ]);
 
-  if (!user) {
+  if ((userPromise && !user) || (organizationPromise && !organization)) {
     return notFound();
   }
+
+  const getImageSrc = () => {
+    if (user) {
+      return user.profileImageSrc;
+    }
+
+    if (organization) {
+      return organization.logoSrc;
+    }
+  };
+
+  const getName = () => {
+    if (user) {
+      return `${user.firstName} ${user.lastName}`;
+    }
+
+    if (organization) {
+      return organization.name;
+    }
+  };
+
+  const imageSrc = getImageSrc();
+  const name = getName();
 
   return (
     <>
@@ -35,7 +66,7 @@ export async function PublicProfile({
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <Avatar
               className="shrink-0 h-40 w-40"
-              src={user.profileImageSrc}
+              src={imageSrc}
               alt={`avatar`}
               height={700}
               width={700}
@@ -45,7 +76,7 @@ export async function PublicProfile({
                 className="text-3xl font-bold truncate"
                 data-testid="user-profile-name"
               >
-                {`${user.firstName} ${user.lastName}`}
+                {name}
               </Text>
               <div className="flex gap-2">
                 <div>
