@@ -1,4 +1,3 @@
-import {Event} from '@prisma/client';
 import {type RouterOutputs} from 'api';
 import {EventCard} from 'cards';
 import Link from 'next/link';
@@ -6,24 +5,29 @@ import {Suspense} from 'react';
 import {Avatar, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
 import {MessageButton} from './(features)/MessageButton/MessageButton';
 import {FollowButton} from './(features)/FollowButton/FollowButton';
+import {notFound} from 'next/navigation';
 
 interface Props {
   isLoadingEvents?: boolean;
-  profileImageSrc?: string | null;
-  events: Event[];
-  name: string;
+  eventsPromise: Promise<RouterOutputs['event']['getPublicEvents']>;
+  userPromise: Promise<RouterOutputs['user']['getUserById']>;
   followCountsPromise: Promise<RouterOutputs['follow']['getFollowCounts']>;
   amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
 }
 
 export async function PublicProfile({
   isLoadingEvents,
-  events,
-  name,
-  profileImageSrc,
+  eventsPromise,
+  userPromise,
   followCountsPromise,
   amFollowingPromise,
 }: Props) {
+  const [events, user] = await Promise.all([eventsPromise, userPromise]);
+
+  if (!user) {
+    return notFound();
+  }
+
   return (
     <>
       <Container maxSize="sm" className="flex flex-col gap-y-4">
@@ -31,17 +35,17 @@ export async function PublicProfile({
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <Avatar
               className="shrink-0 h-40 w-40"
-              src={profileImageSrc}
+              src={user.profileImageSrc}
               alt={`avatar`}
-              height={1000}
-              width={1000}
+              height={700}
+              width={700}
             />
             <div className="flex flex-col max-w-full overflow-hidden">
               <Text
                 className="text-3xl font-bold truncate"
                 data-testid="user-profile-name"
               >
-                {name}
+                {`${user.firstName} ${user.lastName}`}
               </Text>
               <div className="flex gap-2">
                 <div>
