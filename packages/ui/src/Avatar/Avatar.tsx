@@ -20,6 +20,8 @@ export function Avatar({
   alt,
   ...props
 }: Props) {
+  const canRenderImage = src?.includes('gravatar') ? null : true;
+
   return (
     <div
       className={cn(
@@ -27,7 +29,7 @@ export function Avatar({
         className
       )}
     >
-      {src ? (
+      {canRenderImage && src ? (
         <Image
           {...props}
           loader={cloudflareImageLoader}
