@@ -1,15 +1,23 @@
 import Link from 'next/link';
 import {CardBase, Text} from 'ui';
 import {getConversationMembers} from 'utils';
-import {api} from '../../../../trpc/server-http';
-import {User} from '@prisma/client';
+import {RouterOutputs} from 'api';
+import {notFound} from 'next/navigation';
 
 interface Props {
-  me: User;
+  mePromise: Promise<RouterOutputs['user']['me']>;
+  conversationsPromise: Promise<
+    RouterOutputs['conversation']['getMyConversations']
+  >;
 }
 
-export async function Conversations({me}: Props) {
-  const conversations = await api.conversation.getMyConversations.query();
+export async function Conversations({mePromise, conversationsPromise}: Props) {
+  const me = await mePromise;
+  const conversations = await conversationsPromise;
+
+  if (!me) {
+    return notFound();
+  }
 
   return (
     <CardBase innerClassName="flex flex-col gap-4">
