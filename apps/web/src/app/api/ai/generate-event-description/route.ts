@@ -2,7 +2,7 @@ import {OpenAIStream, OpenAIStreamPayload} from 'lib/src/OpenAI';
 
 export const runtime = 'edge';
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   try {
     const {prompt} = (await req.json()) as {
       prompt?: string;

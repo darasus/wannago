@@ -13,5 +13,4 @@ export {useFileFromUrl} from './src/useFileFromUrl';
 export {useUnpublishEvent} from './src/event/useUnpublishEvent';
 export {usePublishEvent} from './src/event/usePublishEvent';
 export {useRemoveEvent} from './src/event/useRemoveEvent';
-export {useGenerateEventDescription} from './src/useGenerateEventDescription';
 export {useCreateConversation} from './src/conversation/useCreateConversation';

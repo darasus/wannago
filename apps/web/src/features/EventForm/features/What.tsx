@@ -1,4 +1,4 @@
-import {Sparkles, CheckCircle2} from 'lucide-react';
+import {Sparkles} from 'lucide-react';
 import {
   Button,
   FileInput,
@@ -8,49 +8,35 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  Spinner,
 } from 'ui';
 import {RichTextarea} from 'ui/src/components/RichTextarea/RichTextarea';
 import {useFormContext} from 'react-hook-form';
 import {eventFormSchema} from '../hooks/useEventForm';
 import {z} from 'zod';
-import {useGenerateEventDescription, useUploadImage} from 'hooks';
-import {useCallback, useEffect} from 'react';
+import {useEffect} from 'react';
+import {useCompletion} from 'ai/react';
 
 export function What() {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
-  const {generate, generatedOutput, isLoading} = useGenerateEventDescription();
+  const {
+    complete,
+    completion,
+    isLoading: isGenerating,
+  } = useCompletion({
+    api: '/api/ai/generate-event-description',
+  });
   const title = form.watch('title');
-  const featuredImageSrc = form.watch('featuredImageSrc');
 
   const onClickGenerate = () => {
-    generate(title);
+    complete(title);
   };
 
   useEffect(() => {
-    if (generatedOutput) {
-      form.setValue('description', generatedOutput);
+    if (completion) {
+      form.setValue('description', completion);
     }
-  }, [generatedOutput, form]);
-
-  const {isLoading: isUploadingImage, handleFileUpload} = useUploadImage();
-
-  const handleImageUpload = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file) {
-        handleFileUpload(file).then((data) => {
-          if (data) {
-            form.setValue('featuredImageSrc', data.url);
-            form.setValue('featuredImageHeight', data.height);
-            form.setValue('featuredImageWidth', data.width);
-            form.setValue('featuredImagePreviewSrc', data.imageSrcBase64);
-          }
-        });
-      }
-    },
-    [form, handleFileUpload]
-  );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [completion]);
 
   return (
     <>
@@ -78,13 +64,15 @@ export function What() {
                 dataTestId="event-form-description"
                 label="Description"
                 isOptional
-                isGenerating={isLoading}
+                isGenerating={isGenerating}
                 placeholder={`Type your description here or press "Generate" to let AI do the work for you...`}
+                value={field.value}
                 additionalEditorMenu={
                   <Button
                     size="sm"
                     onClick={onClickGenerate}
-                    disabled={!title || title.length < 10 || isLoading}
+                    disabled={!title || title.length < 10 || isGenerating}
+                    isLoading={isGenerating}
                   >
                     <Sparkles className="mr-2" /> Generate
                   </Button>
@@ -101,10 +89,7 @@ export function What() {
         render={({field}) => (
           <FormItem>
             <FormLabel className="flex gap-2 items-center">
-              Featured image {isUploadingImage && <Spinner />}
-              {!isUploadingImage && !!featuredImageSrc && (
-                <CheckCircle2 className="w-3 h-3 text-green-600" />
-              )}
+              Featured image
             </FormLabel>
             <FormControl>
               <FileInput
