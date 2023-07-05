@@ -5,7 +5,7 @@ import StarterKit from '@tiptap/starter-kit';
 import {HTMLAttributes, useEffect} from 'react';
 import {FieldError, useFormContext} from 'react-hook-form';
 import {cn} from 'utils';
-import {Form} from '../../../../../apps/web/src/features/EventForm/types';
+import {Form} from '../../../../apps/web/src/features/EventForm/types';
 import {EditorMenu} from './EditorMenu';
 import {inputClassName} from '../Input/Input';
 
