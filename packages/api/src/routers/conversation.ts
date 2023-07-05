@@ -33,8 +33,6 @@ const createConversation = protectedProcedure
       },
     });
 
-    console.log({existingConversation});
-
     if (existingConversation) {
       return existingConversation;
     }
