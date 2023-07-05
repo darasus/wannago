@@ -1,14 +1,14 @@
 import {useSignIn} from '@clerk/nextjs';
 import {Button} from 'ui';
 
-export function SignInWithGoogleButton() {
+export function SignInWithGoogleButton(props?: {redirectUrlComplete?: string}) {
   const {signIn} = useSignIn();
 
   const onClick = async () => {
     await signIn?.authenticateWithRedirect({
       strategy: 'oauth_google',
       redirectUrl: '/auth/callback',
-      redirectUrlComplete: '/dashboard',
+      redirectUrlComplete: props?.redirectUrlComplete ?? '/dashboard',
     });
   };
 

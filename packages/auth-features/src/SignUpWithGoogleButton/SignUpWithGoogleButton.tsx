@@ -2,16 +2,17 @@ import {useSignUp} from '@clerk/nextjs';
 import {useTransition} from 'react';
 import {Button, Icons} from 'ui';
 
-export function SignUpWithGoogleButton() {
+export function SignUpWithGoogleButton(props?: {redirectUrlComplete?: string}) {
   const {signUp} = useSignUp();
   const [isPending, startTransition] = useTransition();
 
   const onClick = async () => {
     startTransition(async () => {
+      console.log(props?.redirectUrlComplete);
       await signUp?.authenticateWithRedirect({
         strategy: 'oauth_google',
         redirectUrl: '/auth/callback',
-        redirectUrlComplete: '/dashboard',
+        redirectUrlComplete: props?.redirectUrlComplete ?? '/dashboard/all',
       });
     });
   };

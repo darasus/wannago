@@ -16,9 +16,10 @@ import Link from 'next/link';
 interface Props {
   onDone?: () => void;
   onLoginClick?: () => void;
+  redirectUrlComplete?: string;
 }
 
-export function Register({onDone, onLoginClick}: Props) {
+export function Register({onDone, onLoginClick, redirectUrlComplete}: Props) {
   const {setSession, isLoaded} = useSignUp();
   const {getToken} = useAuth();
 
@@ -82,11 +83,17 @@ export function Register({onDone, onLoginClick}: Props) {
           </span>
         </div>
       </div>
-      <SignUpWithGoogleButton />
+      <SignUpWithGoogleButton redirectUrlComplete={redirectUrlComplete} />
       <div>
-        <Button asChild variant={'link'}>
-          <Link href="/login">Go to login</Link>
-        </Button>
+        {onLoginClick ? (
+          <Button onClick={onLoginClick} variant={'link'}>
+            Go to login
+          </Button>
+        ) : (
+          <Button asChild variant={'link'}>
+            <Link href="/login">Go to login</Link>
+          </Button>
+        )}
       </div>
     </div>
   );

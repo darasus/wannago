@@ -38,7 +38,7 @@ export function Modal({children, isOpen, onClose, title, className}: Props) {
             >
               <Dialog.Panel
                 className={cn(
-                  'flex flex-col gap-2 w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 shadow-xl transition-all border-2 border-gray-800 mx-4',
+                  'flex flex-col gap-2 w-full max-w-md transform overflow-hidden rounded-md bg-white p-6 shadow-xl transition-all border-2 border-gray-800 mx-4',
                   className
                 )}
               >

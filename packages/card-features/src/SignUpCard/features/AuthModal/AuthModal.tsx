@@ -14,7 +14,7 @@ export function AuthModal({isOpen, onClose, onDone}: Props) {
   const [step, setStep] = useState<'login' | 'register'>('login');
 
   return (
-    <Modal title="" isOpen={isOpen} onClose={onClose} className="bg-slate-200">
+    <Modal title="" isOpen={isOpen} onClose={onClose}>
       {step === 'login' && (
         <Login
           onCreateAccountClick={() => setStep('register')}
