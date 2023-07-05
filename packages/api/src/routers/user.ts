@@ -20,6 +20,7 @@ const getUserByExternalId = publicProcedure
   });
 
 const me = publicProcedure.query(async ({ctx}) => {
+  console.log('>>> ctx', ctx.auth?.userId);
   if (!ctx.auth?.userId) {
     return null;
   }

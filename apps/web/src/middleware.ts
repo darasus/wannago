@@ -12,6 +12,7 @@ const publicRoutes = [
   '/o/',
   '/api/',
   '/api/trpc/',
+  '/auth/callback',
 ];
 
 export default authMiddleware({

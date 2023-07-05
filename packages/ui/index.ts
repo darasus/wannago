@@ -96,3 +96,4 @@ export {FileInput} from './src/components/FileInput/FileInput';
 export {RichTextarea} from './src/components/RichTextarea/RichTextarea';
 export {Switch} from './src/components/Switch/Switch';
 export {Title} from './src/components/Title/Title';
+export {Icons} from './src/components/Icons/Icons';
