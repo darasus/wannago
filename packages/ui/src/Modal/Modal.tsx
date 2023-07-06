@@ -1,6 +1,7 @@
 import {Dialog, Transition} from '@headlessui/react';
 import {Fragment} from 'react';
 import {cn} from 'utils';
+import {CardBase} from '../CardBase/CardBase';
 
 interface Props extends React.PropsWithChildren {
   isOpen: boolean;
@@ -37,19 +38,10 @@ export function Modal({children, isOpen, onClose, title, className}: Props) {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className={cn(
-                  'flex flex-col gap-2 w-full max-w-md transform overflow-hidden rounded-md bg-white p-6 shadow-xl transition-all border-2 border-gray-800 mx-4',
-                  className
-                )}
+                as={CardBase}
+                title={title}
+                className={cn('w-full max-w-md', className)}
               >
-                {title && (
-                  <Dialog.Title
-                    as="h3"
-                    className="text-xl font-bold leading-6 text-gray-900"
-                  >
-                    {title}
-                  </Dialog.Title>
-                )}
                 <div>{children}</div>
               </Dialog.Panel>
             </Transition.Child>
