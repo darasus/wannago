@@ -80,7 +80,20 @@ export const update = protectedProcedure
             },
           }),
         },
+        include: {tickets: true},
       });
+
+      for (const ticket of event.tickets) {
+        const ticketInInput = tickets.find((t) => t.id === ticket.id);
+
+        if (!ticketInInput) {
+          await ctx.prisma.ticket.delete({
+            where: {
+              id: ticket.id,
+            },
+          });
+        }
+      }
 
       for (const ticket of tickets) {
         if (ticket.id) {
