@@ -877,9 +877,6 @@ importers:
       client-env:
         specifier: workspace:*
         version: link:../client-env
-      hooks:
-        specifier: workspace:*
-        version: link:../hooks
       utils:
         specifier: workspace:*
         version: link:../utils

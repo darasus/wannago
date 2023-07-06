@@ -1,5 +1,6 @@
 'use client';
 
+import {ChevronDown} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {usePathname} from 'next/navigation';
 import {
@@ -50,7 +51,7 @@ export function EventFilter() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild data-testid="filter-button">
           <Button variant="outline" size="sm">
-            {getLabel()}
+            <ChevronDown /> {getLabel()}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">

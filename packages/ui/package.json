@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "client-env": "workspace:*",
-    "hooks": "workspace:*",
     "utils": "workspace:*"
   },
   "devDependencies": {

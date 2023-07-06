@@ -4,7 +4,7 @@ import {useDropzone} from 'react-dropzone';
 import {cn} from 'utils';
 import {Button} from '../Button/Button';
 import {Spinner} from '../Spinner/Spinner';
-import {useUploadImage} from 'hooks';
+import {useUploadImage} from '../../../hooks/src/useUploadImage';
 
 interface Value {
   src: string | null | undefined;
