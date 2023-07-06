@@ -9,6 +9,7 @@ import {useAmplitude} from 'hooks';
 import {PageHeader} from 'ui';
 import {Event, Organization, Ticket, User} from '@prisma/client';
 import {updateEvent} from './actions';
+import {toast} from 'react-hot-toast';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -58,8 +59,9 @@ export function EditEventForm({event, me, myOrganizations}: Props) {
           });
           router.push(`/e/${data.shortId}`);
         })
-        .catch(() => {
+        .catch((error) => {
           form.trigger();
+          toast.error(error.message);
         });
     }
   });

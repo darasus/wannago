@@ -3,6 +3,7 @@ import {protectedProcedure} from '../../../trpc';
 import {eventInput} from '../validation';
 import {geocode} from 'utils';
 import {canModifyEvent} from '../../../actions/canModifyEvent';
+import {TRPCError} from '@trpc/server';
 
 export const update = protectedProcedure
   .input(eventInput.extend({eventId: z.string().uuid()}))
@@ -87,11 +88,18 @@ export const update = protectedProcedure
         const ticketInInput = tickets.find((t) => t.id === ticket.id);
 
         if (!ticketInInput) {
-          await ctx.prisma.ticket.delete({
-            where: {
-              id: ticket.id,
-            },
-          });
+          try {
+            await ctx.prisma.ticket.delete({
+              where: {
+                id: ticket.id,
+              },
+            });
+          } catch {
+            throw new TRPCError({
+              code: 'BAD_REQUEST',
+              message: `You can't remove ticket that has at least 1 sale`,
+            });
+          }
         }
       }
 
