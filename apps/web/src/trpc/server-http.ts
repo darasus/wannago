@@ -26,6 +26,7 @@ export const api = experimental_createTRPCNextAppDirServer<AppRouter>({
                 'content-length',
                 'Content-Type',
                 'content-type',
+                'connection',
               ],
               Object.fromEntries(headers().entries())
             ),
