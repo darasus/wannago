@@ -51,7 +51,8 @@ export function EventFilter() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild data-testid="filter-button">
           <Button variant="outline" size="sm">
-            <ChevronDown /> {getLabel()}
+            {getLabel()}
+            <ChevronDown className="ml-2 h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">

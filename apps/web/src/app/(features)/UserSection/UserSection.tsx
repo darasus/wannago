@@ -15,7 +15,7 @@ import {usePathname} from 'next/navigation';
 import {getIsPublic} from '../../../features/AppLayout/features/Header/constants';
 import {useRouter} from 'next/navigation';
 import {User} from '@prisma/client';
-import {Plus} from 'lucide-react';
+import {ChevronDown, Plus} from 'lucide-react';
 import {cn} from 'utils';
 
 interface Props {
@@ -128,6 +128,7 @@ export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
                 <div className="h-4 w-4 bg-red-400 rounded-full absolute -top-1 -right-1" />
               )}
               {me.firstName}
+              <ChevronDown className="ml-1 w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
