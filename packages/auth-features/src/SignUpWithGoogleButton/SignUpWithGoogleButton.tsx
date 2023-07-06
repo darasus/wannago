@@ -8,7 +8,6 @@ export function SignUpWithGoogleButton(props?: {redirectUrlComplete?: string}) {
 
   const onClick = async () => {
     startTransition(async () => {
-      console.log(props?.redirectUrlComplete);
       await signUp?.authenticateWithRedirect({
         strategy: 'oauth_google',
         redirectUrl: '/auth/callback',

@@ -23,9 +23,6 @@ export function AddEventForm({me, organization}: Props) {
   const form = useEventForm({me});
   const {handleSubmit} = form;
 
-  console.log(form.formState.errors);
-  console.log(form.watch());
-
   const onSubmit = handleSubmit(async (data) => {
     logEvent('event_create_submitted');
     trackEventCreateConversion();
