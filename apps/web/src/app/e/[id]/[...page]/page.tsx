@@ -15,13 +15,13 @@ export default async function EventPages({
 }: {
   params: {id: string; page: string[]};
 }) {
-  const [me, event, isMyEvent, myOrganization] = await Promise.all([
+  const [me, event, isMyEvent, myOrganizations] = await Promise.all([
     api.user.me.query(),
     api.event.getByShortId.query({id: id}),
     api.event.getIsMyEvent.query({
       eventShortId: id,
     }),
-    api.organization.getMyOrganization.query(),
+    api.organization.getMyOrganizations.query(),
   ]);
 
   const allAttendeesPromise = api.event.getAllEventsAttendees.query({
@@ -62,7 +62,7 @@ export default async function EventPages({
                   <EditEventForm
                     event={event}
                     me={me}
-                    organization={myOrganization}
+                    myOrganizations={myOrganizations || []}
                   />
                 )}
                 {page[0] === 'attendees' && (

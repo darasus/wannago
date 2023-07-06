@@ -13,10 +13,10 @@ import {Organization, User} from '@prisma/client';
 
 interface Props {
   me: User;
-  organization: Organization | null;
+  myOrganizations: Organization[];
 }
 
-export function AddEventForm({me, organization}: Props) {
+export function AddEventForm({me, myOrganizations}: Props) {
   const {logEvent} = useAmplitude();
   const router = useRouter();
   const {push} = useRouter();
@@ -64,7 +64,7 @@ export function AddEventForm({me, organization}: Props) {
     <FormProvider {...form}>
       <EventForm
         me={me}
-        myOrganization={organization}
+        myOrganizations={myOrganizations}
         onSubmit={onSubmit}
         onCancelClick={() => router.push(`/dashboard`)}
       />

@@ -13,10 +13,10 @@ import {updateEvent} from './actions';
 interface Props {
   event: Event & {tickets: Ticket[]};
   me: User;
-  organization: Organization | null;
+  myOrganizations: Organization[];
 }
 
-export function EditEventForm({event, me, organization}: Props) {
+export function EditEventForm({event, me, myOrganizations}: Props) {
   const {logEvent} = useAmplitude();
   const router = useRouter();
   const form = useEventForm({
@@ -72,7 +72,7 @@ export function EditEventForm({event, me, organization}: Props) {
           <div className="col-span-12 md:col-span-12">
             <EventForm
               me={me}
-              myOrganization={organization}
+              myOrganizations={myOrganizations}
               onSubmit={onSubmit}
               onCancelClick={() => router.push(`/e/${event?.shortId}`)}
             />

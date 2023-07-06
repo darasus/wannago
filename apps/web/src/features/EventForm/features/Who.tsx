@@ -19,10 +19,10 @@ import {Organization, User} from '@prisma/client';
 
 interface Props {
   me: User;
-  myOrganization?: Organization | null;
+  myOrganizations: Organization[];
 }
 
-export function Who({me, myOrganization}: Props) {
+export function Who({me, myOrganizations}: Props) {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
 
   const options = [
@@ -30,14 +30,12 @@ export function Who({me, myOrganization}: Props) {
       label: `${me?.firstName} ${me?.lastName}`,
       value: `${me?.id}`,
     },
-    ...(myOrganization
-      ? [
-          {
-            label: `${myOrganization?.name}`,
-            value: `${myOrganization?.id}`,
-          },
-        ]
-      : []),
+    ...myOrganizations.map((o) => {
+      return {
+        label: `${o.name}`,
+        value: `${o.id}`,
+      };
+    }),
   ];
 
   return (

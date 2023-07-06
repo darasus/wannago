@@ -7,9 +7,9 @@ export const metadata = {
 };
 
 export default async function EventAddPage() {
-  const [me, organization] = await Promise.all([
+  const [me, myOrganizations] = await Promise.all([
     api.user.me.query(),
-    api.organization.getMyOrganization.query(),
+    api.organization.getMyOrganizations.query(),
   ]);
 
   if (!me) {
@@ -20,7 +20,7 @@ export default async function EventAddPage() {
     <>
       <Container maxSize="sm" className="md:px-4">
         <PageHeader title="Create new event" className="mb-4" />
-        <AddEventForm me={me} organization={organization} />
+        <AddEventForm me={me} myOrganizations={myOrganizations || []} />
       </Container>
     </>
   );

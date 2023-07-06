@@ -84,16 +84,6 @@ const getOrganizationById = publicProcedure
     });
   });
 
-const getMyOrganization = publicProcedure.query(async ({ctx}) => {
-  if (!ctx.auth?.userId) {
-    return null;
-  }
-
-  return getOrganizationByUserExternalId(ctx)({
-    externalId: ctx.auth.userId,
-  });
-});
-
 const getMyOrganizations = publicProcedure.query(async ({ctx}) => {
   if (!ctx.auth?.userId) {
     return null;
@@ -106,11 +96,6 @@ const getMyOrganizations = publicProcedure.query(async ({ctx}) => {
           externalId: ctx.auth.userId,
         },
       },
-    },
-    select: {
-      id: true,
-      name: true,
-      logoSrc: true,
     },
   });
 });
@@ -219,7 +204,6 @@ export const organizationRouter = createTRPCRouter({
   create,
   update,
   remove,
-  getMyOrganization,
   getMyOrganizationMembers,
   getOrganizationById,
   addOrganizationMember,
