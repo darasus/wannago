@@ -21,6 +21,9 @@ import {useSearchLocation} from '../hooks/useSearchLocation';
 export function Where() {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
   const searchLocation = useSearchLocation();
+  const currentValue = form.watch('address');
+  const hasNoSearchResults =
+    !searchLocation.predictions || searchLocation.predictions?.length === 0;
 
   return (
     <FormField
@@ -57,6 +60,9 @@ export function Where() {
                       </div>
                     )}
                   </div>
+                  {Boolean(currentValue) && hasNoSearchResults && (
+                    <SelectItem value={currentValue}>{currentValue}</SelectItem>
+                  )}
                   {searchLocation.predictions?.map((location) => {
                     return (
                       <SelectItem
@@ -68,8 +74,7 @@ export function Where() {
                       </SelectItem>
                     );
                   })}
-                  {(!searchLocation.predictions ||
-                    searchLocation.predictions?.length === 0) && (
+                  {hasNoSearchResults && (
                     <div className="p-2 text-center">
                       <span>No location selected...</span>
                     </div>
