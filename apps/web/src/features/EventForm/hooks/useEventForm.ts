@@ -11,10 +11,10 @@ export const eventFormSchema = z.object({
   createdById: z.string(),
   title: z.string(),
   description: z.string().optional(),
-  featuredImageSrc: z.string().nullable(),
-  featuredImageHeight: z.number().nullable(),
-  featuredImageWidth: z.number().nullable(),
-  featuredImagePreviewSrc: z.string().nullable(),
+  featuredImageSrc: z.string().nullable().optional(),
+  featuredImageHeight: z.number().nullable().optional(),
+  featuredImageWidth: z.number().nullable().optional(),
+  featuredImagePreviewSrc: z.string().nullable().optional(),
   startDate: z.date({
     required_error: 'Start date is required.',
   }),
@@ -58,7 +58,9 @@ export function useEventForm(props: {
           : event?.endDate) || new Date(),
       description: event?.description || undefined,
       address: event?.address || undefined,
-      maxNumberOfAttendees: String(event?.maxNumberOfAttendees) || '0',
+      maxNumberOfAttendees: event?.maxNumberOfAttendees
+        ? String(event?.maxNumberOfAttendees)
+        : '0',
       featuredImageSrc: event?.featuredImageSrc || undefined,
       featuredImageHeight: event?.featuredImageHeight || undefined,
       featuredImageWidth: event?.featuredImageWidth || undefined,

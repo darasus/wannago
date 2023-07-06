@@ -7,7 +7,7 @@ import type {PlaceAutocompleteResponseData} from '@googlemaps/google-maps-servic
 
 export function useSearchLocation() {
   const [isPending, startTransition] = useTransition();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce(value);
   const [state, setState] = useState<PlaceAutocompleteResponseData | null>(
     null

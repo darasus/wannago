@@ -47,6 +47,10 @@ export function EditEventForm({event, me, organization}: Props) {
           Intl.DateTimeFormat().resolvedOptions().timeZone
         ),
         maxNumberOfAttendees: Number(data.maxNumberOfAttendees) || 0,
+        featuredImageSrc: data.featuredImageSrc || null,
+        featuredImageHeight: Number(data.featuredImageHeight) || null,
+        featuredImageWidth: Number(data.featuredImageWidth) || null,
+        featuredImagePreviewSrc: data.featuredImagePreviewSrc || null,
       })
         .then((data) => {
           logEvent('event_updated', {

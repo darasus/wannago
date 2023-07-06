@@ -4,22 +4,18 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  Popover,
-  PopoverTrigger,
-  Spinner,
-  Button,
-  PopoverContent,
-  Command,
-  CommandInput,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
   FormMessage,
+  Input,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Spinner,
 } from 'ui';
 import {z} from 'zod';
 import {eventFormSchema} from '../hooks/useEventForm';
-import {cn} from 'utils';
-import {Check, ChevronsUpDown} from 'lucide-react';
 import {useSearchLocation} from '../hooks/useSearchLocation';
 
 export function Where() {
@@ -31,65 +27,57 @@ export function Where() {
       control={form.control}
       name="address"
       render={({field}) => (
-        <FormItem className="flex flex-col">
-          <FormLabel>Location</FormLabel>
-          <Popover>
-            <PopoverTrigger asChild>
-              <FormControl>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  className={cn(
-                    'justify-between',
-                    !field.value && 'text-muted-foreground'
-                  )}
-                  data-testid="event-form-address-button"
-                >
-                  {field.value || 'Search location...'}
-                  {searchLocation.isPending ? (
-                    <Spinner />
-                  ) : (
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  )}
-                </Button>
-              </FormControl>
-            </PopoverTrigger>
-            <PopoverContent className="p-0">
-              <Command>
-                <CommandInput
-                  placeholder="Search Location..."
-                  value={searchLocation.value}
-                  onValueChange={(value) => {
-                    searchLocation.setValue(value);
-                  }}
-                  data-testid="event-form-address"
-                />
-                <CommandEmpty>No place found.</CommandEmpty>
-                <CommandGroup>
-                  {searchLocation.predictions?.map((location) => (
-                    <CommandItem
-                      value={location.description}
-                      key={location.place_id}
-                      onSelect={(value) => {
-                        field.onChange(value);
+        <FormItem>
+          <FormLabel>Address</FormLabel>
+          <FormControl>
+            <Select
+              value={field.value}
+              onValueChange={(value) => {
+                field.onChange(value);
+              }}
+            >
+              <SelectTrigger data-testid="event-form-address-button">
+                <SelectValue placeholder="Select location" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <div className="relative">
+                    <Input
+                      className="mb-2"
+                      placeholder="Type your address here..."
+                      value={searchLocation.value}
+                      onChange={(e) => {
+                        searchLocation.setValue(e.target.value);
                       }}
-                      data-testid="location-input-option"
-                    >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4',
-                          location.description === field.value
-                            ? 'opacity-100'
-                            : 'opacity-0'
-                        )}
-                      />
-                      {location.description}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </Command>
-            </PopoverContent>
-          </Popover>
+                      data-testid="event-form-address-input"
+                    />
+                    {searchLocation?.isPending && (
+                      <div className="absolute top-0 right-2 h-full flex items-center">
+                        <Spinner className="h-4 w-4" />
+                      </div>
+                    )}
+                  </div>
+                  {searchLocation.predictions?.map((location) => {
+                    return (
+                      <SelectItem
+                        key={location.place_id}
+                        value={location.description}
+                        data-testid="location-input-option"
+                      >
+                        {location.description}
+                      </SelectItem>
+                    );
+                  })}
+                  {(!searchLocation.predictions ||
+                    searchLocation.predictions?.length === 0) && (
+                    <div className="p-2 text-center">
+                      <span>No location selected...</span>
+                    </div>
+                  )}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </FormControl>
           <FormMessage />
         </FormItem>
       )}

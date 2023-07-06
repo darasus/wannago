@@ -43,7 +43,7 @@ Cypress.Commands.addAll({
     cy.get('[data-testid="calendar-date-button"]').contains('21').click();
     // address
     cy.get('[data-testid="event-form-address-button"]').click();
-    cy.get('[data-testid="event-form-address"]').type('Paris');
+    cy.get('[data-testid="event-form-address-input"]').type('Paris');
     cy.get('[data-testid="location-input-option"]').first().click();
     // attendees
     cy.get('[data-testid="event-form-max-attendees"]').type('10');
