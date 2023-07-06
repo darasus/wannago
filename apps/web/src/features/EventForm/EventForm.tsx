@@ -1,52 +1,52 @@
-"use client";
+'use client';
 
-import { FormEventHandler } from "react";
-import { FormProvider, useFormContext } from "react-hook-form";
-import { Button, CardBase, Form } from "ui";
-import { Organization, User } from "@prisma/client";
-import { z } from "zod";
-import { eventFormSchema } from "./hooks/useEventForm";
-import { Who } from "./features/Who";
-import { What } from "./features/What";
-import { When } from "./features/When";
-import { Where } from "./features/Where";
-import { Attend } from "./features/Attend";
+import {FormEventHandler} from 'react';
+import {FormProvider, useFormContext} from 'react-hook-form';
+import {Button, CardBase, Form} from 'ui';
+import {Organization, User} from '@prisma/client';
+import {z} from 'zod';
+import {eventFormSchema} from './hooks/useEventForm';
+import {Who} from './features/Who';
+import {What} from './features/What';
+import {When} from './features/When';
+import {Where} from './features/Where';
+import {Attend} from './features/Attend';
 
 interface Props {
   onSubmit: FormEventHandler;
   isLoading?: boolean;
   onCancelClick: () => void;
   me: User;
-  myOrganization: Organization | null;
+  myOrganizations: Organization[];
 }
 
 export function EventForm({
   onSubmit,
   onCancelClick,
   me,
-  myOrganization,
+  myOrganizations,
 }: Props) {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
 
   const items = [
     {
-      label: "Who",
-      content: <Who me={me} myOrganization={myOrganization} />,
+      label: 'Who',
+      content: <Who me={me} myOrganizations={myOrganizations} />,
     },
     {
-      label: "What",
+      label: 'What',
       content: <What />,
     },
     {
-      label: "When",
+      label: 'When',
       content: <When />,
     },
     {
-      label: "Where",
+      label: 'Where',
       content: <Where />,
     },
     {
-      label: "Attend",
+      label: 'Attend',
       content: <Attend />,
     },
   ];
@@ -58,7 +58,7 @@ export function EventForm({
           <form onSubmit={onSubmit}>
             <div className="flex flex-col gap-y-4">
               <FormProvider {...form}>
-                {items.map(({ label, content }, i) => {
+                {items.map(({label, content}, i) => {
                   return (
                     <CardBase key={i} title={label}>
                       <div className="flex flex-col gap-y-2">{content}</div>
@@ -74,7 +74,7 @@ export function EventForm({
                     type="submit"
                     data-testid="event-form-submit-button"
                   >
-                    {"Save"}
+                    {'Save'}
                   </Button>
                   <Button
                     onClick={(e) => {
