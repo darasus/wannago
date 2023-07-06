@@ -4,6 +4,7 @@ import {useCallback, useTransition} from 'react';
 import {Badge, Button, Text} from 'ui';
 import {removeMember} from './actions';
 import {toast} from 'react-hot-toast';
+import Link from 'next/link';
 
 interface Props {
   member: User;
@@ -27,7 +28,7 @@ export function TeamMember({member, organization}: Props) {
   }, [member, organization?.id]);
 
   const {modal, open} = useConfirmDialog({
-    title: 'Are you sure you want to remove team member?',
+    title: 'Remove team member?',
     description: `This team member will no longer be able to access you team's events`,
     onConfirm: async () => {
       await handleRemove();
@@ -38,14 +39,20 @@ export function TeamMember({member, organization}: Props) {
     <>
       {modal}
       <div className="flex gap-2 items-center">
-        <Text className="text-sm">{`${member.firstName} ${member.lastName}`}</Text>
+        <Button variant="link" size="sm" className="p-0" asChild>
+          <Link href={`/u/${member.id}`}>
+            <Text className="text-sm">{`${member.firstName} ${member.lastName}`}</Text>
+          </Link>
+        </Button>
         <Badge>Admin</Badge>
+        <div className="grow" />
         <Button
-          variant="destructive"
+          variant="link"
           size="sm"
           onClick={open}
           disabled={isPending}
           isLoading={isPending}
+          className="text-red-500 p-0"
         >
           Remove
         </Button>

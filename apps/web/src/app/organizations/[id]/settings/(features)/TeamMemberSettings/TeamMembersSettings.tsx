@@ -19,10 +19,6 @@ export function TeamMembersSettings({organization, membersPromise}: Props) {
     useState(false);
   const members = use(membersPromise);
 
-  if (!organization) {
-    return null;
-  }
-
   return (
     <>
       <CreateMemberModal
