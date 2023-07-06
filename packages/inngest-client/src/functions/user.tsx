@@ -5,7 +5,7 @@ export const userAccountRegistered = inngest.createFunction(
     name: 'User Account Registered',
   },
   {event: 'user/account.registered'},
-  async ctx => {
+  async (ctx) => {
     await ctx.step.sleep(5000);
 
     const user = await ctx.step.run('Fetch user', () => {
@@ -23,7 +23,7 @@ export const userAccountRegistered = inngest.createFunction(
     await ctx.step.run('Notify admins about created user', async () => {
       await ctx.postmark.sendToTransactionalStream({
         subject: 'New user registered',
-        to: 'hi@wannago.app',
+        to: 'hello@wannago.app',
         htmlString: `
           <div>
             <p>New user registered!</p>

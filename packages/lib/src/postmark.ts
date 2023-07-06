@@ -35,14 +35,14 @@ export class Postmark {
         'X-Postmark-Server-Token': env.POSTMARK_API_KEY,
       },
       body: JSON.stringify({
-        From: from || 'hi@wannago.app',
+        From: from || 'hello@wannago.app',
         To: to,
         ReplyTo: replyTo || to,
         Subject: subject,
         HtmlBody: htmlString,
         MessageStream: messageStream,
       }),
-    }).catch(error => {
+    }).catch((error) => {
       captureException(error);
     });
   }

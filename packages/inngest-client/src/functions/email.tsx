@@ -134,7 +134,7 @@ export const emailReminderSent = inngest.createFunction(
       : '';
 
     return ctx.postmark.sendToTransactionalStream({
-      replyTo: 'WannaGo Team <hi@wannago.app>',
+      replyTo: 'WannaGo Team <hello@wannago.app>',
       to: user.email,
       subject: `Your event is coming up "${event.title}"!`,
       htmlString: render(
@@ -193,7 +193,7 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
           });
 
         return ctx.postmark.sendToTransactionalStream({
-          replyTo: 'WannaGo Team <hi@wannago.app>',
+          replyTo: 'WannaGo Team <hello@wannago.app>',
           to: user.email,
           subject: `Order confirmation`,
           htmlString: render(
@@ -249,7 +249,7 @@ export const eventSignUp = inngest.createFunction(
       : `${organizer.name}`;
 
     await ctx.postmark.sendToTransactionalStream({
-      replyTo: 'WannaGo Team <hi@wannago.app>',
+      replyTo: 'WannaGo Team <hello@wannago.app>',
       to: user.email,
       subject: `Thanks for signing up for "${event.title}"!`,
       htmlString: render(
@@ -303,7 +303,7 @@ export const eventInvite = inngest.createFunction(
       : `${organizer.name}`;
 
     await ctx.postmark.sendToTransactionalStream({
-      replyTo: 'WannaGo Team <hi@wannago.app>',
+      replyTo: 'WannaGo Team <hello@wannago.app>',
       to: user.email,
       subject: `You're invited to: "${event.title}"!`,
       htmlString: render(
@@ -411,7 +411,7 @@ export const afterRegisterNoCreatedEventFollowUpEmail = inngest.createFunction(
 
     if (hasNoEvents && user?.firstName) {
       await ctx.postmark.sendToBroadcastStream({
-        replyTo: 'WannaGo Team <hi@wannago.app>',
+        replyTo: 'WannaGo Team <hello@wannago.app>',
         to: user.email,
         subject: 'We would love to hear your feedback',
         htmlString: render(
@@ -456,7 +456,7 @@ export const eventCancelInvite = inngest.createFunction(
       : `${organizer.name}`;
 
     await ctx.postmark.sendToTransactionalStream({
-      replyTo: 'WannaGo Team <hi@wannago.app>',
+      replyTo: 'WannaGo Team <hello@wannago.app>',
       to: user.email,
       subject: `Your invite has been cancelled...`,
       htmlString: render(
@@ -505,7 +505,7 @@ export const eventCancelSignUp = inngest.createFunction(
       : `${organizer.name}`;
 
     await ctx.postmark.sendToTransactionalStream({
-      replyTo: 'WannaGo Team <hi@wannago.app>',
+      replyTo: 'WannaGo Team <hello@wannago.app>',
       to: user.email,
       subject: `Your sign up has been cancelled...`,
       htmlString: render(
@@ -551,7 +551,7 @@ export const organizerEventSignUpNotification = inngest.createFunction(
     invariant(organizer, organizerNotFoundError);
 
     await ctx.postmark.sendToOrganizerEventSignUpNotificationStream({
-      replyTo: 'WannaGo Team <hi@wannago.app>',
+      replyTo: 'WannaGo Team <hello@wannago.app>',
       //TODO: '' should not be allowed
       to: organizer?.email || '',
       subject: 'Your event has new sign up!',
