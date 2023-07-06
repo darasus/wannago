@@ -2,11 +2,7 @@
 
 import {useEffect, useRef} from 'react';
 
-interface Props {
-  className?: string;
-}
-
-export function LoadingWave({className = 'h-5 w-5'}: Props) {
+export function LoadingWave() {
   const ref = useRef<SVGPathElement>(null);
 
   useEffect(() => {

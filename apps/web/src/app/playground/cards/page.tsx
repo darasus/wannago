@@ -7,7 +7,7 @@ import {
   OrganizerCard,
   UrlCard,
 } from 'cards';
-import {CardBase, Container, InfoIconWithTooltip} from 'ui';
+import {CardBase, Container, InfoIconWithTooltip, LoadingCard} from 'ui';
 import {getBaseUrl} from 'utils';
 
 function Section({children}: {children?: React.ReactNode}) {
@@ -57,6 +57,9 @@ const event: Event & {user: User} = {
 export default function CardsPage() {
   return (
     <Container maxSize="sm" className="flex flex-col gap-4">
+      <Section>
+        <LoadingCard />
+      </Section>
       <Section>
         <CardBase
           badges={[

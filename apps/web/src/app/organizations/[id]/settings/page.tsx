@@ -1,4 +1,4 @@
-import {Button, CardBase, Container, LoadingBlock, PageHeader} from 'ui';
+import {Button, Container, LoadingCard, PageHeader} from 'ui';
 import {api} from '../../../../trpc/server-http';
 import {OrganizationForm} from '../../(features)/OrganizationForm/OrganizationForm';
 import {TeamMembersSettings} from './(features)/TeamMemberSettings/TeamMembersSettings';
@@ -8,15 +8,11 @@ import {ChevronLeft} from 'lucide-react';
 import {Suspense} from 'react';
 import {updateOrganization} from './actions';
 
-// TODO: create description text explaining why you need to create a team
+// TODO: create description text explaining why you need to create a organization
 
 export const generateMetadata = async ({params}: {params: {id: string}}) => {
-  const organization = await api.organization.getOrganizationById.query({
-    organizationId: params.id,
-  });
-
   return {
-    title: `${organization?.name} settings | WannaGo`,
+    title: `Organization settings | WannaGo`,
   };
 };
 
@@ -34,6 +30,9 @@ export default async function OrganizationSettingsPage({
   }
 
   const membersPromise = api.organization.getMyOrganizationMembers.query();
+  const stripeAccountPromise = api.stripeAccountLink.getAccount.query({
+    organizerId: organization.id,
+  });
 
   return (
     <>
@@ -45,7 +44,7 @@ export default async function OrganizationSettingsPage({
               Back to organizations
             </Link>
           </Button>
-          <PageHeader title={`${organization?.name} settings`} />
+          <PageHeader title="Organization settings" />
           <div className="flex flex-col gap-4">
             <OrganizationForm
               organization={organization}
@@ -57,19 +56,18 @@ export default async function OrganizationSettingsPage({
                 });
               }}
             />
-            <Suspense
-              fallback={
-                <CardBase>
-                  <LoadingBlock />
-                </CardBase>
-              }
-            >
+            <Suspense fallback={<LoadingCard />}>
               <TeamMembersSettings
                 organization={organization}
                 membersPromise={membersPromise}
               />
             </Suspense>
-            <StripeAccountLinkSettings organizerId={organization.id} />
+            <Suspense fallback={<LoadingCard />}>
+              <StripeAccountLinkSettings
+                stripeAccountPromise={stripeAccountPromise}
+                organizerId={organization.id}
+              />
+            </Suspense>
           </div>
         </div>
       </Container>

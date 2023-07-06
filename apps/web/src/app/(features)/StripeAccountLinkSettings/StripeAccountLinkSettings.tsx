@@ -1,16 +1,22 @@
 'use client';
 
-import {Button, CardBase} from 'ui';
-import {api} from '../../../trpc/client';
+import {Badge, Button, CardBase} from 'ui';
 import {use} from 'react';
 import {useRedirectToStripeAccount} from './hooks/useRedirectToStripeAccount';
 import {useCreateStripeAccount} from './hooks/useCreateStripeAccount';
+import {RouterOutputs} from 'api';
 
 interface Props {
   organizerId: string;
+  stripeAccountPromise: Promise<
+    RouterOutputs['stripeAccountLink']['getAccount']
+  >;
 }
 
-export function StripeAccountLinkSettings({organizerId}: Props) {
+export function StripeAccountLinkSettings({
+  organizerId,
+  stripeAccountPromise,
+}: Props) {
   const {isLoading: isRedirecting, redirectToStripeAccount} =
     useRedirectToStripeAccount({
       organizerId,
@@ -18,42 +24,45 @@ export function StripeAccountLinkSettings({organizerId}: Props) {
   const {createAccountLink, isLoading: isCreating} = useCreateStripeAccount({
     organizerId,
   });
-
-  const account = use(
-    api.stripeAccountLink.getAccount.query({
-      organizerId,
-    })
-  );
+  const account = use(stripeAccountPromise);
 
   return (
-    <CardBase title={account ? 'Linked Stripe account' : 'Link Stripe account'}>
+    <CardBase
+      title="Connect Stripe"
+      titleChildren={
+        account ? (
+          <Button
+            onClick={redirectToStripeAccount}
+            disabled={isRedirecting}
+            isLoading={isRedirecting}
+            size="sm"
+            variant={'link'}
+          >
+            View Stripe account
+          </Button>
+        ) : (
+          <Button
+            onClick={createAccountLink}
+            disabled={isCreating}
+            isLoading={isCreating}
+            size="sm"
+            variant={'link'}
+          >
+            Connect
+          </Button>
+        )
+      }
+    >
       {account && (
-        <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
           <div>
             <div>Account ID: {account.id}</div>
           </div>
-          <div className="flex gap-2">
-            <Button
-              onClick={redirectToStripeAccount}
-              disabled={isRedirecting}
-              isLoading={isRedirecting}
-              size="sm"
-            >
-              View Stripe account
-            </Button>
-          </div>
+          <div className="grow" />
+          <Badge className="bg-green-500 hover:bg-green-600">Linked</Badge>
         </div>
       )}
-      {!account && (
-        <Button
-          onClick={createAccountLink}
-          disabled={isCreating}
-          isLoading={isCreating}
-          size="sm"
-        >
-          Link Stripe account
-        </Button>
-      )}
+      {!account && <span>No stripe account is linked</span>}
     </CardBase>
   );
 }

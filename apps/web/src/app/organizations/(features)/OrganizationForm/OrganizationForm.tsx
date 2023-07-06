@@ -73,7 +73,7 @@ export function OrganizationForm({organization, onSubmit}: Props) {
   });
 
   return (
-    <CardBase>
+    <CardBase title="Organization details">
       <Form {...form}>
         <form onSubmit={handleSubmit}>
           <FormProvider {...form}>

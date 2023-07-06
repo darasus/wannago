@@ -32,7 +32,7 @@ export function TeamMembersSettings({organization, membersPromise}: Props) {
       />
       <div className="flex flex-col gap-4">
         <CardBase
-          title={'Team members'}
+          title={'Organization members'}
           titleChildren={
             <Button
               size="sm"

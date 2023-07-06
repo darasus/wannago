@@ -1,23 +1,30 @@
-import {Container, PageHeader} from 'ui';
+import {Container, LoadingCard, PageHeader} from 'ui';
 import {api} from '../../trpc/server-http';
-import {UserSettings} from './(features)/UserSettings/UserSettings';
+import {UserSettingsForm} from './(features)/UserSettingsForm/UserSettingsForm';
+import {Suspense} from 'react';
+import {StripeSettings} from './(features)/StripeSettings/StripeSettings';
 
 export const generateMetadata = async () => {
-  const user = await api.user.me.query();
-
   return {
-    title: `${user?.firstName} ${user?.lastName} settings | WannaGo`,
+    title: `User settings | WannaGo`,
   };
 };
 
 export default async function SettingsPage() {
-  const user = await api.user.me.query();
+  const userPromise = api.user.me.query();
 
   return (
     <Container maxSize="sm">
       <div className="flex flex-col gap-y-4">
         <PageHeader title={'Settings'}></PageHeader>
-        {user && <UserSettings user={user} />}
+        <div className="flex flex-col gap-4">
+          <Suspense fallback={<LoadingCard />}>
+            <UserSettingsForm userPromise={userPromise} />
+          </Suspense>
+          <Suspense fallback={<LoadingCard />}>
+            <StripeSettings userPromise={userPromise} />
+          </Suspense>
+        </div>
       </div>
     </Container>
   );

@@ -88,3 +88,5 @@ export {RichTextarea} from './src/RichTextarea/RichTextarea';
 export {Switch} from './src/Switch/Switch';
 export {Title} from './src/Title/Title';
 export {Icons} from './src/Icons/Icons';
+export {LoadingCard} from './src/LoadingCard/LoadingCard';
+export {Skeleton} from './src/Skeleton/Skeleton';

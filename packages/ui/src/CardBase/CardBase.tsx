@@ -1,4 +1,4 @@
-import {forwardRef, PropsWithChildren} from 'react';
+import {forwardRef, PropsWithChildren, ReactNode} from 'react';
 import {cn} from 'utils';
 import {LoadingBlock} from '../LoadingBlock/LoadingBlock';
 
@@ -11,7 +11,7 @@ type Props = PropsWithChildren & {
   className?: string;
   innerClassName?: string;
   isLoading?: boolean;
-  title?: string;
+  title?: ReactNode;
   titleChildren?: React.ReactNode;
   badges?: BadgeItem[];
 };
