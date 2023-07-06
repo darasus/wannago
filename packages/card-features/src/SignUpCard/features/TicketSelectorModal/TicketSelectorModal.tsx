@@ -2,12 +2,12 @@
 
 import {
   Button,
+  Counter,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-  Input,
   Modal,
   Text,
 } from 'ui';
@@ -21,6 +21,7 @@ import {api} from '../../../../../../apps/web/src/trpc/client';
 import {toast} from 'react-hot-toast';
 import {z} from 'zod';
 import {RouterOutputs} from 'api';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -30,7 +31,7 @@ interface Props {
   mePromise: Promise<RouterOutputs['user']['me']>;
 }
 
-const formScheme = z.record(z.string());
+const formScheme = z.record(z.number());
 
 export function TicketSelectorModal({
   isOpen,
@@ -41,7 +42,14 @@ export function TicketSelectorModal({
 }: Props) {
   const me = use(mePromise);
   const router = useRouter();
-  const form = useForm<z.infer<typeof formScheme>>({defaultValues: {}});
+  const form = useForm<z.infer<typeof formScheme>>({
+    resolver: zodResolver(formScheme),
+    defaultValues: {
+      ...event.tickets.reduce((acc, ticket) => {
+        return {...acc, [ticket.id]: 0};
+      }, {}),
+    },
+  });
   const total = Object.entries(form.watch()).reduce(
     (acc: number, [ticketId, quantity]) => {
       if (isNaN(Number(quantity))) {
@@ -65,6 +73,10 @@ export function TicketSelectorModal({
         throw new TRPCClientError('You must be logged in to buy tickets');
       }
 
+      if (Object.values(data).every((quantity) => quantity === 0)) {
+        return toast.error('You must select at least one ticket');
+      }
+
       const responseUrl = await api.payments.createCheckoutSession
         .mutate({
           userId: me.id,
@@ -72,7 +84,7 @@ export function TicketSelectorModal({
             .filter(([, quantity]) => Boolean(quantity))
             .map(([ticketId, quantity]) => ({
               ticketId,
-              quantity: Number(quantity) || 0,
+              quantity: Number(quantity),
             })),
           eventId: event.id,
         })
@@ -95,42 +107,44 @@ export function TicketSelectorModal({
           <div className="flex flex-col gap-4">
             {event.tickets.map(({title, price, id, description}) => {
               return (
-                <div key={id} className="flex flex-col gap-2">
-                  <div key={id} className="flex items-center gap-4">
-                    <div className="flex grow">
-                      <div className="grow">
-                        <Text>{title}</Text>
-                      </div>
-                      <div>
-                        <Text>
-                          {formatCents(price, event.preferredCurrency)}
-                        </Text>
-                      </div>
-                    </div>
-                    <FormField
-                      control={form.control}
-                      name={id}
-                      render={({field}) => (
+                <FormField
+                  key={id}
+                  control={form.control}
+                  name={id}
+                  render={({field}) => (
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-4">
+                        <div className="flex grow">
+                          <div className="grow">
+                            <Text>{title}</Text>
+                          </div>
+                          <div>
+                            <Text>
+                              {formatCents(price, event.preferredCurrency)}
+                            </Text>
+                          </div>
+                        </div>
                         <FormItem>
                           <FormControl>
-                            <Input
-                              className="w-[120px]"
-                              {...field}
-                              data-testid="register-last-name-input"
-                              placeholder="Quantity"
+                            <Counter
+                              value={field.value}
+                              minValue={0}
+                              onChange={(value) => {
+                                field.onChange(value);
+                              }}
                             />
                           </FormControl>
-                          <FormMessage />
                         </FormItem>
+                      </div>
+                      {description && (
+                        <div className="bg-gray-100 p-2 rounded-xl">
+                          <Text>{description}</Text>
+                        </div>
                       )}
-                    />
-                  </div>
-                  {description && (
-                    <div className="bg-gray-100 p-2 rounded-xl">
-                      <Text>{description}</Text>
+                      <FormMessage />
                     </div>
                   )}
-                </div>
+                />
               );
             })}
             <div className="flex">
