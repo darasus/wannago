@@ -1,6 +1,6 @@
 'use client';
 
-import {Event, Ticket, User} from '@prisma/client';
+import {Currency, Event, Ticket, User} from '@prisma/client';
 import {useForm} from 'react-hook-form';
 import {useEffect} from 'react';
 import {z} from 'zod';
@@ -8,8 +8,8 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {parseISO} from 'date-fns';
 
 export const eventFormSchema = z.object({
-  createdById: z.string(),
-  title: z.string(),
+  createdById: z.string().nonempty(),
+  title: z.string().nonempty(),
   description: z.string().optional(),
   featuredImageSrc: z.string().nullable().optional(),
   featuredImageHeight: z.number().nullable().optional(),
@@ -21,7 +21,7 @@ export const eventFormSchema = z.object({
   endDate: z.date({
     required_error: 'End date is required.',
   }),
-  address: z.string(),
+  address: z.string().nonempty(),
   maxNumberOfAttendees: z.string().optional().default('0'),
   tickets: z
     .array(
@@ -34,13 +34,14 @@ export const eventFormSchema = z.object({
       })
     )
     .optional(),
+  currency: z.nativeEnum(Currency),
 });
 
 export function useEventForm(props: {
   event?: (Event & {tickets: Ticket[]}) | null;
   me: User;
 }) {
-  const {event} = props || {};
+  const {event, me} = props || {};
   const createdByIdDefault =
     event?.userId || event?.organizationId || props.me.id;
 
@@ -76,6 +77,7 @@ export function useEventForm(props: {
           };
         }) || [],
       createdById: createdByIdDefault,
+      currency: event?.preferredCurrency ?? me.preferredCurrency,
     },
   });
 

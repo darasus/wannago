@@ -25,6 +25,7 @@ import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
 import {Inngest, EventSchemas} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
 import type {NextRequest} from 'next/server';
+import {NextApiRequest} from 'next';
 
 const actions = {
   getEvents,
@@ -98,6 +99,38 @@ export function createContext(opts: {req: NextRequest}): Context {
   const timezone = opts.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
   const currency = getCurrencyFromHeaders(
     opts.req.headers.get('x-vercel-ip-country')
+  );
+  const auth = getAuth(opts.req);
+
+  const innerContext = createContextInner({
+    auth,
+    clerk,
+    prisma,
+    timezone,
+    currency,
+    inngest,
+    postmark: new Postmark(),
+    cache: new CacheService(),
+  });
+
+  return Object.assign(innerContext, {
+    actions: Object.values(actions).reduce<Actions>((acc, action) => {
+      return {...acc, [action.name]: action(innerContext)};
+    }, {} as Actions),
+    assertions: Object.values(assertions).reduce<Assertions>(
+      (acc, assertion) => {
+        return {...acc, [assertion.name]: assertion(innerContext)};
+      },
+      {} as Assertions
+    ),
+  });
+}
+
+export function createNodeContext(opts: {req: NextApiRequest}): Context {
+  const timezone =
+    (opts.req.headers['x-vercel-ip-timezone'] as string) ?? 'UTC';
+  const currency = getCurrencyFromHeaders(
+    opts.req.headers['x-vercel-ip-country'] as string | undefined
   );
   const auth = getAuth(opts.req);
 

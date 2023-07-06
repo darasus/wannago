@@ -28,3 +28,4 @@ export {formatCents} from './src/formatCents';
 export {formatPercent} from './src/formatPercent';
 export {getCurrencyFromHeaders} from './src/getCurrencyFromHeaders';
 export {geocode, placeAutocomplete} from './src/maps';
+export {getCurrencySymbol} from './src/getCurrencySymbol';

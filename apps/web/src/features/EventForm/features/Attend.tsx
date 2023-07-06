@@ -1,4 +1,4 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
+import {useFieldArray, useFormContext} from 'react-hook-form';
 import {
   Button,
   FormControl,
@@ -12,15 +12,16 @@ import {
   TabsList,
   TabsTrigger,
   Textarea,
-} from "ui";
-import { z } from "zod";
-import { eventFormSchema } from "../hooks/useEventForm";
+} from 'ui';
+import {z} from 'zod';
+import {eventFormSchema} from '../hooks/useEventForm';
+import {getCurrencySymbol} from 'utils';
 
 export function Attend() {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
-  const { fields, append, remove } = useFieldArray({
+  const {fields, append, remove} = useFieldArray({
     control: form.control,
-    name: "tickets",
+    name: 'tickets',
   });
 
   return (
@@ -28,8 +29,8 @@ export function Attend() {
       defaultValue={
         form.formState.defaultValues?.tickets &&
         form.formState.defaultValues?.tickets?.length > 0
-          ? "paid"
-          : "free"
+          ? 'paid'
+          : 'free'
       }
     >
       <TabsList className="grid w-full grid-cols-2">
@@ -40,7 +41,7 @@ export function Attend() {
         <FormField
           control={form.control}
           name="maxNumberOfAttendees"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Max number of attendees</FormLabel>
               <FormControl>
@@ -72,7 +73,7 @@ export function Attend() {
                       <FormField
                         control={form.control}
                         name={`tickets.${index}.title`}
-                        render={({ field }) => <Input {...field} />}
+                        render={({field}) => <Input {...field} />}
                       />
                     </FormControl>
                   </FormItem>
@@ -84,20 +85,26 @@ export function Attend() {
                       <FormField
                         control={form.control}
                         name={`tickets.${index}.description`}
-                        render={({ field }) => <Textarea {...field} />}
+                        render={({field}) => <Textarea {...field} />}
                       />
                     </FormControl>
                   </FormItem>
                   <div className="grid grid-cols-2 gap-2">
                     <FormItem>
                       <FormLabel className="flex gap-2 items-center">
-                        Price
+                        {`Price, ${
+                          form.formState.defaultValues?.currency
+                            ? getCurrencySymbol(
+                                form.formState.defaultValues?.currency
+                              )
+                            : null
+                        }`}
                       </FormLabel>
                       <FormControl key={field.id}>
                         <FormField
                           control={form.control}
                           name={`tickets.${index}.price`}
-                          render={({ field }) => <Input {...field} />}
+                          render={({field}) => <Input {...field} />}
                         />
                       </FormControl>
                     </FormItem>
@@ -109,7 +116,7 @@ export function Attend() {
                         <FormField
                           control={form.control}
                           name={`tickets.${index}.maxQuantity`}
-                          render={({ field }) => (
+                          render={({field}) => (
                             <Input type="number" {...field} />
                           )}
                         />
@@ -134,10 +141,10 @@ export function Attend() {
             onClick={(e) => {
               e.preventDefault();
               append({
-                maxQuantity: "0",
-                price: "0",
-                title: "",
-                id: "",
+                maxQuantity: '0',
+                price: '0',
+                title: '',
+                id: '',
               });
             }}
             variant="outline"
