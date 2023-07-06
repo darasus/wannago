@@ -27,9 +27,16 @@ export function Login({
   const {getToken} = useAuth();
   const {setSession, isLoaded} = useSignIn();
   const [step, setStep] = useState<'email' | 'code'>('email');
-  const emailForm = useForm<z.infer<typeof emailFormScheme>>();
+  const emailForm = useForm<z.infer<typeof emailFormScheme>>({
+    defaultValues: {
+      email: '',
+    },
+  });
   const codeForm = useForm<z.infer<typeof codeFormScheme>>({
     mode: 'onSubmit',
+    defaultValues: {
+      code: '',
+    },
   });
 
   const ready = useCallback(async (): Promise<any> => {

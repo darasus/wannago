@@ -24,9 +24,18 @@ export function Register({onDone, onLoginClick, redirectUrlComplete}: Props) {
   const {getToken} = useAuth();
 
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
-  const userInfoForm = useForm<z.infer<typeof infoFormScheme>>();
+  const userInfoForm = useForm<z.infer<typeof infoFormScheme>>({
+    defaultValues: {
+      email: '',
+      firstName: '',
+      lastName: '',
+    },
+  });
   const codeForm = useForm<z.infer<typeof codeFormScheme>>({
     mode: 'onSubmit',
+    defaultValues: {
+      code: '',
+    },
   });
 
   const ready = useCallback(async (): Promise<any> => {
