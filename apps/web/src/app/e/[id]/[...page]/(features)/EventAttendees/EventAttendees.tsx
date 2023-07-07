@@ -1,12 +1,11 @@
 'use client';
 
-import {EventSignUp, User} from '@prisma/client';
+import {Event, EventSignUp, Ticket, TicketSale, User} from '@prisma/client';
 import {
   CardBase,
   Button,
   Text,
   PageHeader,
-  TicketList,
   EventRegistrationStatusBadge,
 } from 'ui';
 import {useConfirmDialog} from 'hooks';
@@ -16,18 +15,13 @@ import {ExportAttendeesCSV} from './features/ExportAttendeesCSV/ExportAttendeesC
 import {useParams} from 'next/navigation';
 import {api} from '../../../../../../trpc/client';
 import {useRouter} from 'next/navigation';
+import {TicketList} from '../TicketList/TicketList';
 
 interface ItemProps {
   eventSignUp: EventSignUp & {
     user: User;
-    tickets: {
-      [id: string]: {
-        id: string;
-        title: string;
-        description: string | undefined | null;
-        quantity: number;
-      };
-    };
+    event: Event;
+    ticketSales: (TicketSale & {ticket: Ticket})[];
   };
   refetch: () => void;
 }
@@ -63,7 +57,7 @@ function Item({eventSignUp, refetch}: ItemProps) {
           </div>
           <div className="flex gap-2">
             <EventRegistrationStatusBadge status={eventSignUp.status} />
-            {Object.entries(eventSignUp.tickets).length === 0 && (
+            {Object.entries(eventSignUp.ticketSales).length === 0 && (
               <Button
                 size="sm"
                 variant="outline"
@@ -75,9 +69,9 @@ function Item({eventSignUp, refetch}: ItemProps) {
             )}
           </div>
         </div>
-        {Object.entries(eventSignUp.tickets).length > 0 && (
-          <div className="p-4 rounded-3xl border-2">
-            <TicketList tickets={Object.values(eventSignUp.tickets)} />
+        {Object.entries(eventSignUp.ticketSales).length > 0 && (
+          <div className="p-4 rounded-md border-2">
+            <TicketList eventSignUps={[eventSignUp]} />
           </div>
         )}
       </CardBase>

@@ -1,4 +1,5 @@
 import {authMiddleware} from '@clerk/nextjs';
+import {NextResponse} from 'next/server';
 
 const publicRoutes = [
   '/login',
@@ -26,6 +27,23 @@ export default authMiddleware({
     }
 
     return publicRoutes.some((route) => req.nextUrl.pathname.startsWith(route));
+  },
+  beforeAuth(req, evt) {
+    if (req.nextUrl.pathname.includes('api/pdf-ticket')) {
+      return false;
+    }
+
+    return NextResponse.next();
+  },
+  afterAuth(auth, req, evt) {
+    if (auth.isPublicRoute) {
+      return NextResponse.next();
+    }
+    // if (req.nextUrl.pathname === '/login' && auth.isPublicRoute) {
+    //   return NextResponse.redirect(getBaseUrl() + '/dashboard');
+    // }
+
+    return NextResponse.next();
   },
 });
 

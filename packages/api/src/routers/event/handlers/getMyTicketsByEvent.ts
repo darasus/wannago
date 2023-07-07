@@ -27,37 +27,18 @@ export const getMyTicketsByEvent = publicProcedure
     invariant(user, userNotFoundError);
     invariant(event, eventNotFoundError);
 
-    const tickets = await ctx.prisma.ticket.findMany({
+    return ctx.prisma.eventSignUp.findMany({
       where: {
         eventId: event.id,
+        userId: user.id,
       },
       include: {
+        event: true,
         ticketSales: {
-          where: {
-            userId: user.id,
+          include: {
+            ticket: true,
           },
         },
       },
     });
-
-    const response = tickets
-      .map((ticket) => {
-        return {
-          id: ticket.id,
-          title: ticket.title,
-          description: ticket.description,
-          price: ticket.price,
-          quantity: ticket.ticketSales.reduce(
-            (acc, ticketSale) => acc + ticketSale.quantity,
-            0
-          ),
-        };
-      })
-      .filter((ticket) => ticket.quantity > 0);
-
-    if (response.length === 0) {
-      return null;
-    }
-
-    return response;
   });

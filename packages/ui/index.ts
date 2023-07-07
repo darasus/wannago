@@ -11,12 +11,16 @@ export {Modal} from './src/Modal/Modal';
 export {Logo, LogoView} from './src/Logo/Logo';
 export {PageHeader} from './src/PageHeader/PageHeader';
 export {Spinner} from './src/Spinner/Spinner';
-export {Table} from './src/Table/Table';
-export {TBody} from './src/Table/TBody';
-export {TRow} from './src/Table/TRow';
-export {THead} from './src/Table/THead';
-export {Th} from './src/Table/Th';
-export {Td} from './src/Table/Td';
+export {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './src/Table/Table';
 export {LocationImage} from './src/LocationImage/LocationImage';
 export {EventRegistrationStatusBadge} from './src/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 export {TextAnimation} from './src/TextAnimation/TextAnimation';
@@ -41,7 +45,6 @@ export {
 } from './src/Menu/Menu';
 export {NotFoundMessage} from './src/NotFoundMessage/NotFoundMessage';
 export {InfoIconWithTooltip} from './src/InfoIconWithTooltip/InfoIconWithTooltip';
-export {TicketList} from './src/TicketList/TicketList';
 export {InputWrapper} from './src/InputWrapper/InputWrapper';
 export {AnimateRender} from './src/AnimateRender/AnimateRender';
 export {
@@ -91,3 +94,4 @@ export {Icons} from './src/Icons/Icons';
 export {LoadingCard} from './src/LoadingCard/LoadingCard';
 export {Skeleton} from './src/Skeleton/Skeleton';
 export {Counter} from './src/Counter/Counter';
+export {Checkbox} from './src/Checkbox/Checkbox';

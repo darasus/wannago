@@ -1,42 +1,42 @@
-"use client";
+'use client';
 
-import { Organization } from "@prisma/client";
+import {Organization} from '@prisma/client';
 import {
   createColumnHelper,
   useReactTable,
   getCoreRowModel,
   flexRender,
-} from "@tanstack/react-table";
-import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
+} from '@tanstack/react-table';
+import {ChevronLeft} from 'lucide-react';
+import Link from 'next/link';
 import {
   Button,
   Container,
   PageHeader,
-  TBody,
-  THead,
-  TRow,
   Table,
-  Td,
-  Th,
-} from "ui";
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from 'ui';
 
 const columnHelper = createColumnHelper<Organization>();
 
 const columns = [
   columnHelper.accessor((row) => row.name, {
-    id: "Name",
-    header: () => "Name",
+    id: 'Name',
+    header: () => 'Name',
     cell: (info) => (
       <Link className="underline" href={`/o/${info.row.original.id}`}>
         {info.getValue()}
       </Link>
     ),
   }),
-  columnHelper.accessor("email", {
+  columnHelper.accessor('email', {
     cell: (info) => info.renderValue(),
   }),
-  columnHelper.accessor("id", {
+  columnHelper.accessor('id', {
     cell: (info) => info.getValue(),
   }),
 ];
@@ -45,7 +45,7 @@ interface OrganizationsTableProps {
   organizations: Organization[];
 }
 
-export function OrganizationsTable({ organizations }: OrganizationsTableProps) {
+export function OrganizationsTable({organizations}: OrganizationsTableProps) {
   const table = useReactTable({
     data: organizations,
     columns,
@@ -55,41 +55,41 @@ export function OrganizationsTable({ organizations }: OrganizationsTableProps) {
   return (
     <Container maxSize="full">
       <div className="flex flex-col gap-4">
-        <Button variant="outline" asChild>
+        <Button asChild>
           <Link href="/admin">
-            <ChevronLeft />
+            <ChevronLeft className="h-4 w-4 mr-1" />
             Back to admin home
           </Link>
         </Button>
-        <PageHeader title={"All organizations"} />
+        <PageHeader title={'All organizations'} />
         <Table>
-          <THead>
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <Th key={header.id}>
+                  <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                  </Th>
+                  </TableHead>
                 ))}
-              </TRow>
+              </TableRow>
             ))}
-          </THead>
-          <TBody>
+          </TableHeader>
+          <TableBody>
             {table.getRowModel().rows.map((row) => (
-              <TRow key={row.id}>
+              <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <Td key={cell.id}>
+                  <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Td>
+                  </TableCell>
                 ))}
-              </TRow>
+              </TableRow>
             ))}
-          </TBody>
+          </TableBody>
         </Table>
       </div>
     </Container>

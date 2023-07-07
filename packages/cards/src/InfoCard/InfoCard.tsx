@@ -63,7 +63,7 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
     <>
       <CardBase badges={badges} title={'What'}>
         {isLoadingImage && (
-          <div className="flex flex-col items-center overflow-hidden relative justify-center bg-gray-300 rounded-3xl safari-rounded-border-fix mb-4 aspect-square">
+          <div className="flex flex-col items-center overflow-hidden relative justify-center bg-gray-300 rounded-md safari-rounded-border-fix mb-4 aspect-square">
             <LoadingBlock />
           </div>
         )}

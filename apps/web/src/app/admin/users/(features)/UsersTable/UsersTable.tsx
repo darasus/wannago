@@ -1,33 +1,33 @@
-"use client";
+'use client';
 
-import { User } from "@prisma/client";
+import {User} from '@prisma/client';
 import {
   useReactTable,
   getCoreRowModel,
   flexRender,
   createColumnHelper,
-} from "@tanstack/react-table";
-import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
+} from '@tanstack/react-table';
+import {ChevronLeft} from 'lucide-react';
+import Link from 'next/link';
 import {
   Container,
   Button,
   PageHeader,
   Table,
-  THead,
-  TRow,
-  Th,
-  TBody,
-  Td,
-} from "ui";
-import { formatDate } from "utils";
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from 'ui';
+import {formatDate} from 'utils';
 
 const columnHelper = createColumnHelper<User>();
 
 const columns = [
   columnHelper.accessor((row) => row.firstName, {
-    id: "firstName",
-    header: () => "Name",
+    id: 'firstName',
+    header: () => 'Name',
     cell: (info) => (
       <Link
         className="underline"
@@ -35,16 +35,16 @@ const columns = [
       >{`${info.getValue()} ${info.row.original.lastName}`}</Link>
     ),
   }),
-  columnHelper.accessor("createdAt", {
-    cell: (info) => formatDate(info.getValue(), "dd MMM, HH:mm"),
+  columnHelper.accessor('createdAt', {
+    cell: (info) => formatDate(info.getValue(), 'dd MMM, HH:mm'),
   }),
-  columnHelper.accessor("email", {
+  columnHelper.accessor('email', {
     cell: (info) => info.renderValue(),
   }),
-  columnHelper.accessor("id", {
+  columnHelper.accessor('id', {
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("externalId", {
+  columnHelper.accessor('externalId', {
     cell: (info) => info.renderValue(),
   }),
 ];
@@ -53,7 +53,7 @@ interface UsersTableProps {
   users: User[];
 }
 
-export function UsersTable({ users }: UsersTableProps) {
+export function UsersTable({users}: UsersTableProps) {
   const table = useReactTable({
     data: users || [],
     columns,
@@ -67,41 +67,41 @@ export function UsersTable({ users }: UsersTableProps) {
   return (
     <Container maxSize="full">
       <div className="flex flex-col gap-4">
-        <Button variant="outline" asChild>
+        <Button asChild>
           <Link href="/admin">
-            <ChevronLeft />
+            <ChevronLeft className="h-4 w-4 mr-1" />
             Back to admin home
           </Link>
         </Button>
-        <PageHeader title={"All users"} />
+        <PageHeader title={'All users'} />
         <Table>
-          <THead>
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <Th key={header.id}>
+                  <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                  </Th>
+                  </TableHead>
                 ))}
-              </TRow>
+              </TableRow>
             ))}
-          </THead>
-          <TBody>
+          </TableHeader>
+          <TableBody>
             {table.getRowModel().rows.map((row) => (
-              <TRow key={row.id}>
+              <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <Td key={cell.id}>
+                  <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Td>
+                  </TableCell>
                 ))}
-              </TRow>
+              </TableRow>
             ))}
-          </TBody>
+          </TableBody>
         </Table>
       </div>
     </Container>
