@@ -28,7 +28,7 @@ export default async function EventPages({
     eventShortId: id,
   });
 
-  const myTicketPromise = api.event.getMyTicketsByEvent.query({
+  const myEventSignUpsPromise = api.event.getMyTicketsByEvent.query({
     eventShortId: id,
   });
 
@@ -81,7 +81,9 @@ export default async function EventPages({
               </>
             )}
             {page[0] === 'my-tickets' && (
-              <MyTickets myTicketPromise={myTicketPromise} />
+              <Suspense fallback={<LoadingBlock />}>
+                <MyTickets eventSignUpsPromise={myEventSignUpsPromise} />
+              </Suspense>
             )}
           </div>
         </Suspense>

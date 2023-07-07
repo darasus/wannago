@@ -29,7 +29,7 @@ export function Accordion({items, defaultExpandedIndex}: Props) {
               initial={false}
               onClick={() => setExpandedIndex(isExpanded ? false : i)}
             >
-              <div className="flex items-center cursor-pointer font-medium bg-black/5 pl-3 pr-1 py-1 rounded-3xl">
+              <div className="flex items-center cursor-pointer font-medium bg-black/5 pl-3 pr-1 py-1 rounded-md">
                 {label}
                 <motion.div
                   className="flex items-center justify-center bg-black/10 h-7 w-7 rounded-full shrink-0 ml-2"

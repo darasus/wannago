@@ -55,9 +55,27 @@ const update = protectedProcedure
     });
   });
 
+const getMyTickets = protectedProcedure.query(async ({ctx, input}) => {
+  return ctx.prisma.ticketSale.findMany({
+    where: {
+      user: {
+        externalId: ctx.auth.userId,
+      },
+    },
+    include: {
+      event: true,
+      ticket: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+});
+
 export const userRouter = createTRPCRouter({
   getUserById,
   getUserByExternalId,
   me,
   update,
+  getMyTickets,
 });

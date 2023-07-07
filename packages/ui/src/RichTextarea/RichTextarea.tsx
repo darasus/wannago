@@ -65,7 +65,7 @@ export function RichTextarea({
   return (
     <div
       className={cn(
-        'flex flex-col border-2 gap-y-2 rounded-3xl py-2 px-3 max-w-full min-h-[200px]',
+        'flex flex-col border-2 gap-y-2 rounded-md py-2 px-3 max-w-full min-h-[200px]',
         inputClassName,
         'h-auto'
       )}

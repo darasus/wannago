@@ -59,6 +59,13 @@ export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
       'data-testid': 'profile-button',
     },
     {
+      label: 'My tickets',
+      onClick: () => {
+        router.push(`/my-tickets`);
+      },
+      'data-testid': 'my-tickets-button',
+    },
+    {
       label: 'Organizations',
       onClick: () => {
         router.push(`/organizations`);

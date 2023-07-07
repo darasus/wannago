@@ -58,7 +58,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
             <div
               key={index}
               className={cn(
-                'flex justify-center items-center border-2 border-primary rounded-3xl px-2 py-1',
+                'flex justify-center items-center border-2 border-primary rounded-md px-2 py-1',
                 {
                   'bg-green-300': badgeColor === 'green',
                   'bg-white': badgeColor === 'white',
@@ -76,7 +76,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
         className={cn(
           'absolute top-0 bottom-0 left-0 right-0',
           'flex items-center justify-center',
-          'bg-white opacity-0 rounded-3xl z-10 pointer-events-none',
+          'bg-white opacity-0 rounded-md z-10 pointer-events-none',
           'transition-opacity duration-300',
           {'opacity-100 pointer-events-auto': isLoading}
         )}
