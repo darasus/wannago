@@ -1,49 +1,53 @@
-"use client";
+'use client';
 
-import { Event } from "@prisma/client";
+import {Event} from '@prisma/client';
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import { ArrowLeftCircle } from "lucide-react";
-import Link from "next/link";
+} from '@tanstack/react-table';
+import {ChevronLeft} from 'lucide-react';
+import Link from 'next/link';
 import {
   Container,
   Button,
   PageHeader,
   Table,
-  THead,
-  TRow,
-  Th,
-  TBody,
-  Td,
-} from "ui";
-import { formatDate } from "utils";
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableBody,
+  TableCell,
+} from 'ui';
+import {formatDate} from 'utils';
 
 const columnHelper = createColumnHelper<Event>();
 
 const columns = [
-  columnHelper.accessor("title", {
+  columnHelper.accessor('title', {
+    header: 'Title',
     cell: (info) => (
       <Link
         href={`/e/${info.row.original.shortId}`}
         className="underline"
-        target={"_blank"}
+        target={'_blank'}
       >
         {info.getValue()}
       </Link>
     ),
   }),
-  columnHelper.accessor("shortId", {
+  columnHelper.accessor('shortId', {
+    header: 'Short ID',
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor("isPublished", {
-    cell: (info) => (info.getValue() ? "Published" : "Draft"),
+  columnHelper.accessor('isPublished', {
+    header: 'Published?',
+    cell: (info) => (info.getValue() ? 'Published' : 'Draft'),
   }),
-  columnHelper.accessor("createdAt", {
-    cell: (info) => formatDate(info.getValue(), "dd MMM, HH:mm"),
+  columnHelper.accessor('createdAt', {
+    header: 'Created at',
+    cell: (info) => formatDate(info.getValue(), 'dd MMM, HH:mm'),
   }),
 ];
 
@@ -51,7 +55,7 @@ interface EventsTableProps {
   events: Event[];
 }
 
-export function EventsTable({ events }: EventsTableProps) {
+export function EventsTable({events}: EventsTableProps) {
   const table = useReactTable({
     data: events,
     columns,
@@ -61,41 +65,41 @@ export function EventsTable({ events }: EventsTableProps) {
   return (
     <Container maxSize="full">
       <div className="flex flex-col gap-4">
-        <Button variant="outline" asChild>
+        <Button asChild>
           <Link href="/admin">
-            <ArrowLeftCircle />
+            <ChevronLeft className="h-4 w-4 mr-1" />
             Back to admin home
           </Link>
         </Button>
-        <PageHeader title={"All events"} />
+        <PageHeader title={'All events'} />
         <Table>
-          <THead>
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <Th key={header.id}>
+                  <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                  </Th>
+                  </TableHead>
                 ))}
-              </TRow>
+              </TableRow>
             ))}
-          </THead>
-          <TBody>
+          </TableHeader>
+          <TableBody>
             {table.getRowModel().rows.map((row) => (
-              <TRow key={row.id}>
+              <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <Td key={cell.id}>
+                  <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Td>
+                  </TableCell>
                 ))}
-              </TRow>
+              </TableRow>
             ))}
-          </TBody>
+          </TableBody>
         </Table>
       </div>
     </Container>

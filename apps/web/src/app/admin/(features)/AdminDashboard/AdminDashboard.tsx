@@ -40,7 +40,7 @@ export function AdminDashboard({
           className="lg:col-span-4"
           title="Total users count"
           titleChildren={
-            <Button variant="outline" size="sm" asChild>
+            <Button variant="link" size="sm" asChild className="p-0">
               <Link href="/admin/users">View all users</Link>
             </Button>
           }
@@ -51,7 +51,7 @@ export function AdminDashboard({
           className="lg:col-span-4"
           title="Total events count"
           titleChildren={
-            <Button variant="outline" size="sm" asChild>
+            <Button variant="link" size="sm" asChild className="p-0">
               <Link href="/admin/events">View all events</Link>
             </Button>
           }
@@ -62,7 +62,7 @@ export function AdminDashboard({
           title="Total organizations count"
           className="lg:col-span-4"
           titleChildren={
-            <Button variant="outline" size="sm" asChild>
+            <Button variant="link" size="sm" asChild className="p-0">
               <Link href="/admin/organizations">View all organizations</Link>
             </Button>
           }
