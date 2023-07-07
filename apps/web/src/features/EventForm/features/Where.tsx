@@ -74,7 +74,7 @@ export function Where() {
                       </SelectItem>
                     );
                   })}
-                  {hasNoSearchResults && (
+                  {!Boolean(currentValue) && hasNoSearchResults && (
                     <div className="p-2 text-center">
                       <span>No location selected...</span>
                     </div>
