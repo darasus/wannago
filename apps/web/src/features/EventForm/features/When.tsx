@@ -9,7 +9,7 @@ import {
 } from 'ui';
 import {z} from 'zod';
 import {eventFormSchema} from '../hooks/useEventForm';
-import {getLocalTimeZone, parseAbsolute} from '@internationalized/date';
+import {getLocalTimeZone, parseAbsolute, today} from '@internationalized/date';
 
 export function When() {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
@@ -38,6 +38,7 @@ export function When() {
                   field.onChange(value.toDate('UTC'));
                 }}
                 data-testid="event-form-start-date"
+                minValue={today(getLocalTimeZone())}
               />
             </FormControl>
             <FormMessage />
@@ -66,6 +67,7 @@ export function When() {
                   field.onChange(value.toDate('UTC'));
                 }}
                 data-testid="event-form-end-date"
+                minValue={today(getLocalTimeZone())}
               />
             </FormControl>
             <FormMessage />
