@@ -3,12 +3,50 @@ import {api} from '../../../trpc/server-http';
 import {ManageEventButton} from './(features)/ManageEventButton/ManageEventButton';
 import {EventView} from '../../../features/EventView/EventView';
 import {Suspense} from 'react';
+import {ResolvingMetadata} from 'next';
+import {getBaseUrl} from 'utils';
 
-export async function generateMetadata({params: {id}}: {params: {id: string}}) {
+export async function generateMetadata(
+  {params: {id}}: {params: {id: string}},
+  parent?: ResolvingMetadata
+) {
   const event = await api.event.getByShortId.query({id});
+  const previousImages = (await parent)?.openGraph?.images || [];
+
+  const url = new URL(`${getBaseUrl()}/api/og-image`);
+
+  if (event?.title) {
+    url.searchParams.append('title', event?.title);
+  }
+
+  url.searchParams.append(
+    'organizerName',
+    event?.organization?.name ||
+      `${event?.user?.firstName} ${event?.user?.lastName}`
+  );
+
+  if (event?.featuredImageSrc) {
+    url.searchParams.append(
+      'eventImageUrl',
+      btoa(encodeURIComponent(event?.featuredImageSrc))
+    );
+  }
+
+  const profileImageSrc =
+    event?.organization?.logoSrc || event?.user?.profileImageSrc;
+
+  if (profileImageSrc) {
+    url.searchParams.append(
+      'organizerProfileImageUrl',
+      btoa(encodeURIComponent(profileImageSrc))
+    );
+  }
 
   return {
     title: `${event?.title} | WannaGo`,
+    openGraph: {
+      images: [url.toString(), ...previousImages],
+    },
   };
 }
 
