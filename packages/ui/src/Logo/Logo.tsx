@@ -1,6 +1,5 @@
 import Link, {LinkProps} from 'next/link';
-import {logoFont} from '../../../../apps/web/src/fonts';
-import {cn} from 'utils';
+import Image from 'next/image';
 
 interface Props extends LinkProps {
   className?: string;
@@ -15,16 +14,19 @@ export function Logo({className, ...props}: Props) {
 }
 
 export function LogoView({className}: {className?: string}) {
+  const height = 100;
+  const width = 152;
+
   return (
-    <div
-      className={cn(
-        logoFont.className,
-        'bg-foreground rounded-md p-2 text-background uppercase leading-none text-left',
-        className
-      )}
-    >
-      <div>wanna</div>
-      <div>go</div>
-    </div>
+    <Image
+      src={`/api/logo`}
+      width={width}
+      height={height}
+      alt="WannaGo logo"
+      style={{
+        height: height * 0.5,
+        width: width * 0.5,
+      }}
+    />
   );
 }

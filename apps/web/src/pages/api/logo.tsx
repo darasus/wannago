@@ -13,20 +13,28 @@ export default async function handler() {
 
   return new ImageResponse(
     (
-      <div tw="flex flex-col justify-center items-center bg-[#09090b] text-gray-100 w-full h-full">
+      <div tw="flex flex-col justify-center items-start bg-[#09090b] text-gray-100 w-full h-full p-4 uppercase rounded-xl">
         <span
-          tw="text-2xl leading-none text-center"
+          tw="text-[30px] leading-none text-center"
           style={{
             fontFamily: 'Font',
           }}
         >
-          GO
+          wanna
+        </span>
+        <span
+          tw="text-[30px] leading-none text-center"
+          style={{
+            fontFamily: 'Font',
+          }}
+        >
+          go
         </span>
       </div>
     ),
     {
-      width: 50,
-      height: 50,
+      width: 152,
+      height: 100,
       headers: {
         'Content-Type': 'image/png',
         'Cache-Control': 'max-age=60, stale-while-revalidate',
