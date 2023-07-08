@@ -75,7 +75,7 @@ export function getEvents(ctx: ActionContext) {
     ];
     const events = await ctx.prisma.event.findMany({
       orderBy: {
-        startDate: 'asc',
+        startDate: input.onlyPast === true ? 'desc' : 'asc',
       },
       where: {
         ...(input.onlyPast === true
