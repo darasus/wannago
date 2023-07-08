@@ -35,16 +35,6 @@ export default authMiddleware({
 
     return NextResponse.next();
   },
-  afterAuth(auth, req, evt) {
-    if (auth.isPublicRoute) {
-      return NextResponse.next();
-    }
-    // if (req.nextUrl.pathname === '/login' && auth.isPublicRoute) {
-    //   return NextResponse.redirect(getBaseUrl() + '/dashboard');
-    // }
-
-    return NextResponse.next();
-  },
 });
 
 export const config = {
