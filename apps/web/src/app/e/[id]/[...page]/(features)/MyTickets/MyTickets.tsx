@@ -1,29 +1,29 @@
 'use client';
 
-import {usePathname} from 'next/navigation';
+import {useSearchParams} from 'next/navigation';
 import {use, useEffect} from 'react';
-import {toast} from 'react-hot-toast';
 import {CardBase, PageHeader, Text} from 'ui';
 import {TicketList} from '../TicketList/TicketList';
 import {RouterOutputs} from 'api';
+import {toast} from 'react-hot-toast';
 
 interface Props {
   eventSignUpsPromise: Promise<RouterOutputs['event']['getMyTicketsByEvent']>;
 }
 
 export function MyTickets({eventSignUpsPromise}: Props) {
-  const pathname = usePathname();
+  const params = useSearchParams();
   const eventSignUps = use(eventSignUpsPromise);
 
   useEffect(() => {
     if (
       eventSignUps &&
       eventSignUps?.length > 0 &&
-      pathname?.includes('/success')
+      params?.get('success') === 'true'
     ) {
       toast.success('Ticket purchased successfully!');
     }
-  }, [eventSignUps, pathname]);
+  }, [eventSignUps, params]);
 
   return (
     <div className="flex flex-col gap-4">
