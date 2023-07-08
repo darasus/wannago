@@ -29,7 +29,9 @@ export default authMiddleware({
     return publicRoutes.some((route) => req.nextUrl.pathname.startsWith(route));
   },
   beforeAuth(req, evt) {
-    if (req.nextUrl.pathname.includes('api/pdf-ticket')) {
+    const list = ['inngest', '/api/pdf-ticket', '/api/logo', '/api/favicon'];
+
+    if (list.some((route) => req.nextUrl.pathname.startsWith(route))) {
       return false;
     }
 
