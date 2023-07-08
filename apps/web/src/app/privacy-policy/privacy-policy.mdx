@@ -1,4 +1,5 @@
 import { Container, CardBase } from 'ui'
+import { cn } from 'utils'
 
 WannaGo Privacy Policy
 ----------------------
@@ -275,13 +276,15 @@ To receive this information, send us a request using the contact details provide
 
 For any questions or concerns regarding your privacy, you may contact us using the following details:
 
-Ilya Daraseliya  
+Ilya Daraseliya
 ilya@wannago.app
 
 export default ({ children }) => {
     return (
-        <Container className="prose">
-            <CardBase>{children}</CardBase>
+        <Container>
+            <CardBase>
+                <div className={cn("prose max-w-full prose-h2:mt-0")}>{children}</div>
+            </CardBase>
         </Container>
     )
 }
