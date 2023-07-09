@@ -3,6 +3,8 @@ import {PublicProfile} from '../../(features)/PublicProfile/PublicProfile';
 import {api} from '../../../trpc/server-http';
 import {LoadingBlock} from 'ui';
 
+export const runtime = 'edge';
+
 export const generateMetadata = async ({
   params: {userId},
 }: {

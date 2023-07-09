@@ -1,6 +1,5 @@
 'use server';
 
-import {loggerLink} from '@trpc/client';
 import {experimental_createTRPCNextAppDirServer} from '@trpc/next/app-dir/server';
 import {AppRouter} from 'api';
 import {cookies, headers} from 'next/headers';
@@ -13,11 +12,11 @@ export const api = experimental_createTRPCNextAppDirServer<AppRouter>({
     return {
       transformer: superjson,
       links: [
-        loggerLink({
-          enabled: (opts) =>
-            process.env.NODE_ENV === 'development' ||
-            (opts.direction === 'down' && opts.result instanceof Error),
-        }),
+        // loggerLink({
+        //   enabled: (opts) =>
+        //     process.env.NODE_ENV === 'development' ||
+        //     (opts.direction === 'down' && opts.result instanceof Error),
+        // }),
         endingLink({
           headers: {
             ...omit(
