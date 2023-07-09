@@ -9,5 +9,6 @@ export const getPublicEvents = publicProcedure
       authorIds: [input.id],
       isPublished: true,
       eventType: 'organizing',
+      orderByStartDate: 'desc',
     });
   });

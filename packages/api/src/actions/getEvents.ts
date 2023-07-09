@@ -7,6 +7,7 @@ const validation = z.object({
   eventType: z.enum(['attending', 'organizing', 'all', 'following']),
   isPublished: z.boolean().optional(),
   onlyPast: z.boolean().optional(),
+  orderByStartDate: z.enum(['desc', 'asc']).optional(),
 });
 
 export function getEvents(ctx: ActionContext) {
@@ -75,7 +76,8 @@ export function getEvents(ctx: ActionContext) {
     ];
     const events = await ctx.prisma.event.findMany({
       orderBy: {
-        startDate: input.onlyPast === true ? 'desc' : 'asc',
+        startDate:
+          input.orderByStartDate ?? input.onlyPast === true ? 'desc' : 'asc',
       },
       where: {
         ...(input.onlyPast === true
