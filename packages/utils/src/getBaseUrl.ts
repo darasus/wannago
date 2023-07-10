@@ -9,5 +9,10 @@ export const getBaseUrl = () => {
 
   const url = process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL;
 
+  console.log(
+    'NEXT_PUBLIC_VERCEL_BRANCH_URL',
+    process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
+  );
+
   return url?.startsWith('http') ? url : `https://${url}`;
 };
