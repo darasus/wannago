@@ -1,10 +1,10 @@
 import {test, expect} from '@playwright/test';
-import {user_1_email} from './constants';
+import {testUrl, user_1_email} from './constants';
 
 test.use({actionTimeout: 10000});
 
 test('can login', async ({page}) => {
-  await page.goto(process.env.ENVIRONMENT_URL!);
+  await page.goto(process.env.ENVIRONMENT_URL || testUrl);
   await page.locator('[data-testid="login-button"]').click();
   await page.locator('[data-testid="login-email-input"]').type(user_1_email);
   await page.locator('[data-testid="login-email-form-submit"]').click();
