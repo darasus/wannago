@@ -7,7 +7,7 @@ export const getBaseUrl = () => {
     return `http://localhost:3000`;
   }
 
-  const url = process.env.NEXT_PUBLIC_VERCEL_URL;
+  const url = process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL;
 
   return url?.startsWith('http') ? url : `https://${url}`;
 };
