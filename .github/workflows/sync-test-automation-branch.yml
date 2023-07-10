@@ -20,4 +20,4 @@ jobs:
             git fetch
             git checkout test-automation
             git rebase origin/main
-            git push origin test-automation
+            git push origin test-automation --force
