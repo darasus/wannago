@@ -1,18 +1,20 @@
+import {env} from 'client-env';
+import getConfig from 'next/config';
+
+const {publicRuntimeConfig} = getConfig();
+
 export const getBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
+  if (env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
     return `https://www.wannago.app`;
   }
 
-  if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'development') {
+  if (env.NEXT_PUBLIC_VERCEL_ENV === 'development') {
     return `http://localhost:3000`;
   }
 
-  const url = process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL;
+  const url = publicRuntimeConfig.vercelBranchUrl;
 
-  console.log(
-    'NEXT_PUBLIC_VERCEL_BRANCH_URL',
-    process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
-  );
+  console.log('url', url);
 
   return url?.startsWith('http') ? url : `https://${url}`;
 };
