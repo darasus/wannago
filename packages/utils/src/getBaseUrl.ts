@@ -9,7 +9,7 @@ export const getBaseUrl = () => {
     return `http://localhost:3000`;
   }
 
-  const url = env.NEXT_PUBLIC_VERCEL_ENV;
+  const url = env.NEXT_PUBLIC_VERCEL_BRANCH_URL;
 
   console.log('url', url);
 
