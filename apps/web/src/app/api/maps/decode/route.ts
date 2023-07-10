@@ -1,4 +1,3 @@
-import {NextResponse} from 'next/server';
 import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
 import {env} from 'server-env';
 import {invariant} from 'utils';
@@ -16,5 +15,12 @@ export async function POST(req: Request) {
     },
   });
 
-  return NextResponse.json(response.data);
+  return new Response(JSON.stringify(response.data), {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
 }
