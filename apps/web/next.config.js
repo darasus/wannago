@@ -72,9 +72,6 @@ const moduleExports = {
     'ui',
     'utils',
   ],
-  publicRuntimeConfig: {
-    vercelBranchUr: process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL,
-  },
   webpack(config) {
     config.experiments = {
       asyncWebAssembly: true,

@@ -1,7 +1,4 @@
 import {env} from 'client-env';
-import getConfig from 'next/config';
-
-const {publicRuntimeConfig} = getConfig();
 
 export const getBaseUrl = () => {
   if (env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
@@ -12,7 +9,7 @@ export const getBaseUrl = () => {
     return `http://localhost:3000`;
   }
 
-  const url = publicRuntimeConfig.vercelBranchUrl;
+  const url = env.NEXT_PUBLIC_VERCEL_ENV;
 
   console.log('url', url);
 
