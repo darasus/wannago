@@ -14,6 +14,7 @@ const config = defineConfig({
   repoUrl: 'https://github.com/checkly/checkly-cli',
   /* Sets default values for Checks */
   checks: {
+    doubleCheck: true,
     /* A default for how often your Check should run in minutes */
     frequency: 30,
     /* Checkly data centers to run your Checks as monitors */
