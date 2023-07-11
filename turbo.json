@@ -24,7 +24,9 @@
     "STRIPE_API_SECRET",
     "DATABASE_URL",
     "STRIPE_ENDPOINT_SECRET",
-    "STABILITY_AI_API_KEY"
+    "STABILITY_AI_API_KEY",
+    "IS_CHECKLY",
+    "ENVIRONMENT_URL"
   ],
   "pipeline": {
     "build": {
