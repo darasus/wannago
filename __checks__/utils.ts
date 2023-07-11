@@ -7,9 +7,9 @@ export async function login({page, email}: {page: Page; email: string}) {
   await page.locator('[data-testid="login-email-form-submit"]').click();
   await page.locator('[data-testid="login-code-input"]').type('424242');
 
-  await expect(page.locator('[data-testid="header-user-button"]')).toBeVisible({
-    timeout: 20000,
-  });
+  await expect(
+    page.locator('[data-testid="header-user-button"]')
+  ).toBeVisible();
 }
 
 export async function createEvent({
