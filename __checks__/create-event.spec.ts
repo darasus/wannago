@@ -12,8 +12,7 @@ test.use({
 });
 
 test('can create free event', async ({page}) => {
-  test.setTimeout(60 * 10 * 1000);
-
+  test.setTimeout(120000);
   await page.goto(getBaseUrl());
   await login({page, email: user_1_email});
   await createEvent({page, authorId: user_1_id});
