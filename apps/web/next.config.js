@@ -74,6 +74,7 @@ const moduleExports = {
   ],
   env: {
     NEXT_PUBLIC_VERCEL_BRANCH_URL: process.env.VERCEL_BRANCH_URL,
+    NEXT_PUBLIC_VERCEL_URL: process.env.VERCEL_URL,
   },
   webpack(config) {
     config.experiments = {

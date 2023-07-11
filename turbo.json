@@ -26,6 +26,7 @@
     "STRIPE_ENDPOINT_SECRET",
     "STABILITY_AI_API_KEY",
     "IS_CHECKLY",
+    "VERCEL_URL",
     "ENVIRONMENT_URL"
   ],
   "pipeline": {
