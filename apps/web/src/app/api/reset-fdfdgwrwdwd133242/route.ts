@@ -4,7 +4,7 @@ import {
   organization_2_id,
   user_1_id,
   user_2_id,
-} from '../../../../../__checks__/constants';
+} from '../../../../../../__checks__/constants';
 import {prisma} from 'database';
 
 export const runtime = 'edge';

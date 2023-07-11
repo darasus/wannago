@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {baseUrl} from '../constants';
+import {getBaseUrl} from './getBaseUrl';
 
 export function resetDB() {
-  return axios.post(`${baseUrl}/api/reset-fdfdgwrwdwd133242`);
+  return axios.post(`${getBaseUrl()}/api/reset-fdfdgwrwdwd133242`);
 }

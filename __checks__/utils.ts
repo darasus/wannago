@@ -1,10 +1,10 @@
 import {Page, expect} from '@playwright/test';
-import {baseUrl} from './constants';
+import {getBaseUrl} from './utils/getBaseUrl';
 
 export async function login({page, email}: {page: Page; email: string}) {
   const currentUrl = page.url();
-  if (currentUrl !== baseUrl) {
-    await page.goto(baseUrl);
+  if (currentUrl !== getBaseUrl()) {
+    await page.goto(getBaseUrl());
   }
   await page.locator('[data-testid="login-button"]').click();
   await page.locator('[data-testid="login-email-input"]').type(email);
@@ -29,7 +29,7 @@ export async function createEvent({
   page: Page;
   authorId?: string;
 }) {
-  await page.goto(`${baseUrl}/dashboard`);
+  await page.goto(`${getBaseUrl()}/dashboard`);
   await page.locator('[data-testid="add-event-button"]').click();
 
   if (authorId) {
