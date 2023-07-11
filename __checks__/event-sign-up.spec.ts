@@ -14,5 +14,17 @@ test('can sign up to free event', async ({page}) => {
   await createEvent({page, authorId: user_1_id});
   await publishCurrentEvent({page});
   await page.locator('[data-testid="attend-button"]').click();
-  await expect(page.locator('[data-testid="toast-success"]')).toBeVisible();
+
+  await page.waitForResponse((resp) => {
+    resp.url().includes('rsc');
+    expect(resp.status()).toBe(200);
+
+    return true;
+  });
+
+  await expect(
+    page.locator('[data-testid="event-signup-success-label"]')
+  ).toBeVisible({
+    timeout: 20000,
+  });
 });

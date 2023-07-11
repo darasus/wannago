@@ -78,6 +78,6 @@ export async function publishCurrentEvent({page}: {page: Page}) {
   await page.locator('[data-testid="confirm-dialog-confirm-button"]').click();
 
   await expect(
-    page.locator('[data-testid="event-published-badge"]')
+    await page.locator('[data-testid="event-published-badge"]')
   ).toBeVisible();
 }
