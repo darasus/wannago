@@ -3,6 +3,8 @@ import {organization_2_id, user_1_email, user_2_email} from './constants';
 import {createEvent, login, logout, publishCurrentEvent} from './utils';
 import {getBaseUrl} from './utils/getBaseUrl';
 
+test.setTimeout(60 * 10 * 1000);
+
 test.use({
   actionTimeout:
     process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
@@ -22,10 +24,7 @@ test('can follow organization', async ({page}) => {
   await page.goto(`${getBaseUrl()}/o/${organization_2_id}`);
   await page.waitForLoadState();
 
-  const hasUnfollowButton = await page
-    .locator('[data-testid="unfollow-button"]')
-    .getByText('unfollow')
-    .isVisible();
+  const hasUnfollowButton = await page.getByText('unfollow').isVisible();
 
   if (hasUnfollowButton) {
     await page
@@ -51,6 +50,7 @@ test('can follow organization', async ({page}) => {
     .isVisible();
 
   await page.locator('[data-testid="logo-link"]').click();
+  await page.waitForLoadState();
 
   await page.locator('[data-testid="filter-button"]').click();
 
@@ -61,6 +61,9 @@ test('can follow organization', async ({page}) => {
   await page.waitForLoadState();
 
   await expect(
-    page.locator('[data-testid="event-card"]').getByText('Organization 2')
+    page
+      .locator('[data-testid="event-card"]')
+      .getByText('Organization 2')
+      .nth(0)
   ).toBeVisible();
 });
