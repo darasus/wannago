@@ -4,7 +4,7 @@ import {baseUrl} from './constants';
 export async function login({page, email}: {page: Page; email: string}) {
   const currentUrl = page.url();
   if (currentUrl !== baseUrl) {
-    await page.goto('/');
+    await page.goto(baseUrl);
   }
   await page.locator('[data-testid="login-button"]').click();
   await page.locator('[data-testid="login-email-input"]').type(email);
@@ -29,7 +29,7 @@ export async function createEvent({
   page: Page;
   authorId?: string;
 }) {
-  await page.goto('/dashboard');
+  await page.goto(`${baseUrl}/dashboard`);
   await page.locator('[data-testid="add-event-button"]').click();
 
   if (authorId) {

@@ -12,7 +12,7 @@ test.use({
 });
 
 test('can sign up (free event)', async ({page}) => {
-  await page.goto('/');
+  await page.goto(baseUrl);
   await login({page, email: user_1_email});
   await createEvent({page, authorId: user_1_id});
   await publishCurrentEvent({page});
@@ -24,7 +24,7 @@ test('can sign up (free event)', async ({page}) => {
 });
 
 test('can cancel sign up (free event)', async ({page}) => {
-  await page.goto('/');
+  await page.goto(baseUrl);
   await login({page, email: user_1_email});
   await createEvent({page, authorId: user_1_id});
   await publishCurrentEvent({page});

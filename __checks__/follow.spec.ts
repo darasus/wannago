@@ -23,12 +23,12 @@ test.beforeEach(async () => {
 
 test('can follow organization', async ({page}) => {
   await login({page, email: user_2_email});
-  await page.goto('/');
+  await page.goto(baseUrl);
   await createEvent({page, authorId: organization_2_id});
   await publishCurrentEvent({page});
   await logout({page});
   await login({page, email: user_1_email});
-  await page.goto(`/o/${organization_2_id}`);
+  await page.goto(`${baseUrl}/o/${organization_2_id}`);
   await page.locator('[data-testid="follow-button"]').click();
 
   await page.waitForResponse(/trpc/);
@@ -37,7 +37,7 @@ test('can follow organization', async ({page}) => {
     '1'
   );
 
-  await page.goto('/dashboard');
+  await page.goto(`${baseUrl}/dashboard`);
   await page.locator('[data-testid="filter-button"]').click();
   await page
     .locator('[data-testid="filter-option-button"]')
