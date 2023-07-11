@@ -7,17 +7,14 @@ import {
 } from './constants';
 import {createEvent, login, logout, publishCurrentEvent} from './utils';
 import {resetDB} from './utils/resetDB';
-import {prepare} from './utils/prepare';
 
-test.beforeAll(() => {
-  test.use({
-    actionTimeout:
-      process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
-    navigationTimeout:
-      process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
-    ignoreHTTPSErrors: true,
-    baseURL: baseUrl,
-  });
+test.use({
+  actionTimeout:
+    process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
+  navigationTimeout:
+    process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
+  ignoreHTTPSErrors: true,
+  baseURL: baseUrl,
 });
 
 test.beforeEach(async () => {
