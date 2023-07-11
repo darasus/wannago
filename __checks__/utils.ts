@@ -1,7 +1,11 @@
 import {Page, expect} from '@playwright/test';
-import {testUrl} from './constants';
+import {baseUrl} from './constants';
 
 export async function login({page, email}: {page: Page; email: string}) {
+  const currentUrl = page.url();
+  if (currentUrl !== baseUrl) {
+    await page.goto('/');
+  }
   await page.locator('[data-testid="login-button"]').click();
   await page.locator('[data-testid="login-email-input"]').type(email);
   await page.locator('[data-testid="login-email-form-submit"]').click();
@@ -12,6 +16,12 @@ export async function login({page, email}: {page: Page; email: string}) {
   ).toBeVisible();
 }
 
+export async function logout({page}: {page: Page}) {
+  await page.locator('[data-testid="header-user-button"]').click();
+  await page.locator('[data-testid="logout-button"]').click();
+  await expect(page.locator('[data-testid="login-button"]')).toBeVisible();
+}
+
 export async function createEvent({
   page,
   authorId,
@@ -19,7 +29,7 @@ export async function createEvent({
   page: Page;
   authorId?: string;
 }) {
-  await page.goto(`${process.env.ENVIRONMENT_URL || testUrl}/dashboard`);
+  await page.goto('/dashboard');
   await page.locator('[data-testid="add-event-button"]').click();
 
   if (authorId) {

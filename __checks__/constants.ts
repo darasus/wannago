@@ -1,4 +1,4 @@
-export const testUrl =
+export const baseUrl =
   process.env.VERCEL_ENV === 'development'
     ? 'http://localhost:3000'
     : 'https://wannago-git-test-automation-darasus-team.vercel.app';

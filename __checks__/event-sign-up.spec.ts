@@ -1,9 +1,9 @@
 import {test, expect} from '@playwright/test';
-import {testUrl, user_1_email, user_1_id} from './constants';
+import {user_1_email, user_1_id} from './constants';
 import {createEvent, login, publishCurrentEvent} from './utils';
 
 test('can sign up (free event)', async ({page}) => {
-  await page.goto(process.env.ENVIRONMENT_URL || testUrl);
+  await page.goto('/');
   await login({page, email: user_1_email});
   await createEvent({page, authorId: user_1_id});
   await publishCurrentEvent({page});
@@ -15,7 +15,7 @@ test('can sign up (free event)', async ({page}) => {
 });
 
 test('can cancel sign up (free event)', async ({page}) => {
-  await page.goto(process.env.ENVIRONMENT_URL || testUrl);
+  await page.goto('/');
   await login({page, email: user_1_email});
   await createEvent({page, authorId: user_1_id});
   await publishCurrentEvent({page});
