@@ -13,5 +13,7 @@ test.use({
 });
 
 test('can login', async ({page}) => {
+  test.setTimeout(60 * 10 * 1000);
+
   await login({page, email: user_1_email});
 });

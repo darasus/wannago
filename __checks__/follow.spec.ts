@@ -3,8 +3,6 @@ import {organization_2_id, user_1_email, user_2_email} from './constants';
 import {createEvent, login, logout, publishCurrentEvent} from './utils';
 import {getBaseUrl} from './utils/getBaseUrl';
 
-test.setTimeout(60 * 10 * 1000);
-
 test.use({
   actionTimeout:
     process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
@@ -15,6 +13,8 @@ test.use({
 });
 
 test('can follow organization', async ({page}) => {
+  test.setTimeout(60 * 10 * 1000);
+
   await login({page, email: user_2_email});
   await page.goto(getBaseUrl());
   await createEvent({page, authorId: organization_2_id});
