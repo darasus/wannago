@@ -1,11 +1,23 @@
 import {test, expect} from '@playwright/test';
-import {organization_2_id, user_1_email, user_2_email} from './constants';
+import {
+  baseUrl,
+  organization_2_id,
+  user_1_email,
+  user_2_email,
+} from './constants';
 import {createEvent, login, logout, publishCurrentEvent} from './utils';
 import {resetDB} from './utils/resetDB';
 import {prepare} from './utils/prepare';
 
 test.beforeAll(() => {
-  prepare();
+  test.use({
+    actionTimeout:
+      process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
+    navigationTimeout:
+      process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
+    ignoreHTTPSErrors: true,
+    baseURL: baseUrl,
+  });
 });
 
 test.beforeEach(async () => {

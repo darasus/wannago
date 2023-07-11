@@ -1,10 +1,17 @@
 import {test, expect} from '@playwright/test';
-import {user_1_email, user_1_id} from './constants';
+import {baseUrl, user_1_email, user_1_id} from './constants';
 import {createEvent, login, publishCurrentEvent} from './utils';
 import {prepare} from './utils/prepare';
 
 test.beforeAll(() => {
-  prepare();
+  test.use({
+    actionTimeout:
+      process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
+    navigationTimeout:
+      process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
+    ignoreHTTPSErrors: true,
+    baseURL: baseUrl,
+  });
 });
 
 test('can sign up (free event)', async ({page}) => {
