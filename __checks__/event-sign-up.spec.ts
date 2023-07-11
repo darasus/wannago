@@ -1,6 +1,11 @@
 import {test, expect} from '@playwright/test';
 import {user_1_email, user_1_id} from './constants';
 import {createEvent, login, publishCurrentEvent} from './utils';
+import {prepare} from './utils/prepare';
+
+test.beforeAll(() => {
+  prepare();
+});
 
 test('can sign up (free event)', async ({page}) => {
   await page.goto('/');
