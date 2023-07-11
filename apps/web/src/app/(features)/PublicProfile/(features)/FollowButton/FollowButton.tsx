@@ -6,6 +6,7 @@ import {Button} from 'ui';
 import {api} from '../../../../../trpc/client';
 import {toast} from 'react-hot-toast';
 import {type RouterOutputs} from 'api';
+import {follow} from './actions';
 
 interface Props {
   amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
@@ -53,14 +54,12 @@ export function FollowButton({amFollowingPromise}: Props) {
       variant="outline"
       onClick={() => {
         startTransition(async () => {
-          await api.follow.follow
-            .mutate({
-              organizationId,
-              userId,
-            })
-            .catch((error) => {
-              toast.error(error.message);
-            });
+          await follow({
+            organizationId,
+            userId,
+          }).catch((error) => {
+            toast.error(error.message);
+          });
           router.refresh();
         });
       }}
