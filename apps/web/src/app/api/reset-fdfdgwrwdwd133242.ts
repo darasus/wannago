@@ -9,7 +9,7 @@ import {prisma} from 'database';
 
 export const runtime = 'edge';
 
-export async function POST(req: Request) {
+export async function POST() {
   if (env.VERCEL_ENV === 'production') {
     return null;
   }
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   return new Response(JSON.stringify({success: true}), {status: 200});
 }
 
-export async function resetDB() {
+async function resetDB() {
   const user_1 = await prisma.user.findUnique({
     where: {
       id: user_1_id,

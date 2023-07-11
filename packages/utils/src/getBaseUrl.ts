@@ -1,6 +1,14 @@
 import {env} from 'client-env';
 
 export const getBaseUrl = () => {
+  if (process.env.IS_CHECKLY === 'true' && process.env.ENVIRONMENT_URL) {
+    return process.env.ENVIRONMENT_URL;
+  }
+
+  if (process.env.IS_CHECKLY === 'true') {
+    return 'https://wannago-git-test-automation-darasus-team.vercel.app';
+  }
+
   if (env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
     return `https://www.wannago.app`;
   }
@@ -10,8 +18,6 @@ export const getBaseUrl = () => {
   }
 
   const url = env.NEXT_PUBLIC_VERCEL_BRANCH_URL;
-
-  console.log('url', url);
 
   return url?.startsWith('http') ? url : `https://${url}`;
 };
