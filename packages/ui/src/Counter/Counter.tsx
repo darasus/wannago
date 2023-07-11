@@ -28,7 +28,7 @@ export function Counter({value, onChange, maxValue, minValue}: Props) {
       >
         <Minus className="w-4 h-4" />
       </Button>
-      <span>{value}</span>
+      <span style={{fontVariantNumeric: 'tabular-nums'}}>{value}</span>
       <Button
         size="icon"
         variant={'outline'}
