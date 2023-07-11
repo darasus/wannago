@@ -80,7 +80,6 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
       .then(async () => {
         toast.success('Signed up! Check your email for more details!');
         confetti();
-        router.refresh();
       })
       .catch((error) => {
         toast.error(error.message);

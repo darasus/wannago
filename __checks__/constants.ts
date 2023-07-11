@@ -1,5 +1,8 @@
-export const testUrl =
-  'https://wannago-git-test-automation-darasus-team.vercel.app';
+export const baseUrl =
+  process.env.ENVIRONMENT_URL ||
+  (process.env.VERCEL_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'https://wannago-git-test-automation-darasus-team.vercel.app');
 
 export const user_1_email = 'idarase+1+automation+clerk_test@gmail.com';
 export const user_1_id = '52cb62d5-c6ca-4da3-be41-d1c3a83dfa21';
@@ -13,4 +16,5 @@ export const user_2_id = 'ba2c68ad-f288-43c5-b3c5-6bfcc3611a98';
 
 export const organization_2_email =
   'idarase+2+organization+automation+clerk_test@gmail.com';
+
 export const organization_2_id = '28acab1f-7c9d-4782-a168-393ff902aba5';

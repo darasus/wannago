@@ -9,17 +9,17 @@ export async function joinEvent({
   eventId: string;
   hasPlusOne: boolean;
 }) {
-  'use server';
   await api.event.joinEvent.mutate({
     eventId,
     hasPlusOne,
   });
 
   await api.event.getMySignUp.revalidate();
+
+  return true;
 }
 
 export async function cancelEvent({eventId}: {eventId: string}) {
-  'use server';
   await api.event.cancelEvent.mutate({
     eventId,
   });
@@ -28,4 +28,6 @@ export async function cancelEvent({eventId}: {eventId: string}) {
   await api.event.getByShortId.revalidate();
   await api.event.getById.revalidate();
   await api.event.getMySignUp.revalidate();
+
+  return true;
 }

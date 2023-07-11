@@ -37,7 +37,10 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
                 badgeColor: 'green',
                 badgeContent: (
                   <div className="flex gap-[2px]">
-                    <span className="text-xs uppercase font-bold">
+                    <span
+                      className="text-xs uppercase font-bold"
+                      data-testid="event-published-badge"
+                    >
                       Published
                     </span>{' '}
                     <InfoIconWithTooltip text="Your event is published and can be shared." />
