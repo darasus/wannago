@@ -7,7 +7,7 @@ interface Props extends LinkProps {
 
 export function Logo({className, ...props}: Props) {
   return (
-    <Link {...props}>
+    <Link {...props} data-testid="logo-link">
       <LogoView className={className} />
     </Link>
   );

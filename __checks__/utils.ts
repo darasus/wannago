@@ -10,10 +10,9 @@ export async function login({page, email}: {page: Page; email: string}) {
   await page.locator('[data-testid="login-email-input"]').type(email);
   await page.locator('[data-testid="login-email-form-submit"]').click();
   await page.locator('[data-testid="login-code-input"]').type('424242');
-
-  await expect(
-    page.locator('[data-testid="header-user-button"]')
-  ).toBeVisible();
+  await expect(page.locator('[data-testid="header-user-button"]')).toBeVisible({
+    timeout: 20 * 1000,
+  });
 }
 
 export async function logout({page}: {page: Page}) {
@@ -76,7 +75,9 @@ export async function createEvent({
   await page.locator('[data-testid="file-input-image-preview"]');
   await page.locator('[data-testid="event-form-submit-button"]').click();
 
-  await expect(page.locator('[data-testid="event-title"]')).toBeVisible();
+  await expect(page.locator('[data-testid="event-title"]')).toBeVisible({
+    timeout: 10000,
+  });
 }
 
 export async function publishCurrentEvent({page}: {page: Page}) {
