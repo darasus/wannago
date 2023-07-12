@@ -39,13 +39,17 @@ export function EventInviteButton() {
 
   const onSubmit = handleSubmit(async (data) => {
     if (eventShortId) {
-      await inviteByEmail({...data, eventShortId}).catch((error) => {
-        toast.error(error.message);
-      });
-      toast.success('Invitation sent!');
-      reset();
-      set(false);
-      router.refresh();
+      await inviteByEmail({...data, eventShortId})
+        .then((res) => {
+          console.log('>>> res', res);
+          toast.success('Invitation sent!');
+          reset();
+          router.refresh();
+          set(false);
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
     }
   });
 

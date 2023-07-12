@@ -24,6 +24,9 @@ export const getAllEventsAttendees = protectedProcedure
       where: {
         externalId: ctx.auth.userId,
       },
+      include: {
+        organizations: true,
+      },
     });
 
     invariant(
@@ -33,9 +36,18 @@ export const getAllEventsAttendees = protectedProcedure
 
     const eventSignUps = await ctx.prisma.eventSignUp.findMany({
       where: {
-        event: {
-          userId: user.id,
-        },
+        OR: [
+          {
+            event: {
+              userId: user.id,
+            },
+          },
+          ...user.organizations.map((organization) => ({
+            event: {
+              organizationId: organization.id,
+            },
+          })),
+        ],
       },
       include: {
         user: true,
