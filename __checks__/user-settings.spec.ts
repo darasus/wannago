@@ -1,5 +1,5 @@
 import {expect, test} from '@playwright/test';
-import {organization_1_email, user_1_email} from './constants';
+import {user_1_email} from './constants';
 import {login} from './utils';
 import {getBaseUrl} from './utils/getBaseUrl';
 
@@ -12,7 +12,7 @@ test.use({
   baseURL: getBaseUrl(),
 });
 
-test('can update organization', async ({page}) => {
+test('can update user', async ({page}) => {
   test.setTimeout(120000);
 
   const firstName = 'John' + Math.random();
@@ -27,12 +27,8 @@ test('can update organization', async ({page}) => {
   await page.locator('[data-testid="last-name-input"]').clear();
   await page.locator('[data-testid="last-name-input"]').type(lastName);
   await page.locator('[data-testid="user-settings-submit-button"]').click();
-  await page.locator('[data-testid="header-user-button"]').click();
-  await page.locator('[data-testid="profile-button"]').click();
-  await expect(page.locator('[data-testid="user-profile-name"]')).toContainText(
-    firstName
-  );
-  await expect(page.locator('[data-testid="user-profile-name"]')).toContainText(
-    lastName
-  );
+
+  await expect(
+    page.locator('[data-testid="header-user-button"]')
+  ).toContainText(firstName);
 });

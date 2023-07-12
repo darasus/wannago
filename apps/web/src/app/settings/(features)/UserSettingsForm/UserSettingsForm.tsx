@@ -20,6 +20,7 @@ import {api} from '../../../../trpc/client';
 import {useRouter} from 'next/navigation';
 import {z} from 'zod';
 import {use} from 'react';
+import {toast} from 'react-hot-toast';
 
 const userProfileSettingsFormScheme = z.object({
   firstName: z.string(),
@@ -48,14 +49,21 @@ export function UserSettingsForm({userPromise}: Props) {
 
   const onSubmit = form.handleSubmit(async (data) => {
     if (user?.id) {
-      await api.user.update.mutate({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        profileImageSrc: data.profileImageSrc,
-        userId: user.id,
-        currency: data.currency,
-      });
+      await api.user.update
+        .mutate({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          profileImageSrc: data.profileImageSrc,
+          userId: user.id,
+          currency: data.currency,
+        })
+        .then(() => {
+          toast.success('User is updated!');
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        });
       router.refresh();
     }
   });

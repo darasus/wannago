@@ -12,7 +12,7 @@ test.use({
   baseURL: getBaseUrl(),
 });
 
-test('can update team', async ({page}) => {
+test('can update organization', async ({page}) => {
   test.setTimeout(120000);
   await login({page, email: user_1_email});
 
