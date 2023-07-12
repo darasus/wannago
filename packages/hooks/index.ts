@@ -8,7 +8,6 @@ export {useHandleEmailCallbackParam} from './src/useHandleEmailCallbackParam';
 export {useInitiateAmplitude} from './src/useInitiateAmplitude';
 export {useUploadImage} from './src/useUploadImage';
 export {useFlag} from './src/useFeatureFlag';
-export {useGlobalLoading, useLoading} from './src/useGlobalLoading';
 export {useFileFromUrl} from './src/useFileFromUrl';
 export {useUnpublishEvent} from './src/event/useUnpublishEvent';
 export {usePublishEvent} from './src/event/usePublishEvent';
