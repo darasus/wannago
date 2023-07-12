@@ -22,13 +22,11 @@ test('can update user', async ({page}) => {
 
   await page.goto(`${getBaseUrl()}/settings`);
 
-  await page.locator('[data-testid="first-name-input"]').clear();
-  await page.locator('[data-testid="first-name-input"]').type(firstName);
-  await page.locator('[data-testid="last-name-input"]').clear();
-  await page.locator('[data-testid="last-name-input"]').type(lastName);
+  await page.locator('[data-testid="first-name-input"]').fill(firstName);
+  await page.locator('[data-testid="last-name-input"]').fill(lastName);
   await page.locator('[data-testid="user-settings-submit-button"]').click();
 
   await expect(
-    page.locator('[data-testid="header-user-button"]')
-  ).toContainText(firstName);
+    page.locator('[data-testid="header-user-button"]').getByText(firstName)
+  ).toBeVisible();
 });

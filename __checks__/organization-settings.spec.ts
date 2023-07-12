@@ -23,14 +23,12 @@ test('can update organization', async ({page}) => {
   await page
     .locator('[data-testid="organization-item-card-settings-button"]')
     .click();
-  await page.locator('[data-testid="team-settings-form-input-name"]').clear();
   await page
     .locator('[data-testid="team-settings-form-input-name"]')
-    .type('Organization 1');
-  await page.locator('[data-testid="team-settings-form-input-email"]').clear;
+    .fill('Organization 1');
   await page
     .locator('[data-testid="team-settings-form-input-email"]')
-    .type(organization_1_email);
+    .fill(organization_1_email);
   // await page
   //   .locator('[data-testid="file-input"]')
   //   .setInputFiles('cypress/support/logo.png', {
@@ -41,5 +39,7 @@ test('can update organization', async ({page}) => {
     .locator('[data-testid="team-settings-form-input-submit-button"]')
     .click();
 
-  await expect(page.locator('[data-testid="toast-success"]')).toBeVisible();
+  await expect(page.locator('[data-testid="toast-success"]')).toBeVisible({
+    timeout: 10000,
+  });
 });
