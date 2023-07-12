@@ -120,7 +120,7 @@ export function OrganizationForm({organization, onSubmit}: Props) {
                       <FileInput
                         value={{src: field.value, height: null, width: null}}
                         onChange={(value) => {
-                          field.onChange(value?.src || null);
+                          field.onChange(value?.src || '');
                         }}
                       />
                     </FormControl>
@@ -136,7 +136,9 @@ export function OrganizationForm({organization, onSubmit}: Props) {
                     <FormLabel>Preferred currency</FormLabel>
                     <FormControl>
                       <RadioGroup
-                        onValueChange={field.onChange}
+                        onValueChange={(e) => {
+                          field.onChange(e as Currency);
+                        }}
                         defaultValue={field.value}
                         className="flex flex-col space-y-1"
                       >
