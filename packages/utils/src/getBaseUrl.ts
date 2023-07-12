@@ -1,4 +1,6 @@
 export const getBaseUrl = () => {
+  console.log('>>> IS_CHECKLY', process.env.IS_CHECKLY);
+
   if (process.env.IS_CHECKLY === 'true' && process.env.ENVIRONMENT_URL) {
     return process.env.ENVIRONMENT_URL;
   }
