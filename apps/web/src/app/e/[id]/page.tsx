@@ -1,6 +1,6 @@
 import {Container, LoadingBlock} from 'ui';
 import {api} from '../../../trpc/server-http';
-import {ManageEventButton} from './(features)/ManageEventButton/ManageEventButton';
+import {ManageEventButton} from './features/ManageEventButton/ManageEventButton';
 import {EventView} from '../../../features/EventView/EventView';
 import {Suspense} from 'react';
 import {getBaseUrl} from 'utils';

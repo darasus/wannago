@@ -1,44 +1,34 @@
 import {authMiddleware} from '@clerk/nextjs';
 import {NextResponse} from 'next/server';
 
-const publicRoutes = [
-  '/login',
-  '/register',
-  '/examples',
-  '/terms-of-service',
-  '/privacy-policy',
-  '/cookie-policy',
-  '/e/',
-  '/u/',
-  '/o/',
-  '/api/',
-  '/api/trpc/',
-  '/auth/callback',
-];
-
 export default authMiddleware({
-  publicRoutes: (req) => {
-    if (req.nextUrl.pathname.includes('inngest')) {
-      return true;
+  signInUrl: '/login',
+  publicRoutes: [
+    '/',
+    '/login(.*)',
+    '/register(.*)',
+    '/examples(.*)',
+    '/terms-of-service(.*)',
+    '/privacy-policy(.*)',
+    '/cookie-policy(.*)',
+    '/e/(.*)',
+    '/u/(.*)',
+    '/o/(.*)',
+    '/api/(.*)',
+    '/api/trpc/(.*)',
+    '/auth/callback(.*)',
+    '(.*)inngest(.*)',
+  ],
+  async afterAuth(auth, req) {
+    if (auth.isPublicRoute) {
+      return NextResponse.next();
     }
 
-    if (req.nextUrl.pathname === '/') {
-      return true;
-    }
+    const url = new URL(req.nextUrl.origin);
 
-    return publicRoutes.some((route) => req.nextUrl.pathname.startsWith(route));
-  },
-  beforeAuth(req, evt) {
-    const list = [
-      'inngest',
-      '/api/pdf-ticket',
-      '/api/logo',
-      '/api/favicon',
-      '/api/og-image',
-    ];
-
-    if (list.some((route) => req.nextUrl.pathname.startsWith(route))) {
-      return false;
+    if (!auth.userId) {
+      url.pathname = '/login';
+      return NextResponse.redirect(url);
     }
 
     return NextResponse.next();
@@ -46,10 +36,5 @@ export default authMiddleware({
 });
 
 export const config = {
-  matcher: [
-    '/((?!static|_next/static|_next/image|favicon.ico).*)',
-    '/((?!.*\\..*|_next).*)',
-    '/',
-    '/(api|trpc)(.*)',
-  ],
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };

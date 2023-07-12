@@ -1,12 +1,12 @@
 import {Button, Container, LoadingCard, PageHeader} from 'ui';
 import {api} from '../../../../trpc/server-http';
-import {OrganizationForm} from '../../(features)/OrganizationForm/OrganizationForm';
-import {TeamMembersSettings} from './(features)/TeamMemberSettings/TeamMembersSettings';
-import {StripeAccountLinkSettings} from '../../../(features)/StripeAccountLinkSettings/StripeAccountLinkSettings';
+import {OrganizationForm} from '../../features/OrganizationForm/OrganizationForm';
+import {TeamMembersSettings} from './features/TeamMemberSettings/TeamMembersSettings';
 import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
 import {Suspense} from 'react';
 import {updateOrganization} from './actions';
+import {StripeAccountLinkSettings} from '../../../../features/StripeAccountLinkSettings/StripeAccountLinkSettings';
 
 // TODO: create description text explaining why you need to create a organization
 

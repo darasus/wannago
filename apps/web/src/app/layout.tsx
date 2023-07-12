@@ -1,11 +1,11 @@
 import {ClerkProvider} from '@clerk/nextjs';
 import './globals.css';
 import {Container} from 'ui';
-import {Header} from './(features)/Header/Header';
-import {ToastProvider} from './(features)/ToastProvider';
-import {Scripts} from './(features)/Scripts';
-import {Tools} from './(features)/Tools';
 import {getBaseUrl} from 'utils';
+import {Header} from '../features/Header/Header';
+import {Tools} from '../features/Tools';
+import {ToastProvider} from '../features/ToastProvider';
+import {Scripts} from '../features/Scripts';
 
 export const metadata = {
   title: 'WannaGo',

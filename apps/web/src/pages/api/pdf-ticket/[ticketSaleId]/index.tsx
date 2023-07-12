@@ -3,7 +3,7 @@ import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
 import {NextApiRequest, NextApiResponse} from 'next';
 import {invariant} from 'utils';
-import {TicketPDF} from '../../../../app/(components)/pdf/TicketPDF';
+import {TicketPDF} from '../../../../components/pdf/TicketPDF';
 
 export default async function handler(
   req: NextApiRequest,

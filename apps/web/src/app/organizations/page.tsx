@@ -1,5 +1,5 @@
 import {Button, Container, PageHeader, Text} from 'ui';
-import {OrganizationCard} from './(features)/OrganizationCard/OrganizationCard';
+import {OrganizationCard} from './features/OrganizationCard/OrganizationCard';
 import {api} from '../../trpc/server-http';
 import Link from 'next/link';
 

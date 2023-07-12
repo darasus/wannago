@@ -1,8 +1,8 @@
 import {Container, LoadingCard, PageHeader} from 'ui';
 import {api} from '../../trpc/server-http';
-import {UserSettingsForm} from './(features)/UserSettingsForm/UserSettingsForm';
+import {UserSettingsForm} from './features/UserSettingsForm/UserSettingsForm';
 import {Suspense} from 'react';
-import {StripeSettings} from './(features)/StripeSettings/StripeSettings';
+import {StripeSettings} from './features/StripeSettings/StripeSettings';
 
 export const generateMetadata = async () => {
   return {
