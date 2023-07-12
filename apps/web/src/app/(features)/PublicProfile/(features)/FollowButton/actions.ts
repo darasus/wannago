@@ -15,3 +15,17 @@ export async function follow({
   });
   await api.follow.getFollowCounts.revalidate();
 }
+
+export async function unfollow({
+  organizationId,
+  userId,
+}: {
+  organizationId: string | undefined;
+  userId: string | undefined;
+}) {
+  await api.follow.unfollow.mutate({
+    organizationId,
+    userId,
+  });
+  await api.follow.getFollowCounts.revalidate();
+}

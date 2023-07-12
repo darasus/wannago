@@ -3,10 +3,9 @@
 import {useParams, useRouter} from 'next/navigation';
 import {use, useTransition} from 'react';
 import {Button} from 'ui';
-import {api} from '../../../../../trpc/client';
 import {toast} from 'react-hot-toast';
 import {type RouterOutputs} from 'api';
-import {follow} from './actions';
+import {follow, unfollow} from './actions';
 
 interface Props {
   amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
@@ -27,14 +26,12 @@ export function FollowButton({amFollowingPromise}: Props) {
         variant="outline"
         onClick={() => {
           startTransition(async () => {
-            await api.follow.unfollow
-              .mutate({
-                organizationId,
-                userId,
-              })
-              .catch((error) => {
-                toast.error(error.message);
-              });
+            await unfollow({
+              organizationId,
+              userId,
+            }).catch((error) => {
+              toast.error(error.message);
+            });
             router.refresh();
           });
         }}
@@ -64,6 +61,7 @@ export function FollowButton({amFollowingPromise}: Props) {
         });
       }}
       disabled={isPending}
+      isLoading={isPending}
       data-testid="follow-button"
     >
       Follow

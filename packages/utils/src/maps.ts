@@ -14,6 +14,7 @@ export async function geocode(address: string) {
 }
 
 export async function placeAutocomplete(query: string) {
+  console.log('>>> URL', `${getBaseUrl()}/api/maps/placeAutocomplete`);
   const response = await fetch(`${getBaseUrl()}/api/maps/placeAutocomplete`, {
     method: 'POST',
     body: JSON.stringify({query}),
