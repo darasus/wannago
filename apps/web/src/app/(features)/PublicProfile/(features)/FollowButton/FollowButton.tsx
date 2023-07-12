@@ -29,10 +29,13 @@ export function FollowButton({amFollowingPromise}: Props) {
             await unfollow({
               organizationId,
               userId,
-            }).catch((error) => {
-              toast.error(error.message);
-            });
-            router.refresh();
+            })
+              .then(() => {
+                router.refresh();
+              })
+              .catch((error) => {
+                toast.error(error.message);
+              });
           });
         }}
         disabled={isPending}
@@ -54,10 +57,13 @@ export function FollowButton({amFollowingPromise}: Props) {
           await follow({
             organizationId,
             userId,
-          }).catch((error) => {
-            toast.error(error.message);
-          });
-          router.refresh();
+          })
+            .then(() => {
+              router.refresh();
+            })
+            .catch((error) => {
+              toast.error(error.message);
+            });
         });
       }}
       disabled={isPending}
