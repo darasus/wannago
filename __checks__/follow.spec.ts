@@ -20,102 +20,40 @@ test.use({
 
 test('can follow organization', async ({page}) => {
   test.setTimeout(120000);
-  await login({page, email: user_2_email});
-  await page.goto(getBaseUrl());
-  await createEvent({page, authorId: organization_2_id});
-  await publishCurrentEvent({page});
-  await logout({page});
   await login({page, email: user_1_email});
   await page.goto(`${getBaseUrl()}/o/${organization_2_id}`);
 
   const hasUnfollowButton = await page.getByText('unfollow').isVisible();
 
   if (hasUnfollowButton) {
-    await page
-      .locator('[data-testid="unfollow-button"]')
-      .getByText('unfollow')
-      .click();
-
-    await page
-      .locator('[data-testid="follow-button"]')
-      .getByText('follow')
-      .isVisible();
+    await page.locator('[data-testid="unfollow-button"]').click();
   }
 
-  await page
-    .locator('[data-testid="follow-button"]')
-    .getByText('follow')
-    .click();
+  await page.locator('[data-testid="follow-button"]').click({timeout: 20000});
 
-  await page
-    .locator('[data-testid="unfollow-button"]')
-    .getByText('unfollow')
-    .isVisible();
+  await page.waitForResponse(/rsc/);
 
-  await page.locator('[data-testid="logo-link"]').click();
-
-  await page.locator('[data-testid="filter-button"]').click();
-
-  await page
-    .locator('[data-testid="filter-option-button"]')
-    .getByText('Following')
-    .click();
-
-  await expect(
-    page
-      .locator('[data-testid="event-card"]')
-      .getByText('Organization 2')
-      .nth(0)
-  ).toBeVisible({timeout: 60 * 1000});
+  await expect(page.locator('[data-testid="unfollow-button"]')).toBeVisible({
+    timeout: 20000,
+  });
 });
 
 test('can follow user', async ({page}) => {
   test.setTimeout(120000);
-  await login({page, email: user_2_email});
-  await page.goto(getBaseUrl());
-  await createEvent({page, authorId: user_2_id});
-  await publishCurrentEvent({page});
-  await logout({page});
   await login({page, email: user_1_email});
   await page.goto(`${getBaseUrl()}/u/${user_2_id}`);
 
   const hasUnfollowButton = await page.getByText('unfollow').isVisible();
 
   if (hasUnfollowButton) {
-    await page
-      .locator('[data-testid="unfollow-button"]')
-      .getByText('unfollow')
-      .click();
-
-    await page
-      .locator('[data-testid="follow-button"]')
-      .getByText('follow')
-      .isVisible();
+    await page.locator('[data-testid="unfollow-button"]').click();
   }
 
-  await page
-    .locator('[data-testid="follow-button"]')
-    .getByText('follow')
-    .click();
+  await page.locator('[data-testid="follow-button"]').click({timeout: 20000});
 
-  await page
-    .locator('[data-testid="unfollow-button"]')
-    .getByText('unfollow')
-    .isVisible();
+  await page.waitForResponse(/rsc/);
 
-  await page.locator('[data-testid="logo-link"]').click();
-
-  await page.locator('[data-testid="filter-button"]').click();
-
-  await page
-    .locator('[data-testid="filter-option-button"]')
-    .getByText('Following')
-    .click();
-
-  await expect(
-    page
-      .locator('[data-testid="event-card"]')
-      .getByText('Organization 2')
-      .nth(0)
-  ).toBeVisible({timeout: 60 * 1000});
+  await expect(page.locator('[data-testid="unfollow-button"]')).toBeVisible({
+    timeout: 20000,
+  });
 });

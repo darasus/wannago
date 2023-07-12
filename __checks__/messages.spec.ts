@@ -35,6 +35,7 @@ test('can send message to user', async ({page}) => {
   await page.locator('[data-testid="message-button"]').click();
   await page.locator('[data-testid="message-input"]').type(randomMessage);
   await page.locator('[data-testid="message-form-submit-button"]').click();
+
   await expect(
     page.locator('[data-testid="message-text"]').last()
   ).toContainText(randomMessage);

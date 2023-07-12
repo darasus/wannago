@@ -13,6 +13,7 @@ export async function follow({
     organizationId,
     userId,
   });
+  await api.follow.amFollowing.revalidate();
   await api.follow.getFollowCounts.revalidate();
 }
 
@@ -27,5 +28,6 @@ export async function unfollow({
     organizationId,
     userId,
   });
+  await api.follow.amFollowing.revalidate();
   await api.follow.getFollowCounts.revalidate();
 }
