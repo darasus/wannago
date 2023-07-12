@@ -1,0 +1,45 @@
+import {expect, test} from '@playwright/test';
+import {organization_1_email, user_1_email} from './constants';
+import {login} from './utils';
+import {getBaseUrl} from './utils/getBaseUrl';
+
+test.use({
+  actionTimeout:
+    process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
+  navigationTimeout:
+    process.env.VERCEL_ENV === 'development' ? 20 * 1000 : undefined,
+  ignoreHTTPSErrors: true,
+  baseURL: getBaseUrl(),
+});
+
+test('can update team', async ({page}) => {
+  test.setTimeout(120000);
+  await login({page, email: user_1_email});
+
+  await page.goto(`${getBaseUrl()}/dashboard`);
+
+  await page.locator('[data-testid="header-user-button"]').click();
+  await page.locator('[data-testid="organizations-button"]').click();
+  await page
+    .locator('[data-testid="organization-item-card-settings-button"]')
+    .click();
+  await page.locator('[data-testid="team-settings-form-input-name"]').clear();
+  await page
+    .locator('[data-testid="team-settings-form-input-name"]')
+    .type('Organization 1');
+  await page.locator('[data-testid="team-settings-form-input-email"]').clear;
+  await page
+    .locator('[data-testid="team-settings-form-input-email"]')
+    .type(organization_1_email);
+  // await page
+  //   .locator('[data-testid="file-input"]')
+  //   .setInputFiles('cypress/support/logo.png', {
+  //     force: true,
+  //   });
+  await page.locator('[data-testid="file-input-image-preview"]');
+  await page
+    .locator('[data-testid="team-settings-form-input-submit-button"]')
+    .click();
+
+  await expect(page.locator('[data-testid="toast-success"]')).toBeVisible();
+});
