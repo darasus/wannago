@@ -1,5 +1,5 @@
 import {Container, LoadingBlock, PageHeader} from 'ui';
-import {Conversations} from './(features)/Conversations/Conversations';
+import {Conversations} from './features/Conversations/Conversations';
 import {Suspense} from 'react';
 import {api} from '../../trpc/server-http';
 

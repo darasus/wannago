@@ -1,9 +1,9 @@
 import {Container, LoadingBlock, PageHeader} from 'ui';
 import {z} from 'zod';
 import {api} from '../../../trpc/server-http';
-import {EventFilter} from './(features)/EventFilter';
+import {EventFilter} from './features/EventFilter';
 import {Suspense} from 'react';
-import {EventsList} from './(features)/EventsList';
+import {EventsList} from './features/EventsList';
 
 const filterSchema = z.array(
   z

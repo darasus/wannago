@@ -1,5 +1,5 @@
 import {Container, PageHeader} from 'ui';
-import {OrganizationForm} from '../(features)/OrganizationForm/OrganizationForm';
+import {OrganizationForm} from '../features/OrganizationForm/OrganizationForm';
 import {createOrganization} from './actions';
 
 export default function CreateOrganizationPage() {

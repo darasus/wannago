@@ -23,6 +23,7 @@ export function LogoView({className}: {className?: string}) {
       width={width}
       height={height}
       alt="WannaGo logo"
+      priority
       style={{
         height: height * 0.5,
         width: width * 0.5,

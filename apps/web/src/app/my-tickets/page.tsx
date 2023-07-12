@@ -1,6 +1,6 @@
 import {Container, PageHeader} from 'ui';
 import {api} from '../../trpc/server-http';
-import {MyTickets} from './(features)/MyTickets/MyTickets';
+import {MyTickets} from './features/MyTickets/MyTickets';
 
 export default async function TicketsPage() {
   const myTicketSalesPromise = api.user.getMyTickets.query();

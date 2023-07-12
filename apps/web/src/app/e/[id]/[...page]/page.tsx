@@ -1,11 +1,11 @@
 import {Button, Container, LoadingBlock, Text} from 'ui';
-import {EventInfo} from './(features)/EventInfo/EventInfo';
+import {EventInfo} from './features/EventInfo/EventInfo';
 import {api} from '../../../../trpc/server-http';
 import {notFound} from 'next/navigation';
 import {EditEventForm} from '../../../../features/EventForm/EditEventForm';
-import {EventAttendees} from './(features)/EventAttendees/EventAttendees';
-import {EventInvite} from './(features)/EventInvite/EventInvite';
-import {MyTickets} from './(features)/MyTickets/MyTickets';
+import {EventAttendees} from './features/EventAttendees/EventAttendees';
+import {EventInvite} from './features/EventInvite/EventInvite';
+import {MyTickets} from './features/MyTickets/MyTickets';
 import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
 import {Suspense} from 'react';

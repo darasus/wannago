@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, {Fragment} from 'react';
 import {Avatar, Button, CardBase, Container, PageHeader, Text} from 'ui';
 import {formatDate, getConversationMembers} from 'utils';
-import {MessageInput} from './(features)/MessageInput/MessageInput';
+import {MessageInput} from './features/MessageInput/MessageInput';
 import {api} from '../../../trpc/server-http';
 import {ChevronLeft} from 'lucide-react';
 
