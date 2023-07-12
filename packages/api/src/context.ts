@@ -4,7 +4,7 @@ import {
   createClerkClient,
 } from '@clerk/nextjs/server';
 import {Currency, PrismaClient} from '@prisma/client';
-import {prisma} from 'database';
+import {db, prisma} from 'database';
 import {Postmark} from 'lib/src/postmark';
 import {CacheService} from 'lib/src/cache';
 import {SignedInAuthObject, SignedOutAuthObject} from '@clerk/clerk-sdk-node';
@@ -63,6 +63,7 @@ interface CreateInnerContextOptions {
   postmark: Postmark;
   cache: CacheService;
   inngest: InngestType;
+  db: typeof db;
 }
 
 interface CreateContextOptions extends CreateInnerContextOptions {
@@ -82,6 +83,7 @@ export function createContextInner(
     postmark: _opts.postmark,
     cache: _opts.cache,
     inngest: _opts.inngest,
+    db: _opts.db,
   };
 }
 
@@ -103,6 +105,7 @@ export function createContext(opts: {req: NextRequest}): Context {
   const auth = getAuth(opts.req);
 
   const innerContext = createContextInner({
+    db,
     auth,
     clerk,
     prisma,
@@ -135,6 +138,7 @@ export function createNodeContext(opts: {req: NextApiRequest}): Context {
   const auth = getAuth(opts.req);
 
   const innerContext = createContextInner({
+    db,
     auth,
     clerk,
     prisma,

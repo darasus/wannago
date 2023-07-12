@@ -27,7 +27,8 @@
     "STABILITY_AI_API_KEY",
     "IS_CHECKLY",
     "VERCEL_URL",
-    "ENVIRONMENT_URL"
+    "ENVIRONMENT_URL",
+    "MIGRATE_DATABASE_URL"
   ],
   "pipeline": {
     "build": {
