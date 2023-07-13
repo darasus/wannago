@@ -7,10 +7,7 @@ import {useAuth} from '@clerk/nextjs';
 import {usePathname} from 'next/navigation';
 import Link from 'next/link';
 import {Menu, X} from 'lucide-react';
-import {
-  getIsPublic,
-  navItems,
-} from '../features/AppLayout/features/Header/constants';
+import {getIsPublic, navItems} from 'const';
 
 export function MobileMenu() {
   const pathname = usePathname();

@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from 'ui';
 import {usePathname} from 'next/navigation';
-import {getIsPublic} from '../../features/AppLayout/features/Header/constants';
+import {getIsPublic} from 'const';
 import {useRouter} from 'next/navigation';
 import {User} from '@prisma/client';
 import {ChevronDown, Plus} from 'lucide-react';

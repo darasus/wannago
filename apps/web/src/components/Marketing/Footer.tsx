@@ -1,8 +1,5 @@
 import {Text, Logo, Container, Button} from 'ui';
-import {
-  legalNavItems,
-  navItems,
-} from '../../features/AppLayout/features/Header/constants';
+import {legalNavItems, navItems} from 'const';
 import Link from 'next/link';
 
 export function Footer() {
