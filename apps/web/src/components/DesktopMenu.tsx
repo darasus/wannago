@@ -2,11 +2,8 @@
 
 import {Button} from 'ui';
 import {usePathname} from 'next/navigation';
-import {
-  getIsPublic,
-  navItems,
-} from '../features/AppLayout/features/Header/constants';
 import Link from 'next/link';
+import {getIsPublic, navItems} from 'const';
 
 export function DesktopMenu() {
   const pathname = usePathname();
