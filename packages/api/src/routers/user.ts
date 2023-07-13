@@ -1,14 +1,15 @@
 import {z} from 'zod';
 import {createTRPCRouter, protectedProcedure, publicProcedure} from '../trpc';
 import {getUserByExternalId as _getUserByExternalId} from '../actions/getUserByExternalId';
-import {getUserById as _getUserById} from '../actions/getUserById';
 
 const getUserById = publicProcedure
   .input(z.object({userId: z.string().uuid()}))
   .query(async ({ctx, input}) => {
-    return _getUserById(ctx)({
-      id: input.userId,
-    });
+    return ctx.db
+      .selectFrom('User')
+      .where('id', '=', input.userId)
+      .select(['firstName', 'lastName', 'profileImageSrc', 'preferredCurrency'])
+      .executeTakeFirst();
   });
 
 const getUserByExternalId = publicProcedure
@@ -41,18 +42,19 @@ const update = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    return ctx.prisma.user.update({
-      where: {
-        id: input.userId,
-      },
-      data: {
+    await ctx.db
+      .updateTable('User')
+      .set({
         firstName: input.firstName,
         lastName: input.lastName,
         email: input.email,
         profileImageSrc: input.profileImageSrc,
         preferredCurrency: input.currency,
-      },
-    });
+      })
+      .where('id', '=', input.userId)
+      .executeTakeFirst();
+
+    return null;
   });
 
 const getMyTickets = protectedProcedure.query(async ({ctx, input}) => {

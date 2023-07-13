@@ -1,12 +1,11 @@
 import {Suspense} from 'react';
 import {titleFontClassName} from '../../fonts';
-import {Button, LoadingBlock} from 'ui';
+import {LoadingBlock} from 'ui';
 import {Container} from 'ui';
 import {cn} from 'utils';
-import {auth} from '@clerk/nextjs';
 import EventPreview from './EventPreview';
-import Link from 'next/link';
 import {api} from '../../trpc/server-http';
+import {CreateYourFirstEventButton} from './CreateYourFirstEventButton';
 
 export function Hero() {
   return (
@@ -30,11 +29,7 @@ export function Hero() {
           </span>
         </div>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">
-          <Button className="pointer-events-auto" size="lg" asChild>
-            <Link href={auth().userId ? '/e/add' : '/register'}>
-              Create your first event
-            </Link>
-          </Button>
+          <CreateYourFirstEventButton />
         </div>
         <div className="flex justify-center relative w-full max-w-2xl m-auto pointer-events-none">
           <Suspense fallback={<LoadingBlock />}>
