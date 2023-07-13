@@ -23,7 +23,7 @@ ${dbTypes}
 
 export const db = new Kysely<DB>({
   dialect: new PlanetScaleDialect({
-    url: process.env.DATABASE_URL,
+    url: process.env.MIGRATE_DATABASE_URL,
   }),
 });
 
