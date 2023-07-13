@@ -3,9 +3,10 @@ generator client {
 }
 
 generator kysely {
-  provider     = "prisma-kysely"
-  output       = ".."
-  enumFileName = "enums.ts"
+  provider            = "prisma-kysely"
+  output              = ".."
+  enumFileName        = "enums.ts"
+  booleanTypeOverride = "boolean"
 }
 
 datasource db {

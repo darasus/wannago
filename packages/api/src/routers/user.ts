@@ -25,9 +25,13 @@ const me = publicProcedure.query(async ({ctx}) => {
     return null;
   }
 
-  return _getUserByExternalId(ctx)({
-    externalId: ctx.auth.userId,
-  });
+  const result = await ctx.db
+    .selectFrom('User')
+    .where('externalId', '=', ctx.auth?.userId)
+    .selectAll()
+    .executeTakeFirst();
+
+  return result || null;
 });
 
 const update = protectedProcedure
