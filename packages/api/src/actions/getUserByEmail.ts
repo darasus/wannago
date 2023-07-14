@@ -7,11 +7,11 @@ const validation = z.object({
 
 export function getUserByEmail(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
-    const user = await ctx.prisma.user.findUnique({
-      where: {
-        email: input.email,
-      },
-    });
+    const user = await ctx.db
+      .selectFrom('User')
+      .where('email', '=', input.email)
+      .selectAll()
+      .executeTakeFirst();
 
     return user;
   };

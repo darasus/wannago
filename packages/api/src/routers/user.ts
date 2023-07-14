@@ -1,6 +1,5 @@
 import {z} from 'zod';
 import {createTRPCRouter, protectedProcedure, publicProcedure} from '../trpc';
-import {getUserByExternalId as _getUserByExternalId} from '../actions/getUserByExternalId';
 
 const getUserById = publicProcedure
   .input(z.object({userId: z.string().uuid()}))
@@ -15,9 +14,11 @@ const getUserById = publicProcedure
 const getUserByExternalId = publicProcedure
   .input(z.object({externalId: z.string()}))
   .query(async ({ctx, input}) => {
-    return _getUserByExternalId(ctx)({
-      externalId: input.externalId,
-    });
+    return ctx.db
+      .selectFrom('User')
+      .where('externalId', '=', input.externalId)
+      .selectAll()
+      .executeTakeFirst();
   });
 
 const me = publicProcedure.query(async ({ctx}) => {
