@@ -25,20 +25,27 @@ const create = protectedProcedure
 
     invariant(user, userNotFoundError);
 
-    return ctx.prisma.organization.create({
-      data: {
-        name: input.name,
-        logoSrc: input.logoSrc,
-        disabled: false,
-        email: input.email,
-        preferredCurrency: input.currency,
-        users: {
-          connect: {
-            id: user.id,
+    return ctx.prisma.organization
+      .create({
+        data: {
+          name: input.name,
+          logoSrc: input.logoSrc,
+          disabled: false,
+          email: input.email,
+          preferredCurrency: input.currency,
+          users: {
+            connect: {
+              id: user.id,
+            },
           },
         },
-      },
-    });
+      })
+      .catch((error) => {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Seems like indicated email is already in use',
+        });
+      });
   });
 
 const update = protectedProcedure
