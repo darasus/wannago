@@ -45,7 +45,6 @@ export {
 } from './src/Menu/Menu';
 export {NotFoundMessage} from './src/NotFoundMessage/NotFoundMessage';
 export {InfoIconWithTooltip} from './src/InfoIconWithTooltip/InfoIconWithTooltip';
-export {InputWrapper} from './src/InputWrapper/InputWrapper';
 export {AnimateRender} from './src/AnimateRender/AnimateRender';
 export {
   Select,
