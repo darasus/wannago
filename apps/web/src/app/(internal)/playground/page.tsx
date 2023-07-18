@@ -1,28 +1,31 @@
-"use client";
+'use client';
 
-import { Accordion, Badge, Button, Container, LoadingWave } from "ui";
-import { ChevronDown } from "lucide-react";
+import {Accordion, Badge, Button, Container, LoadingWave} from 'ui';
+import {ChevronDown} from 'lucide-react';
 
-const sizes = ["sm", "lg"] as const;
+const sizes = ['sm', 'lg'] as const;
 
 const items = [
   {
-    label: "What is Tailwind CSS?",
+    label: 'What is Tailwind CSS?',
     content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
   },
   {
-    label: "What is Tailwind CSS?",
+    label: 'What is Tailwind CSS?',
     content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
   },
   {
-    label: "What is Tailwind CSS?",
+    label: 'What is Tailwind CSS?',
     content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
   },
   {
-    label: "What is Tailwind CSS?",
+    label: 'What is Tailwind CSS?',
     content: `Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces. It's completely customizable, completely extensible, and a lot of fun to use!`,
   },
 ];
+
+export const runtime = 'edge';
+export const preferredRegion = 'iad1';
 
 export default function PlaygroundPage() {
   return (
@@ -87,11 +90,11 @@ export default function PlaygroundPage() {
       </Section>
 
       <Section>
-        {(["xs", "sm", "md", "lg"] as const).map((size) => {
+        {(['xs', 'sm', 'md', 'lg'] as const).map((size) => {
           return (
             <div className="flex gap-4">
               {(
-                ["default", "secondary", "destructive", "outline"] as const
+                ['default', 'secondary', 'destructive', 'outline'] as const
               ).map((variant) => {
                 return <Badge variant={variant}>Hello</Badge>;
               })}
@@ -106,6 +109,6 @@ export default function PlaygroundPage() {
   );
 }
 
-function Section({ children }: { children: React.ReactNode }) {
+function Section({children}: {children: React.ReactNode}) {
   return <div className="flex flex-col gap-4">{children}</div>;
 }

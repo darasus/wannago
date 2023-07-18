@@ -4,6 +4,9 @@ import {UserSettingsForm} from './features/UserSettingsForm/UserSettingsForm';
 import {Suspense} from 'react';
 import {StripeSettings} from './features/StripeSettings/StripeSettings';
 
+export const runtime = 'edge';
+export const preferredRegion = 'iad1';
+
 export const generateMetadata = async () => {
   return {
     title: `User settings | WannaGo`,

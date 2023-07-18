@@ -3,6 +3,9 @@ import {api} from '../../../../trpc/server-http';
 import {LoadingBlock} from 'ui';
 import {PublicProfile} from '../../../../features/PublicProfile/PublicProfile';
 
+export const runtime = 'edge';
+export const preferredRegion = 'iad1';
+
 export const generateMetadata = async ({
   params: {organizationId},
 }: {

@@ -5,6 +5,9 @@ import {EventView} from '../../../features/EventView/EventView';
 import {Suspense} from 'react';
 import {getBaseUrl} from 'utils';
 
+export const runtime = 'edge';
+export const preferredRegion = 'iad1';
+
 export async function generateMetadata({params: {id}}: {params: {id: string}}) {
   const event = await api.event.getByShortId.query({id});
 
