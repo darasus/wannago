@@ -1,7 +1,7 @@
 import {Event, Organization, User} from '@prisma/client';
 import {isFuture} from 'date-fns';
 import Image from 'next/image';
-import {cloudflareImageLoader, formatTimeago} from 'utils';
+import {cloudflareImageLoader, cn, formatTimeago} from 'utils';
 import {Avatar, Badge, CardBase, Text} from 'ui';
 import {forwardRef} from 'react';
 
@@ -28,8 +28,10 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
   } = event;
 
   return (
-    <CardBase ref={ref} data-testid="event-card">
-      <div className="flex flex-col gap-2">
+    <CardBase
+      ref={ref}
+      data-testid="event-card"
+      title={
         <div className="flex items-center gap-2">
           <Avatar
             className="w-6 h-6 -mr-1"
@@ -44,13 +46,22 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
             {event.organization?.name ||
               `${event.user?.firstName} ${event.user?.lastName}`}
           </Text>
-          <Badge variant={isUpcoming ? 'default' : 'outline'}>
-            {isUpcoming ? 'Upcoming' : 'Past'}
-          </Badge>
-          <Text className="text-sm text-gray-600 whitespace-nowrap">
-            {formatTimeago(event.startDate)}
-          </Text>
         </div>
+      }
+      titleChildren={
+        <div className="flex items-center gap-2">
+          <Badge
+            className={cn({
+              'bg-green-500 hover:bg-green-600': isUpcoming,
+              'bg-gray-500 hover:bg-gray-600': !isUpcoming,
+            })}
+          >
+            {formatTimeago(event.startDate)}
+          </Badge>
+        </div>
+      }
+    >
+      <div className="flex flex-col gap-2">
         {featuredImageSrc &&
           featuredImagePreviewSrc &&
           featuredImageWidth &&
