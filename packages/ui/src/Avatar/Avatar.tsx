@@ -38,6 +38,7 @@ export function Avatar({
             imageClassName
           )}
           fill
+          sizes="320 640 750 1000"
           style={{objectFit: 'cover'}}
           src={src}
           alt={alt}
