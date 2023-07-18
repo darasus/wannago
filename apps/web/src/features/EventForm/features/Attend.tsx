@@ -2,6 +2,7 @@ import {useFieldArray, useFormContext} from 'react-hook-form';
 import {
   Button,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -51,6 +52,7 @@ export function Attend() {
                   data-testid="event-form-max-attendees"
                 />
               </FormControl>
+              <FormDescription>Leave 0 for unlimited attendees</FormDescription>
               <FormMessage />
             </FormItem>
           )}
