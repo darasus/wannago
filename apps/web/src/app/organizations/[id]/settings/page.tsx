@@ -10,6 +10,9 @@ import {StripeAccountLinkSettings} from '../../../../features/StripeAccountLinkS
 
 // TODO: create description text explaining why you need to create a organization
 
+export const runtime = 'edge';
+export const preferredRegion = 'iad1';
+
 export const generateMetadata = async ({params}: {params: {id: string}}) => {
   return {
     title: `Organization settings | WannaGo`,

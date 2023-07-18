@@ -6,6 +6,9 @@ export const metadata = {
   title: 'Add event | WannaGo',
 };
 
+export const runtime = 'edge';
+export const preferredRegion = 'iad1';
+
 export default async function EventAddPage() {
   const [me, myOrganizations] = await Promise.all([
     api.user.me.query(),

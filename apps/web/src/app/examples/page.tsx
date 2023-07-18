@@ -7,6 +7,9 @@ export const metadata = {
   title: 'Examples | WannaGo',
 };
 
+export const runtime = 'edge';
+export const preferredRegion = 'iad1';
+
 export default async function ExamplesPage() {
   const examples = await api.event.getExamples.query();
 

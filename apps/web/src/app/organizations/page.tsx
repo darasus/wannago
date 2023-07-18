@@ -7,6 +7,9 @@ export const metadata = {
   title: 'Organizations | WannaGo',
 };
 
+export const runtime = 'edge';
+export const preferredRegion = 'iad1';
+
 export default async function SettingsPage() {
   const organizations = await api.organization.getMyOrganizations.query();
 
