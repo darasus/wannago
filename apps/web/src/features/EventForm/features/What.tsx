@@ -26,6 +26,9 @@ export function What() {
     api: '/api/ai/generate-event-description',
   });
   const title = form.watch('title');
+  const featuredImageHeight = form.watch('featuredImageHeight');
+  const featuredImageWidth = form.watch('featuredImageWidth');
+  const featuredImagePreviewSrc = form.watch('featuredImagePreviewSrc');
 
   const onClickGenerate = () => {
     complete(title);
@@ -93,14 +96,34 @@ export function What() {
             </FormLabel>
             <FormControl>
               <FileInput
-                value={{src: field.value, height: null, width: null}}
+                value={
+                  field.value &&
+                  featuredImageHeight &&
+                  featuredImageWidth &&
+                  featuredImagePreviewSrc
+                    ? {
+                        src: field.value,
+                        height: featuredImageHeight,
+                        width: featuredImageWidth,
+                        imageSrcBase64: featuredImagePreviewSrc,
+                      }
+                    : null
+                }
                 onChange={(value) => {
-                  field.onChange(value?.src);
-                  if (value?.height) {
-                    form.setValue('featuredImageHeight', value?.height);
-                  }
-                  if (value?.width) {
-                    form.setValue('featuredImageWidth', value?.width);
+                  console.log(value);
+                  if (value) {
+                    field.onChange(value.src);
+                    form.setValue('featuredImageHeight', value.height);
+                    form.setValue('featuredImageWidth', value.width);
+                    form.setValue(
+                      'featuredImagePreviewSrc',
+                      value.imageSrcBase64
+                    );
+                  } else {
+                    field.onChange(null);
+                    form.setValue('featuredImageHeight', null);
+                    form.setValue('featuredImageWidth', null);
+                    form.setValue('featuredImagePreviewSrc', null);
                   }
                 }}
               />

@@ -7,13 +7,14 @@ import {Spinner} from '../Spinner/Spinner';
 import {useUploadImage} from '../../../hooks/src/useUploadImage';
 
 interface Value {
-  src: string | null | undefined;
-  height: number | null | undefined;
-  width: number | null | undefined;
+  src: string;
+  imageSrcBase64: string;
+  height: number;
+  width: number;
 }
 
 interface Props {
-  value: Value;
+  value: Value | null;
   onChange: (value: Value | null) => void;
 }
 
@@ -28,6 +29,7 @@ export function FileInput({value, onChange, ...props}: Props) {
             height: data.height,
             width: data.width,
             src: data.url,
+            imageSrcBase64: data.imageSrcBase64,
           };
           onChange?.(v);
         }
@@ -47,8 +49,9 @@ export function FileInput({value, onChange, ...props}: Props) {
   });
 
   const handleRemoveImage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
     onChange?.(null);
+    e.preventDefault();
+    console.log('CLICK');
   };
 
   return (

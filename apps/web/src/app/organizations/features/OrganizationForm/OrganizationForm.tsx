@@ -118,7 +118,16 @@ export function OrganizationForm({organization, onSubmit}: Props) {
                     <FormLabel>Profile picture</FormLabel>
                     <FormControl>
                       <FileInput
-                        value={{src: field.value, height: null, width: null}}
+                        value={
+                          field.value
+                            ? {
+                                src: field.value,
+                                height: 0,
+                                width: 0,
+                                imageSrcBase64: '',
+                              }
+                            : null
+                        }
                         onChange={(value) => {
                           field.onChange(value?.src || '');
                         }}
