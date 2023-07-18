@@ -36,7 +36,7 @@ export function Hero() {
             </Link>
           </Button>
         </div>
-        <div className="flex justify-center relative w-full max-w-2xl m-auto pointer-events-none">
+        <div className="flex justify-center relative w-full max-w-2xl m-auto">
           <Suspense fallback={<LoadingBlock />}>
             <EventPreview eventPromise={api.event.getRandomExample.query()} />
           </Suspense>
