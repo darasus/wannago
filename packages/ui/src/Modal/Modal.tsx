@@ -40,7 +40,7 @@ export function Modal({children, isOpen, onClose, title, className}: Props) {
               <Dialog.Panel
                 as={CardBase}
                 title={title}
-                className={cn('w-full max-w-md', className)}
+                className={cn('w-full max-w-md', className, 'mx-4')}
               >
                 <div>{children}</div>
               </Dialog.Panel>
