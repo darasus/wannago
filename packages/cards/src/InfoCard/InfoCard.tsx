@@ -1,10 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import {CardBase, InfoIconWithTooltip, LoadingBlock} from 'ui';
+import {Button, CardBase, InfoIconWithTooltip, LoadingBlock} from 'ui';
 import {cn} from 'utils';
 import {cloudflareImageLoader} from 'utils';
 import {Event} from '@prisma/client';
+import clip from 'text-clipper';
+import {useState} from 'react';
 
 interface Props {
   event: Event;
@@ -13,6 +15,7 @@ interface Props {
 }
 
 export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const {
     description,
     title,
@@ -108,13 +111,32 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
                   'prose-h1:text-gray-900 prose-h2:text-gray-900 prose-h3:text-gray-900 prose-h4:text-gray-900 prose-h5:text-gray-900 prose-h6:text-gray-900',
                   'prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-pre:rounded-md prose-pre:text-gray-900',
                   'prose-a:text-brand-700',
-                  'prose-p:break-words'
+                  'prose-p:break-words prose-p:mt-0 prose-p:mb-0'
                 )}
               >
                 <div
-                  className="text-body"
-                  dangerouslySetInnerHTML={{__html: description}}
+                  className="flex flex-col gap-y-2"
+                  dangerouslySetInnerHTML={{
+                    __html: isExpanded
+                      ? description
+                      : clip(description, 550, {
+                          html: true,
+                          indicator: '...',
+                        }),
+                  }}
                 />
+                {!isExpanded && (
+                  <Button
+                    className="w-full mt-2"
+                    variant={'outline'}
+                    size={'sm'}
+                    onClick={() => {
+                      setIsExpanded(true);
+                    }}
+                  >
+                    Read more
+                  </Button>
+                )}
               </div>
             </>
           )}
