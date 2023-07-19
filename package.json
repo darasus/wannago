@@ -20,7 +20,7 @@
   "dependencies": {
     "@amplitude/analytics-browser": "^1.12.1",
     "@clerk/clerk-sdk-node": "^4.11.0",
-    "@clerk/nextjs": "^4.22.0",
+    "@clerk/nextjs": "^4.22.1",
     "@googlemaps/google-maps-services-js": "^3.3.33",
     "@headlessui/react": "1.7.4",
     "@hookform/resolvers": "^2.9.11",
