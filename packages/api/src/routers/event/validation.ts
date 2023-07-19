@@ -1,4 +1,4 @@
-import { z } from "zod";
+import {z} from 'zod';
 
 export const eventInput = z.object({
   createdById: z.string().uuid(),
@@ -15,13 +15,13 @@ export const eventInput = z.object({
     .number()
     .or(z.string())
     .transform((val): number => {
-      if (typeof val === "number") {
+      if (typeof val === 'number') {
         return val;
       }
       return isNaN(Number(val)) ? 0 : Number(val);
     })
     .nullable()
-    .default(Infinity),
+    .default(0),
   tickets: z.array(
     z.object({
       title: z.string(),

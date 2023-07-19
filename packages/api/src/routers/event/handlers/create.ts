@@ -52,7 +52,7 @@ export const create = protectedProcedure
           endDate,
           startDate,
           address: address,
-          maxNumberOfAttendees: maxNumberOfAttendees ?? Infinity,
+          maxNumberOfAttendees: maxNumberOfAttendees ?? 0,
           featuredImageSrc,
           featuredImageHeight,
           featuredImageWidth,
