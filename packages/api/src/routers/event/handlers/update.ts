@@ -28,11 +28,7 @@ export const update = protectedProcedure
     }) => {
       await canModifyEvent(ctx)({eventId});
 
-      let geocodeResponse = null;
-
-      if (address) {
-        geocodeResponse = await geocode(address);
-      }
+      const geocodeResponse = await geocode(address);
 
       const [user, organization] = await Promise.all([
         await ctx.prisma.user.findUnique({

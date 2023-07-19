@@ -44,7 +44,7 @@ export const create = protectedProcedure
         })
       );
 
-      let event = await ctx.prisma.event.create({
+      const event = await ctx.prisma.event.create({
         data: {
           shortId: generateShortId(),
           title,

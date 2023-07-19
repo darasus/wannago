@@ -8,8 +8,8 @@ import {zonedTimeToUtc} from 'date-fns-tz';
 import {useAmplitude} from 'hooks';
 import {PageHeader} from 'ui';
 import {Event, Organization, Ticket, User} from '@prisma/client';
-import {updateEvent} from './actions';
 import {toast} from 'react-hot-toast';
+import {api} from '../../trpc/server-http';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -29,34 +29,36 @@ export function EditEventForm({event, me, myOrganizations}: Props) {
     logEvent('event_update_submitted');
 
     if (event?.id) {
-      await updateEvent({
-        ...data,
-        tickets:
-          data.tickets?.map((ticket) => ({
-            ...ticket,
-            price: Number(ticket.price) * 100,
-            maxQuantity: Number(ticket.maxQuantity),
-          })) || [],
-        description: data.description || null,
-        eventId: event.id,
-        startDate: zonedTimeToUtc(
-          data.startDate,
-          Intl.DateTimeFormat().resolvedOptions().timeZone
-        ),
-        endDate: zonedTimeToUtc(
-          data.endDate,
-          Intl.DateTimeFormat().resolvedOptions().timeZone
-        ),
-        maxNumberOfAttendees: Number(data.maxNumberOfAttendees) || 0,
-        featuredImageSrc: data.featuredImageSrc || null,
-        featuredImageHeight: Number(data.featuredImageHeight) || null,
-        featuredImageWidth: Number(data.featuredImageWidth) || null,
-        featuredImagePreviewSrc: data.featuredImagePreviewSrc || null,
-      })
+      await api.event.update
+        .mutate({
+          ...data,
+          tickets:
+            data.tickets?.map((ticket) => ({
+              ...ticket,
+              price: Number(ticket.price) * 100,
+              maxQuantity: Number(ticket.maxQuantity),
+            })) || [],
+          description: data.description || null,
+          eventId: event.id,
+          startDate: zonedTimeToUtc(
+            data.startDate,
+            Intl.DateTimeFormat().resolvedOptions().timeZone
+          ),
+          endDate: zonedTimeToUtc(
+            data.endDate,
+            Intl.DateTimeFormat().resolvedOptions().timeZone
+          ),
+          maxNumberOfAttendees: Number(data.maxNumberOfAttendees) || 0,
+          featuredImageSrc: data.featuredImageSrc || null,
+          featuredImageHeight: Number(data.featuredImageHeight) || null,
+          featuredImageWidth: Number(data.featuredImageWidth) || null,
+          featuredImagePreviewSrc: data.featuredImagePreviewSrc || null,
+        })
         .then((data) => {
           logEvent('event_updated', {
             eventId: data?.id,
           });
+          router.refresh();
           router.push(`/e/${data.shortId}`);
         })
         .catch((error) => {
