@@ -6,5 +6,4 @@ Sentry.init({
   dsn: SENTRY_DSN,
   tracesSampleRate: 0.1,
   profilesSampleRate: 0.1,
-  enabled: process.env.VERCEL_ENV === 'production',
 });
