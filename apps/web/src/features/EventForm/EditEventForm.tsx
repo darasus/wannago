@@ -9,7 +9,7 @@ import {useAmplitude} from 'hooks';
 import {PageHeader} from 'ui';
 import {Event, Organization, Ticket, User} from '@prisma/client';
 import {toast} from 'react-hot-toast';
-import {api} from '../../trpc/server-http';
+import {api} from '../../trpc/client';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
