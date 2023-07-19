@@ -6,6 +6,7 @@ module.exports = {
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
     '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/editor/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/cards/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/card-features/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/auth-features/src/**/*.{js,ts,jsx,tsx}',

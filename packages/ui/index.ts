@@ -94,3 +94,21 @@ export {LoadingCard} from './src/LoadingCard/LoadingCard';
 export {Skeleton} from './src/Skeleton/Skeleton';
 export {Counter} from './src/Counter/Counter';
 export {Checkbox} from './src/Checkbox/Checkbox';
+export {
+  Menubar,
+  MenubarCheckboxItem,
+  MenubarContent,
+  MenubarGroup,
+  MenubarItem,
+  MenubarLabel,
+  MenubarMenu,
+  MenubarPortal,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger,
+} from './src/MenuBar/MenuBar';
