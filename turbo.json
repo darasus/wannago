@@ -29,7 +29,8 @@
     "VERCEL_URL",
     "ENVIRONMENT_URL",
     "KV_REST_API_URL",
-    "KV_REST_API_TOKEN"
+    "KV_REST_API_TOKEN",
+    "SENTRY_AUTH_TOKEN"
   ],
   "pipeline": {
     "build": {

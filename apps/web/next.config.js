@@ -28,7 +28,9 @@ const moduleExports = {
     // https://webpack.js.org/configuration/devtool/ and
     // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#use-hidden-source-map
     // for more information.
-    hideSourceMaps: true,
+    hideSourceMaps: false,
+    tunnelRoute: '/monitoring',
+    widenClientFileUpload: true,
   },
   reactStrictMode: true,
   experimental: {
@@ -123,9 +125,6 @@ module.exports = withMDX(
     silent: true,
     org: 'darasus-bv',
     project: 'wannago',
-    widenClientFileUpload: true,
-    tunnelRoute: '/monitoring',
-    hideSourceMaps: true,
-    disableLogger: true,
+    authToken: process.env.SENTRY_AUTH_TOKEN,
   })
 );
