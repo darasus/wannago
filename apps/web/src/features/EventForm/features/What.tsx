@@ -74,7 +74,6 @@ export function What() {
                     : null
                 }
                 onChange={(value) => {
-                  console.log(value);
                   if (value) {
                     field.onChange(value.src);
                     form.setValue('featuredImageHeight', value.height);
