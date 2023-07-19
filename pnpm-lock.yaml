@@ -100,7 +100,7 @@ importers:
         version: 3.15.0(react-dom@18.2.0)(react@18.2.0)
       '@react-pdf/renderer':
         specifier: ^3.1.12
-        version: 3.1.12(react@18.2.0)
+        version: 3.1.12(encoding@0.1.13)(react@18.2.0)
       '@react-stately/datepicker':
         specifier: ^3.5.0
         version: 3.5.0(react@18.2.0)
@@ -115,7 +115,7 @@ importers:
         version: 3.18.1(react@18.2.0)
       '@sentry/nextjs':
         specifier: 7.59.3
-        version: 7.59.3(next@13.4.10)(react@18.2.0)(webpack@5.88.2)
+        version: 7.59.3(encoding@0.1.13)(next@13.4.10)(react@18.2.0)(webpack@5.88.2)
       '@styled-icons/simple-icons':
         specifier: ^10.46.0
         version: 10.46.0(react@18.2.0)(styled-components@5.3.11)
@@ -193,16 +193,16 @@ importers:
         version: 2.0.5
       '@upstash/ratelimit':
         specifier: ^0.4.3
-        version: 0.4.3
+        version: 0.4.3(encoding@0.1.13)
       '@upstash/redis':
         specifier: ^1.22.0
-        version: 1.22.0
+        version: 1.22.0(encoding@0.1.13)
       '@vercel/blob':
         specifier: ^0.9.3
         version: 0.9.3
       '@vercel/kv':
         specifier: ^0.2.2
-        version: 0.2.2
+        version: 0.2.2(encoding@0.1.13)
       '@vercel/og':
         specifier: ^0.5.8
         version: 0.5.8
@@ -233,6 +233,9 @@ importers:
       date-fns-tz:
         specifier: ^1.3.8
         version: 1.3.8(date-fns@2.30.0)
+      encoding:
+        specifier: ^0.1.13
+        version: 0.1.13
       eventsource-parser:
         specifier: ^1.0.0
         version: 1.0.0
@@ -259,7 +262,7 @@ importers:
         version: 1.0.2
       inngest:
         specifier: ^2.3.0
-        version: 2.3.0(typescript@5.1.6)
+        version: 2.3.0(encoding@0.1.13)(typescript@5.1.6)
       js-confetti:
         specifier: ^0.11.0
         version: 0.11.0
@@ -268,7 +271,7 @@ importers:
         version: 0.32.2
       langchain:
         specifier: ^0.0.57
-        version: 0.0.57(axios@1.4.0)
+        version: 0.0.57(axios@1.4.0)(encoding@0.1.13)
       lodash.debounce:
         specifier: ^4.0.8
         version: 4.0.8
@@ -380,7 +383,7 @@ importers:
         version: 1.36.0
       '@sentry/cli':
         specifier: ^2.19.4
-        version: 2.19.4
+        version: 2.19.4(encoding@0.1.13)
       '@types/file-saver':
         specifier: ^2.0.5
         version: 2.0.5
@@ -434,7 +437,7 @@ importers:
         version: 2.0.0(eslint@8.45.0)
       inngest-cli:
         specifier: ^0.15.3
-        version: 0.15.3
+        version: 0.15.3(encoding@0.1.13)
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -773,7 +776,7 @@ importers:
         version: 1.3.5(react@18.2.0)
       react-email:
         specifier: 1.9.3
-        version: 1.9.3
+        version: 1.9.3(encoding@0.1.13)
     devDependencies:
       database:
         specifier: workspace:*
@@ -1055,11 +1058,11 @@ packages:
       '@jridgewell/trace-mapping': 0.3.18
     dev: false
 
-  /@anthropic-ai/sdk@0.4.4:
+  /@anthropic-ai/sdk@0.4.4(encoding@0.1.13):
     resolution: {integrity: sha512-Z/39nQi1sSUCeLII3lsAbL1u+0JF6cR2XmUEX9sLH0VtxmIjY6cjOUYjCkYh4oapTxOkhAFnVSAFJ6cxml2qXg==}
     dependencies:
       '@fortaine/fetch-event-source': 3.0.6
-      cross-fetch: 3.1.8
+      cross-fetch: 3.1.8(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -2406,13 +2409,13 @@ packages:
     engines: {node: '>= 14'}
     dev: false
 
-  /@octokit/core@4.2.1:
+  /@octokit/core@4.2.1(encoding@0.1.13):
     resolution: {integrity: sha512-tEDxFx8E38zF3gT7sSMDrT1tGumDgsw5yPG6BBh/X+5ClIQfMH/Yqocxz1PnHx6CHyF6pxmovUTOfZAUvQ0Lvw==}
     engines: {node: '>= 14'}
     dependencies:
       '@octokit/auth-token': 3.0.4
-      '@octokit/graphql': 5.0.6
-      '@octokit/request': 6.2.5
+      '@octokit/graphql': 5.0.6(encoding@0.1.13)
+      '@octokit/request': 6.2.5(encoding@0.1.13)
       '@octokit/request-error': 3.0.3
       '@octokit/types': 9.3.1
       before-after-hook: 2.2.3
@@ -2430,11 +2433,11 @@ packages:
       universal-user-agent: 6.0.0
     dev: false
 
-  /@octokit/graphql@5.0.6:
+  /@octokit/graphql@5.0.6(encoding@0.1.13):
     resolution: {integrity: sha512-Fxyxdy/JH0MnIB5h+UQ3yCoh1FG4kWXfFKkpWqjZHw/p+Kc8Y44Hu/kCgNBT6nU1shNumEchmW/sUO1JuQnPcw==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/request': 6.2.5
+      '@octokit/request': 6.2.5(encoding@0.1.13)
       '@octokit/types': 9.3.1
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
@@ -2451,7 +2454,7 @@ packages:
     peerDependencies:
       '@octokit/core': '>=4'
     dependencies:
-      '@octokit/core': 4.2.1
+      '@octokit/core': 4.2.1(encoding@0.1.13)
       '@octokit/tsconfig': 1.0.2
       '@octokit/types': 9.3.1
     dev: false
@@ -2461,7 +2464,7 @@ packages:
     peerDependencies:
       '@octokit/core': '>=3'
     dependencies:
-      '@octokit/core': 4.2.1
+      '@octokit/core': 4.2.1(encoding@0.1.13)
     dev: false
 
   /@octokit/plugin-rest-endpoint-methods@7.2.1(@octokit/core@4.2.1):
@@ -2470,7 +2473,7 @@ packages:
     peerDependencies:
       '@octokit/core': '>=3'
     dependencies:
-      '@octokit/core': 4.2.1
+      '@octokit/core': 4.2.1(encoding@0.1.13)
       '@octokit/types': 9.3.1
     dev: false
 
@@ -2483,7 +2486,7 @@ packages:
       once: 1.4.0
     dev: false
 
-  /@octokit/request@6.2.5:
+  /@octokit/request@6.2.5(encoding@0.1.13):
     resolution: {integrity: sha512-z83E8UIlPNaJUsXpjD8E0V5o/5f+vJJNbNcBwVZsX3/vC650U41cOkTLjq4PKk9BYonQGOnx7N17gvLyNjgGcQ==}
     engines: {node: '>= 14'}
     dependencies:
@@ -2491,17 +2494,17 @@ packages:
       '@octokit/request-error': 3.0.3
       '@octokit/types': 9.3.1
       is-plain-object: 5.0.0
-      node-fetch: 2.6.12
+      node-fetch: 2.6.12(encoding@0.1.13)
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@octokit/rest@19.0.7:
+  /@octokit/rest@19.0.7(encoding@0.1.13):
     resolution: {integrity: sha512-HRtSfjrWmWVNp2uAkEpQnuGMJsu/+dBr47dRc5QVgsCbnIc1+GFEaoKBWkYG+zjrsHpSqcAElMio+n10c0b5JA==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/core': 4.2.1
+      '@octokit/core': 4.2.1(encoding@0.1.13)
       '@octokit/plugin-paginate-rest': 6.1.2(@octokit/core@4.2.1)
       '@octokit/plugin-request-log': 1.0.4(@octokit/core@4.2.1)
       '@octokit/plugin-rest-endpoint-methods': 7.2.1(@octokit/core@4.2.1)
@@ -4460,41 +4463,41 @@ packages:
       '@babel/runtime': 7.22.6
     dev: false
 
-  /@react-pdf/font@2.3.6:
+  /@react-pdf/font@2.3.6(encoding@0.1.13):
     resolution: {integrity: sha512-JYV+KmVyG2tPdpCK0/iFiBy1V7VHz2fETttKCgTRsLAo+w8RpM0pUGSAYROSuRl7yqbhiKGw/A24PYWhBReiOQ==}
     dependencies:
       '@babel/runtime': 7.22.6
       '@react-pdf/types': 2.3.3
-      cross-fetch: 3.1.8
+      cross-fetch: 3.1.8(encoding@0.1.13)
       fontkit: 2.0.2
       is-url: 1.2.4
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@react-pdf/image@2.2.1:
+  /@react-pdf/image@2.2.1(encoding@0.1.13):
     resolution: {integrity: sha512-f0+cEP6pSBmk8eS/wP2tMsJcv2c7xjzca6cr1kwcapr1nzkPrh6fMdEeFl6kR2/HlJK/JoHo+xxlzRiQ8V2lrw==}
     dependencies:
       '@babel/runtime': 7.22.6
       '@react-pdf/png-js': 2.2.0
-      cross-fetch: 3.1.8
+      cross-fetch: 3.1.8(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@react-pdf/layout@3.6.2:
+  /@react-pdf/layout@3.6.2(encoding@0.1.13):
     resolution: {integrity: sha512-YD3/tDC6p5XPCXI04zH79bgX8LytjxEYfeCtsIzEFk0A2VvIHoRnRRDZ2OhZmO5g112ykyjY8vn9//ubTt+Ktg==}
     dependencies:
       '@babel/runtime': 7.22.6
       '@react-pdf/fns': 2.0.1
-      '@react-pdf/image': 2.2.1
+      '@react-pdf/image': 2.2.1(encoding@0.1.13)
       '@react-pdf/pdfkit': 3.0.2
       '@react-pdf/primitives': 3.0.1
       '@react-pdf/stylesheet': 4.1.7
       '@react-pdf/textkit': 4.2.0
       '@react-pdf/types': 2.3.3
       '@react-pdf/yoga': 4.1.2
-      cross-fetch: 3.1.8
+      cross-fetch: 3.1.8(encoding@0.1.13)
       emoji-regex: 10.2.1
       queue: 6.0.2
     transitivePeerDependencies:
@@ -4537,14 +4540,14 @@ packages:
       svg-arc-to-cubic-bezier: 3.2.0
     dev: false
 
-  /@react-pdf/renderer@3.1.12(react@18.2.0):
+  /@react-pdf/renderer@3.1.12(encoding@0.1.13)(react@18.2.0):
     resolution: {integrity: sha512-y4H2ELH0okJP7+ig+uNjFAfuAanWiF3mxsKsE7ZBuhF4tabbMt9fX+pQ7qn4xrzEWX0vlso6s6ebkkeGdSGWzA==}
     peerDependencies:
       react: ^16.8.6 || ^17.0.0 || ^18.0.0
     dependencies:
       '@babel/runtime': 7.22.6
-      '@react-pdf/font': 2.3.6
-      '@react-pdf/layout': 3.6.2
+      '@react-pdf/font': 2.3.6(encoding@0.1.13)
+      '@react-pdf/layout': 3.6.2(encoding@0.1.13)
       '@react-pdf/pdfkit': 3.0.2
       '@react-pdf/primitives': 3.0.1
       '@react-pdf/render': 3.2.6
@@ -5259,7 +5262,7 @@ packages:
       tslib: 2.6.0
     dev: false
 
-  /@sentry/cli@1.75.2:
+  /@sentry/cli@1.75.2(encoding@0.1.13):
     resolution: {integrity: sha512-CG0CKH4VCKWzEaegouWfCLQt9SFN+AieFESCatJ7zSuJmzF05ywpMusjxqRul6lMwfUhRKjGKOzcRJ1jLsfTBw==}
     engines: {node: '>= 8'}
     hasBin: true
@@ -5267,7 +5270,7 @@ packages:
     dependencies:
       https-proxy-agent: 5.0.1
       mkdirp: 0.5.6
-      node-fetch: 2.6.12
+      node-fetch: 2.6.12(encoding@0.1.13)
       progress: 2.0.3
       proxy-from-env: 1.1.0
       which: 2.0.2
@@ -5276,14 +5279,14 @@ packages:
       - supports-color
     dev: false
 
-  /@sentry/cli@2.19.4:
+  /@sentry/cli@2.19.4(encoding@0.1.13):
     resolution: {integrity: sha512-wsSr2O/GVgr/i+DYtie+DNhODyI+HL7F5/0t1HwWMjHJWm4+5XTEauznYgbh2mewkzfUk9+t0CPecA82lEgspg==}
     engines: {node: '>= 10'}
     hasBin: true
     requiresBuild: true
     dependencies:
       https-proxy-agent: 5.0.1
-      node-fetch: 2.6.12
+      node-fetch: 2.6.12(encoding@0.1.13)
       progress: 2.0.3
       proxy-from-env: 1.1.0
       which: 2.0.2
@@ -5311,7 +5314,7 @@ packages:
       tslib: 2.6.0
     dev: false
 
-  /@sentry/nextjs@7.59.3(next@13.4.10)(react@18.2.0)(webpack@5.88.2):
+  /@sentry/nextjs@7.59.3(encoding@0.1.13)(next@13.4.10)(react@18.2.0)(webpack@5.88.2):
     resolution: {integrity: sha512-f4Tv00ZTwXzGjvkrkS0qqvUPIFERk08CyOJlQeGzbiEE1c8LKfoOBElu8b1GXdEqwugZTYuRiHT3JJWd7eeBvg==}
     engines: {node: '>=8'}
     peerDependencies:
@@ -5329,7 +5332,7 @@ packages:
       '@sentry/react': 7.59.3(react@18.2.0)
       '@sentry/types': 7.59.3
       '@sentry/utils': 7.59.3
-      '@sentry/webpack-plugin': 1.20.0
+      '@sentry/webpack-plugin': 1.20.0(encoding@0.1.13)
       chalk: 3.0.0
       next: 13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
@@ -5394,11 +5397,11 @@ packages:
       tslib: 2.6.0
     dev: false
 
-  /@sentry/webpack-plugin@1.20.0:
+  /@sentry/webpack-plugin@1.20.0(encoding@0.1.13):
     resolution: {integrity: sha512-Ssj1mJVFsfU6vMCOM2d+h+KQR7QHSfeIP16t4l20Uq/neqWXZUQ2yvQfe4S3BjdbJXz/X4Rw8Hfy1Sd0ocunYw==}
     engines: {node: '>= 8'}
     dependencies:
-      '@sentry/cli': 1.75.2
+      '@sentry/cli': 1.75.2(encoding@0.1.13)
       webpack-sources: 3.2.3
     transitivePeerDependencies:
       - encoding
@@ -6424,35 +6427,35 @@ packages:
       eslint-visitor-keys: 3.4.1
     dev: true
 
-  /@upstash/core-analytics@0.0.6:
+  /@upstash/core-analytics@0.0.6(encoding@0.1.13):
     resolution: {integrity: sha512-cpPSR0XJAJs4Ddz9nq3tINlPS5aLfWVCqhhtHnXt4p7qr5+/Znlt1Es736poB/9rnl1hAHrOsOvVj46NEXcVqA==}
     engines: {node: '>=16.0.0'}
     dependencies:
-      '@upstash/redis': 1.22.0
+      '@upstash/redis': 1.22.0(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@upstash/ratelimit@0.4.3:
+  /@upstash/ratelimit@0.4.3(encoding@0.1.13):
     resolution: {integrity: sha512-Dsp9Mw09Flg28JRklKgFiCXqr3bqv8bbG0kgpUYoHjcgPPolFFyaYOj/I2HExvYLZiogl77NUavBoNvMOK0zUQ==}
     dependencies:
-      '@upstash/core-analytics': 0.0.6
+      '@upstash/core-analytics': 0.0.6(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@upstash/redis@1.21.0:
+  /@upstash/redis@1.21.0(encoding@0.1.13):
     resolution: {integrity: sha512-c6M+cl0LOgGK/7Gp6ooMkIZ1IDAJs8zFR+REPkoSkAq38o7CWFX5FYwYEqGZ6wJpUGBuEOr/7hTmippXGgL25A==}
     dependencies:
-      isomorphic-fetch: 3.0.0
+      isomorphic-fetch: 3.0.0(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@upstash/redis@1.22.0:
+  /@upstash/redis@1.22.0(encoding@0.1.13):
     resolution: {integrity: sha512-sXoJDoEqqik0HbrNE7yRWckOySEFsoBxfRdCgOqkc0w6py19ZZG50SpGkDDEUXSnBqP8VgGYXhWAiBpqxrt5oA==}
     dependencies:
-      isomorphic-fetch: 3.0.0
+      isomorphic-fetch: 3.0.0(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -6470,11 +6473,11 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@vercel/kv@0.2.2:
+  /@vercel/kv@0.2.2(encoding@0.1.13):
     resolution: {integrity: sha512-mqnQOB6bkp4h5eObxfLNIlhlVqOGSH8cWOlC5pDVWTjX3zL8dETO1ZBl6M74HBmeBjbD5+J7wDJklRigY6UNKw==}
     engines: {node: '>=14.6'}
     dependencies:
-      '@upstash/redis': 1.21.0
+      '@upstash/redis': 1.21.0(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -7733,10 +7736,10 @@ packages:
     resolution: {integrity: sha512-VQ2MBenTq1fWZUH9DJNGti7kKv6EeAuYr3cLwxUWhIu1baTaXh4Ib5W2CqHVqib4/MqbYGJqiL3Zb8GJZr3l4g==}
     dev: false
 
-  /cross-fetch@3.1.8:
+  /cross-fetch@3.1.8(encoding@0.1.13):
     resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
     dependencies:
-      node-fetch: 2.6.12
+      node-fetch: 2.6.12(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -8287,6 +8290,11 @@ packages:
   /emoji-regex@9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
     dev: true
+
+  /encoding@0.1.13:
+    resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
+    dependencies:
+      iconv-lite: 0.6.3
 
   /end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
@@ -9695,7 +9703,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
-    dev: false
 
   /ics@2.44.0:
     resolution: {integrity: sha512-JeiPjNeWkd7Qri/wfHqjZCtglVwRJRqy1MEFKn9QzatzxUyCOsx4YARPlLkU8UnPxpg4VtEjR+VRUG+Cvj6bDg==}
@@ -9758,19 +9765,19 @@ packages:
     resolution: {integrity: sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==}
     dev: false
 
-  /inngest-cli@0.15.3:
+  /inngest-cli@0.15.3(encoding@0.1.13):
     resolution: {integrity: sha512-9+CKNLr50U7FMoaCzKypWWRRXrE+nbN24tZYpWIunYx2w2jh8tZwVDxo1SGAHm/Hp4HCjJ7TGg9rx1Tkg0EUPA==}
     hasBin: true
     requiresBuild: true
     dependencies:
-      node-fetch: 2.6.7
+      node-fetch: 2.6.7(encoding@0.1.13)
       tar: 6.1.11
       unzipper: 0.10.11
     transitivePeerDependencies:
       - encoding
     dev: true
 
-  /inngest@2.3.0(typescript@5.1.6):
+  /inngest@2.3.0(encoding@0.1.13)(typescript@5.1.6):
     resolution: {integrity: sha512-0E/r1Ik6iUU4LqAW0yIH4Idm0QyjG4+SVAhJeUFAwOJ2Ovkj7dyVcgCC8AM3hGpjmubsBlEVwsQA1AOz92cyZw==}
     engines: {node: '>=14'}
     hasBin: true
@@ -9780,7 +9787,7 @@ packages:
       buffer: 6.0.3
       canonicalize: 1.0.8
       chalk: 4.1.2
-      cross-fetch: 3.1.8
+      cross-fetch: 3.1.8(encoding@0.1.13)
       h3: 1.7.1
       hash.js: 1.1.7
       json-stringify-safe: 5.0.1
@@ -10122,10 +10129,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /isomorphic-fetch@3.0.0:
+  /isomorphic-fetch@3.0.0(encoding@0.1.13):
     resolution: {integrity: sha512-qvUtwJ3j6qwsF3jLxkZ72qCgjMysPzDfeV240JHiGZsANBYd+EEuu35v7dfrJ9Up0Ak07D7GGSkGhCHTqg/5wA==}
     dependencies:
-      node-fetch: 2.6.12
+      node-fetch: 2.6.12(encoding@0.1.13)
       whatwg-fetch: 3.6.2
     transitivePeerDependencies:
       - encoding
@@ -10419,7 +10426,7 @@ packages:
     engines: {node: '>=14.16'}
     dev: false
 
-  /langchain@0.0.57(axios@1.4.0):
+  /langchain@0.0.57(axios@1.4.0)(encoding@0.1.13):
     resolution: {integrity: sha512-Ik8SGMzl6woXkqmdWnNIqY7ds3+y1b6FLYDhCXpTT3fHHD+vsNgiapAAdJ/lkThnYQ0y0i3gtv1pHbjfsYS5qw==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -10503,7 +10510,7 @@ packages:
       weaviate-ts-client:
         optional: true
     dependencies:
-      '@anthropic-ai/sdk': 0.4.4
+      '@anthropic-ai/sdk': 0.4.4(encoding@0.1.13)
       '@dqbd/tiktoken': 1.0.7
       axios: 1.4.0
       binary-extensions: 2.2.0
@@ -11488,7 +11495,7 @@ packages:
     resolution: {integrity: sha512-VzW+TAk2wE4X9maiKMlT+GsPU4OMmR1U9CrHSmd3DFLn2IcZ9VJ6M6BBugGfYUnPCLSYxXdZy17M0BEJyhUTwg==}
     dev: false
 
-  /node-fetch@2.6.12:
+  /node-fetch@2.6.12(encoding@0.1.13):
     resolution: {integrity: sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g==}
     engines: {node: 4.x || >=6.0.0}
     peerDependencies:
@@ -11497,9 +11504,10 @@ packages:
       encoding:
         optional: true
     dependencies:
+      encoding: 0.1.13
       whatwg-url: 5.0.0
 
-  /node-fetch@2.6.7:
+  /node-fetch@2.6.7(encoding@0.1.13):
     resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
     engines: {node: 4.x || >=6.0.0}
     peerDependencies:
@@ -11508,6 +11516,7 @@ packages:
       encoding:
         optional: true
     dependencies:
+      encoding: 0.1.13
       whatwg-url: 5.0.0
     dev: true
 
@@ -12548,14 +12557,14 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-email@1.9.3:
+  /react-email@1.9.3(encoding@0.1.13):
     resolution: {integrity: sha512-pD+uVG6GoJR03Kzkk5KHPlc/TtUZ/UYs/hfakeRP6Ma/Oja0fOw4gjYGXQo0zwwqEM5OdLQOdS3qBCJyRYrqVw==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     dependencies:
       '@commander-js/extra-typings': 9.4.1(commander@9.4.1)
       '@manypkg/find-root': 2.1.0
-      '@octokit/rest': 19.0.7
+      '@octokit/rest': 19.0.7(encoding@0.1.13)
       '@react-email/render': 0.0.6
       chokidar: 3.5.3
       commander: 9.4.1
@@ -13063,7 +13072,6 @@ packages:
 
   /safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
-    dev: false
 
   /satori@0.10.1:
     resolution: {integrity: sha512-F4bTCkDp931tLb7+UCNPBuSQwXhikrUkI4fBQo6fA8lF0Evqqgg3nDyUpRktQpR5Ry1DIiIVqLyEwkAms87ykg==}
