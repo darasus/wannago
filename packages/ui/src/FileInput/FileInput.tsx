@@ -51,7 +51,6 @@ export function FileInput({value, onChange, ...props}: Props) {
   const handleRemoveImage = (e: React.MouseEvent<HTMLButtonElement>) => {
     onChange?.(null);
     e.preventDefault();
-    console.log('CLICK');
   };
 
   return (

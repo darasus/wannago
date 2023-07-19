@@ -41,7 +41,6 @@ export function EventInviteButton() {
     if (eventShortId) {
       await inviteByEmail({...data, eventShortId})
         .then((res) => {
-          console.log('>>> res', res);
           toast.success('Invitation sent!');
           reset();
           router.refresh();
