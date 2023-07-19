@@ -14,6 +14,8 @@ interface Props {
   isMyEvent?: boolean;
 }
 
+const maxDescriptionLength = 550;
+
 export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const {
@@ -24,6 +26,14 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
     featuredImageWidth,
     featuredImagePreviewSrc,
   } = event;
+  const trimmedDescription = description
+    ? clip(description, maxDescriptionLength, {
+        html: true,
+        indicator: '...',
+      })
+    : '';
+  const hasReachedDescriptionLength =
+    trimmedDescription.length !== description?.length;
 
   const canRenderImage =
     featuredImageSrc &&
@@ -117,15 +127,10 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
                 <div
                   className="flex flex-col gap-y-2"
                   dangerouslySetInnerHTML={{
-                    __html: isExpanded
-                      ? description
-                      : clip(description, 550, {
-                          html: true,
-                          indicator: '...',
-                        }),
+                    __html: isExpanded ? description : trimmedDescription,
                   }}
                 />
-                {!isExpanded && (
+                {!isExpanded && hasReachedDescriptionLength && (
                   <Button
                     className="w-full mt-2"
                     variant={'outline'}
