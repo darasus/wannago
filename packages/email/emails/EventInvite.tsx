@@ -17,7 +17,6 @@ interface Props {
   endDate: string;
   address: string | 'none';
   eventUrl: string;
-  cancelEventUrl: string;
   organizerName: string;
 }
 
@@ -27,7 +26,6 @@ export default function EventInvite({
   endDate = '2022/12/11 11:30',
   startDate = '2022/12/11 11:30',
   eventUrl = 'https://www.wannago.app',
-  cancelEventUrl = 'https://www.wannago.app',
   organizerName = 'Organizer Name',
 }: Props) {
   return (
@@ -52,7 +50,7 @@ export default function EventInvite({
           <Section style={{...buttonContainer, maxWidth: 250}}>
             <Button href={eventUrl}>View event</Button>
           </Section>
-          <EventDisclaimer cancelEventUrl={cancelEventUrl} />
+          <EventDisclaimer />
           <Footer />
         </Container>
       </Section>

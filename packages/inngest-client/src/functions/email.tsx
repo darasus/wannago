@@ -123,10 +123,6 @@ export const emailReminderSent = inngest.createFunction(
     invariant(user);
     invariant(organizer);
 
-    const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-signup`);
-    cancelEventUrl.searchParams.append('eventShortId', event.shortId);
-    cancelEventUrl.searchParams.append('email', user.email);
-
     const organizerName = isUser(organizer)
       ? `${organizer.firstName} ${organizer.lastName}`
       : isOrganization(organizer)
@@ -142,7 +138,6 @@ export const emailReminderSent = inngest.createFunction(
           title={event.title}
           address={event.address || 'none'}
           eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
-          cancelEventUrl={cancelEventUrl.toString()}
           startDate={formatDate(new Date(event.startDate), 'MMMM d, yyyy')}
           endDate={formatDate(new Date(event.endDate), 'MMMM d, yyyy')}
           organizerName={organizerName}
@@ -240,10 +235,6 @@ export const eventSignUp = inngest.createFunction(
 
     invariant(user, userNotFoundError);
 
-    const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-signup`);
-    cancelEventUrl.searchParams.append('eventShortId', event.shortId);
-    cancelEventUrl.searchParams.append('email', user.email);
-
     const organizerName = isUser(organizer)
       ? `${organizer.firstName} ${organizer.lastName}`
       : `${organizer.name}`;
@@ -257,7 +248,6 @@ export const eventSignUp = inngest.createFunction(
           title={event.title}
           address={event.address || 'none'}
           eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
-          cancelEventUrl={cancelEventUrl.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
           organizerName={organizerName}
@@ -294,9 +284,6 @@ export const eventInvite = inngest.createFunction(
     invariant(organizer, organizerNotFoundError);
 
     const eventUrl = new URL(`${getBaseUrl()}/e/${event.shortId}`);
-    const cancelEventUrl = new URL(`${getBaseUrl()}/api/cancel-invite`);
-    cancelEventUrl.searchParams.append('eventShortId', event.shortId);
-    cancelEventUrl.searchParams.append('email', user.email);
 
     const organizerName = isUser(organizer)
       ? `${organizer.firstName} ${organizer.lastName}`
@@ -311,7 +298,6 @@ export const eventInvite = inngest.createFunction(
           title={event.title}
           address={event.address || 'none'}
           eventUrl={eventUrl.toString()}
-          cancelEventUrl={cancelEventUrl.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
           organizerName={organizerName}
