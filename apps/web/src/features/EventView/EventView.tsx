@@ -1,4 +1,3 @@
-import {Event, Organization, Ticket, User} from '@prisma/client';
 import {
   DateCard,
   LocationCard,
@@ -14,12 +13,8 @@ import {RouterOutputs} from 'api';
 
 interface Props {
   eventPromise: Promise<
-    | (Event & {
-        tickets: Ticket[];
-        user: User | null;
-        organization: Organization | null;
-      })
-    | null
+    | RouterOutputs['event']['getByShortId']
+    | RouterOutputs['event']['getRandomExample']
   >;
   isLoadingImage?: boolean;
   isMyEvent?: boolean;
