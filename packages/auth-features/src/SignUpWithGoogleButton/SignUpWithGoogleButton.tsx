@@ -22,13 +22,14 @@ export function SignUpWithGoogleButton(props?: {redirectUrlComplete?: string}) {
       type="button"
       disabled={isPending}
       onClick={onClick}
+      variant={'outline'}
     >
       {isPending ? (
         <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
       ) : (
         <Icons.google className="mr-2 h-4 w-4" />
       )}{' '}
-      Google
+      Continue with Google
     </Button>
   );
 }
