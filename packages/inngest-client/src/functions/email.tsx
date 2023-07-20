@@ -269,7 +269,7 @@ export const eventSignUp = inngest.createFunction(
 
 export const eventInvite = inngest.createFunction(
   {
-    name: 'Event Invote',
+    name: 'Event Invite',
   },
   {event: 'email/event.invite'},
   async (ctx) => {

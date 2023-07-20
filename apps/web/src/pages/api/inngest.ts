@@ -12,6 +12,13 @@ import {
   stripeTicketsPurchased,
   ticketPurchaseEmailSent,
   userAccountRegistered,
+  eventCancelInvite,
+  afterRegisterNoCreatedEventFollowUpEmail,
+  eventCancelSignUp,
+  eventInvite,
+  eventSignUp,
+  messageToAllAttendees,
+  organizerEventSignUpNotification,
 } from 'inngest-client';
 
 export default serve(inngest, [
@@ -26,4 +33,11 @@ export default serve(inngest, [
   stripeTicketsPurchased,
   ticketPurchaseEmailSent,
   userAccountRegistered,
+  eventCancelInvite,
+  afterRegisterNoCreatedEventFollowUpEmail,
+  eventCancelSignUp,
+  eventInvite,
+  eventSignUp,
+  messageToAllAttendees,
+  organizerEventSignUpNotification,
 ]);
