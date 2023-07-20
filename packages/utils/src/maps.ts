@@ -3,13 +3,14 @@ import type {
   PlaceAutocompleteResponse,
 } from '@googlemaps/google-maps-services-js';
 import {getBaseUrl} from './getBaseUrl';
-import axios from 'axios';
 import {captureException} from '@sentry/nextjs';
 
 export async function geocode(address: string) {
-  const response = await axios
-    .post(`${getBaseUrl()}/api/maps/decode`, {address})
-    .then((res) => res.data)
+  const response = await fetch(`${getBaseUrl()}/api/maps/decode`, {
+    method: 'POST',
+    body: JSON.stringify({address}),
+  })
+    .then((res) => res.json())
     .catch((error) => {
       captureException(error);
       return null;
@@ -19,9 +20,11 @@ export async function geocode(address: string) {
 }
 
 export async function placeAutocomplete(query: string) {
-  const response = await axios
-    .post(`${getBaseUrl()}/api/maps/placeAutocomplete`, {query})
-    .then((res) => res.data)
+  const response = await fetch(`${getBaseUrl()}/api/maps/placeAutocomplete`, {
+    method: 'POST',
+    body: JSON.stringify({query}),
+  })
+    .then((res) => res.json())
     .catch((error) => {
       captureException(error);
       return null;
