@@ -18,7 +18,7 @@ const config = defineConfig({
     /* A default for how often your Check should run in minutes */
     frequency: 30,
     /* Checkly data centers to run your Checks as monitors */
-    locations: ['us-east-1', 'eu-west-2', 'eu-central-1', 'ap-south-1'],
+    locations: ['us-east-1'],
     /* An optional array of tags to organize your Checks */
     tags: [],
     /** The Checkly Runtime identifier, determining npm packages and the Node.js version available at runtime.
