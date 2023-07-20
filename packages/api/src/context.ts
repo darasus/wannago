@@ -117,13 +117,8 @@ export function createContext(opts: {
     country = opts.req.headers['x-vercel-ip-country'] as string;
   }
 
-  console.log('>>> country', country);
-  console.log('>>> timezone', timezone);
-
   const currency = getCurrencyFromHeaders(country);
   const auth = getAuth(opts.req);
-
-  console.log('>>> currency', currency);
 
   const innerContext = createContextInner({
     auth,

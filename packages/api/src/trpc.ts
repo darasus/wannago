@@ -7,8 +7,6 @@ import {createContext} from './context';
 export const t = initTRPC.context<typeof createContext>().create({
   transformer: superjson,
   errorFormatter({shape, error, ctx, path, input, type}) {
-    console.log('>>> error', error);
-
     const e = {
       ...shape,
       data: {

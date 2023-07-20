@@ -30,7 +30,6 @@ export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
     })(runtime);
 
     return (ctx) => {
-      console.log('>>> getBaseUrl', getBaseUrl());
       const path = ctx.op.path.split('.') as [string, ...string[]];
       const endpoint = lambdas.includes(path[0]) ? 'lambda' : 'edge';
 
