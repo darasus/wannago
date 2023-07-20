@@ -4,7 +4,6 @@ import {api} from '../../../../trpc/server-http';
 import {notFound} from 'next/navigation';
 import {EditEventForm} from '../../../../features/EventForm/EditEventForm';
 import {EventAttendees} from './features/EventAttendees/EventAttendees';
-import {EventInvite} from './features/EventInvite/EventInvite';
 import {MyTickets} from './features/MyTickets/MyTickets';
 import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
@@ -70,15 +69,7 @@ export default async function EventPages({
                 )}
                 {page[0] === 'attendees' && (
                   <Suspense fallback={<LoadingBlock />}>
-                    <EventAttendees />
-                  </Suspense>
-                )}
-                {page[0] === 'invite' && (
-                  <Suspense fallback={<LoadingBlock />}>
-                    <EventInvite
-                      allAttendeesPromise={allAttendeesPromise}
-                      eventShortId={id}
-                    />
+                    <EventAttendees eventShortId={id} />
                   </Suspense>
                 )}
               </>

@@ -5,7 +5,7 @@ import {useRouter} from 'next/navigation';
 import {Button} from 'ui';
 import {toast} from 'react-hot-toast';
 import {useConfirmDialog} from 'hooks';
-import {api} from '../../../../../../../../trpc/client';
+import {api} from '../../../../../../../../../../trpc/client';
 
 interface InviteButtonProps {
   eventShortId: string;

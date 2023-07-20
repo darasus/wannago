@@ -67,6 +67,7 @@ const handleCheckoutSessionCompleted = publicProcedure
         data: {
           userId: user.id,
           eventId: input.data.object.metadata.eventId,
+          status: 'REGISTERED',
           ticketSales: {
             connect: ticketSales.map((ticketSale) => ({
               id: ticketSale.id,
@@ -79,6 +80,7 @@ const handleCheckoutSessionCompleted = publicProcedure
         data: {
           userId: user.id,
           eventId: input.data.object.metadata.eventId,
+          status: 'REGISTERED',
           ticketSales: {
             connect: ticketSales.map((ticketSale) => ({
               id: ticketSale.id,

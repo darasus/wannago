@@ -52,9 +52,6 @@ export const getAllEventsAttendees = protectedProcedure
       include: {
         user: true,
       },
-      orderBy: {
-        createdAt: 'desc',
-      },
     });
 
     const userMap: Record<

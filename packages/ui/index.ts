@@ -22,6 +22,7 @@ export {
   TableRow,
 } from './src/Table/Table';
 export {LocationImage} from './src/LocationImage/LocationImage';
+export {Label} from './src/Label/Label';
 export {EventRegistrationStatusBadge} from './src/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
 export {TextAnimation} from './src/TextAnimation/TextAnimation';
 export {LoadingWave} from './src/LoadingWave/LoadingWave';
@@ -112,3 +113,23 @@ export {
   MenubarSubTrigger,
   MenubarTrigger,
 } from './src/MenuBar/MenuBar';
+export {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from './src/Dialog/Dialog';
+export {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from './src/AlertDialog/AlertDialog';
