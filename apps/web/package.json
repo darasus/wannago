@@ -15,7 +15,6 @@
     "database": "workspace:*",
     "const": "workspace:*",
     "tsconfig": "workspace:*",
-    "editor": "workspace:*",
     "inngest-client": "workspace:*",
     "eslint-config-custom": "workspace:*",
     "api": "workspace:*",
