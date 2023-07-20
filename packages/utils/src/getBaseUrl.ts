@@ -11,6 +11,10 @@ export const getBaseUrl = () => {
     return process.env.ENVIRONMENT_URL;
   }
 
+  if (process.env.IS_CHECKLY === 'true') {
+    return 'https://wannago-git-test-automation-darasus-team.vercel.app';
+  }
+
   if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
     return `https://www.wannago.app`;
   }
