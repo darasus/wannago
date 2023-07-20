@@ -15,9 +15,9 @@ export default async function ExamplesPage() {
 
   return (
     <>
-      <Container className="flex flex-col gap-4">
+      <Container className="flex flex-col gap-4" maxSize="sm">
         <PageHeader title="Examples" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="flex flex-col gap-4">
           {examples?.map((event) => {
             return (
               <Link
