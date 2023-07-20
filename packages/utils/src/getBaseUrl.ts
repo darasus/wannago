@@ -4,7 +4,7 @@ export const getBaseUrl = () => {
   }
 
   if (process.env.VERCEL_BRANCH_URL?.includes('test-automation')) {
-    return process.env.VERCEL_BRANCH_URL;
+    return `https://${process.env.VERCEL_BRANCH_URL}`;
   }
 
   if (process.env.IS_CHECKLY === 'true' && process.env.ENVIRONMENT_URL) {
