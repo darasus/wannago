@@ -2,7 +2,7 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import {buffer} from 'micro';
 import {Stripe} from 'lib/src/stripe';
 import Cors from 'micro-cors';
-import {createNodeContext} from 'api/src/context';
+import {createContext} from 'api/src/context';
 import {stripeWebhookHandlerRouter} from 'api/src/routers/stripeWebhookHandler';
 import {
   baseEventHandlerSchema,
@@ -28,7 +28,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const stripe = new Stripe();
   const buf = await buffer(req);
   const sig = req.headers['stripe-signature'] as string;
-  const ctx = await createNodeContext({req});
+  const ctx = await createContext({req});
   const caller = stripeWebhookHandlerRouter.createCaller(ctx);
 
   try {

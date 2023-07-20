@@ -58,7 +58,7 @@ interface CreateInnerContextOptions {
   auth: SignedInAuthObject | SignedOutAuthObject | null;
   clerk: ReturnType<typeof createClerkClient>;
   prisma: PrismaClient;
-  timezone: string;
+  timezone: string | undefined;
   currency: Currency;
   postmark: Postmark;
   cache: CacheService;
@@ -95,44 +95,35 @@ const inngest = new Inngest({
 });
 export type InngestType = typeof inngest;
 
-export function createContext(opts: {req: NextRequest}): Context {
-  const timezone = opts.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
-  const currency = getCurrencyFromHeaders(
-    opts.req.headers.get('x-vercel-ip-country')
-  );
+export function createContext(opts: {
+  req: NextRequest | NextApiRequest;
+}): Context {
+  let timezone: string | undefined = undefined;
+  let country: string | undefined = undefined;
+
+  if (typeof opts.req.headers.get === 'function') {
+    timezone = opts.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
+  }
+
+  if ('x-vercel-ip-timezone' in opts.req.headers) {
+    timezone = opts.req.headers['x-vercel-ip-timezone'] as string;
+  }
+
+  if (typeof opts.req.headers.get === 'function') {
+    country = opts.req.headers.get('x-vercel-ip-country') ?? 'UTC';
+  }
+
+  if ('x-vercel-ip-timezone' in opts.req.headers) {
+    country = opts.req.headers['x-vercel-ip-country'] as string;
+  }
+
+  console.log('>>> country', country);
+  console.log('>>> timezone', timezone);
+
+  const currency = getCurrencyFromHeaders(country);
   const auth = getAuth(opts.req);
 
-  const innerContext = createContextInner({
-    auth,
-    clerk,
-    prisma,
-    timezone,
-    currency,
-    inngest,
-    postmark: new Postmark(),
-    cache: new CacheService(),
-  });
-
-  return Object.assign(innerContext, {
-    actions: Object.values(actions).reduce<Actions>((acc, action) => {
-      return {...acc, [action.name]: action(innerContext)};
-    }, {} as Actions),
-    assertions: Object.values(assertions).reduce<Assertions>(
-      (acc, assertion) => {
-        return {...acc, [assertion.name]: assertion(innerContext)};
-      },
-      {} as Assertions
-    ),
-  });
-}
-
-export function createNodeContext(opts: {req: NextApiRequest}): Context {
-  const timezone =
-    (opts.req.headers['x-vercel-ip-timezone'] as string) ?? 'UTC';
-  const currency = getCurrencyFromHeaders(
-    opts.req.headers['x-vercel-ip-country'] as string | undefined
-  );
-  const auth = getAuth(opts.req);
+  console.log('>>> currency', currency);
 
   const innerContext = createContextInner({
     auth,
