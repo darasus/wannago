@@ -1,6 +1,6 @@
 export function getBaseUrl() {
   return (
     process.env.ENVIRONMENT_URL ||
-    'https://wannago-git-test-automation-darasus-team.vercel.app'
+    `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   );
 }
