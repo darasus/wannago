@@ -30,7 +30,8 @@
     "ENVIRONMENT_URL",
     "KV_REST_API_URL",
     "KV_REST_API_TOKEN",
-    "SENTRY_AUTH_TOKEN"
+    "SENTRY_AUTH_TOKEN",
+    "NEXT_PUBLIC_PREVIEW_VERCEL_URL"
   ],
   "pipeline": {
     "build": {
