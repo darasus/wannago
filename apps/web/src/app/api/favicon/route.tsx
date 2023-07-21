@@ -1,9 +1,7 @@
 import {ImageResponse} from '@vercel/og';
 import {getBaseUrl} from 'utils';
 
-export const config = {
-  runtime: 'edge',
-};
+export const runtime = 'edge';
 
 const fontResponse = fetch(
   new URL(`${getBaseUrl()}/paytone-one.ttf`, import.meta.url)
