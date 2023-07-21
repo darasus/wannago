@@ -1,14 +1,15 @@
 import {ImageResponse} from '@vercel/og';
 import {NextRequest} from 'next/server';
 import {ONE_WEEK_IN_SECONDS} from 'const';
-import {invariant} from 'utils';
+import {getBaseUrl, invariant} from 'utils';
 import {captureException} from '@sentry/nextjs';
+import clip from 'text-clipper';
 
 export const config = {
   runtime: 'edge',
 };
 
-export default async function handler(req: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
     const {searchParams} = req.nextUrl;
     const title = searchParams.get('title');
@@ -18,23 +19,21 @@ export default async function handler(req: NextRequest) {
       'organizerProfileImageUrl'
     );
 
-    invariant(eventImageUrl);
+    invariant(title, 'Missing title');
+    invariant(organizerName, 'Missing organizerName');
+    invariant(eventImageUrl, 'Missing eventImageUrl');
 
     const [logoFontData, bodyFontData] = await Promise.all([
-      fetch(new URL('../../../public/paytone-one.ttf', import.meta.url)).then(
+      fetch(new URL(`${getBaseUrl()}/paytone-one.ttf`, import.meta.url)).then(
         (res) => res.arrayBuffer()
       ),
       fetch(
-        new URL('../../../public/dm-serif-display.ttf', import.meta.url)
+        new URL(`${getBaseUrl()}/dm-serif-display.ttf`, import.meta.url)
       ).then((res) => res.arrayBuffer()),
     ]);
 
-    const maxTitleLength = 100;
-
-    const formattedTitle =
-      title && title.length > maxTitleLength
-        ? `${title.slice(0, maxTitleLength)}...`
-        : title;
+    const trimmedTitle = clip(title, 80);
+    const trimmedOrganizerName = clip(organizerName, 20);
 
     return new ImageResponse(
       (
@@ -74,11 +73,11 @@ export default async function handler(req: NextRequest) {
                       alt="Profile Image"
                     />
                   </div>
-                  <span style={{fontSize: 50}}>{organizerName}</span>
+                  <span style={{fontSize: 50}}>{trimmedOrganizerName}</span>
                 </div>
                 <div tw="flex flex-col max-w-[600px]">
                   <span tw="max-w-full leading-[60px]" style={{fontSize: 70}}>
-                    {formattedTitle}
+                    {trimmedTitle}
                   </span>
                 </div>
               </div>
