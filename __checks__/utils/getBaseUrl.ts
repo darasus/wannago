@@ -1,5 +1,3 @@
-export {getBaseUrl} from '../../packages/utils/src/getBaseUrl';
-
-// export function getBaseUrl() {
-//   return 'https://wannago-git-test-automation-darasus-team.vercel.app';
-// }
+export function getBaseUrl() {
+  return process.env.ENVIRONMENT_URL;
+}
