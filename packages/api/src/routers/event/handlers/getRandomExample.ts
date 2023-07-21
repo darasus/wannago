@@ -1,5 +1,5 @@
 import {exampleEventIds} from 'const';
-import {random} from 'utils';
+import {isPast, random} from 'utils';
 import {publicProcedure} from '../../../trpc';
 
 export const getRandomExample = publicProcedure.query(async ({ctx}) => {
@@ -19,5 +19,7 @@ export const getRandomExample = publicProcedure.query(async ({ctx}) => {
     },
   });
 
-  return random(events);
+  const event = random(events);
+
+  return {...event, isPast: isPast(event.endDate, ctx.timezone)};
 });

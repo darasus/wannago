@@ -1,5 +1,7 @@
 import {z} from 'zod';
 import {publicProcedure} from '../../../trpc';
+import {invariant, isPast} from 'utils';
+import {eventNotFoundError} from 'error';
 
 export const getByShortId = publicProcedure
   .input(
@@ -8,7 +10,7 @@ export const getByShortId = publicProcedure
     })
   )
   .query(async ({input, ctx}) => {
-    return ctx.prisma.event.findFirst({
+    const event = await ctx.prisma.event.findFirst({
       where: {
         shortId: input.id,
       },
@@ -26,4 +28,8 @@ export const getByShortId = publicProcedure
         },
       },
     });
+
+    invariant(event, eventNotFoundError);
+
+    return {...event, isPast: isPast(event.endDate, ctx.timezone)};
   });

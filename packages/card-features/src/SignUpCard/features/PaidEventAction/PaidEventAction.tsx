@@ -12,7 +12,7 @@ import {api} from '../../../../../../apps/web/src/trpc/client';
 import Link from 'next/link';
 
 interface Props {
-  event: Event & {tickets: Ticket[]};
+  event: Event & {tickets: Ticket[]} & {isPast: boolean};
   myTicketPromise: ReturnType<typeof api.event.getMyTicketsByEvent.query>;
   mePromise: ReturnType<typeof api.user.me.query>;
 }
@@ -76,7 +76,7 @@ export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
         )}
         <Button
           type="submit"
-          disabled={form.formState.isSubmitting}
+          disabled={form.formState.isSubmitting || event.isPast}
           isLoading={form.formState.isSubmitting}
           size="sm"
           data-testid="buy-ticket-button"

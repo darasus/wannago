@@ -26,7 +26,7 @@ interface EventSignUpForm {
 }
 
 interface Props {
-  event: Event;
+  event: Event & {isPast: boolean};
   mySignUpPromise: Promise<RouterOutputs['event']['getMySignUp']>;
 }
 
@@ -105,7 +105,7 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
             <Badge data-testid="event-signup-success-label">{`You're signed up!`}</Badge>
             <Button
               type="submit"
-              disabled={form.formState.isSubmitting}
+              disabled={form.formState.isSubmitting || event.isPast}
               variant="outline"
               size="sm"
               data-testid="cancel-signup-button"
@@ -175,7 +175,7 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
           </div>
           <Button
             type="submit"
-            disabled={form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting || event.isPast}
             isLoading={form.formState.isSubmitting}
             size="sm"
             data-testid="attend-button"

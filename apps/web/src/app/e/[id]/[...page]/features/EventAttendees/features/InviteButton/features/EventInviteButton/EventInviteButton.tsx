@@ -1,9 +1,14 @@
 'use client';
 
-import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {
   Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
   Form,
   FormControl,
   FormField,
@@ -11,7 +16,6 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  Modal,
 } from 'ui';
 import {toast} from 'react-hot-toast';
 import {useParams, useRouter} from 'next/navigation';
@@ -25,39 +29,44 @@ const formScheme = z.object({
 });
 
 export function EventInviteButton() {
-  const [on, set] = useState(false);
   const params = useParams();
   const eventShortId = params?.id as string;
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formScheme>>();
-  const {
-    handleSubmit,
-    reset,
-    formState: {isSubmitting},
-  } = form;
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = form.handleSubmit(async (data) => {
     if (eventShortId) {
       await inviteByEmail({...data, eventShortId})
-        .then((res) => {
+        .then(() => {
           toast.success('Invitation sent!');
-          reset();
+          form.reset();
           router.refresh();
-          set(false);
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast.error(
+            typeof error.message === 'string'
+              ? error.message
+              : 'Something went wrong'
+          );
         });
     }
   });
 
   return (
-    <>
-      <Modal title="Invite by email" isOpen={on} onClose={() => set(false)}>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button size="sm" data-testid="invite-by-email-open-modal-button">
+          Invite by email
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Invite by email</DialogTitle>
+        </DialogHeader>
         <Form {...form}>
           <form onSubmit={onSubmit}>
-            <div className="grid grid-cols-12 gap-2 grow mr-2">
+            <div className="grid grid-cols-12 gap-4 grow mb-4">
               <div className="col-span-6">
                 <FormField
                   control={form.control}
@@ -112,28 +121,21 @@ export function EventInviteButton() {
                   )}
                 />
               </div>
-              <div className="col-span-4">
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  isLoading={isSubmitting}
-                  className="w-full"
-                  data-testid="invite-by-email-submit-button"
-                >
-                  Invite
-                </Button>
-              </div>
             </div>
+            <DialogFooter>
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                isLoading={form.formState.isSubmitting}
+                className="w-full"
+                data-testid="invite-by-email-submit-button"
+              >
+                Invite
+              </Button>
+            </DialogFooter>
           </form>
         </Form>
-      </Modal>
-      <Button
-        size="sm"
-        onClick={() => set(true)}
-        data-testid="invite-by-email-open-modal-button"
-      >
-        Invite by email
-      </Button>
-    </>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -9,7 +9,6 @@ import {
   Info,
   Trash2,
   UploadCloud,
-  UserPlus,
   Users,
 } from 'lucide-react';
 import {useParams, useRouter} from 'next/navigation';
@@ -91,15 +90,6 @@ export function ManageEventButton({eventPromise}: Props) {
               >
                 <Users className="mr-2 h-4 w-4" />
                 <span>Attendees</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                data-testid="select-option-button"
-                onClick={() => {
-                  router.push(`/e/${shortId}/invite`);
-                }}
-              >
-                <UserPlus className="mr-2 h-4 w-4" />
-                <span>Invite</span>
               </DropdownMenuItem>
               {!event?.isPublished && (
                 <DropdownMenuItem

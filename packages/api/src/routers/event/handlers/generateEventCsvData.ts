@@ -9,7 +9,7 @@ export const generateEventCsvData = protectedProcedure
       eventShortId: z.string(),
     })
   )
-  .mutation(async ({input: {eventShortId}, ctx}) => {
+  .query(async ({input: {eventShortId}, ctx}) => {
     const event = await ctx.prisma.event.findFirst({
       where: {
         shortId: eventShortId,
@@ -37,7 +37,7 @@ export const generateEventCsvData = protectedProcedure
 
       const data = ticketSales?.map((ticketSale, i) => {
         const ticket = tickets.find(
-          ticket => ticket.id === ticketSale.ticketId
+          (ticket) => ticket.id === ticketSale.ticketId
         )!;
 
         return {
@@ -73,7 +73,7 @@ export const generateEventCsvData = protectedProcedure
 function generateCsvFromData(data: Array<Record<string, string | number>>) {
   const header =
     Object.keys(data[0])
-      .map(key => {
+      .map((key) => {
         if (key === '#') {
           return key;
         } else {
@@ -83,7 +83,7 @@ function generateCsvFromData(data: Array<Record<string, string | number>>) {
       .join(',') + '\r\n';
 
   const rows = data
-    ?.map(item => {
+    ?.map((item) => {
       const values = Object.values(item);
       return values.join(',');
     })

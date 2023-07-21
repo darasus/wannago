@@ -1,4 +1,3 @@
-import {Event, Ticket} from '@prisma/client';
 import {CardBase, Container, Text} from 'ui';
 import {FreeEventAction} from './features/FreeEventAction/FreeEventAction';
 import {PaidEventAction} from './features/PaidEventAction/PaidEventAction';
@@ -8,7 +7,9 @@ import {Suspense} from 'react';
 import {UserCount} from './features/UserCount/UserCount';
 
 interface Props {
-  event: Event & {tickets: Ticket[]};
+  event:
+    | NonNullable<RouterOutputs['event']['getByShortId']>
+    | NonNullable<RouterOutputs['event']['getRandomExample']>;
   myTicketPromise: ReturnType<typeof api.event.getMyTicketsByEvent.query>;
   mePromise: Promise<RouterOutputs['user']['me']>;
 }
