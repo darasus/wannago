@@ -44,21 +44,21 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
           <div
             className={cn(
               {'border-r': !!titleChildren},
-              'border-foreground/5 bg-muted p-2 pl-4 text-sm rounded-tl-md font-bold uppercase'
+              'border-foreground/5 bg-muted p-2 pl-4 text-sm rounded-tl-md font-bold uppercase shrink overflow-hidden'
             )}
           >
             {title}
           </div>
-          {titleChildren}
+          <div className="grow shrink-0 mr-4">{titleChildren}</div>
         </div>
       )}
       {badges && (
-        <div className="flex justify-center items-center gap-1 absolute left-0 right-0 top-0 mx-auto -translate-y-[50%]">
+        <div className="flex justify-center items-center gap-1 shrink-0 absolute left-0 right-0 top-0 mx-auto -translate-y-[50%]">
           {badges.map(({badgeColor, badgeContent}, index) => (
             <div
               key={index}
               className={cn(
-                'flex justify-center items-center border-2 border-primary rounded-md px-2 py-1',
+                'flex justify-center items-center border-2 border-primary rounded-md px-1 py-1',
                 {
                   'bg-green-300': badgeColor === 'green',
                   'bg-white': badgeColor === 'white',

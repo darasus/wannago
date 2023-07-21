@@ -49,7 +49,7 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
               {
                 badgeColor: 'green',
                 badgeContent: (
-                  <div className="flex gap-[2px]">
+                  <div className="flex gap-[5px]">
                     <span
                       className="text-xs uppercase font-bold"
                       data-testid="event-published-badge"
@@ -65,7 +65,7 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
               {
                 badgeColor: 'yellow',
                 badgeContent: (
-                  <div className="flex gap-[2px]">
+                  <div className="flex gap-[5px]">
                     <span className="text-xs uppercase font-bold">Draft</span>{' '}
                     <InfoIconWithTooltip text="Your event is not published yet. To be able to share your event please publish it first." />
                   </div>

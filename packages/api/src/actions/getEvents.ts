@@ -106,6 +106,7 @@ export function getEvents(ctx: ActionContext) {
       include: {
         user: true,
         organization: true,
+        tickets: true,
       },
     });
 

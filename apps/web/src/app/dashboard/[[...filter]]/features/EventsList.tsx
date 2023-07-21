@@ -1,9 +1,9 @@
-import {Event} from '@prisma/client';
+import {RouterOutputs} from 'api';
 import {EventCard} from 'cards';
 import Link from 'next/link';
 
 interface Props {
-  events: Promise<Event[]>;
+  events: Promise<RouterOutputs['event']['getMyEvents']>;
   eventType: any;
 }
 

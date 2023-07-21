@@ -1,12 +1,12 @@
-import {Event, Organization, User} from '@prisma/client';
 import {isFuture} from 'date-fns';
+import {RouterOutputs} from 'api';
 import Image from 'next/image';
-import {cloudflareImageLoader, cn, formatTimeago} from 'utils';
+import {cloudflareImageLoader, formatCents, getRelativeTime} from 'utils';
 import {Avatar, Badge, CardBase, Text} from 'ui';
 import {forwardRef} from 'react';
 
 interface Props {
-  event: Event & {user?: User | null; organization?: Organization | null};
+  event: RouterOutputs['event']['getMyEvents'][0];
   showPublishStatus?: boolean;
 }
 
@@ -27,6 +27,11 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
     title,
   } = event;
 
+  const price =
+    event.tickets.length > 0
+      ? `From ${formatCents(event.tickets?.[0].price, event.preferredCurrency)}`
+      : 'Free';
+
   return (
     <CardBase
       ref={ref}
@@ -34,7 +39,7 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
       title={
         <div className="flex items-center gap-2">
           <Avatar
-            className="w-6 h-6 -mr-1"
+            className="w-6 h-6 shrink-0"
             src={event.user?.profileImageSrc || event.organization?.logoSrc}
             alt={
               event.user?.firstName ||
@@ -42,31 +47,33 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
               'User profile'
             }
           />
-          <Text className="text-sm" truncate>
+          <Text className="text-sm truncate break-keep">
             {event.organization?.name ||
               `${event.user?.firstName} ${event.user?.lastName}`}
           </Text>
         </div>
       }
       titleChildren={
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <Badge
-            className={cn({
-              'bg-green-500 hover:bg-green-600': isUpcoming,
-              'bg-gray-500 hover:bg-gray-600': !isUpcoming,
-            })}
+            className="shrink-0"
+            variant={isUpcoming ? 'positive' : 'outline'}
           >
-            {formatTimeago(event.startDate)}
+            {getRelativeTime(event.startDate, event.endDate)}
+          </Badge>
+          <div className="grow" />
+          <Badge className="shrink-0" variant={'outline'}>
+            {price}
           </Badge>
         </div>
       }
     >
-      <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-4">
         {featuredImageSrc &&
           featuredImagePreviewSrc &&
           featuredImageWidth &&
           featuredImageHeight && (
-            <div className="grow overflow-hidden relative justify-center bg-black rounded-md aspect-video safari-rounded-border-fix">
+            <div className="shrink-0 overflow-hidden relative justify-center bg-black rounded-md aspect-video safari-rounded-border-fix w-36 h-36">
               {showPublishStatus && (
                 <div className="absolute left-4 top-4 z-10">
                   {event.isPublished ? (
@@ -97,7 +104,11 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
             </div>
           )}
         <div>
-          <Text className="text-2xl font-bold line-clamp-2">{event.title}</Text>
+          <Text className="text-2xl font-bold line-clamp-2 leading-none">
+            {event.title}
+          </Text>
+          <br />
+          <Text className="">{event.address}</Text>
         </div>
       </div>
     </CardBase>
