@@ -1,6 +1,3 @@
 export function getBaseUrl() {
-  return (
-    process.env.ENVIRONMENT_URL ||
-    `https://${process.env.NEXT_PUBLIC_PREVIEW_VERCEL_URL}`
-  );
+  return process.env.ENVIRONMENT_URL || 'https://automation.wannago.app/';
 }
