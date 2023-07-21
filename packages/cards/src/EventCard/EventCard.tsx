@@ -6,7 +6,10 @@ import {Avatar, Badge, CardBase, Text} from 'ui';
 import {forwardRef} from 'react';
 
 interface Props {
-  event: RouterOutputs['event']['getMyEvents'][0];
+  event:
+    | RouterOutputs['event']['getMyEvents'][0]
+    | RouterOutputs['event']['getRandomExample']
+    | RouterOutputs['event']['getExamples'][0];
   showPublishStatus?: boolean;
 }
 
