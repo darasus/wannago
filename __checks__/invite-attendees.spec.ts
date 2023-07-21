@@ -28,8 +28,9 @@ test('can invite attendees', async ({page}) => {
   await page.locator('[data-testid="manage-event-button"]').click();
   await page
     .locator('[data-testid="select-option-button"]')
-    .getByText('Invite')
+    .getByText('Attendees')
     .click();
+  await page.locator('[data-testid="invite-button"]').click();
   await page
     .locator('[data-testid="invite-by-email-open-modal-button"]')
     .click();

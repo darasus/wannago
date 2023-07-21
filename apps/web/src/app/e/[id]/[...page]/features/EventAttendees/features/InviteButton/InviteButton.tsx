@@ -32,7 +32,9 @@ export function InviteButton({
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button size="sm">Invite</Button>
+          <Button size="sm" data-testid="invite-button">
+            Invite
+          </Button>
         </DialogTrigger>
         <DialogContent className="max-w-2xl">
           <DialogHeader>

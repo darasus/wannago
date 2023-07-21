@@ -3,12 +3,12 @@ export const getBaseUrl = () => {
     return window.location.origin;
   }
 
-  if (process.env.VERCEL_BRANCH_URL?.includes('test-automation')) {
-    return `https://${process.env.VERCEL_BRANCH_URL}`;
-  }
-
   if (process.env.IS_CHECKLY === 'true' && process.env.ENVIRONMENT_URL) {
     return process.env.ENVIRONMENT_URL;
+  }
+
+  if (process.env.IS_CHECKLY === 'true') {
+    return `https://wannago-git-test-automation-darasus-team.vercel.app`;
   }
 
   if (process.env.IS_CHECKLY === 'true') {
