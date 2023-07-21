@@ -1,4 +1,4 @@
-import {Event, User} from '@prisma/client';
+import {RouterOutputs} from 'api';
 import {
   InfoCard,
   EventCard,
@@ -14,7 +14,7 @@ function Section({children}: {children?: React.ReactNode}) {
   return <div className="flex flex-col gap-4">{children}</div>;
 }
 
-const event: Event & {user: User} = {
+const event: NonNullable<RouterOutputs['event']['getRandomExample']> = {
   id: '1',
   title: 'Exploring the Frontiers of Space: A Journey Through the Cosmos',
   description:
@@ -52,6 +52,11 @@ const event: Event & {user: User} = {
     stripeLinkedAccountId: null,
     preferredCurrency: 'USD',
   },
+  organization: null,
+  tickets: [],
+  eventSignUps: [],
+  isPast: false,
+  ticketSales: [],
 };
 
 export const runtime = 'edge';
@@ -104,9 +109,9 @@ export default function CardsPage() {
       </Section>
       <Section>
         <OrganizerCard
-          name={`${event.user.firstName} ${event.user.lastName}`}
-          profileImageSrc={event.user.profileImageSrc}
-          profilePath={`/u/${event.user.id}`}
+          name={`${event.user?.firstName} ${event.user?.lastName}`}
+          profileImageSrc={event.user?.profileImageSrc}
+          profilePath={`/u/${event.user?.id}`}
         />
       </Section>
     </Container>
