@@ -2,6 +2,7 @@ import {Suspense} from 'react';
 import {api} from '../../../../trpc/server-http';
 import {LoadingBlock} from 'ui';
 import {PublicProfile} from '../../../../features/PublicProfile/PublicProfile';
+import {notFound} from 'next/navigation';
 
 export const runtime = 'edge';
 export const preferredRegion = 'iad1';
@@ -11,12 +12,14 @@ export const generateMetadata = async ({
 }: {
   params: {userId: string};
 }) => {
-  const user = await api.user.getUserById.query({
-    userId,
-  });
+  const user = await api.user.getUserById
+    .query({
+      userId,
+    })
+    .catch(() => null);
 
   if (!user) {
-    return null;
+    return notFound();
   }
 
   return {

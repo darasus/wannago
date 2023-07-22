@@ -1,5 +1,9 @@
 'use client';
 
+import {captureException} from '@sentry/nextjs';
+import {useEffect} from 'react';
+import {ErrorComponent} from 'ui';
+
 export default function GlobalError({
   error,
   reset,
@@ -7,11 +11,16 @@ export default function GlobalError({
   error: Error;
   reset: () => void;
 }) {
+  useEffect(() => {
+    captureException(error);
+  }, [error]);
+
+  console.log(error);
+
   return (
     <html>
       <body>
-        <h2>Something went wrong!</h2>
-        <button onClick={() => reset()}>Try again</button>
+        <ErrorComponent error={error} />
       </body>
     </html>
   );

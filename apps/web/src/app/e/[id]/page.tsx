@@ -4,12 +4,17 @@ import {ManageEventButton} from './features/ManageEventButton/ManageEventButton'
 import {EventView} from '../../../features/EventView/EventView';
 import {Suspense} from 'react';
 import {getBaseUrl} from 'utils';
+import {notFound} from 'next/navigation';
 
 export const runtime = 'edge';
 export const preferredRegion = 'iad1';
 
 export async function generateMetadata({params: {id}}: {params: {id: string}}) {
-  const event = await api.event.getByShortId.query({id});
+  const event = await api.event.getByShortId.query({id}).catch(() => null);
+
+  if (!event) {
+    return notFound();
+  }
 
   const url = new URL(`${getBaseUrl()}/api/og-image`);
 

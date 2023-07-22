@@ -1,29 +1,21 @@
 'use client';
 
+import {captureException} from '@sentry/nextjs';
+import {TRPCClientError} from '@trpc/client';
+import {AppRouter} from 'api';
 import {useEffect} from 'react';
+import {ErrorComponent} from 'ui';
 
 export default function Error({
   error,
   reset,
 }: {
-  error: Error & {digest?: string};
+  error: TRPCClientError<AppRouter> | Error;
   reset: () => void;
 }) {
   useEffect(() => {
-    console.log('>>> client error', error);
+    captureException(error);
   }, [error]);
 
-  return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-      >
-        Try again
-      </button>
-    </div>
-  );
+  return <ErrorComponent error={error} />;
 }

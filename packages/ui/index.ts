@@ -133,3 +133,4 @@ export {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from './src/AlertDialog/AlertDialog';
+export {ErrorComponent} from './src/ErrorComponent/ErrorComponent';

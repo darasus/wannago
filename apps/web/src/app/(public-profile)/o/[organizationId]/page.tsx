@@ -2,6 +2,7 @@ import {Suspense} from 'react';
 import {api} from '../../../../trpc/server-http';
 import {LoadingBlock} from 'ui';
 import {PublicProfile} from '../../../../features/PublicProfile/PublicProfile';
+import {notFound} from 'next/navigation';
 
 export const runtime = 'edge';
 export const preferredRegion = 'iad1';
@@ -11,12 +12,14 @@ export const generateMetadata = async ({
 }: {
   params: {organizationId: string};
 }) => {
-  const organization = await api.organization.getOrganizationById.query({
-    organizationId,
-  });
+  const organization = await api.organization.getOrganizationById
+    .query({
+      organizationId,
+    })
+    .catch(() => null);
 
   if (!organization) {
-    return null;
+    return notFound();
   }
 
   return {
