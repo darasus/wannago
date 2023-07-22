@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "dotenv -e ../../.vercel/.env.development.local -- next dev",
+    "dev": "dotenv -e ../../.vercel/.env.development.local -- next dev | grep -v '/inngest'",
     "dev:inngest": "dotenv -e ../../.vercel/.env.development.local -- inngest-cli dev",
     "build": "dotenv -e ../../.vercel/.env.development.local -- next build",
     "start": "dotenv -e ../../.vercel/.env.development.local -- next start",
