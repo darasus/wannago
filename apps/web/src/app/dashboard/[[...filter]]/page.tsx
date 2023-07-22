@@ -16,7 +16,7 @@ export const metadata = {
   title: 'Dashboard | WannaGo',
 };
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const preferredRegion = 'iad1';
 
 export default async function Dashboard(props: {

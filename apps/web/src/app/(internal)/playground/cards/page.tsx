@@ -59,7 +59,7 @@ const event: NonNullable<RouterOutputs['event']['getRandomExample']> = {
   ticketSales: [],
 };
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const preferredRegion = 'iad1';
 
 export default function CardsPage() {

@@ -4,7 +4,7 @@ export const metadata = {
   title: 'Register | WannaGo',
 };
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const preferredRegion = 'iad1';
 
 export default function RegisterPage() {

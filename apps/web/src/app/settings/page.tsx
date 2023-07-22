@@ -4,7 +4,7 @@ import {UserSettingsForm} from './features/UserSettingsForm/UserSettingsForm';
 import {Suspense} from 'react';
 import {StripeSettings} from './features/StripeSettings/StripeSettings';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const preferredRegion = 'iad1';
 
 export const generateMetadata = async () => {
