@@ -1,5 +1,5 @@
 import {PropsWithChildren} from 'react';
-import {Text} from '@react-email/text';
+import {Text} from '@react-email/components';
 import {fontFamily, token} from './shared';
 
 interface Props extends PropsWithChildren {}

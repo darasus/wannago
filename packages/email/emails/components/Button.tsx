@@ -1,6 +1,6 @@
 import {PropsWithChildren} from 'react';
 import {token, fontFamily} from './shared';
-import {Button as _Button} from '@react-email/button';
+import {Button as _Button} from '@react-email/components';
 
 interface Props extends PropsWithChildren {
   href: string;
@@ -9,16 +9,12 @@ interface Props extends PropsWithChildren {
 
 const style = {
   fontFamily,
-  borderRadius: '100px',
+  borderRadius: '5px',
   fontSize: '15px',
   fontWeight: 'bold',
   textDecoration: 'none',
   textAlign: 'center' as const,
   display: 'block',
-  paddingLeft: 25,
-  paddingRight: 25,
-  paddingTop: 15,
-  paddingBottom: 15,
   borderWidth: '1px',
   borderColor: token.dark,
   borderStyle: 'solid',
@@ -37,7 +33,7 @@ const map = {
 
 export function Button({children, href, variant = 'primary'}: Props) {
   return (
-    <_Button style={{...style, ...map[variant]}} href={href}>
+    <_Button style={{...style, ...map[variant]}} pX={20} pY={10} href={href}>
       {children}
     </_Button>
   );

@@ -1,4 +1,4 @@
-import {Text as _Text} from '@react-email/text';
+import {Text as _Text} from '@react-email/components';
 import {PropsWithChildren} from 'react';
 import {token, fontFamily} from './shared';
 

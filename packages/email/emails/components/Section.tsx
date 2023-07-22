@@ -1,4 +1,4 @@
-import {Section as _Section} from '@react-email/section';
+import {Section as _Section} from '@react-email/components';
 import {PropsWithChildren} from 'react';
 
 interface Props extends PropsWithChildren {

@@ -1,8 +1,8 @@
 // TODO: fix design token
 export const token = {
-  light: '#e2e8f0',
-  dark: '#1f2937',
-  brand: '#973AA8',
+  light: '#ffffff',
+  dark: '#09090b',
+  brand: '#09090b',
 };
 
 export const gutter = 20;

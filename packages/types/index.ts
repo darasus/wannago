@@ -4,7 +4,6 @@ export enum EmailType {
   EventInvite = 'EventInvite',
   EventCancelInvite = 'EventCancelInvite',
   EventReminder = 'EventReminder',
-  MessageToOrganizer = 'MessageToOrganizer',
   MessageToAllAttendees = 'MessageToAllAttendees',
   AfterRegisterNoCreatedEventFollowUpEmail = 'AfterRegisterNoCreatedEventFollowUpEmail',
   OrganizerEventSignUpNotification = 'OrganizerEventSignUpNotification',

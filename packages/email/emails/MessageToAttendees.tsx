@@ -1,7 +1,4 @@
-import {Container} from '@react-email/container';
-import {Head} from '@react-email/head';
-import {Hr} from '@react-email/hr';
-import {Html} from '@react-email/html';
+import {Container, Head, Html, Hr} from '@react-email/components';
 import {Section} from './components/Section';
 import * as React from 'react';
 import {Header} from './components/Header';

@@ -1,5 +1,5 @@
 import {PropsWithChildren} from 'react';
-import {Link as _Link} from '@react-email/link';
+import {Link as _Link} from '@react-email/components';
 import {token, fontFamily} from './shared';
 
 interface Props extends PropsWithChildren {

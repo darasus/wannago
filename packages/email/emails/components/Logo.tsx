@@ -1,13 +1,13 @@
-import {Img} from '@react-email/img';
+import {Img} from '@react-email/components';
 
 export function Logo() {
-  const ratio = 233 / 121;
-  const height = 50;
-  const width = height * ratio;
+  const ratio = 0.5;
+  const height = 100 * ratio;
+  const width = 152 * ratio;
 
   return (
     <Img
-      src="https://www.wannago.app/images/logo_dark.png"
+      src="https://www.wannago.app/api/logo"
       alt="WannaGo logo"
       width={width}
       height={height}

@@ -1,4 +1,4 @@
-import {Hr} from '@react-email/hr';
+import {Hr} from '@react-email/components';
 import {gutter, hr} from './shared';
 import {Link} from './Link';
 import {Text} from './Text';

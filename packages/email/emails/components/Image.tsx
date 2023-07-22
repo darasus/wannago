@@ -1,5 +1,4 @@
-import {Section} from '@react-email/section';
-import {Img} from '@react-email/img';
+import {Section, Img} from '@react-email/components';
 import {gutter} from './shared';
 
 interface Props {
