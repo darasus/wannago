@@ -7,7 +7,7 @@ export const metadata = {
   title: 'Examples | WannaGo',
 };
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const preferredRegion = 'iad1';
 
 export default async function ExamplesPage() {

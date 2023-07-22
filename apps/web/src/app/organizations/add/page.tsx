@@ -2,7 +2,7 @@ import {Container, PageHeader} from 'ui';
 import {OrganizationForm} from '../features/OrganizationForm/OrganizationForm';
 import {createOrganization} from './actions';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const preferredRegion = 'iad1';
 
 export default function CreateOrganizationPage() {

@@ -4,7 +4,7 @@ export const metadata = {
   title: 'Login | WannaGo',
 };
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const preferredRegion = 'iad1';
 
 export default function LoginPage() {

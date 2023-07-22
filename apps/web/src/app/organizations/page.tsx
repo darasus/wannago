@@ -7,7 +7,7 @@ export const metadata = {
   title: 'Organizations | WannaGo',
 };
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const preferredRegion = 'iad1';
 
 export default async function SettingsPage() {

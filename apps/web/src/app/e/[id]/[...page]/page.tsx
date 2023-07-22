@@ -9,7 +9,7 @@ import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
 import {Suspense} from 'react';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const preferredRegion = 'iad1';
 
 export default async function EventPages({

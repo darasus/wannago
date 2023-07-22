@@ -6,7 +6,7 @@ import {Features} from '../components/Marketing/Features';
 import {HowDoesItWork} from '../components/Marketing/HowDoesItWork';
 import {Pricing} from '../components/Marketing/Pricing';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const preferredRegion = 'iad1';
 
 export default function HomePage() {
