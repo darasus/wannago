@@ -51,6 +51,8 @@ const moduleExports = {
       'images.clerk.dev',
       'gravatar.com',
       'www.wannago.app',
+      'wannago.app',
+      'localhost',
     ],
   },
   transpilePackages: [

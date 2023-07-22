@@ -1,5 +1,6 @@
 import Link, {LinkProps} from 'next/link';
 import Image from 'next/image';
+import {getBaseUrl} from 'utils';
 
 interface Props extends LinkProps {
   className?: string;
@@ -19,7 +20,7 @@ export function LogoView({className}: {className?: string}) {
 
   return (
     <Image
-      src={`/api/logo`}
+      src={`${getBaseUrl()}/api/logo`}
       width={width}
       height={height}
       alt="WannaGo logo"
