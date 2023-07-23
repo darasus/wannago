@@ -45,7 +45,7 @@ export {
   DropdownMenuTrigger,
 } from './src/Menu/Menu';
 export {NotFoundMessage} from './src/NotFoundMessage/NotFoundMessage';
-export {InfoIconWithTooltip} from './src/InfoIconWithTooltip/InfoIconWithTooltip';
+export {BadgeWithModal} from './src/BadgeWithModal/BadgeWithModal';
 export {AnimateRender} from './src/AnimateRender/AnimateRender';
 export {
   Select,

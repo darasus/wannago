@@ -7,7 +7,7 @@ import {
   OrganizerCard,
   UrlCard,
 } from 'cards';
-import {CardBase, Container, InfoIconWithTooltip, LoadingCard} from 'ui';
+import {CardBase, Container, LoadingCard} from 'ui';
 import {getBaseUrl} from 'utils';
 
 function Section({children}: {children?: React.ReactNode}) {
@@ -69,21 +69,7 @@ export default function CardsPage() {
         <LoadingCard />
       </Section>
       <Section>
-        <CardBase
-          badges={[
-            {
-              badgeColor: 'green',
-              badgeContent: (
-                <div className="flex gap-[2px]">
-                  <span className="text-xs uppercase font-bold">Published</span>{' '}
-                  <InfoIconWithTooltip text="Some text" />
-                </div>
-              ),
-            },
-          ]}
-        >
-          This is some base card
-        </CardBase>
+        <CardBase>This is some base card</CardBase>
       </Section>
       <Section>
         <InfoCard event={event} />

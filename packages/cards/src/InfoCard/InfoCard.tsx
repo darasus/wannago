@@ -1,12 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import {Button, CardBase, InfoIconWithTooltip, LoadingBlock} from 'ui';
+import {Button, CardBase, LoadingBlock} from 'ui';
 import {cn} from 'utils';
 import {cloudflareImageLoader} from 'utils';
 import {Event} from '@prisma/client';
 import clip from 'text-clipper';
 import {useState} from 'react';
+import {Info} from 'lucide-react';
 
 interface Props {
   event: Event;
@@ -42,42 +43,32 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
     featuredImageHeight &&
     !isLoadingImage;
 
-  const badges = isMyEvent
-    ? [
-        ...(event.isPublished
-          ? ([
-              {
-                badgeColor: 'green',
-                badgeContent: (
-                  <div className="flex gap-[5px]">
-                    <span
-                      className="text-xs uppercase font-bold"
-                      data-testid="event-published-badge"
-                    >
-                      Published
-                    </span>{' '}
-                    <InfoIconWithTooltip text="Your event is published and can be shared." />
-                  </div>
-                ),
-              },
-            ] as const)
-          : ([
-              {
-                badgeColor: 'yellow',
-                badgeContent: (
-                  <div className="flex gap-[5px]">
-                    <span className="text-xs uppercase font-bold">Draft</span>{' '}
-                    <InfoIconWithTooltip text="Your event is not published yet. To be able to share your event please publish it first." />
-                  </div>
-                ),
-              },
-            ] as const)),
-      ]
+  const badge = isMyEvent
+    ? event.isPublished
+      ? ({
+          label: (
+            <div className="flex items-center gap-1">
+              Published <Info className="h-4 w-4" />
+            </div>
+          ),
+          color: 'green',
+          content: 'Your event is published and can be shared.',
+        } as const)
+      : ({
+          label: (
+            <div className="flex items-center gap-1">
+              Draft <Info className="h-4 w-4" />
+            </div>
+          ),
+          color: 'yellow',
+          content:
+            'Your event is not published yet. To be able to share your event please publish it first.',
+        } as const)
     : undefined;
 
   return (
     <>
-      <CardBase badges={badges} title={'What'}>
+      <CardBase badge={badge} title={'What'}>
         {isLoadingImage && (
           <div className="flex flex-col items-center overflow-hidden relative justify-center bg-gray-300 rounded-md safari-rounded-border-fix mb-4 aspect-square">
             <LoadingBlock />

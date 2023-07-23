@@ -1,10 +1,12 @@
 import {forwardRef, PropsWithChildren, ReactNode} from 'react';
 import {cn} from 'utils';
 import {LoadingBlock} from '../LoadingBlock/LoadingBlock';
+import {BadgeWithModal} from '../BadgeWithModal/BadgeWithModal';
 
 interface BadgeItem {
-  badgeContent: React.ReactNode;
-  badgeColor: 'green' | 'gray' | 'yellow' | 'white';
+  label: React.ReactNode;
+  content: React.ReactNode;
+  color: 'green' | 'red' | 'blue' | 'yellow';
 }
 
 type Props = PropsWithChildren & {
@@ -13,7 +15,7 @@ type Props = PropsWithChildren & {
   isLoading?: boolean;
   title?: ReactNode;
   titleChildren?: React.ReactNode;
-  badges?: BadgeItem[];
+  badge?: BadgeItem;
 };
 
 export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
@@ -24,7 +26,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
     isLoading,
     title,
     titleChildren = null,
-    badges,
+    badge,
     ...props
   },
   ref
@@ -52,23 +54,11 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
           <div className="grow shrink-0 mr-4">{titleChildren}</div>
         </div>
       )}
-      {badges && (
+      {badge && (
         <div className="flex justify-center items-center gap-1 shrink-0 absolute left-0 right-0 top-0 mx-auto -translate-y-[50%]">
-          {badges.map(({badgeColor, badgeContent}, index) => (
-            <div
-              key={index}
-              className={cn(
-                'flex justify-center items-center border-2 border-primary rounded-md px-1 py-1',
-                {
-                  'bg-green-300': badgeColor === 'green',
-                  'bg-white': badgeColor === 'white',
-                  'bg-yellow-300': badgeColor === 'yellow',
-                }
-              )}
-            >
-              <div className="-mb-[1px]">{badgeContent}</div>
-            </div>
-          ))}
+          <BadgeWithModal text={badge.content} color={badge.color}>
+            {badge.label}
+          </BadgeWithModal>
         </div>
       )}
       <div className={cn('p-4', innerClassName)}>{children}</div>
