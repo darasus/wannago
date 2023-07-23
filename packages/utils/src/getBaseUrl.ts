@@ -11,7 +11,10 @@ export const getBaseUrl = () => {
     return 'http://localhost:3000';
   }
 
-  if (process.env.NEXT_PUBLIC_PREVIEW_VERCEL_URL) {
+  if (
+    !process.env.NEXT_PUBLIC_VERCEL_GIT_PULL_REQUEST_ID &&
+    process.env.NEXT_PUBLIC_PREVIEW_VERCEL_URL
+  ) {
     return `https://${process.env.NEXT_PUBLIC_PREVIEW_VERCEL_URL}`;
   }
 
