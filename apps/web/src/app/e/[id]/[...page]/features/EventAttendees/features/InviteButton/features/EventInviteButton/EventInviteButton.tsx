@@ -21,6 +21,7 @@ import {toast} from 'react-hot-toast';
 import {useParams, useRouter} from 'next/navigation';
 import {z} from 'zod';
 import {api} from '../../../../../../../../../../trpc/client';
+import {useState} from 'react';
 
 const formScheme = z.object({
   firstName: z.string().nonempty(),
@@ -29,6 +30,7 @@ const formScheme = z.object({
 });
 
 export function EventInviteButton() {
+  const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
   const eventShortId = params?.id as string;
   const router = useRouter();
@@ -41,8 +43,11 @@ export function EventInviteButton() {
         .mutate({...data, eventShortId})
         .then(() => {
           toast.success('Invitation sent!');
-          form.reset();
+          form.resetField('firstName');
+          form.resetField('lastName');
+          form.resetField('email');
           router.refresh();
+          setIsOpen(false);
         })
         .catch((error) => {
           toast.error(
@@ -55,9 +60,15 @@ export function EventInviteButton() {
   });
 
   return (
-    <Dialog>
+    <Dialog open={isOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" data-testid="invite-by-email-open-modal-button">
+        <Button
+          size="sm"
+          data-testid="invite-by-email-open-modal-button"
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
           Invite by email
         </Button>
       </DialogTrigger>

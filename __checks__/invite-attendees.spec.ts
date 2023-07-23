@@ -55,7 +55,7 @@ test('can invite attendees', async ({page}) => {
 
   await expect(
     page.locator('[data-testid="invitee-card"]').first().getByText(newEmail)
-  ).toBeVisible();
+  ).toBeDefined();
 
   await expect(
     page

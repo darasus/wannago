@@ -121,6 +121,7 @@ export {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from './src/Dialog/Dialog';
 export {
   AlertDialog,
