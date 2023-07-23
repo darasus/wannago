@@ -3,12 +3,15 @@
 import {
   Button,
   Counter,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-  Modal,
   Text,
 } from 'ui';
 import {Event, Ticket} from '@prisma/client';
@@ -22,6 +25,7 @@ import {toast} from 'react-hot-toast';
 import {z} from 'zod';
 import {RouterOutputs} from 'api';
 import {zodResolver} from '@hookform/resolvers/zod';
+import Link from 'next/link';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -101,72 +105,98 @@ export function TicketSelectorModal({
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <Form {...form}>
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-4">
-            {event.tickets.map(({title, price, id, description}) => {
-              return (
-                <FormField
-                  key={id}
-                  control={form.control}
-                  name={id}
-                  render={({field}) => (
-                    <div className="flex flex-col gap-2">
-                      <div className="flex items-center gap-4">
-                        <div className="flex grow">
-                          <div className="grow">
-                            <Text>{title}</Text>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Select ticket and quantity</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col gap-4">
+              {event.tickets.map(({title, price, id, description}) => {
+                return (
+                  <FormField
+                    key={id}
+                    control={form.control}
+                    name={id}
+                    render={({field}) => (
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center gap-4">
+                          <div className="flex grow">
+                            <div className="grow">
+                              <Text>{title}</Text>
+                            </div>
+                            <div>
+                              <Text>
+                                {formatCents(price, event.preferredCurrency)}
+                              </Text>
+                            </div>
                           </div>
-                          <div>
-                            <Text>
-                              {formatCents(price, event.preferredCurrency)}
-                            </Text>
-                          </div>
+                          <FormItem>
+                            <FormControl>
+                              <Counter
+                                value={field.value}
+                                minValue={0}
+                                onChange={(value) => {
+                                  field.onChange(value);
+                                }}
+                              />
+                            </FormControl>
+                          </FormItem>
                         </div>
-                        <FormItem>
-                          <FormControl>
-                            <Counter
-                              value={field.value}
-                              minValue={0}
-                              onChange={(value) => {
-                                field.onChange(value);
-                              }}
-                            />
-                          </FormControl>
-                        </FormItem>
+                        {description && (
+                          <div className="bg-gray-100 p-2 rounded-xl">
+                            <Text>{description}</Text>
+                          </div>
+                        )}
+                        <FormMessage />
                       </div>
-                      {description && (
-                        <div className="bg-gray-100 p-2 rounded-xl">
-                          <Text>{description}</Text>
-                        </div>
-                      )}
-                      <FormMessage />
-                    </div>
-                  )}
-                />
-              );
-            })}
-            <div className="flex">
-              <div className="grow">
-                <Text>Total:</Text>
+                    )}
+                  />
+                );
+              })}
+              <div className="flex">
+                <div className="grow">
+                  <Text>Total:</Text>
+                </div>
+                <div>
+                  <Text className="font-bold">
+                    {formatCents(total, event.preferredCurrency)}
+                  </Text>
+                </div>
               </div>
-              <div>
-                <Text className="font-bold">
-                  {formatCents(total, event.preferredCurrency)}
-                </Text>
-              </div>
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                isLoading={form.formState.isSubmitting}
+              >
+                Buy
+              </Button>
             </div>
-            <Button
-              type="submit"
-              disabled={form.formState.isSubmitting}
-              isLoading={form.formState.isSubmitting}
-            >
-              Buy
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </Modal>
+            <div className="text-center mt-1">
+              <span className="text-sm text-gray-400">
+                By clicking Buy you agree to{' '}
+                <Link
+                  href="/terms-of-service"
+                  target="_blank"
+                  className="underline"
+                >
+                  terms of service
+                </Link>{' '}
+                and{' '}
+                <Link
+                  href="/privacy-policy"
+                  target="_blank"
+                  className="underline"
+                >
+                  privacy policy
+                </Link>
+                .
+              </span>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 }
