@@ -1,3 +1,3 @@
 export function getBaseUrl() {
-  return process.env.ENVIRONMENT_URL || 'https://automation.wannago.app';
+  return process.env.ENVIRONMENT_URL || 'https://www.wannago.app';
 }
