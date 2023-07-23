@@ -1,6 +1,6 @@
 'use client';
 
-import {useAuth, useSignIn} from '@clerk/nextjs';
+import {useSignIn} from '@clerk/nextjs';
 import {useCallback, useState} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import {CardBase, LoadingBlock, Button, Text} from 'ui';
@@ -12,6 +12,7 @@ import {CodeForm} from './features/CodeForm/CodeForm';
 import {EmailForm} from './features/EmailForm/EmailForm';
 import {SignUpWithGoogleButton} from '../SignUpWithGoogleButton/SignUpWithGoogleButton';
 import Link from 'next/link';
+import {api} from '../../../../apps/web/src/trpc/client';
 
 interface Props {
   onDone?: () => void;
@@ -24,7 +25,6 @@ export function Login({
   onCreateAccountClick,
   redirectUrlComplete,
 }: Props) {
-  const {getToken} = useAuth();
   const {setSession, isLoaded} = useSignIn();
   const [step, setStep] = useState<'email' | 'code'>('email');
   const emailForm = useForm<z.infer<typeof emailFormScheme>>({
@@ -40,13 +40,13 @@ export function Login({
   });
 
   const ready = useCallback(async (): Promise<any> => {
-    const token = await getToken();
+    const me = await api.user.me.query();
 
-    if (!token) {
+    if (!me) {
       await sleep(1000);
       return ready();
     }
-  }, [getToken]);
+  }, []);
 
   const handleOnDone = useCallback(
     async (createdSessionId: string) => {

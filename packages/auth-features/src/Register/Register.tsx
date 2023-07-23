@@ -12,6 +12,7 @@ import {UserForm} from './features/UserForm/UserForm';
 import {CodeForm} from './features/CodeForm/CodeForm';
 import {SignUpWithGoogleButton} from '../SignUpWithGoogleButton/SignUpWithGoogleButton';
 import Link from 'next/link';
+import {api} from '../../../../apps/web/src/trpc/client';
 
 interface Props {
   onDone?: () => void;
@@ -39,13 +40,13 @@ export function Register({onDone, onLoginClick, redirectUrlComplete}: Props) {
   });
 
   const ready = useCallback(async (): Promise<any> => {
-    const token = await getToken();
+    const me = await api.user.me.query();
 
-    if (!token) {
+    if (!me) {
       await sleep(1000);
       return ready();
     }
-  }, [getToken]);
+  }, []);
 
   const handleOnDone = async (createdSessionId: string): Promise<any> => {
     await setSession?.(createdSessionId);
