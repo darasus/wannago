@@ -1,5 +1,6 @@
 import {test, expect} from '@playwright/test';
 import {
+  organization_1_email,
   organization_2_id,
   user_1_email,
   user_1_id,
@@ -18,8 +19,15 @@ test.use({
   baseURL: getBaseUrl(),
 });
 
+const getNewEmail = () => {
+  const emailParts = user_1_email.split('@');
+
+  return `${emailParts[0]}+${Math.random()}@${emailParts[1]}`;
+};
+
 test('can invite attendees', async ({page}) => {
   test.setTimeout(120000);
+  const newEmail = getNewEmail();
   await login({page, email: user_2_email});
   await page.goto(getBaseUrl());
   await createEvent({page, authorId: organization_2_id});
@@ -42,14 +50,11 @@ test('can invite attendees', async ({page}) => {
     .type('Doe');
   await page
     .locator('[data-testid="invite-by-email-email-input"]')
-    .type('idarase+123@gmail.com');
+    .type(newEmail);
   await page.locator('[data-testid="invite-by-email-submit-button"]').click();
 
   await expect(
-    page
-      .locator('[data-testid="invitee-card"]')
-      .first()
-      .getByText('idarase+123@gmail.com')
+    page.locator('[data-testid="invitee-card"]').first().getByText(newEmail)
   ).toBeVisible();
 
   await expect(
