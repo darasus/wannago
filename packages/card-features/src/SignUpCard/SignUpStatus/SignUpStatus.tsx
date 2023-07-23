@@ -33,7 +33,11 @@ export function SignUpStatus({mySignUpPromise, myTicketPromise, event}: Props) {
       })}
     >
       {amInvited && <span className="text-sm">{"You're invited!"}</span>}
-      {amSignedUp && <span className="text-sm">{"You're signed up!"}</span>}
+      {amSignedUp && (
+        <span className="text-sm" data-testid="event-signup-label">
+          {"You're signed up!"}
+        </span>
+      )}
       {haveTickets && (
         <div className="flex gap-2">
           <span className="text-sm">{'You bought tickets!'}</span>
