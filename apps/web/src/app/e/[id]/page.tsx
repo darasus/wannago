@@ -13,7 +13,7 @@ export async function generateMetadata({params: {id}}: {params: {id: string}}) {
   const event = await api.event.getByShortId.query({id}).catch(() => null);
 
   if (!event) {
-    return notFound();
+    notFound();
   }
 
   const url = new URL(`${getBaseUrl()}/api/og-image`);
