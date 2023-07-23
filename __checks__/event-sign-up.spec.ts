@@ -21,7 +21,7 @@ test('can sign up (free event)', async ({page}) => {
   await page.locator('[data-testid="attend-button"]').click();
 
   await expect(
-    page.locator('[data-testid="event-signup-success-label"]')
+    page.locator('[data-testid="event-signup-label"]')
   ).toBeVisible();
 });
 
