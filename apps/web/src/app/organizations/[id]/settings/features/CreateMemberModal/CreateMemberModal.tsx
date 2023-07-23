@@ -1,6 +1,5 @@
 'use client';
 
-import {captureException} from '@sentry/nextjs';
 import {useForm} from 'react-hook-form';
 import {
   Button,
@@ -15,10 +14,11 @@ import {
   Modal,
 } from 'ui';
 import {Organization} from '@prisma/client';
-import {addMember} from './actions';
 import {toast} from 'react-hot-toast';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {api} from '../../../../../../trpc/client';
+import {useRouter} from 'next/navigation';
 
 interface Props {
   isOpen: boolean;
@@ -31,6 +31,7 @@ const formScheme = z.object({
 });
 
 export function CreateMemberModal({isOpen, onClose, organization}: Props) {
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formScheme),
     defaultValues: {
@@ -39,15 +40,17 @@ export function CreateMemberModal({isOpen, onClose, organization}: Props) {
   });
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    await addMember({
-      email: data.email,
-      organizationId: organization.id,
-    })
+    await api.organization.addOrganizationMember
+      .mutate({
+        userEmail: data.email,
+        organizationId: organization.id,
+      })
       .then(() => {
+        router.refresh();
+        form.reset();
         onClose();
       })
       .catch((error: any) => {
-        captureException(error);
         toast.error(error.message);
       });
   });

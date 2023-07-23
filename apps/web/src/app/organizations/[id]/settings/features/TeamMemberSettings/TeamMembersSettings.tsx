@@ -34,6 +34,7 @@ export function TeamMembersSettings({organization, membersPromise}: Props) {
               size="sm"
               variant="link"
               onClick={() => setIsAddMemberDialogModalOpen(true)}
+              className="p-0"
             >
               Add member
             </Button>

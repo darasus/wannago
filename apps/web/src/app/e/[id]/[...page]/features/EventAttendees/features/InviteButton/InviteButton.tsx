@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  ScrollArea,
   Text,
 } from 'ui';
 import {UserRow} from './features/UserRow/UserRow';
@@ -45,25 +46,27 @@ export function InviteButton({
               }
             </DialogDescription>
           </DialogHeader>
-          <div className="flex flex-col gap-2 w-full">
-            <div>
-              <EventInviteButton />
-            </div>
-            {allEventsAttendees?.length === 0 && (
-              <div className="text-center">
-                <Text>{`You don't have users to invite yet...`}</Text>
+          <ScrollArea className="max-h-[500px] w-full">
+            <div className="flex flex-col gap-2 w-full">
+              <div>
+                <EventInviteButton />
               </div>
-            )}
-            {allEventsAttendees?.map((user) => {
-              return (
-                <UserRow
-                  key={user.id}
-                  user={user}
-                  eventShortId={eventShortId}
-                />
-              );
-            })}
-          </div>
+              {allEventsAttendees?.length === 0 && (
+                <div className="text-center">
+                  <Text>{`You don't have users to invite yet...`}</Text>
+                </div>
+              )}
+              {allEventsAttendees?.map((user) => {
+                return (
+                  <UserRow
+                    key={user.id}
+                    user={user}
+                    eventShortId={eventShortId}
+                  />
+                );
+              })}
+            </div>
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     </>

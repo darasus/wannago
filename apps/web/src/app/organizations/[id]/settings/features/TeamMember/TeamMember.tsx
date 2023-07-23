@@ -2,9 +2,10 @@ import {Organization, User} from '@prisma/client';
 import {useConfirmDialog} from 'hooks';
 import {useCallback, useTransition} from 'react';
 import {Badge, Button, Text} from 'ui';
-import {removeMember} from './actions';
 import {toast} from 'react-hot-toast';
 import Link from 'next/link';
+import {api} from '../../../../../../trpc/client';
+import {useRouter} from 'next/navigation';
 
 interface Props {
   member: User;
@@ -12,20 +13,27 @@ interface Props {
 }
 
 export function TeamMember({member, organization}: Props) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const handleRemove = useCallback(async () => {
     startTransition(async () => {
       if (organization.id) {
-        await removeMember({
-          userId: member.id,
-          organizationId: organization.id,
-        }).catch((error) => {
-          toast.error(error.message);
-        });
+        await api.organization.removeOrganizationMember
+          .mutate({
+            userId: member.id,
+            organizationId: organization.id,
+          })
+          .then(() => {
+            router.refresh();
+            toast.success('Team member removed!');
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          });
       }
     });
-  }, [member, organization?.id]);
+  }, [member, organization?.id, router]);
 
   const {modal, open} = useConfirmDialog({
     title: 'Remove team member?',

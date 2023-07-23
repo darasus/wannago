@@ -18,8 +18,8 @@ import {
 } from 'ui';
 import {AuthModal} from '../AuthModal/AuthModal';
 import {useRouter} from 'next/navigation';
-import {cancelEvent, joinEvent} from './actions';
 import {RouterOutputs} from 'api';
+import {api} from '../../../../../../apps/web/src/trpc/client';
 
 interface EventSignUpForm {
   hasPlusOne: boolean;
@@ -42,15 +42,16 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
     title: 'Confirm cancellation',
     description: 'Are you sure you want to cancel your attendance?',
     onConfirm: async () => {
-      await cancelEvent({
-        eventId: event.id,
-      })
+      await api.event.cancelEvent
+        .mutate({
+          eventId: event.id,
+        })
         .then(async () => {
+          router.refresh();
           logEvent('event_sign_up_cancel_submitted', {
             eventId: event.id,
           });
           toast.success('Sign up is cancelled!');
-          router.refresh();
         })
         .catch((error) => {
           toast.error(error.message);
@@ -73,20 +74,22 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
       }
     }
 
-    await joinEvent({
-      eventId: event.id,
-      hasPlusOne: data.hasPlusOne,
-    })
+    await api.event.joinEvent
+      .mutate({
+        eventId: event.id,
+        hasPlusOne: data.hasPlusOne,
+      })
       .then(async () => {
+        router.refresh();
         toast.success('Signed up! Check your email for more details!');
         confetti();
+        logEvent('event_sign_up_submitted', {
+          eventId: event.id,
+        });
       })
       .catch((error) => {
         toast.error(error.message);
       });
-    logEvent('event_sign_up_submitted', {
-      eventId: event.id,
-    });
   });
 
   const onCancelSubmit = form.handleSubmit(async () => {

@@ -5,7 +5,6 @@ import {TeamMembersSettings} from './features/TeamMemberSettings/TeamMembersSett
 import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
 import {Suspense} from 'react';
-import {updateOrganization} from './actions';
 import {StripeAccountLinkSettings} from '../../../../features/StripeAccountLinkSettings/StripeAccountLinkSettings';
 
 // TODO: create description text explaining why you need to create a organization
@@ -32,7 +31,9 @@ export default async function OrganizationSettingsPage({
     return null;
   }
 
-  const membersPromise = api.organization.getMyOrganizationMembers.query();
+  const membersPromise = api.organization.getMyOrganizationMembers.query({
+    organizationId: organization.id,
+  });
   const stripeAccountPromise = api.stripeAccountLink.getAccount.query({
     organizerId: organization.id,
   });
@@ -49,16 +50,7 @@ export default async function OrganizationSettingsPage({
           </Button>
           <PageHeader title="Organization settings" />
           <div className="flex flex-col gap-4">
-            <OrganizationForm
-              organization={organization}
-              onSubmit={async (args) => {
-                'use server';
-                return updateOrganization({
-                  ...args,
-                  organizationId: organization.id,
-                });
-              }}
-            />
+            <OrganizationForm organization={organization} />
             <Suspense fallback={<LoadingCard />}>
               <TeamMembersSettings
                 organization={organization}

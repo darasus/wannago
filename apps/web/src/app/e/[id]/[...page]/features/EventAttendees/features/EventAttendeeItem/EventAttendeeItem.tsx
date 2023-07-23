@@ -1,18 +1,20 @@
 'use client';
 
 import {useConfirmDialog} from 'hooks';
-import {useParams} from 'next/navigation';
+import {useParams, useRouter} from 'next/navigation';
 import {useCallback} from 'react';
 import {Button, CardBase, EventRegistrationStatusBadge, Text} from 'ui';
 import {TicketList} from '../../../TicketList/TicketList';
 import {RouterOutputs} from 'api';
-import {cancelEventByUserId} from './actions';
+import {api} from '../../../../../../../../trpc/client';
+import {toast} from 'react-hot-toast';
 
 interface ItemProps {
   eventSignUp: RouterOutputs['event']['getAttendees'][0];
 }
 
 export function EventAttendeeItem({eventSignUp}: ItemProps) {
+  const router = useRouter();
   const label =
     eventSignUp.user.firstName +
     ' ' +
@@ -22,12 +24,20 @@ export function EventAttendeeItem({eventSignUp}: ItemProps) {
   const eventShortId = params?.id as string;
   const handleCancelClick = useCallback(async () => {
     if (eventShortId) {
-      await cancelEventByUserId({
-        eventShortId,
-        userId: eventSignUp.user.id,
-      });
+      await api.event.cancelEventByUserId
+        .mutate({
+          eventShortId,
+          userId: eventSignUp.user.id,
+        })
+        .then(() => {
+          router.refresh();
+          toast.success('RSVP cancelled!');
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
     }
-  }, [eventShortId, eventSignUp]);
+  }, [eventShortId, eventSignUp, router]);
   const {open, modal} = useConfirmDialog({
     title: 'Cancel RSVP',
     description: `Are you sure you want to cancel the RSVP for ${eventSignUp.user.firstName} ${eventSignUp.user.lastName}?`,

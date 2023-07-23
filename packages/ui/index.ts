@@ -134,3 +134,4 @@ export {
   AlertDialogTrigger,
 } from './src/AlertDialog/AlertDialog';
 export {ErrorComponent} from './src/ErrorComponent/ErrorComponent';
+export {ScrollArea, ScrollBar} from './src/ScrollArea/ScrollArea';

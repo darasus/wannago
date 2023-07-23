@@ -5,7 +5,7 @@ import {use, useTransition} from 'react';
 import {Button} from 'ui';
 import {toast} from 'react-hot-toast';
 import {type RouterOutputs} from 'api';
-import {follow, unfollow} from './actions';
+import {api} from '../../../../trpc/client';
 
 interface Props {
   amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
@@ -26,10 +26,11 @@ export function FollowButton({amFollowingPromise}: Props) {
         variant="outline"
         onClick={() => {
           startTransition(async () => {
-            await unfollow({
-              organizationId,
-              userId,
-            })
+            await api.follow.unfollow
+              .mutate({
+                organizationId,
+                userId,
+              })
               .then(() => {
                 router.refresh();
               })
@@ -54,10 +55,11 @@ export function FollowButton({amFollowingPromise}: Props) {
       variant="outline"
       onClick={() => {
         startTransition(async () => {
-          await follow({
-            organizationId,
-            userId,
-          })
+          await api.follow.follow
+            .mutate({
+              organizationId,
+              userId,
+            })
             .then(() => {
               router.refresh();
             })

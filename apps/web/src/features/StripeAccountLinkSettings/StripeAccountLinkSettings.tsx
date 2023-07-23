@@ -37,6 +37,7 @@ export function StripeAccountLinkSettings({
             isLoading={isRedirecting}
             size="sm"
             variant={'link'}
+            className="p-0"
           >
             View Stripe account
           </Button>
@@ -47,6 +48,7 @@ export function StripeAccountLinkSettings({
             isLoading={isCreating}
             size="sm"
             variant={'link'}
+            className="p-0"
           >
             Connect
           </Button>

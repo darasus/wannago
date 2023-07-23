@@ -3,7 +3,6 @@ import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {createTRPCRouter, publicProcedure, protectedProcedure} from '../trpc';
-import {getOrganizationByUserExternalId} from '../actions/getOrganizationByUserExternalId';
 import {getUserByEmail} from '../actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from '../actions/getOrganizationWithMembersByOrganizationId';
 
@@ -124,25 +123,33 @@ const remove = protectedProcedure
     });
   });
 
-const getMyOrganizationMembers = protectedProcedure.query(async ({ctx}) => {
-  const organization = await getOrganizationByUserExternalId(ctx)({
-    externalId: ctx.auth.userId,
-  });
+const getMyOrganizationMembers = protectedProcedure
+  .input(
+    z.object({
+      organizationId: z.string().uuid(),
+    })
+  )
+  .query(async ({ctx, input}) => {
+    const organization = await ctx.prisma.organization.findFirst({
+      where: {
+        id: input.organizationId,
+      },
+    });
 
-  if (!organization) {
-    return [];
-  }
+    if (!organization) {
+      return [];
+    }
 
-  return ctx.prisma.user.findMany({
-    where: {
-      organizations: {
-        some: {
-          id: organization.id,
+    return ctx.prisma.user.findMany({
+      where: {
+        organizations: {
+          some: {
+            id: organization.id,
+          },
         },
       },
-    },
+    });
   });
-});
 
 const addOrganizationMember = protectedProcedure
   .input(

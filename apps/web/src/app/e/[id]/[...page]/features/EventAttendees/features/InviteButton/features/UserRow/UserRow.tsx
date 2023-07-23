@@ -16,7 +16,7 @@ import {MoreHorizontal} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useConfirmDialog} from 'hooks';
 import {toast} from 'react-hot-toast';
-import {invite} from './actions';
+import {api} from '../../../../../../../../../../trpc/client';
 
 interface UserRowProps {
   user: User & {status: EventRegistrationStatus | null};
@@ -79,9 +79,15 @@ function useInvite({eventShortId, user}: {eventShortId: string; user: User}) {
     title: `Invite ${user.firstName} ${user.lastName}?`,
     description: `Are you sure you want to invite ${user.firstName} ${user.lastName} to the event? We will send invitation to this email address: ${user.email}`,
     onConfirm: async () => {
-      await invite({userId: user.id, eventShortId}).catch((error) => {
-        toast.error(error.message);
-      });
+      await api.event.invitePastAttendee
+        .mutate({userId: user.id, eventShortId})
+        .then(() => {
+          toast.success(`User is successfully invited!`);
+          router.refresh();
+        })
+        .catch((error) => {
+          toast.error(error.message);
+        });
       toast.success(`User is successfully invited!`);
       // router.refresh();
     },

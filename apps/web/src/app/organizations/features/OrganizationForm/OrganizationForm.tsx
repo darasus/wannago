@@ -20,6 +20,7 @@ import {FileInput} from 'ui';
 import {Currency, Organization} from '@prisma/client';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {api} from '../../../../trpc/client';
 
 const organizationSettingsFormScheme = z.object({
   name: z.string(),
@@ -30,12 +31,9 @@ const organizationSettingsFormScheme = z.object({
 
 interface Props {
   organization?: Organization;
-  onSubmit: (
-    args: z.infer<typeof organizationSettingsFormScheme>
-  ) => Promise<Organization>;
 }
 
-export function OrganizationForm({organization, onSubmit}: Props) {
+export function OrganizationForm({organization}: Props) {
   const isCreating = !organization;
   const router = useRouter();
   const form = useForm<z.infer<typeof organizationSettingsFormScheme>>({
@@ -52,23 +50,38 @@ export function OrganizationForm({organization, onSubmit}: Props) {
     const {name, logoSrc, email, currency} = data;
 
     if (name && logoSrc && email && currency) {
-      try {
-        await onSubmit({logoSrc, name, email, currency})
+      if (isCreating) {
+        await api.organization.create
+          .mutate({
+            logoSrc,
+            name,
+            email,
+            currency,
+          })
           .then((res) => {
-            toast.success(
-              isCreating
-                ? 'Organization is created!'
-                : 'Organization settings updated!'
-            );
-            if (isCreating) {
-              router.push(`/organizations/${res.id}/settings`);
-            }
+            toast.success('Organization is created!');
+            router.push(`/organizations/${res.id}/settings`);
           })
           .catch((error) => {
             toast.error(error.message);
           });
-        router.refresh();
-      } catch (error) {}
+      } else {
+        await api.organization.update
+          .mutate({
+            organizationId: organization.id,
+            logoSrc,
+            name,
+            email,
+            currency,
+          })
+          .then((res) => {
+            router.refresh();
+            toast.success('Organization is updated!');
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          });
+      }
     }
   });
 

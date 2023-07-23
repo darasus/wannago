@@ -20,7 +20,7 @@ import {
 import {toast} from 'react-hot-toast';
 import {useParams, useRouter} from 'next/navigation';
 import {z} from 'zod';
-import {inviteByEmail} from './actions';
+import {api} from '../../../../../../../../../../trpc/client';
 
 const formScheme = z.object({
   firstName: z.string().nonempty(),
@@ -37,7 +37,8 @@ export function EventInviteButton() {
 
   const onSubmit = form.handleSubmit(async (data) => {
     if (eventShortId) {
-      await inviteByEmail({...data, eventShortId})
+      await api.event.inviteByEmail
+        .mutate({...data, eventShortId})
         .then(() => {
           toast.success('Invitation sent!');
           form.reset();
