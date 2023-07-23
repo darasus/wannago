@@ -30,7 +30,7 @@ export async function EventView({
   const event = await eventPromise;
 
   if (!event) {
-    return notFound();
+    notFound();
   }
 
   if (event.isPublished === false && isMyEvent === false) {
