@@ -5,6 +5,7 @@ import {api} from '../../../../apps/web/src/trpc/server-http';
 import {RouterOutputs} from 'api';
 import {Suspense} from 'react';
 import {UserCount} from './features/UserCount/UserCount';
+import {SignUpStatus} from './SignUpStatus/SignUpStatus';
 
 interface Props {
   event:
@@ -53,6 +54,13 @@ export function SignUpCard({event, myTicketPromise, mePromise}: Props) {
             </div>
           </div>
         </CardBase>
+        <Suspense>
+          <SignUpStatus
+            event={event}
+            mySignUpPromise={mySignUpPromise}
+            myTicketPromise={myTicketPromise}
+          />
+        </Suspense>
       </Container>
     </>
   );

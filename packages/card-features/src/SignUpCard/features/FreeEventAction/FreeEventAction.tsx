@@ -105,7 +105,6 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
         {cancelModal}
         <form className="flex items-center gap-x-4" onSubmit={onCancelSubmit}>
           <div className="flex items-center gap-x-2">
-            <Badge data-testid="event-signup-success-label">{`You're signed up!`}</Badge>
             <Button
               type="submit"
               disabled={form.formState.isSubmitting || event.isPast}

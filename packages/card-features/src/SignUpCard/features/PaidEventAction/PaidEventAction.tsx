@@ -9,7 +9,6 @@ import {formatCents} from 'utils';
 import {AuthModal} from '../AuthModal/AuthModal';
 import {TicketSelectorModal} from '../TicketSelectorModal/TicketSelectorModal';
 import {api} from '../../../../../../apps/web/src/trpc/client';
-import Link from 'next/link';
 
 interface Props {
   event: Event & {tickets: Ticket[]} & {isPast: boolean};
@@ -64,16 +63,6 @@ export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
         className="flex items-center gap-x-2 w-full"
         onSubmit={onJoinSubmit}
       >
-        {myTickets && myTickets?.length > 0 && (
-          <Button
-            size="sm"
-            variant="outline"
-            data-testid="my-tickets-button"
-            asChild
-          >
-            <Link href={`/e/${event.shortId}/my-tickets`}>{`My tickets`}</Link>
-          </Button>
-        )}
         <Button
           type="submit"
           disabled={form.formState.isSubmitting || event.isPast}
