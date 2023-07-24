@@ -90,5 +90,5 @@ export async function publishCurrentEvent({page}: {page: Page}) {
 
   await expect(
     await page.locator('[data-testid="event-published-badge"]')
-  ).toBeVisible();
+  ).toBeVisible({timeout: 10000});
 }

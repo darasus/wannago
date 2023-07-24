@@ -49,11 +49,11 @@ const createConversation = protectedProcedure
               },
             }
           : {}),
-        // organizations: {
-        //   connect: {
-        //     id: input.organizationId,
-        //   },
-        // },
+        organizations: {
+          connect: {
+            id: input.organizationId,
+          },
+        },
       },
     });
 
