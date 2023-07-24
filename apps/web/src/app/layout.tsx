@@ -9,6 +9,7 @@ import {Scripts} from '../features/Scripts';
 
 export const metadata = {
   title: 'WannaGo',
+  metadataBase: new URL(getBaseUrl()),
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
