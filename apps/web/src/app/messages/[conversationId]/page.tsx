@@ -54,6 +54,10 @@ export default async function ConversationPage({
         )}
         <div className="flex flex-col gap-2">
           {conversation?.messages.map((message) => {
+            const userOrganization = message.user?.organizations.find((o) =>
+              conversation.organizations.map((o) => o.id).includes(o.id)
+            )?.name;
+
             return (
               <div
                 key={message.id}
@@ -70,7 +74,9 @@ export default async function ConversationPage({
                         alt={`${message.user?.firstName}'s profile picture`}
                       />
                       <Text>
-                        <b>{message.user?.firstName}</b>
+                        <b>{`${message.user?.firstName}${
+                          userOrganization ? ` (${userOrganization} admin)` : ''
+                        }`}</b>
                       </Text>
                       <div className="grow" />
                       <Text className="text-xs text-gray-400">

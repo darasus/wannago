@@ -12,7 +12,6 @@ const createConversation = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    console.log('>>> input', input);
     const existingConversation = await ctx.prisma.conversation.findFirst({
       where: {
         users: {
@@ -34,8 +33,6 @@ const createConversation = protectedProcedure
       },
     });
 
-    console.log('>>> existingConversation', existingConversation);
-
     if (existingConversation) {
       return existingConversation;
     }
@@ -54,6 +51,10 @@ const createConversation = protectedProcedure
             id: input.organizationId,
           },
         },
+      },
+      include: {
+        users: true,
+        organizations: true,
       },
     });
 
@@ -76,8 +77,11 @@ const getConversationById = protectedProcedure
         organizations: true,
         messages: {
           include: {
-            organization: true,
-            user: true,
+            user: {
+              include: {
+                organizations: true,
+              },
+            },
           },
           orderBy: {
             createdAt: 'asc',
