@@ -12,6 +12,7 @@ interface Props {}
 export function MessageButton({}: Props) {
   const router = useRouter();
   const params = useParams();
+  const organizationId = params?.organizationId as string | undefined;
   const [isPending, startTransition] = useTransition();
 
   return (
@@ -23,7 +24,6 @@ export function MessageButton({}: Props) {
       onClick={async () => {
         startTransition(async () => {
           const me = await api.user.me.query();
-          const organizationIds = [] as string[];
           const userIds = [me?.id] as string[];
 
           if (!me?.id) {
@@ -40,14 +40,10 @@ export function MessageButton({}: Props) {
             userIds.push(params?.userId);
           }
 
-          if (typeof params?.organizationId === 'string') {
-            organizationIds.push(params?.organizationId);
-          }
-
           const conversation = await api.conversation.createConversation
             .mutate({
               userIds,
-              organizationIds,
+              organizationId,
             })
             .catch((error) => {
               toast.error(error.message);
