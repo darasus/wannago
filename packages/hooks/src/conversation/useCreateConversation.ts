@@ -23,7 +23,6 @@ export function useCreateConversation({me}: Props) {
       organizationId: string | null | undefined;
     }): Promise<Conversation> => {
       return new Promise((resolve) => {
-        const organizationIds = [] as string[];
         const userIds = [me?.id] as string[];
 
         if (!auth.userId) {
@@ -39,14 +38,11 @@ export function useCreateConversation({me}: Props) {
         if (userId) {
           userIds.push(userId);
         }
-        if (organizationId) {
-          organizationIds.push(organizationId);
-        }
 
         startTransition(async () => {
           const conversation = await api.conversation.createConversation.mutate(
             {
-              organizationIds,
+              organizationId: organizationId || undefined,
               userIds,
             }
           );

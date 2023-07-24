@@ -8,30 +8,33 @@ const createConversation = protectedProcedure
   .input(
     z.object({
       userIds: z.array(z.string().uuid()),
-      organizationIds: z.array(z.string().uuid()),
+      organizationId: z.string().uuid().optional(),
     })
   )
   .mutation(async ({ctx, input}) => {
+    console.log('>>> input', input);
     const existingConversation = await ctx.prisma.conversation.findFirst({
       where: {
-        AND: [
-          ...input.userIds.map((id) => ({
-            users: {
-              every: {
-                id,
-              },
+        users: {
+          every: {
+            id: {
+              in: input.userIds,
             },
-          })),
-          ...input.organizationIds.map((id) => ({
-            organizations: {
-              every: {
-                id,
-              },
-            },
-          })),
-        ],
+          },
+        },
+        organizations: {
+          every: {
+            id: input.organizationId,
+          },
+        },
+      },
+      include: {
+        users: true,
+        organizations: true,
       },
     });
+
+    console.log('>>> existingConversation', existingConversation);
 
     if (existingConversation) {
       return existingConversation;
@@ -46,13 +49,11 @@ const createConversation = protectedProcedure
               },
             }
           : {}),
-        ...(input.organizationIds.length > 0
-          ? {
-              organizations: {
-                connect: input.organizationIds.map((id) => ({id})),
-              },
-            }
-          : {}),
+        // organizations: {
+        //   connect: {
+        //     id: input.organizationId,
+        //   },
+        // },
       },
     });
 
