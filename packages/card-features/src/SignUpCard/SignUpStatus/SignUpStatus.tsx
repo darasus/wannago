@@ -19,7 +19,8 @@ export function SignUpStatus({mySignUpPromise, myTicketPromise, event}: Props) {
     event.tickets.length > 0 && myTickets && myTickets?.length > 0;
   const amSignedUp =
     !haveTickets && Boolean(signUp && signUp?.status === 'REGISTERED');
-  const amInvited = Boolean(signUp && signUp?.status === 'INVITED');
+  const amInvited =
+    !haveTickets && Boolean(signUp && signUp?.status === 'INVITED');
 
   if (!amSignedUp && !amInvited && !haveTickets) {
     return null;
