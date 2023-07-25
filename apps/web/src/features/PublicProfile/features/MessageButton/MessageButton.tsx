@@ -5,15 +5,14 @@ import {useParams} from 'next/dist/client/components/navigation';
 import {useRouter} from 'next/navigation';
 import {toast} from 'react-hot-toast';
 import {useTransition} from 'react';
-import {api} from '../../../../trpc/client';
+import {useCreateConversation} from 'hooks';
 
-interface Props {}
-
-export function MessageButton({}: Props) {
+export function MessageButton() {
   const router = useRouter();
   const params = useParams();
   const organizationId = params?.organizationId as string | undefined;
   const [isPending, startTransition] = useTransition();
+  const {createConversation} = useCreateConversation();
 
   return (
     <Button
@@ -23,31 +22,12 @@ export function MessageButton({}: Props) {
       isLoading={isPending}
       onClick={async () => {
         startTransition(async () => {
-          const me = await api.user.me.query();
-          const userIds = [me?.id] as string[];
-
-          if (!me?.id) {
-            toast.error('To be able to message anyone you need to login first');
-            return undefined;
-          }
-
-          if (me?.id === params?.userId) {
-            toast.error('You cannot message yourself');
-            return undefined;
-          }
-
-          if (typeof params?.userId === 'string') {
-            userIds.push(params?.userId);
-          }
-
-          const conversation = await api.conversation.createConversation
-            .mutate({
-              userIds,
-              organizationId,
-            })
-            .catch((error) => {
-              toast.error(error.message);
-            });
+          const conversation = await createConversation({
+            userId: params?.userId as string | undefined,
+            organizationId,
+          }).catch((error) => {
+            toast.error(error.message);
+          });
 
           if (conversation?.id) {
             router.push(`/messages/${conversation.id}`);

@@ -33,7 +33,7 @@ test('can invite attendees', async ({page}) => {
   await createEvent({page, authorId: organization_2_id});
   await publishCurrentEvent({page});
 
-  await page.locator('[data-testid="manage-event-button"]').click();
+  await page.getByRole('button').getByText('manage event').click();
   await page
     .locator('[data-testid="select-option-button"]')
     .getByText('Attendees')

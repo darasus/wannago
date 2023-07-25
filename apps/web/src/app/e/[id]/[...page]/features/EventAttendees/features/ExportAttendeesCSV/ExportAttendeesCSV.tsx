@@ -19,7 +19,6 @@ export function ExportAttendeesCSV() {
       const content = await api.event.generateEventCsvData.query({
         eventShortId: eventShortId!,
       });
-      console.log('>>> content', content);
       if (!content || !event?.title) {
         toast.error('Error generating CSV file, please try again later.');
         return;

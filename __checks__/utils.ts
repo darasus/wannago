@@ -10,6 +10,7 @@ export async function login({page, email}: {page: Page; email: string}) {
   await page.locator('[data-testid="login-email-input"]').type(email);
   await page.locator('[data-testid="login-email-form-submit"]').click();
   await page.locator('[data-testid="login-code-input"]').type('424242');
+  await page.waitForLoadState('networkidle');
   await expect(page.locator('[data-testid="header-user-button"]')).toBeVisible({
     timeout: 20 * 1000,
   });

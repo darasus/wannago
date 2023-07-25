@@ -11,14 +11,11 @@ interface Props {
     user: User | null;
     organization: Organization | null;
   };
-  me: User | null;
 }
 
-export function OrganizerCard({event, me}: Props) {
+export function OrganizerCard({event}: Props) {
   const router = useRouter();
-  const {createConversation, isMutating} = useCreateConversation({
-    me,
-  });
+  const {createConversation, isMutating} = useCreateConversation();
 
   const onMessageOrganizerClick = async () => {
     const conversation = await createConversation({

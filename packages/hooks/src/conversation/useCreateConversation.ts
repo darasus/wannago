@@ -1,17 +1,14 @@
 'use client';
 
-import {useCallback, useTransition} from 'react';
+import {useCallback, useTransition, use} from 'react';
 import {toast} from 'react-hot-toast';
 import {api} from '../../../../apps/web/src/trpc/client';
-import {Conversation, User} from '@prisma/client';
+import {Conversation} from '@prisma/client';
 import {useAuth} from '@clerk/nextjs';
 
-interface Props {
-  me: User | null;
-}
-
-export function useCreateConversation({me}: Props) {
+export function useCreateConversation() {
   const auth = useAuth();
+  const me = use(api.user.me.query());
   const [isPending, startTransition] = useTransition();
 
   const createConversation = useCallback(

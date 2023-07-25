@@ -52,7 +52,7 @@ export async function EventView({
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="items-stretch">
-          <OrganizerCard event={event} me={me} />
+          <OrganizerCard event={event} />
         </div>
         <div className="items-stretch">
           <UrlCard
