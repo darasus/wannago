@@ -3,7 +3,7 @@
 import {useParams, useRouter} from 'next/navigation';
 import {use, useTransition} from 'react';
 import {Button} from 'ui';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {type RouterOutputs} from 'api';
 import {api} from '../../../../trpc/client';
 

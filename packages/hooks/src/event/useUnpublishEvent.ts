@@ -1,5 +1,5 @@
 import {TRPCClientError} from '@trpc/client';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {useConfirmDialog} from '../useConfirmDialog';
 import {api} from '../../../../apps/web/src/trpc/client';
 import {useRouter} from 'next/navigation';

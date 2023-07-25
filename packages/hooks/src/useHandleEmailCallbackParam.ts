@@ -3,7 +3,7 @@
 import {useSearchParams} from 'next/navigation';
 import {useRouter} from 'next/router';
 import {useEffect, useMemo} from 'react';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {z} from 'zod';
 
 const parseQuery = z

@@ -26,7 +26,7 @@ import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {api} from '../../../../../../trpc/client';
 import {useRouter} from 'next/navigation';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 
 interface Props {
   organization: Organization;

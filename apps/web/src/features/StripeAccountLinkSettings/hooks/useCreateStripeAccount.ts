@@ -2,7 +2,7 @@
 
 import {useTransition} from 'react';
 import {api} from '../../../trpc/client';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {captureException} from '@sentry/nextjs';
 import {useRouter} from 'next/navigation';
 import {useAmplitude} from 'hooks';

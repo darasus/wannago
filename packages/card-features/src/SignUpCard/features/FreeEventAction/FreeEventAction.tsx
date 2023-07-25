@@ -5,7 +5,7 @@ import {Event} from '@prisma/client';
 import {useAmplitude, useConfetti, useConfirmDialog} from 'hooks';
 import {use, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {
   Badge,
   Button,
@@ -42,20 +42,26 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
     title: 'Confirm cancellation',
     description: 'Are you sure you want to cancel your attendance?',
     onConfirm: async () => {
-      await api.event.cancelEvent
+      const promise = api.event.cancelEvent
         .mutate({
           eventId: event.id,
         })
-        .then(async () => {
+        .then(() => {
           router.refresh();
           logEvent('event_sign_up_cancel_submitted', {
             eventId: event.id,
           });
-          toast.success('Sign up is cancelled!');
-        })
-        .catch((error) => {
-          toast.error(error.message);
         });
+
+      toast.promise(promise, {
+        loading: 'Cancelling sign up...',
+        success: 'Sign up is cancelled!',
+        error: (error) => error.message,
+      });
+
+      try {
+        await promise;
+      } catch (error) {}
     },
   });
   const form = useForm<EventSignUpForm>({
@@ -74,22 +80,28 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
       }
     }
 
-    await api.event.joinEvent
+    const promise = api.event.joinEvent
       .mutate({
         eventId: event.id,
         hasPlusOne: data.hasPlusOne,
       })
-      .then(async () => {
+      .then(() => {
         router.refresh();
-        toast.success('Signed up! Check your email for more details!');
         confetti();
         logEvent('event_sign_up_submitted', {
           eventId: event.id,
         });
-      })
-      .catch((error) => {
-        toast.error(error.message);
       });
+
+    toast.promise(promise, {
+      loading: 'Signing up...',
+      success: 'Signed up! Check your email for more details.',
+      error: (error) => error.message,
+    });
+
+    try {
+      await promise;
+    } catch (error) {}
   });
 
   const onCancelSubmit = form.handleSubmit(async () => {

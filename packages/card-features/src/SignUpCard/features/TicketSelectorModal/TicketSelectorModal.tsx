@@ -21,7 +21,7 @@ import {useRouter} from 'next/navigation';
 import {TRPCClientError} from '@trpc/client';
 import {use} from 'react';
 import {api} from '../../../../../../apps/web/src/trpc/client';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {z} from 'zod';
 import {RouterOutputs} from 'api';
 import {zodResolver} from '@hookform/resolvers/zod';

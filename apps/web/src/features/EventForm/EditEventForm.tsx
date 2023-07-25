@@ -8,7 +8,7 @@ import {zonedTimeToUtc} from 'date-fns-tz';
 import {useAmplitude} from 'hooks';
 import {PageHeader} from 'ui';
 import {Event, Organization, Ticket, User} from '@prisma/client';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {api} from '../../trpc/client';
 
 interface Props {

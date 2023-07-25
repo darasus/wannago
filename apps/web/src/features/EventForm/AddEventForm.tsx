@@ -6,7 +6,7 @@ import {FormProvider} from 'react-hook-form';
 import {trackEventCreateConversion} from 'lib/src/gtag';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {useAmplitude} from 'hooks';
 import {api} from '../../trpc/client';
 import {Organization, User} from '@prisma/client';
