@@ -44,3 +44,5 @@ tsconfig.tsbuildinfo
 # Sentry Auth Token
 .sentryclirc
 /test-results
+/playwright-report
+playwright.config.ts
