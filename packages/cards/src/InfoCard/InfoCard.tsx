@@ -47,7 +47,10 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
     ? event.isPublished
       ? ({
           label: (
-            <div className="flex items-center gap-1">
+            <div
+              className="flex items-center gap-1"
+              data-testid="event-published-badge"
+            >
               Published <Info className="h-4 w-4" />
             </div>
           ),

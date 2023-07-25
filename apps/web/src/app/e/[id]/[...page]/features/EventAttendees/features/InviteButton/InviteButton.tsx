@@ -1,6 +1,4 @@
-'use client';
-
-import {use} from 'react';
+import {Suspense, use} from 'react';
 import {
   Button,
   Dialog,
@@ -9,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  LoadingBlock,
   ScrollArea,
   Text,
 } from 'ui';
@@ -51,20 +50,22 @@ export function InviteButton({
               <div>
                 <EventInviteButton />
               </div>
-              {allEventsAttendees?.length === 0 && (
-                <div className="text-center">
-                  <Text>{`You don't have users to invite yet...`}</Text>
-                </div>
-              )}
-              {allEventsAttendees?.map((user) => {
-                return (
-                  <UserRow
-                    key={user.id}
-                    user={user}
-                    eventShortId={eventShortId}
-                  />
-                );
-              })}
+              <Suspense fallback={<LoadingBlock />}>
+                {allEventsAttendees?.length === 0 && (
+                  <div className="text-center">
+                    <Text>{`You don't have users to invite yet...`}</Text>
+                  </div>
+                )}
+                {allEventsAttendees?.map((user) => {
+                  return (
+                    <UserRow
+                      key={user.id}
+                      user={user}
+                      eventShortId={eventShortId}
+                    />
+                  );
+                })}
+              </Suspense>
             </div>
           </ScrollArea>
         </DialogContent>

@@ -22,8 +22,8 @@ test('can send message to organization', async ({page}) => {
   await page.locator('[data-testid="message-input"]').type(randomMessage);
   await page.locator('[data-testid="message-form-submit-button"]').click();
   await expect(
-    page.locator('[data-testid="message-text"]').last()
-  ).toContainText(randomMessage);
+    page.locator('[data-testid="message-text"]').getByText(randomMessage)
+  ).toBeVisible();
 });
 
 test('can send message to user', async ({page}) => {
@@ -37,6 +37,6 @@ test('can send message to user', async ({page}) => {
   await page.locator('[data-testid="message-form-submit-button"]').click();
 
   await expect(
-    page.locator('[data-testid="message-text"]').last()
-  ).toContainText(randomMessage);
+    page.locator('[data-testid="message-text"]').getByText(randomMessage)
+  ).toBeVisible();
 });
