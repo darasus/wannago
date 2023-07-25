@@ -23,17 +23,15 @@ test('can follow organization', async ({page}) => {
   await login({page, email: user_1_email});
   await page.goto(`${getBaseUrl()}/o/${organization_2_id}`);
 
-  const hasUnfollowButton = await page.getByText('unfollow').isVisible();
+  const unfollowButton = page.getByRole('button').getByText('unfollow');
 
-  if (hasUnfollowButton) {
-    await page.locator('[data-testid="unfollow-button"]').click();
+  if (await unfollowButton.isVisible()) {
+    await unfollowButton.click();
   }
 
-  await page.locator('[data-testid="follow-button"]').click({timeout: 20000});
+  await page.getByRole('button').getByText('follow').click({timeout: 20000});
 
-  await page.waitForResponse(/rsc/);
-
-  await expect(page.locator('[data-testid="unfollow-button"]')).toBeVisible({
+  await expect(unfollowButton).toBeVisible({
     timeout: 20000,
   });
 });
@@ -43,17 +41,15 @@ test('can follow user', async ({page}) => {
   await login({page, email: user_1_email});
   await page.goto(`${getBaseUrl()}/u/${user_2_id}`);
 
-  const hasUnfollowButton = await page.getByText('unfollow').isVisible();
+  const unfollowButton = page.getByRole('button').getByText('unfollow');
 
-  if (hasUnfollowButton) {
-    await page.locator('[data-testid="unfollow-button"]').click();
+  if (await unfollowButton.isVisible()) {
+    await unfollowButton.click();
   }
 
-  await page.locator('[data-testid="follow-button"]').click({timeout: 20000});
+  await page.getByRole('button').getByText('follow').click({timeout: 20000});
 
-  await page.waitForResponse(/rsc/);
-
-  await expect(page.locator('[data-testid="unfollow-button"]')).toBeVisible({
+  await expect(unfollowButton).toBeVisible({
     timeout: 20000,
   });
 });

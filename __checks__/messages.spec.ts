@@ -18,7 +18,10 @@ test('can send message to organization', async ({page}) => {
   const randomMessage = 'Message ' + Math.random();
 
   await page.goto(`${getBaseUrl()}/o/${organization_2_id}`);
-  await page.locator('[data-testid="message-button"]').click();
+
+  await page.waitForTimeout(3000);
+
+  await page.getByRole('button').getByText('message').click();
   await page.locator('[data-testid="message-input"]').type(randomMessage);
   await page.locator('[data-testid="message-form-submit-button"]').click();
   await expect(
@@ -32,6 +35,9 @@ test('can send message to user', async ({page}) => {
   const randomMessage = 'Message ' + Math.random();
 
   await page.goto(`${getBaseUrl()}/u/${user_2_id}`);
+
+  await page.waitForTimeout(3000);
+
   await page.locator('[data-testid="message-button"]').click();
   await page.locator('[data-testid="message-input"]').type(randomMessage);
   await page.locator('[data-testid="message-form-submit-button"]').click();
