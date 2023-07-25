@@ -31,6 +31,8 @@ test('can follow organization', async ({page}) => {
 
   await page.getByRole('button').getByText('follow').click({timeout: 20000});
 
+  await page.waitForTimeout(3000);
+
   await expect(unfollowButton).toBeVisible({
     timeout: 20000,
   });
@@ -48,6 +50,8 @@ test('can follow user', async ({page}) => {
   }
 
   await page.getByRole('button').getByText('follow').click({timeout: 20000});
+
+  await page.waitForTimeout(3000);
 
   await expect(unfollowButton).toBeVisible({
     timeout: 20000,
