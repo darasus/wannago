@@ -3,7 +3,7 @@
 import {Button} from 'ui';
 import {useParams} from 'next/dist/client/components/navigation';
 import {useRouter} from 'next/navigation';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {useTransition} from 'react';
 import {useCreateConversation} from 'hooks';
 

@@ -1,7 +1,7 @@
 'use client';
 
-import {useCallback, useTransition, use} from 'react';
-import {toast} from 'react-hot-toast';
+import {use, useCallback, useTransition} from 'react';
+import {toast} from 'sonner';
 import {api} from '../../../../apps/web/src/trpc/client';
 import {Conversation} from '@prisma/client';
 import {useAuth} from '@clerk/nextjs';

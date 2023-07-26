@@ -20,7 +20,7 @@ import {api} from '../../../../trpc/client';
 import {useRouter} from 'next/navigation';
 import {z} from 'zod';
 import {use} from 'react';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 
 const userProfileSettingsFormScheme = z.object({
   firstName: z.string(),

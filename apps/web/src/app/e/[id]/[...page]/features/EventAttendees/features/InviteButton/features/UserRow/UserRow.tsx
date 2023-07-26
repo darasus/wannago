@@ -15,7 +15,7 @@ import {EventRegistrationStatusBadge} from 'ui';
 import {MoreHorizontal} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useConfirmDialog} from 'hooks';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {api} from '../../../../../../../../../../trpc/client';
 
 interface UserRowProps {

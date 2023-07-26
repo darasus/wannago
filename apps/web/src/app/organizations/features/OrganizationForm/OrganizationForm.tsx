@@ -2,7 +2,7 @@
 
 import {useRouter} from 'next/navigation';
 import {useForm, FormProvider} from 'react-hook-form';
-import toast from 'react-hot-toast';
+import {toast} from 'sonner';
 import {
   CardBase,
   Button,

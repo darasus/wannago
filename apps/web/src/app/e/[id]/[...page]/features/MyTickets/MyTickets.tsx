@@ -5,7 +5,7 @@ import {use, useEffect} from 'react';
 import {CardBase, PageHeader, Text} from 'ui';
 import {TicketList} from '../TicketList/TicketList';
 import {RouterOutputs} from 'api';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 
 interface Props {
   eventSignUpsPromise: Promise<RouterOutputs['event']['getMyTicketsByEvent']>;

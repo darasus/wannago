@@ -2,7 +2,7 @@
 
 import {Button} from 'ui';
 import {saveAs} from 'file-saver';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {snakeCase} from 'change-case';
 import {useParams} from 'next/navigation';
 import {use, useTransition} from 'react';

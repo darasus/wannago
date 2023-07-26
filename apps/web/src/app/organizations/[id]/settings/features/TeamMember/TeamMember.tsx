@@ -2,7 +2,7 @@ import {Organization, User} from '@prisma/client';
 import {useConfirmDialog} from 'hooks';
 import {useCallback, useTransition} from 'react';
 import {Badge, Button, Text} from 'ui';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import Link from 'next/link';
 import {api} from '../../../../../../trpc/client';
 import {useRouter} from 'next/navigation';

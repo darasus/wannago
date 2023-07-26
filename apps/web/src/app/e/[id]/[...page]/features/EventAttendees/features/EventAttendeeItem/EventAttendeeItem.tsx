@@ -7,7 +7,7 @@ import {Button, CardBase, EventRegistrationStatusBadge, Text} from 'ui';
 import {TicketList} from '../../../TicketList/TicketList';
 import {RouterOutputs} from 'api';
 import {api} from '../../../../../../../../trpc/client';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 
 interface ItemProps {
   eventSignUp: RouterOutputs['event']['getAttendees'][0];

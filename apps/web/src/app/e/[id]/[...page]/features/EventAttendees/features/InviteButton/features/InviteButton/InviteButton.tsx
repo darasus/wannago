@@ -3,7 +3,7 @@
 import {User} from '@prisma/client';
 import {useRouter} from 'next/navigation';
 import {Button} from 'ui';
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {useConfirmDialog} from 'hooks';
 import {api} from '../../../../../../../../../../trpc/client';
 

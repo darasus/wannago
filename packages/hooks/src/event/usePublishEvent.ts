@@ -1,4 +1,4 @@
-import {toast} from 'react-hot-toast';
+import {toast} from 'sonner';
 import {useConfetti} from '../useConfetti';
 import {useConfirmDialog} from '../useConfirmDialog';
 import {TRPCClientError} from '@trpc/client';
