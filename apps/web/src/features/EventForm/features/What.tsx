@@ -7,10 +7,14 @@ import {
   FormMessage,
   Input,
 } from 'ui';
-import {RichTextarea} from 'ui';
 import {useFormContext} from 'react-hook-form';
 import {eventFormSchema} from '../hooks/useEventForm';
 import {z} from 'zod';
+import dynamic from 'next/dynamic';
+
+const DynamicRichTextarea = dynamic(() =>
+  import('ui').then((mod) => mod.RichTextarea)
+);
 
 export function What() {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
@@ -40,7 +44,7 @@ export function What() {
           <FormItem>
             <FormLabel>Description</FormLabel>
             <FormControl>
-              <RichTextarea
+              <DynamicRichTextarea
                 dataTestId="event-form-description"
                 value={field.value}
                 onChange={field.onChange}

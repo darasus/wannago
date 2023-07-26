@@ -24,7 +24,6 @@ export {
 export {LocationImage} from './src/LocationImage/LocationImage';
 export {Label} from './src/Label/Label';
 export {EventRegistrationStatusBadge} from './src/EventRegistrationStatusBadge/EventRegistrationStatusBadge';
-export {TextAnimation} from './src/TextAnimation/TextAnimation';
 export {LoadingWave} from './src/LoadingWave/LoadingWave';
 export {LoadingBlock} from './src/LoadingBlock/LoadingBlock';
 export {

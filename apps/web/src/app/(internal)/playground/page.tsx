@@ -1,6 +1,6 @@
 'use client';
 
-import {Accordion, Badge, Button, Container, LoadingWave} from 'ui';
+import {Badge, Button, Container, LoadingWave} from 'ui';
 import {ChevronDown} from 'lucide-react';
 
 const sizes = ['sm', 'lg'] as const;
@@ -83,10 +83,6 @@ export default function PlaygroundPage() {
 
       <Section>
         {/* <Input label="Hello" placeholder="Placeholder..." isLoading /> */}
-      </Section>
-
-      <Section>
-        <Accordion items={items} />
       </Section>
 
       <Section>
