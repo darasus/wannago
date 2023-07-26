@@ -11,9 +11,9 @@ export async function Scripts() {
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
-          <Script id="google-analytics" strategy="afterInteractive">
+          <Script id="google-analytics" strategy="lazyOnload">
             {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){window.dataLayer.push(arguments);}
@@ -24,7 +24,7 @@ export async function Scripts() {
         </>
       )}
       {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
-        <Script id="hotjar" strategy="afterInteractive">
+        <Script id="hotjar" strategy="lazyOnload">
           {`
             (function(h,o,t,j,a,r){
                 h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -38,7 +38,7 @@ export async function Scripts() {
         </Script>
       )}
       {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
-        <Script id="missive" strategy="afterInteractive">
+        <Script id="missive" strategy="lazyOnload">
           {`
           (function(d, w) {
             w.MissiveChatConfig = ${JSON.stringify({
