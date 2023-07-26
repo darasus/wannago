@@ -86,7 +86,6 @@ export {DateTimePicker} from './src/DateTimePicker/DateTimePicker';
 export {Tabs, TabsContent, TabsList, TabsTrigger} from './src/Tabs/Tabs';
 export {RadioGroup, RadioGroupItem} from './src/Radio/Radio';
 export {FileInput} from './src/FileInput/FileInput';
-export {RichTextarea} from './src/RichTextarea/RichTextarea';
 export {Switch} from './src/Switch/Switch';
 export {Title} from './src/Title/Title';
 export {Icons} from './src/Icons/Icons';

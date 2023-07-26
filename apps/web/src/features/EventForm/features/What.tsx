@@ -13,7 +13,7 @@ import {z} from 'zod';
 import dynamic from 'next/dynamic';
 
 const DynamicRichTextarea = dynamic(() =>
-  import('ui').then((mod) => mod.RichTextarea)
+  import('ui/src/RichTextarea/RichTextarea').then((mod) => mod.RichTextarea)
 );
 
 export function What() {
