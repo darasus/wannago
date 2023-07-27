@@ -39,7 +39,7 @@ test('can update organization', async ({page}) => {
     .locator('[data-testid="team-settings-form-input-submit-button"]')
     .click();
 
-  await expect(page.locator('[data-testid="toast-success"]')).toBeVisible({
+  await expect(page.getByText('Organization is updated!')).toBeVisible({
     timeout: 10000,
   });
 });

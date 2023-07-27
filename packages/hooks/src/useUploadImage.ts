@@ -1,6 +1,5 @@
 'use client';
 
-import ky from 'ky';
 import {useCallback, useState} from 'react';
 import {z} from 'zod';
 import {getBaseUrl} from 'utils';
@@ -24,12 +23,12 @@ const uploadFile = (file: File) => {
   payload.append('requireSignedURLs', 'false');
   payload.append('file', file);
 
-  return ky
-    .post(`${getBaseUrl()}/api/upload-image`, {
-      body: payload,
-    })
-    .json()
-    .then(res => schema.parse(res));
+  return fetch(`${getBaseUrl()}/api/upload-image`, {
+    method: 'POST',
+    body: payload,
+  })
+    .then((res) => res.json())
+    .then((res) => schema.parse(res));
 };
 
 export function useUploadImage(props?: Props) {

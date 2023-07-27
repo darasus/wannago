@@ -46,5 +46,5 @@ test('can message attendees', async ({page}) => {
     .type('Test message');
   await page.locator('[data-testid="message-attendees-form-submit"]').click();
 
-  await expect(page.locator('[data-testid="toast-success"]')).toBeVisible();
+  await expect(page.getByText('Message is sent!')).toBeVisible();
 });
