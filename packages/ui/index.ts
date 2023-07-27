@@ -7,7 +7,6 @@ export {Container} from './src/Container/Container';
 export {CardBase} from './src/CardBase/CardBase';
 export {Text} from './src/Text/Text';
 export {Tooltip} from './src/Tooltip/Tooltip';
-export {Modal} from './src/Modal/Modal';
 export {Logo, LogoView} from './src/Logo/Logo';
 export {PageHeader} from './src/PageHeader/PageHeader';
 export {Spinner} from './src/Spinner/Spinner';
