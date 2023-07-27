@@ -1,6 +1,7 @@
-import {use} from 'react';
-import {api} from '../../../apps/web/src/trpc/client';
+import {api} from '../../../apps/web/src/trpc/react-query-client';
 
 export function useMe() {
-  return use(api.user.me.query());
+  const {data} = api.user.me.useQuery();
+
+  return data;
 }
