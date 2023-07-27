@@ -2,10 +2,10 @@
 
 import {experimental_createTRPCNextAppDirServer} from '@trpc/next/app-dir/server';
 import {AppRouter} from 'api';
-import {cookies, headers} from 'next/headers';
+import {headers} from 'next/headers';
 import superjson from 'superjson';
 import {endingLink} from './shared';
-import omit from 'ramda/es/omit';
+import pick from 'ramda/es/pick';
 
 export const api = experimental_createTRPCNextAppDirServer<AppRouter>({
   config() {
@@ -19,17 +19,20 @@ export const api = experimental_createTRPCNextAppDirServer<AppRouter>({
         // }),
         endingLink({
           headers: {
-            ...omit(
+            ...pick(
               [
-                'Content-Length',
-                'content-length',
-                'Content-Type',
-                'content-type',
-                'connection',
+                'cookie',
+                'x-clerk-auth-status',
+                'x-clerk-auth-message',
+                'x-clerk-auth-reason',
+                'user-agent',
+                'cache-control',
+                'accept-language',
+                'accept-encoding',
+                'accept',
               ],
               Object.fromEntries(headers().entries())
             ),
-            cookie: cookies().toString(),
             'x-trpc-source': 'rsc-http',
           },
         }),
