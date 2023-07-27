@@ -65,7 +65,6 @@ export {
   FormMessage,
   useFormField,
 } from './src/Form/Form';
-export {DatePicker} from './src/DatePicker/DatePicker';
 export {Popover, PopoverContent, PopoverTrigger} from './src/Popover/Popover';
 export {Input} from './src/Input/Input';
 export {Textarea} from './src/Textarea/Textarea';
