@@ -16,7 +16,7 @@ const config = defineConfig({
   checks: {
     doubleCheck: true,
     /* A default for how often your Check should run in minutes */
-    frequency: 30,
+    frequency: 120,
     /* Checkly data centers to run your Checks as monitors */
     locations: ['us-east-1'],
     /* An optional array of tags to organize your Checks */
