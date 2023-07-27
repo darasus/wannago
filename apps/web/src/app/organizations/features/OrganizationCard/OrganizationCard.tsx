@@ -1,7 +1,6 @@
 import {User, Cog} from 'lucide-react';
 import {Organization} from '@prisma/client';
 import Link from 'next/link';
-import {o} from 'ramda';
 import {CardBase, Avatar, Button, Text} from 'ui';
 
 interface OrganizationCardProps {
@@ -16,7 +15,7 @@ export function OrganizationCard({organization}: OrganizationCardProps) {
           src={organization.logoSrc}
           width={50}
           height={50}
-          alt={o.name}
+          alt={organization.name}
         />
         <Text>{organization.name}</Text>
         <div className="grow" />

@@ -5,7 +5,7 @@ import {AppRouter} from 'api';
 import {cookies, headers} from 'next/headers';
 import superjson from 'superjson';
 import {endingLink} from './shared';
-import {omit} from 'ramda';
+import omit from 'ramda/es/omit';
 
 export const api = experimental_createTRPCNextAppDirServer<AppRouter>({
   config() {

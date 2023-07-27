@@ -1,5 +1,4 @@
 export {useAmplitude} from './src/useAmplitude';
-export {useBreakpoint} from './src/useBreakpoint';
 export {useConfetti} from './src/useConfetti';
 export {useConfirmDialog} from './src/useConfirmDialog';
 export {useCopyClipboard} from './src/useCopyClipboard';
