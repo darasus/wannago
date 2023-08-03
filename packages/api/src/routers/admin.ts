@@ -16,6 +16,11 @@ function createDateRange() {
 
 const getAllUsers = adminProcedure.query(async ({ctx}) => {
   const registeredUsers = await ctx.prisma.user.findMany({
+    where: {
+      externalId: {
+        not: null,
+      },
+    },
     orderBy: {
       createdAt: 'desc',
     },
@@ -57,7 +62,7 @@ const getDailySignUps = adminProcedure.query(async ({ctx}) => {
   const dateRange = createDateRange();
   const allUsers = await ctx.prisma.user.findMany();
 
-  allUsers.forEach(user => {
+  allUsers.forEach((user) => {
     const date = format(new Date(user.createdAt), 'yyyy-MM-dd');
 
     if (dateRange.hasOwnProperty(date)) {
@@ -72,7 +77,7 @@ const getDailyCreatedEvents = adminProcedure.query(async ({ctx}) => {
   const dateRange = createDateRange();
   const allUsers = await ctx.prisma.event.findMany();
 
-  allUsers.forEach(user => {
+  allUsers.forEach((user) => {
     const date = format(new Date(user.createdAt), 'yyyy-MM-dd');
 
     if (dateRange.hasOwnProperty(date)) {
@@ -84,7 +89,13 @@ const getDailyCreatedEvents = adminProcedure.query(async ({ctx}) => {
 });
 
 const getUsersCount = adminProcedure.query(async ({ctx}) => {
-  return ctx.prisma.user.count();
+  return ctx.prisma.user.count({
+    where: {
+      externalId: {
+        not: null,
+      },
+    },
+  });
 });
 
 const getEventsCount = adminProcedure.query(async ({ctx}) => {
