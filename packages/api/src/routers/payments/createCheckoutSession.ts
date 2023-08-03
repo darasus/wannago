@@ -142,7 +142,7 @@ export const createCheckoutSession = protectedProcedure
             product_data: {
               name: ticket.title,
             },
-            currency: event.preferredCurrency,
+            currency: event.preferredCurrency || 'USD',
             unit_amount: ticket.price,
           },
         };

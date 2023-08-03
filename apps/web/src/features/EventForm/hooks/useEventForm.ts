@@ -77,7 +77,7 @@ export function useEventForm(props: {
           };
         }) || [],
       createdById: createdByIdDefault,
-      currency: event?.preferredCurrency ?? me.preferredCurrency,
+      currency: (event?.preferredCurrency ?? me.preferredCurrency) || 'USD',
     },
   });
 

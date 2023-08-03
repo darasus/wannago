@@ -3,7 +3,7 @@ import {
   getAuth,
   createClerkClient,
 } from '@clerk/nextjs/server';
-import {Currency, PrismaClient} from '@prisma/client';
+import {Currency} from '@prisma/client';
 import {prisma} from 'database';
 import {Postmark} from 'lib/src/postmark';
 import {CacheService} from 'lib/src/cache';
@@ -57,7 +57,7 @@ type Assertions = {
 interface CreateInnerContextOptions {
   auth: SignedInAuthObject | SignedOutAuthObject | null;
   clerk: ReturnType<typeof createClerkClient>;
-  prisma: PrismaClient;
+  prisma: typeof prisma;
   timezone: string | undefined;
   currency: Currency;
   postmark: Postmark;

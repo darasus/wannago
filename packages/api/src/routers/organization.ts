@@ -31,7 +31,7 @@ const create = protectedProcedure
           logoSrc: input.logoSrc,
           disabled: false,
           email: input.email,
-          preferredCurrency: input.currency,
+          preferredCurrency: input.currency || 'USD',
           users: {
             connect: {
               id: user.id,
@@ -75,7 +75,7 @@ const update = protectedProcedure
         logoSrc: input.logoSrc,
         disabled: false,
         email: input.email,
-        preferredCurrency: input.currency,
+        preferredCurrency: input.currency || 'USD',
       },
     });
   });

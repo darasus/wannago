@@ -7,8 +7,7 @@
     "dev:inngest": "dotenv -e ../../.vercel/.env.development.local -- inngest-cli dev",
     "build": "dotenv -e ../../.vercel/.env.development.local -- next build",
     "start": "dotenv -e ../../.vercel/.env.development.local -- next start",
-    "lint": "next lint",
-    "vercel-build": "npx prisma generate --data-proxy && next build"
+    "lint": "next lint"
   },
   "dependencies": {
     "clerk-webhook-handler": "workspace:*",

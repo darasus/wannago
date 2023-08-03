@@ -32,9 +32,9 @@ export const create = protectedProcedure
         ctx.prisma.organization.findUnique({where: {id: createdById}}),
       ]);
 
-      const preferredCurrency = user?.id
-        ? user.preferredCurrency
-        : organization?.preferredCurrency;
+      const preferredCurrency =
+        (user?.id ? user.preferredCurrency : organization?.preferredCurrency) ||
+        'USD';
 
       invariant(
         preferredCurrency,
