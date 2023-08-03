@@ -1,5 +1,5 @@
 import {Stripe} from 'lib/src/stripe';
-import {PrismaClient} from '@prisma/client';
+import {prisma} from 'database';
 
 export interface ActionParams {
   ctx: ActionContext;
@@ -7,7 +7,7 @@ export interface ActionParams {
 
 export interface ActionContext {
   stripe: Stripe['client'];
-  prisma: PrismaClient;
+  prisma: typeof prisma;
 }
 
 export type Currency = 'usd' | 'eur' | 'gbp';

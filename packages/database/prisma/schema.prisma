@@ -97,7 +97,7 @@ model User {
   followers             Follow[]               @relation(name: "FollowingUser")
   following             Follow[]               @relation(name: "FollowerUser")
   ticketSale            TicketSale[]
-  preferredCurrency     Currency
+  preferredCurrency     Currency?              @default(USD)
 
   @@index([externalId])
   @@index([email])
@@ -117,7 +117,7 @@ model Organization {
   conversation          Conversation[]         @relation(name: "OrganizationConversation")
   lastSeens             ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
   followers             Follow[]               @relation(name: "FollowingOrganization")
-  preferredCurrency     Currency
+  preferredCurrency     Currency?              @default(USD)
 }
 
 model EventSignUp {
