@@ -24,14 +24,6 @@ test('can message attendees', async ({page}) => {
   await page.goto(getBaseUrl());
   await createEvent({page, authorId: organization_2_id});
   await publishCurrentEvent({page});
-  await page.goto(`${getBaseUrl()}/dashboard`);
-
-  await page.locator('[data-testid="filter-button"]').click();
-  await page
-    .locator('[data-testid="filter-option-button"]')
-    .getByText('Organizing')
-    .click();
-  await page.locator('[data-testid="event-card"]').first().click();
   await page.locator('[data-testid="manage-event-button"]').click();
   await page
     .locator('[data-testid="select-option-button"]')
@@ -46,5 +38,5 @@ test('can message attendees', async ({page}) => {
     .type('Test message');
   await page.locator('[data-testid="message-attendees-form-submit"]').click();
 
-  await expect(page.locator('[data-testid="toast-success"]')).toBeVisible();
+  await expect(page.getByText('Message is sent!')).toBeVisible();
 });

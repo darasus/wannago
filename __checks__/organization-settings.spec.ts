@@ -29,17 +29,12 @@ test('can update organization', async ({page}) => {
   await page
     .locator('[data-testid="team-settings-form-input-email"]')
     .fill(organization_1_email);
-  // await page
-  //   .locator('[data-testid="file-input"]')
-  //   .setInputFiles('cypress/support/logo.png', {
-  //     force: true,
-  //   });
-  await page.locator('[data-testid="file-input-image-preview"]');
+  await page.waitForTimeout(5000);
   await page
     .locator('[data-testid="team-settings-form-input-submit-button"]')
     .click();
 
-  await expect(page.locator('[data-testid="toast-success"]')).toBeVisible({
+  await expect(page.getByText('Organization is updated!')).toBeVisible({
     timeout: 10000,
   });
 });
