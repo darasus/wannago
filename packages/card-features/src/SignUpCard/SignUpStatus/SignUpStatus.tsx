@@ -28,7 +28,7 @@ export function SignUpStatus({mySignUpPromise, myTicketPromise, event}: Props) {
 
   return (
     <div
-      className={cn('border-2 pt-4 -mt-3 px-4 pb-2 rounded-b-md', {
+      className={cn('border-2 pt-4 -mt-3 px-6 pb-2 rounded-b-xl', {
         'bg-yellow-300 border-yellow-600': amInvited,
         'bg-green-300 border-green-600': amSignedUp || haveTickets,
       })}

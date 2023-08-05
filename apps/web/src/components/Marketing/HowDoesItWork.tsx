@@ -1,36 +1,49 @@
-import {CardBase, Container, Text, Title} from 'ui';
+import {Badge, Card, CardContent, CardHeader, Container, Title} from 'ui';
 import {SectionContainer} from './SectionContainer';
-import {titleFontClassName} from '../../fonts';
 import {cn} from 'utils';
 import {Fragment} from 'react';
-import {ChevronDown, ChevronRight} from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronRight,
+  PlusCircle,
+  Settings2,
+  Share2,
+} from 'lucide-react';
 
 const items = [
   {
     summary: 'Create event',
     description: `Create an engaging and captivating event page swiftly. Add featured image and details to bring your event to life and entice attendees.`,
+    icon: PlusCircle,
   },
   {
     summary: 'Share event',
     description: `Share your event page across various social media platforms, emails, or direct messages. Facebook Events integration coming soon.`,
+    icon: Share2,
   },
   {
     summary: 'Manage event',
     description: `Track ticket sales, respond to attendee queries, and update event details effortlessly. Gain insights and use this information to perfect your current and future events.`,
+    icon: Settings2,
   },
 ];
 
 function Item({feature}: any) {
   return (
     <div className="w-full">
-      <CardBase className="h-full" innerClassName="h-full">
-        <div className="relative z-10 flex flex-col gap-1">
-          <Text className={cn(titleFontClassName, 'font-display text-xl')}>
+      <Card className="h-full">
+        <CardHeader className="items-start">
+          <Badge
+            className={cn(
+              'inline-flex border gap-1 py-1.5 bg-gray-100 text-gray-800 border-gray-200'
+            )}
+          >
+            <feature.icon className="w-4 h-4" />
             {feature.summary}
-          </Text>
-          <Text className="text-sm text-gray-600">{feature.description}</Text>
-        </div>
-      </CardBase>
+          </Badge>
+        </CardHeader>
+        <CardContent>{feature.description}</CardContent>
+      </Card>
     </div>
   );
 }

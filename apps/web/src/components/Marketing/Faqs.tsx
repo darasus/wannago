@@ -1,13 +1,12 @@
 'use client';
 
 import {useState} from 'react';
-import {Button, CardBase, Text} from 'ui';
+import {Button, Card, CardContent, CardHeader, CardTitle} from 'ui';
 import {Container} from 'ui';
 import {SectionHeader} from './SectionHeader';
 import {SectionContainer} from './SectionContainer';
 import Link from 'next/link';
 import {cn, formatCents, formatPercent} from 'utils';
-import {titleFontClassName} from '../../fonts';
 import {AnimatePresence, motion} from 'framer-motion';
 import {feeAmount, feePercent} from 'const';
 
@@ -112,30 +111,28 @@ interface ItemProps {
 function Item({faq, isOpen, toggle}: ItemProps) {
   return (
     <div onClick={toggle}>
-      <CardBase className={cn('overflow-hidden cursor-pointer')}>
-        <div className="relative z-10 w-full">
-          <Text className={cn(titleFontClassName, 'font-display text-xl')}>
-            {faq.question}
-          </Text>
-          <AnimatePresence initial={false}>
-            {isOpen && (
-              <motion.section
-                key="content"
-                initial="collapsed"
-                animate="open"
-                exit="collapsed"
-                variants={{
-                  open: {opacity: 1, height: 'auto'},
-                  collapsed: {opacity: 0, height: 0},
-                }}
-                transition={{duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98]}}
-              >
-                <Text className="text-sm text-gray-600">{faq.answer}</Text>
-              </motion.section>
-            )}
-          </AnimatePresence>
-        </div>
-      </CardBase>
+      <Card className={cn('overflow-hidden cursor-pointer')}>
+        <CardHeader>
+          <CardTitle>{faq.question}</CardTitle>
+        </CardHeader>
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.section
+              key="content"
+              initial="collapsed"
+              animate="open"
+              exit="collapsed"
+              variants={{
+                open: {opacity: 1, height: 'auto'},
+                collapsed: {opacity: 0, height: 0},
+              }}
+              transition={{duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98]}}
+            >
+              <CardContent>{faq.answer}</CardContent>
+            </motion.section>
+          )}
+        </AnimatePresence>
+      </Card>
     </div>
   );
 }

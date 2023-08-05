@@ -1,4 +1,4 @@
-import {CardBase, Container, Text} from 'ui';
+import {Badge, Card, CardContent, CardHeader, Container} from 'ui';
 import {SectionHeader} from './SectionHeader';
 import {
   Building,
@@ -11,7 +11,6 @@ import {
   UserPlus,
 } from 'lucide-react';
 import {SectionContainer} from './SectionContainer';
-import {titleFontClassName} from '../../fonts';
 import {cn} from 'utils';
 
 const features = [
@@ -70,29 +69,32 @@ const features = [
   },
 ];
 
-function Feature({feature, className, ...props}: any) {
+function Feature({feature, className, index, ...props}: any) {
   return (
-    <CardBase
+    <Card
       className={cn(className, 'flex flex-col overflow-hidden h-full')}
       {...props}
     >
-      <div className="relative z-10 flex flex-col gap-1">
-        <Text className={cn(titleFontClassName, 'font-display text-xl')}>
+      <CardHeader className="items-start">
+        <Badge
+          className={cn('inline-flex border gap-1 py-1.5', {
+            'bg-green-100 text-green-800 border-green-200': index === 0,
+            'bg-red-100 text-red-800 border-red-200': index === 1,
+            'bg-yellow-100 text-yellow-800 border-yellow-200': index === 2,
+            'bg-blue-100 text-blue-800 border-blue-200': index === 3,
+            'bg-purple-100 text-purple-800 border-purple-200': index === 4,
+            'bg-teal-100 text-teal-800 border-teal-200': index === 5,
+            'bg-pink-100 text-pink-800 border-pink-200': index === 6,
+            'bg-orange-100 text-orange-800 border-orange-200': index === 7,
+            'bg-lime-100 text-lime-800 border-lime-200': index === 8,
+          })}
+        >
+          <feature.icon className="w-4 h-4" />
           {feature.summary}
-        </Text>
-        <Text className="text-sm text-gray-600">{feature.description}</Text>
-      </div>
-      <div
-        className={cn(
-          'absolute top-0 right-0 z-[0]',
-          'w-[200px] h-[200px] flex items-center justify-center',
-          'text-gray-100',
-          'rotate-12'
-        )}
-      >
-        <feature.icon className="w-32 h-32" />
-      </div>
-    </CardBase>
+        </Badge>
+      </CardHeader>
+      <CardContent>{feature.description}</CardContent>
+    </Card>
   );
 }
 
@@ -105,9 +107,13 @@ export function Features() {
           description="We provide the tools you need to build your audience and sell tickets while you focus on what's important"
         />
         <div className="grid lg:grid-cols-12 gap-4 items-stretch">
-          {features.map((feature) => (
+          {features.map((feature, i) => (
             <div key={feature.summary} className="col-span-4">
-              <Feature feature={feature} className="mx-auto max-w-2xl" />
+              <Feature
+                feature={feature}
+                className="mx-auto max-w-2xl"
+                index={i}
+              />
             </div>
           ))}
         </div>

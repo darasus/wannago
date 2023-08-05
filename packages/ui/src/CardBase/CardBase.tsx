@@ -2,6 +2,7 @@ import {forwardRef, PropsWithChildren, ReactNode} from 'react';
 import {cn} from 'utils';
 import {LoadingBlock} from '../LoadingBlock/LoadingBlock';
 import {BadgeWithModal} from '../BadgeWithModal/BadgeWithModal';
+import {Card} from '../Card/Card';
 
 interface BadgeItem {
   label: React.ReactNode;
@@ -18,7 +19,7 @@ type Props = PropsWithChildren & {
   badge?: BadgeItem;
 };
 
-export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
+export const CardBase = forwardRef<HTMLDivElement, Props>(function CardBase(
   {
     children,
     className,
@@ -32,26 +33,20 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
   ref
 ) {
   return (
-    <div
-      ref={ref}
-      {...props}
-      className={cn(
-        'relative',
-        'rounded-md border-2 border-primary bg-white',
-        className
-      )}
-    >
+    <Card ref={ref} {...props} className={cn('relative', className)}>
       {title && (
-        <div className="flex items-center gap-2 bg-muted rounded-t-md border-b border-foreground/5">
+        <div className="flex items-center gap-2 bg-muted rounded-t-xl border-b border-foreground/5">
           <div
             className={cn(
               {'border-r': !!titleChildren},
-              'border-foreground/5 bg-muted p-2 pl-4 text-sm rounded-tl-md font-bold uppercase shrink overflow-hidden'
+              'border-foreground/5 bg-muted p-2 pl-4 text-sm rounded-tl-xl font-bold uppercase shrink overflow-hidden'
             )}
           >
             {title}
           </div>
-          <div className="grow shrink-0 mr-4">{titleChildren}</div>
+          <div className="flex items-center grow shrink-0 mr-4">
+            {titleChildren}
+          </div>
         </div>
       )}
       {badge && (
@@ -61,7 +56,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
           </BadgeWithModal>
         </div>
       )}
-      <div className={cn('p-4', innerClassName)}>{children}</div>
+      <div className={cn('p-6', innerClassName)}>{children}</div>
       <div
         className={cn(
           'absolute top-0 bottom-0 left-0 right-0',
@@ -73,6 +68,6 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function Card(
       >
         <LoadingBlock />
       </div>
-    </div>
+    </Card>
   );
 });

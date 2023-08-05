@@ -132,3 +132,11 @@ export {
 } from './src/AlertDialog/AlertDialog';
 export {ErrorComponent} from './src/ErrorComponent/ErrorComponent';
 export {ScrollArea, ScrollBar} from './src/ScrollArea/ScrollArea';
+export {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from './src/Card/Card';
