@@ -17,7 +17,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <ClerkProvider>
       <html lang="en">
         <head>
-          <link rel="shortcut icon" href={`${getBaseUrl()}/api/favicon`} />
+          <link rel="shortcut icon" href={`${getBaseUrl()}/favicon.png`} />
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"

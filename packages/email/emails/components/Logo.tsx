@@ -7,7 +7,7 @@ export function Logo() {
 
   return (
     <Img
-      src="https://www.wannago.app/api/logo"
+      src="https://www.wannago.app/logo.png"
       alt="WannaGo logo"
       width={width}
       height={height}

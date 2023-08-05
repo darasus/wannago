@@ -15,19 +15,19 @@ export function Logo({className, ...props}: Props) {
 }
 
 export function LogoView({className}: {className?: string}) {
-  const height = 100;
+  const height = 70;
   const width = 152;
 
   return (
     <Image
-      src={`${getBaseUrl()}/api/logo`}
+      src={`${getBaseUrl()}/logo.png`}
       width={width}
       height={height}
       alt="WannaGo logo"
       priority
       style={{
-        height: height * 0.5,
-        width: width * 0.5,
+        height: height * 0.6,
+        width: width * 0.6,
       }}
     />
   );
