@@ -2,7 +2,15 @@ import {type RouterOutputs} from 'api';
 import {EventCard} from 'cards';
 import Link from 'next/link';
 import {Suspense} from 'react';
-import {Avatar, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
+import {
+  Avatar,
+  Button,
+  CardBase,
+  Container,
+  LoadingBlock,
+  PageHeader,
+  Text,
+} from 'ui';
 import {MessageButton} from './features/MessageButton/MessageButton';
 import {FollowButton} from './features/FollowButton/FollowButton';
 import {notFound} from 'next/navigation';
@@ -97,7 +105,13 @@ export async function PublicProfile({
                 </div>
               </div>
               <div className="flex gap-2 justify-start mt-4">
-                <Suspense>
+                <Suspense
+                  fallback={
+                    <Button disabled size={'sm'} variant={'outline'}>
+                      Loading...
+                    </Button>
+                  }
+                >
                   <FollowButton amFollowingPromise={amFollowingPromise} />
                 </Suspense>
                 <MessageButton />

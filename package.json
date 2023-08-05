@@ -119,7 +119,7 @@
     "micro": "^10.0.1",
     "micro-cors": "^0.1.1",
     "ms": "^2.1.3",
-    "next": "13.4.13-canary.14",
+    "next": "13.4.13-canary.16",
     "openai": "^3.3.0",
     "openai-edge": "^1.2.0",
     "prism-react-renderer": "^1.3.5",
