@@ -20,6 +20,7 @@ import {AuthModal} from '../AuthModal/AuthModal';
 import {useRouter} from 'next/navigation';
 import {RouterOutputs} from 'api';
 import {api} from '../../../../../../apps/web/src/trpc/client';
+import {revalidateGetMySignUp} from './actions';
 
 interface EventSignUpForm {
   hasPlusOne: boolean;
@@ -46,7 +47,8 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
         .mutate({
           eventId: event.id,
         })
-        .then(() => {
+        .then(async () => {
+          await revalidateGetMySignUp({eventId: event.id});
           router.refresh();
           logEvent('event_sign_up_cancel_submitted', {
             eventId: event.id,

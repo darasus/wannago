@@ -89,7 +89,10 @@ export async function publishCurrentEvent({page}: {page: Page}) {
     .click();
   await page.locator('[data-testid="confirm-dialog-confirm-button"]').click();
 
-  await expect(
-    await page.locator('[data-testid="event-published-badge"]')
-  ).toBeVisible({timeout: 10000});
+  await page.waitForTimeout(3000);
+  await page.reload({waitUntil: 'networkidle'});
+
+  await expect(page.getByRole('button', {name: 'Published'})).toBeVisible({
+    timeout: 10000,
+  });
 }

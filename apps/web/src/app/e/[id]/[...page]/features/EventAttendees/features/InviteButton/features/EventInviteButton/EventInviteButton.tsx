@@ -22,6 +22,7 @@ import {useParams, useRouter} from 'next/navigation';
 import {z} from 'zod';
 import {api} from '../../../../../../../../../../trpc/client';
 import {useState} from 'react';
+import {revalidateGetAllEventsAttendees} from './actions';
 
 const formScheme = z.object({
   firstName: z.string().nonempty(),
@@ -41,7 +42,8 @@ export function EventInviteButton() {
     if (eventShortId) {
       await api.event.inviteByEmail
         .mutate({...data, eventShortId})
-        .then(() => {
+        .then(async () => {
+          await revalidateGetAllEventsAttendees({eventShortId});
           toast.success('Invitation sent!');
           form.resetField('firstName');
           form.resetField('lastName');
