@@ -20,7 +20,7 @@ import {AuthModal} from '../AuthModal/AuthModal';
 import {useRouter} from 'next/navigation';
 import {RouterOutputs} from 'api';
 import {api} from '../../../../../../apps/web/src/trpc/client';
-import {revalidateGetMySignUp} from './actions';
+import {revalidateGetMySignUp} from '../../../../../../apps/web/src/actions';
 
 interface EventSignUpForm {
   hasPlusOne: boolean;

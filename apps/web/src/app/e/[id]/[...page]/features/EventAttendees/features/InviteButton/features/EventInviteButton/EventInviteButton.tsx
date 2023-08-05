@@ -22,7 +22,7 @@ import {useParams, useRouter} from 'next/navigation';
 import {z} from 'zod';
 import {api} from '../../../../../../../../../../trpc/client';
 import {useState} from 'react';
-import {revalidateGetAllEventsAttendees} from './actions';
+import {revalidateGetAllEventsAttendees} from '../../../../../../../../../../actions';
 
 const formScheme = z.object({
   firstName: z.string().nonempty(),
