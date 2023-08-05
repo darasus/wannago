@@ -14,7 +14,7 @@ import {useParams, useRouter} from 'next/navigation';
 import {User} from '@prisma/client';
 import {z} from 'zod';
 import {api} from '../../../../../trpc/client';
-import {revalidateGetConversationById} from './actions';
+import {revalidateGetConversationById} from '../../../../../actions';
 
 interface Props {
   me: User;
