@@ -10,7 +10,7 @@ export default function Blob() {
   useEffect(() => {
     if (typeof window !== 'undefined' && ref.current) {
       const app = new Application(ref.current);
-      app.load(`${getBaseUrl()}/abstract_gradient_background.spline`);
+      app.load(`${getBaseUrl()}/scene.splinecode`);
     }
   }, []);
 
