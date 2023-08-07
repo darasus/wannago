@@ -10,7 +10,7 @@ interface Props {
 export default function EventPreview({eventPromise}: Props) {
   return (
     <AnimateRender>
-      <EventView eventPromise={eventPromise} me={null} />
+      <EventView eventPromise={eventPromise} me={null} noSticky />
     </AnimateRender>
   );
 }

@@ -7,7 +7,7 @@ import {
 } from 'card-features';
 import {InfoCard} from 'cards';
 import {notFound} from 'next/navigation';
-import {getBaseUrl} from 'utils';
+import {cn, getBaseUrl} from 'utils';
 import {api} from '../../trpc/server-http';
 import {RouterOutputs} from 'api';
 
@@ -19,6 +19,7 @@ interface Props {
   isLoadingImage?: boolean;
   isMyEvent?: boolean;
   me: RouterOutputs['user']['me'];
+  noSticky?: boolean;
 }
 
 export async function EventView({
@@ -26,6 +27,7 @@ export async function EventView({
   isLoadingImage,
   isMyEvent,
   me,
+  noSticky = false,
 }: Props) {
   const event = await eventPromise;
 
@@ -43,7 +45,7 @@ export async function EventView({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="sticky top-4 z-20">
+      <div className={cn({'sticky top-4 z-20': !noSticky})}>
         <SignUpCard
           event={event}
           myTicketPromise={myTicketPromise}
