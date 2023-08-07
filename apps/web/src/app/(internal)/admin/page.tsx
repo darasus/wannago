@@ -37,9 +37,9 @@ export default async function AdminPage() {
 
   return (
     <AdminDashboard
-      eventsCount={usersCount}
+      eventsCount={eventsCount}
       organizationsCount={organizationsCount}
-      usersCount={eventsCount}
+      usersCount={usersCount}
       dailySignUpsData={dailySignUpsData}
       dailyEventsCreatedData={dailyEventsCreatedData}
     />

@@ -20,6 +20,11 @@ const getAllUsers = adminProcedure.query(async ({ctx}) => {
       externalId: {
         not: null,
       },
+      email: {
+        not: {
+          contains: '+automation',
+        },
+      },
     },
     orderBy: {
       createdAt: 'desc',
@@ -53,6 +58,18 @@ const getAllEvents = adminProcedure.query(async ({ctx}) => {
     orderBy: {
       createdAt: 'desc',
     },
+    where: {
+      user: {
+        externalId: {
+          not: null,
+        },
+        email: {
+          not: {
+            contains: '+automation',
+          },
+        },
+      },
+    },
   });
 
   return allEvents;
@@ -60,7 +77,18 @@ const getAllEvents = adminProcedure.query(async ({ctx}) => {
 
 const getDailySignUps = adminProcedure.query(async ({ctx}) => {
   const dateRange = createDateRange();
-  const allUsers = await ctx.prisma.user.findMany();
+  const allUsers = await ctx.prisma.user.findMany({
+    where: {
+      externalId: {
+        not: null,
+      },
+      email: {
+        not: {
+          contains: '+automation',
+        },
+      },
+    },
+  });
 
   allUsers.forEach((user) => {
     const date = format(new Date(user.createdAt), 'yyyy-MM-dd');
@@ -75,7 +103,20 @@ const getDailySignUps = adminProcedure.query(async ({ctx}) => {
 
 const getDailyCreatedEvents = adminProcedure.query(async ({ctx}) => {
   const dateRange = createDateRange();
-  const allUsers = await ctx.prisma.event.findMany();
+  const allUsers = await ctx.prisma.event.findMany({
+    where: {
+      user: {
+        externalId: {
+          not: null,
+        },
+        email: {
+          not: {
+            contains: '+automation',
+          },
+        },
+      },
+    },
+  });
 
   allUsers.forEach((user) => {
     const date = format(new Date(user.createdAt), 'yyyy-MM-dd');
@@ -94,12 +135,30 @@ const getUsersCount = adminProcedure.query(async ({ctx}) => {
       externalId: {
         not: null,
       },
+      email: {
+        not: {
+          contains: '+automation',
+        },
+      },
     },
   });
 });
 
 const getEventsCount = adminProcedure.query(async ({ctx}) => {
-  return ctx.prisma.event.count();
+  return ctx.prisma.event.count({
+    where: {
+      user: {
+        externalId: {
+          not: null,
+        },
+        email: {
+          not: {
+            contains: '+automation',
+          },
+        },
+      },
+    },
+  });
 });
 
 const getOrganizationsCount = adminProcedure.query(async ({ctx}) => {
