@@ -21,10 +21,7 @@ export async function GET(req: NextRequest) {
     invariant(organizerName, 'Missing organizerName');
     invariant(eventImageUrl, 'Missing eventImageUrl');
 
-    const [logoFontData, bodyFontData] = await Promise.all([
-      fetch(new URL(`${getBaseUrl()}/paytone-one.ttf`, import.meta.url)).then(
-        (res) => res.arrayBuffer()
-      ),
+    const [bodyFontData] = await Promise.all([
       fetch(
         new URL(`${getBaseUrl()}/dm-serif-display.ttf`, import.meta.url)
       ).then((res) => res.arrayBuffer()),
@@ -97,11 +94,6 @@ export async function GET(req: NextRequest) {
         width: 1200,
         height: 630,
         fonts: [
-          {
-            name: 'Logo',
-            data: logoFontData,
-            weight: 500,
-          },
           {
             name: 'Body',
             data: bodyFontData,
