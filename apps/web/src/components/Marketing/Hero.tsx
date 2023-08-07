@@ -7,13 +7,17 @@ import {auth} from '@clerk/nextjs';
 import EventPreview from './EventPreview';
 import Link from 'next/link';
 import {api} from '../../trpc/server-http';
-import {Blob} from './Blob';
+import dynamic from 'next/dynamic';
+
+const DynamicBlob = dynamic(() => import('./Blob'), {
+  ssr: false,
+});
 
 export function Hero() {
   return (
     <>
       <div className="absolute top-0 bottom-0 right-0 left-0 -z-[1]">
-        <Blob />
+        <DynamicBlob />
       </div>
       <div className="relative">
         <div className="relative flex flex-col items-center gap-6 pt-32">

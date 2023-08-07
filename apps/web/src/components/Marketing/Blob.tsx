@@ -4,7 +4,7 @@ import {useEffect, useRef} from 'react';
 import {Application} from '@splinetool/runtime';
 import {getBaseUrl} from 'utils';
 
-export function Blob() {
+export default function Blob() {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
