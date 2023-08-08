@@ -8,6 +8,7 @@ import {Event} from '@prisma/client';
 import clip from 'text-clipper';
 import {useState} from 'react';
 import {Info} from 'lucide-react';
+import {proseClassname} from 'const';
 
 interface Props {
   event: Event;
@@ -109,15 +110,7 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
           </h1>
           {description && (
             <>
-              <div
-                className={cn(
-                  'prose',
-                  'prose-h1:text-gray-900 prose-h2:text-gray-900 prose-h3:text-gray-900 prose-h4:text-gray-900 prose-h5:text-gray-900 prose-h6:text-gray-900',
-                  'prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-pre:rounded-md prose-pre:text-gray-900',
-                  'prose-a:text-brand-700',
-                  'prose-p:break-words prose-p:mt-0 prose-p:mb-0'
-                )}
-              >
+              <div className={proseClassname}>
                 <div
                   className="flex flex-col gap-y-2"
                   dangerouslySetInnerHTML={{

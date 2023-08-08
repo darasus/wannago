@@ -642,6 +642,9 @@ importers:
       api:
         specifier: workspace:*
         version: link:../api
+      const:
+        specifier: workspace:*
+        version: link:../const
       ui:
         specifier: workspace:*
         version: link:../ui
@@ -893,6 +896,9 @@ importers:
       client-env:
         specifier: workspace:*
         version: link:../client-env
+      const:
+        specifier: workspace:*
+        version: link:../const
       utils:
         specifier: workspace:*
         version: link:../utils
