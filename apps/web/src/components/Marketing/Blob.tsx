@@ -12,10 +12,14 @@ export default function Blob() {
     if (typeof window !== 'undefined' && ref.current) {
       const app = new Application(ref.current);
       app.load(
-        resolvedTheme === 'dark'
-          ? 'https://prod.spline.design/uIkYeCM5LMKNkXlz/scene.splinecode'
-          : 'https://prod.spline.design/fSgRvzLa1vBCVtFp/scene.splinecode'
+        resolvedTheme === 'light'
+          ? 'https://prod.spline.design/fSgRvzLa1vBCVtFp/scene.splinecode'
+          : 'https://prod.spline.design/T7jhIjDHsC3SsOz0/scene.splinecode'
       );
+
+      return () => {
+        app.dispose();
+      };
     }
   }, [resolvedTheme]);
 
