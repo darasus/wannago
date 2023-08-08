@@ -60,7 +60,7 @@
     "@react-types/datepicker": "^3.4.0",
     "@react-types/select": "^3.8.1",
     "@react-types/shared": "^3.18.1",
-    "@sentry/nextjs": "7.59.3",
+    "@sentry/nextjs": "7.61.1",
     "@styled-icons/simple-icons": "^10.46.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.4",
@@ -152,7 +152,7 @@
   "devDependencies": {
     "@clerk/types": "^3.47.0",
     "@playwright/test": "^1.36.0",
-    "@sentry/cli": "^2.19.4",
+    "@sentry/cli": "^2.20.4",
     "@types/file-saver": "^2.0.5",
     "@types/formidable": "^2.0.6",
     "@types/gtag.js": "^0.0.12",
