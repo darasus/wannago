@@ -48,6 +48,7 @@ const moduleExports = {
       'www.wannago.app',
       'wannago.app',
       'localhost',
+      '0.0.0.0',
     ],
   },
   transpilePackages: [
