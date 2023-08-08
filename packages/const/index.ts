@@ -46,6 +46,10 @@ export const proseClassname =
   ' ' +
   'prose-h1:text-gray-900 prose-h2:text-gray-900 prose-h3:text-gray-900 prose-h4:text-gray-900 prose-h5:text-gray-900 prose-h6:text-gray-900' +
   ' ' +
+  'prose-h1:my-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-h5:my-0 prose-h6:my-0' +
+  ' ' +
+  'prose-h1:text-primary prose-h2:text-primary prose-h3:text-primary prose-h4:text-primary prose-h5:text-primary prose-h6:text-primary' +
+  ' ' +
   'prose-pre:bg-gray-100 prose-pre:border prose-pre:border-gray-200 prose-pre:rounded-md prose-pre:text-gray-900' +
   ' ' +
   'prose-a:text-brand-700' +
