@@ -19,16 +19,16 @@ export function BadgeWithModal({className, text, children, color}: Props) {
   return (
     <Dialog>
       <DialogTrigger>
-        <div className={cn('inline-flex', className)}>
+        <div className={cn('inline-flex bg-background rounded-lg', className)}>
           <Badge
-            className={cn({
-              'bg-green-300 hover:bg-green-300 border-2 border-primary text-primary':
+            className={cn('border text-primary', {
+              'bg-green-400/20 border-green-600/20 border-green-600/20':
                 color === 'green',
-              'bg-red-300 hover:bg-red-300 border-2 border-primary text-primary':
+              'bg-red-400/20 hover:bg-red-600/20 border-red-600/20':
                 color === 'red',
-              'bg-blue-300 hover:bg-blue-300 border-2 border-primary text-primary':
+              'bg-blue-400/20 hover:bg-blue-600/20 border-blue-600/20':
                 color === 'blue',
-              'bg-yellow-300 hover:bg-yellow-300 border-2 border-primary text-primary':
+              'bg-yellow-400/20 hover:bg-yellow-600/20 border-yellow-600/20':
                 color === 'yellow',
             })}
           >

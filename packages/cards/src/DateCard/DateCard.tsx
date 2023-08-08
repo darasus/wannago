@@ -46,7 +46,7 @@ export function DateCard({endDate, startDate, onAddToCalendarClick}: Props) {
           <Text className="font-bold">{timeRangeString}</Text>
           <div className="mb-2" />
           <div className="flex">
-            <div className="flex flex-col justify-center items-center border-2 border-foreground rounded-md bg-muted h-24 w-24 mr-2 grow">
+            <div className="flex flex-col justify-center items-center border bg-muted dark:bg-white/[.04] rounded-md h-24 w-24 mr-2 grow">
               <Text className="text-4xl leading-none font-bold">
                 {formatDate(new Date(startDate), 'dd')}
               </Text>
@@ -57,7 +57,7 @@ export function DateCard({endDate, startDate, onAddToCalendarClick}: Props) {
             </div>
             <div className="flex flex-col justify-center grow shrink-0">
               <Text className="font-bold capitalize">
-                {formatDate(new Date(startDate), 'EEE, MMMM dd, yyyy')}
+                {formatDate(new Date(startDate), 'EEE, MMM dd, yyyy')}
               </Text>{' '}
               <div />
               <Text className="text-secondary-foreground/50">

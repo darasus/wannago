@@ -69,10 +69,9 @@
 // export {prisma};
 
 import {PrismaClient} from '@prisma/client/edge';
-import {withAccelerate} from '@prisma/extension-accelerate';
 
 function makePrisma() {
-  return new PrismaClient().$extends(withAccelerate());
+  return new PrismaClient();
 }
 
 const globalForPrisma = global as unknown as {

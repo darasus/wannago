@@ -27,27 +27,29 @@ export function SignUpStatus({mySignUpPromise, myTicketPromise, event}: Props) {
   }
 
   return (
-    <div
-      className={cn('border-2 pt-4 -mt-3 px-6 pb-2 rounded-b-xl', {
-        'bg-yellow-300 border-yellow-600': amInvited,
-        'bg-green-300 border-green-600': amSignedUp || haveTickets,
-      })}
-    >
-      {amInvited && <span className="text-sm">{"You're invited!"}</span>}
-      {amSignedUp && (
-        <span className="text-sm" data-testid="event-signup-label">
-          {"You're signed up!"}
-        </span>
-      )}
-      {haveTickets && (
-        <div className="flex gap-2">
-          <span className="text-sm">{'You bought tickets!'}</span>
-          <Link
-            href={`/e/${event.shortId}/my-tickets`}
-            className="text-sm underline font-bold"
-          >{`My tickets`}</Link>
-        </div>
-      )}
+    <div className="bg-background rounded-b-lg">
+      <div
+        className={cn('border pt-5 -mt-3 px-6 pb-2 rounded-b-lg', {
+          'bg-yellow-300 border-yellow-600': amInvited,
+          'bg-green-400/20 border-green-600/20': amSignedUp || haveTickets,
+        })}
+      >
+        {amInvited && <span className="text-sm">{"You're invited!"}</span>}
+        {amSignedUp && (
+          <span className="text-sm" data-testid="event-signup-label">
+            {"You're signed up!"}
+          </span>
+        )}
+        {haveTickets && (
+          <div className="flex gap-2">
+            <span className="text-sm">{'You bought tickets!'}</span>
+            <Link
+              href={`/e/${event.shortId}/my-tickets`}
+              className="text-sm underline font-bold"
+            >{`My tickets`}</Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

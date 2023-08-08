@@ -1,8 +1,10 @@
 const forms = require('@tailwindcss/forms');
 const typography = require('@tailwindcss/typography');
+const animate = require('tailwindcss-animate');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ['class'],
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
     '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
@@ -17,10 +19,8 @@ module.exports = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
-
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
@@ -30,8 +30,8 @@ module.exports = {
           foreground: 'hsl(var(--secondary-foreground))',
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: 'hsl(var(--destructive) / <alpha-value>)',
+          foreground: 'hsl(var(--destructive-foreground) / <alpha-value>)',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',
@@ -50,21 +50,29 @@ module.exports = {
           foreground: 'hsl(var(--card-foreground))',
         },
       },
-      height: {
-        'hero-preview': 600,
+      borderRadius: {
+        xl: `calc(var(--radius) + 4px)`,
+        lg: `var(--radius)`,
+        md: `calc(var(--radius) - 2px)`,
+        sm: 'calc(var(--radius) - 4px)',
       },
-      transitionDelay: {
-        0: '0ms',
-        100: '100ms',
-        200: '200ms',
-        300: '300ms',
-        400: '400ms',
-        500: '500ms',
-        600: '600ms',
+      keyframes: {
+        'accordion-down': {
+          from: {height: 0},
+          to: {height: 'var(--radix-accordion-content-height)'},
+        },
+        'accordion-up': {
+          from: {height: 'var(--radix-accordion-content-height)'},
+          to: {height: 0},
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
   },
-  plugins: [forms, typography],
+  plugins: [forms, typography, animate],
   future: {
     hoverOnlyWhenSupported: true,
   },

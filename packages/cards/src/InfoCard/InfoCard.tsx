@@ -51,7 +51,7 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
               className="flex items-center gap-1"
               data-testid="event-published-badge"
             >
-              Published <Info className="h-4 w-4" />
+              Published <Info className="h-3 w-3" />
             </div>
           ),
           color: 'green',
@@ -60,7 +60,7 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
       : ({
           label: (
             <div className="flex items-center gap-1">
-              Draft <Info className="h-4 w-4" />
+              Draft <Info className="h-3 w-3" />
             </div>
           ),
           color: 'yellow',

@@ -2,194 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --ring: 240 5% 64.9%;
-
-    --radius: 0.5rem;
-
-    /* rich text colors */
-    --novel-highlight-default: #ffffff;
-    --novel-highlight-purple: #f6f3f8;
-    --novel-highlight-red: #fdebeb;
-    --novel-highlight-yellow: #fbf4a2;
-    --novel-highlight-blue: #c1ecf9;
-    --novel-highlight-green: #acf79f;
-    --novel-highlight-orange: #faebdd;
-    --novel-highlight-pink: #faf1f5;
-    --novel-highlight-gray: #f1f1ef;
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-
-    --ring: 240 3.7% 15.9%;
-  }
+:root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 240 5.9% 10%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 240 5.9% 10%;
+  --radius: 0.75rem;
+}
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 240 5.9% 10%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 240 4.9% 83.9%;
 }
 
-html,
-body {
-  color: var(--muted);
-  background-color: var(--background);
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
 }
 
 @layer utilities {
-  .safari-rounded-border-fix {
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
+  .step {
+    counter-increment: step;
+  }
+
+  .step:before {
+    @apply absolute w-9 h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 border-background;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
   }
 }
 
-.text-body {
-  @apply prose p-0;
-  @apply prose-p:pt-1 prose-p:pb-2;
-  @apply prose-p:m-0;
-  @apply prose-h1:m-0 prose-h2:m-0 prose-h3:m-0 prose-h4:m-0 prose-h5:m-0 prose-h6:m-0;
-  @apply prose-h1:mb-2 prose-h2:mb-2 prose-h3:mb-2 prose-h4:mb-2 prose-h5:mb-2 prose-h6:mb-2;
-  @apply prose-ul:m-0;
-  @apply prose-li:m-0;
-}
-
-.text-body .ProseMirror {
-  @apply p-2;
-}
-
-.ProseMirror {
-  @apply outline-none;
-}
-
-.text-shadow {
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-}
-
-.text-shadow-md {
-  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
-}
-
-.text-shadow-lg {
-  text-shadow: 0 15px 30px rgba(0, 0, 0, 0.11), 0 5px 15px rgba(0, 0, 0, 0.08);
-}
-
-.text-shadow-none {
-  text-shadow: none;
-}
-
-.zigzag {
-  --c: rgb(234 105 139 / 0.3);
-  --s: 0.11em;
-  padding-bottom: calc(0.1 * var(--s));
-  background: conic-gradient(from 135deg at top, var(--c) 90deg, #0000 0) left 0
-      bottom var(--s) / calc(2 * var(--s)) var(--s) repeat-x,
-    conic-gradient(from -45deg at bottom, var(--c) 90deg, #0000 0) bottom 0 left
-      var(--s) / calc(2 * var(--s)) var(--s) repeat-x;
-  --_m: linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0) 50% / var(--_p, 0%) padding-box no-repeat;
-  -webkit-mask: var(--_m);
-  mask: var(--_m);
-  /* transition: 0.5s; */
-  --_p: 100%;
-}
-
-.__simple-icons-svg {
-  display: block !important;
-}
-
-.header-loading {
-  background: repeating-linear-gradient(
-    -45deg,
-    rgb(255 255 255 / var(--tw-bg-opacity)),
-    rgb(255 255 255 / var(--tw-bg-opacity)) 20px,
-    rgb(226 232 240 / var(--tw-bg-opacity)) 20px,
-    rgb(226 232 240 / var(--tw-bg-opacity)) 40px
-  );
-
-  transition: opacity 0.25s;
-
-  /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
-  animation: gradient 10s linear infinite;
-  background-size: 200% 100%;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 100% 0%;
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
   }
-  100% {
-    background-position: 0% 0%;
-  }
-}
-
-#wave {
-  stroke-dasharray: 0 16 101 16;
-  animation: moveTheWave 2400ms linear infinite;
-}
-
-@keyframes moveTheWave {
-  0% {
-    stroke-dashoffset: 0;
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    stroke-dashoffset: -133;
-    transform: translate3d(-90px, 0, 0);
-  }
-}
-
-.is-editor-empty::before {
-  @apply text-gray-400;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
 }

@@ -35,11 +35,11 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function CardBase(
   return (
     <Card ref={ref} {...props} className={cn('relative', className)}>
       {title && (
-        <div className="flex items-center gap-2 bg-muted rounded-t-xl border-b border-foreground/5">
+        <div className="flex items-center gap-2 bg-muted dark:bg-white/[.04] rounded-t-lg border-b">
           <div
             className={cn(
               {'border-r': !!titleChildren},
-              'border-foreground/5 bg-muted p-2 pl-4 text-sm rounded-tl-xl font-bold uppercase shrink overflow-hidden'
+              'p-2 pl-4 text-sm font-bold shrink overflow-hidden'
             )}
           >
             {title}
@@ -61,7 +61,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function CardBase(
         className={cn(
           'absolute top-0 bottom-0 left-0 right-0',
           'flex items-center justify-center',
-          'bg-white opacity-0 rounded-md z-10 pointer-events-none',
+          'opacity-0 rounded-md z-10 pointer-events-none',
           'transition-opacity duration-300',
           {'opacity-100 pointer-events-auto': isLoading}
         )}
