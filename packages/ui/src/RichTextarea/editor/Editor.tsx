@@ -11,6 +11,7 @@ import {getPrevText} from './utils/getPrevText';
 import {TiptapEditorProps} from './props';
 import {inputClassName} from '../../Input/Input';
 import {cn} from 'utils';
+import {proseClassname} from 'const';
 
 interface Props {
   dataTestId?: string;
@@ -132,15 +133,7 @@ export function Editor({value, onChange, dataTestId}: Props) {
       >
         <EditorContent
           data-testid={dataTestId}
-          className={cn(
-            'border-none',
-            'prose',
-            'text-md',
-            'prose-h1:m-0 prose-h2:m-0 prose-h3:m-0',
-            'prose-p:m-0',
-            'prose-ul:m-0',
-            'prose-li:m-0'
-          )}
+          className={cn('border-none', proseClassname)}
           editor={editor}
         />
       </div>

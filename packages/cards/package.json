@@ -9,6 +9,7 @@
   "dependencies": {
     "utils": "workspace:*",
     "api": "workspace:*",
+    "const": "workspace:*",
     "ui": "workspace:*"
   },
   "devDependencies": {

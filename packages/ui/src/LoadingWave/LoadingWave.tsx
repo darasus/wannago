@@ -18,7 +18,7 @@ export function LoadingWave() {
         width="80px"
         height="60px"
         viewBox="5 0 80 60"
-        className="loading-wave stroke-gray-800"
+        className="loading-wave stroke-foreground"
       >
         <path
           ref={ref}

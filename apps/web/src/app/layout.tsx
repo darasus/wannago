@@ -1,11 +1,13 @@
-import {ClerkProvider} from '@clerk/nextjs';
 import './globals.css';
+
+import {ClerkProvider} from '@clerk/nextjs';
 import {Container} from 'ui';
 import {getBaseUrl} from 'utils';
 import {Header} from '../features/Header/Header';
 import {Tools} from '../features/Tools';
 import {ToastProvider} from '../features/ToastProvider';
 import {Scripts} from '../features/Scripts';
+import {ThemeProvider} from './ThemeProvider';
 
 export const metadata = {
   title: 'WannaGo',
@@ -15,7 +17,7 @@ export const metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <head>
           <link rel="shortcut icon" href={`${getBaseUrl()}/favicon.png`} />
           <meta
@@ -24,18 +26,20 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           />
         </head>
         <body>
-          <div>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div>
-              <Container maxSize={'full'}>
-                <Header />
-              </Container>
+              <div>
+                <Container maxSize={'full'}>
+                  <Header />
+                </Container>
+              </div>
+              <div>
+                <div>{children}</div>
+              </div>
             </div>
-            <div>
-              <div>{children}</div>
-            </div>
-          </div>
-          <Tools />
-          <ToastProvider />
+            <Tools />
+            <ToastProvider />
+          </ThemeProvider>
         </body>
         <Scripts />
       </html>

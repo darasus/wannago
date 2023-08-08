@@ -13,19 +13,19 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <div className="h-0.5 bg-secondary" />
+      <div className="border-b" />
       <HowDoesItWork />
-      <div className="h-0.5 bg-secondary" />
+      <div className="border-b" />
       <Features />
-      <div className="h-0.5 bg-secondary" />
+      <div className="border-b" />
       {/* <SecondaryFeatures /> */}
       <Pricing />
-      <div className="h-0.5 bg-secondary" />
+      <div className="border-b" />
       {/* <Testimonials /> */}
       <CallToAction />
-      <div className="h-0.5 bg-secondary" />
+      <div className="border-b" />
       <Faqs />
-      <div className="h-0.5 bg-secondary" />
+      <div className="border-b" />
       <Footer />
     </>
   );

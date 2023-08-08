@@ -34,7 +34,7 @@ export function Avatar({
           {...props}
           loader={cloudflareImageLoader}
           className={cn(
-            'block h-full w-full rounded-full border-2 border-gray-800',
+            'block h-full w-full rounded-full border',
             imageClassName
           )}
           fill
@@ -46,7 +46,7 @@ export function Avatar({
       ) : (
         <div
           className={cn(
-            'flex items-center justify-center h-full w-full border-2 border-gray-800 rounded-full bg-slate-200',
+            'flex items-center justify-center h-full w-full border bg-muted dark:bg-white/[.04] rounded-full',
             imageClassName
           )}
         >
