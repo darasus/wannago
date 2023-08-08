@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from 'recharts';
 import {Button, CardBase, Container, Text} from 'ui';
+import {StatCard} from '../StatCard/StatCard';
 
 interface AdminDashboardProps {
   usersCount: number;
@@ -69,6 +70,18 @@ export function AdminDashboard({
         >
           <Text className="text-5xl">{organizationsCount}</Text>
         </CardBase>
+        <StatCard
+          items={dailySignUpsData}
+          value={usersCount.toString()}
+          label={'Users'}
+          secondaryLabel="Daily user sign ups (last 7 days)"
+        />
+        <StatCard
+          items={dailyEventsCreatedData}
+          value={eventsCount.toString()}
+          label={'Events'}
+          secondaryLabel="Daily events created (last 7 days)"
+        />
         <CardBase
           className="lg:col-span-12"
           innerClassName="h-80"

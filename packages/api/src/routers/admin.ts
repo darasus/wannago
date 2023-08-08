@@ -1,8 +1,8 @@
-import {addDays, format, startOfToday} from 'date-fns';
+import {addDays, format, startOfToday, sub} from 'date-fns';
 import {createTRPCRouter, adminProcedure} from '../trpc';
 
 function createDateRange() {
-  const startDate = new Date('2023-01-01T00:00:00');
+  const startDate = sub(new Date(), {days: 7});
   const endDate = startOfToday();
   const dateRange: Record<string, number> = {};
 
