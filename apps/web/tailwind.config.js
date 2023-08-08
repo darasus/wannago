@@ -12,6 +12,7 @@ module.exports = {
     '../../packages/cards/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/card-features/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/auth-features/src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/const/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
