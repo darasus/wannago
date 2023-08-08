@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^1.12.1",
-    "@clerk/clerk-sdk-node": "^4.11.0",
-    "@clerk/nextjs": "^4.22.1",
+    "@clerk/clerk-sdk-node": "^4.12.2",
+    "@clerk/nextjs": "^4.23.2",
     "@googlemaps/google-maps-services-js": "^3.3.33",
     "@hookform/resolvers": "^2.9.11",
     "@internationalized/date": "^3.3.0",
@@ -150,7 +150,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@clerk/types": "^3.47.0",
+    "@clerk/types": "^3.49.0",
     "@playwright/test": "^1.36.0",
     "@sentry/cli": "^2.20.4",
     "@types/file-saver": "^2.0.5",
