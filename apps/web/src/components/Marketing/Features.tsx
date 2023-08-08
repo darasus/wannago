@@ -1,4 +1,4 @@
-import {Badge, Card, CardContent, CardHeader, Container} from 'ui';
+import {Card, CardContent, CardHeader, ColoredBadge, Container} from 'ui';
 import {SectionHeader} from './SectionHeader';
 import {
   Building,
@@ -69,6 +69,18 @@ const features = [
   },
 ];
 
+const colors = [
+  'green',
+  'red',
+  'yellow',
+  'blue',
+  'purple',
+  'teal',
+  'pink',
+  'orange',
+  'lime',
+] as const;
+
 function Feature({feature, className, index, ...props}: any) {
   return (
     <Card
@@ -76,22 +88,10 @@ function Feature({feature, className, index, ...props}: any) {
       {...props}
     >
       <CardHeader className="items-start">
-        <Badge
-          className={cn('inline-flex border gap-1 py-1.5', {
-            'bg-green-100 text-green-800 border-green-200': index === 0,
-            'bg-red-100 text-red-800 border-red-200': index === 1,
-            'bg-yellow-100 text-yellow-800 border-yellow-200': index === 2,
-            'bg-blue-100 text-blue-800 border-blue-200': index === 3,
-            'bg-purple-100 text-purple-800 border-purple-200': index === 4,
-            'bg-teal-100 text-teal-800 border-teal-200': index === 5,
-            'bg-pink-100 text-pink-800 border-pink-200': index === 6,
-            'bg-orange-100 text-orange-800 border-orange-200': index === 7,
-            'bg-lime-100 text-lime-800 border-lime-200': index === 8,
-          })}
-        >
+        <ColoredBadge color={colors[index]}>
           <feature.icon className="w-4 h-4" />
           {feature.summary}
-        </Badge>
+        </ColoredBadge>
       </CardHeader>
       <CardContent>{feature.description}</CardContent>
     </Card>

@@ -1,6 +1,12 @@
-import {Badge, Card, CardContent, CardHeader, Container, Title} from 'ui';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  ColoredBadge,
+  Container,
+  Title,
+} from 'ui';
 import {SectionContainer} from './SectionContainer';
-import {cn} from 'utils';
 import {Fragment} from 'react';
 import {
   ChevronDown,
@@ -33,14 +39,10 @@ function Item({feature}: any) {
     <div className="w-full">
       <Card className="h-full">
         <CardHeader className="items-start">
-          <Badge
-            className={cn(
-              'inline-flex border gap-1 py-1.5 bg-gray-100 text-gray-800 border-gray-200'
-            )}
-          >
+          <ColoredBadge color="default">
             <feature.icon className="w-4 h-4" />
             {feature.summary}
-          </Badge>
+          </ColoredBadge>
         </CardHeader>
         <CardContent>{feature.description}</CardContent>
       </Card>
