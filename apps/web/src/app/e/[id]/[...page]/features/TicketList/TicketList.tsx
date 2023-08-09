@@ -23,7 +23,7 @@ export function TicketList({eventSignUps}: Props) {
               <Text>{`quantity: ${ticketSale.quantity}`}</Text>
             </div>
             {ticketSale.ticket.description && (
-              <div className="bg-gray-100 p-2 rounded-xl">
+              <div className="bg-muted p-2 rounded-xl">
                 <Text className="">{`${ticketSale.ticket.description}`}</Text>
               </div>
             )}
