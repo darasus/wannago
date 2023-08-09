@@ -10,9 +10,6 @@ jobs:
       - name: Print URL 🖨
         run: echo Testing URL ${{ github.event.deployment_status.target_url }}
 
-      - name: Print GitHub env variables 🖨
-        run: npx @bahmutov/print-env GITHUB
-
       - name: Checkout 🛎
         uses: actions/checkout@v3
         with:
@@ -27,13 +24,42 @@ jobs:
         with:
             node-version: 18
             cache: 'pnpm'
+            
+      - name: Install dependencies
+        run: pnpm install
 
-      - name: Run Cypress 🌲
-        uses: cypress-io/github-action@v2
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
         with:
-            command: pnpm test:e2e
+            path: ~/.cache/Cypress
+            key: cypress-${{ runner.os }}-cypress-${{ hashFiles('**/package.json') }}
+            restore-keys: |
+              cypress-${{ runner.os }}-cypress-
+
+      - name: install dependencies and verify Cypress
+        env:
+            CI: 1
+        run: |
+            pnpm install
+            pnpm dlx cypress verify
+            pnpm dlx cypress info
+            pnpm dlx cypress version
+            pnpm dlx cypress version --component package
+            pnpm dlx cypress version --component binary
+            pnpm dlx cypress version --component electron
+            pnpm dlx cypress version --component node
+        
+      - name: Cypress run
+        run: pnpm run-p --race web:start test:e2e
         env:
             CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
+
+    #   - name: Run Cypress 🌲
+    #     uses: cypress-io/github-action@v2
+    #     with:
+    #         command: pnpm test:e2e
+    #     env:
+    #         CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
         #   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
       # if you are NOT using Cypress GitHub Integration App, then set commit status manually
