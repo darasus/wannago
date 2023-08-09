@@ -1,0 +1,16 @@
+{
+  "name": "web-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test:e2e": "dotenv -e ../../.vercel/.env.development.local --  pnpm cypress run",
+    "test:e2e:dev": "dotenv -e ../../.vercel/.env.development.local -- pnpm cypress open"
+  },
+  "dependencies": {
+    "database": "workspace:*"
+  },
+  "devDependencies": {
+    "cypress": "12.3.0",
+    "eslint-config-custom": "workspace:*"
+  }
+}
