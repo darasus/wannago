@@ -1,3 +1,5 @@
+import {user_1_email} from '../../constants';
+
 // TODO REMOVE THIS WHEN YOU CAN!!!
 Cypress.on('uncaught:exception', (err, runnable) => {
   // returning false here prevents Cypress from
@@ -6,10 +8,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 Cypress.Commands.addAll({
-  login(user_email = 'user_1_email') {
+  login(email = user_1_email) {
     cy.visit('/', {failOnStatusCode: false});
     cy.get('[data-testid="login-button"]').click();
-    cy.get('[data-testid="login-email-input"]').type(Cypress.env(user_email));
+    cy.get('[data-testid="login-email-input"]').type(email);
     cy.get('[data-testid="login-email-form-submit"]').click();
     cy.get('[data-testid="login-code-input"]').type(Cypress.env('otp'));
     cy.get('[data-testid="add-event-button"]');
@@ -34,12 +36,12 @@ Cypress.Commands.addAll({
     cy.get(
       '[data-testid="event-form-start-date"] > [data-testid="calendar-button"]'
     ).click();
-    cy.get('[data-testid="calendar-next-month-button"]').click();
+    cy.get('[data-testid="calendar-next-month-button"]').last().click();
     cy.get('[data-testid="calendar-date-button"]').contains('20').click();
     cy.get(
       '[data-testid="event-form-end-date"] > [data-testid="calendar-button"]'
     ).click();
-    cy.get('[data-testid="calendar-next-month-button"]').click();
+    cy.get('[data-testid="calendar-next-month-button"]').last().click();
     cy.get('[data-testid="calendar-date-button"]').contains('21').click();
     // address
     cy.get('[data-testid="event-form-address-button"]').click();

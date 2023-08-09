@@ -79,7 +79,8 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
         eventId: event.id,
         hasPlusOne: data.hasPlusOne,
       })
-      .then(() => {
+      .then(async () => {
+        await revalidateGetMySignUp({eventId: event.id});
         router.refresh();
         confetti();
         logEvent('event_sign_up_submitted', {
