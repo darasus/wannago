@@ -145,7 +145,7 @@ export function TicketSelectorModal({
                           </FormItem>
                         </div>
                         {description && (
-                          <div className="bg-gray-100 p-2 rounded-xl">
+                          <div className="bg-muted p-2 rounded-xl">
                             <Text>{description}</Text>
                           </div>
                         )}
