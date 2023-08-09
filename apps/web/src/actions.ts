@@ -31,6 +31,14 @@ export async function revalidateGetConversationById({
   });
 }
 
+export async function revalidateGetAttendees({
+  eventShortId,
+}: {
+  eventShortId: string;
+}) {
+  await api.event.getAttendees.revalidate({eventShortId});
+}
+
 export async function revalidateGetAllEventsAttendees({
   eventShortId,
 }: {
