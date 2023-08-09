@@ -1,6 +1,6 @@
 'use client';
 
-import {Badge, Button, Container, LoadingWave} from 'ui';
+import {Badge, Button, Container} from 'ui';
 import {ChevronDown} from 'lucide-react';
 
 const sizes = ['sm', 'lg'] as const;
@@ -97,9 +97,6 @@ export default function PlaygroundPage() {
             </div>
           );
         })}
-      </Section>
-      <Section>
-        <LoadingWave />
       </Section>
     </Container>
   );

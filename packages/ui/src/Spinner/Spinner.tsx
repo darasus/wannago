@@ -4,10 +4,10 @@ interface Props {
   className?: string;
 }
 
-export function Spinner({className = 'h-3 w-3'}: Props) {
+export function Spinner({className = 'h-6 w-6'}: Props) {
   return (
     <svg
-      className={cn('animate-spin block', className)}
+      className={cn('animate-spin block text-primary', className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

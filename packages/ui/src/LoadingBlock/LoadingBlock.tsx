@@ -1,9 +1,9 @@
-import {LoadingWave} from '../LoadingWave/LoadingWave';
+import {Spinner} from '../Spinner/Spinner';
 
 export function LoadingBlock() {
   return (
     <div className="flex justify-center">
-      <LoadingWave />
+      <Spinner />
     </div>
   );
 }
