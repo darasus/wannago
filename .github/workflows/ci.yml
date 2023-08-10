@@ -6,6 +6,10 @@ jobs:
     # only runs this job on successful deploy
     if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
     steps:
       - name: Print URL 🖨
         run: echo Testing URL ${{ github.event.deployment_status.target_url }}
