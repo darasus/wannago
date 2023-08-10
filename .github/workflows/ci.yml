@@ -50,7 +50,7 @@ jobs:
             pnpm dlx cypress version --component node
         
       - name: Cypress run
-        run: pnpm test:e2e
+        run: pnpm turbo run test:e2e --filter web-e2e
         env:
             CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
 
