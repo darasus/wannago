@@ -47,7 +47,7 @@ const moduleExports = {
       'gravatar.com',
       'www.wannago.app',
       'wannago.app',
-      'vercel.app',
+      'wannago-*-darasus-team.vercel.app',
       'localhost',
     ],
   },
