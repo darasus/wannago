@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "test:e2e:ci": "dotenv -e ../../.vercel/.env.development.local --  pnpm cypress run --record --parallel --auto-cancel-after-failures 1",
     "test:e2e": "dotenv -e ../../.vercel/.env.development.local --  pnpm cypress run",
     "test:e2e:dev": "dotenv -e ../../.vercel/.env.development.local -- pnpm cypress open"
   },
@@ -10,7 +11,7 @@
     "database": "workspace:*"
   },
   "devDependencies": {
-    "cypress": "12.3.0",
+    "cypress": "12.17.3",
     "eslint-config-custom": "workspace:*"
   }
 }

@@ -53,6 +53,10 @@
       "outputs": [],
       "cache": false
     },
+    "test:e2e:ci": {
+      "outputs": [],
+      "cache": false
+    },
     "test:e2e:dev": {
       "outputs": [],
       "cache": false,

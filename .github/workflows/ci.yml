@@ -50,7 +50,7 @@ jobs:
             pnpm dlx cypress version --component node
         
       - name: Cypress run
-        run: pnpm turbo run test:e2e --filter web-e2e
+        run: pnpm turbo run test:e2e:ci --filter web-e2e
         env:
             CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
             NEXT_PUBLIC_BASE_URL: ${{ github.event.deployment_status.target_url }}
@@ -88,6 +88,7 @@ jobs:
             STABILITY_AI_API_KEY: "STABILITY_AI_API_KEY"
             INNGEST_SIGNING_KEY: ${{ secrets.INNGEST_SIGNING_KEY }}
             INNGEST_EVENT_KEY: ${{ secrets.INNGEST_EVENT_KEY }}
+            CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
     #   - name: Run Cypress 🌲
     #     uses: cypress-io/github-action@v2
