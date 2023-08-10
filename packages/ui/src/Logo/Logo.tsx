@@ -1,6 +1,5 @@
 import Link, {LinkProps} from 'next/link';
 import Image from 'next/image';
-import {getBaseUrl} from 'utils';
 import {useTheme} from 'next-themes';
 
 interface Props extends LinkProps {
@@ -23,11 +22,7 @@ export function LogoView({className}: {className?: string}) {
   return (
     <div className="h-[40px] flex items-center">
       <Image
-        src={
-          resolvedTheme === 'dark'
-            ? `${getBaseUrl()}/logo-light.png`
-            : `${getBaseUrl()}/logo-dark.png`
-        }
+        src={resolvedTheme === 'dark' ? `/logo-light.png` : `/logo-dark.png`}
         width={width}
         height={height}
         alt="WannaGo logo"
