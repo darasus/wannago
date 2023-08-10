@@ -19,7 +19,6 @@ interface Props {
 export function AddEventForm({me, myOrganizations}: Props) {
   const {logEvent} = useAmplitude();
   const router = useRouter();
-  const {push} = useRouter();
   const form = useEventForm({me});
   const {handleSubmit} = form;
 
@@ -51,7 +50,7 @@ export function AddEventForm({me, myOrganizations}: Props) {
           eventId: data?.id,
         });
         if (data?.id) {
-          push(`/e/${data.shortId}`);
+          router.push(`/e/${data.shortId}`);
         }
       })
       .catch((error) => {
