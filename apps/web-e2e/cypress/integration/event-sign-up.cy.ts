@@ -1,6 +1,10 @@
 import {user_1_email, user_1_id} from '../../constants';
 
 describe('create event', () => {
+  beforeEach(() => {
+    cy.task('db:reset');
+  });
+
   it('can sign up (free event)', () => {
     cy.visit('/', {failOnStatusCode: false});
     cy.login(user_1_email);

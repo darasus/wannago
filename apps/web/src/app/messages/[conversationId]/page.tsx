@@ -61,13 +61,13 @@ export default async function ConversationPage({
             return (
               <div
                 key={message.id}
-                className="flex items-center bg-gray-100 rounded-md p-4"
+                className="flex items-center bg-muted rounded-md p-4"
               >
                 <div className="grow">
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-1">
                       <Avatar
-                        className="w-5 h-5"
+                        className="w-7 h-7"
                         src={message.user?.profileImageSrc}
                         width={100}
                         height={100}
