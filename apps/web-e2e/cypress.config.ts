@@ -18,7 +18,7 @@ export default defineConfig({
     supportFile: 'cypress/support/commands.ts',
     viewportHeight: 1000,
     viewportWidth: 1240,
-    video: false,
+    video: true,
     execTimeout: 60000,
     taskTimeout: 60000,
     defaultCommandTimeout: 60000,
