@@ -53,7 +53,41 @@ jobs:
         run: pnpm turbo run test:e2e --filter web-e2e
         env:
             CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
+            NEXT_PUBLIC_BASE_URL: ${{ github.event.deployment_status.target_url }}
+            NEXT_PUBLIC_VERCEL_URL: ${{ github.event.deployment_status.target_url }}
+            TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+            TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+            VERCEL_ANALYTICS_ID: ${{ secrets.VERCEL_ANALYTICS_ID }}
+            VERCEL_WEB_ANALYTICS_ID: ${{ secrets.VERCEL_WEB_ANALYTICS_ID }}
+            VERCEL_ENV: ${{ secrets.VERCEL_ENV }}
+            NEXT_PUBLIC_CLERK_FRONTEND_API: ${{ secrets.NEXT_PUBLIC_CLERK_FRONTEND_API }}
+            CLERK_API_KEY: ${{ secrets.CLERK_API_KEY }}
+            MIGRATE_DATABASE_URL: ${{ secrets.MIGRATE_DATABASE_URL }}
+            NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
+            CLERK_JWT_KEY: ${{ secrets.CLERK_JWT_KEY }}
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
+            PRISMA_GENERATE_DATAPROXY: ${{ secrets.PRISMA_GENERATE_DATAPROXY }}
+            UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+            UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+            CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
+            QSTASH_URL: ${{ secrets.QSTASH_URL }}
+            QSTASH_TOKEN: ${{ secrets.QSTASH_TOKEN }}
+            QSTASH_CURRENT_SIGNING_KEY: ${{ secrets.QSTASH_CURRENT_SIGNING_KEY }}
+            QSTASH_NEXT_SIGNING_KEY: ${{ secrets.QSTASH_NEXT_SIGNING_KEY }}
+            SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+            SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+            NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
+            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+            NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+            NEXT_PUBLIC_AMPLITUDE_API_KEY: ${{ secrets.NEXT_PUBLIC_AMPLITUDE_API_KEY }}
+            POSTMARK_API_KEY: ${{ secrets.POSTMARK_API_KEY }}
+            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+            NEXT_PUBLIC_VERCEL_ENV: ${{ secrets.NEXT_PUBLIC_VERCEL_ENV }}
+            STRIPE_API_SECRET: "STRIPE_API_SECRET"
+            STRIPE_ENDPOINT_SECRET: "STRIPE_ENDPOINT_SECRET"
+            STABILITY_AI_API_KEY: "STABILITY_AI_API_KEY"
+            INNGEST_SIGNING_KEY: ${{ secrets.INNGEST_SIGNING_KEY }}
+            INNGEST_EVENT_KEY: ${{ secrets.INNGEST_EVENT_KEY }}
 
     #   - name: Run Cypress 🌲
     #     uses: cypress-io/github-action@v2
