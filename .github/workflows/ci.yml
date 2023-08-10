@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        containers: [1, 2, 3]
+        containers: [1]
     steps:
       - name: Print URL 🖨
         run: echo Testing URL ${{ github.event.deployment_status.target_url }}
