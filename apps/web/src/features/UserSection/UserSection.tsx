@@ -30,8 +30,7 @@ export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
   const isPublicPage = getIsPublic(pathname ?? '/');
 
   const onSignOutClick = async () => {
-    // await signOut();
-    window.location.href = '/';
+    router.push('/logout');
   };
 
   if (isPublicPage) {
