@@ -5,7 +5,6 @@ import {Postmark} from 'lib/src/postmark';
 import {CacheService} from 'lib/src/cache';
 import {getCurrencyFromHeaders} from 'utils';
 import {getEvents} from './actions/getEvents';
-import {getUserByExternalId} from './actions/getUserByExternalId';
 import {getUserById} from './actions/getUserById';
 import {getOrganizationById} from './actions/getOrganizationById';
 import {getEvent} from './actions/getEvent';
@@ -25,7 +24,6 @@ import {getPageSession} from 'auth';
 
 const actions = {
   getEvents,
-  getUserByExternalId,
   getUserById,
   getOrganizationById,
   getEvent,

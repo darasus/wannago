@@ -17,14 +17,14 @@ export function canModifyEvent(ctx: ActionContext) {
         OR: [
           {
             user: {
-              externalId: ctx.auth?.userId,
+              id: ctx.auth?.user?.id,
             },
           },
           {
             organization: {
               users: {
                 some: {
-                  externalId: ctx.auth?.userId,
+                  id: ctx.auth?.user?.id,
                 },
               },
             },
@@ -33,7 +33,7 @@ export function canModifyEvent(ctx: ActionContext) {
       },
     });
 
-    invariant(ctx.auth?.userId && event, forbiddenError);
+    invariant(ctx.auth?.user?.id && event, forbiddenError);
 
     return true;
   };

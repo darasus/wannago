@@ -14,7 +14,7 @@
 //   )
 //   .mutation(async ({input, ctx}) => {
 //     const user = await ctx.actions.getUserByExternalId({
-//       externalId: ctx.auth?.userId,
+//       id: ctx.auth?.user?.id,
 //       includeOrganization: true,
 //     });
 

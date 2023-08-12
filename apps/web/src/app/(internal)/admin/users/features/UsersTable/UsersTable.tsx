@@ -44,9 +44,6 @@ const columns = [
   columnHelper.accessor('id', {
     cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('externalId', {
-    cell: (info) => info.renderValue(),
-  }),
 ];
 
 interface UsersTableProps {

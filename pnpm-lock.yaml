@@ -501,9 +501,6 @@ importers:
       cards:
         specifier: workspace:*
         version: link:../../packages/cards
-      clerk-webhook-handler:
-        specifier: workspace:*
-        version: link:../../packages/clerk-webhook-handler
       client-env:
         specifier: workspace:*
         version: link:../../packages/client-env
@@ -648,40 +645,6 @@ importers:
       ui:
         specifier: workspace:*
         version: link:../ui
-      utils:
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-
-  packages/clerk-webhook-handler:
-    dependencies:
-      database:
-        specifier: workspace:*
-        version: link:../database
-      email:
-        specifier: workspace:*
-        version: link:../email
-      error:
-        specifier: workspace:*
-        version: link:../error
-      inngest-client:
-        specifier: workspace:*
-        version: link:../inngest-client
-      lib:
-        specifier: workspace:*
-        version: link:../lib
-      server-env:
-        specifier: workspace:*
-        version: link:../server-env
-      types:
-        specifier: workspace:*
-        version: link:../types
       utils:
         specifier: workspace:*
         version: link:../utils

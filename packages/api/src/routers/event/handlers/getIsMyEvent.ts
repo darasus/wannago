@@ -8,7 +8,7 @@ export const getIsMyEvent = publicProcedure
     })
   )
   .query(async ({input, ctx}) => {
-    if (!ctx.auth?.userId) {
+    if (!ctx.auth?.user?.id) {
       return false;
     }
 
@@ -18,14 +18,14 @@ export const getIsMyEvent = publicProcedure
         OR: [
           {
             user: {
-              externalId: ctx.auth?.userId,
+              id: ctx.auth?.user?.id,
             },
           },
           {
             organization: {
               users: {
                 some: {
-                  externalId: ctx.auth?.userId,
+                  id: ctx.auth?.user?.id,
                 },
               },
             },

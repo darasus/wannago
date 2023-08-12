@@ -29,7 +29,7 @@ export const createCheckoutSession = protectedProcedure
             id: input.userId,
           },
           {
-            externalId: ctx.auth.user?.id,
+            id: ctx.auth?.user?.id,
           },
         ],
       },
@@ -155,7 +155,7 @@ export const createCheckoutSession = protectedProcedure
       },
       allow_promotion_codes: false,
       metadata: {
-        externalUserId: ctx.auth.user?.id,
+        externalUserId: ctx.auth?.user?.id,
         eventId: input.eventId,
         tickets: JSON.stringify(
           input.tickets.map((t) => {

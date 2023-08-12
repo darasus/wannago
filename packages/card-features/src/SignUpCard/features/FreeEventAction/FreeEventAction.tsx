@@ -1,8 +1,7 @@
 'use client';
 
-import {useAuth} from '@clerk/nextjs';
 import {Event} from '@prisma/client';
-import {useAmplitude, useConfetti, useConfirmDialog} from 'hooks';
+import {useAmplitude, useConfetti, useConfirmDialog, useMe} from 'hooks';
 import {use, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'sonner';
@@ -36,7 +35,7 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
   const {confetti} = useConfetti();
   const {logEvent} = useAmplitude();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const auth = useAuth();
+  const me = useMe();
   const signUp = use(mySignUpPromise);
 
   const {modal: cancelModal, open: openCancelModal} = useConfirmDialog({
@@ -73,14 +72,14 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
   });
 
   const onJoinSubmit = form.handleSubmit(async (data) => {
-    if (!auth.isSignedIn) {
-      const token = await auth.getToken();
+    // if (!auth.isSignedIn) {
+    //   const token = await auth.getToken();
 
-      if (!token) {
-        setIsAuthModalOpen(true);
-        return;
-      }
-    }
+    //   if (!token) {
+    //     setIsAuthModalOpen(true);
+    //     return;
+    //   }
+    // }
 
     const promise = api.event.joinEvent
       .mutate({

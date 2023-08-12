@@ -1,9 +1,8 @@
 'use client';
 
-import {useAuth, useSignUp} from '@clerk/nextjs';
 import {useCallback, useState} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
-import {Button, CardBase, LoadingBlock, Text} from 'ui';
+import {Button, CardBase, Text} from 'ui';
 import {cn, sleep} from 'utils';
 import {titleFont} from '../../../../apps/web/src/fonts';
 import {z} from 'zod';
@@ -20,9 +19,6 @@ interface Props {
 }
 
 export function Register({onDone, onLoginClick, redirectUrlComplete}: Props) {
-  const {setSession, isLoaded} = useSignUp();
-  const {getToken} = useAuth();
-
   const [step, setStep] = useState<'user_info' | 'code'>('user_info');
   const userInfoForm = useForm<z.infer<typeof infoFormScheme>>({
     defaultValues: {
@@ -39,16 +35,14 @@ export function Register({onDone, onLoginClick, redirectUrlComplete}: Props) {
   });
 
   const ready = useCallback(async (): Promise<any> => {
-    const token = await getToken();
-
-    if (!token) {
-      await sleep(1000);
-      return ready();
-    }
-  }, [getToken]);
+    // if (!token) {
+    await sleep(1000);
+    return ready();
+    // }
+  }, []);
 
   const handleOnDone = async (createdSessionId: string): Promise<any> => {
-    await setSession?.(createdSessionId);
+    // await setSession?.(createdSessionId);
     await ready();
 
     if (onDone) {
@@ -62,25 +56,21 @@ export function Register({onDone, onLoginClick, redirectUrlComplete}: Props) {
     <div className="flex flex-col items-center gap-4">
       <Text className={cn('text-4xl', titleFont.className)}>Register</Text>
       <CardBase className="w-full">
-        {isLoaded ? (
-          <>
-            {step === 'user_info' && (
-              <FormProvider {...userInfoForm}>
-                <UserForm goToNextStep={() => setStep('code')} />
-              </FormProvider>
-            )}
-            {step === 'code' && (
-              <FormProvider {...codeForm}>
-                <CodeForm
-                  onDone={handleOnDone}
-                  email={userInfoForm.watch('email')}
-                />
-              </FormProvider>
-            )}
-          </>
-        ) : (
-          <LoadingBlock />
-        )}
+        <>
+          {step === 'user_info' && (
+            <FormProvider {...userInfoForm}>
+              <UserForm goToNextStep={() => setStep('code')} />
+            </FormProvider>
+          )}
+          {step === 'code' && (
+            <FormProvider {...codeForm}>
+              <CodeForm
+                onDone={handleOnDone}
+                email={userInfoForm.watch('email')}
+              />
+            </FormProvider>
+          )}
+        </>
       </CardBase>
       <div className="relative w-full">
         <div className="absolute inset-0 flex items-center">

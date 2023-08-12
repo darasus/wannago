@@ -55,7 +55,6 @@ const moduleExports = {
     'auth-features',
     'card-features',
     'cards',
-    'clerk-webhook-handler',
     'client-env',
     'config',
     'database',

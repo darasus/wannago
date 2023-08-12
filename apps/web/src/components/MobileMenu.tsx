@@ -8,22 +8,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from 'ui';
-import {useAuth} from '@clerk/nextjs';
 import {usePathname} from 'next/navigation';
 import {Menu} from 'lucide-react';
 import {getIsPublic, navItems} from 'const';
 import Link from 'next/link';
+import {useMe} from 'hooks';
 
 export function MobileMenu() {
   const pathname = usePathname();
   const isPublic = getIsPublic(pathname ?? '/');
-  const auth = useAuth();
+  const me = useMe();
 
   if (!isPublic) {
     return null;
   }
 
-  const showAuthButtons = auth.isLoaded && !auth.isSignedIn;
+  const showAuthButtons = !me?.id;
 
   return (
     <div className="-mr-1 md:hidden">

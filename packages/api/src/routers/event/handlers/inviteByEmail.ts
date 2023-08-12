@@ -40,7 +40,6 @@ export const inviteByEmail = protectedProcedure
           email: input.email,
           firstName: input.firstName,
           lastName: input.lastName,
-          externalId: null,
           preferredCurrency: 'USD',
         },
       });

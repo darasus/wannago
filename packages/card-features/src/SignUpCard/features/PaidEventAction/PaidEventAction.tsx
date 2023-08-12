@@ -1,6 +1,5 @@
 'use client';
 
-import {useAuth} from '@clerk/nextjs';
 import {Event, Ticket} from '@prisma/client';
 import {use, useState} from 'react';
 import {useForm} from 'react-hook-form';
@@ -9,6 +8,7 @@ import {formatCents} from 'utils';
 import {AuthModal} from '../AuthModal/AuthModal';
 import {TicketSelectorModal} from '../TicketSelectorModal/TicketSelectorModal';
 import {api} from '../../../../../../apps/web/src/trpc/client';
+import {useMe} from 'hooks';
 
 interface Props {
   event: Event & {tickets: Ticket[]} & {isPast: boolean};
@@ -20,18 +20,17 @@ export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isTicketSelectorModalOpen, setIsTicketSelectorModalOpen] =
     useState(false);
-  const auth = useAuth();
+  const me = useMe();
   const form = useForm();
   const myTickets = use(myTicketPromise);
 
   const onJoinSubmit = form.handleSubmit(async (data) => {
-    if (!auth.isSignedIn) {
-      const token = await auth.getToken();
-
-      if (!token) {
-        setIsAuthModalOpen(true);
-        return;
-      }
+    if (!me?.id) {
+      // const token = await auth.getToken();
+      // if (!token) {
+      //   setIsAuthModalOpen(true);
+      //   return;
+      // }
     }
 
     if (event.tickets.length > 0) {

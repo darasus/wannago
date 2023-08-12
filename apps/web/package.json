@@ -10,7 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "clerk-webhook-handler": "workspace:*",
     "database": "workspace:*",
     "auth": "workspace:*",
     "const": "workspace:*",

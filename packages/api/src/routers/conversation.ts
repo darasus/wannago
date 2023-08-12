@@ -155,7 +155,7 @@ const sendMessage = protectedProcedure
 const getMyConversations = protectedProcedure.query(async ({ctx}) => {
   const user = await ctx.prisma.user.findFirst({
     where: {
-      externalId: ctx.auth?.userId,
+      id: ctx.auth?.user?.id,
     },
     include: {
       organizations: true,
@@ -215,7 +215,7 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
 const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
   const user = await ctx.prisma.user.findFirst({
     where: {
-      externalId: ctx.auth?.userId,
+      id: ctx.auth?.user?.id,
     },
     include: {
       organizations: true,
@@ -294,7 +294,7 @@ const markConversationAsSeen = protectedProcedure
   .mutation(async ({ctx, input}) => {
     const user = await ctx.prisma.user.findFirst({
       where: {
-        externalId: ctx.auth?.userId,
+        id: ctx.auth?.user?.id,
       },
     });
     const conversationLastSeen =

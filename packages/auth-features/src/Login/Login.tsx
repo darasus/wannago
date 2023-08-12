@@ -1,10 +1,9 @@
 'use client';
 
-import {useAuth, useSignIn} from '@clerk/nextjs';
 import {useCallback, useState} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
-import {CardBase, LoadingBlock, Button, Text} from 'ui';
-import {cn, sleep} from 'utils';
+import {CardBase, Button, Text} from 'ui';
+import {cn} from 'utils';
 import {titleFont} from '../../../../apps/web/src/fonts';
 import {z} from 'zod';
 import {codeFormScheme, emailFormScheme} from '../shared';
@@ -24,8 +23,8 @@ export function Login({
   onCreateAccountClick,
   redirectUrlComplete,
 }: Props) {
-  const {getToken} = useAuth();
-  const {setSession, isLoaded} = useSignIn();
+  // const {getToken} = useAuth();
+  // const {setSession, isLoaded} = useSignIn();
   const [step, setStep] = useState<'email' | 'code'>('email');
   const emailForm = useForm<z.infer<typeof emailFormScheme>>({
     defaultValues: {
@@ -40,17 +39,16 @@ export function Login({
   });
 
   const ready = useCallback(async (): Promise<any> => {
-    const token = await getToken();
-
-    if (!token) {
-      await sleep(1000);
-      return ready();
-    }
-  }, [getToken]);
+    // const token = await getToken();
+    // if (!token) {
+    //   await sleep(1000);
+    //   return ready();
+    // }
+  }, []);
 
   const handleOnDone = useCallback(
     async (createdSessionId: string) => {
-      await setSession?.(createdSessionId);
+      // await setSession?.(createdSessionId);
       await ready();
 
       if (onDone) {
@@ -59,32 +57,28 @@ export function Login({
         window.location.href = '/dashboard';
       }
     },
-    [ready, setSession, onDone]
+    [ready, onDone]
   );
 
   return (
     <div className="flex flex-col items-center gap-4">
       <Text className={cn('text-4xl', titleFont.className)}>Login</Text>
       <CardBase className="w-full">
-        {isLoaded ? (
-          <>
-            {step === 'email' && (
-              <FormProvider {...emailForm}>
-                <EmailForm goToNextStep={() => setStep('code')} />
-              </FormProvider>
-            )}
-            {step === 'code' && (
-              <FormProvider {...codeForm}>
-                <CodeForm
-                  onDone={handleOnDone}
-                  email={emailForm.watch('email')}
-                />
-              </FormProvider>
-            )}
-          </>
-        ) : (
-          <LoadingBlock />
-        )}
+        <>
+          {step === 'email' && (
+            <FormProvider {...emailForm}>
+              <EmailForm goToNextStep={() => setStep('code')} />
+            </FormProvider>
+          )}
+          {step === 'code' && (
+            <FormProvider {...codeForm}>
+              <CodeForm
+                onDone={handleOnDone}
+                email={emailForm.watch('email')}
+              />
+            </FormProvider>
+          )}
+        </>
       </CardBase>
       <div className="relative w-full">
         <div className="absolute inset-0 flex items-center">
