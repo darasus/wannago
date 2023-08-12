@@ -1,13 +1,8 @@
-import {
-  clerkClient as clerk,
-  getAuth,
-  createClerkClient,
-} from '@clerk/nextjs/server';
+import {clerkClient as clerk, createClerkClient} from '@clerk/nextjs/server';
 import {Currency} from '@prisma/client';
 import {prisma} from 'database';
 import {Postmark} from 'lib/src/postmark';
 import {CacheService} from 'lib/src/cache';
-import {SignedInAuthObject, SignedOutAuthObject} from '@clerk/clerk-sdk-node';
 import {getCurrencyFromHeaders} from 'utils';
 import {getEvents} from './actions/getEvents';
 import {getUserByExternalId} from './actions/getUserByExternalId';
@@ -26,6 +21,7 @@ import {Inngest, EventSchemas} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
 import type {NextRequest} from 'next/server';
 import {NextApiRequest} from 'next';
+import {getPageSession} from 'auth';
 
 const actions = {
   getEvents,
@@ -55,7 +51,7 @@ type Assertions = {
 };
 
 interface CreateInnerContextOptions {
-  auth: SignedInAuthObject | SignedOutAuthObject | null;
+  auth: Awaited<ReturnType<typeof getPageSession> | null>;
   clerk: ReturnType<typeof createClerkClient>;
   prisma: typeof prisma;
   timezone: string | undefined;
@@ -95,9 +91,9 @@ const inngest = new Inngest({
 });
 export type InngestType = typeof inngest;
 
-export function createContext(opts: {
+export async function createContext(opts: {
   req: NextRequest | NextApiRequest;
-}): Context {
+}): Promise<Context> {
   let timezone: string | undefined = undefined;
   let country: string | undefined = undefined;
 
@@ -118,7 +114,7 @@ export function createContext(opts: {
   }
 
   const currency = getCurrencyFromHeaders(country);
-  const auth = getAuth(opts.req);
+  const auth = await getPageSession();
 
   const innerContext = createContextInner({
     auth,

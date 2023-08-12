@@ -25,7 +25,7 @@ const me = publicProcedure.query(async ({ctx}) => {
   }
 
   return _getUserByExternalId(ctx)({
-    externalId: ctx.auth.userId,
+    externalId: ctx.auth.user?.id,
   });
 });
 
@@ -59,7 +59,7 @@ const getMyTickets = protectedProcedure.query(async ({ctx, input}) => {
   return ctx.prisma.ticketSale.findMany({
     where: {
       user: {
-        externalId: ctx.auth.userId,
+        externalId: ctx.auth.user?.id,
       },
     },
     include: {

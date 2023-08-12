@@ -98,6 +98,8 @@ model User {
   following             Follow[]               @relation(name: "FollowerUser")
   ticketSale            TicketSale[]
   preferredCurrency     Currency?              @default(USD)
+  auth_session          Session[]
+  key                   Key[]
 
   @@index([externalId])
   @@index([email])
@@ -210,4 +212,23 @@ enum Currency {
   USD
   EUR
   GBP
+}
+
+model Session {
+  id             String @id @unique
+  user_id        String
+  active_expires BigInt
+  idle_expires   BigInt
+  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model Key {
+  id              String  @id @unique
+  hashed_password String?
+  user_id         String
+  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
 }

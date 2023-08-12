@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "auth",
   "version": "1.0.0",
   "license": "MIT",
   "main": "./index.ts",
@@ -9,16 +9,9 @@
   "dependencies": {
     "server-env": "workspace:*",
     "client-env": "workspace:*",
-    "stripe-webhook-input-validation": "workspace:*",
-    "utils": "workspace:*",
-    "auth": "workspace:*",
-    "inngest-client": "workspace:*",
-    "error": "workspace:*",
+    "database": "workspace:*",
     "types": "workspace:*",
-    "const": "workspace:*",
-    "email": "workspace:*",
-    "lib": "workspace:*",
-    "database": "workspace:*"
+    "utils": "workspace:*"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",

@@ -16,7 +16,7 @@ export const deleteAccountLink = protectedProcedure
     const stripe = new Stripe().client;
 
     const organizer = await getOrganizerById(ctx)({
-      id: ctx.auth.userId,
+      id: ctx.auth.user?.id,
     });
 
     invariant(organizer, organizerNotFoundError);

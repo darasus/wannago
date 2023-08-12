@@ -16,7 +16,7 @@ export const getMyTicketsByEvent = publicProcedure
     }
 
     const user = await getUserByExternalId(ctx)({
-      externalId: ctx.auth.userId,
+      externalId: ctx.auth.user?.id,
     });
     const event = await ctx.prisma.event.findUnique({
       where: {
