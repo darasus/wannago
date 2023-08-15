@@ -1,2 +1,2 @@
-export {Login} from './src/Login/Login';
-export {Register} from './src/Register/Register';
+export {SignIn} from './src/SignIn/SignIn';
+export {SignUp} from './src/SignUp/SignUp';

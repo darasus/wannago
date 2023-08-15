@@ -21,7 +21,7 @@ export const GET = async (request: NextRequest) => {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: '/login', // redirect to login page
+      Location: '/sign-in', // redirect to login page
     },
   });
 };

@@ -44,7 +44,7 @@ export function MobileMenu() {
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild data-testid="mobile-login-button">
-                  <Link className="font-bold" href={'/login'}>
+                  <Link className="font-bold" href={'/sign-in'}>
                     Login
                   </Link>
                 </DropdownMenuItem>

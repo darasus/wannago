@@ -1,4 +1,3 @@
-import {clerkClient as clerk, createClerkClient} from '@clerk/nextjs/server';
 import {Currency} from '@prisma/client';
 import {prisma} from 'database';
 import {Postmark} from 'lib/src/postmark';
@@ -18,9 +17,11 @@ import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
 import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
 import {Inngest, EventSchemas} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
-import type {NextRequest} from 'next/server';
+import {NextRequest} from 'next/server';
 import {NextApiRequest} from 'next';
-import {getPageSession} from 'auth';
+import {getPageSession, auth as _auth} from 'auth';
+import {cookies} from 'next/headers';
+import {AuthRequest} from 'lucia';
 
 const actions = {
   getEvents,
@@ -50,7 +51,7 @@ type Assertions = {
 
 interface CreateInnerContextOptions {
   auth: Awaited<ReturnType<typeof getPageSession> | null>;
-  clerk: ReturnType<typeof createClerkClient>;
+  authRequest: AuthRequest | null;
   prisma: typeof prisma;
   timezone: string | undefined;
   currency: Currency;
@@ -69,7 +70,7 @@ export function createContextInner(
 ): CreateInnerContextOptions {
   return {
     auth: _opts.auth,
-    clerk: _opts.clerk,
+    authRequest: _opts.authRequest,
     prisma: _opts.prisma,
     timezone: _opts.timezone,
     currency: _opts.currency,
@@ -114,9 +115,18 @@ export async function createContext(opts: {
   const currency = getCurrencyFromHeaders(country);
   const auth = await getPageSession();
 
+  let authRequest: any = null;
+
+  if (opts.req instanceof NextRequest) {
+    authRequest = _auth.handleRequest({
+      request: opts.req,
+      cookies,
+    });
+  }
+
   const innerContext = createContextInner({
     auth,
-    clerk,
+    authRequest,
     prisma,
     timezone,
     currency,

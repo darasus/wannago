@@ -37,7 +37,7 @@ export async function Header() {
                 size="sm"
                 data-testid="login-button"
               >
-                <Link href="/login">Login</Link>
+                <Link href="/sign-in">Sign in</Link>
               </Button>
             )}
           </div>

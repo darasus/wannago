@@ -16,8 +16,8 @@ export function getIsPublic(pathname: string) {
 
   return [
     '/examples',
-    '/login',
-    '/register',
+    '/sign-in',
+    '/sign-up',
     '/terms',
     '/#how-does-it-work',
     '/#features',

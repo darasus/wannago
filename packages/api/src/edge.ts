@@ -7,6 +7,7 @@ import {followRouter} from './routers/follow';
 import {mapsRouter} from './routers/maps';
 import {eventRouter} from './routers/event';
 import {userRouter} from './routers/user';
+import {authRouter} from './routers/auth';
 
 export const edgeRouter = createTRPCRouter({
   maps: mapsRouter,
@@ -17,4 +18,5 @@ export const edgeRouter = createTRPCRouter({
   conversation: conversationRouter,
   event: eventRouter,
   user: userRouter,
+  auth: authRouter,
 });
