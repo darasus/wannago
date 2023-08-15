@@ -86,6 +86,7 @@ export function SignIn({}: Props) {
                       <Input
                         {...field}
                         disabled={form.formState.isSubmitting}
+                        type="password"
                       />
                     </FormControl>
                     <FormMessage />

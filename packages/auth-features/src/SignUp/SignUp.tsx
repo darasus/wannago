@@ -124,6 +124,7 @@ export function SignUp({}: Props) {
                         {...field}
                         disabled={form.formState.isSubmitting}
                         type="password"
+                        autoComplete="new-password"
                       />
                     </FormControl>
                     <FormMessage />
