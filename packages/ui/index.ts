@@ -140,3 +140,4 @@ export {
   CardHeader,
   CardTitle,
 } from './src/Card/Card';
+export {Banner} from './src/Banner/Banner';

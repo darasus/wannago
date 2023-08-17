@@ -2,10 +2,7 @@ import {z} from 'zod';
 import {publicProcedure} from '../../trpc';
 import {auth} from 'auth';
 import {TRPCError} from '@trpc/server';
-import {
-  generateEmailVerificationToken,
-  sendEmailVerificationLink,
-} from './utils';
+import {generateEmailVerificationToken} from './utils';
 import {Prisma} from '@prisma/client';
 import {v4 as uuid} from 'uuid';
 
@@ -43,7 +40,12 @@ export const signUp = publicProcedure
 
       const token = await generateEmailVerificationToken(user.userId);
 
-      await sendEmailVerificationLink(token);
+      await ctx.postmark.sendToTransactionalStream({
+        to: input.email,
+        subject: 'Verify your email',
+        replyTo: 'no-reply@wannago.app',
+        htmlString: `<p>${token}</p>`,
+      });
 
       return {
         success: true,
