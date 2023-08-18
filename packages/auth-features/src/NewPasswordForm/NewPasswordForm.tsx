@@ -13,7 +13,6 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from 'ui';
 import Link from 'next/link';
 import {useForm} from 'react-hook-form';
@@ -23,31 +22,37 @@ import {api} from '../../../../apps/web/src/trpc/client';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
 
-interface Props {}
+interface Props {
+  token: string;
+}
 
 const formSchema = z.object({
-  email: z.string().email(),
+  token: z.string(),
+  newPassword: z.string().min(6).max(255),
+  repeatNewPassword: z.string().min(6).max(255),
 });
 
-export function PasswordResetForm({}: Props) {
+export function NewPasswordForm({token}: Props) {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
+    defaultValues: {
+      token,
+    },
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    await api.auth.sendPasswordResetEmail
+    await api.auth.resetPassword
       .mutate(data)
       .then((res) => {
         if (res?.success) {
-          toast.success('Check your email for a link to reset your password.');
+          toast.success('Password is updated!');
           router.refresh();
           router.push('/sign-in');
         }
       })
       .catch((err) => {
         toast.error(err.message);
-        form.setFocus('email');
       });
   };
 
@@ -55,11 +60,7 @@ export function PasswordResetForm({}: Props) {
     <div className="flex flex-col items-center gap-4">
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Reset password</CardTitle>
-          <CardDescription>
-            Type your email address and we will send you a link to reset your
-            password.
-          </CardDescription>
+          <CardTitle>New password</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -69,14 +70,32 @@ export function PasswordResetForm({}: Props) {
             >
               <FormField
                 control={form.control}
-                name="email"
+                name="newPassword"
                 render={({field}) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>New password</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         disabled={form.formState.isSubmitting}
+                        type="password"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="repeatNewPassword"
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Repeat new password</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={form.formState.isSubmitting}
+                        type="password"
                       />
                     </FormControl>
                     <FormMessage />
@@ -88,7 +107,7 @@ export function PasswordResetForm({}: Props) {
                 isLoading={form.formState.isSubmitting}
                 disabled={form.formState.isSubmitting}
               >
-                Reset password
+                Submit new password
               </Button>
             </form>
           </Form>

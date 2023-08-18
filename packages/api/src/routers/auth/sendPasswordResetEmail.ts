@@ -28,7 +28,7 @@ export const sendPasswordResetEmail = publicProcedure
       await ctx.postmark.sendToTransactionalStream({
         to: user.email,
         subject: 'Password reset',
-        htmlString: `<p><a href="${getBaseUrl()}/auth/password-reset/${token}">link</a></p>`,
+        htmlString: `<p><a href="${getBaseUrl()}/password-reset/${token}">link</a></p>`,
       });
 
       return {success: true};

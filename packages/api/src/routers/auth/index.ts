@@ -4,6 +4,7 @@ import {signIn} from './signIn';
 import {verifyEmail} from './verifyEmail';
 import {sendEmailVerificationEmail} from './sendEmailVerificationEmail';
 import {sendPasswordResetEmail} from './sendPasswordResetEmail';
+import {resetPassword} from './resetPassword';
 
 export const authRouter = createTRPCRouter({
   signUp,
@@ -11,4 +12,5 @@ export const authRouter = createTRPCRouter({
   verifyEmail,
   sendEmailVerificationEmail,
   sendPasswordResetEmail,
+  resetPassword,
 });

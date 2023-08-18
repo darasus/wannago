@@ -73,20 +73,26 @@ export const validateEmailVerificationToken = async (token: string) => {
 export const generatePasswordResetToken = async (userId: string) => {
   const storedUserTokens = await prisma.passwordResetToken.findMany({
     where: {
-      user: {
-        id: userId,
-      },
+      user_id: userId,
     },
   });
+
   if (storedUserTokens.length > 0) {
     const reusableStoredToken = storedUserTokens.find((token) => {
       // check if expiration is within 1 hour
       // and reuse the token if true
-      return isWithinExpiration(Number(token.expires) - EXPIRES_IN / 2);
+      return isWithinExpiration(token.expires.getTime() - EXPIRES_IN / 2);
     });
-    if (reusableStoredToken) return reusableStoredToken.id;
+
+    if (reusableStoredToken) {
+      return reusableStoredToken.id;
+    }
   }
+
+  console.log('>>> storedUserTokens', storedUserTokens);
+
   const token = generateRandomString(63);
+
   await prisma.passwordResetToken.create({
     data: {
       id: token,
@@ -94,12 +100,13 @@ export const generatePasswordResetToken = async (userId: string) => {
       user_id: userId,
     },
   });
+
   return token;
 };
 
 export const validatePasswordResetToken = async (token: string) => {
   const storedToken = await prisma.$transaction(async (trx) => {
-    const storedToken = await prisma.passwordResetToken.findFirst({
+    const storedToken = await trx.passwordResetToken.findFirst({
       where: {
         id: token,
       },
@@ -109,13 +116,14 @@ export const validatePasswordResetToken = async (token: string) => {
       throw new Error('Invalid token');
     }
 
-    await prisma.passwordResetToken.delete({
+    await trx.passwordResetToken.delete({
       where: {
         id: storedToken.id,
       },
     });
     return storedToken;
   });
+
   const tokenExpires = storedToken.expires.getTime();
 
   if (!isWithinExpiration(tokenExpires)) {

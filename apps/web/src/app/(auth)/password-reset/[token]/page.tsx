@@ -1,10 +1,10 @@
-import {PasswordResetForm} from 'auth-features';
+import {NewPasswordForm} from 'auth-features';
 import {Container} from 'ui';
 
-export default function PasswordResetPage() {
+export default function PasswordResetPage({params}: {params: {token: string}}) {
   return (
     <Container maxSize="xs">
-      <PasswordResetForm />
+      <NewPasswordForm token={params.token} />
     </Container>
   );
 }
