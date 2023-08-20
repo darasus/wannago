@@ -2,18 +2,18 @@
 
 import {useEffect} from 'react';
 import {setContext} from '@sentry/nextjs';
-import {useAuth} from '@clerk/nextjs';
+import {useMe} from 'hooks';
 
 export function Sentry() {
-  const auth = useAuth();
+  const me = useMe();
 
   useEffect(() => {
-    if (auth?.userId) {
+    if (me?.id) {
       setContext('user', {
-        userId: auth?.userId,
+        userId: me?.id,
       });
     }
-  }, [auth?.userId]);
+  }, [me?.id]);
 
   return null;
 }

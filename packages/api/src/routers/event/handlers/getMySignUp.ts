@@ -8,7 +8,7 @@ export const getMySignUp = publicProcedure
     })
   )
   .query(async ({ctx, input}) => {
-    if (!ctx.auth?.userId) {
+    if (!ctx.auth?.user?.id) {
       return null;
     }
 
@@ -16,7 +16,7 @@ export const getMySignUp = publicProcedure
       where: {
         eventId: input.eventId,
         user: {
-          externalId: ctx.auth?.userId,
+          id: ctx.auth?.user?.id,
         },
       },
     });

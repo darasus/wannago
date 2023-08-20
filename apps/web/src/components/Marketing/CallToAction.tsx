@@ -17,7 +17,7 @@ export function CallToAction() {
           description="Nothing stops you from trying out WannaGo, just create free account and see for yourself."
         />
         <div className="flex justify-center">
-          <Button size="lg" onClick={() => router.push('/login')}>
+          <Button size="lg" onClick={() => router.push('/sign-in')}>
             Create account
           </Button>
         </div>

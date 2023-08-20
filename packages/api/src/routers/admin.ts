@@ -17,9 +17,6 @@ function createDateRange() {
 const getAllUsers = adminProcedure.query(async ({ctx}) => {
   const registeredUsers = await ctx.prisma.user.findMany({
     where: {
-      externalId: {
-        not: null,
-      },
       email: {
         not: {
           contains: '+automation',
@@ -60,9 +57,6 @@ const getAllEvents = adminProcedure.query(async ({ctx}) => {
     },
     where: {
       user: {
-        externalId: {
-          not: null,
-        },
         email: {
           not: {
             contains: '+automation',
@@ -79,9 +73,6 @@ const getDailySignUps = adminProcedure.query(async ({ctx}) => {
   const dateRange = createDateRange();
   const allUsers = await ctx.prisma.user.findMany({
     where: {
-      externalId: {
-        not: null,
-      },
       email: {
         not: {
           contains: '+automation',
@@ -106,9 +97,6 @@ const getDailyCreatedEvents = adminProcedure.query(async ({ctx}) => {
   const allUsers = await ctx.prisma.event.findMany({
     where: {
       user: {
-        externalId: {
-          not: null,
-        },
         email: {
           not: {
             contains: '+automation',
@@ -132,9 +120,6 @@ const getDailyCreatedEvents = adminProcedure.query(async ({ctx}) => {
 const getUsersCount = adminProcedure.query(async ({ctx}) => {
   return ctx.prisma.user.count({
     where: {
-      externalId: {
-        not: null,
-      },
       email: {
         not: {
           contains: '+automation',
@@ -148,9 +133,6 @@ const getEventsCount = adminProcedure.query(async ({ctx}) => {
   return ctx.prisma.event.count({
     where: {
       user: {
-        externalId: {
-          not: null,
-        },
         email: {
           not: {
             contains: '+automation',

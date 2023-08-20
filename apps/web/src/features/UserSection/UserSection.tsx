@@ -1,6 +1,5 @@
 'use client';
 
-import {useAuth} from '@clerk/nextjs';
 import {use} from 'react';
 import {
   Avatar,
@@ -26,14 +25,12 @@ interface Props {
 export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
   const router = useRouter();
   const pathname = usePathname();
-  const {signOut} = useAuth();
   const me = use(mePromise);
   const hasUnseenConversation = use(hasUnseenConversationPromise);
   const isPublicPage = getIsPublic(pathname ?? '/');
 
   const onSignOutClick = async () => {
-    await signOut();
-    window.location.href = '/';
+    router.push('/logout');
   };
 
   if (isPublicPage) {

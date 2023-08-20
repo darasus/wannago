@@ -13,7 +13,7 @@ export const cancelEvent = protectedProcedure
   .mutation(async ({input: {eventId}, ctx}) => {
     const user = await ctx.prisma.user.findFirst({
       where: {
-        externalId: ctx.auth.userId,
+        id: ctx.auth?.user?.id,
       },
     });
 

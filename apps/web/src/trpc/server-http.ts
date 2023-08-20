@@ -22,9 +22,6 @@ export const api = experimental_createTRPCNextAppDirServer<AppRouter>({
             ...pick(
               [
                 'cookie',
-                'x-clerk-auth-status',
-                'x-clerk-auth-message',
-                'x-clerk-auth-reason',
                 'user-agent',
                 'cache-control',
                 'accept-language',

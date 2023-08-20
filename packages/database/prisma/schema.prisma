@@ -76,28 +76,33 @@ model TicketSale {
 }
 
 model User {
-  id                    String                 @id @default(uuid())
-  email                 String                 @unique
-  createdAt             DateTime               @default(now())
-  updatedAt             DateTime               @default(now()) @updatedAt
-  externalId            String?                @unique
-  firstName             String
-  lastName              String
-  profileImageSrc       String?
-  organizations         Organization[]         @relation(name: "UserOrganizations")
-  eventSignUps          EventSignUp[]          @relation(name: "EventSignUpUser")
-  type                  UserType               @default(USER)
-  events                Event[]                @relation(name: "EventUser")
-  disabled              Boolean                @default(false)
-  stripeCustomerId      String?
-  stripeLinkedAccountId String?
-  messages              Message[]              @relation(name: "UserMessage")
-  conversation          Conversation[]         @relation(name: "UserConversation")
-  lastSeens             ConversationLastSeen[] @relation(name: "UserConversationLastSeen")
-  followers             Follow[]               @relation(name: "FollowingUser")
-  following             Follow[]               @relation(name: "FollowerUser")
-  ticketSale            TicketSale[]
-  preferredCurrency     Currency?              @default(USD)
+  id                      String                   @id @default(uuid())
+  email                   String                   @unique
+  email_verified          Boolean                  @default(false)
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @default(now()) @updatedAt
+  externalId              String?                  @unique
+  firstName               String
+  lastName                String
+  profileImageSrc         String?
+  organizations           Organization[]           @relation(name: "UserOrganizations")
+  eventSignUps            EventSignUp[]            @relation(name: "EventSignUpUser")
+  type                    UserType                 @default(USER)
+  events                  Event[]                  @relation(name: "EventUser")
+  disabled                Boolean                  @default(false)
+  stripeCustomerId        String?
+  stripeLinkedAccountId   String?
+  messages                Message[]                @relation(name: "UserMessage")
+  conversation            Conversation[]           @relation(name: "UserConversation")
+  lastSeens               ConversationLastSeen[]   @relation(name: "UserConversationLastSeen")
+  followers               Follow[]                 @relation(name: "FollowingUser")
+  following               Follow[]                 @relation(name: "FollowerUser")
+  ticketSale              TicketSale[]
+  preferredCurrency       Currency?                @default(USD)
+  auth_session            Session[]
+  key                     Key[]
+  emailVerificationTokens EmailVerificationToken[]
+  passwordResetTokens     PasswordResetToken[]
 
   @@index([externalId])
   @@index([email])
@@ -210,4 +215,41 @@ enum Currency {
   USD
   EUR
   GBP
+}
+
+model Session {
+  id             String @id @unique
+  user_id        String
+  active_expires BigInt
+  idle_expires   BigInt
+  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model Key {
+  id              String  @id @unique
+  hashed_password String?
+  user_id         String
+  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+}
+
+model EmailVerificationToken {
+  id      String   @id @unique
+  user_id String
+  user    User     @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  expires DateTime
+
+  @@index([user_id])
+}
+
+model PasswordResetToken {
+  id      String   @id @unique
+  user_id String
+  user    User     @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  expires DateTime
+
+  @@index([user_id])
 }

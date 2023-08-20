@@ -1,6 +1,5 @@
 import {z} from 'zod';
 import {createTRPCRouter, protectedProcedure, publicProcedure} from '../trpc';
-import {getUserByExternalId as _getUserByExternalId} from '../actions/getUserByExternalId';
 import {getUserById as _getUserById} from '../actions/getUserById';
 
 const getUserById = publicProcedure
@@ -11,21 +10,13 @@ const getUserById = publicProcedure
     });
   });
 
-const getUserByExternalId = publicProcedure
-  .input(z.object({externalId: z.string()}))
-  .query(async ({ctx, input}) => {
-    return _getUserByExternalId(ctx)({
-      externalId: input.externalId,
-    });
-  });
-
 const me = publicProcedure.query(async ({ctx}) => {
-  if (!ctx.auth?.userId) {
+  if (!ctx.auth?.user?.id) {
     return null;
   }
 
-  return _getUserByExternalId(ctx)({
-    externalId: ctx.auth.userId,
+  return _getUserById(ctx)({
+    id: ctx.auth?.user?.id,
   });
 });
 
@@ -59,7 +50,7 @@ const getMyTickets = protectedProcedure.query(async ({ctx, input}) => {
   return ctx.prisma.ticketSale.findMany({
     where: {
       user: {
-        externalId: ctx.auth.userId,
+        id: ctx.auth?.user?.id,
       },
     },
     include: {
@@ -74,7 +65,6 @@ const getMyTickets = protectedProcedure.query(async ({ctx, input}) => {
 
 export const userRouter = createTRPCRouter({
   getUserById,
-  getUserByExternalId,
   me,
   update,
   getMyTickets,

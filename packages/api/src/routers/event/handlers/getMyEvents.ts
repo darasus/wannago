@@ -12,7 +12,7 @@ export const getMyEvents = protectedProcedure
   .query(async ({ctx, input}) => {
     const user = await ctx.prisma.user.findFirst({
       where: {
-        externalId: ctx.auth.userId,
+        id: ctx.auth?.user?.id,
       },
       include: {
         organizations: true,

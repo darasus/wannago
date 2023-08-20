@@ -2,7 +2,7 @@ import {z} from 'zod';
 import {ActionContext} from '../context';
 
 const validation = z.object({
-  externalId: z.string().uuid(),
+  id: z.string().uuid(),
 });
 
 export function getOrganizationByUserExternalId(ctx: ActionContext) {
@@ -12,7 +12,7 @@ export function getOrganizationByUserExternalId(ctx: ActionContext) {
         disabled: false,
         users: {
           some: {
-            externalId: input.externalId,
+            id: input.id,
           },
         },
       },

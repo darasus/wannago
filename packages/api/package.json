@@ -11,6 +11,7 @@
     "client-env": "workspace:*",
     "stripe-webhook-input-validation": "workspace:*",
     "utils": "workspace:*",
+    "auth": "workspace:*",
     "inngest-client": "workspace:*",
     "error": "workspace:*",
     "types": "workspace:*",

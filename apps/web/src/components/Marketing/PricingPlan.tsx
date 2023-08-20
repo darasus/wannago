@@ -1,12 +1,12 @@
 'use client';
 
-import {useAuth} from '@clerk/nextjs';
 import {useRouter} from 'next/navigation';
 import {Button, CardBase, Text} from 'ui';
 import {cn, formatCents} from 'utils';
 import {titleFont} from '../../fonts';
 import {Currency} from '@prisma/client';
 import {CheckCircle} from 'lucide-react';
+import {useMe} from 'hooks';
 
 interface Props {
   type: 'general' | 'featured';
@@ -27,7 +27,8 @@ export function PricingPlan({
   type,
   currency,
 }: Props) {
-  const {isSignedIn} = useAuth();
+  const me = useMe();
+  const isSignedIn = !me;
   const router = useRouter();
 
   const getRedirectUrl = () => {

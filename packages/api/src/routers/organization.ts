@@ -18,7 +18,7 @@ const create = protectedProcedure
   .mutation(async ({ctx, input}) => {
     const user = await ctx.prisma.user.findFirst({
       where: {
-        externalId: ctx.auth.userId,
+        id: ctx.auth?.user.id,
       },
     });
 
@@ -60,7 +60,7 @@ const update = protectedProcedure
   .mutation(async ({ctx, input}) => {
     const user = await ctx.prisma.user.findFirst({
       where: {
-        externalId: ctx.auth.userId,
+        id: ctx.auth?.user.id,
       },
     });
 
@@ -91,7 +91,7 @@ const getOrganizationById = publicProcedure
   });
 
 const getMyOrganizations = publicProcedure.query(async ({ctx}) => {
-  if (!ctx.auth?.userId) {
+  if (!ctx.auth?.user.id) {
     return null;
   }
 
@@ -99,7 +99,7 @@ const getMyOrganizations = publicProcedure.query(async ({ctx}) => {
     where: {
       users: {
         some: {
-          externalId: ctx.auth.userId,
+          id: ctx.auth?.user?.id,
         },
       },
     },

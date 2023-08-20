@@ -1,14 +1,13 @@
 'use client';
 
-import {use, useCallback, useTransition} from 'react';
+import {useCallback, useTransition} from 'react';
 import {toast} from 'sonner';
 import {api} from '../../../../apps/web/src/trpc/client';
 import {Conversation} from '@prisma/client';
-import {useAuth} from '@clerk/nextjs';
+import {useMe} from '../useMe';
 
 export function useCreateConversation() {
-  const auth = useAuth();
-  const me = use(api.user.me.query());
+  const me = useMe();
   const [isPending, startTransition] = useTransition();
 
   const createConversation = useCallback(
@@ -22,7 +21,7 @@ export function useCreateConversation() {
       return new Promise((resolve) => {
         const userIds = [me?.id] as string[];
 
-        if (!auth.userId) {
+        if (!me?.id) {
           toast.error('Please login first');
           return;
         }
@@ -47,7 +46,7 @@ export function useCreateConversation() {
         });
       });
     },
-    [me?.id, auth.userId]
+    [me?.id]
   );
 
   return {

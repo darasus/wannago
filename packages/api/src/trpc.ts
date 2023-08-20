@@ -20,7 +20,7 @@ export const t = initTRPC.context<typeof createContext>().create({
 
     captureException(error, (scope) => {
       scope.setUser({
-        id: ctx?.auth?.userId || undefined,
+        id: ctx?.auth?.user.id || undefined,
       });
       if (path) {
         scope.setContext('path', {path});
@@ -46,7 +46,7 @@ export const mergeRouters = t.mergeRouters;
 export const publicProcedure = t.procedure;
 
 const enforceUserIsAuthed = t.middleware(({ctx, next}) => {
-  if (!ctx.auth?.userId) {
+  if (!ctx.auth?.user?.id) {
     throw new TRPCError({code: 'UNAUTHORIZED'});
   }
 
@@ -58,7 +58,7 @@ const enforceUserIsAuthed = t.middleware(({ctx, next}) => {
 const enforceUserIsAdmin = t.middleware(async ({ctx, next}) => {
   const user = await ctx.prisma.user.findFirst({
     where: {
-      externalId: ctx.auth?.userId,
+      id: ctx.auth?.user?.id,
     },
   });
 

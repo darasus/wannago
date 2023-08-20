@@ -2,7 +2,7 @@ import {eventNotFoundError, userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {publicProcedure} from '../../../trpc';
-import {getUserByExternalId} from '../../../actions/getUserByExternalId';
+import {getUserById} from '../../../actions/getUserById';
 
 export const getMyTicketsByEvent = publicProcedure
   .input(
@@ -11,13 +11,14 @@ export const getMyTicketsByEvent = publicProcedure
     })
   )
   .query(async ({ctx, input}) => {
-    if (!ctx.auth?.userId) {
+    if (!ctx.auth?.user?.id) {
       return null;
     }
 
-    const user = await getUserByExternalId(ctx)({
-      externalId: ctx.auth.userId,
+    const user = await getUserById(ctx)({
+      id: ctx.auth?.user?.id,
     });
+
     const event = await ctx.prisma.event.findUnique({
       where: {
         shortId: input.eventShortId,

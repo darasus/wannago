@@ -3,12 +3,14 @@ import {titleFontClassName} from '../../fonts';
 import {Button, LoadingBlock} from 'ui';
 import {Container} from 'ui';
 import {cn} from 'utils';
-import {auth} from '@clerk/nextjs';
 import EventPreview from './EventPreview';
 import Link from 'next/link';
 import {api} from '../../trpc/server-http';
+import {getPageSession} from 'auth';
 
-export function Hero() {
+export async function Hero() {
+  const auth = await getPageSession();
+
   return (
     <div className="relative overflow-hidden">
       <Container className="py-20 lg:py-32 mb-0 relative z-10 overflow-hidden">
@@ -31,7 +33,7 @@ export function Hero() {
         </div>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">
           <Button className="pointer-events-auto" size="lg" asChild>
-            <Link href={auth().userId ? '/e/add' : '/register'}>
+            <Link href={auth?.user.id ? '/e/add' : '/register'}>
               Create your first event
             </Link>
           </Button>

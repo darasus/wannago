@@ -20,7 +20,6 @@ const _serverEnv = serverSchema.safeParse({
   QSTASH_TOKEN: process.env.QSTASH_TOKEN,
   POSTMARK_API_KEY: process.env.POSTMARK_API_KEY,
   VERCEL_ENV: process.env.VERCEL_ENV,
-  CLERK_API_KEY: process.env.CLERK_API_KEY,
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   STRIPE_API_SECRET: process.env.STRIPE_API_SECRET,
   STRIPE_ENDPOINT_SECRET: process.env.STRIPE_ENDPOINT_SECRET,
