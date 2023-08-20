@@ -153,7 +153,6 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@playwright/test": "^1.36.0",
     "@sentry/cli": "^2.20.4",
     "@types/file-saver": "^2.0.5",
     "@types/formidable": "^2.0.6",
