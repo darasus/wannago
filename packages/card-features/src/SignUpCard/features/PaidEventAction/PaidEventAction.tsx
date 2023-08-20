@@ -1,14 +1,14 @@
 'use client';
 
 import {Event, Ticket} from '@prisma/client';
-import {use, useState} from 'react';
+import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Badge, Button} from 'ui';
 import {formatCents} from 'utils';
-import {AuthModal} from '../AuthModal/AuthModal';
 import {TicketSelectorModal} from '../TicketSelectorModal/TicketSelectorModal';
 import {api} from '../../../../../../apps/web/src/trpc/client';
 import {useMe} from 'hooks';
+import {useRouter} from 'next/navigation';
 
 interface Props {
   event: Event & {tickets: Ticket[]} & {isPast: boolean};
@@ -17,20 +17,15 @@ interface Props {
 }
 
 export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const router = useRouter();
   const [isTicketSelectorModalOpen, setIsTicketSelectorModalOpen] =
     useState(false);
   const me = useMe();
   const form = useForm();
-  const myTickets = use(myTicketPromise);
 
   const onJoinSubmit = form.handleSubmit(async (data) => {
-    if (!me?.id) {
-      // const token = await auth.getToken();
-      // if (!token) {
-      //   setIsAuthModalOpen(true);
-      //   return;
-      // }
+    if (!me) {
+      router.push('/login');
     }
 
     if (event.tickets.length > 0) {
@@ -46,11 +41,6 @@ export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
 
   return (
     <>
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-        onDone={() => setIsTicketSelectorModalOpen(true)}
-      />
       <TicketSelectorModal
         mePromise={mePromise}
         isOpen={isTicketSelectorModalOpen}

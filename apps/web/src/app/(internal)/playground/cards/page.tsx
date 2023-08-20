@@ -42,6 +42,7 @@ const event: NonNullable<RouterOutputs['event']['getRandomExample']> = {
     firstName: 'Ilya',
     lastName: 'Daraseliya',
     email: 'example@example.com',
+    email_verified: true,
     profileImageSrc: 'https://via.placeholder.com/150',
     createdAt: new Date(),
     updatedAt: new Date(),

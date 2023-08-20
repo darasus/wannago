@@ -2,7 +2,7 @@
 
 import {Event} from '@prisma/client';
 import {useAmplitude, useConfetti, useConfirmDialog, useMe} from 'hooks';
-import {use, useState} from 'react';
+import {use} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'sonner';
 import {
@@ -15,7 +15,6 @@ import {
   FormLabel,
   Switch,
 } from 'ui';
-import {AuthModal} from '../AuthModal/AuthModal';
 import {useRouter} from 'next/navigation';
 import {RouterOutputs} from 'api';
 import {api} from '../../../../../../apps/web/src/trpc/client';
@@ -34,7 +33,6 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
   const router = useRouter();
   const {confetti} = useConfetti();
   const {logEvent} = useAmplitude();
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const me = useMe();
   const signUp = use(mySignUpPromise);
 
@@ -72,14 +70,9 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
   });
 
   const onJoinSubmit = form.handleSubmit(async (data) => {
-    // if (!auth.isSignedIn) {
-    //   const token = await auth.getToken();
-
-    //   if (!token) {
-    //     setIsAuthModalOpen(true);
-    //     return;
-    //   }
-    // }
+    if (!me) {
+      router.push('/login');
+    }
 
     const promise = api.event.joinEvent
       .mutate({
@@ -155,50 +148,43 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
   }
 
   return (
-    <>
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-        onDone={onJoinSubmit}
-      />
-      <Form {...form}>
-        <form
-          className="flex items-center gap-x-4 w-full"
-          onSubmit={onJoinSubmit}
+    <Form {...form}>
+      <form
+        className="flex items-center gap-x-4 w-full"
+        onSubmit={onJoinSubmit}
+      >
+        <div>
+          <FormField
+            name="hasPlusOne"
+            control={form.control}
+            render={({field}) => {
+              return (
+                <FormItem className="flex items-center space-y-0 gap-1">
+                  <FormControl>
+                    <Switch
+                      id="bring-one"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel htmlFor="bring-one">
+                    <span className="hidden md:inline">Bring </span>+1
+                  </FormLabel>
+                </FormItem>
+              );
+            }}
+          />
+        </div>
+        <Button
+          type="submit"
+          disabled={form.formState.isSubmitting || event.isPast}
+          isLoading={form.formState.isSubmitting}
+          size="sm"
+          data-testid="attend-button"
         >
-          <div>
-            <FormField
-              name="hasPlusOne"
-              control={form.control}
-              render={({field}) => {
-                return (
-                  <FormItem className="flex items-center space-y-0 gap-1">
-                    <FormControl>
-                      <Switch
-                        id="bring-one"
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormLabel htmlFor="bring-one">
-                      <span className="hidden md:inline">Bring </span>+1
-                    </FormLabel>
-                  </FormItem>
-                );
-              }}
-            />
-          </div>
-          <Button
-            type="submit"
-            disabled={form.formState.isSubmitting || event.isPast}
-            isLoading={form.formState.isSubmitting}
-            size="sm"
-            data-testid="attend-button"
-          >
-            Attend
-          </Button>
-        </form>
-      </Form>
-    </>
+          Attend
+        </Button>
+      </form>
+    </Form>
   );
 }
