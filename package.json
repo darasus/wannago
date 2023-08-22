@@ -13,8 +13,6 @@
     "test:e2e:ci": "turbo run test:e2e:ci --filter web-e2e",
     "test:e2e": "turbo run test:e2e --filter web-e2e",
     "test:e2e:dev": "turbo run test:e2e:dev --filter web-e2e",
-    "checkly:test": "pnpx checkly test",
-    "checkly:deploy": "pnpx checkly deploy",
     "postinstall": "prisma generate --schema packages/database/prisma/schema.prisma --data-proxy",
     "pull:env": "vercel pull"
   },
@@ -168,7 +166,6 @@
     "@types/sharp": "^0.31.1",
     "@types/uuid": "^9.0.2",
     "autoprefixer": "^10.4.14",
-    "checkly": "^4.0.12",
     "dotenv-cli": "^6.0.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "eslint-plugin-unused-imports": "^2.0.0",
