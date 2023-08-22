@@ -30,6 +30,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
               <Header />
             </Container>
           </div>
+          <div>
+            <div>{children}</div>
+          </div>
           <Tools />
           <ToastProvider />
         </ClientProvider>
