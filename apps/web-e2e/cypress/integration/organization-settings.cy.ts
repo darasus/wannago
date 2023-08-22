@@ -1,4 +1,4 @@
-import {organization_1_email, user_1_email} from '../../constants';
+import {users} from '../../constants';
 
 describe('organization settings', () => {
   beforeEach(() => {
@@ -6,8 +6,9 @@ describe('organization settings', () => {
   });
 
   it('can update organization', () => {
-    cy.login(user_1_email);
+    cy.login(users.user_1.email, users.user_1.password);
     cy.visit(`/dashboard`);
+    cy.wait(1000);
     cy.get('[data-testid="header-user-button"]').click();
     cy.get('[data-testid="organizations-button"]').click();
     cy.get('[data-testid="organization-item-card-settings-button"]').click();
@@ -16,7 +17,7 @@ describe('organization settings', () => {
       .type('Organization 1');
     cy.get('[data-testid="team-settings-form-input-email"]')
       .clear()
-      .type(organization_1_email);
+      .type(users.user_1.email);
     cy.wait(3000);
     cy.get('[data-testid="team-settings-form-input-submit-button"]').click();
     cy.get('[data-sonner-toast]')

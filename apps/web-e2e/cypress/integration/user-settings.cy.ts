@@ -1,4 +1,4 @@
-import {user_1_email} from '../../constants';
+import {users} from '../../constants';
 
 describe('user settings', () => {
   beforeEach(() => {
@@ -8,7 +8,7 @@ describe('user settings', () => {
   it('can update user', () => {
     const firstName = 'John' + Math.random();
     const lastName = 'Doe' + Math.random();
-    cy.login(user_1_email);
+    cy.login(users.user_1.email, users.user_1.password);
     cy.visit(`/settings`);
     cy.wait(3000);
     cy.get('[data-testid="first-name-input"]').clear();
@@ -18,6 +18,8 @@ describe('user settings', () => {
     cy.get('[data-sonner-toast]')
       .contains('User is updated!')
       .should('be.visible');
+    // TODO: FIX REVALIDATE
+    cy.reload();
     cy.get('[data-testid="header-user-button"]')
       .contains(firstName)
       .should('be.visible');

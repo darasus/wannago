@@ -1,4 +1,4 @@
-import {user_1_email, user_1_id} from '../../constants';
+import {users} from '../../constants';
 
 describe('create event', () => {
   beforeEach(() => {
@@ -7,8 +7,8 @@ describe('create event', () => {
 
   it('can sign up (free event)', () => {
     cy.visit('/', {failOnStatusCode: false});
-    cy.login(user_1_email);
-    cy.createEvent(user_1_id);
+    cy.login(users.user_1.email, users.user_1.password);
+    cy.createEvent(users.user_1.id);
     cy.publishCurrentEvent();
     cy.get('[data-testid="attend-button"]').click();
     cy.get('[data-testid="event-signup-label"]').should('be.visible');
@@ -16,8 +16,8 @@ describe('create event', () => {
 
   it('can cancel sign up (free event)', () => {
     cy.visit('/', {failOnStatusCode: false});
-    cy.login(user_1_email);
-    cy.createEvent(user_1_id);
+    cy.login(users.user_1.email, users.user_1.password);
+    cy.createEvent(users.user_1.id);
     cy.publishCurrentEvent();
     cy.get('[data-testid="attend-button"]').click();
     cy.get('[data-testid="cancel-signup-button"]').click();

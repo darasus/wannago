@@ -1,4 +1,4 @@
-import {organization_2_id, user_1_email, user_2_id} from '../../constants';
+import {users} from '../../constants';
 
 describe('Messages', () => {
   beforeEach(() => {
@@ -6,9 +6,9 @@ describe('Messages', () => {
   });
 
   it('can send message to organization', () => {
-    cy.login(user_1_email);
+    cy.login(users.user_1.email, users.user_1.password);
     const randomMessage = 'Message ' + Math.random();
-    cy.visit(`/o/${organization_2_id}`);
+    cy.visit(`/o/${users.user_2.organization.id}`);
     cy.wait(3000);
     cy.get('button').contains('Message').click();
     cy.get('[data-testid="message-input"]').type(randomMessage);
@@ -19,9 +19,9 @@ describe('Messages', () => {
   });
 
   it('can send message to user', () => {
-    cy.login(user_1_email);
+    cy.login(users.user_1.email, users.user_1.password);
     const randomMessage = 'Message ' + Math.random();
-    cy.visit(`/u/${user_2_id}`);
+    cy.visit(`/o/${users.user_2.organization.id}`);
     cy.wait(3000);
     cy.get('button').contains('Message').click();
     cy.get('[data-testid="message-input"]').type(randomMessage);

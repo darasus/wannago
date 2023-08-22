@@ -1,10 +1,5 @@
 import {PrismaClient} from '@prisma/client';
-import {
-  organization_1_id,
-  organization_2_id,
-  user_1_id,
-  user_2_id,
-} from '../constants';
+import {users} from '../constants';
 
 export async function resetDB() {
   const prisma = new PrismaClient({
@@ -17,22 +12,22 @@ export async function resetDB() {
 
   const user_1 = await prisma.user.findUnique({
     where: {
-      id: user_1_id,
+      id: users.user_1.id,
     },
   });
   const user_2 = await prisma.user.findUnique({
     where: {
-      id: user_2_id,
+      id: users.user_2.id,
     },
   });
   const organization_1 = await prisma.organization.findUnique({
     where: {
-      id: organization_1_id,
+      id: users.user_1.organization.id,
     },
   });
   const organization_2 = await prisma.organization.findUnique({
     where: {
-      id: organization_2_id,
+      id: users.user_2.organization.id,
     },
   });
 
@@ -145,14 +140,14 @@ export async function resetDB() {
   await prisma.message.deleteMany({
     where: {
       conversationId: {
-        in: conversations.map(conversation => conversation.id),
+        in: conversations.map((conversation) => conversation.id),
       },
     },
   });
   await prisma.conversationLastSeen.deleteMany({
     where: {
       conversationId: {
-        in: conversations.map(conversation => conversation.id),
+        in: conversations.map((conversation) => conversation.id),
       },
     },
   });
@@ -161,7 +156,7 @@ export async function resetDB() {
       OR: [
         {
           id: {
-            in: conversations.map(conversation => conversation.id),
+            in: conversations.map((conversation) => conversation.id),
           },
         },
       ],

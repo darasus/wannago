@@ -1,11 +1,6 @@
 import {prisma} from 'database';
-import {add} from 'date-fns';
+import {add, isWithinInterval, sub} from 'date-fns';
 import {generateRandomString, isWithinExpiration} from 'lucia/utils';
-
-export const sendPasswordResetLink = async (token: string) => {
-  const url = `http://localhost:3000/password-reset/${token}`;
-  console.log(`Your password reset link: ${url}`);
-};
 
 const EXPIRES_IN = 1000 * 60 * 60 * 2; // 2 hours
 
@@ -79,17 +74,16 @@ export const generatePasswordResetToken = async (userId: string) => {
 
   if (storedUserTokens.length > 0) {
     const reusableStoredToken = storedUserTokens.find((token) => {
-      // check if expiration is within 1 hour
-      // and reuse the token if true
-      return isWithinExpiration(token.expires.getTime() - EXPIRES_IN / 2);
+      return isWithinInterval(token.expires, {
+        start: sub(new Date(), {hours: 2}),
+        end: new Date(),
+      });
     });
 
     if (reusableStoredToken) {
       return reusableStoredToken.id;
     }
   }
-
-  console.log('>>> storedUserTokens', storedUserTokens);
 
   const token = generateRandomString(63);
 
@@ -121,12 +115,16 @@ export const validatePasswordResetToken = async (token: string) => {
         id: storedToken.id,
       },
     });
+
     return storedToken;
   });
 
-  const tokenExpires = storedToken.expires.getTime();
-
-  if (!isWithinExpiration(tokenExpires)) {
+  if (
+    !isWithinInterval(storedToken.expires, {
+      start: new Date(),
+      end: add(new Date(), {hours: 2}),
+    })
+  ) {
     throw new Error('Expired token');
   }
 

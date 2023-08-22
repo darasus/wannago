@@ -10,7 +10,7 @@
 
 declare namespace Cypress {
   interface Chainable<Subject = any> {
-    login(email?: string): void;
+    login(email: string, password: string): void;
     createEvent(authorId?: string): void;
     toggleSession(): void;
     logout(): void;

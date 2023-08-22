@@ -1,4 +1,4 @@
-import {user_1_email} from '../../constants';
+import {users} from '../../constants';
 
 describe('create event', () => {
   beforeEach(() => {
@@ -6,7 +6,7 @@ describe('create event', () => {
   });
 
   it('can create free event', () => {
-    cy.login(user_1_email);
+    cy.login(users.user_1.email, users.user_1.password);
     cy.createEvent();
   });
 });

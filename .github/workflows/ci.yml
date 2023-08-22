@@ -64,11 +64,8 @@ jobs:
             VERCEL_ANALYTICS_ID: ${{ secrets.VERCEL_ANALYTICS_ID }}
             VERCEL_WEB_ANALYTICS_ID: ${{ secrets.VERCEL_WEB_ANALYTICS_ID }}
             VERCEL_ENV: ${{ secrets.VERCEL_ENV }}
-            NEXT_PUBLIC_CLERK_FRONTEND_API: ${{ secrets.NEXT_PUBLIC_CLERK_FRONTEND_API }}
-            CLERK_API_KEY: ${{ secrets.CLERK_API_KEY }}
             MIGRATE_DATABASE_URL: ${{ secrets.MIGRATE_DATABASE_URL }}
             NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
-            CLERK_JWT_KEY: ${{ secrets.CLERK_JWT_KEY }}
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
             PRISMA_GENERATE_DATAPROXY: ${{ secrets.PRISMA_GENERATE_DATAPROXY }}
             UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}

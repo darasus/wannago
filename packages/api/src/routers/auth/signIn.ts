@@ -2,6 +2,7 @@ import {z} from 'zod';
 import {publicProcedure} from '../../trpc';
 import {auth} from 'auth';
 import {TRPCError} from '@trpc/server';
+import {LuciaError} from 'lucia';
 
 export const signIn = publicProcedure
   .input(
@@ -28,22 +29,18 @@ export const signIn = publicProcedure
 
       return {success: 'true'};
     } catch (e) {
-      // if (
-      //   e instanceof LuciaError &&
-      //   (e.message === 'AUTH_INVALID_KEY_ID' ||
-      //     e.message === 'AUTH_INVALID_PASSWORD')
-      // ) {
-      //   // user does not exist
-      //   // or invalid password
-      //   return NextResponse.json(
-      //     {
-      //       error: 'Incorrect email or password',
-      //     },
-      //     {
-      //       status: 400,
-      //     }
-      //   );
-      // }
+      if (
+        e instanceof LuciaError &&
+        (e.message === 'AUTH_INVALID_KEY_ID' ||
+          e.message === 'AUTH_INVALID_PASSWORD')
+      ) {
+        // user does not exist
+        // or invalid password
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Incorrect email or password',
+        });
+      }
       throw new TRPCError({
         code: 'INTERNAL_SERVER_ERROR',
         message: 'Something went wrong',

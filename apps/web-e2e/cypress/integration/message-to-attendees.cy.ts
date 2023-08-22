@@ -1,4 +1,4 @@
-import {organization_2_id, user_2_email} from '../../constants';
+import {users} from '../../constants';
 
 describe('Message to attendees', () => {
   beforeEach(() => {
@@ -6,9 +6,9 @@ describe('Message to attendees', () => {
   });
 
   it('can message attendees', () => {
-    cy.login(user_2_email);
+    cy.login(users.user_2.email, users.user_2.password);
     cy.visit('/');
-    cy.createEvent(organization_2_id);
+    cy.createEvent(users.user_2.organization.id);
     cy.publishCurrentEvent();
     cy.get('[data-testid="manage-event-button"]').click();
     cy.get('[data-testid="select-option-button"]')

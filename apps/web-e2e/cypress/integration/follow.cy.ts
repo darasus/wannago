@@ -1,4 +1,4 @@
-import {organization_2_id, user_1_email, user_2_id} from '../../constants';
+import {users} from '../../constants';
 
 describe('follow', () => {
   beforeEach(() => {
@@ -6,16 +6,16 @@ describe('follow', () => {
   });
 
   it('can follow organization', () => {
-    cy.login(user_1_email);
-    cy.visit(`/o/${organization_2_id}`);
+    cy.login(users.user_1.email, users.user_1.password);
+    cy.visit(`/o/${users.user_2.organization.id}`);
     cy.wait(3000);
     cy.get('button').contains('Follow').click();
     cy.get('button').contains('Unfollow').should('be.visible');
   });
 
   it('can follow user', () => {
-    cy.login(user_1_email);
-    cy.visit(`/u/${user_2_id}`);
+    cy.login(users.user_1.email, users.user_1.password);
+    cy.visit(`/u/${users.user_2.id}`);
     cy.wait(3000);
     cy.get('button').contains('Follow').click();
     cy.get('button').contains('Unfollow').should('be.visible');

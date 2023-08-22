@@ -1,7 +1,7 @@
-import {organization_2_id, user_1_email, user_2_email} from '../../constants';
+import {users} from '../../constants';
 
 const getNewEmail = () => {
-  const emailParts = user_1_email.split('@');
+  const emailParts = users.user_1.email.split('@');
 
   return `${emailParts[0]}+${Math.random()}@${emailParts[1]}`;
 };
@@ -13,9 +13,9 @@ describe('invite attendees', () => {
 
   it('can invite attendees', () => {
     const newEmail = getNewEmail();
-    cy.login(user_2_email);
+    cy.login(users.user_2.email, users.user_2.password);
     cy.visit('/');
-    cy.createEvent(organization_2_id);
+    cy.createEvent(users.user_2.organization.id);
     cy.publishCurrentEvent();
     cy.get('button').contains('Manage event').click();
     cy.get('[data-testid="select-option-button"]')

@@ -1,13 +1,20 @@
-export const user_1_email = 'idarase+1+automation+clerk_test@gmail.com';
-export const user_1_id = '52cb62d5-c6ca-4da3-be41-d1c3a83dfa21';
-
-export const organization_1_email =
-  'idarase+1+organization+automation+clerk_test@gmail.com';
-export const organization_1_id = '0b9bd5f7-3189-495b-89b7-5cfb69be1233';
-
-export const user_2_email = 'idarase+2+automation+clerk_test@gmail.com';
-export const user_2_id = 'ba2c68ad-f288-43c5-b3c5-6bfcc3611a98';
-
-export const organization_2_email =
-  'idarase+2+organization+automation+clerk_test@gmail.com';
-export const organization_2_id = '78dc7b48-2437-4670-85d2-d6698d03e22d';
+export const users = {
+  user_1: {
+    id: '14348bf2-1329-49dd-a3fb-d541d2a44b83',
+    email: 'idarase+1+automation@gmail.com',
+    password: 'password',
+    organization: {
+      id: '3768b9c3-0f90-4ff2-a59f-65ede92c048c',
+      email: 'idarase+1+org+automation@gmail.com',
+    },
+  },
+  user_2: {
+    id: 'fbfac8b7-f9aa-4c89-aaba-8ef24cdacdf2',
+    email: 'idarase+2+automation@gmail.com',
+    password: 'password',
+    organization: {
+      id: 'f5480122-21de-4df7-b6a8-dee2901a3085',
+      email: 'idarase+2+org+automation@gmail.com',
+    },
+  },
+};

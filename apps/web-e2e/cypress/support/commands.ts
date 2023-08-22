@@ -1,4 +1,4 @@
-import {user_1_email} from '../../constants';
+import {users} from '../../constants';
 
 // TODO REMOVE THIS WHEN YOU CAN!!!
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -8,12 +8,13 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 Cypress.Commands.addAll({
-  login(email = user_1_email) {
+  login(email = users.user_1.email, password = users.user_1.password) {
     cy.visit('/', {failOnStatusCode: false});
     cy.get('[data-testid="login-button"]').click();
+    cy.wait(1000);
     cy.get('[data-testid="login-email-input"]').type(email);
-    cy.get('[data-testid="login-email-form-submit"]').click();
-    cy.get('[data-testid="login-code-input"]').type(Cypress.env('otp'));
+    cy.get('[data-testid="login-password-input"]').type(password);
+    cy.get('[data-testid="login-form-submit"]').click();
     cy.get('[data-testid="add-event-button"]');
     cy.get('[data-testid="header-user-button"]').contains('John');
   },
@@ -55,7 +56,6 @@ Cypress.Commands.addAll({
     // cy.get('[data-testid="file-input-image-preview"]');
     cy.get('[data-testid="event-form-submit-button"]').click();
     cy.wait(3000);
-    cy.get('button').contains('Paid').click();
     cy.get('[data-testid="event-title"]').should('be.visible');
   },
   publishCurrentEvent() {

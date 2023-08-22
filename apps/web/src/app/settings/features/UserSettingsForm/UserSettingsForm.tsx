@@ -59,6 +59,7 @@ export function UserSettingsForm({userPromise}: Props) {
           currency: data.currency,
         })
         .then(() => {
+          router.refresh();
           toast.success('User is updated!');
         })
         .catch((err) => {

@@ -51,7 +51,6 @@ export const signUp = publicProcedure
         success: true,
       };
     } catch (e) {
-      console.log(e);
       // if (e instanceof SqliteError && e.code === 'SQLITE_CONSTRAINT_UNIQUE') {
       //   return NextResponse.json(
       //     {
