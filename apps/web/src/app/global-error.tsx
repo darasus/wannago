@@ -15,8 +15,6 @@ export default function GlobalError({
     captureException(error);
   }, [error]);
 
-  console.log(error);
-
   return (
     <html>
       <body>

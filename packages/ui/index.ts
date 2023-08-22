@@ -28,8 +28,8 @@ export {LoadingBlock} from './src/LoadingBlock/LoadingBlock';
 export {
   DropdownMenu,
   DropdownMenuCheckboxItem,
-  DropdownMenuContent,
   DropdownMenuGroup,
+  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuPortal,

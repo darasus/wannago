@@ -1,4 +1,3 @@
-import {auth} from 'auth';
 import {publicProcedure} from '../../trpc';
 import {generatePasswordResetToken} from './utils';
 import {getBaseUrl} from 'utils';
@@ -9,21 +8,20 @@ export const sendPasswordResetEmail = publicProcedure
   .input(z.object({email: z.string().email()}))
   .mutation(async ({ctx, input}) => {
     try {
-      const storedUser = await ctx.prisma.user.findFirst({
+      const user = await ctx.prisma.user.findFirst({
         where: {
           email: input.email,
         },
       });
 
-      if (!storedUser) {
+      if (!user) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'User with this email does not exist',
         });
       }
 
-      const user = auth.transformDatabaseUser(storedUser);
-      const token = await generatePasswordResetToken(user.userId);
+      const token = await generatePasswordResetToken(user.id);
 
       await ctx.postmark.sendToTransactionalStream({
         to: user.email,

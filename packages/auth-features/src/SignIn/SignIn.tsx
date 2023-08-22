@@ -23,6 +23,7 @@ import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {api} from '../../../../apps/web/src/trpc/client';
 import {useRouter} from 'next/navigation';
+import {toast} from 'sonner';
 
 interface Props {}
 
@@ -38,12 +39,17 @@ export function SignIn({}: Props) {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    await api.auth.signIn.mutate(data).then((res) => {
-      if (res?.success) {
-        router.refresh();
-        router.push('/dashboard');
-      }
-    });
+    await api.auth.signIn
+      .mutate(data)
+      .then((res) => {
+        if (res?.success) {
+          router.refresh();
+          router.push('/dashboard');
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
 
   return (
@@ -71,6 +77,7 @@ export function SignIn({}: Props) {
                       <Input
                         {...field}
                         disabled={form.formState.isSubmitting}
+                        data-testid="login-email-input"
                       />
                     </FormControl>
                     <FormMessage />
@@ -88,6 +95,7 @@ export function SignIn({}: Props) {
                         {...field}
                         disabled={form.formState.isSubmitting}
                         type="password"
+                        data-testid="login-password-input"
                       />
                     </FormControl>
                     <FormDescription>
@@ -103,6 +111,7 @@ export function SignIn({}: Props) {
                 className="w-full"
                 isLoading={form.formState.isSubmitting}
                 disabled={form.formState.isSubmitting}
+                data-testid="login-form-submit"
               >
                 Login
               </Button>

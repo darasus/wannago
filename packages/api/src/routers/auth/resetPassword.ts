@@ -57,7 +57,6 @@ export const resetPassword = publicProcedure
 
       return {success: true};
     } catch (error) {
-      console.log(error);
       if (error instanceof TRPCError) throw error;
 
       throw new TRPCError({

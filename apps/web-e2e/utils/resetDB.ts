@@ -1,43 +1,33 @@
-import {env} from 'server-env';
-import {
-  organization_1_id,
-  organization_2_id,
-  user_1_id,
-  user_2_id,
-} from '../../../../../../__checks__/constants';
-import {prisma} from 'database';
+import {PrismaClient} from '@prisma/client';
+import {users} from '../constants';
 
-export const runtime = 'edge';
+export async function resetDB() {
+  const prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL,
+      },
+    },
+  });
 
-export async function POST() {
-  if (env.VERCEL_ENV === 'production') {
-    return null;
-  }
-
-  await resetDB();
-
-  return new Response(JSON.stringify({success: true}), {status: 200});
-}
-
-async function resetDB() {
   const user_1 = await prisma.user.findUnique({
     where: {
-      id: user_1_id,
+      id: users.user_1.id,
     },
   });
   const user_2 = await prisma.user.findUnique({
     where: {
-      id: user_2_id,
+      id: users.user_2.id,
     },
   });
   const organization_1 = await prisma.organization.findUnique({
     where: {
-      id: organization_1_id,
+      id: users.user_1.organization.id,
     },
   });
   const organization_2 = await prisma.organization.findUnique({
     where: {
-      id: organization_2_id,
+      id: users.user_2.organization.id,
     },
   });
 

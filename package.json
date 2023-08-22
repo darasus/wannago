@@ -10,8 +10,9 @@
     "web:dev": "turbo run dev dev:inngest --filter web",
     "web:start": "turbo run start --filter web",
     "email:dev": "turbo run dev --filter email",
-    "test:e2e": "dotenv -e ./.vercel/.env.development.local -- pnpm playwright test",
-    "test:e2e:dev": "dotenv -e ./.vercel/.env.development.local -- pnpm playwright test --ui",
+    "test:e2e:ci": "turbo run test:e2e:ci --filter web-e2e",
+    "test:e2e": "turbo run test:e2e --filter web-e2e",
+    "test:e2e:dev": "turbo run test:e2e:dev --filter web-e2e",
     "checkly:test": "pnpx checkly test",
     "checkly:deploy": "pnpx checkly deploy",
     "postinstall": "prisma generate --schema packages/database/prisma/schema.prisma --data-proxy",
@@ -152,7 +153,6 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@playwright/test": "^1.36.0",
     "@sentry/cli": "^2.20.4",
     "@types/file-saver": "^2.0.5",
     "@types/formidable": "^2.0.6",
