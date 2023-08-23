@@ -17,7 +17,7 @@
     "pull:env": "vercel pull"
   },
   "dependencies": {
-    "@amplitude/analytics-browser": "^1.12.1",
+    "@amplitude/analytics-browser": "^2.2.0",
     "@googlemaps/google-maps-services-js": "^3.3.33",
     "@hookform/resolvers": "^2.9.11",
     "@internationalized/date": "^3.3.0",
@@ -25,7 +25,7 @@
     "@lucia-auth/oauth": "^2.1.1",
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
-    "@next/font": "^13.4.9",
+    "@next/font": "^13.4.19",
     "@next/mdx": "^13.4.9",
     "@paralleldrive/cuid2": "^2.2.1",
     "@prisma/client": "^5.1.1",
@@ -59,7 +59,7 @@
     "@react-types/datepicker": "^3.4.0",
     "@react-types/select": "^3.8.1",
     "@react-types/shared": "^3.18.1",
-    "@sentry/nextjs": "7.61.1",
+    "@sentry/nextjs": "7.64.0",
     "@styled-icons/simple-icons": "^10.46.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.4",
@@ -151,7 +151,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@sentry/cli": "^2.20.4",
+    "@sentry/cli": "^2.20.5",
     "@types/file-saver": "^2.0.5",
     "@types/formidable": "^2.0.6",
     "@types/gtag.js": "^0.0.12",
