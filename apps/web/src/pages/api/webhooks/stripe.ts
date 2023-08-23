@@ -11,7 +11,7 @@ import {
 import {captureException} from '@sentry/nextjs';
 
 const cors = Cors({
-  allowMethods: ['POST', 'HEAD'],
+  allowMethods: ['POST', 'HEAD', 'GET', 'PUT'],
 });
 
 export const config = {
@@ -21,10 +21,6 @@ export const config = {
 };
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({error: 'Method Not Allowed'});
-  }
-
   const stripe = new Stripe();
   const buf = await buffer(req);
   const sig = req.headers['stripe-signature'] as string;
