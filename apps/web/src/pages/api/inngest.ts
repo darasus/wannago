@@ -19,6 +19,7 @@ import {
   eventSignUp,
   messageToAllAttendees,
   organizerEventSignUpNotification,
+  verifyEmailAddressEmail,
 } from 'inngest-client';
 
 export default serve(inngest, [
@@ -40,4 +41,5 @@ export default serve(inngest, [
   eventSignUp,
   messageToAllAttendees,
   organizerEventSignUpNotification,
+  verifyEmailAddressEmail,
 ]);

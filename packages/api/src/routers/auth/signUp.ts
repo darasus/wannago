@@ -31,6 +31,7 @@ export const signUp = publicProcedure
           lastName: input.lastName,
         } satisfies Prisma.UserCreateInput,
       });
+
       const session = await auth.createSession({
         userId: user.userId,
         attributes: {},
@@ -40,11 +41,12 @@ export const signUp = publicProcedure
 
       const token = await generateEmailVerificationToken(user.userId);
 
-      await ctx.postmark.sendToTransactionalStream({
-        to: input.email,
-        subject: 'Verify your email',
-        replyTo: 'no-reply@wannago.app',
-        htmlString: `<p>${token}</p>`,
+      await ctx.inngest.send({
+        name: 'email/verify.email.email',
+        data: {
+          userId: session.user.id,
+          code: token,
+        },
       });
 
       return {

@@ -6,7 +6,7 @@ import {isWithinExpiration} from 'lucia/utils';
 export const verifyEmail = publicProcedure
   .input(
     z.object({
-      code: z.string().length(6),
+      code: z.string(),
     })
   )
   .mutation(async ({ctx, input}) => {

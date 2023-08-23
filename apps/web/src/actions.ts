@@ -38,3 +38,7 @@ export async function revalidateGetAllEventsAttendees({
 }) {
   await api.event.getAllEventsAttendees.revalidate({eventShortId});
 }
+
+export async function revalidateMe() {
+  await api.user.me.revalidate();
+}

@@ -20,11 +20,15 @@ export const sendEmailVerificationEmail = publicProcedure.mutation(
 
     try {
       const token = await generateEmailVerificationToken(session.user.id);
-      await ctx.postmark.sendToTransactionalStream({
-        to: session.user.email,
-        subject: 'Verify your email',
-        htmlString: `<p>${token}</p>`,
+
+      await ctx.inngest.send({
+        name: 'email/verify.email.email',
+        data: {
+          userId: session.user.id,
+          code: token,
+        },
       });
+
       return {success: true};
     } catch {
       return new TRPCError({

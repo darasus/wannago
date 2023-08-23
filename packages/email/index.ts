@@ -8,6 +8,7 @@ import LoginCode from './emails/LoginCode';
 import AfterRegisterNoCreatedEventFollowUpEmail from './emails/AfterRegisterNoCreatedEventFollowUpEmail';
 import OrganizerEventSignUpNotification from './emails/OrganizerEventSignUpNotification';
 import TicketPurchaseSuccess from './emails/TicketPurchaseSuccess';
+import VerifyEmail from './emails/VerifyEmail';
 import {render} from '@react-email/render';
 
 export {
@@ -22,4 +23,5 @@ export {
   EventCancelSignUp,
   OrganizerEventSignUpNotification,
   TicketPurchaseSuccess,
+  VerifyEmail,
 };

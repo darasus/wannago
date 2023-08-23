@@ -116,4 +116,10 @@ export type EventsStoreType = {
       userId: string;
     };
   };
+  'email/verify.email.email': {
+    data: {
+      userId: string;
+      code: string;
+    };
+  };
 };

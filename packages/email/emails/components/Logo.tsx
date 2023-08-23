@@ -1,16 +1,16 @@
 import {Img} from '@react-email/components';
 
 export function Logo() {
+  const height = 70;
+  const width = 152;
   const ratio = 0.5;
-  const height = 100 * ratio;
-  const width = 152 * ratio;
 
   return (
     <Img
-      src="https://www.wannago.app/logo.png"
+      src="https://www.wannago.app/logo-dark.png"
       alt="WannaGo logo"
-      width={width}
-      height={height}
+      width={width * ratio}
+      height={height * ratio}
     />
   );
 }

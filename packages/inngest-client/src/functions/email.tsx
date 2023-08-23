@@ -10,6 +10,7 @@ import {
   MessageToAttendees,
   OrganizerEventSignUpNotification,
   TicketPurchaseSuccess,
+  VerifyEmail,
   render,
 } from 'email';
 import {EventReminder} from 'email';
@@ -549,5 +550,34 @@ export const organizerEventSignUpNotification = inngest.createFunction(
         />
       ),
     });
+  }
+);
+
+export const verifyEmailAddressEmail = inngest.createFunction(
+  {
+    name: 'Verify Email Address Email',
+  },
+  {event: 'email/verify.email.email'},
+  async (ctx) => {
+    const user = await ctx.prisma.user.findUnique({
+      where: {id: ctx.event.data.userId},
+    });
+
+    invariant(user, userNotFoundError);
+
+    if (!user.email_verified) {
+      await ctx.postmark.sendToTransactionalStream({
+        replyTo: 'WannaGo Team <hello@wannago.app>',
+        to: user.email,
+        subject: 'Please verify your email',
+        htmlString: render(
+          <VerifyEmail
+            verifyUrl={`${getBaseUrl()}/api/verify-email/${
+              ctx.event.data.code
+            }`}
+          />
+        ),
+      });
+    }
   }
 );
