@@ -33,7 +33,7 @@ export async function Hero() {
         </div>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">
           <Button className="pointer-events-auto" size="lg" asChild>
-            <Link href={auth?.user.id ? '/e/add' : '/register'}>
+            <Link href={auth?.user.id ? '/e/add' : '/sign-up'}>
               Create your first event
             </Link>
           </Button>

@@ -71,7 +71,7 @@ export function FreeEventAction({event, mySignUpPromise}: Props) {
 
   const onJoinSubmit = form.handleSubmit(async (data) => {
     if (!me) {
-      router.push('/login');
+      router.push('/sign-in');
     }
 
     const promise = api.event.joinEvent

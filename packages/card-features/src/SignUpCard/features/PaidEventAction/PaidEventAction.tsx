@@ -25,7 +25,7 @@ export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
 
   const onJoinSubmit = form.handleSubmit(async (data) => {
     if (!me) {
-      router.push('/login');
+      router.push('/sign-in');
     }
 
     if (event.tickets.length > 0) {

@@ -14,7 +14,7 @@ export function GetStartedButton() {
         logEvent('get_started_button_clicked');
       }}
     >
-      <Link href="/register">Get started</Link>
+      <Link href="/sign-up">Get started</Link>
     </Button>
   );
 }

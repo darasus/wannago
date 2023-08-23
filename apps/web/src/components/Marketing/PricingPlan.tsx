@@ -39,7 +39,7 @@ export function PricingPlan({
       return '/settings';
     }
 
-    return '/register';
+    return '/sign-up';
   };
 
   const onClick = () => {

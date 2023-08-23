@@ -49,7 +49,7 @@ export function MobileMenu() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild data-testid="mobile-register-button">
-                  <Link className="font-bold" href={'/register'}>
+                  <Link className="font-bold" href={'/sign-up'}>
                     Register
                   </Link>
                 </DropdownMenuItem>
