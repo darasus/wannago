@@ -18,8 +18,8 @@ importers:
         specifier: ^2.9.11
         version: 2.9.11(react-hook-form@7.45.4)
       '@internationalized/date':
-        specifier: ^3.3.0
-        version: 3.3.0
+        specifier: ^3.4.0
+        version: 3.4.0
       '@lucia-auth/adapter-prisma':
         specifier: ^3.0.1
         version: 3.0.1(@prisma/client@5.1.1)(lucia@2.2.0)
@@ -1712,12 +1712,6 @@ packages:
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
-
-  /@internationalized/date@3.3.0:
-    resolution: {integrity: sha512-qfRd7jCIgUjabI8RxeAsxhLDRS1u8eUPX96GB5uBp1Tpm6YY6dVveE7YwsTEV6L4QOp5LKFirFHHGsL/XQwJIA==}
-    dependencies:
-      '@swc/helpers': 0.5.1
-    dev: false
 
   /@internationalized/date@3.4.0:
     resolution: {integrity: sha512-QUDSGCsvrEVITVf+kv9VSAraAmCgjQmU5CiXtesUBBhBe374NmnEIIaOFBZ72t29dfGMBP0zF+v6toVnbcc6jg==}
@@ -4423,7 +4417,7 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
     dependencies:
-      '@internationalized/date': 3.3.0
+      '@internationalized/date': 3.4.0
       '@internationalized/string': 3.1.1
       '@react-stately/overlays': 3.6.0(react@18.2.0)
       '@react-stately/utils': 3.7.0(react@18.2.0)
@@ -4731,7 +4725,7 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
     dependencies:
-      '@internationalized/date': 3.3.0
+      '@internationalized/date': 3.4.0
       '@react-types/shared': 3.18.1(react@18.2.0)
       react: 18.2.0
     dev: false
@@ -4769,7 +4763,7 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
     dependencies:
-      '@internationalized/date': 3.3.0
+      '@internationalized/date': 3.4.0
       '@react-types/calendar': 3.3.0(react@18.2.0)
       '@react-types/overlays': 3.8.0(react@18.2.0)
       '@react-types/shared': 3.18.1(react@18.2.0)

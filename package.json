@@ -20,7 +20,7 @@
     "@amplitude/analytics-browser": "^2.2.0",
     "@googlemaps/google-maps-services-js": "^3.3.33",
     "@hookform/resolvers": "^2.9.11",
-    "@internationalized/date": "^3.3.0",
+    "@internationalized/date": "^3.4.0",
     "@lucia-auth/adapter-prisma": "^3.0.1",
     "@lucia-auth/oauth": "^2.1.1",
     "@mdx-js/loader": "^2.3.0",

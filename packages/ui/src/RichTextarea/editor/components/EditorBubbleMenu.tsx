@@ -23,6 +23,10 @@ export interface BubbleMenuItem {
 type EditorBubbleMenuProps = Omit<BubbleMenuProps, 'children'>;
 
 export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
+  if (!props.editor) {
+    return null;
+  }
+
   const {mainMenuItems} = createMainItems({
     editor: props.editor,
   });
@@ -67,7 +71,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
           <form
             onSubmit={(e) => {
               const input = (e.target as any)[0] as HTMLInputElement;
-              props.editor.chain().focus().setLink({href: input.value}).run();
+              props.editor?.chain().focus().setLink({href: input.value}).run();
               e.preventDefault();
               e.stopPropagation();
             }}
@@ -81,7 +85,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
               {props.editor.getAttributes('link').href ? (
                 <Button
                   onClick={(e) => {
-                    props.editor.chain().focus().unsetLink().run();
+                    props.editor?.chain().focus().unsetLink().run();
                     e.preventDefault();
                   }}
                   size={'icon'}
