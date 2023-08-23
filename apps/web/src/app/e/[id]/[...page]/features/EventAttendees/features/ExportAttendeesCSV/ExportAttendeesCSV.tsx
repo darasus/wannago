@@ -36,6 +36,7 @@ export function ExportAttendeesCSV() {
       data-testid="export-csv-button"
       disabled={isPending}
       isLoading={isPending}
+      className="shrink-0"
     >
       Export CSV
     </Button>

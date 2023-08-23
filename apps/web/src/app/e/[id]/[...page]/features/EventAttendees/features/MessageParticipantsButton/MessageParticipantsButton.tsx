@@ -62,6 +62,7 @@ export function MessageParticipantsButton() {
           size="sm"
           title="Message attendees"
           data-testid="message-attendees-button"
+          className="shrink-0"
         >
           Message attendees
         </Button>
@@ -78,6 +79,7 @@ export function MessageParticipantsButton() {
                   {...form.register('subject')}
                   placeholder="Subject"
                   data-testid="message-attendees-input-subject"
+                  autoComplete="off"
                 />
               </div>
               <div>
@@ -97,9 +99,10 @@ export function MessageParticipantsButton() {
                   Send
                 </Button>
                 <Button
-                  onClick={() => {
+                  onClick={(e) => {
                     setIsOpen(false);
                     form.reset();
+                    e.preventDefault();
                   }}
                   variant="outline"
                 >

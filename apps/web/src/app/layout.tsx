@@ -6,7 +6,7 @@ import {Header} from '../features/Header/Header';
 import {Tools} from '../features/Tools';
 import {ToastProvider} from '../features/ToastProvider';
 import {Scripts} from '../features/Scripts';
-import {ThemeProvider} from './ThemeProvider';
+import {ClientProvider} from './ClientProvider';
 
 export const metadata = {
   title: 'WannaGo',
@@ -24,20 +24,18 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ClientProvider>
           <div>
-            <div>
-              <Container maxSize={'full'}>
-                <Header />
-              </Container>
-            </div>
-            <div>
-              <div>{children}</div>
-            </div>
+            <Container maxSize={'full'}>
+              <Header />
+            </Container>
+          </div>
+          <div>
+            <div>{children}</div>
           </div>
           <Tools />
           <ToastProvider />
-        </ThemeProvider>
+        </ClientProvider>
       </body>
       <Scripts />
     </html>
