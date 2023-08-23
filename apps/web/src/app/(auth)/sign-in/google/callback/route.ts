@@ -37,6 +37,17 @@ export const GET = async (request: NextRequest) => {
 
     const getUser = async () => {
       if (existingUser) {
+        if (existingUser.email_verified === false) {
+          await prisma.user.update({
+            where: {
+              id: existingUser.id,
+            },
+            data: {
+              email_verified: true,
+            },
+          });
+        }
+
         return existingUser;
       }
 
@@ -59,6 +70,17 @@ export const GET = async (request: NextRequest) => {
             },
           });
 
+          if (databaseUser.email_verified === false) {
+            await prisma.user.update({
+              where: {
+                id: databaseUser.id,
+              },
+              data: {
+                email_verified: true,
+              },
+            });
+          }
+
           return {...databaseUser, userId: databaseUser.id};
         }
       }
@@ -69,8 +91,10 @@ export const GET = async (request: NextRequest) => {
           email: googleUser.email,
           firstName: googleUser.given_name,
           lastName: googleUser.family_name,
+          email_verified: true,
         },
       });
+
       return user;
     };
 
