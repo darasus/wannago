@@ -22,7 +22,7 @@ export default async function handler(
   const form = new formidable.IncomingForm();
 
   form.parse(req, async function (err, fields, files) {
-    const file = files.file as formidable.File;
+    const file = files.file as unknown as formidable.File;
     const buffer = fs.readFileSync(file.filepath);
     const uploadedImage = await uploadImage(buffer);
 

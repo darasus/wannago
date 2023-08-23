@@ -3,7 +3,7 @@ import * as s from 'stripe';
 
 export class Stripe {
   client = new s.Stripe(env.STRIPE_API_SECRET, {
-    apiVersion: '2022-11-15',
+    apiVersion: '2023-08-16',
   });
 
   private endpointSecret = env.STRIPE_ENDPOINT_SECRET;
