@@ -55,7 +55,7 @@ Cypress.Commands.addAll({
     cy.wait(1000);
     // cy.get('[data-testid="file-input-image-preview"]');
     cy.get('[data-testid="event-form-submit-button"]').click();
-    cy.wait(3000);
+    cy.url().should('include', '/e/');
     cy.get('[data-testid="event-title"]').should('be.visible');
   },
   publishCurrentEvent() {
