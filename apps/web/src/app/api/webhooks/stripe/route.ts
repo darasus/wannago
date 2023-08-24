@@ -11,6 +11,8 @@ import {
   handleCheckoutSessionCompletedInputSchema,
 } from 'stripe-webhook-input-validation';
 import {env} from 'server-env';
+import {auth} from 'auth';
+import {cookies} from 'next/headers';
 
 const stripe = new Stripe().client;
 
@@ -33,7 +35,12 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const ctx = await createContext({req});
+  const authRequest = auth.handleRequest({
+    request: req,
+    cookies: cookies,
+  });
+
+  const ctx = await createContext({authRequest});
   const caller = stripeWebhookHandlerRouter.createCaller(ctx);
 
   try {

@@ -17,10 +17,8 @@ import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
 import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
 import {Inngest, EventSchemas} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
-import {NextRequest} from 'next/server';
-import {NextApiRequest} from 'next';
-import {getPageSession, auth as _auth} from 'auth';
-import {cookies} from 'next/headers';
+import {getPageSession} from 'auth';
+import {headers as _headers} from 'next/headers';
 import {AuthRequest} from 'lucia';
 
 const actions = {
@@ -51,7 +49,7 @@ type Assertions = {
 
 interface CreateInnerContextOptions {
   auth: Awaited<ReturnType<typeof getPageSession> | null>;
-  authRequest: AuthRequest | null;
+  authRequest?: AuthRequest;
   prisma: typeof prisma;
   timezone: string | undefined;
   currency: Currency;
@@ -90,43 +88,35 @@ const inngest = new Inngest({
 });
 export type InngestType = typeof inngest;
 
-export async function createContext(opts: {
-  req: NextRequest | NextApiRequest;
+export async function createContext(opts?: {
+  authRequest?: AuthRequest;
 }): Promise<Context> {
+  const headers = _headers();
   let timezone: string | undefined = undefined;
   let country: string | undefined = undefined;
 
-  if (typeof opts.req.headers.get === 'function') {
-    timezone = opts.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
+  if (typeof headers.get === 'function') {
+    timezone = headers.get('x-vercel-ip-timezone') ?? 'UTC';
   }
 
-  if ('x-vercel-ip-timezone' in opts.req.headers) {
-    timezone = opts.req.headers['x-vercel-ip-timezone'] as string;
+  if ('x-vercel-ip-timezone' in headers) {
+    timezone = headers['x-vercel-ip-timezone'] as string;
   }
 
-  if (typeof opts.req.headers.get === 'function') {
-    country = opts.req.headers.get('x-vercel-ip-country') ?? 'UTC';
+  if (typeof headers.get === 'function') {
+    country = headers.get('x-vercel-ip-country') ?? 'UTC';
   }
 
-  if ('x-vercel-ip-timezone' in opts.req.headers) {
-    country = opts.req.headers['x-vercel-ip-country'] as string;
+  if ('x-vercel-ip-country' in headers) {
+    country = headers['x-vercel-ip-country'] as string;
   }
 
   const currency = getCurrencyFromHeaders(country);
   const auth = await getPageSession();
 
-  let authRequest: any = null;
-
-  if (opts.req instanceof NextRequest) {
-    authRequest = _auth.handleRequest({
-      request: opts.req,
-      cookies,
-    });
-  }
-
   const innerContext = createContextInner({
     auth,
-    authRequest,
+    authRequest: opts?.authRequest,
     prisma,
     timezone,
     currency,
