@@ -5,10 +5,11 @@ import {DesktopMenu} from '../../components/DesktopMenu';
 import {MobileMenu} from '../../components/MobileMenu';
 import Link from 'next/link';
 import {api} from '../../trpc/server-http';
+import {api as invoker} from '../../trpc/server-invoker';
 import {VerifyEmailBar} from '../VerifyEmailBar/VerifyEmailBar';
 
 export async function Header() {
-  const me = await api.user.me.query();
+  const me = await invoker.user.me.query();
   const showUserProfile = !!me;
   const showAuthButtons = !me;
 
