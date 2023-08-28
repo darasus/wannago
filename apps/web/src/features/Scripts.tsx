@@ -46,7 +46,7 @@ export async function Scripts() {
           `}
         </Script>
       )} */}
-      {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
+      {/* {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
         <Script id="missive" strategy="lazyOnload">
           {`
           (function(d, w) {
@@ -66,7 +66,7 @@ export async function Scripts() {
           })(document, window);
         `}
         </Script>
-      )}
+      )} */}
     </>
   );
 }
