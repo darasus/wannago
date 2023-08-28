@@ -7,14 +7,14 @@ import {prepareIcsData} from 'utils';
 import {iOS} from 'utils';
 import {DateCard as DataCardView} from 'cards';
 import {Android} from 'utils';
-import {useAmplitude} from 'hooks';
+import {useTracker} from 'hooks';
 
 interface Props {
   event: Event;
 }
 
 export function DateCard({event}: Props) {
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useTracker();
   const handleCalendarClick = () => {
     logEvent('add_to_calendar_button_clicked', {
       eventId: event.id,

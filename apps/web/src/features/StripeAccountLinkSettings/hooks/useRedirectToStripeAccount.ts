@@ -4,14 +4,14 @@ import {useTransition} from 'react';
 import {api} from '../../../trpc/client';
 import {toast} from 'sonner';
 import {captureException} from '@sentry/nextjs';
-import {useAmplitude} from 'hooks';
+import {useTracker} from 'hooks';
 
 export function useRedirectToStripeAccount({
   organizerId,
 }: {
   organizerId: string;
 }) {
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useTracker();
   const [isPending, startTransition] = useTransition();
 
   const redirectToStripeAccount = async () => {
