@@ -30,27 +30,30 @@ export class TinyBird {
     this.#user = props?.user;
   }
 
-  #getClient({
+  async #getClient({
     eventName,
     additionalAttributes,
   }: {
     eventName: EventType;
     additionalAttributes: Record<string, string | number | null | undefined>;
   }) {
-    return fetch(this.#baseUrl + `/events?name=${eventName}`, {
-      method: 'POST',
-      body: JSON.stringify({userId: this.#user?.id, ...additionalAttributes}),
-      headers: {
-        Authorization:
-          'Bearer p.eyJ1IjogIjgwYmMxODdkLTg1ZGMtNGRiOC05NjUxLTc0NTM1NWQ3NDdhOSIsICJpZCI6ICIyMTQ0N2YyMi05ODNiLTRiYWEtYmNlMS0yYjg3YmY1YjgxZGIiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.lha6Tq_gcBnWZXjoktl1SDni1Sd4WNOpieuuVJA3jME',
-      },
-    });
+    try {
+      await fetch(this.#baseUrl + `/events?name=${eventName}`, {
+        method: 'POST',
+        body: JSON.stringify({userId: this.#user?.id, ...additionalAttributes}),
+        headers: {
+          Authorization:
+            'Bearer p.eyJ1IjogIjgwYmMxODdkLTg1ZGMtNGRiOC05NjUxLTc0NTM1NWQ3NDdhOSIsICJpZCI6ICIyMTQ0N2YyMi05ODNiLTRiYWEtYmNlMS0yYjg3YmY1YjgxZGIiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.lha6Tq_gcBnWZXjoktl1SDni1Sd4WNOpieuuVJA3jME',
+        },
+      });
+    } catch (error) {}
   }
 
   public track(
     eventName: EventType,
     additionalAttributes: Record<string, string | number | null | undefined>
   ) {
+    console.log('>>HELLO');
     return this.#getClient({eventName, additionalAttributes});
   }
 }

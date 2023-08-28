@@ -16,7 +16,7 @@ export function useTracker() {
 
   const logEvent = useCallback(
     (eventType: EventType, options?: Options) => {
-      track(eventType, {
+      return track(eventType, {
         eventType,
         ...options?.extra,
         pathname: options?.pathname ?? pathname,
