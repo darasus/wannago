@@ -32,8 +32,9 @@ export const GET = async (request: NextRequest) => {
   }
 
   try {
-    const {existingUser, createUser, googleUser} =
+    const {createUser, googleUser, getExistingUser} =
       await googleAuth.validateCallback(code);
+    const existingUser = await getExistingUser();
 
     const getUser = async () => {
       if (existingUser) {
