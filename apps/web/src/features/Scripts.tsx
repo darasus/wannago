@@ -16,7 +16,7 @@ export async function Scripts() {
           data-token="p.eyJ1IjogIjM0OTg5Zjg3LTcyNTYtNDNkNi05NTg4LTgwN2Y5NWZkNjhlNiIsICJpZCI6ICJmMzRkZmI0OC0yMTliLTRiZjEtOGNmMy1mZjUxZjlmZjU1NjQiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.10TE_bg_84u6gwouDkjW1iXHL5GRShksvDxY9KWw4Z4"
         />
       )}
-      {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
+      {/* {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
@@ -45,7 +45,7 @@ export async function Scripts() {
             })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
           `}
         </Script>
-      )}
+      )} */}
       {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
         <Script id="missive" strategy="lazyOnload">
           {`

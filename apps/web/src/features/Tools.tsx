@@ -1,7 +1,6 @@
 import {env} from 'client-env';
 import {RouteTracker} from './RouteTracker/RouteTracker';
 import {Sentry} from './Sentry/Sentry';
-import {GoogleAnalytics} from './GoogleAnalytics/GoogleAnalytics';
 
 export async function Tools() {
   return (
@@ -10,7 +9,7 @@ export async function Tools() {
         <>
           <RouteTracker />
           <Sentry />
-          <GoogleAnalytics />
+          {/* <GoogleAnalytics /> */}
         </>
       )}
     </>
