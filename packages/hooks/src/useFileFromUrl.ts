@@ -1,5 +1,6 @@
 'use client';
 
+import {captureException} from '@sentry/nextjs';
 import {useEffect, useState} from 'react';
 
 export function useFileFromUrl(url: string | undefined | null) {
@@ -7,7 +8,7 @@ export function useFileFromUrl(url: string | undefined | null) {
 
   useEffect(() => {
     if (url) {
-      createFileFromURL(url).then(file => {
+      createFileFromURL(url).then((file) => {
         if (file) {
           setFile(file);
         }
@@ -29,7 +30,7 @@ async function createFileFromURL(url: string) {
     const data = await response.blob();
     const file = new File([data], 'preview', {type: data.type});
     return file;
-  } catch (error) {
-    console.error('Error fetching the file:', error);
+  } catch (error: any) {
+    captureException('Error fetching the file:', error);
   }
 }

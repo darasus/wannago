@@ -24,9 +24,9 @@ export async function POST(req: NextRequest) {
       env.STRIPE_ENDPOINT_SECRET
     );
   } catch (err) {
+    captureException(err);
+
     const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-    if (err! instanceof Error) console.log(err);
-    console.log(`❌ Error message: ${errorMessage}`);
     return NextResponse.json(
       {message: `Webhook Error: ${errorMessage}`},
       {status: 400}

@@ -27,7 +27,6 @@ export async function track(
   additionalAttributes: Record<string, string | number | null | undefined>
 ) {
   try {
-    console.log('HELLo');
     await fetch(`https://api.tinybird.co/v0/events?name=${eventName}`, {
       method: 'POST',
       body: JSON.stringify(additionalAttributes),
@@ -38,6 +37,5 @@ export async function track(
     });
   } catch (error) {
     captureException(error);
-    console.log(error);
   }
 }

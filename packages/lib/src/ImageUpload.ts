@@ -52,7 +52,6 @@ export class ImageUpload {
       });
       return imageSchema.parse(data);
     } catch (error) {
-      console.error(error);
       captureException(error);
       return null;
     }
