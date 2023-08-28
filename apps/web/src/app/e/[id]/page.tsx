@@ -69,7 +69,9 @@ export default async function EventPage({
   return (
     <Suspense fallback={<LoadingBlock />}>
       <Container className="flex flex-col gap-4" maxSize="sm">
-        {isMyEvent && <ManageEventButton eventPromise={eventPromise} />}
+        <Suspense>
+          {isMyEvent && <ManageEventButton eventPromise={eventPromise} />}
+        </Suspense>
         <EventView eventPromise={eventPromise} isMyEvent={isMyEvent} me={me} />
       </Container>
     </Suspense>
