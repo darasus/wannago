@@ -1,16 +1,16 @@
 import {AnimateRender} from './AnimateRender';
 
 import {EventView} from '../../features/EventView/EventView';
-import {api} from '../../trpc/client';
+import {RouterOutputs} from 'api';
 
 interface Props {
-  eventPromise: ReturnType<typeof api.event.getRandomExample.query>;
+  event: RouterOutputs['event']['getRandomExample'];
 }
 
-export default function EventPreview({eventPromise}: Props) {
+export default function EventPreview({event}: Props) {
   return (
     <AnimateRender>
-      <EventView eventPromise={eventPromise} me={null} />
+      <EventView event={event} me={null} />
     </AnimateRender>
   );
 }

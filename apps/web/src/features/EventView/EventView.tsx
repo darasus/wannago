@@ -6,37 +6,20 @@ import {
   UrlCard,
 } from 'card-features';
 import {InfoCard} from 'cards';
-import {notFound} from 'next/navigation';
 import {getBaseUrl} from 'utils';
 import {api} from '../../trpc/server-http';
 import {RouterOutputs} from 'api';
 
 interface Props {
-  eventPromise: Promise<
+  event:
     | RouterOutputs['event']['getByShortId']
-    | RouterOutputs['event']['getRandomExample']
-  >;
+    | RouterOutputs['event']['getRandomExample'];
   isLoadingImage?: boolean;
   isMyEvent?: boolean;
   me: RouterOutputs['user']['me'];
 }
 
-export async function EventView({
-  eventPromise,
-  isLoadingImage,
-  isMyEvent,
-  me,
-}: Props) {
-  const event = await eventPromise;
-
-  if (!event) {
-    notFound();
-  }
-
-  if (event.isPublished === false && isMyEvent === false) {
-    return notFound();
-  }
-
+export async function EventView({event, isLoadingImage, isMyEvent, me}: Props) {
   const myTicketPromise = api.event.getMyTicketsByEvent.query({
     eventShortId: event.shortId,
   });

@@ -12,7 +12,6 @@ import {
   Users,
 } from 'lucide-react';
 import {useParams, useRouter} from 'next/navigation';
-import {use} from 'react';
 import {
   Button,
   DropdownMenu,
@@ -25,11 +24,10 @@ import {
 } from 'ui';
 
 interface Props {
-  eventPromise: Promise<RouterOutputs['event']['getByShortId']>;
+  event: RouterOutputs['event']['getByShortId'];
 }
 
-export function ManageEventButton({eventPromise}: Props) {
-  const event = use(eventPromise);
+export function ManageEventButton({event}: Props) {
   const router = useRouter();
   const params = useParams();
   const shortId = params?.id as string;

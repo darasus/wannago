@@ -1,9 +1,9 @@
-import {Container, LoadingBlock} from 'ui';
+import {Container} from 'ui';
 import {api} from '../../../trpc/server-http';
 import {ManageEventButton} from './features/ManageEventButton/ManageEventButton';
 import {EventView} from '../../../features/EventView/EventView';
-import {Suspense} from 'react';
 import {getBaseUrl} from 'utils';
+import {notFound} from 'next/navigation';
 
 export const runtime = 'edge';
 export const preferredRegion = 'iad1';
@@ -57,23 +57,26 @@ export default async function EventPage({
 }: {
   params: {id: string};
 }) {
-  const [me, isMyEvent] = await Promise.all([
+  const [me, isMyEvent, event] = await Promise.all([
     api.user.me.query(),
     api.event.getIsMyEvent.query({
       eventShortId: id,
     }),
+    api.event.getByShortId.query({id}),
   ]);
 
-  const eventPromise = api.event.getByShortId.query({id});
+  if (!event) {
+    notFound();
+  }
+
+  if (event.isPublished === false && isMyEvent === false) {
+    notFound();
+  }
 
   return (
-    <Suspense fallback={<LoadingBlock />}>
-      <Container className="flex flex-col gap-4" maxSize="sm">
-        <Suspense>
-          {isMyEvent && <ManageEventButton eventPromise={eventPromise} />}
-        </Suspense>
-        <EventView eventPromise={eventPromise} isMyEvent={isMyEvent} me={me} />
-      </Container>
-    </Suspense>
+    <Container className="flex flex-col gap-4" maxSize="sm">
+      {isMyEvent && <ManageEventButton event={event} />}
+      <EventView event={event} isMyEvent={isMyEvent} me={me} />
+    </Container>
   );
 }

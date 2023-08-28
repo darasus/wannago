@@ -1,6 +1,5 @@
-import {Suspense} from 'react';
 import {titleFontClassName} from '../../fonts';
-import {Button, LoadingBlock} from 'ui';
+import {Button} from 'ui';
 import {Container} from 'ui';
 import {cn} from 'utils';
 import EventPreview from './EventPreview';
@@ -38,9 +37,7 @@ export async function Hero() {
           </Button>
         </div>
         <div className="flex justify-center relative w-full max-w-2xl m-auto">
-          <Suspense fallback={<LoadingBlock />}>
-            <EventPreview eventPromise={api.event.getRandomExample.query()} />
-          </Suspense>
+          <EventPreview event={await api.event.getRandomExample.query()} />
         </div>
       </Container>
     </div>
