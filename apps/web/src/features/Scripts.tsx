@@ -8,6 +8,15 @@ export async function Scripts() {
   return (
     <>
       {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
+        <Script
+          id="tinybird"
+          strategy="afterInteractive"
+          src="https://unpkg.com/@tinybirdco/flock.js"
+          data-host="https://api.tinybird.co"
+          data-token="p.eyJ1IjogIjM0OTg5Zjg3LTcyNTYtNDNkNi05NTg4LTgwN2Y5NWZkNjhlNiIsICJpZCI6ICJmMzRkZmI0OC0yMTliLTRiZjEtOGNmMy1mZjUxZjlmZjU1NjQiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.10TE_bg_84u6gwouDkjW1iXHL5GRShksvDxY9KWw4Z4"
+        />
+      )}
+      {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
