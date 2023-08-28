@@ -4,7 +4,7 @@
   "license": "MIT",
   "main": "./index.ts",
   "scripts": {
-    "generate": "dotenv -e ./.vercel/.env.development.local -- npx prisma generate --accelerate",
+    "generate": "dotenv -e ./.vercel/.env.development.local -- npx prisma generate",
     "push": "dotenv -e ./.env -- npx prisma db push",
     "studio": "dotenv -e ./.env -- npx prisma studio",
     "lint": "eslint"

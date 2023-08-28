@@ -68,7 +68,7 @@
 
 // export {prisma};
 
-import {PrismaClient} from '@prisma/client/edge';
+import {PrismaClient} from '@prisma/client';
 
 function makePrisma() {
   return new PrismaClient();

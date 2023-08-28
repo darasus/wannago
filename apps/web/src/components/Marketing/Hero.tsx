@@ -6,10 +6,9 @@ import {cn} from 'utils';
 import EventPreview from './EventPreview';
 import Link from 'next/link';
 import {api} from '../../trpc/server-http';
-import {getPageSession} from 'auth';
 
 export async function Hero() {
-  const auth = await getPageSession();
+  const me = await api.user.me.query();
 
   return (
     <div className="relative overflow-hidden">
@@ -33,7 +32,7 @@ export async function Hero() {
         </div>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">
           <Button className="pointer-events-auto" size="lg" asChild>
-            <Link href={auth?.user.id ? '/e/add' : '/sign-up'}>
+            <Link href={me ? '/e/add' : '/sign-up'}>
               Create your first event
             </Link>
           </Button>
