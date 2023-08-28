@@ -5,7 +5,7 @@ import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 import {FormProvider} from 'react-hook-form';
 import {zonedTimeToUtc} from 'date-fns-tz';
-import {useAmplitude} from 'hooks';
+import {useTracker} from 'hooks';
 import {PageHeader} from 'ui';
 import {Event, Organization, Ticket, User} from '@prisma/client';
 import {toast} from 'sonner';
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export function EditEventForm({event, me, myOrganizations}: Props) {
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useTracker();
   const router = useRouter();
   const form = useEventForm({
     event,

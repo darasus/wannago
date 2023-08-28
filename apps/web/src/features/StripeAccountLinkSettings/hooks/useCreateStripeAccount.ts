@@ -5,10 +5,10 @@ import {api} from '../../../trpc/client';
 import {toast} from 'sonner';
 import {captureException} from '@sentry/nextjs';
 import {useRouter} from 'next/navigation';
-import {useAmplitude} from 'hooks';
+import {useTracker} from 'hooks';
 
 export function useCreateStripeAccount({organizerId}: {organizerId: string}) {
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useTracker();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 

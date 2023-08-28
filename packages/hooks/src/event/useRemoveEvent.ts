@@ -3,14 +3,14 @@ import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
 import {useConfirmDialog} from '../useConfirmDialog';
 import {api} from '../../../../apps/web/src/trpc/client';
-import {useAmplitude} from '../useAmplitude';
+import {useTracker} from '../useTracker';
 
 interface Props {
   eventId?: string;
 }
 
 export function useRemoveEvent({eventId}: Props) {
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useTracker();
   const router = useRouter();
 
   const {modal, open, isPending} = useConfirmDialog({

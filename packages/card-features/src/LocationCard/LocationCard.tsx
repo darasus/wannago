@@ -1,7 +1,7 @@
 'use client';
 
 import {LocationCard as LocationCardView} from 'cards';
-import {useAmplitude} from 'hooks';
+import {useTracker} from 'hooks';
 
 interface Props {
   address: string;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function LocationCard({address, longitude, latitude, eventId}: Props) {
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useTracker();
   const onGetDirectionsClick = () => {
     logEvent('get_directions_button_clicked', {eventId});
     window?.open(`https://www.google.com/maps/search/${address}`);

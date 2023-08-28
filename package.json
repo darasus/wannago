@@ -17,7 +17,6 @@
     "pull:env": "vercel pull"
   },
   "dependencies": {
-    "@amplitude/analytics-browser": "^2.2.0",
     "@googlemaps/google-maps-services-js": "^3.3.36",
     "@hookform/resolvers": "^3.3.0",
     "@internationalized/date": "^3.4.0",

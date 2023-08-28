@@ -13,7 +13,7 @@ import {
   Input,
   Textarea,
 } from 'ui';
-import {useAmplitude} from 'hooks';
+import {useTracker} from 'hooks';
 import {useParams} from 'next/navigation';
 import {api} from '../../../../../../../../trpc/client';
 import {DialogTrigger} from '@radix-ui/react-dialog';
@@ -26,7 +26,7 @@ interface Form {
 export function MessageParticipantsButton() {
   const params = useParams();
   const eventShortId = params?.id as string;
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useTracker();
   const [isOpen, setIsOpen] = useState(false);
   const form = useForm<Form>();
 

@@ -3,7 +3,7 @@ import {toast} from 'sonner';
 import {useConfirmDialog} from '../useConfirmDialog';
 import {api} from '../../../../apps/web/src/trpc/client';
 import {useRouter} from 'next/navigation';
-import {useAmplitude} from '../useAmplitude';
+import {useTracker} from '../useTracker';
 
 interface Props {
   eventId?: string;
@@ -11,7 +11,7 @@ interface Props {
 
 export function useUnpublishEvent({eventId}: Props) {
   const router = useRouter();
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useTracker();
 
   const {modal, open, isPending} = useConfirmDialog({
     title: 'Are you sure you want to unpublish event?',

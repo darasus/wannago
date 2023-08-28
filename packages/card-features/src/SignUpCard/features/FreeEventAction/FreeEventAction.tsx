@@ -1,7 +1,7 @@
 'use client';
 
 import {Event} from '@prisma/client';
-import {useAmplitude, useConfetti, useConfirmDialog, useMe} from 'hooks';
+import {useTracker, useConfetti, useConfirmDialog, useMe} from 'hooks';
 import {use} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'sonner';
@@ -32,7 +32,7 @@ interface Props {
 export function FreeEventAction({event, mySignUpPromise}: Props) {
   const router = useRouter();
   const {confetti} = useConfetti();
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useTracker();
   const me = useMe();
   const signUp = use(mySignUpPromise);
 

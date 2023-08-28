@@ -9,6 +9,7 @@
   "dependencies": {
     "ui": "workspace:*",
     "client-env": "workspace:*",
+    "lib": "workspace:*",
     "utils": "workspace:*"
   },
   "devDependencies": {

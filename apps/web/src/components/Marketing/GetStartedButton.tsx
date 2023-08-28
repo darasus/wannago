@@ -1,11 +1,11 @@
 'use client';
 
-import {useAmplitude} from 'hooks';
+import {useTracker} from 'hooks';
 import Link from 'next/link';
 import {Button} from 'ui';
 
 export function GetStartedButton() {
-  const {logEvent} = useAmplitude();
+  const {logEvent} = useTracker();
 
   return (
     <Button

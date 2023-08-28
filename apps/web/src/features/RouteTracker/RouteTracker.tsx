@@ -1,13 +1,12 @@
 'use client';
 
 import {useCallback, useEffect} from 'react';
-import {useAmplitude} from 'hooks';
-import {useInitiateAmplitude} from 'hooks';
+import {useTracker} from 'hooks';
 import {getBaseUrl} from 'utils';
 import {usePathname, useSearchParams} from 'next/navigation';
 
-function AmplitudeRouteTracker() {
-  const {logEvent} = useAmplitude();
+function RouteTrackerInternal() {
+  const {logEvent} = useTracker();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -25,12 +24,6 @@ function AmplitudeRouteTracker() {
   return null;
 }
 
-export function Amplitude() {
-  const {isInitiated} = useInitiateAmplitude();
-
-  if (!isInitiated) {
-    return null;
-  }
-
-  return <AmplitudeRouteTracker />;
+export function RouteTracker() {
+  return <RouteTrackerInternal />;
 }
