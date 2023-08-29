@@ -4,11 +4,16 @@ import {ManageEventButton} from './features/ManageEventButton/ManageEventButton'
 import {EventView} from '../../../features/EventView/EventView';
 import {getBaseUrl} from 'utils';
 import {notFound} from 'next/navigation';
+import {Metadata} from 'next';
 
 export const runtime = 'edge';
 export const preferredRegion = 'iad1';
 
-export async function generateMetadata({params: {id}}: {params: {id: string}}) {
+export async function generateMetadata({
+  params: {id},
+}: {
+  params: {id: string};
+}): Promise<Metadata> {
   const event = await api.event.getByShortId.query({id}).catch(() => null);
 
   if (!event) {
@@ -46,6 +51,7 @@ export async function generateMetadata({params: {id}}: {params: {id: string}}) {
 
   return {
     title: `${event?.title} | WannaGo`,
+    description: event?.description?.replaceAll(/<[^>]*>?/gm, ''),
     openGraph: {
       images: [url.toString()],
     },

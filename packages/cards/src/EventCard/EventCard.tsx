@@ -2,7 +2,7 @@ import {isFuture} from 'date-fns';
 import {RouterOutputs} from 'api';
 import Image from 'next/image';
 import {cloudflareImageLoader, formatCents, getRelativeTime} from 'utils';
-import {Avatar, Badge, CardBase, Text} from 'ui';
+import {Avatar, CardBase, ColoredBadge, Text} from 'ui';
 import {forwardRef} from 'react';
 
 interface Props {
@@ -58,16 +58,16 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
       }
       titleChildren={
         <div className="flex items-center gap-1">
-          <Badge
-            className="shrink-0"
-            variant={isUpcoming ? 'positive' : 'outline'}
+          <ColoredBadge
+            className="shrink-0 py-1"
+            color={isUpcoming ? 'green' : 'default'}
           >
             {getRelativeTime(event.startDate, event.endDate)}
-          </Badge>
+          </ColoredBadge>
           <div className="grow" />
-          <Badge className="shrink-0" variant={'outline'}>
+          <ColoredBadge className="shrink-0 py-1" color="default">
             {price}
-          </Badge>
+          </ColoredBadge>
         </div>
       }
     >
@@ -80,9 +80,13 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
               {showPublishStatus && (
                 <div className="absolute left-4 top-4 z-10">
                   {event.isPublished ? (
-                    <Badge>Published</Badge>
+                    <ColoredBadge className="py-1" color="green">
+                      Published
+                    </ColoredBadge>
                   ) : (
-                    <Badge variant={'outline'}>Draft</Badge>
+                    <ColoredBadge className="py-1" color="default">
+                      Draft
+                    </ColoredBadge>
                   )}
                 </div>
               )}
