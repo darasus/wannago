@@ -34,6 +34,8 @@ export function LocationImage({address, longitude, latitude}: Props) {
         alt={address}
         fill
         style={{objectFit: 'cover'}}
+        sizes="320 640 750 1000"
+        priority
       />
     </div>
   );
