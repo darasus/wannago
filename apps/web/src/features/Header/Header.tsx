@@ -18,7 +18,9 @@ export async function Header() {
       <CardBase>
         <nav className="relative flex justify-between">
           <div className="flex items-center gap-x-4 md:gap-x-8">
-            <Logo href={!!me ? '/dashboard' : '/'} />
+            <div className="flex items-center h-[40px]">
+              <Logo href={!!me ? '/dashboard' : '/'} />
+            </div>
             <DesktopMenu />
           </div>
           <div className="flex items-center gap-x-4 md:gap-x-4">
