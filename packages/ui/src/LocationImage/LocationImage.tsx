@@ -1,6 +1,5 @@
 import {env} from 'client-env';
 import Image from 'next/image';
-import {useTheme} from 'next-themes';
 
 interface Props {
   address: string;
@@ -10,30 +9,61 @@ interface Props {
   latitude: number;
 }
 
-export function LocationImage({address, longitude, latitude}: Props) {
-  const {resolvedTheme} = useTheme();
-  const width = 480;
-  const height = 150;
-  const url = new URL('https://maps.googleapis.com/maps/api/staticmap');
+const width = 480;
+const height = 150;
+const url = new URL('https://maps.googleapis.com/maps/api/staticmap');
+url.searchParams.set('key', env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
+url.searchParams.set('size', `${width}x${height}`);
+url.searchParams.set('zoom', '17');
+url.searchParams.set('maptype', 'roadmap');
+url.searchParams.set('scale', '2');
+url.searchParams.set('format', 'jpg');
 
-  url.searchParams.set('key', env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
-  url.searchParams.set('size', `${width}x${height}`);
-  url.searchParams.set('zoom', '17');
-  url.searchParams.set('maptype', 'roadmap');
+export function LocationImage({address, longitude, latitude}: Props) {
   url.searchParams.set('center', address);
-  url.searchParams.set('scale', '2');
-  url.searchParams.set('format', 'jpg');
   url.searchParams.set('markers', `color:red|${latitude},${longitude}`);
 
-  (resolvedTheme === 'dark' ? darkStyles : lightStyles).forEach((style) => {
+  return (
+    <>
+      <DarkImage src={url.toString()} />
+      <LightImage src={url.toString()} />
+    </>
+  );
+}
+
+function DarkImage({src}: {src: string}) {
+  const url = new URL(src);
+
+  darkStyles.forEach((style) => {
     url.searchParams.append('style', style);
   });
 
   return (
-    <div className="relative rounded-md overflow-hidden border bg-muted dark:bg-white/[.04] h-24">
+    <div className="hidden dark:block relative rounded-md overflow-hidden border bg-muted dark:bg-white/[.04] h-24">
       <Image
         src={url.toString()}
-        alt={address}
+        alt={'location'}
+        fill
+        style={{objectFit: 'cover'}}
+        sizes="320 640 750 1000"
+        priority
+      />
+    </div>
+  );
+}
+
+function LightImage({src}: {src: string}) {
+  const url = new URL(src);
+
+  lightStyles.forEach((style) => {
+    url.searchParams.append('style', style);
+  });
+
+  return (
+    <div className="block dark:hidden relative rounded-md overflow-hidden border bg-muted dark:bg-white/[.04] h-24">
+      <Image
+        src={url.toString()}
+        alt={'location'}
         fill
         style={{objectFit: 'cover'}}
         sizes="320 640 750 1000"
