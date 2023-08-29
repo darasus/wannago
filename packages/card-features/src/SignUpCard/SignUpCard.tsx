@@ -1,11 +1,11 @@
-import {CardBase, Container, Text} from 'ui';
+import {CardBase, Container, Skeleton, Text} from 'ui';
 import {FreeEventAction} from './features/FreeEventAction/FreeEventAction';
 import {PaidEventAction} from './features/PaidEventAction/PaidEventAction';
 import {api} from '../../../../apps/web/src/trpc/server-http';
 import {RouterOutputs} from 'api';
 import {Suspense} from 'react';
 import {UserCount} from './features/UserCount/UserCount';
-import {SignUpStatus} from './SignUpStatus/SignUpStatus';
+import {SignUpStatus, SignUpStatusCard} from './SignUpStatus/SignUpStatus';
 
 interface Props {
   event:
@@ -54,7 +54,13 @@ export function SignUpCard({event, myTicketPromise, mePromise}: Props) {
             </div>
           </div>
         </CardBase>
-        <Suspense>
+        <Suspense
+          fallback={
+            <SignUpStatusCard color="default">
+              <Skeleton className="h-5 w-[250px]" />
+            </SignUpStatusCard>
+          }
+        >
           <SignUpStatus
             event={event}
             mySignUpPromise={mySignUpPromise}

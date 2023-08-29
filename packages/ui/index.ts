@@ -3,7 +3,11 @@ export {Avatar} from './src/Avatar/Avatar';
 export {Accordion} from './src/Accordion/Accordion';
 export {Button} from './src/Button/Button';
 export {Badge} from './src/Badge/Badge';
-export {ColoredBadge} from './src/Badge/ColoredBadge';
+export {
+  ColoredBadge,
+  colorVariants,
+  type Color,
+} from './src/Badge/ColoredBadge';
 export {Container} from './src/Container/Container';
 export {CardBase} from './src/CardBase/CardBase';
 export {Text} from './src/Text/Text';

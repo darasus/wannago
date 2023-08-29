@@ -2,18 +2,20 @@ import {cn} from 'utils';
 import {Badge} from './Badge';
 import {cva} from 'class-variance-authority';
 
+export type Color =
+  | 'green'
+  | 'red'
+  | 'yellow'
+  | 'blue'
+  | 'purple'
+  | 'teal'
+  | 'pink'
+  | 'orange'
+  | 'lime'
+  | 'default';
+
 interface Props {
-  color?:
-    | 'green'
-    | 'red'
-    | 'yellow'
-    | 'blue'
-    | 'purple'
-    | 'teal'
-    | 'pink'
-    | 'orange'
-    | 'lime'
-    | 'default';
+  color?: Color;
   children: React.ReactNode;
   className?: string;
 }
