@@ -1,5 +1,6 @@
 import {env} from 'client-env';
 import Image from 'next/image';
+import {useTheme} from 'next-themes';
 
 interface Props {
   address: string;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export function LocationImage({address, longitude, latitude}: Props) {
+  const {resolvedTheme} = useTheme();
   const width = 480;
   const height = 150;
   const url = new URL('https://maps.googleapis.com/maps/api/staticmap');
@@ -23,7 +25,7 @@ export function LocationImage({address, longitude, latitude}: Props) {
   url.searchParams.set('format', 'jpg');
   url.searchParams.set('markers', `color:red|${latitude},${longitude}`);
 
-  styles.forEach((style) => {
+  (resolvedTheme === 'dark' ? darkStyles : lightStyles).forEach((style) => {
     url.searchParams.append('style', style);
   });
 
@@ -41,7 +43,7 @@ export function LocationImage({address, longitude, latitude}: Props) {
   );
 }
 
-const styles = [
+const lightStyles = [
   'element:geometry|color:0xf5f5f5',
   'element:labels.icon|visibility:off',
   'element:labels.text.fill|color:0x616161',
@@ -59,5 +61,31 @@ const styles = [
   'feature:transit.line|element:geometry|color:0xe5e5e5',
   'feature:transit.station|element:geometry|color:0xeeeeee',
   'feature:water|element:geometry|color:0xc9c9c9',
-  'feature:water|element:labels.text.fill|color:0x9e9e9e&size=480x360',
+  'feature:water|element:labels.text.fill|color:0x9e9e9e',
+  'size=480x360',
+];
+
+const darkStyles = [
+  'element:geometry|color:0x212121',
+  'element:labels.icon|visibility:off',
+  'element:labels.text.fill|color:0x757575',
+  'element:labels.text.stroke|color:0x212121',
+  'feature:administrative|element:geometry|color:0x757575',
+  'feature:administrative.country|element:labels.text.fill|color:0x9e9e9e',
+  'feature:administrative.land_parcel|visibility:off',
+  'feature:administrative.locality|element:labels.text.fill|color:0xbdbdbd',
+  'feature:poi|element:labels.text.fill|color:0x757575',
+  'feature:poi.park|element:geometry|color:0x181818',
+  'feature:poi.park|element:labels.text.fill|color:0x616161',
+  'feature:poi.park|element:labels.text.stroke|color:0x1b1b1b',
+  'feature:road|element:geometry.fill|color:0x2c2c2c',
+  'feature:road|element:labels.text.fill|color:0x8a8a8a',
+  'feature:road.arterial|element:geometry|color:0x373737',
+  'feature:road.highway|element:geometry|color:0x3c3c3c',
+  'feature:road.highway.controlled_access|element:geometry|color:0x4e4e4e',
+  'feature:road.local|element:labels.text.fill|color:0x616161',
+  'feature:transit|element:labels.text.fill|color:0x757575',
+  'feature:water|element:geometry|color:0x000000',
+  'feature:water|element:labels.text.fill|color:0x3d3d3d',
+  'size=480x360',
 ];
