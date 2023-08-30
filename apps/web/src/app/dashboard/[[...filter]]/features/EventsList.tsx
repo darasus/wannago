@@ -23,7 +23,7 @@ export async function EventsList({events, eventType}: Props) {
           </span>
         </div>
       )}
-      {data?.map((event, i) => {
+      {data?.map((event) => {
         return (
           <Link
             href={`/e/${event.shortId}`}
