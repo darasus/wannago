@@ -15,21 +15,13 @@ import {
 export function EventFilter() {
   const router = useRouter();
   const pathname = usePathname();
-  const isPast = pathname?.startsWith('/dashboard/past');
-
-  const handleOnClick = () => {
-    if (isPast) {
-      router.push('/dashboard');
-    } else {
-      router.push('/dashboard/past');
-    }
-  };
 
   const options = [
     ['All', '/dashboard/all'],
     ['Attending', '/dashboard/attending'],
     ['Following', '/dashboard/following'],
     ['Organizing', '/dashboard/organizing'],
+    ['Past', '/dashboard/past'],
   ];
 
   const getLabel = () => {
@@ -73,13 +65,6 @@ export function EventFilter() {
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      <Button
-        variant={isPast ? 'default' : 'outline'}
-        size="sm"
-        onClick={handleOnClick}
-      >
-        Show past
-      </Button>
     </>
   );
 }
