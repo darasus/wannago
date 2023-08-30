@@ -1,6 +1,14 @@
 import {BubbleMenuProps} from '@tiptap/react';
-import {FC} from 'react';
-import {Check, Trash} from 'lucide-react';
+import {FC, ReactNode} from 'react';
+import {
+  Bold,
+  Check,
+  Italic,
+  Link,
+  Strikethrough,
+  Trash,
+  Underline,
+} from 'lucide-react';
 import {cn} from 'utils';
 import {Editor} from '@tiptap/core';
 import {ColorSelector} from './ColorSelector';
@@ -15,7 +23,7 @@ import {Input} from '../../../Input/Input';
 import {Button} from '../../../Button/Button';
 
 export interface BubbleMenuItem {
-  name: string;
+  name: ReactNode;
   isActive: () => boolean;
   command: () => void;
 }
@@ -63,9 +71,9 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
       </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger
-          className={cn({'font-bold': props.editor.isActive('link')})}
+          className={cn('px-1', {'bg-muted': props.editor.isActive('link')})}
         >
-          Link
+          <Link className="w-4 h-4" />
         </MenubarTrigger>
         <MenubarContent className="p-2">
           <form
@@ -105,18 +113,15 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
       {mainMenuItems.map((item, index) => (
         <MenubarMenu key={index}>
           <MenubarTrigger
+            className={cn('px-1', {
+              'bg-muted': item.isActive(),
+            })}
             key={index}
             onClick={(e) => {
               item.command();
             }}
           >
-            <span
-              className={cn({
-                'font-bold': item.isActive(),
-              })}
-            >
-              {item.name}
-            </span>
+            {item.name}
           </MenubarTrigger>
         </MenubarMenu>
       ))}
@@ -199,22 +204,22 @@ function createNodeSelectorItems({editor}: {editor: Editor}) {
 function createMainItems({editor}: {editor: Editor}) {
   const mainMenuItems: BubbleMenuItem[] = [
     {
-      name: 'Bold',
+      name: <Bold className="w-4 h-4" />,
       isActive: () => editor.isActive('bold'),
       command: () => editor.chain().focus().toggleBold().run(),
     },
     {
-      name: 'Italic',
+      name: <Italic className="w-4 h-4" />,
       isActive: () => editor.isActive('italic'),
       command: () => editor.chain().focus().toggleItalic().run(),
     },
     {
-      name: 'Underline',
+      name: <Underline className="w-4 h-4" />,
       isActive: () => editor.isActive('underline'),
       command: () => editor.chain().focus().toggleUnderline().run(),
     },
     {
-      name: 'Strike',
+      name: <Strikethrough className="w-4 h-4" />,
       isActive: () => editor.isActive('strike'),
       command: () => editor.chain().focus().toggleStrike().run(),
     },

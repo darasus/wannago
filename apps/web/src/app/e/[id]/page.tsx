@@ -48,7 +48,6 @@ export async function generateMetadata({
       btoa(encodeURIComponent(profileImageSrc))
     );
   }
-
   return {
     title: `${event?.title} | WannaGo`,
     description: event?.description?.replaceAll(/<[^>]*>?/gm, ''),

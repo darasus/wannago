@@ -1,5 +1,5 @@
 import {Editor} from '@tiptap/core';
-import {Check, ChevronDown} from 'lucide-react';
+import {Check, Paintbrush} from 'lucide-react';
 import {FC} from 'react';
 import {
   MenubarContent,
@@ -8,6 +8,7 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from '../../../MenuBar/MenuBar';
+import {cn} from 'utils';
 
 export interface BubbleColorMenuItem {
   name: string;
@@ -107,18 +108,26 @@ export const ColorSelector: FC<ColorSelectorProps> = ({editor}) => {
 
   return (
     <MenubarMenu>
-      <MenubarTrigger>
-        <span
-          className="rounded-sm px-1"
+      <MenubarTrigger
+        className={cn('px-1 cursor-pointer', {
+          // 'bg-muted': !!activeColorItem || !!activeHighlightItem,
+        })}
+        style={{
+          color: activeColorItem?.color || undefined,
+          backgroundColor: activeHighlightItem?.color || undefined,
+        }}
+      >
+        {/* <span
+          className={cn('px-1', {
+            'bg-muted': !!activeColorItem || !!activeHighlightItem,
+          })}
           style={{
             color: activeColorItem?.color || undefined,
             backgroundColor: activeHighlightItem?.color || undefined,
           }}
-        >
-          A
-        </span>
-
-        <ChevronDown className="h-4 w-4" />
+        > */}
+        <Paintbrush className="h-4 w-4" />
+        {/* </span> */}
       </MenubarTrigger>
 
       <MenubarContent>
