@@ -1,4 +1,5 @@
 import {captureException} from '@sentry/nextjs';
+import {env} from 'client-env';
 
 export type EventType =
   | 'get_directions_button_clicked'
@@ -27,14 +28,16 @@ export async function track(
   additionalAttributes: Record<string, string | number | null | undefined>
 ) {
   try {
-    await fetch(`https://api.tinybird.co/v0/events?name=${eventName}`, {
-      method: 'POST',
-      body: JSON.stringify(additionalAttributes),
-      headers: {
-        Authorization:
-          'Bearer p.eyJ1IjogIjgwYmMxODdkLTg1ZGMtNGRiOC05NjUxLTc0NTM1NWQ3NDdhOSIsICJpZCI6ICIyMTQ0N2YyMi05ODNiLTRiYWEtYmNlMS0yYjg3YmY1YjgxZGIiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.lha6Tq_gcBnWZXjoktl1SDni1Sd4WNOpieuuVJA3jME',
-      },
-    });
+    if (env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
+      await fetch(`https://api.tinybird.co/v0/events?name=${eventName}`, {
+        method: 'POST',
+        body: JSON.stringify(additionalAttributes),
+        headers: {
+          Authorization:
+            'Bearer p.eyJ1IjogIjgwYmMxODdkLTg1ZGMtNGRiOC05NjUxLTc0NTM1NWQ3NDdhOSIsICJpZCI6ICIyMTQ0N2YyMi05ODNiLTRiYWEtYmNlMS0yYjg3YmY1YjgxZGIiLCAiaG9zdCI6ICJldV9zaGFyZWQifQ.lha6Tq_gcBnWZXjoktl1SDni1Sd4WNOpieuuVJA3jME',
+        },
+      });
+    }
   } catch (error) {
     captureException(error);
   }
