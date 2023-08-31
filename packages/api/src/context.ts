@@ -113,6 +113,7 @@ export async function createContext(opts: {
   }
 
   const currency = getCurrencyFromHeaders(country);
+
   const auth = await getPageSession();
 
   const innerContext = createContextInner({
