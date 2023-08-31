@@ -115,18 +115,12 @@ export async function createContext(opts: {
   const currency = getCurrencyFromHeaders(country);
   const auth = await getPageSession();
 
-  let authRequest: any = null;
-
-  if (opts.req instanceof NextRequest) {
-    authRequest = _auth.handleRequest({
-      request: opts.req,
-      cookies,
-    });
-  }
-
   const innerContext = createContextInner({
     auth,
-    authRequest,
+    authRequest: _auth.handleRequest({
+      request: null,
+      cookies,
+    }),
     prisma,
     timezone,
     currency,
