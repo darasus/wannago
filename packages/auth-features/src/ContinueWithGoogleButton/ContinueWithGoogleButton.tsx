@@ -6,7 +6,7 @@ export function ContinueWithGoogleButton(props?: {
 }) {
   return (
     <Button asChild className="w-full" type="button" variant={'outline'}>
-      <Link href="/sign-in/google">
+      <Link href="/sign-in/google" prefetch={false}>
         <Icons.google className="mr-2 h-4 w-4" />
         Continue with Google
       </Link>
