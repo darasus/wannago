@@ -1,9 +1,7 @@
 import {titleFontClassName} from '../../fonts';
-import {Button} from 'ui';
-import {Container} from 'ui';
+import {Container, CtaButton} from 'ui';
 import {cn} from 'utils';
 import EventPreview from './EventPreview';
-import Link from 'next/link';
 import {api} from '../../trpc/server-http';
 
 export async function Hero() {
@@ -19,22 +17,20 @@ export async function Hero() {
           )}
         >
           <span className="mb-4">
-            Better way to
+            Simplest way to
             <br />
-            organize events
+            sell tickets online
           </span>
         </h1>
         <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-center">
-          <span className="font-medium">
-            {`Build lasting connections with your attendees. Provide an unforgettable online experience they'll cherish — and eagerly return for.`}
+          <span className="">
+            {`Start selling tickets in minutes. No setup fees, and no hidden costs.`}
           </span>
         </div>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">
-          <Button className="pointer-events-auto" size="lg" asChild>
-            <Link href={me ? '/e/add' : '/sign-up'}>
-              Create your first event
-            </Link>
-          </Button>
+          <CtaButton href={me ? '/e/add' : '/sign-up'}>
+            Create your first event
+          </CtaButton>
         </div>
         <div className="flex justify-center relative w-full max-w-2xl m-auto">
           <EventPreview event={await api.event.getRandomExample.query()} />
