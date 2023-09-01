@@ -2,6 +2,7 @@
 export {Avatar} from './src/Avatar/Avatar';
 export {Accordion} from './src/Accordion/Accordion';
 export {Button} from './src/Button/Button';
+export {CtaButton} from './src/Button/CtaButton';
 export {Badge} from './src/Badge/Badge';
 export {
   ColoredBadge,
