@@ -4,8 +4,8 @@ on: [deployment_status]
 jobs:
   e2e:
     # only runs this job on successful deploy
-    if: github.event.deployment_status.state == 'success'
-    runs-on: wannago-runner
+    if: github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Preview'
+    runs-on: wannago-small-4-core-runner
     strategy:
       fail-fast: false
       matrix:
