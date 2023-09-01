@@ -86,7 +86,7 @@ export async function PublicProfile({
               >
                 {name}
               </Text>
-              <div className="flex gap-2">
+              <div className="flex md:justify-start justify-center gap-2">
                 <div>
                   <Text className="font-bold" data-testid="follower-count">
                     <Suspense fallback="Loading...">
@@ -104,7 +104,7 @@ export async function PublicProfile({
                   <Text> following</Text>
                 </div>
               </div>
-              <div className="flex gap-2 justify-start mt-4">
+              <div className="flex md:justify-start justify-center gap-2 mt-4">
                 <Suspense
                   fallback={
                     <Button disabled size={'sm'} variant={'outline'}>
