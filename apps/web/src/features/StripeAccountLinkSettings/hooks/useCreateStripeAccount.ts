@@ -14,9 +14,7 @@ export function useCreateStripeAccount({organizerId}: {organizerId: string}) {
 
   const createAccountLink = async () => {
     logEvent('link_stripe_account_button_clicked', {
-      extra: {
-        organizerId,
-      },
+      organizerId,
     });
     try {
       startTransition(async () => {

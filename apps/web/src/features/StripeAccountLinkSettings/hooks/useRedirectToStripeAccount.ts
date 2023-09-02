@@ -16,9 +16,7 @@ export function useRedirectToStripeAccount({
 
   const redirectToStripeAccount = async () => {
     logEvent('view_stripe_account_button_clicked', {
-      extra: {
-        organizerId,
-      },
+      organizerId,
     });
     try {
       startTransition(async () => {
