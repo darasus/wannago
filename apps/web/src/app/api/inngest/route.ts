@@ -22,7 +22,7 @@ import {
   verifyEmailAddressEmail,
 } from 'inngest-client';
 
-export default serve(inngest, [
+export const {GET, POST, PUT} = serve(inngest, [
   eventCreated,
   eventUpdated,
   eventPublished,
