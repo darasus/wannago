@@ -20,6 +20,7 @@
     "@googlemaps/google-maps-services-js": "^3.3.36",
     "@hookform/resolvers": "^3.3.1",
     "@internationalized/date": "^3.4.0",
+    "@joshuajaco/react-pdf-renderer-bundled": "^3.1.12",
     "@lucia-auth/adapter-prisma": "^3.0.1",
     "@lucia-auth/oauth": "^3.0.0",
     "@mdx-js/loader": "^2.3.0",

@@ -17,6 +17,9 @@ importers:
       '@internationalized/date':
         specifier: ^3.4.0
         version: 3.4.0
+      '@joshuajaco/react-pdf-renderer-bundled':
+        specifier: ^3.1.12
+        version: 3.1.12(encoding@0.1.13)
       '@lucia-auth/adapter-prisma':
         specifier: ^3.0.1
         version: 3.0.1(@prisma/client@5.2.0)(lucia@2.4.0)
@@ -1700,6 +1703,25 @@ packages:
       '@types/node': 18.17.12
       '@types/yargs': 17.0.24
       chalk: 4.1.2
+    dev: false
+
+  /@joshuajaco/react-pdf-renderer-bundled@3.1.12(encoding@0.1.13):
+    resolution: {integrity: sha512-MBGQxeUfDhnZe49wT3nKeTx8tUYQBFe2e+AqfVevs9k4wuxy+wxdKmAx0dIzKYjrah8Gwm7ukdf1hiHJNJfG6w==}
+    dependencies:
+      '@babel/runtime': 7.22.11
+      '@react-pdf/font': 2.3.6(encoding@0.1.13)
+      '@react-pdf/layout': 3.6.2(encoding@0.1.13)
+      '@react-pdf/pdfkit': 3.0.2
+      '@react-pdf/primitives': 3.0.1
+      '@react-pdf/render': 3.2.6
+      '@react-pdf/types': 2.3.3
+      events: 3.3.0
+      object-assign: 4.1.1
+      prop-types: 15.8.1
+      queue: 6.0.2
+      scheduler: 0.17.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
