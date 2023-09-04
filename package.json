@@ -20,6 +20,7 @@
     "@googlemaps/google-maps-services-js": "^3.3.36",
     "@hookform/resolvers": "^3.3.1",
     "@internationalized/date": "^3.4.0",
+    "@joshuajaco/react-pdf-renderer-bundled": "^3.1.12",
     "@lucia-auth/adapter-prisma": "^3.0.1",
     "@lucia-auth/oauth": "^3.0.0",
     "@mdx-js/loader": "^2.3.0",
@@ -103,7 +104,6 @@
     "eventsource-parser": "^1.0.0",
     "file-saver": "^2.0.5",
     "form-data": "^4.0.0",
-    "formidable": "^3.5.1",
     "framer-motion": "^10.16.2",
     "got": "^13.0.0",
     "ics": "^3.4.0",
@@ -153,7 +153,6 @@
   "devDependencies": {
     "@sentry/cli": "^2.20.5",
     "@types/file-saver": "^2.0.5",
-    "@types/formidable": "^3.4.2",
     "@types/gtag.js": "^0.0.13",
     "@types/lodash.debounce": "^4.0.7",
     "@types/lodash.throttle": "^4.1.7",
