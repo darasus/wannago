@@ -46,7 +46,6 @@ export async function GET(
       headers: {'Content-Type': 'application/pdf'},
     });
   } catch (error) {
-    console.log(error);
     captureException(error);
     return new Response('Something went wrong', {
       status: 400,
