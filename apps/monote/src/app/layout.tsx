@@ -1,29 +1,36 @@
 import './globals.css';
 
-import {ToastProvider} from '../features/ToastProvider';
-import {ClientProvider} from './ClientProvider';
+import {Metadata} from 'next';
+import {ReactNode} from 'react';
+import {Providers} from './providers';
 
-export const metadata = {
-  title: 'Monote',
+const title =
+  'Novel – Notion-style WYSIWYG editor with AI-powered autocompletions';
+const description =
+  'Novel is a Notion-style WYSIWYG editor with AI-powered autocompletions. Built with Tiptap, OpenAI, and Vercel AI SDK.';
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+  },
+  twitter: {
+    title,
+    description,
+    card: 'summary_large_image',
+    creator: '@steventey',
+  },
+  metadataBase: new URL('https://novel.sh'),
+  themeColor: '#ffffff',
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({children}: {children: ReactNode}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* <link rel="shortcut icon" href={`${getBaseUrl()}/favicon.png`} /> */}
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-        />
-      </head>
       <body>
-        <ClientProvider>
-          <div>
-            <div>{children}</div>
-          </div>
-          <ToastProvider />
-        </ClientProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
