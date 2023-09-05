@@ -483,36 +483,12 @@ importers:
 
   apps/monote:
     dependencies:
-      client-env:
-        specifier: workspace:*
-        version: link:../../packages/client-env
-      const:
-        specifier: workspace:*
-        version: link:../../packages/const
       eslint-config-custom:
         specifier: workspace:*
         version: link:../../packages/eslint-config-custom
-      hooks:
-        specifier: workspace:*
-        version: link:../../packages/hooks
-      lib:
-        specifier: workspace:*
-        version: link:../../packages/lib
-      server-env:
-        specifier: workspace:*
-        version: link:../../packages/server-env
       tsconfig:
         specifier: workspace:*
         version: link:../../packages/tsconfig
-      types:
-        specifier: workspace:*
-        version: link:../../packages/types
-      ui:
-        specifier: workspace:*
-        version: link:../../packages/ui
-      utils:
-        specifier: workspace:*
-        version: link:../../packages/utils
 
   apps/web:
     dependencies:

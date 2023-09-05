@@ -1,7 +1,6 @@
 'use client';
 
 import {useEffect} from 'react';
-import {ErrorComponent} from 'ui';
 
 export default function GlobalError({
   error,
@@ -16,9 +15,7 @@ export default function GlobalError({
 
   return (
     <html>
-      <body>
-        <ErrorComponent error={error} />
-      </body>
+      <body>{error.message}</body>
     </html>
   );
 }

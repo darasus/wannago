@@ -9,15 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "const": "workspace:*",
     "tsconfig": "workspace:*",
-    "eslint-config-custom": "workspace:*",
-    "client-env": "workspace:*",
-    "server-env": "workspace:*",
-    "types": "workspace:*",
-    "utils": "workspace:*",
-    "hooks": "workspace:*",
-    "lib": "workspace:*",
-    "ui": "workspace:*"
+    "eslint-config-custom": "workspace:*"
   }
 }
