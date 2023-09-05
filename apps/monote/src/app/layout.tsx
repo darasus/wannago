@@ -1,11 +1,7 @@
 import './globals.css';
 
-import {Container} from 'ui';
-import {getBaseUrl} from 'utils';
-import {Header} from '../features/Header/Header';
-import {Tools} from '../features/Tools';
+import {getBaseUrl} from 'utils/src/getBaseUrl';
 import {ToastProvider} from '../features/ToastProvider';
-import {Scripts} from '../features/Scripts';
 import {ClientProvider} from './ClientProvider';
 
 export const metadata = {
@@ -26,18 +22,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body>
         <ClientProvider>
           <div>
-            <Container maxSize={'full'}>
-              <Header />
-            </Container>
-          </div>
-          <div>
             <div>{children}</div>
           </div>
-          <Tools />
           <ToastProvider />
         </ClientProvider>
       </body>
-      <Scripts />
     </html>
   );
 }

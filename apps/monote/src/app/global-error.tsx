@@ -1,6 +1,5 @@
 'use client';
 
-import {captureException} from '@sentry/nextjs';
 import {useEffect} from 'react';
 import {ErrorComponent} from 'ui';
 
@@ -12,7 +11,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
-    captureException(error);
+    console.log(error);
   }, [error]);
 
   return (
