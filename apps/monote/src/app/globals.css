@@ -3,47 +3,67 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 3% 100%; /* Clean white background */
-  --foreground: 10 10% 30%; /* General text color: dark gray */
-  --card: 0 2% 99%; /* A slightly off-white shade for card backgrounds */
-  --card-foreground: 10 10% 25%; /* Slightly darker text for cards */
-  --popover: 0 1% 98%; /* Even more subtle shade for popovers */
-  --popover-foreground: 10 10% 28%; /* Text color for popovers */
-  --primary: 358 85% 60%; /* Pinterest's signature red */
-  --primary-foreground: 0 3% 100%; /* White for text on primary background */
-  --secondary: 10 30% 80%; /* Light gray for secondary elements */
-  --secondary-foreground: 358 80% 40%; /* A less vibrant red for text on secondary elements */
-  --muted: 0 4% 98%; /* Muted background elements */
-  --muted-foreground: 10 20% 70%; /* Muted text, a medium gray */
-  --accent: 30 75% 65%; /* A warm orange accent, complementary to the main red */
-  --accent-foreground: 0 3% 100%; /* White for text on accent background */
-  --destructive: 340 80% 50%; /* A slightly different shade of red for alerts and destructive actions */
-  --destructive-foreground: 0 3% 100%; /* White for contrast against the red */
-  --border: 10 25% 90%; /* Light gray for borders */
-  --input: 0 3% 99.5%; /* Slightly tinted input field background */
-  --ring: 358 85% 55%; /* Pinterest red for focus rings */
-  --radius: 0.3rem;
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 240 5.9% 10%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 240 5.9% 10%;
+  --radius: 0.75rem;
+
+  --novel-highlight-default: #ffffff;
+  --novel-highlight-purple: #f6f3f8;
+  --novel-highlight-red: #fdebeb;
+  --novel-highlight-yellow: #fbf4a2;
+  --novel-highlight-blue: #c1ecf9;
+  --novel-highlight-green: #acf79f;
+  --novel-highlight-orange: #faebdd;
+  --novel-highlight-pink: #faf1f5;
+  --novel-highlight-gray: #f1f1ef;
 }
 .dark {
-  --background: 10 15% 15%; /* Dark gray background for dark mode */
-  --foreground: 0 10% 85%; /* Lighter text color for dark mode */
-  --card: 10 13% 20%; /* A slightly lighter card shade in dark mode */
-  --card-foreground: 0 10% 80%; /* Lighter text for cards in dark mode */
-  --popover: 10 14% 18%; /* A shade between card and background for popovers in dark mode */
-  --popover-foreground: 0 10% 78%; /* Lighter text for popovers in dark mode */
-  --primary: 358 85% 50%; /* A darker version of Pinterest red for dark mode */
-  --primary-foreground: 10 12% 90%; /* Light gray text on primary background in dark mode */
-  --secondary: 10 30% 60%; /* Dark mode secondary gray */
-  --secondary-foreground: 358 80% 35%; /* Less vibrant red for secondary text in dark mode */
-  --muted: 10 20% 30%; /* Dark mode muted shade */
-  --muted-foreground: 0 10% 70%; /* Lighter text on muted elements in dark mode */
-  --accent: 30 75% 55%; /* Darker orange accent for dark mode */
-  --accent-foreground: 10 15% 85%; /* Gray text on accent elements in dark mode */
-  --destructive: 340 80% 40%; /* A darker destructive red in dark mode */
-  --destructive-foreground: 10 12% 90%; /* Light gray text against the dark red */
-  --border: 10 25% 45%; /* Darker gray border in dark mode */
-  --input: 10 15% 18%; /* Dark mode input field background */
-  --ring: 358 85% 45%; /* Darker Pinterest red for focus rings in dark mode */
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 240 5.9% 10%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 240 4.9% 83.9%;
+
+  --novel-highlight-default: #000000;
+  --novel-highlight-purple: #3f2c4b;
+  --novel-highlight-red: #5c1a1a;
+  --novel-highlight-yellow: #5c4b1a;
+  --novel-highlight-blue: #1a3d5c;
+  --novel-highlight-green: #1a5c20;
+  --novel-highlight-orange: #5c3a1a;
+  --novel-highlight-pink: #5c1a3a;
+  --novel-highlight-gray: #3a3a3a;
 }
 
 @layer base {
