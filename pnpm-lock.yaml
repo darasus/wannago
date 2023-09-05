@@ -481,6 +481,39 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
+  apps/monote:
+    dependencies:
+      client-env:
+        specifier: workspace:*
+        version: link:../../packages/client-env
+      const:
+        specifier: workspace:*
+        version: link:../../packages/const
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../../packages/eslint-config-custom
+      hooks:
+        specifier: workspace:*
+        version: link:../../packages/hooks
+      lib:
+        specifier: workspace:*
+        version: link:../../packages/lib
+      server-env:
+        specifier: workspace:*
+        version: link:../../packages/server-env
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      types:
+        specifier: workspace:*
+        version: link:../../packages/types
+      ui:
+        specifier: workspace:*
+        version: link:../../packages/ui
+      utils:
+        specifier: workspace:*
+        version: link:../../packages/utils
+
   apps/web:
     dependencies:
       api:
@@ -5906,7 +5939,7 @@ packages:
       '@typescript-eslint/types': 6.5.0
       '@typescript-eslint/typescript-estree': 6.5.0(typescript@5.2.2)
       '@typescript-eslint/visitor-keys': 6.5.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       eslint: 8.48.0
       typescript: 5.2.2
     transitivePeerDependencies:
@@ -5937,7 +5970,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 6.5.0
       '@typescript-eslint/visitor-keys': 6.5.0
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
@@ -8069,7 +8102,7 @@ packages:
       eslint: '*'
       eslint-plugin-import: '*'
     dependencies:
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@5.5.0)
       enhanced-resolve: 5.15.0
       eslint: 8.48.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.5.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.0)(eslint@8.48.0)

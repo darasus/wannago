@@ -1,0 +1,23 @@
+{
+  "name": "monote",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "dotenv -e ../../.vercel/.env.development.local -- next dev",
+    "build": "dotenv -e ../../.vercel/.env.development.local -- next build",
+    "start": "dotenv -e ../../.vercel/.env.development.local -- next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "const": "workspace:*",
+    "tsconfig": "workspace:*",
+    "eslint-config-custom": "workspace:*",
+    "client-env": "workspace:*",
+    "server-env": "workspace:*",
+    "types": "workspace:*",
+    "utils": "workspace:*",
+    "hooks": "workspace:*",
+    "lib": "workspace:*",
+    "ui": "workspace:*"
+  }
+}

@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 3% 100%; /* Clean white background */
+  --foreground: 10 10% 30%; /* General text color: dark gray */
+  --card: 0 2% 99%; /* A slightly off-white shade for card backgrounds */
+  --card-foreground: 10 10% 25%; /* Slightly darker text for cards */
+  --popover: 0 1% 98%; /* Even more subtle shade for popovers */
+  --popover-foreground: 10 10% 28%; /* Text color for popovers */
+  --primary: 358 85% 60%; /* Pinterest's signature red */
+  --primary-foreground: 0 3% 100%; /* White for text on primary background */
+  --secondary: 10 30% 80%; /* Light gray for secondary elements */
+  --secondary-foreground: 358 80% 40%; /* A less vibrant red for text on secondary elements */
+  --muted: 0 4% 98%; /* Muted background elements */
+  --muted-foreground: 10 20% 70%; /* Muted text, a medium gray */
+  --accent: 30 75% 65%; /* A warm orange accent, complementary to the main red */
+  --accent-foreground: 0 3% 100%; /* White for text on accent background */
+  --destructive: 340 80% 50%; /* A slightly different shade of red for alerts and destructive actions */
+  --destructive-foreground: 0 3% 100%; /* White for contrast against the red */
+  --border: 10 25% 90%; /* Light gray for borders */
+  --input: 0 3% 99.5%; /* Slightly tinted input field background */
+  --ring: 358 85% 55%; /* Pinterest red for focus rings */
+  --radius: 0.3rem;
+}
+.dark {
+  --background: 10 15% 15%; /* Dark gray background for dark mode */
+  --foreground: 0 10% 85%; /* Lighter text color for dark mode */
+  --card: 10 13% 20%; /* A slightly lighter card shade in dark mode */
+  --card-foreground: 0 10% 80%; /* Lighter text for cards in dark mode */
+  --popover: 10 14% 18%; /* A shade between card and background for popovers in dark mode */
+  --popover-foreground: 0 10% 78%; /* Lighter text for popovers in dark mode */
+  --primary: 358 85% 50%; /* A darker version of Pinterest red for dark mode */
+  --primary-foreground: 10 12% 90%; /* Light gray text on primary background in dark mode */
+  --secondary: 10 30% 60%; /* Dark mode secondary gray */
+  --secondary-foreground: 358 80% 35%; /* Less vibrant red for secondary text in dark mode */
+  --muted: 10 20% 30%; /* Dark mode muted shade */
+  --muted-foreground: 0 10% 70%; /* Lighter text on muted elements in dark mode */
+  --accent: 30 75% 55%; /* Darker orange accent for dark mode */
+  --accent-foreground: 10 15% 85%; /* Gray text on accent elements in dark mode */
+  --destructive: 340 80% 40%; /* A darker destructive red in dark mode */
+  --destructive-foreground: 10 12% 90%; /* Light gray text against the dark red */
+  --border: 10 25% 45%; /* Darker gray border in dark mode */
+  --input: 10 15% 18%; /* Dark mode input field background */
+  --ring: 358 85% 45%; /* Darker Pinterest red for focus rings in dark mode */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
+}
+
+@layer utilities {
+  .step {
+    counter-increment: step;
+  }
+
+  .step:before {
+    @apply absolute w-9 h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 border-background;
+    @apply ml-[-50px] mt-[-4px];
+    content: counter(step);
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
+  }
+}
