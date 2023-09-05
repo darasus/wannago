@@ -1,6 +1,7 @@
 import {Button, CardBase} from 'ui';
 import {LocationImage} from 'ui';
 import {Text} from 'ui';
+import {env} from 'client-env';
 
 interface Props {
   address: string;
@@ -38,6 +39,7 @@ export function LocationCard({
       <div className="mb-2" />
       <div>
         <LocationImage
+          key={env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
           address={address}
           longitude={longitude}
           latitude={latitude}

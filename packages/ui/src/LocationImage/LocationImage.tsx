@@ -1,4 +1,3 @@
-import {env} from 'client-env';
 import Image from 'next/image';
 
 interface Props {
@@ -7,19 +6,20 @@ interface Props {
   height?: number;
   longitude: number;
   latitude: number;
+  key: string;
 }
 
 const width = 480;
 const height = 150;
 const url = new URL('https://maps.googleapis.com/maps/api/staticmap');
-url.searchParams.set('key', env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!);
 url.searchParams.set('size', `${width}x${height}`);
 url.searchParams.set('zoom', '17');
 url.searchParams.set('maptype', 'roadmap');
 url.searchParams.set('scale', '2');
 url.searchParams.set('format', 'jpg');
 
-export function LocationImage({address, longitude, latitude}: Props) {
+export function LocationImage({address, longitude, latitude, key}: Props) {
+  url.searchParams.set('key', key);
   url.searchParams.set('center', address);
   url.searchParams.set('markers', `color:red|${latitude},${longitude}`);
 

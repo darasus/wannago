@@ -489,6 +489,9 @@ importers:
       tsconfig:
         specifier: workspace:*
         version: link:../../packages/tsconfig
+      ui:
+        specifier: workspace:*
+        version: link:../../packages/ui
 
   apps/web:
     dependencies:
@@ -696,6 +699,9 @@ importers:
         specifier: workspace:*
         version: link:../utils
     devDependencies:
+      client-env:
+        specifier: workspace:*
+        version: link:../client-env
       eslint-config-custom:
         specifier: workspace:*
         version: link:../eslint-config-custom
@@ -906,9 +912,6 @@ importers:
 
   packages/ui:
     dependencies:
-      client-env:
-        specifier: workspace:*
-        version: link:../client-env
       const:
         specifier: workspace:*
         version: link:../const

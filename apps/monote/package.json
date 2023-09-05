@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "tsconfig": "workspace:*",
+    "ui": "workspace:*",
     "eslint-config-custom": "workspace:*"
   }
 }
