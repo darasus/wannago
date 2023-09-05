@@ -18,7 +18,7 @@ import {getPrevText} from '../../lib/editor';
 
 export default function Editor({
   completionApi = '/api/generate',
-  className = 'relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg',
+  className = 'relative min-h-[500px] w-full bg-white',
   defaultValue = defaultEditorContent,
   extensions = [],
   editorProps = {},
@@ -34,7 +34,7 @@ export default function Editor({
   completionApi?: string;
   /**
    * Additional classes to add to the editor container.
-   * Defaults to "relative min-h-[500px] w-full max-w-screen-lg border-stone-200 bg-white sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg".
+   * Defaults to "relative min-h-[500px] w-full bg-white".
    */
   className?: string;
   /**
