@@ -4,10 +4,9 @@ import {Metadata} from 'next';
 import {ReactNode} from 'react';
 import {Providers} from './providers';
 
-const title =
-  'Novel – Notion-style WYSIWYG editor with AI-powered autocompletions';
+const title = 'Monote';
 const description =
-  'Novel is a Notion-style WYSIWYG editor with AI-powered autocompletions. Built with Tiptap, OpenAI, and Vercel AI SDK.';
+  'Monote - Offline first simple note taking app for your daily thoughts and tasks.';
 
 export const metadata: Metadata = {
   title,
@@ -20,10 +19,10 @@ export const metadata: Metadata = {
     title,
     description,
     card: 'summary_large_image',
-    creator: '@steventey',
+    creator: '@darasus_',
   },
-  metadataBase: new URL('https://novel.sh'),
-  themeColor: '#ffffff',
+  metadataBase: new URL('https://www.monote.ai/'),
+  // themeColor: '#ffffff',
 };
 
 export default function RootLayout({children}: {children: ReactNode}) {
