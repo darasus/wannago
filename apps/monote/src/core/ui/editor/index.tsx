@@ -19,7 +19,7 @@ import {editorFont} from '../../styles/fonts';
 
 export function Editor({
   completionApi = '/api/generate',
-  className = `relative min-h-[500px] w-full bg-white ${editorFont.className}`,
+  className = `relative min-h-[500px] w-full bg-background ${editorFont.className}`,
   defaultValue = defaultEditorContent,
   extensions = [],
   editorProps = {},
@@ -35,7 +35,7 @@ export function Editor({
   completionApi?: string;
   /**
    * Additional classes to add to the editor container.
-   * Defaults to "relative min-h-[500px] w-full bg-white".
+   * Defaults to "relative min-h-[500px] w-full bg-background".
    */
   className?: string;
   /**

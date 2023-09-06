@@ -2,15 +2,19 @@
 
 import {useState} from 'react';
 import {Editor} from '../core';
+import {ColoredBadge} from 'ui';
 
 export default function HomePage() {
   const [saveStatus, setSaveStatus] = useState('Saved');
 
   return (
     <div>
-      <div className="absolute right-5 top-5 z-10 mb-5 rounded-lg bg-stone-100 px-2 py-1 text-sm text-stone-400">
+      <ColoredBadge
+        color={saveStatus !== 'Saved' ? 'default' : 'green'}
+        className="absolute right-5 top-5 z-10"
+      >
         {saveStatus}
-      </div>
+      </ColoredBadge>
       <Editor
         onUpdate={() => {
           setSaveStatus('Unsaved');

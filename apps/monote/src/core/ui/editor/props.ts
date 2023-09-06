@@ -1,9 +1,10 @@
 import {EditorProps} from '@tiptap/pm/view';
 import {startImageUpload} from './plugins/upload-images';
+import {proseClassName} from 'const';
 
 export const defaultEditorProps: EditorProps = {
   attributes: {
-    class: `prose-lg prose-stone dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`,
+    class: proseClassName,
   },
   handleDOMEvents: {
     keydown: (_view, event) => {

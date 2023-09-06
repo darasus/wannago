@@ -37,17 +37,17 @@ export const defaultExtensions = [
     },
     blockquote: {
       HTMLAttributes: {
-        class: 'border-l-4 border-stone-700',
+        class: 'border-l-4',
       },
     },
     codeBlock: {
       HTMLAttributes: {
-        class: `rounded-sm bg-stone-100 p-5 font-medium text-stone-800 ${editorFont.className}`,
+        class: `rounded-sm bg-muted p-5 ${editorFont.className}`,
       },
     },
     code: {
       HTMLAttributes: {
-        class: `rounded-md bg-stone-200 px-1.5 py-1 font-medium text-stone-900 ${editorFont.className}`,
+        class: `rounded-md bg-muted px-1.5 py-1 ${editorFont.className}`,
         spellcheck: 'false',
       },
     },

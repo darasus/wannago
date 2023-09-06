@@ -48,13 +48,13 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
             url && editor.chain().focus().setLink({href: url}).run();
             setIsOpen(false);
           }}
-          className="fixed top-full z-[99999] mt-1 flex w-60 overflow-hidden rounded border border-stone-200 bg-white p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+          className="fixed top-full z-[99999] mt-1 flex w-60 overflow-hidden rounded border border-stone-200 bg-background p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
         >
           <input
             ref={inputRef}
             type="text"
             placeholder="Paste a link"
-            className="flex-1 bg-white p-1 text-sm outline-none"
+            className="flex-1 bg-background p-1 text-sm outline-none"
             defaultValue={editor.getAttributes('link').href || ''}
           />
           {editor.getAttributes('link').href ? (
