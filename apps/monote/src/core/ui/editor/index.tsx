@@ -9,13 +9,14 @@ import {useCompletion} from 'ai/react';
 import {toast} from 'sonner';
 import va from '@vercel/analytics';
 import {defaultEditorContent} from './default-content';
-import {EditorBubbleMenu} from 'ui/src/RichTextarea/editor/components';
+import {EditorBubbleMenu} from './components/EditorBubbleMenu';
 import {ImageResizer} from './extensions/image-resizer';
 import {EditorProps} from '@tiptap/pm/view';
 import {Editor as EditorClass} from '@tiptap/core';
 import {useLocalStorage} from '../../lib/hooks/use-local-storage';
 import {getPrevText} from '../../lib/editor';
 import {editorFont} from '../../styles/fonts';
+import {ColoredBadge} from 'ui';
 
 export function Editor({
   completionApi = '/api/generate',
@@ -75,6 +76,7 @@ export function Editor({
    */
   storageKey?: string;
 }) {
+  const [saveStatus, setSaveStatus] = useState('Saved');
   const [content, setContent] = useLocalStorage(storageKey, defaultValue);
 
   const [hydrated, setHydrated] = useState(false);
@@ -83,6 +85,11 @@ export function Editor({
     const json = editor.getJSON();
     setContent(json);
     onDebouncedUpdate(editor);
+    setSaveStatus('Saving...');
+    // Simulate a delay in saving.
+    setTimeout(() => {
+      setSaveStatus('Saved');
+    }, 500);
   }, debounceDuration);
 
   const editor = useEditor({
@@ -110,6 +117,7 @@ export function Editor({
         va.track('Autocomplete Shortcut Used');
       } else {
         onUpdate(e.editor);
+        setSaveStatus('Unsaved');
         debouncedUpdates(e);
       }
     },
@@ -188,7 +196,21 @@ export function Editor({
 
   return (
     <div className="flex flex-col gap-4">
-      {editor && <EditorBubbleMenu editor={editor} />}
+      <div className="sticky top-0 left-0 right-0 z-10">
+        {editor && (
+          <EditorBubbleMenu
+            editor={editor}
+            right={
+              <ColoredBadge
+                color={saveStatus !== 'Saved' ? 'default' : 'green'}
+                className="py-0.5"
+              >
+                {saveStatus}
+              </ColoredBadge>
+            }
+          />
+        )}
+      </div>
       <div
         onClick={() => {
           editor?.chain().focus().run();

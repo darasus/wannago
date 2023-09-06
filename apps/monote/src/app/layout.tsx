@@ -30,7 +30,7 @@ export default function RootLayout({children}: {children: ReactNode}) {
     <html lang="en" suppressHydrationWarning>
       <body>
         <Providers>
-          <div className="p-4">{children}</div>
+          <div>{children}</div>
         </Providers>
       </body>
     </html>
