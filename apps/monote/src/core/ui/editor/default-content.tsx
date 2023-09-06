@@ -1,135 +1,121 @@
 export const defaultEditorContent = {
-  type: "doc",
+  type: 'doc',
   content: [
     {
-      type: "heading",
-      attrs: { level: 2 },
-      content: [{ type: "text", text: "Introducing Novel" }],
+      type: 'heading',
+      attrs: {level: 2},
+      content: [{type: 'text', text: 'Introducing Novel'}],
     },
     {
-      type: "paragraph",
+      type: 'paragraph',
       content: [
         {
-          type: "text",
+          type: 'text',
           marks: [
             {
-              type: "link",
+              type: 'link',
               attrs: {
-                href: "https://github.com/steven-tey/novel",
-                target: "_blank",
+                href: 'https://github.com/steven-tey/novel',
+                target: '_blank',
                 class:
-                  "text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer",
+                  'text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer',
               },
             },
           ],
-          text: "Novel",
+          text: 'Novel',
         },
         {
-          type: "text",
-          text: " is a Notion-style WYSIWYG editor with AI-powered autocompletion. Built with ",
+          type: 'text',
+          text: ' is a Notion-style WYSIWYG editor with AI-powered autocompletion. Built with ',
         },
         {
-          type: "text",
+          type: 'text',
           marks: [
             {
-              type: "link",
+              type: 'link',
               attrs: {
-                href: "https://tiptap.dev/",
-                target: "_blank",
+                href: 'https://tiptap.dev/',
+                target: '_blank',
                 class:
-                  "text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer",
+                  'text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer',
               },
             },
           ],
-          text: "Tiptap",
+          text: 'Tiptap',
         },
-        { type: "text", text: " + " },
+        {type: 'text', text: ' + '},
         {
-          type: "text",
+          type: 'text',
           marks: [
             {
-              type: "link",
+              type: 'link',
               attrs: {
-                href: "https://sdk.vercel.ai/docs",
-                target: "_blank",
+                href: 'https://sdk.vercel.ai/docs',
+                target: '_blank',
                 class:
-                  "text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer",
+                  'text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer',
               },
             },
           ],
-          text: "Vercel AI SDK",
+          text: 'Vercel AI SDK',
         },
-        { type: "text", text: "." },
+        {type: 'text', text: '.'},
       ],
     },
     {
-      type: "heading",
-      attrs: { level: 3 },
-      content: [{ type: "text", text: "Installation" }],
+      type: 'heading',
+      attrs: {level: 3},
+      content: [{type: 'text', text: 'Installation'}],
     },
     {
-      type: "codeBlock",
-      attrs: { language: null },
-      content: [{ type: "text", text: "npm i novel" }],
+      type: 'codeBlock',
+      attrs: {language: null},
+      content: [{type: 'text', text: 'npm i novel'}],
     },
     {
-      type: "heading",
-      attrs: { level: 3 },
-      content: [{ type: "text", text: "Usage" }],
+      type: 'heading',
+      attrs: {level: 3},
+      content: [{type: 'text', text: 'Usage'}],
     },
     {
-      type: "codeBlock",
-      attrs: { language: null },
+      type: 'codeBlock',
+      attrs: {language: null},
       content: [
         {
-          type: "text",
+          type: 'text',
           text: 'import { Editor } from "novel";\n\nexport default function App() {\n  return (\n     <Editor />\n  )\n}',
         },
       ],
     },
     {
-      type: "heading",
-      attrs: { level: 3 },
-      content: [{ type: "text", text: "Features" }],
+      type: 'heading',
+      attrs: {level: 3},
+      content: [{type: 'text', text: 'Features'}],
     },
     {
-      type: "orderedList",
-      attrs: { tight: true, start: 1 },
+      type: 'orderedList',
+      attrs: {tight: true, start: 1},
       content: [
         {
-          type: "listItem",
+          type: 'listItem',
           content: [
             {
-              type: "paragraph",
-              content: [{ type: "text", text: "Slash menu & bubble menu" }],
+              type: 'paragraph',
+              content: [{type: 'text', text: 'Slash menu & bubble menu'}],
             },
           ],
         },
         {
-          type: "listItem",
+          type: 'listItem',
           content: [
             {
-              type: "paragraph",
+              type: 'paragraph',
               content: [
-                { type: "text", text: "AI autocomplete (type " },
-                { type: "text", marks: [{ type: "code" }], text: "++" },
+                {type: 'text', text: 'AI autocomplete (type '},
+                {type: 'text', marks: [{type: 'code'}], text: '++'},
                 {
-                  type: "text",
-                  text: " to activate, or select from slash menu)",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          type: "listItem",
-          content: [
-            {
-              type: "paragraph",
-              content: [
-                {
-                  type: "text",
-                  text: "Image uploads (drag & drop / copy & paste, or select from slash menu) ",
+                  type: 'text',
+                  text: ' to activate, or select from slash menu)',
                 },
               ],
             },
@@ -138,101 +124,101 @@ export const defaultEditorContent = {
       ],
     },
     {
-      type: "image",
+      type: 'image',
       attrs: {
-        src: "https://public.blob.vercel-storage.com/pJrjXbdONOnAeZAZ/banner-2wQk82qTwyVgvlhTW21GIkWgqPGD2C.png",
-        alt: "banner.png",
-        title: "banner.png",
+        src: 'https://public.blob.vercel-storage.com/pJrjXbdONOnAeZAZ/banner-2wQk82qTwyVgvlhTW21GIkWgqPGD2C.png',
+        alt: 'banner.png',
+        title: 'banner.png',
         width: null,
         height: null,
       },
     },
-    { type: "horizontalRule" },
+    {type: 'horizontalRule'},
     {
-      type: "heading",
-      attrs: { level: 3 },
-      content: [{ type: "text", text: "Learn more" }],
+      type: 'heading',
+      attrs: {level: 3},
+      content: [{type: 'text', text: 'Learn more'}],
     },
     {
-      type: "taskList",
+      type: 'taskList',
       content: [
         {
-          type: "taskItem",
-          attrs: { checked: false },
+          type: 'taskItem',
+          attrs: {checked: false},
           content: [
             {
-              type: "paragraph",
+              type: 'paragraph',
               content: [
-                { type: "text", text: "Star us on " },
+                {type: 'text', text: 'Star us on '},
                 {
-                  type: "text",
+                  type: 'text',
                   marks: [
                     {
-                      type: "link",
+                      type: 'link',
                       attrs: {
-                        href: "https://github.com/steven-tey/novel",
-                        target: "_blank",
+                        href: 'https://github.com/steven-tey/novel',
+                        target: '_blank',
                         class:
-                          "text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer",
+                          'text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer',
                       },
                     },
                   ],
-                  text: "GitHub",
+                  text: 'GitHub',
                 },
               ],
             },
           ],
         },
         {
-          type: "taskItem",
-          attrs: { checked: false },
+          type: 'taskItem',
+          attrs: {checked: false},
           content: [
             {
-              type: "paragraph",
+              type: 'paragraph',
               content: [
-                { type: "text", text: "Install the " },
+                {type: 'text', text: 'Install the '},
                 {
-                  type: "text",
+                  type: 'text',
                   marks: [
                     {
-                      type: "link",
+                      type: 'link',
                       attrs: {
-                        href: "https://www.npmjs.com/package/novel",
-                        target: "_blank",
+                        href: 'https://www.npmjs.com/package/novel',
+                        target: '_blank',
                         class:
-                          "text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer",
+                          'text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer',
                       },
                     },
                   ],
-                  text: "NPM package",
+                  text: 'NPM package',
                 },
               ],
             },
           ],
         },
         {
-          type: "taskItem",
-          attrs: { checked: false },
+          type: 'taskItem',
+          attrs: {checked: false},
           content: [
             {
-              type: "paragraph",
+              type: 'paragraph',
               content: [
                 {
-                  type: "text",
+                  type: 'text',
                   marks: [
                     {
-                      type: "link",
+                      type: 'link',
                       attrs: {
-                        href: "https://vercel.com/templates/next.js/novel",
-                        target: "_blank",
+                        href: 'https://vercel.com/templates/next.js/novel',
+                        target: '_blank',
                         class:
-                          "text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer",
+                          'text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer',
                       },
                     },
                   ],
-                  text: "Deploy your own",
+                  text: 'Deploy your own',
                 },
-                { type: "text", text: " to Vercel" },
+                {type: 'text', text: ' to Vercel'},
               ],
             },
           ],

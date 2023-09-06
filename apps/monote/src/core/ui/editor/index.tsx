@@ -219,7 +219,7 @@ export function Editor({
         onClick={() => {
           editor?.chain().focus().run();
         }}
-        className={`relative min-h-[500px] w-full bg-background px-8 ${textFont.className}`}
+        className={`relative min-h-[500px] w-full bg-background px-4 ${textFont.className}`}
       >
         {editor?.isActive('image') && <ImageResizer editor={editor} />}
         <EditorContent editor={editor} />
