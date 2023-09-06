@@ -16,7 +16,7 @@ import UpdatedImage from './updated-image';
 import CustomKeymap from './custom-keymap';
 import DragAndDrop from './drag-and-drop';
 import UploadImagesPlugin from '../plugins/upload-images';
-import {editorFont} from '../../../styles/fonts';
+import {codeFont} from '../../../styles/fonts';
 
 export const defaultExtensions = [
   StarterKit.configure({
@@ -42,12 +42,12 @@ export const defaultExtensions = [
     },
     codeBlock: {
       HTMLAttributes: {
-        class: `rounded-sm bg-muted p-5 ${editorFont.className}`,
+        class: `rounded-sm bg-muted p-5 ${codeFont.className}`,
       },
     },
     code: {
       HTMLAttributes: {
-        class: `rounded-md bg-muted px-1.5 py-1 ${editorFont.className}`,
+        class: `rounded-md bg-muted px-1.5 py-1 ${codeFont.className}`,
         spellcheck: 'false',
       },
     },
@@ -87,7 +87,7 @@ export const defaultExtensions = [
   TiptapLink.configure({
     HTMLAttributes: {
       class:
-        'text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer',
+        'text-green-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer',
     },
   }),
   TiptapImage.extend({

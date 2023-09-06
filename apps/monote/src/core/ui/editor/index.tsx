@@ -15,8 +15,9 @@ import {EditorProps} from '@tiptap/pm/view';
 import {Editor as EditorClass} from '@tiptap/core';
 import {useLocalStorage} from '../../lib/hooks/use-local-storage';
 import {getPrevText} from '../../lib/editor';
-import {editorFont} from '../../styles/fonts';
+import {textFont} from '../../styles/fonts';
 import {ColoredBadge} from 'ui';
+import Menu from '../../../ui/menu';
 
 export function Editor({
   completionApi = '/api/generate',
@@ -201,12 +202,15 @@ export function Editor({
           <EditorBubbleMenu
             editor={editor}
             right={
-              <ColoredBadge
-                color={saveStatus !== 'Saved' ? 'default' : 'green'}
-                className="py-0.5"
-              >
-                {saveStatus}
-              </ColoredBadge>
+              <div className="flex items-center gap-2">
+                <ColoredBadge
+                  color={saveStatus !== 'Saved' ? 'default' : 'green'}
+                  className="py-0.5"
+                >
+                  {saveStatus}
+                </ColoredBadge>
+                <Menu />
+              </div>
             }
           />
         )}
@@ -215,7 +219,7 @@ export function Editor({
         onClick={() => {
           editor?.chain().focus().run();
         }}
-        className={`relative min-h-[500px] w-full bg-background px-4 ${editorFont.className}`}
+        className={`relative min-h-[500px] w-full bg-background px-4 ${textFont.className}`}
       >
         {editor?.isActive('image') && <ImageResizer editor={editor} />}
         <EditorContent editor={editor} />

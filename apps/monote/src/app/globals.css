@@ -78,10 +78,6 @@
   }
 }
 
-code {
-  font-family: '__Inconsolata_5ecab9, __Inconsolata_Fallback_5ecab9', monospace;
-}
-
 .ProseMirror .is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
