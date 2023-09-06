@@ -29,7 +29,9 @@ export default function RootLayout({children}: {children: ReactNode}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="p-4">{children}</div>
+        </Providers>
       </body>
     </html>
   );

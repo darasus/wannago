@@ -9,7 +9,7 @@ import {useCompletion} from 'ai/react';
 import {toast} from 'sonner';
 import va from '@vercel/analytics';
 import {defaultEditorContent} from './default-content';
-import {EditorBubbleMenu} from './bubble-menu';
+import {EditorBubbleMenu} from 'ui/src/RichTextarea/editor/components';
 import {ImageResizer} from './extensions/image-resizer';
 import {EditorProps} from '@tiptap/pm/view';
 import {Editor as EditorClass} from '@tiptap/core';
@@ -19,7 +19,6 @@ import {editorFont} from '../../styles/fonts';
 
 export function Editor({
   completionApi = '/api/generate',
-  className = `relative min-h-[500px] w-full bg-background ${editorFont.className}`,
   defaultValue = defaultEditorContent,
   extensions = [],
   editorProps = {},
@@ -188,15 +187,17 @@ export function Editor({
   }, [editor, content, hydrated]);
 
   return (
-    <div
-      onClick={() => {
-        editor?.chain().focus().run();
-      }}
-      className={className}
-    >
+    <div className="flex flex-col gap-4">
       {editor && <EditorBubbleMenu editor={editor} />}
-      {editor?.isActive('image') && <ImageResizer editor={editor} />}
-      <EditorContent editor={editor} />
+      <div
+        onClick={() => {
+          editor?.chain().focus().run();
+        }}
+        className={`relative min-h-[500px] w-full bg-background px-4 ${editorFont.className}`}
+      >
+        {editor?.isActive('image') && <ImageResizer editor={editor} />}
+        <EditorContent editor={editor} />
+      </div>
     </div>
   );
 }
