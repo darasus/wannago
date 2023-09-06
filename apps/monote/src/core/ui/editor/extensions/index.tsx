@@ -16,6 +16,7 @@ import UpdatedImage from './updated-image';
 import CustomKeymap from './custom-keymap';
 import DragAndDrop from './drag-and-drop';
 import UploadImagesPlugin from '../plugins/upload-images';
+import {editorFont} from '../../../styles/fonts';
 
 export const defaultExtensions = [
   StarterKit.configure({
@@ -41,14 +42,12 @@ export const defaultExtensions = [
     },
     codeBlock: {
       HTMLAttributes: {
-        class:
-          'rounded-sm bg-stone-100 p-5 font-mono font-medium text-stone-800',
+        class: `rounded-sm bg-stone-100 p-5 font-medium text-stone-800 ${editorFont.className}`,
       },
     },
     code: {
       HTMLAttributes: {
-        class:
-          'rounded-md bg-stone-200 px-1.5 py-1 font-mono font-medium text-stone-900',
+        class: `rounded-md bg-stone-200 px-1.5 py-1 font-medium text-stone-900 ${editorFont.className}`,
         spellcheck: 'false',
       },
     },

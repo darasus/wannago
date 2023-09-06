@@ -26,7 +26,7 @@
   --novel-highlight-pink: #faf1f5;
   --novel-highlight-gray: #f1f1ef;
 
-  --font-title: 'Cal Sans', sans-serif;
+  /* --font-title: 'Cal Sans', sans-serif; */
 }
 
 .dark-theme {
@@ -58,11 +58,8 @@ body {
   background-color: var(--novel-white);
 }
 
-@font-face {
-  font-family: 'Cal Sans';
-  src:
-    local('Cal Sans'),
-    url(CalSans-SemiBold.otf) format('otf');
+code {
+  font-family: '__Inconsolata_5ecab9, __Inconsolata_Fallback_5ecab9', monospace;
 }
 
 .ProseMirror {

@@ -15,10 +15,11 @@ import {EditorProps} from '@tiptap/pm/view';
 import {Editor as EditorClass} from '@tiptap/core';
 import {useLocalStorage} from '../../lib/hooks/use-local-storage';
 import {getPrevText} from '../../lib/editor';
+import {editorFont} from '../../styles/fonts';
 
-export default function Editor({
+export function Editor({
   completionApi = '/api/generate',
-  className = 'relative min-h-[500px] w-full bg-white',
+  className = `relative min-h-[500px] w-full bg-white ${editorFont.className}`,
   defaultValue = defaultEditorContent,
   extensions = [],
   editorProps = {},

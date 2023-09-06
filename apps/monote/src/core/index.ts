@@ -1,1 +1,1 @@
-export {default as Editor} from './ui/editor';
+export {Editor} from './ui/editor';
