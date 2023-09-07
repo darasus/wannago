@@ -28,7 +28,7 @@ const appearances = [
   },
 ];
 
-export default function Menu() {
+export function SettingsMenu() {
   const {theme: currentTheme, setTheme} = useTheme();
 
   return (

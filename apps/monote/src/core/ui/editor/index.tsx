@@ -17,7 +17,7 @@ import {useLocalStorage} from '../../lib/hooks/use-local-storage';
 import {getPrevText} from '../../lib/editor';
 import {textFont} from '../../styles/fonts';
 import {ColoredBadge} from 'ui';
-import Menu from '../../../ui/menu';
+import {SettingsMenu} from '../../../Feautres/SettingsMenu';
 
 export function Editor({
   completionApi = '/api/generate',
@@ -209,7 +209,7 @@ export function Editor({
                 >
                   {saveStatus}
                 </ColoredBadge>
-                <Menu />
+                <SettingsMenu />
               </div>
             }
           />
