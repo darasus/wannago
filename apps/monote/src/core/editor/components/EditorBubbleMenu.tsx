@@ -45,7 +45,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
   });
 
   return (
-    <Menubar className="rounded-none border-t-0 border-l-0 border-r-0">
+    <Menubar className="rounded-t-lg rounded-b-none border-t-0 border-l-0 border-r-0">
       <MenubarMenu>
         <MenubarTrigger>
           <span className="whitespace-nowrap">

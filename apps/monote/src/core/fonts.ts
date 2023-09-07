@@ -1,4 +1,4 @@
-import {Inter, Fira_Code} from 'next/font/google';
+import {Inter, Fira_Code, Inter_Tight} from 'next/font/google';
 
 export const textFont = Inter({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -9,5 +9,11 @@ export const textFont = Inter({
 export const codeFont = Fira_Code({
   weight: ['300', '400', '500', '600', '700'],
   variable: '--font-code',
+  subsets: ['latin'],
+});
+
+export const shortcutFont = Inter_Tight({
+  weight: ['500'],
+  variable: '--font-shortcut',
   subsets: ['latin'],
 });

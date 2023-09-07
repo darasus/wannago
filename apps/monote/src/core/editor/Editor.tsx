@@ -1,49 +1,36 @@
 'use client';
 
 import {useEffect, useRef, useState} from 'react';
-import {useEditor, EditorContent, JSONContent, Extension} from '@tiptap/react';
+import {useEditor, EditorContent, Extension} from '@tiptap/react';
 import {defaultEditorProps} from './props';
 import {defaultExtensions} from './extensions/defaultExtensions';
 import {useDebouncedCallback} from 'use-debounce';
 import {useCompletion} from 'ai/react';
 import {toast} from 'sonner';
 import va from '@vercel/analytics';
-import {defaultEditorContent} from './defaultEditorContent';
 import {EditorBubbleMenu} from './components/EditorBubbleMenu';
 import {ImageResizer} from './extensions/ImageResizer';
 import {EditorProps} from '@tiptap/pm/view';
 import {Editor as EditorClass} from '@tiptap/core';
-import {useLocalStorage} from '../hooks/useLocalStorage';
 import {textFont} from '../fonts';
-import {ColoredBadge} from 'ui';
-import {SettingsMenu} from '../../Feautres/SettingsMenu';
+import {Card} from 'ui';
 import {getPrevText} from '../utils';
+import {useContent} from '../../hooks/useContent';
+import {defaultEditorContent} from './defaultEditorContent';
+import {useSaved} from '../../hooks/useSaved';
 
 export function Editor({
   completionApi = '/api/generate',
-  defaultValue = defaultEditorContent,
   extensions = [],
   editorProps = {},
   onUpdate = () => {},
   onDebouncedUpdate = () => {},
-  debounceDuration = 750,
-  storageKey = 'novel__content',
 }: {
   /**
    * The API route to use for the OpenAI completion API.
    * Defaults to "/api/generate".
    */
   completionApi?: string;
-  /**
-   * Additional classes to add to the editor container.
-   * Defaults to "relative min-h-[500px] w-full bg-background".
-   */
-  className?: string;
-  /**
-   * The default value to use for the editor.
-   * Defaults to defaultEditorContent.
-   */
-  defaultValue?: JSONContent | string;
   /**
    * A list of extensions to use for the editor, in addition to the default Novel extensions.
    * Defaults to [].
@@ -66,32 +53,23 @@ export function Editor({
    */
   // eslint-disable-next-line no-unused-vars
   onDebouncedUpdate?: (editor?: EditorClass) => void | Promise<void>;
-  /**
-   * The duration (in milliseconds) to debounce the onDebouncedUpdate callback.
-   * Defaults to 750.
-   */
-  debounceDuration?: number;
-  /**
-   * The key to use for storing the editor's value in local storage.
-   * Defaults to "novel__content".
-   */
-  storageKey?: string;
 }) {
-  const [saveStatus, setSaveStatus] = useState('Saved');
-  const [content, setContent] = useLocalStorage(storageKey, defaultValue);
+  const {setSaved, setSaving, setUnsaved} = useSaved();
+  const {content: jsonContent, updateContent} = useContent();
+  const content = jsonContent ? JSON.parse(jsonContent) : defaultEditorContent;
 
   const [hydrated, setHydrated] = useState(false);
 
   const debouncedUpdates = useDebouncedCallback(async ({editor}) => {
     const json = editor.getJSON();
-    setContent(json);
+    updateContent(JSON.stringify(json));
     onDebouncedUpdate(editor);
-    setSaveStatus('Saving...');
+    setSaving();
     // Simulate a delay in saving.
     setTimeout(() => {
-      setSaveStatus('Saved');
+      setSaved();
     }, 500);
-  }, debounceDuration);
+  }, 750);
 
   const editor = useEditor({
     extensions: [...defaultExtensions, ...extensions],
@@ -118,7 +96,7 @@ export function Editor({
         va.track('Autocomplete Shortcut Used');
       } else {
         onUpdate(e.editor);
-        setSaveStatus('Unsaved');
+        setUnsaved();
         debouncedUpdates(e);
       }
     },
@@ -196,34 +174,21 @@ export function Editor({
   }, [editor, content, hydrated]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="sticky top-0 left-0 right-0 z-10">
-        {editor && (
-          <EditorBubbleMenu
-            editor={editor}
-            right={
-              <div className="flex items-center gap-2">
-                <ColoredBadge
-                  color={saveStatus !== 'Saved' ? 'default' : 'green'}
-                  className="py-0.5"
-                >
-                  {saveStatus}
-                </ColoredBadge>
-                <SettingsMenu />
-              </div>
-            }
-          />
-        )}
+    <Card className="w-full">
+      <div className="flex flex-col gap-4">
+        <div className="sticky top-0 left-0 right-0 z-10">
+          {editor && <EditorBubbleMenu editor={editor} />}
+        </div>
+        <div
+          onClick={() => {
+            editor?.chain().focus().run();
+          }}
+          className={`relative min-h-[500px] w-full px-4 ${textFont.className}`}
+        >
+          {editor?.isActive('image') && <ImageResizer editor={editor} />}
+          <EditorContent editor={editor} />
+        </div>
       </div>
-      <div
-        onClick={() => {
-          editor?.chain().focus().run();
-        }}
-        className={`relative min-h-[500px] w-full bg-background px-4 ${textFont.className}`}
-      >
-        {editor?.isActive('image') && <ImageResizer editor={editor} />}
-        <EditorContent editor={editor} />
-      </div>
-    </div>
+    </Card>
   );
 }

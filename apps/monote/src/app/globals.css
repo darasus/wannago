@@ -24,6 +24,9 @@
   --ring: 240 5.9% 10%;
   --radius: 0.75rem;
 
+  --muted-light: hsl(240deg 4.76% 95.88%);
+  --muted-light-foreground: hsl(0deg 0% 77.67%);
+
   --novel-highlight-default: #ffffff;
   --novel-highlight-purple: #f6f3f8;
   --novel-highlight-red: #fdebeb;
@@ -54,6 +57,9 @@
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
   --ring: 240 4.9% 83.9%;
+
+  --muted-light: hsl(240 5% 8% / 1);
+  --muted-light-foreground: hsl(240deg 3.37% 33.36%);
 
   --novel-highlight-default: #000000;
   --novel-highlight-purple: #3f2c4b;
