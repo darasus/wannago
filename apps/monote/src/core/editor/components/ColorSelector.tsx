@@ -8,7 +8,7 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from 'ui';
-import {cn} from '../../../../utils';
+import {cn} from '../../../utils';
 
 export interface BubbleColorMenuItem {
   name: string;

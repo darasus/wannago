@@ -10,12 +10,12 @@ import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import {Markdown} from 'tiptap-markdown';
 import Highlight from '@tiptap/extension-highlight';
-import SlashCommand from './slash-command';
+import {SlashCommand} from './SlashCommand';
 import {InputRule} from '@tiptap/core';
-import UpdatedImage from './updated-image';
-import CustomKeymap from './custom-keymap';
-import UploadImagesPlugin from '../plugins/upload-images';
-import {codeFont} from '../../../styles/fonts';
+import {UpdatedImage} from './UpdatedImage';
+import {CustomKeyMap} from './CustomKeyMap';
+import {UploadImagesPlugin} from '../plugins/UploadImagesPlugin';
+import {codeFont} from '../../fonts';
 
 export const defaultExtensions = [
   StarterKit.configure({
@@ -135,5 +135,5 @@ export const defaultExtensions = [
     html: false,
     transformCopiedText: true,
   }),
-  CustomKeymap,
+  CustomKeyMap,
 ];

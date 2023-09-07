@@ -20,7 +20,7 @@ import {
   Input,
   Button,
 } from 'ui';
-import {cn} from '../../../../utils';
+import {cn} from '../../../utils';
 
 export interface BubbleMenuItem {
   name: ReactNode;

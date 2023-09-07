@@ -17,7 +17,6 @@ import {
   Heading3,
   List,
   ListOrdered,
-  MessageSquarePlus,
   Text,
   TextQuote,
   Image as ImageIcon,
@@ -26,9 +25,10 @@ import {
 } from 'lucide-react';
 import {toast} from 'sonner';
 import va from '@vercel/analytics';
-import {LoadingCircle, Magic} from '../../icons';
-import {startImageUpload} from '../plugins/upload-images';
-import {getPrevText} from '../../../lib/editor';
+import {LoadingCircle} from '../../icons/LoadingCircle';
+import {Magic} from '../../icons/Magic';
+import {startImageUpload} from '../plugins/UploadImagesPlugin';
+import {cn, getPrevText} from '../../utils';
 
 interface CommandItemProps {
   title: string;
@@ -79,15 +79,15 @@ const getSuggestionItems = ({query}: {query: string}) => {
       searchTerms: ['gpt'],
       icon: <Magic className="w-7" />,
     },
-    {
-      title: 'Send Feedback',
-      description: 'Let us know how we can improve.',
-      icon: <MessageSquarePlus size={18} />,
-      command: ({editor, range}: CommandProps) => {
-        editor.chain().focus().deleteRange(range).run();
-        window.open('/feedback', '_blank');
-      },
-    },
+    // {
+    //   title: 'Send Feedback',
+    //   description: 'Let us know how we can improve.',
+    //   icon: <MessageSquarePlus size={18} />,
+    //   command: ({editor, range}: CommandProps) => {
+    //     editor.chain().focus().deleteRange(range).run();
+    //     window.open('/feedback', '_blank');
+    //   },
+    // },
     {
       title: 'Text',
       description: 'Just start typing with plain text.',
@@ -345,13 +345,16 @@ const CommandList = ({
     <div
       id="slash-command"
       ref={commandListContainer}
-      className="z-50 h-auto max-h-[330px] w-72 overflow-y-auto rounded-md border border-stone-200 bg-background px-1 py-2 shadow-md transition-all"
+      className={cn(
+        'rounded-lg border bg-card text-card-foreground shadow-sm',
+        'z-50 h-auto max-h-[330px] w-72 overflow-y-auto p-2 transition-all'
+      )}
     >
       {items.map((item: CommandItemProps, index: number) => {
         return (
           <button
-            className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${
-              index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
+            className={`flex w-full items-center space-x-2 rounded-md p-2 text-left text-sm hover:bg-muted ${
+              index === selectedIndex ? 'bg-muted' : ''
             }`}
             key={index}
             onClick={() => selectItem(index)}
@@ -421,11 +424,9 @@ const renderItems = () => {
   };
 };
 
-const SlashCommand = Command.configure({
+export const SlashCommand = Command.configure({
   suggestion: {
     items: getSuggestionItems,
     render: renderItems,
   },
 });
-
-export default SlashCommand;

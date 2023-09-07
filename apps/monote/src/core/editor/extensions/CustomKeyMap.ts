@@ -1,6 +1,6 @@
-import { Extension } from "@tiptap/core";
+import {Extension} from '@tiptap/core';
 
-declare module "@tiptap/core" {
+declare module '@tiptap/core' {
   // eslint-disable-next-line no-unused-vars
   interface Commands<ReturnType> {
     customkeymap: {
@@ -12,16 +12,16 @@ declare module "@tiptap/core" {
   }
 }
 
-const CustomKeymap = Extension.create({
-  name: "CustomKeymap",
+export const CustomKeyMap = Extension.create({
+  name: 'CustomKeyMap',
 
   addCommands() {
     return {
       selectTextWithinNodeBoundaries:
         () =>
-        ({ editor, commands }) => {
-          const { state } = editor;
-          const { tr } = state;
+        ({editor, commands}) => {
+          const {state} = editor;
+          const {tr} = state;
           const startNodePos = tr.selection.$from.start();
           const endNodePos = tr.selection.$to.end();
           return commands.setTextSelection({
@@ -34,9 +34,9 @@ const CustomKeymap = Extension.create({
 
   addKeyboardShortcuts() {
     return {
-      "Mod-a": ({ editor }) => {
-        const { state } = editor;
-        const { tr } = state;
+      'Mod-a': ({editor}) => {
+        const {state} = editor;
+        const {tr} = state;
         const startSelectionPos = tr.selection.from;
         const endSelectionPos = tr.selection.to;
         const startNodePos = tr.selection.$from.start();
@@ -52,5 +52,3 @@ const CustomKeymap = Extension.create({
     };
   },
 });
-
-export default CustomKeymap;

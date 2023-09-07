@@ -1,9 +1,9 @@
-export default function LoadingCircle({ dimensions }: { dimensions?: string }) {
+export function LoadingCircle({dimensions}: {dimensions?: string}) {
   return (
     <svg
       aria-hidden="true"
       className={`${
-        dimensions || "h-4 w-4"
+        dimensions || 'h-4 w-4'
       } animate-spin fill-stone-600 text-stone-200`}
       viewBox="0 0 100 101"
       fill="none"

@@ -3,21 +3,21 @@
 import {useEffect, useRef, useState} from 'react';
 import {useEditor, EditorContent, JSONContent, Extension} from '@tiptap/react';
 import {defaultEditorProps} from './props';
-import {defaultExtensions} from './extensions';
+import {defaultExtensions} from './extensions/defaultExtensions';
 import {useDebouncedCallback} from 'use-debounce';
 import {useCompletion} from 'ai/react';
 import {toast} from 'sonner';
 import va from '@vercel/analytics';
-import {defaultEditorContent} from './default-content';
+import {defaultEditorContent} from './defaultEditorContent';
 import {EditorBubbleMenu} from './components/EditorBubbleMenu';
-import {ImageResizer} from './extensions/image-resizer';
+import {ImageResizer} from './extensions/ImageResizer';
 import {EditorProps} from '@tiptap/pm/view';
 import {Editor as EditorClass} from '@tiptap/core';
-import {useLocalStorage} from '../../lib/hooks/use-local-storage';
-import {getPrevText} from '../../lib/editor';
-import {textFont} from '../../styles/fonts';
+import {useLocalStorage} from '../hooks/useLocalStorage';
+import {textFont} from '../fonts';
 import {ColoredBadge} from 'ui';
-import {SettingsMenu} from '../../../Feautres/SettingsMenu';
+import {SettingsMenu} from '../../Feautres/SettingsMenu';
+import {getPrevText} from '../utils';
 
 export function Editor({
   completionApi = '/api/generate',

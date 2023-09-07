@@ -1,5 +1,5 @@
 import {EditorProps} from '@tiptap/pm/view';
-import {startImageUpload} from './plugins/upload-images';
+import {startImageUpload} from './plugins/UploadImagesPlugin';
 import {proseClassName} from 'const';
 
 export const defaultEditorProps: EditorProps = {

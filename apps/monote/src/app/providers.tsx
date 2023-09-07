@@ -4,7 +4,7 @@ import {ReactNode, createContext} from 'react';
 import {ThemeProvider, useTheme} from 'next-themes';
 import {Toaster} from 'sonner';
 import {Analytics} from '@vercel/analytics/react';
-import {useLocalStorage} from '../core/lib/hooks/use-local-storage';
+import {useLocalStorage} from '../core/hooks/useLocalStorage';
 
 export const AppContext = createContext<{
   font: string;
