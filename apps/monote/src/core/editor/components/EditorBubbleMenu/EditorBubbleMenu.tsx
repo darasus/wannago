@@ -9,6 +9,7 @@ export interface BubbleMenuItem {
   name: ReactNode;
   isActive: () => boolean;
   command: () => void;
+  shortcut?: string;
 }
 
 type EditorBubbleMenuProps = Omit<BubbleMenuProps, 'children'> & {
@@ -21,7 +22,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
   }
 
   return (
-    <div className="flex items-center rounded-t-lg border-t-0 border-l-0 border-r-0 p-2 gap-2">
+    <div className="flex items-center p-2 gap-2">
       <TextFormatMenuItem editor={props.editor} />
       <LinkMenuItem editor={props.editor} />
       <TextStyleMenuItems editor={props.editor} />

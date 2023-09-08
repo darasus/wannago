@@ -26,36 +26,43 @@ function createNodeSelectorItems({editor}: Props) {
         editor.isActive('paragraph') &&
         !editor.isActive('bulletList') &&
         !editor.isActive('orderedList'),
+      shortcut: '⌘⌥0',
     },
     {
       name: 'Heading 1',
       command: () => editor.chain().focus().toggleHeading({level: 1}).run(),
       isActive: () => editor.isActive('heading', {level: 1}),
+      shortcut: '⌘⌥1',
     },
     {
       name: 'Heading 2',
       command: () => editor.chain().focus().toggleHeading({level: 2}).run(),
       isActive: () => editor.isActive('heading', {level: 2}),
+      shortcut: '⌘⌥2',
     },
     {
       name: 'Heading 3',
       command: () => editor.chain().focus().toggleHeading({level: 3}).run(),
       isActive: () => editor.isActive('heading', {level: 3}),
-    },
-    {
-      name: 'To-do List',
-      command: () => editor.chain().focus().toggleTaskList().run(),
-      isActive: () => editor.isActive('taskItem'),
-    },
-    {
-      name: 'Bullet list',
-      command: () => editor.chain().focus().toggleBulletList().run(),
-      isActive: () => editor.isActive('bulletList'),
+      shortcut: '⌘⌥3',
     },
     {
       name: 'Numbered list',
       command: () => editor.chain().focus().toggleOrderedList().run(),
       isActive: () => editor.isActive('orderedList'),
+      shortcut: '⌘⇧7',
+    },
+    {
+      name: 'Bullet list',
+      command: () => editor.chain().focus().toggleBulletList().run(),
+      isActive: () => editor.isActive('bulletList'),
+      shortcut: '⌘⇧8',
+    },
+    {
+      name: 'To-do List',
+      command: () => editor.chain().focus().toggleTaskList().run(),
+      isActive: () => editor.isActive('taskItem'),
+      shortcut: '⌘⇧9',
     },
     {
       name: 'Quote',
@@ -119,7 +126,9 @@ export function TextFormatMenuItem({editor}: {editor: Editor}) {
               {nodeSelectorItemActive.name === item.name && (
                 <Check className="h-4 w-4 ml-2 text-green-500" />
               )}
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              {item.shortcut && (
+                <DropdownMenuShortcut>{item.shortcut}</DropdownMenuShortcut>
+              )}
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
