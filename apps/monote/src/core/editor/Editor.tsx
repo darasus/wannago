@@ -8,7 +8,7 @@ import {useDebouncedCallback} from 'use-debounce';
 import {useCompletion} from 'ai/react';
 import {toast} from 'sonner';
 import va from '@vercel/analytics';
-import {EditorBubbleMenu} from './components/EditorBubbleMenu';
+import {EditorBubbleMenu} from './components/EditorBubbleMenu/EditorBubbleMenu';
 import {ImageResizer} from './extensions/ImageResizer';
 import {EditorProps} from '@tiptap/pm/view';
 import {Editor as EditorClass} from '@tiptap/core';
@@ -176,7 +176,7 @@ export function Editor({
   return (
     <Card className="w-full">
       <div className="flex flex-col gap-4">
-        <div className="sticky top-0 left-0 right-0 z-10">
+        <div className="sticky top-0 left-0 right-0 z-10 border-b bg-background rounded-t-lg">
           {editor && <EditorBubbleMenu editor={editor} />}
         </div>
         <div
