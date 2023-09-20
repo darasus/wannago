@@ -1,7 +1,7 @@
-import {captureException} from '@sentry/nextjs';
 import {TRPCError} from '@trpc/server';
 import {invariant} from 'utils';
 import {ImageUpload} from 'lib/src/ImageUpload';
+import {NextResponse} from 'next/server';
 
 const {uploadImage} = new ImageUpload();
 
@@ -27,17 +27,11 @@ export async function POST(req: Request) {
           })
         );
 
-        return new Response(JSON.stringify(uploadedImage), {
-          status: 200,
-          headers: {'Content-Type': 'application/json'},
-        });
+        return NextResponse.json(uploadedImage);
       }
     }
+    return NextResponse.json({error: 'Internal Server Error'}, {status: 500});
   } catch (error) {
-    console.log(error);
-    captureException(error);
-    return new Response('Something went wrong', {
-      status: 400,
-    });
+    return NextResponse.json({error: 'Internal Server Error'}, {status: 500});
   }
 }

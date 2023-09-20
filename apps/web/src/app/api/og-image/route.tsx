@@ -1,5 +1,4 @@
-import {ImageResponse} from '@vercel/og';
-import {NextRequest} from 'next/server';
+import {NextRequest, ImageResponse, NextResponse} from 'next/server';
 import {ONE_WEEK_IN_SECONDS} from 'const';
 import {getBaseUrl, invariant} from 'utils';
 import {captureException} from '@sentry/nextjs';
@@ -112,6 +111,6 @@ export async function GET(req: NextRequest) {
     );
   } catch (error) {
     captureException(error);
-    return null;
+    return NextResponse.json({error: 'Internal Server Error'}, {status: 500});
   }
 }
