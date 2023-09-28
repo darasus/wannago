@@ -6,7 +6,7 @@ interface Props {
   height?: number;
   longitude: number;
   latitude: number;
-  key: string;
+  apiKey: string;
 }
 
 const width = 480;
@@ -18,8 +18,8 @@ url.searchParams.set('maptype', 'roadmap');
 url.searchParams.set('scale', '2');
 url.searchParams.set('format', 'jpg');
 
-export function LocationImage({address, longitude, latitude, key}: Props) {
-  url.searchParams.set('key', key);
+export function LocationImage({address, longitude, latitude, apiKey}: Props) {
+  url.searchParams.set('key', apiKey);
   url.searchParams.set('center', address);
   url.searchParams.set('markers', `color:red|${latitude},${longitude}`);
 
