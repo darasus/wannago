@@ -1,35 +1,43 @@
+import {connect} from '@planetscale/database';
+import {PrismaPlanetScale} from '@prisma/adapter-planetscale';
 import {PrismaClient} from '@prisma/client';
+import {fetch as undiciFetch} from 'undici';
 
-let prisma: PrismaClient;
+const connectionString = `${process.env.DATABASE_URL}`;
+const connection = connect({url: connectionString, fetch: undiciFetch});
+const adapter = new PrismaPlanetScale(connection);
+export const prisma = new PrismaClient({adapter});
 
-if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient();
-} else {
-  if (!(global as any).prisma) {
-    (global as any).prisma = new PrismaClient({
-      // log:
-      //   process.env.NODE_ENV === 'development'
-      //     ? ['query', 'error', 'warn']
-      //     : ['error'],
-    });
-  }
-  prisma = (global as any).prisma;
-}
+// let prisma: PrismaClient;
 
-prisma.$use(async (params, next) => {
-  const before = Date.now();
+// if (process.env.NODE_ENV === 'production') {
+//   prisma = new PrismaClient();
+// } else {
+//   if (!(global as any).prisma) {
+//     (global as any).prisma = new PrismaClient({
+//       // log:
+//       //   process.env.NODE_ENV === 'development'
+//       //     ? ['query', 'error', 'warn']
+//       //     : ['error'],
+//     });
+//   }
+//   prisma = (global as any).prisma;
+// }
 
-  const result = await next(params);
+// prisma.$use(async (params, next) => {
+//   const before = Date.now();
 
-  const after = Date.now();
+//   const result = await next(params);
 
-  if (process.env.NODE_ENV === 'development') {
-    console.log(
-      `[PRISMA_QUERY] ${params.model}.${params.action} took ${after - before}ms`
-    );
-  }
+//   const after = Date.now();
 
-  return result;
-});
+//   if (process.env.NODE_ENV === 'development') {
+//     console.log(
+//       `[PRISMA_QUERY] ${params.model}.${params.action} took ${after - before}ms`
+//     );
+//   }
 
-export {prisma};
+//   return result;
+// });
+
+// export {prisma};
