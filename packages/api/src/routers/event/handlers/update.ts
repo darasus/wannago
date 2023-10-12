@@ -23,6 +23,10 @@ export const update = protectedProcedure
         title,
         tickets,
         createdById,
+        eventVisibility,
+        eventVisibilityCode,
+        signUpProtection,
+        signUpProtectionCode,
       },
       ctx,
     }) => {
@@ -56,6 +60,10 @@ export const update = protectedProcedure
           featuredImagePreviewSrc,
           longitude: geocodeResponse?.results[0].geometry.location.lng,
           latitude: geocodeResponse?.results[0].geometry.location.lat,
+          eventVisibility,
+          eventVisibilityCode,
+          signUpProtection,
+          signUpProtectionCode,
           ...(user && {
             user: {
               connect: {

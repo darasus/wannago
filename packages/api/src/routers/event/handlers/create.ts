@@ -20,6 +20,10 @@ export const create = protectedProcedure
         startDate,
         createdById,
         tickets,
+        eventVisibility,
+        eventVisibilityCode,
+        signUpProtection,
+        signUpProtectionCode,
       },
       ctx,
     }) => {
@@ -60,6 +64,10 @@ export const create = protectedProcedure
           longitude: geocodeResponse?.results[0].geometry.location.lng,
           latitude: geocodeResponse?.results[0].geometry.location.lat,
           preferredCurrency,
+          eventVisibility,
+          eventVisibilityCode,
+          signUpProtection,
+          signUpProtectionCode,
           ...(organization?.id
             ? {
                 organization: {connect: {id: organization.id}},
