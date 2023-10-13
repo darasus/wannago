@@ -13,6 +13,7 @@ import {useEffect} from 'react';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {parseISO} from 'date-fns';
+import {generateEventCode} from 'utils/src/generateShortId';
 
 export const eventFormSchema = z.object({
   createdById: z.string().min(1),
@@ -52,8 +53,14 @@ export const eventFormSchema = z.object({
   currency: z.nativeEnum(Currency),
   eventVisibility: z.nativeEnum(EventVisibility).optional(),
   signUpProtection: z.nativeEnum(SignUpProtection).optional(),
-  eventVisibilityCode: z.string().optional(),
-  signUpProtectionCode: z.string().optional(),
+  eventVisibilityCode: z
+    .string()
+    .max(20, 'Code must be less than 20 characters')
+    .optional(),
+  signUpProtectionCode: z
+    .string()
+    .max(20, 'Code must be less than 20 characters')
+    .optional(),
 });
 
 export function useEventForm(props: {
@@ -99,8 +106,8 @@ export function useEventForm(props: {
       currency: (event?.preferredCurrency ?? me.preferredCurrency) || 'USD',
       eventVisibility: event?.eventVisibility || EventVisibility.PUBLIC,
       signUpProtection: event?.signUpProtection || SignUpProtection.PUBLIC,
-      eventVisibilityCode: event?.eventVisibilityCode || '',
-      signUpProtectionCode: event?.signUpProtectionCode || '',
+      eventVisibilityCode: event?.eventVisibilityCode || generateEventCode(),
+      signUpProtectionCode: event?.signUpProtectionCode || generateEventCode(),
     },
   });
 

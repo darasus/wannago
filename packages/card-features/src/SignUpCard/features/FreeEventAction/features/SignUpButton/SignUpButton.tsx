@@ -1,25 +1,17 @@
-import {useFormContext} from 'react-hook-form';
+import {FormProvider, useFormContext} from 'react-hook-form';
 import {
   Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  Input,
-  Label,
   Switch,
 } from 'ui';
 import {EventSignUpForm} from '../../types';
 import {Event, SignUpProtection} from '@prisma/client';
 import {useAttendEvent} from './hooks/useAttendEvent';
+import {ProtectedSignUpButton} from './ProtectedSignUpButton/ProtectedSignUpButton';
 
 interface Props {
   event: Event & {isPast: boolean};
@@ -74,35 +66,9 @@ export function SignUpButton({event}: Props) {
           </Button>
         )}
         {isEventSignUpProtected && (
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline">Attend</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Use sign up code</DialogTitle>
-                <DialogDescription>
-                  To be able to sign up you need to provide a sign up code that
-                  you must obtain from the organizer.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
-                    Name
-                  </Label>
-                  <Input
-                    id="name"
-                    defaultValue="Pedro Duarte"
-                    className="col-span-3"
-                  />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button type="submit">Sign up</Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <FormProvider {...form}>
+            <ProtectedSignUpButton />
+          </FormProvider>
         )}
       </form>
     </Form>

@@ -66,8 +66,10 @@ export const create = protectedProcedure
           preferredCurrency,
           eventVisibility,
           eventVisibilityCode,
-          signUpProtection,
-          signUpProtectionCode,
+          signUpProtection:
+            eventVisibility === 'PROTECTED' ? signUpProtection : undefined,
+          signUpProtectionCode:
+            signUpProtection === 'PROTECTED' ? signUpProtectionCode : undefined,
           ...(organization?.id
             ? {
                 organization: {connect: {id: organization.id}},

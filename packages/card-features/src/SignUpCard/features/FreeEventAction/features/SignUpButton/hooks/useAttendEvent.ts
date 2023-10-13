@@ -5,6 +5,7 @@ import {api} from '../../../../../../../../../apps/web/src/trpc/client';
 import {Event} from '@prisma/client';
 import {revalidateGetMySignUp} from '../../../../../../../../../apps/web/src/actions';
 import {toast} from 'sonner';
+import {useCodeModalState} from './useCodeModalState';
 
 interface Props {
   event: Event;
@@ -15,6 +16,7 @@ export function useAttendEvent({event}: Props) {
   const router = useRouter();
   const {confetti} = useConfetti();
   const {logEvent} = useTracker();
+  const {close: closeCodeModal} = useCodeModalState();
 
   const attendEvent = async (data: EventSignUpForm) => {
     if (!me) {
@@ -25,6 +27,7 @@ export function useAttendEvent({event}: Props) {
       .mutate({
         eventId: event.id,
         hasPlusOne: data.hasPlusOne,
+        code: data.code,
       })
       .then(async () => {
         await revalidateGetMySignUp({eventId: event.id});
@@ -40,6 +43,8 @@ export function useAttendEvent({event}: Props) {
       success: 'Signed up! Check your email for more details.',
       error: (error) => error.message,
     });
+
+    closeCodeModal();
 
     try {
       await promise;
