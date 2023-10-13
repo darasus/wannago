@@ -1,7 +1,7 @@
 'use client';
 
 import {CardBase, Badge, PageHeader} from 'ui';
-import {Text, Tooltip} from 'ui';
+import {Text} from 'ui';
 import {formatTimeago} from 'utils';
 import {getBaseUrl} from 'utils';
 import React, {use} from 'react';
@@ -58,17 +58,7 @@ export function EventInfo({event}: Props) {
     },
     {
       label: 'Public url',
-      value: (
-        <Tooltip
-          text={
-            event?.isPublished
-              ? undefined
-              : 'To see the public link, please publish the event first.'
-          }
-        >
-          <span>{publicEventUrl}</span>
-        </Tooltip>
-      ),
+      value: publicEventUrl,
     },
   ];
 
