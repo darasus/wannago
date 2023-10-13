@@ -26,10 +26,6 @@ export default async function EventPages({
     api.organization.getMyOrganizations.query(),
   ]);
 
-  const allAttendeesPromise = api.event.getAllEventsAttendees.query({
-    eventShortId: id,
-  });
-
   const myEventSignUpsPromise = api.event.getMyTicketsByEvent.query({
     eventShortId: id,
   });

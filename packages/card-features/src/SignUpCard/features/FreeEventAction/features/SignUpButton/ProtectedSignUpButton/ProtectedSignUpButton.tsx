@@ -28,7 +28,7 @@ export function ProtectedSignUpButton() {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline" type="button">
+        <Button type="button">
           <LockIcon className="w-4 h-4 mr-2" /> Attend
         </Button>
       </DialogTrigger>

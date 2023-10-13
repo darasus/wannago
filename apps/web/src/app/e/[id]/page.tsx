@@ -78,6 +78,12 @@ export default async function EventPage({
     notFound();
   }
 
+  console.log('====>', event.eventVisibility);
+
+  if (event.eventVisibility === 'PROTECTED') {
+    event.title = 'Protected Event';
+  }
+
   return (
     <Container className="flex flex-col gap-4" maxSize="sm">
       {isMyEvent && <ManageEventButton event={event} />}
