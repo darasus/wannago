@@ -7,6 +7,7 @@ export const getByShortId = publicProcedure
   .input(
     z.object({
       id: z.string().min(1),
+      code: z.string().optional(),
     })
   )
   .query(async ({input, ctx}) => {
@@ -30,6 +31,8 @@ export const getByShortId = publicProcedure
     });
 
     invariant(event, eventNotFoundError);
+
+    ctx.assertions.assertCanViewEvent({event, code: input.code});
 
     return {...event, isPast: isPast(event.endDate, ctx.timezone)};
   });

@@ -1,3 +1,5 @@
+'use client';
+
 import {FormProvider, useFormContext} from 'react-hook-form';
 import {
   Button,

@@ -1,3 +1,5 @@
+'use client';
+
 import {useFormContext} from 'react-hook-form';
 import {EventSignUpForm} from '../../types';
 import {Button, Form} from 'ui';

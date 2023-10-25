@@ -15,6 +15,9 @@ import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizat
 import {canModifyEvent} from './actions/canModifyEvent';
 import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
 import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
+import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
+import {assertCanViewEvent} from './assertions/assertCanViewEvent';
+import {assertCanPublishEvent} from './assertions/assertCanPublishEvent';
 import {Inngest, EventSchemas} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
 import {NextRequest} from 'next/server';
@@ -39,6 +42,9 @@ const actions = {
 
 const assertions = {
   assertCanPurchaseTickets,
+  assertCanJoinEvent,
+  assertCanViewEvent,
+  assertCanPublishEvent,
 } as const;
 
 type Actions = {

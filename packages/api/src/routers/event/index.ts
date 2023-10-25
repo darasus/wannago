@@ -1,5 +1,6 @@
 import {create} from './handlers/create';
 import {remove} from './handlers/remove';
+import {validateEventVisibilityCode} from './handlers/validateEventVisibilityCode';
 import {update} from './handlers/update';
 import {publish} from './handlers/publish';
 import {getById} from './handlers/getById';
@@ -47,4 +48,5 @@ export const eventRouter = createTRPCRouter({
   getIsMyEvent,
   getMyTicketsByEvent,
   generateEventCsvData,
+  validateEventVisibilityCode,
 });

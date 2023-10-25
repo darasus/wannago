@@ -5,15 +5,20 @@ import {EventView} from '../../../features/EventView/EventView';
 import {getBaseUrl} from 'utils';
 import {notFound} from 'next/navigation';
 import {Metadata} from 'next';
+import {TRPCClientError} from '@trpc/client';
+import {EventVisibilityCodeForm} from './features/EventVisibilityCodeForm/EventVisibilityCodeForm';
 
 export const runtime = 'edge';
 export const preferredRegion = 'iad1';
 
+interface Params {
+  params: {id: string};
+  searchParams: {code?: string};
+}
+
 export async function generateMetadata({
   params: {id},
-}: {
-  params: {id: string};
-}): Promise<Metadata> {
+}: Params): Promise<Metadata> {
   const event = await api.event.getByShortId.query({id}).catch(() => null);
 
   if (!event) {
@@ -57,18 +62,38 @@ export async function generateMetadata({
   };
 }
 
-export default async function EventPage({
-  params: {id},
-}: {
-  params: {id: string};
-}) {
-  const [me, isMyEvent, event] = await Promise.all([
-    api.user.me.query(),
-    api.event.getIsMyEvent.query({
-      eventShortId: id,
-    }),
-    api.event.getByShortId.query({id}),
-  ]);
+async function getData(id: string, code?: string) {
+  'use server';
+  try {
+    const [me, isMyEvent, event] = await Promise.all([
+      api.user.me.query(),
+      api.event.getIsMyEvent.query({
+        eventShortId: id,
+      }),
+      api.event.getByShortId.query({id, code}),
+    ]);
+
+    return {me, isMyEvent, event, notAllowed: false};
+  } catch (error) {
+    if (
+      error instanceof TRPCClientError &&
+      error.shape.data.code === 'FORBIDDEN'
+    ) {
+      return {me: null, isMyEvent: false, event: null, notAllowed: true};
+    }
+    return {me: null, isMyEvent: false, event: null, notAllowed: false};
+  }
+}
+
+export default async function EventPage(props: Params) {
+  const {me, isMyEvent, event, notAllowed} = await getData(
+    props.params.id,
+    props.searchParams.code
+  );
+
+  if (notAllowed === true) {
+    return <EventVisibilityCodeForm id={props.params.id} />;
+  }
 
   if (!event) {
     notFound();
@@ -76,12 +101,6 @@ export default async function EventPage({
 
   if (event.isPublished === false && isMyEvent === false) {
     notFound();
-  }
-
-  console.log('====>', event.eventVisibility);
-
-  if (event.eventVisibility === 'PROTECTED') {
-    event.title = 'Protected Event';
   }
 
   return (
