@@ -1,7 +1,7 @@
 import {z} from 'zod';
-import {protectedProcedure} from '../../../trpc';
+import {publicProcedure} from '../../../trpc';
 
-export const validateEventVisibilityCode = protectedProcedure
+export const validateEventVisibilityCode = publicProcedure
   .input(z.object({id: z.string(), code: z.string().min(1)}))
   .query(async ({ctx, input}) => {
     const event = await ctx.prisma.event.findUnique({

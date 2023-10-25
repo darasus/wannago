@@ -32,7 +32,7 @@ export const getByShortId = publicProcedure
 
     invariant(event, eventNotFoundError);
 
-    ctx.assertions.assertCanViewEvent({event, code: input.code});
+    await ctx.assertions.assertCanViewEvent({event, code: input.code});
 
     return {...event, isPast: isPast(event.endDate, ctx.timezone)};
   });
