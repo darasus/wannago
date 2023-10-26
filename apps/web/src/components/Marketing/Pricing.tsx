@@ -41,10 +41,8 @@ export async function Pricing() {
                 {[
                   'Unlimited events',
                   'Unlimited attendees',
-                  'Profile pages',
                   'Organization profiles',
                   'Unlimited organization members',
-                  'Generative AI assistant',
                   'No fees for free events',
                 ].map((feature: any) => (
                   <div key={feature} className="flex items-center gap-1">
