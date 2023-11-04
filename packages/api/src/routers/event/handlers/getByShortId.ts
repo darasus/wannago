@@ -34,5 +34,12 @@ export const getByShortId = publicProcedure
 
     await ctx.assertions.assertCanViewEvent({event, code: input.code});
 
-    return {...event, isPast: isPast(event.endDate, ctx.timezone)};
+    return {
+      ...event,
+      isPast: isPast(event.endDate, ctx.timezone),
+      isMyEvent:
+        event.userId === ctx.auth?.user.id ||
+        event.organization?.users.some((u) => u.id === ctx.auth?.user.id) ||
+        false,
+    };
   });

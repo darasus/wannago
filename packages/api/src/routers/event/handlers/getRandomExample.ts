@@ -12,7 +12,11 @@ export const getRandomExample = publicProcedure.query(async ({ctx}) => {
     },
     include: {
       user: true,
-      organization: true,
+      organization: {
+        include: {
+          users: true,
+        },
+      },
       tickets: true,
       eventSignUps: true,
       ticketSales: true,
@@ -21,5 +25,12 @@ export const getRandomExample = publicProcedure.query(async ({ctx}) => {
 
   const event = random(events);
 
-  return {...event, isPast: isPast(event.endDate, ctx.timezone)};
+  return {
+    ...event,
+    isPast: isPast(event.endDate, ctx.timezone),
+    isMyEvent:
+      event.userId === ctx.auth?.user.id ||
+      event.organization?.users.some((u) => u.id === ctx.auth?.user.id) ||
+      false,
+  };
 });

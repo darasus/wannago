@@ -45,11 +45,7 @@ export function SignUpCard({event, myTicketPromise, mePromise}: Props) {
                 />
               )}
               {isPaidEvent && (
-                <PaidEventAction
-                  event={event}
-                  myTicketPromise={myTicketPromise}
-                  mePromise={mePromise}
-                />
+                <PaidEventAction event={event} mePromise={mePromise} />
               )}
             </div>
           </div>
