@@ -58,6 +58,11 @@ const event: NonNullable<RouterOutputs['event']['getRandomExample']> = {
   eventSignUps: [],
   isPast: false,
   ticketSales: [],
+  eventVisibility: 'PUBLIC',
+  eventVisibilityCode: 'PUBLIC',
+  isMyEvent: false,
+  signUpProtection: 'PUBLIC',
+  signUpProtectionCode: 'NONE',
 };
 
 export const runtime = 'edge';
