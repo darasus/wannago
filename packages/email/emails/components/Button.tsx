@@ -18,6 +18,7 @@ const style = {
   borderWidth: '1px',
   borderColor: token.dark,
   borderStyle: 'solid',
+  padding: '10px 20px',
 };
 
 const map = {
@@ -33,7 +34,7 @@ const map = {
 
 export function Button({children, href, variant = 'primary'}: Props) {
   return (
-    <_Button style={{...style, ...map[variant]}} pX={20} pY={10} href={href}>
+    <_Button style={{...style, ...map[variant]}} href={href}>
       {children}
     </_Button>
   );

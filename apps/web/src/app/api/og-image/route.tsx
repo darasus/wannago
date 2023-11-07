@@ -1,4 +1,5 @@
-import {NextRequest, ImageResponse, NextResponse} from 'next/server';
+import {NextRequest, NextResponse} from 'next/server';
+import {ImageResponse} from '@vercel/og';
 import {ONE_WEEK_IN_SECONDS} from 'const';
 import {getBaseUrl, invariant} from 'utils';
 import {captureException} from '@sentry/nextjs';
