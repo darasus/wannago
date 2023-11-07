@@ -51,7 +51,7 @@ export function PaidEventAction({event, mePromise}: Props) {
       return;
     }
 
-    if (isEventSignUpProtected) {
+    if (!event.isMyEvent && isEventSignUpProtected) {
       openSignUpCodeModal();
       return;
     }

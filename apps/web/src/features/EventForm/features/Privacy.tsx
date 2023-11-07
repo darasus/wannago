@@ -158,17 +158,18 @@ export function Privacy() {
                     <div className={cn(proseClassName, 'text-xs')}>
                       <h3>Protected sign ups</h3>
                       <p>
-                        Event visibility settings allow you to fine tune who can
-                        see event details. You can set following options:
+                        Event sign up protection settings allow you to fine tune
+                        who can sign up to your event. You can set following
+                        options:
                       </p>
                       <ul>
                         <li>
-                          Public: anyone who can access event link can read
-                          event details
+                          Public sign up: anyone who can access event link can
+                          sign up to your event
                         </li>
                         <li>
-                          Private: anyone who has access to special code can
-                          read event details
+                          Sign up with code: anyone who has access to special
+                          code can sign up to your event
                         </li>
                       </ul>
                     </div>
@@ -194,7 +195,7 @@ export function Privacy() {
                     className="sr-only"
                   />
                   <UnlockKeyholeIcon className="mb-2 h-6 w-6" />
-                  Sign up without code
+                  Public sign up
                 </Label>
                 <Label
                   htmlFor="sign-up-protection-protected"
