@@ -1,6 +1,7 @@
 import {z} from 'zod';
 import {publicProcedure} from '../../../trpc';
 import {getEvents} from '../../../actions/getEvents';
+import {Listing} from '@prisma/client';
 
 export const getPublicEvents = publicProcedure
   .input(z.object({id: z.string().uuid()}))
@@ -10,5 +11,6 @@ export const getPublicEvents = publicProcedure
       isPublished: true,
       eventType: 'organizing',
       orderByStartDate: 'desc',
+      listing: Listing.LISTED,
     });
   });

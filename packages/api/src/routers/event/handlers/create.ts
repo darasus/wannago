@@ -24,6 +24,7 @@ export const create = protectedProcedure
         eventVisibilityCode,
         signUpProtection,
         signUpProtectionCode,
+        listing,
       },
       ctx,
     }) => {
@@ -64,6 +65,7 @@ export const create = protectedProcedure
           longitude: geocodeResponse?.results[0].geometry.location.lng,
           latitude: geocodeResponse?.results[0].geometry.location.lat,
           preferredCurrency,
+          listing,
           eventVisibility,
           eventVisibilityCode,
           signUpProtection:

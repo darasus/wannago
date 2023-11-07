@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {Prisma} from '@prisma/client';
+import {Listing, Prisma} from '@prisma/client';
 import {ActionContext} from '../context';
 
 const validation = z.object({
@@ -8,11 +8,13 @@ const validation = z.object({
   isPublished: z.boolean().optional(),
   onlyPast: z.boolean().optional(),
   orderByStartDate: z.enum(['desc', 'asc']).optional(),
+  listing: z.nativeEnum(Listing).optional(),
 });
 
 export function getEvents(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
-    const {authorIds, isPublished, eventType} = validation.parse(input);
+    const {authorIds, isPublished, eventType, listing} =
+      validation.parse(input);
 
     const organizingQuery: Prisma.EventWhereInput['OR'] = [
       {
@@ -80,6 +82,7 @@ export function getEvents(ctx: ActionContext) {
           input.orderByStartDate ?? input.onlyPast === true ? 'desc' : 'asc',
       },
       where: {
+        listing,
         ...(input.onlyPast === true
           ? {
               endDate: {

@@ -1,4 +1,4 @@
-import {EventVisibility, SignUpProtection} from '@prisma/client';
+import {EventVisibility, Listing, SignUpProtection} from '@prisma/client';
 import {z} from 'zod';
 
 export const eventInput = z.object({
@@ -36,4 +36,5 @@ export const eventInput = z.object({
   signUpProtection: z.nativeEnum(SignUpProtection).optional(),
   eventVisibilityCode: z.string().optional(),
   signUpProtectionCode: z.string().optional(),
+  listing: z.nativeEnum(Listing),
 });

@@ -40,9 +40,15 @@ model Event {
   signUpProtection        SignUpProtection @default(PUBLIC)
   eventVisibilityCode     String?
   signUpProtectionCode    String?
+  listing                 Listing?         @default(LISTED)
 
   @@index([organizationId])
   @@index([userId])
+}
+
+enum Listing {
+  LISTED
+  UNLISTED
 }
 
 enum EventVisibility {

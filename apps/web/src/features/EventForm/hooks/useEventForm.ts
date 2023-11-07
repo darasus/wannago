@@ -4,6 +4,7 @@ import {
   Currency,
   Event,
   EventVisibility,
+  Listing,
   SignUpProtection,
   Ticket,
   User,
@@ -62,6 +63,7 @@ export const eventFormSchema = z
       .string()
       .max(20, 'Code must be less than 20 characters')
       .optional(),
+    listing: z.nativeEnum(Listing),
   })
   .superRefine(({signUpProtection, eventVisibility}, ctx) => {
     if (signUpProtection === 'PROTECTED' && eventVisibility === 'PROTECTED') {
@@ -125,6 +127,7 @@ export function useEventForm(props: {
       signUpProtection: event?.signUpProtection || SignUpProtection.PUBLIC,
       eventVisibilityCode: event?.eventVisibilityCode || generateEventCode(),
       signUpProtectionCode: event?.signUpProtectionCode || generateEventCode(),
+      listing: event?.listing || Listing.LISTED,
     },
   });
 

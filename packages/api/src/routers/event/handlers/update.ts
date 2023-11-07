@@ -27,6 +27,7 @@ export const update = protectedProcedure
         eventVisibilityCode,
         signUpProtection,
         signUpProtectionCode,
+        listing,
       },
       ctx,
     }) => {
@@ -64,6 +65,7 @@ export const update = protectedProcedure
           eventVisibilityCode,
           signUpProtection,
           signUpProtectionCode,
+          listing,
           ...(user && {
             user: {
               connect: {

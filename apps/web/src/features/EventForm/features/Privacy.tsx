@@ -17,11 +17,13 @@ import {
 } from 'ui';
 import {z} from 'zod';
 import {eventFormSchema} from '../hooks/useEventForm';
-import {EventVisibility, SignUpProtection} from '@prisma/client';
+import {EventVisibility, Listing, SignUpProtection} from '@prisma/client';
 import {
   EyeIcon,
   EyeOffIcon,
   InfoIcon,
+  ListPlusIcon,
+  ListXIcon,
   LockKeyholeIcon,
   UnlockKeyholeIcon,
 } from 'lucide-react';
@@ -187,7 +189,7 @@ export function Privacy() {
               >
                 <Label
                   htmlFor="sign-up-protection-public"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
                 >
                   <RadioGroupItem
                     value={SignUpProtection.PUBLIC}
@@ -199,7 +201,7 @@ export function Privacy() {
                 </Label>
                 <Label
                   htmlFor="sign-up-protection-protected"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
                 >
                   <RadioGroupItem
                     value={SignUpProtection.PROTECTED}
@@ -234,6 +236,86 @@ export function Privacy() {
           )}
         />
       )}
+      <FormField
+        control={form.control}
+        name="listing"
+        render={({field}) => (
+          <FormItem>
+            <FormLabel className="flex items-center gap-1">
+              Listing{' '}
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      size="icon"
+                      variant="secondary"
+                      className="p-1 w-auto h-auto"
+                      type="button"
+                    >
+                      <InfoIcon className="h-3 w-3" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-[300px]">
+                    <div className={cn(proseClassName, 'text-xs')}>
+                      <h3>Listing</h3>
+                      <p>
+                        Event listing settings allow you to fine tune if your
+                        event can be seen on your profile page. You can set
+                        following options:
+                      </p>
+                      <ul>
+                        <li>
+                          Listed: anyone who can see your event on your profile
+                          page
+                        </li>
+                        <li>
+                          Unlisted: no one can see your event on your profile
+                          page. Only users with event link can view your event.
+                        </li>
+                      </ul>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </FormLabel>
+            <FormControl>
+              <RadioGroup
+                value={field.value}
+                onValueChange={(value) => {
+                  field.onChange(value);
+                }}
+                className="grid grid-cols-2 gap-4"
+              >
+                <Label
+                  htmlFor="listing-listed"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                >
+                  <RadioGroupItem
+                    value={Listing.LISTED}
+                    id="listing-listed"
+                    className="sr-only"
+                  />
+                  <ListPlusIcon className="mb-2 h-6 w-6" />
+                  Listed
+                </Label>
+                <Label
+                  htmlFor="listing-unlisted"
+                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                >
+                  <RadioGroupItem
+                    value={Listing.UNLISTED}
+                    id="listing-unlisted"
+                    className="sr-only"
+                  />
+                  <ListXIcon className="mb-2 h-6 w-6" />
+                  Unlisted
+                </Label>
+              </RadioGroup>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </>
   );
 }
