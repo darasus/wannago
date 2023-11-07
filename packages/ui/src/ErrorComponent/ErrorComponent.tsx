@@ -10,7 +10,6 @@ export function ErrorComponent({
 }: {
   error: TRPCClientError<AppRouter> | Error;
 }) {
-  console.log('===>', error.name);
   return (
     <Container maxSize="sm">
       <div className="flex flex-col items-center">

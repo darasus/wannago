@@ -65,7 +65,7 @@ export default async function EventPages({
                 )}
                 {page[0] === 'attendees' && (
                   <Suspense fallback={<LoadingBlock />}>
-                    <EventAttendees eventShortId={id} />
+                    <EventAttendees event={event} />
                   </Suspense>
                 )}
               </>

@@ -40,7 +40,7 @@ export type Item = {
 };
 
 interface Props {
-  eventShortId: string;
+  event: RouterOutputs['event']['getByShortId'];
   getAttendeesPromise: Promise<Item[]>;
   getAllEventsAttendeesPromise: Promise<
     RouterOutputs['event']['getAllEventsAttendees']
@@ -48,7 +48,7 @@ interface Props {
 }
 
 export function AttendeesTable({
-  eventShortId,
+  event,
   getAllEventsAttendeesPromise,
   getAttendeesPromise,
 }: Props) {
@@ -131,9 +131,9 @@ export function AttendeesTable({
           }
         />
         <MessageParticipantsButton />
-        <ExportAttendeesCSV />
+        <ExportAttendeesCSV event={event} />
         <InviteButton
-          eventShortId={eventShortId}
+          eventShortId={event.id}
           getAllEventsAttendeesPromise={getAllEventsAttendeesPromise}
         />
       </div>

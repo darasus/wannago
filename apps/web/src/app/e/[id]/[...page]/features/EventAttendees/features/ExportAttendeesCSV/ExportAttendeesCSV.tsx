@@ -5,14 +5,18 @@ import {saveAs} from 'file-saver';
 import {toast} from 'sonner';
 import {snakeCase} from 'change-case';
 import {useParams} from 'next/navigation';
-import {use, useTransition} from 'react';
+import {useTransition} from 'react';
 import {api} from '../../../../../../../../trpc/client';
+import {RouterOutputs} from 'api';
 
-export function ExportAttendeesCSV() {
+interface Props {
+  event: RouterOutputs['event']['getByShortId'];
+}
+
+export function ExportAttendeesCSV({event}: Props) {
   const [isPending, startTransition] = useTransition();
   const params = useParams();
   const eventShortId = params?.id as string;
-  const event = use(api.event.getByShortId.query({id: eventShortId}));
 
   const handleDownloadCsvClick = () => {
     startTransition(async () => {

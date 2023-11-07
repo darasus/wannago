@@ -16,7 +16,7 @@ import {
 } from 'ui';
 import {Event, Ticket} from '@prisma/client';
 import {formatCents} from 'utils';
-import {useFormContext} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {useRouter} from 'next/navigation';
 import {TRPCClientError} from '@trpc/client';
 import {use} from 'react';
@@ -26,6 +26,7 @@ import {z} from 'zod';
 import {RouterOutputs} from 'api';
 import Link from 'next/link';
 import {formScheme} from '../../validation';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
@@ -42,9 +43,16 @@ export function TicketSelectorModal({
 }: Props) {
   const me = use(mePromise);
   const router = useRouter();
-  const form = useFormContext<z.infer<typeof formScheme>>();
+  const form = useForm<z.infer<typeof formScheme>>({
+    resolver: zodResolver(formScheme),
+    defaultValues: {
+      tickets: event.tickets.reduce((acc, ticket) => {
+        return {...acc, [ticket.id]: 0};
+      }, {}),
+    },
+  });
 
-  const total = Object.entries(form.watch()).reduce(
+  const total = Object.entries(form.watch().tickets).reduce(
     (acc: number, [ticketId, quantity]) => {
       if (isNaN(Number(quantity))) {
         return acc;
@@ -74,7 +82,7 @@ export function TicketSelectorModal({
       const responseUrl = await api.payments.createCheckoutSession
         .mutate({
           userId: me.id,
-          tickets: Object.entries(data)
+          tickets: Object.entries(data.tickets)
             .filter(([, quantity]) => Boolean(quantity))
             .map(([ticketId, quantity]) => ({
               ticketId,

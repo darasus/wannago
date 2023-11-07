@@ -35,8 +35,6 @@ export function Privacy() {
   const isEventSignUpProtected =
     form.watch('signUpProtection') === SignUpProtection.PROTECTED;
 
-  console.log(form.watch());
-
   return (
     <>
       <FormField

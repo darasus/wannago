@@ -1,7 +1,7 @@
 'use client';
 
 import {Event, SignUpProtection, Ticket} from '@prisma/client';
-import {FormProvider, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {Badge, Button} from 'ui';
 import {formatCents} from 'utils';
 import {TicketSelectorModal} from './features/TicketSelectorModal/TicketSelectorModal';
@@ -48,6 +48,7 @@ export function PaidEventAction({event, mePromise}: Props) {
   const openTicketSelector = form.handleSubmit(async (data) => {
     if (!me) {
       router.push('/sign-in');
+      return;
     }
 
     if (isEventSignUpProtected) {
@@ -68,35 +69,35 @@ export function PaidEventAction({event, mePromise}: Props) {
 
   return (
     <>
-      <FormProvider {...form}>
-        <TicketSelectorModal
-          mePromise={mePromise}
-          isOpen={isTicketSelectorModalOpen}
-          onClose={() => closeTicketSelectorModal()}
-          event={event}
-        />
-        <SignUpCodeModal
-          isOpen={isSignUpCodeModalOpen}
-          onOpenChange={onSignUpCodeModalOpenChange}
-          eventShortId={event.shortId}
-        />
-      </FormProvider>
-      <div className="flex items-center gap-x-2 w-full">
-        <Button
-          disabled={form.formState.isSubmitting || event.isPast}
-          isLoading={form.formState.isSubmitting}
-          size="sm"
-          data-testid="buy-ticket-button"
-          onClick={openTicketSelector}
-        >
-          {isEventSignUpProtected && <LockIcon className="m-3" />}
-          {`Buy ticket`}
-        </Button>
-        <Badge
-          variant={'outline'}
-          className="hidden md:flex"
-        >{`from ${formattedPrice}`}</Badge>
-      </div>
+      <TicketSelectorModal
+        mePromise={mePromise}
+        isOpen={isTicketSelectorModalOpen}
+        onClose={() => closeTicketSelectorModal()}
+        event={event}
+      />
+      <SignUpCodeModal
+        isOpen={isSignUpCodeModalOpen}
+        onOpenChange={onSignUpCodeModalOpenChange}
+        eventShortId={event.shortId}
+      />
+      <form onSubmit={openTicketSelector}>
+        <div className="flex items-center gap-x-2 w-full">
+          <Button
+            disabled={form.formState.isSubmitting || event.isPast}
+            isLoading={form.formState.isSubmitting}
+            size="sm"
+            data-testid="buy-ticket-button"
+            type="submit"
+          >
+            {isEventSignUpProtected && <LockIcon className="mr-2 w-4 h-4" />}
+            {`Buy ticket`}
+          </Button>
+          <Badge
+            variant={'outline'}
+            className="hidden md:flex"
+          >{`from ${formattedPrice}`}</Badge>
+        </div>
+      </form>
     </>
   );
 }
