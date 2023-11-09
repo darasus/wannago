@@ -53,19 +53,8 @@ export function getEvents(ctx: ActionContext) {
     const followingQuery: Prisma.EventWhereInput['OR'] = [
       {
         isPublished: true,
+        listing: 'LISTED',
         user: {
-          followers: {
-            some: {
-              followerUserId: {
-                in: authorIds,
-              },
-            },
-          },
-        },
-      },
-      {
-        isPublished: true,
-        organization: {
           followers: {
             some: {
               followerUserId: {
@@ -82,7 +71,7 @@ export function getEvents(ctx: ActionContext) {
           input.orderByStartDate ?? input.onlyPast === true ? 'desc' : 'asc',
       },
       where: {
-        listing,
+        ...(listing ? {listing} : {}),
         ...(input.onlyPast === true
           ? {
               endDate: {

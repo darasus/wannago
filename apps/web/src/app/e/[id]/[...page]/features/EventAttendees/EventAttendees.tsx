@@ -20,6 +20,7 @@ export async function EventAttendees({event}: Props) {
           status: eventSignUp.status,
           eventShortId: eventSignUp.event.shortId,
           userId: eventSignUp.user.id,
+          email: eventSignUp.user.email,
         };
       });
     });

@@ -7,6 +7,7 @@ import {getBaseUrl} from 'utils';
 import React, {use} from 'react';
 import {Event} from '@prisma/client';
 import {api} from '../../../../../../trpc/client';
+import {capitalCase} from 'change-case';
 
 interface Props {
   event: Event;
@@ -38,6 +39,18 @@ export function EventInfo({event}: Props) {
       value: event?.isPublished ? 'Published' : 'Draft',
       badgeColor: event?.isPublished ? 'green' : 'yellow',
       dataTestId: 'event-status-label',
+    },
+    {
+      label: 'Event visibility',
+      value: capitalCase(event?.eventVisibility),
+    },
+    {
+      label: 'Event sign up protection',
+      value: capitalCase(event?.signUpProtection),
+    },
+    {
+      label: 'Listing',
+      value: capitalCase(event?.listing),
     },
     {
       label: 'Created',

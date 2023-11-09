@@ -5,6 +5,7 @@ import {TRPCError} from '@trpc/server';
 import {generateEmailVerificationToken} from './utils';
 import {Prisma} from '@prisma/client';
 import {v4 as uuid} from 'uuid';
+import {DatabaseError} from '@planetscale/database';
 
 export const signUp = publicProcedure
   .input(
@@ -53,16 +54,23 @@ export const signUp = publicProcedure
         success: true,
       };
     } catch (e) {
-      // if (e instanceof SqliteError && e.code === 'SQLITE_CONSTRAINT_UNIQUE') {
-      //   return NextResponse.json(
-      //     {
-      //       error: 'Account already exists',
-      //     },
-      //     {
-      //       status: 400,
-      //     }
-      //   );
-      // }
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2002') {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Email already exists',
+          });
+        }
+      }
+
+      if (e instanceof DatabaseError) {
+        if (e.body.message.includes('Duplicate entry')) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Email already exists',
+          });
+        }
+      }
 
       throw new TRPCError({
         code: 'BAD_REQUEST',
