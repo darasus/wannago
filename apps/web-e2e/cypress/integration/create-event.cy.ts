@@ -33,7 +33,7 @@ describe('create event', () => {
       'Protected'
     );
   });
-  it.only('can create unlisted event', () => {
+  it('can create unlisted event', () => {
     cy.login(users.user_1.email, users.user_1.password);
     cy.createEvent(users.user_1.id, {
       listing: 'unlisted',
@@ -41,8 +41,6 @@ describe('create event', () => {
     cy.publishCurrentEvent();
     cy.get('[data-testid="manage-event-button"]').click();
     cy.get('[data-testid="select-option-button"]').contains('Info').click();
-    cy.get('[data-testid="event-sign-up-protection-value"]').contains(
-      'Unlisted'
-    );
+    cy.get('[data-testid="event-listing-value"]').contains('Unlisted');
   });
 });
