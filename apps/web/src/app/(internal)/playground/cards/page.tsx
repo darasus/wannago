@@ -1,3 +1,4 @@
+import {Listing} from '@prisma/client';
 import {RouterOutputs} from 'api';
 import {
   InfoCard,
@@ -63,6 +64,7 @@ const event: NonNullable<RouterOutputs['event']['getRandomExample']> = {
   isMyEvent: false,
   signUpProtection: 'PUBLIC',
   signUpProtectionCode: 'NONE',
+  listing: Listing.LISTED,
 };
 
 export const runtime = 'edge';
