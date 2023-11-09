@@ -68,10 +68,8 @@ export const create = protectedProcedure
           listing,
           eventVisibility,
           eventVisibilityCode,
-          signUpProtection:
-            eventVisibility === 'PROTECTED' ? signUpProtection : undefined,
-          signUpProtectionCode:
-            signUpProtection === 'PROTECTED' ? signUpProtectionCode : undefined,
+          signUpProtection,
+          signUpProtectionCode,
           ...(organization?.id
             ? {
                 organization: {connect: {id: organization.id}},

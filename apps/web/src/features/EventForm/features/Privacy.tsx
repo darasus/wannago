@@ -91,6 +91,7 @@ export function Privacy() {
                 <Label
                   htmlFor="event-visibility-public"
                   className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  data-testid="event-visibility-public-button"
                 >
                   <RadioGroupItem
                     value={EventVisibility.PUBLIC}
@@ -103,6 +104,7 @@ export function Privacy() {
                 <Label
                   htmlFor="event-visibility-protected"
                   className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  data-testid="event-visibility-protected-button"
                 >
                   <RadioGroupItem
                     value={EventVisibility.PROTECTED}
@@ -127,7 +129,7 @@ export function Privacy() {
               <FormLabel>Event visibility code</FormLabel>
               <FormControl>
                 <Input
-                  data-testid="event-visibility-switch-input"
+                  data-testid="event-visibility-protected-code-input"
                   value={field.value}
                   onChange={field.onChange}
                 />
@@ -190,6 +192,7 @@ export function Privacy() {
                 <Label
                   htmlFor="sign-up-protection-public"
                   className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  data-testid="event-sign-up-protection-public-button"
                 >
                   <RadioGroupItem
                     value={SignUpProtection.PUBLIC}
@@ -202,6 +205,7 @@ export function Privacy() {
                 <Label
                   htmlFor="sign-up-protection-protected"
                   className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  data-testid="event-sign-up-protection-protected-button"
                 >
                   <RadioGroupItem
                     value={SignUpProtection.PROTECTED}
@@ -226,7 +230,7 @@ export function Privacy() {
               <FormLabel>Event sign up protection code</FormLabel>
               <FormControl>
                 <Input
-                  data-testid="event-sign-up-protection-switch-input"
+                  data-testid="event-sign-up-protection-protected-code-input"
                   value={field.value}
                   onChange={field.onChange}
                 />
@@ -289,6 +293,7 @@ export function Privacy() {
                 <Label
                   htmlFor="listing-listed"
                   className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  data-testid="event-listing-listed-button"
                 >
                   <RadioGroupItem
                     value={Listing.LISTED}
@@ -301,6 +306,7 @@ export function Privacy() {
                 <Label
                   htmlFor="listing-unlisted"
                   className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  data-testid="event-listing-unlisted-button"
                 >
                   <RadioGroupItem
                     value={Listing.UNLISTED}

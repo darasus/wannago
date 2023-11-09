@@ -14,7 +14,6 @@ export default defineConfig({
     defaultCommandTimeout: 60000,
     requestTimeout: 60000,
     pageLoadTimeout: 60000,
-    projectId: 'nvo5fb',
     retries: {
       runMode: 2,
       openMode: 0,

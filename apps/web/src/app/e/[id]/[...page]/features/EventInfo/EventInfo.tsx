@@ -43,14 +43,17 @@ export function EventInfo({event}: Props) {
     {
       label: 'Event visibility',
       value: capitalCase(event?.eventVisibility),
+      dataTestId: 'event-visibility-value',
     },
     {
       label: 'Event sign up protection',
       value: capitalCase(event?.signUpProtection),
+      dataTestId: 'event-sign-up-protection-value',
     },
     {
       label: 'Listing',
       value: capitalCase(event?.listing),
+      dataTestId: 'event-listing-value',
     },
     {
       label: 'Created',
