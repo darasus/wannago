@@ -28,7 +28,7 @@ export function ProtectedSignUpButton() {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button type="button">
+        <Button type="button" data-testid="protected-attend-button">
           <LockIcon className="w-4 h-4 mr-2" /> Attend
         </Button>
       </DialogTrigger>
@@ -58,7 +58,11 @@ export function ProtectedSignUpButton() {
           )}
         />
         <DialogFooter>
-          <Button type="submit" disabled={form.formState.isSubmitting}>
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            data-testid="event-code-form-submit"
+          >
             Attend
           </Button>
         </DialogFooter>

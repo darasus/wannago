@@ -84,7 +84,11 @@ export function SignUpCodeModal({isOpen, onOpenChange, eventShortId}: Props) {
               )}
             />
             <DialogFooter>
-              <Button type="submit" disabled={form.formState.isSubmitting}>
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                data-testid="event-code-form-submit"
+              >
                 Attend
               </Button>
             </DialogFooter>

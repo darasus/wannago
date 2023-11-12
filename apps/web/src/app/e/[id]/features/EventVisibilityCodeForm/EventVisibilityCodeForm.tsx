@@ -77,6 +77,7 @@ export function EventVisibilityCodeForm({id}: Props) {
                       <Input
                         type="text"
                         placeholder="Enter the code"
+                        data-testid="code-input"
                         {...field}
                       />
                     </FormControl>
@@ -86,7 +87,9 @@ export function EventVisibilityCodeForm({id}: Props) {
               />
             </CardContent>
             <CardFooter>
-              <Button className="w-full">Submit</Button>
+              <Button className="w-full" data-testid="code-form-button">
+                Submit
+              </Button>
             </CardFooter>
           </Card>
         </Container>

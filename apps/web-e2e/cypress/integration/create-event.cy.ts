@@ -33,6 +33,7 @@ describe('create event', () => {
       'Protected'
     );
   });
+
   it('can create unlisted event', () => {
     cy.login(users.user_1.email, users.user_1.password);
     cy.createEvent(users.user_1.id, {
