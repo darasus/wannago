@@ -167,6 +167,7 @@ export function TicketSelectorModal({
                 type="submit"
                 disabled={form.formState.isSubmitting}
                 isLoading={form.formState.isSubmitting}
+                data-testid="buy-tickets-button"
               >
                 Buy
               </Button>

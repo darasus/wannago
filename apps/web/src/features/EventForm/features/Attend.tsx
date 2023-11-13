@@ -39,8 +39,12 @@ export function Attend() {
           }
         >
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="free">Free</TabsTrigger>
-            <TabsTrigger value="paid">Paid</TabsTrigger>
+            <TabsTrigger value="free" data-testid="free-event-tab-button">
+              Free
+            </TabsTrigger>
+            <TabsTrigger value="paid" data-testid="paid-event-tab-button">
+              Paid
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="free">
             <FormField
@@ -81,7 +85,12 @@ export function Attend() {
                           <FormField
                             control={form.control}
                             name={`tickets.${index}.title`}
-                            render={({field}) => <Input {...field} />}
+                            render={({field}) => (
+                              <Input
+                                {...field}
+                                data-testid="ticket-title-input"
+                              />
+                            )}
                           />
                         </FormControl>
                       </FormItem>
@@ -93,7 +102,12 @@ export function Attend() {
                           <FormField
                             control={form.control}
                             name={`tickets.${index}.description`}
-                            render={({field}) => <Textarea {...field} />}
+                            render={({field}) => (
+                              <Textarea
+                                {...field}
+                                data-testid="ticket-description-input"
+                              />
+                            )}
                           />
                         </FormControl>
                       </FormItem>
@@ -112,7 +126,12 @@ export function Attend() {
                             <FormField
                               control={form.control}
                               name={`tickets.${index}.price`}
-                              render={({field}) => <Input {...field} />}
+                              render={({field}) => (
+                                <Input
+                                  {...field}
+                                  data-testid="ticket-price-input"
+                                />
+                              )}
                             />
                           </FormControl>
                         </FormItem>
@@ -125,7 +144,11 @@ export function Attend() {
                               control={form.control}
                               name={`tickets.${index}.maxQuantity`}
                               render={({field}) => (
-                                <Input type="number" {...field} />
+                                <Input
+                                  type="number"
+                                  {...field}
+                                  data-testid="ticket-max-quantity-input"
+                                />
                               )}
                             />
                           </FormControl>
@@ -157,6 +180,7 @@ export function Attend() {
                 }}
                 variant="outline"
                 size="sm"
+                data-testid="add-ticket-button"
               >
                 Add ticket
               </Button>

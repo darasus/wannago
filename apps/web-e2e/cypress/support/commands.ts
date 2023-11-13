@@ -60,8 +60,35 @@ Cypress.Commands.addAll({
     cy.get('[data-testid="event-form-address-button"]').click();
     cy.get('[data-testid="event-form-address-input"]').type('Paris');
     cy.get('[data-testid="location-input-option"]').first().click();
+
     // attendees
-    cy.get('[data-testid="event-form-max-attendees"]').clear().type('10');
+    if (type === 'free') {
+      cy.get('[data-testid="event-form-max-attendees"]').clear().type('10');
+    }
+
+    if (type === 'paid') {
+      cy.get('[data-testid="paid-event-tab-button"]').click();
+      cy.get('[data-testid="add-ticket-button"]').click();
+      cy.get('[data-testid="ticket-title-input"]').type('Test ticket title 1');
+      cy.get('[data-testid="ticket-description-input"]').type(
+        'Test ticket description 1'
+      );
+      cy.get('[data-testid="ticket-price-input"]').clear().type('1');
+      cy.get('[data-testid="ticket-max-quantity-input"]').clear().type('10');
+      cy.get('[data-testid="add-ticket-button"]').click();
+      cy.get('[data-testid="ticket-title-input"]')
+        .eq(1)
+        .type('Test ticket title 2');
+      cy.get('[data-testid="ticket-description-input"]')
+        .eq(1)
+        .type('Test ticket description 2');
+      cy.get('[data-testid="ticket-price-input"]').eq(1).clear().type('1');
+      cy.get('[data-testid="ticket-max-quantity-input"]')
+        .eq(1)
+        .clear()
+        .type('10');
+    }
+
     cy.wait(1000);
     // event visibility
     if (eventVisibility === 'protected') {

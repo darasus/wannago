@@ -25,6 +25,7 @@ export function Counter({value, onChange, maxValue, minValue}: Props) {
 
           onChange(value - 1);
         }}
+        data-testid="counter-minus-button"
       >
         <Minus className="w-4 h-4" />
       </Button>
@@ -41,6 +42,7 @@ export function Counter({value, onChange, maxValue, minValue}: Props) {
 
           e.preventDefault();
         }}
+        data-testid="counter-plus-button"
       >
         <Plus className="w-4 h-4" />
       </Button>
