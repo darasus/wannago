@@ -13,6 +13,7 @@ interface CreateEventOptions {
   eventVisibility?: 'public' | 'protected';
   signUpProtection?: 'public' | 'protected';
   listing?: 'listed' | 'unlisted';
+  eventTitle?: string;
 }
 
 declare namespace Cypress {

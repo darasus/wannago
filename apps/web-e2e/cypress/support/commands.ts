@@ -19,7 +19,8 @@ Cypress.Commands.addAll({
     cy.get('[data-testid="header-user-button"]').contains('John');
   },
   createEvent(authorId, options) {
-    let {type, eventVisibility, signUpProtection, listing} = options || {};
+    let {type, eventVisibility, signUpProtection, listing, eventTitle} =
+      options || {};
 
     if (typeof type === 'undefined') {
       type = 'free';
@@ -31,9 +32,12 @@ Cypress.Commands.addAll({
       cy.get('[data-testid="event-form-created-by-input"]').click();
       cy.get(`[data-testid="created-by-option-${authorId}"]`).click();
     }
-    cy.get('[data-testid="event-form-title"]').type('Test title', {
-      force: true,
-    });
+    cy.get('[data-testid="event-form-title"]').type(
+      eventTitle || 'Test title',
+      {
+        force: true,
+      }
+    );
     // cy.get('[data-testid="event-form-description"]')
     //   .click()
     //   .type('Test description', {force: true});
