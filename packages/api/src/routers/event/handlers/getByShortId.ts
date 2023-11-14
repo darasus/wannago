@@ -2,6 +2,7 @@ import {z} from 'zod';
 import {publicProcedure} from '../../../trpc';
 import {invariant, isPast} from 'utils';
 import {eventNotFoundError} from 'error';
+import {assertCanViewEvent} from '../../../assertions/assertCanViewEvent';
 
 export const getByShortId = publicProcedure
   .input(
@@ -32,7 +33,7 @@ export const getByShortId = publicProcedure
 
     invariant(event, eventNotFoundError);
 
-    await ctx.assertions.assertCanViewEvent({event, code: input.code});
+    await assertCanViewEvent(ctx)({event, code: input.code});
 
     return {
       ...event,
