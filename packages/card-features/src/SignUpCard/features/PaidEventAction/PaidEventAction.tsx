@@ -1,26 +1,24 @@
 'use client';
 
-import {Event, Ticket} from '@prisma/client';
+import {Event, Ticket, User} from '@prisma/client';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Badge, Button} from 'ui';
 import {formatCents} from 'utils';
 import {TicketSelectorModal} from '../TicketSelectorModal/TicketSelectorModal';
 import {api} from '../../../../../../apps/web/src/trpc/client';
-import {useMe} from 'hooks';
 import {useRouter} from 'next/navigation';
 
 interface Props {
   event: Event & {tickets: Ticket[]} & {isPast: boolean};
   myTicketPromise: ReturnType<typeof api.event.getMyTicketsByEvent.query>;
-  mePromise: ReturnType<typeof api.user.me.query>;
+  me: User | null;
 }
 
-export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
+export function PaidEventAction({event, myTicketPromise, me}: Props) {
   const router = useRouter();
   const [isTicketSelectorModalOpen, setIsTicketSelectorModalOpen] =
     useState(false);
-  const me = useMe();
   const form = useForm();
 
   const onJoinSubmit = form.handleSubmit(async (data) => {
@@ -42,7 +40,7 @@ export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
   return (
     <>
       <TicketSelectorModal
-        mePromise={mePromise}
+        me={me}
         isOpen={isTicketSelectorModalOpen}
         onClose={() => setIsTicketSelectorModalOpen(false)}
         onDone={() => {}}

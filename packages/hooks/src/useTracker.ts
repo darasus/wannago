@@ -1,7 +1,7 @@
-import {useCallback} from 'react';
+import {use, useCallback} from 'react';
 import {usePathname} from 'next/navigation';
-import {useMe} from './useMe';
 import va from '@vercel/analytics';
+import {api} from '../../../apps/web/src/trpc/client';
 
 type EventType =
   | 'get_directions_button_clicked'
@@ -27,7 +27,7 @@ type EventType =
 
 export function useTracker() {
   const pathname = usePathname();
-  const me = useMe();
+  const me = use(api.user.me.query());
 
   const logEvent = useCallback(
     (

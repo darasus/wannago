@@ -19,7 +19,6 @@ import {formatCents} from 'utils';
 import {useForm} from 'react-hook-form';
 import {useRouter} from 'next/navigation';
 import {TRPCClientError} from '@trpc/client';
-import {use} from 'react';
 import {api} from '../../../../../../apps/web/src/trpc/client';
 import {toast} from 'sonner';
 import {z} from 'zod';
@@ -32,7 +31,7 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   onDone?: () => void;
-  mePromise: Promise<RouterOutputs['user']['me']>;
+  me: RouterOutputs['user']['me'];
 }
 
 const formScheme = z.record(z.number());
@@ -42,9 +41,8 @@ export function TicketSelectorModal({
   onClose,
   onDone,
   event,
-  mePromise,
+  me,
 }: Props) {
-  const me = use(mePromise);
   const router = useRouter();
   const form = useForm<z.infer<typeof formScheme>>({
     resolver: zodResolver(formScheme),

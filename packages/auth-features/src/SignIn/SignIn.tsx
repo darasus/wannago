@@ -24,6 +24,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {api} from '../../../../apps/web/src/trpc/client';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
+import {revalidateMe} from '../../../../apps/web/src/actions';
 
 interface Props {}
 
@@ -36,13 +37,18 @@ export function SignIn({}: Props) {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     await api.auth.signIn
       .mutate(data)
-      .then((res) => {
+      .then(async (res) => {
         if (res?.success) {
+          await revalidateMe();
           router.refresh();
           router.push('/dashboard');
         }

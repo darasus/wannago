@@ -1,7 +1,7 @@
 'use client';
 
-import {Event} from '@prisma/client';
-import {useTracker, useConfetti, useConfirmDialog, useMe} from 'hooks';
+import {Event, User} from '@prisma/client';
+import {useTracker, useConfetti, useConfirmDialog} from 'hooks';
 import {use} from 'react';
 import {useForm} from 'react-hook-form';
 import {toast} from 'sonner';
@@ -27,13 +27,13 @@ interface EventSignUpForm {
 interface Props {
   event: Event & {isPast: boolean};
   mySignUpPromise: Promise<RouterOutputs['event']['getMySignUp']>;
+  me: User | null;
 }
 
-export function FreeEventAction({event, mySignUpPromise}: Props) {
+export function FreeEventAction({event, mySignUpPromise, me}: Props) {
   const router = useRouter();
   const {confetti} = useConfetti();
   const {logEvent} = useTracker();
-  const me = useMe();
   const signUp = use(mySignUpPromise);
 
   const {modal: cancelModal, open: openCancelModal} = useConfirmDialog({

@@ -12,10 +12,10 @@ interface Props {
     | NonNullable<RouterOutputs['event']['getByShortId']>
     | NonNullable<RouterOutputs['event']['getRandomExample']>;
   myTicketPromise: ReturnType<typeof api.event.getMyTicketsByEvent.query>;
-  mePromise: Promise<RouterOutputs['user']['me']>;
+  me: RouterOutputs['user']['me'];
 }
 
-export function SignUpCard({event, myTicketPromise, mePromise}: Props) {
+export function SignUpCard({event, myTicketPromise, me}: Props) {
   const isFreeEvent = event.tickets.length === 0;
   const isPaidEvent = event.tickets.length > 0;
   const mySignUpPromise = api.event.getMySignUp.query({eventId: event.id});
@@ -42,13 +42,14 @@ export function SignUpCard({event, myTicketPromise, mePromise}: Props) {
                 <FreeEventAction
                   mySignUpPromise={mySignUpPromise}
                   event={event}
+                  me={me}
                 />
               )}
               {isPaidEvent && (
                 <PaidEventAction
                   event={event}
                   myTicketPromise={myTicketPromise}
-                  mePromise={mePromise}
+                  me={me}
                 />
               )}
             </div>

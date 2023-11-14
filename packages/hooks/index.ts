@@ -10,4 +10,3 @@ export {useUnpublishEvent} from './src/event/useUnpublishEvent';
 export {usePublishEvent} from './src/event/usePublishEvent';
 export {useRemoveEvent} from './src/event/useRemoveEvent';
 export {useCreateConversation} from './src/conversation/useCreateConversation';
-export {useMe} from './src/useMe';

@@ -12,12 +12,15 @@ import {usePathname} from 'next/navigation';
 import {Menu} from 'lucide-react';
 import {getIsPublic, navItems} from 'const';
 import Link from 'next/link';
-import {useMe} from 'hooks';
+import {User} from '@prisma/client';
 
-export function MobileMenu() {
+interface Props {
+  me: User | null;
+}
+
+export function MobileMenu({me}: Props) {
   const pathname = usePathname();
   const isPublic = getIsPublic(pathname ?? '/');
-  const me = useMe();
 
   if (!isPublic) {
     return null;

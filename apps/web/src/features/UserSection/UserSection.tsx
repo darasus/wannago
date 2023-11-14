@@ -18,14 +18,13 @@ import {ChevronDown, Plus} from 'lucide-react';
 import {cn} from 'utils';
 
 interface Props {
-  mePromise: Promise<User | null>;
+  me: User | null;
   hasUnseenConversationPromise: Promise<boolean>;
 }
 
-export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
+export function UserSection({hasUnseenConversationPromise, me}: Props) {
   const router = useRouter();
   const pathname = usePathname();
-  const me = use(mePromise);
   const hasUnseenConversation = use(hasUnseenConversationPromise);
   const isPublicPage = getIsPublic(pathname ?? '/');
 

@@ -1,13 +1,12 @@
 'use client';
 
-import {useCallback, useTransition} from 'react';
+import {use, useCallback, useTransition} from 'react';
 import {toast} from 'sonner';
 import {api} from '../../../../apps/web/src/trpc/client';
 import {Conversation} from '@prisma/client';
-import {useMe} from '../useMe';
 
 export function useCreateConversation() {
-  const me = useMe();
+  const me = use(api.user.me.query());
   const [isPending, startTransition] = useTransition();
 
   const createConversation = useCallback(

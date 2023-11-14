@@ -2,11 +2,13 @@
 
 import {useEffect} from 'react';
 import {setContext} from '@sentry/nextjs';
-import {useMe} from 'hooks';
+import {User} from '@prisma/client';
 
-export function Sentry() {
-  const me = useMe();
+interface Props {
+  me: User | null;
+}
 
+export function Sentry({me}: Props) {
   useEffect(() => {
     if (me?.id) {
       setContext('user', {

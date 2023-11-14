@@ -9,6 +9,7 @@ import {VerifyEmailBar} from '../VerifyEmailBar/VerifyEmailBar';
 
 export async function Header() {
   const me = await api.user.me.query();
+  console.log('me', me);
   const showUserProfile = !!me;
   const showAuthButtons = !me;
 
@@ -24,11 +25,11 @@ export async function Header() {
             <DesktopMenu />
           </div>
           <div className="flex items-center gap-x-4 md:gap-x-4">
-            <MobileMenu />
+            <MobileMenu me={me} />
             {showUserProfile && (
               <Suspense fallback={<LoadingBlock />}>
                 <UserSection
-                  mePromise={api.user.me.query()}
+                  me={me}
                   hasUnseenConversationPromise={api.conversation.getUserHasUnseenConversation.query()}
                 />
               </Suspense>
