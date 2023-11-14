@@ -91,16 +91,16 @@ export default async function EventPage(props: Params) {
     props.searchParams.code
   );
 
+  if (notAllowed === true) {
+    return <EventVisibilityCodeForm id={props.params.id} />;
+  }
+
   if (!event) {
     notFound();
   }
 
   if (event.isPublished === false && isMyEvent === false) {
     notFound();
-  }
-
-  if (notAllowed === true) {
-    return <EventVisibilityCodeForm id={props.params.id} />;
   }
 
   return (
