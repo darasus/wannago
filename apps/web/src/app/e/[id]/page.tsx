@@ -18,8 +18,11 @@ interface Params {
 
 export async function generateMetadata({
   params: {id},
+  searchParams,
 }: Params): Promise<Metadata> {
-  const event = await api.event.getByShortId.query({id}).catch(() => null);
+  const event = await api.event.getByShortId
+    .query({id, code: searchParams.code})
+    .catch(() => null);
 
   if (!event) {
     return {};
@@ -96,10 +99,6 @@ export default async function EventPage(props: Params) {
   }
 
   if (!event) {
-    notFound();
-  }
-
-  if (event.isPublished === false && isMyEvent === false) {
     notFound();
   }
 

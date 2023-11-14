@@ -26,19 +26,23 @@ export function assertCanViewEvent(ctx: AssertionContext) {
     };
     code?: string;
   }) => {
-    if (event.eventVisibility !== 'PROTECTED') {
+    const isMyEvent = getIsMyEvent(event, ctx);
+
+    if (isMyEvent) {
       return;
     }
 
-    if (isMyEvent(event, ctx)) {
-      return;
+    if (!event.isPublished) {
+      throw new ViewEventError({
+        code: 'NOT_FOUND',
+      });
     }
 
     if (await amILinkedToEvent(event.id, ctx)) {
       return;
     }
 
-    if (!code) {
+    if (event.eventVisibility === 'PROTECTED' && !code) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'Code is required for protected events.',
@@ -46,8 +50,9 @@ export function assertCanViewEvent(ctx: AssertionContext) {
     }
 
     if (
+      code &&
       event.eventVisibilityCode?.toLocaleLowerCase() !==
-      code.toLocaleLowerCase()
+        code.toLocaleLowerCase()
     ) {
       throw new ViewEventError({
         code: 'FORBIDDEN',
@@ -57,7 +62,7 @@ export function assertCanViewEvent(ctx: AssertionContext) {
   };
 }
 
-function isMyEvent(
+function getIsMyEvent(
   event: Event & {
     user: User | null;
     organization: (Organization & {users: User[]}) | null;
@@ -86,6 +91,9 @@ async function amILinkedToEvent(eventId: string, ctx: AssertionContext) {
       eventSignUps: {
         some: {
           userId: ctx.auth?.user.id,
+          status: {
+            in: ['INVITED', 'REGISTERED'],
+          },
         },
       },
     },

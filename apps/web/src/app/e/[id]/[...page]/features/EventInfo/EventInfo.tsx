@@ -28,12 +28,7 @@ export function EventInfo({event}: Props) {
         .replace('https://www.', '')
         .replace('http://', '');
 
-  const values: {
-    label: string;
-    value: JSX.Element | string;
-    badgeColor?: 'green' | 'yellow';
-    dataTestId?: string;
-  }[] = [
+  const values = [
     {
       label: 'Status',
       value: event?.isPublished ? 'Published' : 'Draft',
@@ -45,11 +40,27 @@ export function EventInfo({event}: Props) {
       value: capitalCase(event?.eventVisibility),
       dataTestId: 'event-visibility-value',
     },
+    ...(event?.eventVisibility === 'PROTECTED'
+      ? [
+          {
+            label: 'Event visibility code',
+            value: event.eventVisibilityCode || '',
+          },
+        ]
+      : []),
     {
       label: 'Event sign up protection',
       value: capitalCase(event?.signUpProtection),
       dataTestId: 'event-sign-up-protection-value',
     },
+    ...(event?.signUpProtection === 'PROTECTED'
+      ? [
+          {
+            label: 'Event sign up code',
+            value: event.signUpProtectionCode,
+          },
+        ]
+      : []),
     {
       label: 'Listing',
       value: capitalCase(event?.listing),
