@@ -31,10 +31,6 @@ export function UserSection({hasUnseenConversationPromise, me}: Props) {
   const hasUnseenConversation = use(hasUnseenConversationPromise);
   const isPublicPage = getIsPublic(pathname ?? '/');
 
-  const onSignOutClick = async () => {
-    router.push('/logout');
-  };
-
   if (isPublicPage) {
     return (
       <div className="flex gap-2">
@@ -93,7 +89,7 @@ export function UserSection({hasUnseenConversationPromise, me}: Props) {
     {
       label: 'Logout',
       onClick: () => {
-        onSignOutClick();
+        router.push('/logout');
       },
       'data-testid': 'logout-button',
     },
