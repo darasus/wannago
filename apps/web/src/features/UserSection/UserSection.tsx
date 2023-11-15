@@ -70,7 +70,7 @@ export function UserSection({hasUnseenConversationPromise, me}: Props) {
     {
       label: 'Settings',
       onClick: () => {
-        router.push(`/settings`);
+        window.location.href = '/logout';
       },
     },
     {
