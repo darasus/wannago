@@ -1,7 +1,8 @@
 import {loggerLink} from '@trpc/client';
 import {experimental_nextCacheLink} from '@trpc/next/app-dir/links/nextCache';
 import {experimental_createTRPCNextAppDirServer} from '@trpc/next/app-dir/server';
-import {AppRouter, appRouter} from 'api';
+import {AppRouter} from 'api';
+import {appRouter} from 'api/src/root';
 import {createContext} from 'api/src/context';
 import SuperJSON from 'superjson';
 

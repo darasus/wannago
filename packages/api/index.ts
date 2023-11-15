@@ -5,7 +5,7 @@ import type {AppRouter} from './src/root';
 // TODO: Maybe just export `createAction` instead of the whole `trpc` object?
 export {t} from './src/trpc';
 
-export {type AppRouter, appRouter} from './src/root';
+export {type AppRouter} from './src/root';
 
 /**
  * Inference helpers for input types
