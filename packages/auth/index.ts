@@ -1,12 +1,11 @@
 import {lucia} from 'lucia';
-import {nextjs} from 'lucia/middleware';
+import {nextjs_future} from 'lucia/middleware';
 import {google} from '@lucia-auth/oauth/providers';
 import {prisma} from '@lucia-auth/adapter-prisma';
-import {cache} from 'react';
-import {cookies} from 'next/headers';
 import {prisma as prismaClient} from 'database';
 import {getBaseUrl} from 'utils';
 import {User} from '@prisma/client';
+import * as context from 'next/headers';
 
 export const auth = lucia({
   adapter: prisma(prismaClient, {
@@ -15,7 +14,7 @@ export const auth = lucia({
     session: 'session',
   }),
   env: process.env.NODE_ENV === 'development' ? 'DEV' : 'PROD',
-  middleware: nextjs(),
+  middleware: nextjs_future(),
   sessionCookie: {
     expires: false,
   },
@@ -31,11 +30,8 @@ export const googleAuth = google(auth, {
 
 export type Auth = typeof auth;
 
-export const getPageSession = cache(() => {
-  const authRequest = auth.handleRequest({
-    request: null,
-    cookies,
-  });
+export const getPageSession = () => {
+  const authRequest = auth.handleRequest('GET', context);
 
   return authRequest.validate() as Promise<{
     user: User;
@@ -45,4 +41,4 @@ export const getPageSession = cache(() => {
     state: string;
     fresh: boolean;
   } | null>;
-});
+};

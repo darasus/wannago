@@ -11,7 +11,7 @@ const handler = (req: NextRequest) =>
     endpoint: '/api/trpc/lambda',
     router: lambdaRouter,
     req: req,
-    createContext: () => createContext({req}),
+    createContext,
     onError: ({error, path, req, input, type}) => {
       captureException(error, {
         extra: {

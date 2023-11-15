@@ -1,11 +1,11 @@
 import {auth} from 'auth';
-import {cookies} from 'next/headers';
 
-import type {NextRequest} from 'next/server';
-import {api} from '../../../trpc/server-http';
+import {NextResponse, type NextRequest} from 'next/server';
+import {revalidatePath} from 'next/cache';
+import * as context from 'next/headers';
 
 export const GET = async (request: NextRequest) => {
-  const authRequest = auth.handleRequest({request, cookies});
+  const authRequest = auth.handleRequest('GET', context);
   // check if user is authenticated
   const session = await authRequest.validate();
 
@@ -20,12 +20,11 @@ export const GET = async (request: NextRequest) => {
   // delete session cookie
   authRequest.setSession(null);
 
-  await api.user.me.revalidate();
+  revalidatePath('/', 'layout');
 
-  return new Response(null, {
-    status: 302,
-    headers: {
-      Location: '/sign-in', // redirect to login page
-    },
-  });
+  const url = new URL('/sign-in', request.url);
+
+  url.searchParams.set('refresh', 'true');
+
+  return NextResponse.redirect(url);
 };

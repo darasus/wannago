@@ -1,9 +1,10 @@
 import {cookies} from 'next/headers';
 import type {NextRequest} from 'next/server';
 import {auth, googleAuth} from 'auth';
+import * as context from 'next/headers';
 
 export const GET = async (request: NextRequest) => {
-  const authRequest = auth.handleRequest({request, cookies});
+  const authRequest = auth.handleRequest('GET', context);
   const session = await authRequest.validate();
 
   if (session) {

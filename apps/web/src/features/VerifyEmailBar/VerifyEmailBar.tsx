@@ -1,10 +1,14 @@
+'use client';
+
 import {Banner} from 'ui';
-import {api} from '../../trpc/server-http';
 import {VerifyEmailButton} from './VerifyEmailButton';
+import {User} from '@prisma/client';
 
-export async function VerifyEmailBar() {
-  const me = await api.user.me.query();
+interface Props {
+  me: User | null;
+}
 
+export function VerifyEmailBar({me}: Props) {
   if (!me) {
     return null;
   }

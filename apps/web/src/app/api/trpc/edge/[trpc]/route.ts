@@ -12,7 +12,7 @@ const handler = (req: NextRequest) =>
     endpoint: '/api/trpc/edge',
     router: edgeRouter,
     req: req,
-    createContext: () => createContext({req}),
+    createContext,
     onError: ({error, path, req, input, type}) => {
       captureException(error, {
         extra: {

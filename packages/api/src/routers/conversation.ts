@@ -2,7 +2,7 @@ import {isBefore} from 'date-fns';
 import {conversationNotFoundError, userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
-import {createTRPCRouter, protectedProcedure} from '../trpc';
+import {createTRPCRouter, protectedProcedure, publicProcedure} from '../trpc';
 
 const createConversation = protectedProcedure
   .input(
@@ -212,7 +212,11 @@ const getMyConversations = protectedProcedure.query(async ({ctx}) => {
   });
 });
 
-const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
+const getUserHasUnseenConversation = publicProcedure.query(async ({ctx}) => {
+  if (!ctx.auth?.user?.id) {
+    return false;
+  }
+
   const user = await ctx.prisma.user.findFirst({
     where: {
       id: ctx.auth?.user?.id,

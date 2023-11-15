@@ -1,6 +1,7 @@
 import {z} from 'zod';
 import {createTRPCRouter, protectedProcedure, publicProcedure} from '../trpc';
 import {getUserById as _getUserById} from '../actions/getUserById';
+import {getPageSession} from 'auth';
 
 const getUserById = publicProcedure
   .input(z.object({userId: z.string().uuid()}))
@@ -11,7 +12,9 @@ const getUserById = publicProcedure
   });
 
 const me = publicProcedure.query(async ({ctx}) => {
-  if (!ctx.auth?.user?.id) {
+  const session = await getPageSession();
+
+  if (!ctx.auth?.user?.id || !session) {
     return null;
   }
 

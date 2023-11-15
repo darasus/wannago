@@ -1,21 +1,26 @@
+'use client';
+
 import {Button, CardBase, LoadingBlock, Logo} from 'ui';
 import {UserSection} from '../UserSection/UserSection';
 import {Suspense} from 'react';
 import {DesktopMenu} from '../../components/DesktopMenu';
 import {MobileMenu} from '../../components/MobileMenu';
 import Link from 'next/link';
-import {api} from '../../trpc/server-http';
 import {VerifyEmailBar} from '../VerifyEmailBar/VerifyEmailBar';
+import {User} from '@prisma/client';
+import {RouterOutputs} from 'api';
 
-export async function Header() {
-  const me = await api.user.me.query();
-  console.log('me', me);
-  const showUserProfile = !!me;
-  const showAuthButtons = !me;
+interface Props {
+  me: User | null;
+  hasUnseenConversationPromise: Promise<
+    RouterOutputs['conversation']['getUserHasUnseenConversation']
+  >;
+}
 
+export function Header({me, hasUnseenConversationPromise}: Props) {
   return (
     <header className="flex flex-col gap-4">
-      <VerifyEmailBar />
+      <VerifyEmailBar me={me} />
       <CardBase>
         <nav className="relative flex justify-between">
           <div className="flex items-center gap-x-4 md:gap-x-8">
@@ -26,15 +31,15 @@ export async function Header() {
           </div>
           <div className="flex items-center gap-x-4 md:gap-x-4">
             <MobileMenu me={me} />
-            {showUserProfile && (
+            {me && (
               <Suspense fallback={<LoadingBlock />}>
                 <UserSection
                   me={me}
-                  hasUnseenConversationPromise={api.conversation.getUserHasUnseenConversation.query()}
+                  hasUnseenConversationPromise={hasUnseenConversationPromise}
                 />
               </Suspense>
             )}
-            {showAuthButtons && (
+            {!me && (
               <Button
                 asChild
                 className="hidden md:flex"

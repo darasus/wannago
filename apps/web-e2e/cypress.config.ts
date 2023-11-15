@@ -14,12 +14,12 @@ export default defineConfig({
     defaultCommandTimeout: 60000,
     requestTimeout: 60000,
     pageLoadTimeout: 60000,
-    projectId: 'nvo5fb',
     retries: {
       runMode: 2,
       openMode: 0,
     },
     setupNodeEvents(on: any, config: any) {
+      require('cypress-fail-fast/plugin')(on, config);
       on('task', {
         async 'db:reset'() {
           await resetDB();
@@ -27,6 +27,7 @@ export default defineConfig({
           return 'done';
         },
       });
+      return config;
     },
   },
 });

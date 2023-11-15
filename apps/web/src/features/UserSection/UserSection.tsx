@@ -16,10 +16,13 @@ import {useRouter} from 'next/navigation';
 import {User} from '@prisma/client';
 import {ChevronDown, Plus} from 'lucide-react';
 import {cn} from 'utils';
+import {RouterOutputs} from 'api';
 
 interface Props {
   me: User | null;
-  hasUnseenConversationPromise: Promise<boolean>;
+  hasUnseenConversationPromise: Promise<
+    RouterOutputs['conversation']['getUserHasUnseenConversation']
+  >;
 }
 
 export function UserSection({hasUnseenConversationPromise, me}: Props) {

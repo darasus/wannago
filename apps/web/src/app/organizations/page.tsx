@@ -18,9 +18,7 @@ export default async function SettingsPage() {
       <Container maxSize="sm">
         <div className="flex flex-col gap-y-4">
           <PageHeader title={'Organizations'} />
-          {organizations?.map((o) => (
-            <OrganizationCard organization={o} />
-          ))}
+          {organizations?.map((o) => <OrganizationCard organization={o} />)}
           {organizations?.length === 0 && (
             <div className="text-center">
               <Text>

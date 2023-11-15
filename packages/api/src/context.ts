@@ -17,11 +17,9 @@ import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
 import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
 import {Inngest, EventSchemas} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
-import {NextRequest} from 'next/server';
-import {NextApiRequest} from 'next';
 import {getPageSession, auth as _auth} from 'auth';
-import {cookies} from 'next/headers';
 import {AuthRequest} from 'lucia';
+import * as context from 'next/headers';
 
 const actions = {
   getEvents,
@@ -90,26 +88,22 @@ const inngest = new Inngest({
 });
 export type InngestType = typeof inngest;
 
-export async function createContext(opts: {
-  req: NextRequest | NextApiRequest;
-}): Promise<Context> {
+export async function createContext(): Promise<Context> {
+  const headers = context.headers();
+
   let timezone: string | undefined = undefined;
   let country: string | undefined = undefined;
 
-  if (typeof opts.req.headers.get === 'function') {
-    timezone = opts.req.headers.get('x-vercel-ip-timezone') ?? 'UTC';
+  if (typeof headers.get === 'function') {
+    timezone = headers.get('x-vercel-ip-timezone') ?? 'UTC';
   }
 
-  if ('x-vercel-ip-timezone' in opts.req.headers) {
-    timezone = opts.req.headers['x-vercel-ip-timezone'] as string;
+  if ('x-vercel-ip-timezone' in headers) {
+    timezone = headers['x-vercel-ip-timezone'] as string;
   }
 
-  if (typeof opts.req.headers.get === 'function') {
-    country = opts.req.headers.get('x-vercel-ip-country') ?? 'UTC';
-  }
-
-  if ('x-vercel-ip-timezone' in opts.req.headers) {
-    country = opts.req.headers['x-vercel-ip-country'] as string;
+  if (typeof headers.get === 'function') {
+    country = headers.get('x-vercel-ip-country') ?? 'UTC';
   }
 
   const currency = getCurrencyFromHeaders(country);
@@ -118,10 +112,7 @@ export async function createContext(opts: {
 
   const innerContext = createContextInner({
     auth,
-    authRequest: _auth.handleRequest({
-      request: null,
-      cookies,
-    }),
+    authRequest: _auth.handleRequest('GET', context),
     prisma,
     timezone,
     currency,

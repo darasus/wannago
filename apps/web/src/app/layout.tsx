@@ -7,13 +7,24 @@ import {Tools} from '../features/Tools';
 import {ToastProvider} from '../features/ToastProvider';
 import {Scripts} from '../features/Scripts';
 import {ClientProvider} from './ClientProvider';
+import {api} from '../trpc/server-invoker';
+import {ClientRefresher} from './features/ClientRefresher/ClientRefresher';
 
 export const metadata = {
   title: 'WannaGo',
   metadataBase: new URL(getBaseUrl()),
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export const runtime = 'edge';
+export const preferredRegion = 'iad1';
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const me = await api.user.me.query();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -27,7 +38,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <ClientProvider>
           <div>
             <Container maxSize={'full'}>
-              <Header />
+              <Header
+                me={me}
+                hasUnseenConversationPromise={api.conversation.getUserHasUnseenConversation.query()}
+              />
             </Container>
           </div>
           <div>
@@ -35,6 +49,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           </div>
           <Tools />
           <ToastProvider />
+          <ClientRefresher />
         </ClientProvider>
       </body>
       <Scripts />
