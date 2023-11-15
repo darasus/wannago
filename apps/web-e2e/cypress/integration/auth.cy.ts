@@ -10,7 +10,7 @@ describe('Auth', () => {
     cy.get('[data-testid="header-user-button"]').should('contain.text', 'John');
   });
 
-  it.only('Can logout', () => {
+  it('Can logout', () => {
     cy.login(users.user_1.email, users.user_1.password);
     cy.get('[data-testid="header-user-button"]').should('contain.text', 'John');
     cy.logout();
