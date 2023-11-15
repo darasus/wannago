@@ -2,6 +2,8 @@ import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
 import {env} from 'server-env';
 import {invariant} from 'utils';
 
+export const runtime = 'nodejs';
+
 export async function POST(req: Request) {
   const {query} = await req.json();
 

@@ -5,7 +5,7 @@ import {getBaseUrl, invariant} from 'utils';
 import {captureException} from '@sentry/nextjs';
 import clip from 'text-clipper';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function GET(req: NextRequest) {
   try {
