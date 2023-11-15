@@ -6,6 +6,8 @@ import {auth, googleAuth} from 'auth';
 import {prisma} from 'database';
 import * as context from 'next/headers';
 
+export const runtime = 'nodejs';
+
 export const GET = async (request: NextRequest) => {
   const authRequest = auth.handleRequest('GET', context);
   const session = await authRequest.validate();

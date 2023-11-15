@@ -22,6 +22,8 @@ import {
   verifyEmailAddressEmail,
 } from 'inngest-client';
 
+export const runtime = 'nodejs';
+
 export const {GET, POST, PUT} = serve(inngest, [
   eventCreated,
   eventUpdated,

@@ -4,6 +4,8 @@ import {NextResponse, type NextRequest} from 'next/server';
 import {revalidatePath} from 'next/cache';
 import * as context from 'next/headers';
 
+export const runtime = 'nodejs';
+
 export const GET = async (request: NextRequest) => {
   const authRequest = auth.handleRequest('GET', context);
   // check if user is authenticated

@@ -14,6 +14,8 @@ import {env} from 'server-env';
 
 const stripe = new Stripe().client;
 
+export const runtime = 'nodejs';
+
 export async function POST(req: NextRequest) {
   let event: IStripe.Event;
 
@@ -33,7 +35,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const ctx = await createContext({req});
+  const ctx = await createContext();
   const caller = stripeWebhookHandlerRouter.createCaller(ctx);
 
   try {

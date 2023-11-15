@@ -5,6 +5,8 @@ import {NextResponse} from 'next/server';
 
 const {uploadImage} = new ImageUpload();
 
+export const runtime = 'nodejs';
+
 export async function POST(req: Request) {
   try {
     const data = await req.formData();

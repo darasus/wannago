@@ -3,11 +3,13 @@ import {createContext} from 'api/src/context';
 import {authRouter} from 'api/src/routers/auth';
 import {NextRequest} from 'next/server';
 
+export const runtime = 'nodejs';
+
 export async function GET(
   req: NextRequest,
   {params}: {params: {code: string}}
 ) {
-  const ctx = await createContext({req});
+  const ctx = await createContext();
   const caller = authRouter.createCaller(ctx);
 
   try {

@@ -7,7 +7,7 @@ import {Tools} from '../features/Tools';
 import {ToastProvider} from '../features/ToastProvider';
 import {Scripts} from '../features/Scripts';
 import {ClientProvider} from './ClientProvider';
-import {api} from '../trpc/server-invoker';
+import {api} from '../trpc/server-http';
 import {ClientRefresher} from './features/ClientRefresher/ClientRefresher';
 
 export const metadata = {
