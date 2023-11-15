@@ -27,11 +27,7 @@ export async function EventView({event, isLoadingImage, isMyEvent, me}: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div className="sticky top-4 z-20">
-        <SignUpCard
-          event={event}
-          myTicketPromise={myTicketPromise}
-          mePromise={Promise.resolve(me)}
-        />
+        <SignUpCard event={event} myTicketPromise={myTicketPromise} me={me} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="items-stretch">
