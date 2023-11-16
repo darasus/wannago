@@ -90,7 +90,7 @@ export function Privacy() {
               >
                 <Label
                   htmlFor="event-visibility-public"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  className="flex flex-col text-center items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
                   data-testid="event-visibility-public-button"
                 >
                   <RadioGroupItem
@@ -103,7 +103,7 @@ export function Privacy() {
                 </Label>
                 <Label
                   htmlFor="event-visibility-protected"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  className="flex flex-col text-center items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
                   data-testid="event-visibility-protected-button"
                 >
                   <RadioGroupItem
@@ -191,7 +191,7 @@ export function Privacy() {
               >
                 <Label
                   htmlFor="sign-up-protection-public"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  className="flex flex-col text-center items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
                   data-testid="event-sign-up-protection-public-button"
                 >
                   <RadioGroupItem
@@ -204,7 +204,7 @@ export function Privacy() {
                 </Label>
                 <Label
                   htmlFor="sign-up-protection-protected"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  className="flex flex-col text-center items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
                   data-testid="event-sign-up-protection-protected-button"
                 >
                   <RadioGroupItem
@@ -292,7 +292,7 @@ export function Privacy() {
               >
                 <Label
                   htmlFor="listing-listed"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  className="flex flex-col text-center items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
                   data-testid="event-listing-listed-button"
                 >
                   <RadioGroupItem
@@ -305,7 +305,7 @@ export function Privacy() {
                 </Label>
                 <Label
                   htmlFor="listing-unlisted"
-                  className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
+                  className="flex flex-col text-center items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary cursor-pointer"
                   data-testid="event-listing-unlisted-button"
                 >
                   <RadioGroupItem
