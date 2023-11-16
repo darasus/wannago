@@ -44,7 +44,7 @@ export function SignIn({}: Props) {
       .then((res) => {
         if (res?.success) {
           router.refresh();
-          router.push('/dashboard');
+          router.push('/dashboard?refresh=true');
         }
       })
       .catch((err) => {
