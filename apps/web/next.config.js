@@ -74,28 +74,6 @@ const moduleExports = {
     NEXT_PUBLIC_VERCEL_BRANCH_URL: process.env.VERCEL_BRANCH_URL,
     NEXT_PUBLIC_VERCEL_URL: process.env.VERCEL_URL,
   },
-  webpack(config) {
-    config.experiments = {
-      asyncWebAssembly: true,
-      layers: true,
-    };
-
-    config.module.rules.unshift({
-      test: /pdf\.worker\.(min\.)?js/,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            name: '[contenthash].[ext]',
-            publicPath: '_next/static/worker',
-            outputPath: 'static/worker',
-          },
-        },
-      ],
-    });
-
-    return config;
-  },
   async redirects() {
     return [
       {
