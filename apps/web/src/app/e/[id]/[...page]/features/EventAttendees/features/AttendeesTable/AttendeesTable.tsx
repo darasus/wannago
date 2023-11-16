@@ -126,7 +126,7 @@ export function AttendeesTable({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row items-center gap-2">
         <Input
           placeholder="Filter names..."
           value={
@@ -136,12 +136,14 @@ export function AttendeesTable({
             table.getColumn('fullName')?.setFilterValue(event.target.value)
           }
         />
-        <MessageParticipantsButton />
-        <ExportAttendeesCSV event={event} />
-        <InviteButton
-          eventShortId={event.shortId}
-          getAllEventsAttendeesPromise={getAllEventsAttendeesPromise}
-        />
+        <div className="flex items-center gap-2 w-full shrink-0 sm:shrink">
+          <MessageParticipantsButton />
+          <ExportAttendeesCSV event={event} />
+          <InviteButton
+            eventShortId={event.shortId}
+            getAllEventsAttendeesPromise={getAllEventsAttendeesPromise}
+          />
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>
