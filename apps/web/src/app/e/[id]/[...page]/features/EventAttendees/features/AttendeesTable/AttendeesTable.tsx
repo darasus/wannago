@@ -34,13 +34,14 @@ import {ActionsButton} from './features/ActionsButton/ActionsButton';
 export type Item = {
   id: string;
   fullName: string;
+  email: string;
   status: EventRegistrationStatus;
   eventShortId: string;
   userId: string;
 };
 
 interface Props {
-  eventShortId: string;
+  event: RouterOutputs['event']['getByShortId'];
   getAttendeesPromise: Promise<Item[]>;
   getAllEventsAttendeesPromise: Promise<
     RouterOutputs['event']['getAllEventsAttendees']
@@ -48,7 +49,7 @@ interface Props {
 }
 
 export function AttendeesTable({
-  eventShortId,
+  event,
   getAllEventsAttendeesPromise,
   getAttendeesPromise,
 }: Props) {
@@ -70,6 +71,11 @@ export function AttendeesTable({
       cell: ({row}) => (
         <div className="lowercase">{row.getValue('fullName')}</div>
       ),
+    },
+    {
+      accessorKey: 'email',
+      header: 'Email',
+      cell: ({row}) => <div className="lowercase">{row.getValue('email')}</div>,
     },
     {
       accessorKey: 'status',
@@ -131,9 +137,9 @@ export function AttendeesTable({
           }
         />
         <MessageParticipantsButton />
-        <ExportAttendeesCSV />
+        <ExportAttendeesCSV event={event} />
         <InviteButton
-          eventShortId={eventShortId}
+          eventShortId={event.shortId}
           getAllEventsAttendeesPromise={getAllEventsAttendeesPromise}
         />
       </div>

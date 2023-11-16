@@ -1,12 +1,13 @@
 'use client';
 
 import {CardBase, Badge, PageHeader} from 'ui';
-import {Text, Tooltip} from 'ui';
+import {Text} from 'ui';
 import {formatTimeago} from 'utils';
 import {getBaseUrl} from 'utils';
 import React, {use} from 'react';
 import {Event} from '@prisma/client';
 import {api} from '../../../../../../trpc/client';
+import {capitalCase} from 'change-case';
 
 interface Props {
   event: Event;
@@ -27,17 +28,43 @@ export function EventInfo({event}: Props) {
         .replace('https://www.', '')
         .replace('http://', '');
 
-  const values: {
-    label: string;
-    value: JSX.Element | string;
-    badgeColor?: 'green' | 'yellow';
-    dataTestId?: string;
-  }[] = [
+  const values = [
     {
       label: 'Status',
       value: event?.isPublished ? 'Published' : 'Draft',
       badgeColor: event?.isPublished ? 'green' : 'yellow',
       dataTestId: 'event-status-label',
+    },
+    {
+      label: 'Event visibility',
+      value: capitalCase(event?.eventVisibility),
+      dataTestId: 'event-visibility-value',
+    },
+    ...(event?.eventVisibility === 'PROTECTED'
+      ? [
+          {
+            label: 'Event visibility code',
+            value: event.eventVisibilityCode || '',
+          },
+        ]
+      : []),
+    {
+      label: 'Event sign up protection',
+      value: capitalCase(event?.signUpProtection),
+      dataTestId: 'event-sign-up-protection-value',
+    },
+    ...(event?.signUpProtection === 'PROTECTED'
+      ? [
+          {
+            label: 'Event sign up code',
+            value: event.signUpProtectionCode,
+          },
+        ]
+      : []),
+    {
+      label: 'Listing',
+      value: capitalCase(event?.listing),
+      dataTestId: 'event-listing-value',
     },
     {
       label: 'Created',
@@ -58,17 +85,7 @@ export function EventInfo({event}: Props) {
     },
     {
       label: 'Public url',
-      value: (
-        <Tooltip
-          text={
-            event?.isPublished
-              ? undefined
-              : 'To see the public link, please publish the event first.'
-          }
-        >
-          <span>{publicEventUrl}</span>
-        </Tooltip>
-      ),
+      value: publicEventUrl,
     },
   ];
 

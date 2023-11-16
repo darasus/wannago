@@ -1,15 +1,16 @@
 import {PageHeader} from 'ui';
 import {api} from '../../../../../../trpc/server-http';
 import {AttendeesTable} from './features/AttendeesTable/AttendeesTable';
+import {RouterOutputs} from 'api';
 
 interface Props {
-  eventShortId: string;
+  event: RouterOutputs['event']['getByShortId'];
 }
 
-export async function EventAttendees({eventShortId}: Props) {
+export async function EventAttendees({event}: Props) {
   const getAttendeesPromise = api.event.getAttendees
     .query({
-      eventShortId,
+      eventShortId: event.shortId,
     })
     .then((res) => {
       return res.map((eventSignUp) => {
@@ -19,12 +20,13 @@ export async function EventAttendees({eventShortId}: Props) {
           status: eventSignUp.status,
           eventShortId: eventSignUp.event.shortId,
           userId: eventSignUp.user.id,
+          email: eventSignUp.user.email,
         };
       });
     });
 
   const getAllEventsAttendeesPromise = api.event.getAllEventsAttendees.query({
-    eventShortId: eventShortId,
+    eventShortId: event.shortId,
   });
 
   return (
@@ -32,7 +34,7 @@ export async function EventAttendees({eventShortId}: Props) {
       <div className="flex flex-col gap-4">
         <PageHeader title="Event attendees" />
         <AttendeesTable
-          eventShortId={eventShortId}
+          event={event}
           getAllEventsAttendeesPromise={getAllEventsAttendeesPromise}
           getAttendeesPromise={getAttendeesPromise}
         />

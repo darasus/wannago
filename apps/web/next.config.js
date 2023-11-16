@@ -35,7 +35,6 @@ const moduleExports = {
   reactStrictMode: true,
   experimental: {
     mdxRs: true,
-    serverActions: true,
   },
   images: {
     domains: [

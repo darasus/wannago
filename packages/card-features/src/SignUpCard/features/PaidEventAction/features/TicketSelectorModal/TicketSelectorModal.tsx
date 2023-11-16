@@ -20,27 +20,24 @@ import {useForm} from 'react-hook-form';
 import {useRouter} from 'next/navigation';
 import {TRPCClientError} from '@trpc/client';
 import {use} from 'react';
-import {api} from '../../../../../../apps/web/src/trpc/client';
+import {api} from '../../../../../../../../apps/web/src/trpc/client';
 import {toast} from 'sonner';
 import {z} from 'zod';
 import {RouterOutputs} from 'api';
-import {zodResolver} from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import {formScheme} from '../../validation';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
   isOpen: boolean;
   onClose: () => void;
-  onDone?: () => void;
   mePromise: Promise<RouterOutputs['user']['me']>;
 }
-
-const formScheme = z.record(z.number());
 
 export function TicketSelectorModal({
   isOpen,
   onClose,
-  onDone,
   event,
   mePromise,
 }: Props) {
@@ -49,12 +46,13 @@ export function TicketSelectorModal({
   const form = useForm<z.infer<typeof formScheme>>({
     resolver: zodResolver(formScheme),
     defaultValues: {
-      ...event.tickets.reduce((acc, ticket) => {
+      tickets: event.tickets.reduce((acc, ticket) => {
         return {...acc, [ticket.id]: 0};
       }, {}),
     },
   });
-  const total = Object.entries(form.watch()).reduce(
+
+  const total = Object.entries(form.watch().tickets).reduce(
     (acc: number, [ticketId, quantity]) => {
       if (isNaN(Number(quantity))) {
         return acc;
@@ -77,14 +75,14 @@ export function TicketSelectorModal({
         throw new TRPCClientError('You must be logged in to buy tickets');
       }
 
-      if (Object.values(data).every((quantity) => quantity === 0)) {
+      if (Object.values(data.tickets).every((quantity) => quantity === 0)) {
         return toast.error('You must select at least one ticket');
       }
 
       const responseUrl = await api.payments.createCheckoutSession
         .mutate({
           userId: me.id,
-          tickets: Object.entries(data)
+          tickets: Object.entries(data.tickets)
             .filter(([, quantity]) => Boolean(quantity))
             .map(([ticketId, quantity]) => ({
               ticketId,
@@ -118,7 +116,7 @@ export function TicketSelectorModal({
                   <FormField
                     key={id}
                     control={form.control}
-                    name={id}
+                    name={`tickets.${id}`}
                     render={({field}) => (
                       <div className="flex flex-col gap-2">
                         <div className="flex items-center gap-4">
@@ -169,6 +167,7 @@ export function TicketSelectorModal({
                 type="submit"
                 disabled={form.formState.isSubmitting}
                 isLoading={form.formState.isSubmitting}
+                data-testid="buy-tickets-button"
               >
                 Buy
               </Button>

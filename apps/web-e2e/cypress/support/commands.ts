@@ -18,16 +18,26 @@ Cypress.Commands.addAll({
     cy.get('[data-testid="add-event-button"]');
     cy.get('[data-testid="header-user-button"]').contains('John');
   },
-  createEvent(authorId) {
+  createEvent(authorId, options) {
+    let {type, eventVisibility, signUpProtection, listing, eventTitle} =
+      options || {};
+
+    if (typeof type === 'undefined') {
+      type = 'free';
+    }
+
     cy.visit('/e/add');
     cy.wait(3000);
     if (authorId) {
       cy.get('[data-testid="event-form-created-by-input"]').click();
       cy.get(`[data-testid="created-by-option-${authorId}"]`).click();
     }
-    cy.get('[data-testid="event-form-title"]').type('Test title', {
-      force: true,
-    });
+    cy.get('[data-testid="event-form-title"]').type(
+      eventTitle || 'Test title',
+      {
+        force: true,
+      }
+    );
     // cy.get('[data-testid="event-form-description"]')
     //   .click()
     //   .type('Test description', {force: true});
@@ -50,10 +60,55 @@ Cypress.Commands.addAll({
     cy.get('[data-testid="event-form-address-button"]').click();
     cy.get('[data-testid="event-form-address-input"]').type('Paris');
     cy.get('[data-testid="location-input-option"]').first().click();
+
     // attendees
-    cy.get('[data-testid="event-form-max-attendees"]').type('10');
+    if (type === 'free') {
+      cy.get('[data-testid="event-form-max-attendees"]').clear().type('10');
+    }
+
+    if (type === 'paid') {
+      cy.get('[data-testid="paid-event-tab-button"]').click();
+      cy.get('[data-testid="add-ticket-button"]').click();
+      cy.get('[data-testid="ticket-title-input"]').type('Test ticket title 1');
+      cy.get('[data-testid="ticket-description-input"]').type(
+        'Test ticket description 1'
+      );
+      cy.get('[data-testid="ticket-price-input"]').clear().type('1');
+      cy.get('[data-testid="ticket-max-quantity-input"]').clear().type('10');
+      cy.get('[data-testid="add-ticket-button"]').click();
+      cy.get('[data-testid="ticket-title-input"]')
+        .eq(1)
+        .type('Test ticket title 2');
+      cy.get('[data-testid="ticket-description-input"]')
+        .eq(1)
+        .type('Test ticket description 2');
+      cy.get('[data-testid="ticket-price-input"]').eq(1).clear().type('1');
+      cy.get('[data-testid="ticket-max-quantity-input"]')
+        .eq(1)
+        .clear()
+        .type('10');
+    }
+
     cy.wait(1000);
-    // cy.get('[data-testid="file-input-image-preview"]');
+    // event visibility
+    if (eventVisibility === 'protected') {
+      cy.get('[data-testid="event-visibility-protected-button"]').click();
+      cy.get('[data-testid="event-visibility-protected-code-input"]')
+        .clear()
+        .type('1234');
+    }
+    if (signUpProtection === 'protected') {
+      cy.get(
+        '[data-testid="event-sign-up-protection-protected-button"]'
+      ).click();
+      cy.get('[data-testid="event-sign-up-protection-protected-code-input"]')
+        .clear()
+        .type('4321');
+    }
+    if (listing === 'unlisted') {
+      cy.get('[data-testid="event-listing-unlisted-button"]').click();
+    }
+    //// cy.get('[data-testid="file-input-image-preview"]');
     cy.get('[data-testid="event-form-submit-button"]').click();
     cy.url().should('include', '/e/');
     cy.get('[data-testid="event-title"]').should('be.visible');

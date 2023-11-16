@@ -85,6 +85,26 @@ export async function resetDB() {
       ],
     },
   });
+  await prisma.ticket.deleteMany({
+    where: {
+      event: {
+        OR: [
+          {
+            userId: user_1.id,
+          },
+          {
+            userId: user_2.id,
+          },
+          {
+            organizationId: organization_1.id,
+          },
+          {
+            organizationId: organization_2.id,
+          },
+        ],
+      },
+    },
+  });
   await prisma.event.deleteMany({
     where: {
       OR: [

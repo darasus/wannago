@@ -1,42 +1,40 @@
 import {initTRPC, TRPCError} from '@trpc/server';
 import superjson from 'superjson';
-import {ZodError} from 'zod';
-import {captureException} from '@sentry/nextjs';
 import {createContext} from './context';
 
 export const t = initTRPC.context<typeof createContext>().create({
   transformer: superjson,
-  errorFormatter({shape, error, ctx, path, input, type}) {
-    const e = {
-      ...shape,
-      data: {
-        ...shape.data,
-        zodError:
-          error.code === 'BAD_REQUEST' && error.cause instanceof ZodError
-            ? error.cause.flatten()
-            : null,
-      },
-    };
+  // errorFormatter({shape, error, ctx, path, input, type}) {
+  //   const e = {
+  //     ...shape,
+  //     data: {
+  //       ...shape.data,
+  //       zodError:
+  //         error.code === 'BAD_REQUEST' && error.cause instanceof ZodError
+  //           ? error.cause.flatten()
+  //           : null,
+  //     },
+  //   };
 
-    captureException(error, (scope) => {
-      scope.setUser({
-        id: ctx?.auth?.user.id || undefined,
-      });
-      if (path) {
-        scope.setContext('path', {path});
-      }
-      if (input) {
-        scope.setContext('input', {input});
-      }
-      if (type) {
-        scope.setContext('type', {type});
-      }
+  //   captureException(error, (scope) => {
+  //     scope.setUser({
+  //       id: ctx?.auth?.user.id || undefined,
+  //     });
+  //     if (path) {
+  //       scope.setContext('path', {path});
+  //     }
+  //     if (input) {
+  //       scope.setContext('input', {input});
+  //     }
+  //     if (type) {
+  //       scope.setContext('type', {type});
+  //     }
 
-      return scope;
-    });
+  //     return scope;
+  //   });
 
-    return e;
-  },
+  //   return e;
+  // },
 });
 
 export const createTRPCRouter = t.router;
@@ -47,7 +45,10 @@ export const publicProcedure = t.procedure;
 
 const enforceUserIsAuthed = t.middleware(({ctx, next}) => {
   if (!ctx.auth?.user?.id) {
-    throw new TRPCError({code: 'UNAUTHORIZED'});
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: `You're not logged in. To continue please login first.`,
+    });
   }
 
   return next({

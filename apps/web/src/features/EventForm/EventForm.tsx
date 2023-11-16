@@ -11,6 +11,7 @@ import {What} from './features/What';
 import {When} from './features/When';
 import {Where} from './features/Where';
 import {Attend} from './features/Attend';
+import {Privacy} from './features/Privacy';
 
 interface Props {
   onSubmit: FormEventHandler;
@@ -48,6 +49,10 @@ export function EventForm({
     {
       label: 'Attend',
       content: <Attend />,
+    },
+    {
+      label: 'Privacy',
+      content: <Privacy />,
     },
   ];
 

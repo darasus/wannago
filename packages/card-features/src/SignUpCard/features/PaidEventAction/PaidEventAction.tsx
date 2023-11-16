@@ -1,35 +1,63 @@
 'use client';
 
-import {Event, Ticket} from '@prisma/client';
-import {useState} from 'react';
+import {Event, SignUpProtection, Ticket} from '@prisma/client';
 import {useForm} from 'react-hook-form';
 import {Badge, Button} from 'ui';
 import {formatCents} from 'utils';
-import {TicketSelectorModal} from '../TicketSelectorModal/TicketSelectorModal';
+import {TicketSelectorModal} from './features/TicketSelectorModal/TicketSelectorModal';
 import {api} from '../../../../../../apps/web/src/trpc/client';
 import {useMe} from 'hooks';
 import {useRouter} from 'next/navigation';
+import {SignUpCodeModal} from './features/SignUpCodeModal/SignUpCodeModal';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {formScheme} from './validation';
+import {useModalState} from './hooks/useModalState';
+import {LockIcon} from 'lucide-react';
 
 interface Props {
-  event: Event & {tickets: Ticket[]} & {isPast: boolean};
-  myTicketPromise: ReturnType<typeof api.event.getMyTicketsByEvent.query>;
+  event: Event & {tickets: Ticket[]} & {isPast: boolean; isMyEvent: boolean};
   mePromise: ReturnType<typeof api.user.me.query>;
 }
 
-export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
+export function PaidEventAction({event, mePromise}: Props) {
   const router = useRouter();
-  const [isTicketSelectorModalOpen, setIsTicketSelectorModalOpen] =
-    useState(false);
+  const {
+    isSignUpCodeModalOpen,
+    isTicketSelectorModalOpen,
+    closeTicketSelectorModal,
+    onSignUpCodeModalOpenChange,
+    openSignUpCodeModal,
+    openTicketSelectorUpModal,
+  } = useModalState();
   const me = useMe();
-  const form = useForm();
+  const form = useForm<z.infer<typeof formScheme>>({
+    resolver: zodResolver(formScheme),
+    defaultValues: {
+      tickets: event.tickets.reduce((acc, ticket) => {
+        return {...acc, [ticket.id]: 0};
+      }, {}),
+    },
+  });
 
-  const onJoinSubmit = form.handleSubmit(async (data) => {
+  const isEventSignUpPublic =
+    event.signUpProtection === SignUpProtection.PUBLIC;
+  const isEventSignUpProtected =
+    event.signUpProtection === SignUpProtection.PROTECTED;
+
+  const openTicketSelector = form.handleSubmit(async (data) => {
     if (!me) {
       router.push('/sign-in');
+      return;
+    }
+
+    if (!event.isMyEvent && isEventSignUpProtected) {
+      openSignUpCodeModal();
+      return;
     }
 
     if (event.tickets.length > 0) {
-      setIsTicketSelectorModalOpen(true);
+      openTicketSelectorUpModal();
       return;
     }
   });
@@ -44,27 +72,31 @@ export function PaidEventAction({event, myTicketPromise, mePromise}: Props) {
       <TicketSelectorModal
         mePromise={mePromise}
         isOpen={isTicketSelectorModalOpen}
-        onClose={() => setIsTicketSelectorModalOpen(false)}
-        onDone={() => {}}
+        onClose={() => closeTicketSelectorModal()}
         event={event}
       />
-      <form
-        className="flex items-center gap-x-2 w-full"
-        onSubmit={onJoinSubmit}
-      >
-        <Button
-          type="submit"
-          disabled={form.formState.isSubmitting || event.isPast}
-          isLoading={form.formState.isSubmitting}
-          size="sm"
-          data-testid="buy-ticket-button"
-        >
-          {`Buy ticket`}
-        </Button>
-        <Badge
-          variant={'outline'}
-          className="hidden md:flex"
-        >{`from ${formattedPrice}`}</Badge>
+      <SignUpCodeModal
+        isOpen={isSignUpCodeModalOpen}
+        onOpenChange={onSignUpCodeModalOpenChange}
+        eventShortId={event.shortId}
+      />
+      <form onSubmit={openTicketSelector}>
+        <div className="flex items-center gap-x-2 w-full">
+          <Button
+            disabled={form.formState.isSubmitting || event.isPast}
+            isLoading={form.formState.isSubmitting}
+            size="sm"
+            data-testid="buy-ticket-button"
+            type="submit"
+          >
+            {isEventSignUpProtected && <LockIcon className="mr-2 w-4 h-4" />}
+            {`Buy ticket`}
+          </Button>
+          <Badge
+            variant={'outline'}
+            className="hidden md:flex"
+          >{`from ${formattedPrice}`}</Badge>
+        </div>
       </form>
     </>
   );

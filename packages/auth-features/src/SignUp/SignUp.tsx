@@ -40,12 +40,17 @@ export function SignUp({}: Props) {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    await api.auth.signUp.mutate(data).then((res) => {
-      if (res?.success) {
-        toast.success('You have successfully signed up!');
-        router.push('/sign-in');
-      }
-    });
+    await api.auth.signUp
+      .mutate(data)
+      .then((res) => {
+        if (res?.success) {
+          toast.success('You have successfully signed up!');
+          router.push('/sign-in');
+        }
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      });
   };
 
   return (

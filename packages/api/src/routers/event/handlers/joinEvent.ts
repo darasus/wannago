@@ -11,6 +11,7 @@ export const joinEvent = protectedProcedure
     z.object({
       eventId: z.string().uuid(),
       hasPlusOne: z.boolean(),
+      code: z.string().optional(),
     })
   )
   .mutation(async ({input, ctx}) => {
@@ -22,12 +23,7 @@ export const joinEvent = protectedProcedure
 
     invariant(user, userNotFoundError);
 
-    const [
-      existingSignUp,
-      event,
-      numberOfRegisteredUsers,
-      numberOfInvitedUsers,
-    ] = await Promise.all([
+    const [existingSignUp, event, numberOfRegisteredUsers] = await Promise.all([
       ctx.prisma.eventSignUp.findFirst({
         where: {
           eventId: input.eventId,
@@ -51,14 +47,6 @@ export const joinEvent = protectedProcedure
           },
         },
       }),
-      ctx.prisma.eventSignUp.count({
-        where: {
-          eventId: input.eventId,
-          status: {
-            in: ['REGISTERED', 'INVITED'],
-          },
-        },
-      }),
     ]);
 
     if (!event?.isPublished) {
@@ -78,6 +66,7 @@ export const joinEvent = protectedProcedure
     assertCanJoinEvent(ctx)({
       numberOfRegisteredUsers,
       event,
+      code: input.code,
     });
 
     if (!existingSignUp) {
