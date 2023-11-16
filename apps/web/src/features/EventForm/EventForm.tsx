@@ -2,7 +2,7 @@
 
 import {FormEventHandler} from 'react';
 import {FormProvider, useFormContext} from 'react-hook-form';
-import {Button, CardBase, Form} from 'ui';
+import {Badge, Button, CardBase, Form} from 'ui';
 import {Organization, User} from '@prisma/client';
 import {z} from 'zod';
 import {eventFormSchema} from './hooks/useEventForm';
@@ -65,7 +65,19 @@ export function EventForm({
               <FormProvider {...form}>
                 {items.map(({label, content}, i) => {
                   return (
-                    <CardBase key={i} title={label}>
+                    <CardBase
+                      key={i}
+                      title={
+                        label === 'Privacy' ? (
+                          <div className="flex gap-1">
+                            {label}
+                            <Badge variant={'outline'}>Beta</Badge>
+                          </div>
+                        ) : (
+                          label
+                        )
+                      }
+                    >
                       <div className="flex flex-col gap-y-2">{content}</div>
                     </CardBase>
                   );
