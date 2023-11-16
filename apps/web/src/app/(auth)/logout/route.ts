@@ -25,7 +25,7 @@ export const GET = async (request: NextRequest) => {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: '/sign-in?refresh=true', // redirect to login page
+      Location: '/sign-in', // redirect to login page
     },
   });
 };

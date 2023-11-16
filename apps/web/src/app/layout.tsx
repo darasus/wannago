@@ -7,7 +7,6 @@ import {Tools} from '../features/Tools';
 import {ToastProvider} from '../features/ToastProvider';
 import {Scripts} from '../features/Scripts';
 import {ClientProvider} from './ClientProvider';
-import {ClientRefresher} from './features/ClientRefresher/ClientRefresher';
 
 export const metadata = {
   title: 'WannaGo',
@@ -36,7 +35,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           </div>
           <Tools />
           <ToastProvider />
-          <ClientRefresher />
         </ClientProvider>
       </body>
       <Scripts />
