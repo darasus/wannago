@@ -1,11 +1,11 @@
 import {auth} from 'auth';
-import {cookies} from 'next/headers';
+import {cookies, headers} from 'next/headers';
 
 import type {NextRequest} from 'next/server';
 import {api} from '../../../trpc/server-http';
 
 export const GET = async (request: NextRequest) => {
-  const authRequest = auth.handleRequest({request, cookies});
+  const authRequest = auth.handleRequest('GET', {headers, cookies});
   // check if user is authenticated
   const session = await authRequest.validate();
 
