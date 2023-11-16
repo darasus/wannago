@@ -1,12 +1,12 @@
 import {OAuthRequestError} from '@lucia-auth/oauth';
-import {cookies} from 'next/headers';
+import {cookies, headers} from 'next/headers';
 import {v4 as uuid} from 'uuid';
 import type {NextRequest} from 'next/server';
 import {auth, googleAuth} from 'auth';
 import {prisma} from 'database';
 
 export const GET = async (request: NextRequest) => {
-  const authRequest = auth.handleRequest({request, cookies});
+  const authRequest = auth.handleRequest('GET', {headers, cookies});
   const session = await authRequest.validate();
 
   if (session) {
