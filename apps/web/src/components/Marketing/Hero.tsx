@@ -1,8 +1,8 @@
 import {titleFontClassName} from '../../fonts';
-import {Container, CtaButton} from 'ui';
+import {Container} from 'ui';
 import {cn} from 'utils';
-import EventPreview from './EventPreview';
 import {api} from '../../trpc/server-http';
+import {HeroCta} from './HeroCta';
 
 export async function Hero() {
   const me = await api.user.me.query();
@@ -17,24 +17,28 @@ export async function Hero() {
           )}
         >
           <span className="mb-4">
-            Simplest way to
-            <br />
-            sell tickets online
+            Smooth ticketing <br className="hidden md:block" /> for private
+            events
           </span>
         </h1>
-        <div className="mx-auto mt-6 max-w-sm text-lg tracking-tight text-center">
-          <span className="">
-            {`Start selling tickets in minutes. No setup fees, and no hidden costs.`}
-          </span>
+        <div className="mx-auto mt-6 max-w-sm text-xl text-center font-bold text-secondary-foreground">
+          {`Start selling tickets in minutes. No setup fees, and no hidden costs.`}
         </div>
         <div className="mt-10 flex justify-center gap-x-6 mb-16">
-          <CtaButton href={me ? '/e/add' : '/sign-up'}>
-            Create your first event
-          </CtaButton>
+          {/* <CtaButton
+            href={
+              (await api.user.me.query().then((res) => Boolean(res)))
+                ? '/e/add'
+                : '/sign-up'
+            }
+          >
+            Try for free
+          </CtaButton> */}
+          <HeroCta isLoggedIn={Boolean(me)} />
         </div>
-        <div className="flex justify-center relative w-full max-w-2xl m-auto">
+        {/* <div className="flex justify-center relative w-full max-w-2xl m-auto">
           <EventPreview event={await api.event.getRandomExample.query()} />
-        </div>
+        </div> */}
       </Container>
     </div>
   );
