@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const ctx = await createContext({req});
+  const ctx = await createContext();
   const caller = stripeWebhookHandlerRouter.createCaller(ctx);
 
   try {

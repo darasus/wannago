@@ -20,8 +20,6 @@ import {assertCanViewEvent} from './assertions/assertCanViewEvent';
 import {assertCanPublishEvent} from './assertions/assertCanPublishEvent';
 import {Inngest, EventSchemas} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
-import {NextRequest} from 'next/server';
-import {NextApiRequest} from 'next';
 import {getPageSession, auth as _auth} from 'auth';
 import {cookies, headers} from 'next/headers';
 import {AuthRequest} from 'lucia';
@@ -96,9 +94,7 @@ const inngest = new Inngest({
 });
 export type InngestType = typeof inngest;
 
-export async function createContext(opts: {
-  req: NextRequest | NextApiRequest;
-}): Promise<Context> {
+export async function createContext(): Promise<Context> {
   const _headers = headers();
   const timezone = _headers.get('x-vercel-ip-timezone') ?? 'UTC';
   const country = _headers.get('x-vercel-ip-country') ?? 'UTC';

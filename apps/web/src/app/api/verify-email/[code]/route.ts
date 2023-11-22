@@ -7,7 +7,7 @@ export async function GET(
   req: NextRequest,
   {params}: {params: {code: string}}
 ) {
-  const ctx = await createContext({req});
+  const ctx = await createContext();
   const caller = authRouter.createCaller(ctx);
 
   try {
