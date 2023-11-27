@@ -16,8 +16,13 @@ import {StatCard} from '../StatCard/StatCard';
 interface AdminDashboardProps {
   usersCount: number;
   eventsCount: number;
+  eventSignUpsCount: number;
   organizationsCount: number;
-  dailySignUpsData: Array<{
+  dailyEventSignUpsData: Array<{
+    date: string;
+    count: number;
+  }>;
+  dailyUserRegistrationsData: Array<{
     date: string;
     count: number;
   }>;
@@ -31,8 +36,10 @@ export function AdminDashboard({
   usersCount,
   eventsCount,
   organizationsCount,
+  eventSignUpsCount,
   dailyEventsCreatedData,
-  dailySignUpsData,
+  dailyEventSignUpsData,
+  dailyUserRegistrationsData,
 }: AdminDashboardProps) {
   return (
     <Container maxSize="full">
@@ -71,16 +78,22 @@ export function AdminDashboard({
           <Text className="text-5xl">{organizationsCount}</Text>
         </CardBase>
         <StatCard
-          items={dailySignUpsData}
+          items={dailyUserRegistrationsData}
           value={usersCount.toString()}
           label={'Users'}
-          secondaryLabel="Daily user sign ups (last 7 days)"
+          secondaryLabel="Daily user registrations (last 14 days)"
+        />
+        <StatCard
+          items={dailyEventSignUpsData}
+          value={eventSignUpsCount.toString()}
+          label={'Event sign ups'}
+          secondaryLabel="Daily event sign ups (last 14 days)"
         />
         <StatCard
           items={dailyEventsCreatedData}
           value={eventsCount.toString()}
           label={'Events'}
-          secondaryLabel="Daily events created (last 7 days)"
+          secondaryLabel="Daily events created (last 14 days)"
         />
         <CardBase
           className="lg:col-span-12"
@@ -91,7 +104,7 @@ export function AdminDashboard({
             <LineChart
               width={500}
               height={300}
-              data={dailySignUpsData}
+              data={dailyEventSignUpsData}
               margin={{
                 top: 5,
                 right: 30,

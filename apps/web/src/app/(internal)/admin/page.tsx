@@ -7,30 +7,46 @@ export const preferredRegion = 'iad1';
 
 export default async function AdminPage() {
   const [
-    dailySignUps,
+    dailyUserRegistrations,
+    dailyEventSignUps,
     dailyCreatedEvents,
     usersCount,
+    eventSignUpsCount,
     eventsCount,
     organizationsCount,
   ] = await Promise.all([
-    api.admin.getDailySignUps.query(),
+    api.admin.getDailyUserRegistrations.query(),
+    api.admin.getDailyEventSignUps.query(),
     api.admin.getDailyCreatedEvents.query(),
     api.admin.getUsersCount.query(),
+    api.admin.getEventSignUpsCount.query(),
     api.admin.getEventsCount.query(),
     api.admin.getOrganizationsCount.query(),
   ]);
 
-  const dailySignUpsData = Object.entries(dailySignUps || {}).map((signUp) => {
+  const dailyUserRegistrationsData = Object.entries(
+    dailyUserRegistrations || {}
+  ).map((item) => {
     return {
-      date: signUp[0],
-      count: signUp[1] as number,
+      date: item[0],
+      count: item[1] as number,
     };
   });
-  const dailyEventsCreatedData = Object.entries(dailyCreatedEvents || {}).map(
-    (signUp) => {
+
+  const dailyEventSignUpsData = Object.entries(dailyEventSignUps || {}).map(
+    (item) => {
       return {
-        date: signUp[0],
-        count: signUp[1] as number,
+        date: item[0],
+        count: item[1] as number,
+      };
+    }
+  );
+
+  const dailyEventsCreatedData = Object.entries(dailyCreatedEvents || {}).map(
+    (item) => {
+      return {
+        date: item[0],
+        count: item[1] as number,
       };
     }
   );
@@ -40,8 +56,10 @@ export default async function AdminPage() {
       eventsCount={eventsCount}
       organizationsCount={organizationsCount}
       usersCount={usersCount}
-      dailySignUpsData={dailySignUpsData}
+      eventSignUpsCount={eventSignUpsCount}
+      dailyEventSignUpsData={dailyEventSignUpsData}
       dailyEventsCreatedData={dailyEventsCreatedData}
+      dailyUserRegistrationsData={dailyUserRegistrationsData}
     />
   );
 }
