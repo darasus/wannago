@@ -183,10 +183,10 @@
   },
   "packageManager": "pnpm@8.6.11",
   "engines": {
-    "node": ">=18",
+    "node": ">=20",
     "pnpm": ">=8"
   },
   "volta": {
-    "node": "18.16.0"
+    "node": "20.16.0"
   }
 }
