@@ -26,6 +26,10 @@ export function assertCanViewEvent(ctx: AssertionContext) {
     };
     code?: string;
   }) => {
+    if (ctx.auth?.user.type === 'ADMIN') {
+      return;
+    }
+
     const isMyEvent = getIsMyEvent(event, ctx);
 
     if (isMyEvent) {
