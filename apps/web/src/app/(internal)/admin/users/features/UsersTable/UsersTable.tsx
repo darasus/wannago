@@ -1,49 +1,39 @@
 'use client';
 
 import {User} from '@prisma/client';
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  createColumnHelper,
-} from '@tanstack/react-table';
+import {useReactTable, getCoreRowModel, ColumnDef} from '@tanstack/react-table';
 import {ChevronLeft} from 'lucide-react';
 import Link from 'next/link';
-import {
-  Container,
-  Button,
-  PageHeader,
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from 'ui';
+import {Container, Button, PageHeader} from 'ui';
+import {AdminTable} from '../../../features/AdminTable/AdminTable';
 import {formatDate} from 'utils';
 
-const columnHelper = createColumnHelper<User>();
-
-const columns = [
-  columnHelper.accessor((row) => row.firstName, {
-    id: 'firstName',
-    header: () => 'Name',
+const columns: ColumnDef<User>[] = [
+  {
+    accessorKey: 'id',
+    header: 'id',
+    cell: (info) => info.renderValue(),
+  },
+  {
+    accessorKey: 'firstName',
+    header: () => 'firstName',
     cell: (info) => (
       <Link
         className="underline"
         href={`/u/${info.row.original.id}`}
       >{`${info.getValue()} ${info.row.original.lastName}`}</Link>
     ),
-  }),
-  columnHelper.accessor('createdAt', {
-    cell: (info) => formatDate(info.getValue(), 'dd MMM, HH:mm'),
-  }),
-  columnHelper.accessor('email', {
+  },
+  {
+    accessorKey: 'createdAt',
+    header: 'createdAt',
+    cell: (info) => formatDate(info.getValue() as Date, 'dd MMM, HH:mm'),
+  },
+  {
+    accessorKey: 'email',
+    header: 'email',
     cell: (info) => info.renderValue(),
-  }),
-  columnHelper.accessor('id', {
-    cell: (info) => info.getValue(),
-  }),
+  },
 ];
 
 interface UsersTableProps {
@@ -57,10 +47,6 @@ export function UsersTable({users}: UsersTableProps) {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  if (!users) {
-    return null;
-  }
-
   return (
     <Container maxSize="full">
       <div className="flex flex-col gap-4">
@@ -71,35 +57,7 @@ export function UsersTable({users}: UsersTableProps) {
           </Link>
         </Button>
         <PageHeader title={'All users'} />
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <AdminTable table={table} columns={columns} />
       </div>
     </Container>
   );

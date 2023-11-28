@@ -1,41 +1,45 @@
 'use client';
 
-import {Organization} from '@prisma/client';
+import {Event, EventSignUp} from '@prisma/client';
 import {useReactTable, getCoreRowModel, ColumnDef} from '@tanstack/react-table';
 import {ChevronLeft} from 'lucide-react';
 import Link from 'next/link';
-import {Button, Container, PageHeader} from 'ui';
+import {Container, Button, PageHeader} from 'ui';
 import {AdminTable} from '../../../features/AdminTable/AdminTable';
+import {formatDate} from 'utils';
 
-const columns: ColumnDef<Organization>[] = [
+type Item = EventSignUp & {event: Event};
+
+const columns: ColumnDef<Item>[] = [
   {
     accessorKey: 'id',
     header: 'id',
     cell: (info) => info.renderValue(),
   },
   {
-    accessorKey: 'name',
-    header: () => 'name',
-    cell: (info) => (
-      <Link className="underline" href={`/o/${info.row.original.id}`}>
-        {info.getValue() as string}
-      </Link>
-    ),
+    accessorKey: 'createdAt',
+    header: 'createdAt',
+    cell: (info) => formatDate(info.getValue() as Date, 'dd MMM, HH:mm'),
   },
   {
-    accessorKey: 'email',
-    header: () => 'email',
-    cell: (info) => info.renderValue(),
+    accessorKey: 'eventId',
+    header: 'eventId',
+    cell: (info) => (
+      <Link
+        className="underline"
+        href={`/e/${info.row.original.event.shortId}`}
+      >{`${info.getValue()}`}</Link>
+    ),
   },
 ];
 
-interface OrganizationsTableProps {
-  organizations: Organization[];
+interface SignUpsTableProps {
+  signUps: Item[];
 }
 
-export function OrganizationsTable({organizations}: OrganizationsTableProps) {
+export function SignUpsTable({signUps}: SignUpsTableProps) {
   const table = useReactTable({
-    data: organizations || [],
+    data: signUps || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -49,7 +53,7 @@ export function OrganizationsTable({organizations}: OrganizationsTableProps) {
             Back to admin home
           </Link>
         </Button>
-        <PageHeader title={'All organizations'} />
+        <PageHeader title={'All event sign ups'} />
         <AdminTable table={table} columns={columns} />
       </div>
     </Container>

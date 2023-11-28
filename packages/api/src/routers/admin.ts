@@ -36,6 +36,9 @@ const getAllSignUps = adminProcedure.query(async ({ctx}) => {
     orderBy: {
       createdAt: 'desc',
     },
+    include: {
+      event: true,
+    },
   });
 
   return registeredUsers;

@@ -2,30 +2,22 @@
 
 import {Event} from '@prisma/client';
 import {
+  ColumnDef,
   createColumnHelper,
-  flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 import {ChevronLeft} from 'lucide-react';
 import Link from 'next/link';
-import {
-  Container,
-  Button,
-  PageHeader,
-  Table,
-  TableHead,
-  TableRow,
-  TableHeader,
-  TableBody,
-  TableCell,
-} from 'ui';
+import {Container, Button, PageHeader} from 'ui';
 import {formatDate} from 'utils';
+import {AdminTable} from '../../../features/AdminTable/AdminTable';
 
 const columnHelper = createColumnHelper<Event>();
 
-const columns = [
-  columnHelper.accessor('title', {
+const columns: ColumnDef<Event>[] = [
+  {
+    accessorKey: 'title',
     header: 'Title',
     cell: (info) => (
       <Link
@@ -33,22 +25,20 @@ const columns = [
         className="underline"
         target={'_blank'}
       >
-        {info.getValue()}
+        {info.getValue() as string}
       </Link>
     ),
-  }),
-  columnHelper.accessor('shortId', {
-    header: 'Short ID',
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('isPublished', {
+  },
+  {
+    accessorKey: 'isPublished',
     header: 'Published?',
     cell: (info) => (info.getValue() ? 'Published' : 'Draft'),
-  }),
-  columnHelper.accessor('createdAt', {
+  },
+  {
+    accessorKey: 'createdAt',
     header: 'Created at',
-    cell: (info) => formatDate(info.getValue(), 'dd MMM, HH:mm'),
-  }),
+    cell: (info) => formatDate(info.getValue() as Date, 'dd MMM, HH:mm'),
+  },
 ];
 
 interface EventsTableProps {
@@ -72,35 +62,7 @@ export function EventsTable({events}: EventsTableProps) {
           </Link>
         </Button>
         <PageHeader title={'All events'} />
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <AdminTable table={table} columns={columns} />
       </div>
     </Container>
   );
