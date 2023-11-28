@@ -4,35 +4,36 @@ import {Button} from 'ui';
 import {useParams} from 'next/dist/client/components/navigation';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
-import {useTransition} from 'react';
-import {useCreateConversation} from 'hooks';
+import {useState} from 'react';
+import {api} from '../../../../trpc/client';
 
 export function MessageButton() {
   const router = useRouter();
   const params = useParams();
+  const userId = params.userId as string | undefined;
   const organizationId = params?.organizationId as string | undefined;
-  const [isPending, startTransition] = useTransition();
-  const {createConversation} = useCreateConversation();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Button
       size="sm"
       variant="outline"
-      disabled={isPending}
-      isLoading={isPending}
+      disabled={isLoading}
+      isLoading={isLoading}
       onClick={async () => {
-        startTransition(async () => {
-          const conversation = await createConversation({
-            userId: params?.userId as string | undefined,
-            organizationId,
-          }).catch((error) => {
+        setIsLoading(true);
+        const conversation = await api.conversation.createConversation
+          .mutate({userId, organizationId})
+          .catch((error) => {
             toast.error(error.message);
+          })
+          .finally(() => {
+            setIsLoading(false);
           });
 
-          if (conversation?.id) {
-            router.push(`/messages/${conversation.id}`);
-          }
-        });
+        if (conversation?.id) {
+          router.push(`/messages/${conversation.id}`);
+        }
       }}
       data-testid="message-button"
     >

@@ -2,9 +2,10 @@
 
 import {Event, Organization, User} from '@prisma/client';
 import {OrganizerCard as OrganizerCardView} from 'cards';
-import {useCreateConversation} from 'hooks';
 import {useRouter} from 'next/navigation';
 import {Button} from 'ui';
+import {api} from '../../../../apps/web/src/trpc/client';
+import {useState} from 'react';
 
 interface Props {
   event: Event & {
@@ -15,13 +16,18 @@ interface Props {
 
 export function OrganizerCard({event}: Props) {
   const router = useRouter();
-  const {createConversation, isMutating} = useCreateConversation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onMessageOrganizerClick = async () => {
-    const conversation = await createConversation({
-      organizationId: event?.organizationId,
-      userId: event?.userId,
-    });
+    setIsLoading(true);
+    const conversation = await api.conversation.createConversation
+      .mutate({
+        organizationId: event?.organizationId || undefined,
+        userId: event?.userId || undefined,
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
 
     if (conversation) {
       router.push(`/messages/${conversation?.id}`);
@@ -50,8 +56,8 @@ export function OrganizerCard({event}: Props) {
           onClick={onMessageOrganizerClick}
           variant="link"
           size="sm"
-          disabled={isMutating}
-          isLoading={isMutating}
+          disabled={isLoading}
+          isLoading={isLoading}
           className="p-0 h-auto"
         >
           Message organizer

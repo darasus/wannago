@@ -3,29 +3,45 @@ import {conversationNotFoundError, userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {createTRPCRouter, protectedProcedure} from '../trpc';
+import {TRPCError} from '@trpc/server';
 
 const createConversation = protectedProcedure
   .input(
     z.object({
-      userIds: z.array(z.string().uuid()),
+      userId: z.string().uuid().optional(),
       organizationId: z.string().uuid().optional(),
     })
   )
   .mutation(async ({ctx, input}) => {
+    if (ctx.auth.user.id === input.userId) {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: `You can't message yourself`,
+      });
+    }
+
     const existingConversation = await ctx.prisma.conversation.findFirst({
       where: {
         users: {
           every: {
             id: {
-              in: input.userIds,
+              in: [ctx.auth.user.id, ...(input.userId ? [input.userId] : [])],
             },
           },
         },
-        organizations: {
-          every: {
-            id: input.organizationId,
-          },
-        },
+        ...(input.organizationId
+          ? {
+              organizations: {
+                every: {
+                  id: input.organizationId,
+                },
+              },
+            }
+          : {
+              organizations: {
+                none: {},
+              },
+            }),
       },
       include: {
         users: true,
@@ -39,18 +55,18 @@ const createConversation = protectedProcedure
 
     const conversation = await ctx.prisma.conversation.create({
       data: {
-        ...(input.userIds.length > 0
+        users: {
+          connect: [ctx.auth.user.id, input.userId].map((id) => ({id})),
+        },
+        ...(input.organizationId
           ? {
-              users: {
-                connect: input.userIds.map((id) => ({id})),
+              organizations: {
+                connect: {
+                  id: input.organizationId,
+                },
               },
             }
           : {}),
-        organizations: {
-          connect: {
-            id: input.organizationId,
-          },
-        },
       },
       include: {
         users: true,

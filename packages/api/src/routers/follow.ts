@@ -22,7 +22,7 @@ const follow = protectedProcedure
     if (input.userId === me.id) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
-        message: 'You cannot follow yourself',
+        message: `You can't follow yourself`,
       });
     }
 
