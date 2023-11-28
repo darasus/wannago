@@ -144,6 +144,8 @@ model Organization {
   lastSeens             ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
   followers             Follow[]               @relation(name: "FollowingOrganization")
   preferredCurrency     Currency?              @default(USD)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @default(now()) @updatedAt
 }
 
 model EventSignUp {

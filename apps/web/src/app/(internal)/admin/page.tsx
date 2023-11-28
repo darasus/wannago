@@ -1,3 +1,4 @@
+import {notFound} from 'next/navigation';
 import {api} from '../../../trpc/server-http';
 
 import {AdminDashboard} from './features/AdminDashboard/AdminDashboard';
@@ -6,22 +7,29 @@ export const runtime = 'nodejs';
 export const preferredRegion = 'iad1';
 
 export default async function AdminPage() {
+  const me = await api.user.me.query();
+
+  if (me?.type !== 'ADMIN') {
+    notFound();
+  }
+
+  const [usersCount, eventSignUpsCount, eventsCount, organizationsCount] =
+    await Promise.all([
+      api.admin.getUsersCount.query(),
+      api.admin.getEventSignUpsCount.query(),
+      api.admin.getEventsCount.query(),
+      api.admin.getOrganizationsCount.query(),
+    ]);
   const [
     dailyUserRegistrations,
     dailyEventSignUps,
     dailyCreatedEvents,
-    usersCount,
-    eventSignUpsCount,
-    eventsCount,
-    organizationsCount,
+    dailyCreatedOrganizations,
   ] = await Promise.all([
     api.admin.getDailyUserRegistrations.query(),
     api.admin.getDailyEventSignUps.query(),
     api.admin.getDailyCreatedEvents.query(),
-    api.admin.getUsersCount.query(),
-    api.admin.getEventSignUpsCount.query(),
-    api.admin.getEventsCount.query(),
-    api.admin.getOrganizationsCount.query(),
+    api.admin.getDailyCreatedOrganizations.query(),
   ]);
 
   const dailyUserRegistrationsData = Object.entries(
@@ -29,7 +37,7 @@ export default async function AdminPage() {
   ).map((item) => {
     return {
       date: item[0],
-      count: item[1] as number,
+      count: item[1],
     };
   });
 
@@ -37,7 +45,7 @@ export default async function AdminPage() {
     (item) => {
       return {
         date: item[0],
-        count: item[1] as number,
+        count: item[1],
       };
     }
   );
@@ -46,10 +54,19 @@ export default async function AdminPage() {
     (item) => {
       return {
         date: item[0],
-        count: item[1] as number,
+        count: item[1],
       };
     }
   );
+
+  const dailyCreatedOrganizationsData = Object.entries(
+    dailyCreatedOrganizations || {}
+  ).map((item) => {
+    return {
+      date: item[0],
+      count: item[1],
+    };
+  });
 
   return (
     <AdminDashboard
@@ -57,9 +74,10 @@ export default async function AdminPage() {
       organizationsCount={organizationsCount}
       usersCount={usersCount}
       eventSignUpsCount={eventSignUpsCount}
-      dailyEventSignUpsData={dailyEventSignUpsData}
-      dailyEventsCreatedData={dailyEventsCreatedData}
-      dailyUserRegistrationsData={dailyUserRegistrationsData}
+      dailyCreatedEventSignUpsData={dailyEventSignUpsData}
+      dailyCreatedEventsData={dailyEventsCreatedData}
+      dailyCreatedUsersData={dailyUserRegistrationsData}
+      dailyCreatedOrganizationsData={dailyCreatedOrganizationsData}
     />
   );
 }

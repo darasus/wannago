@@ -31,6 +31,16 @@ const getAllUsers = adminProcedure.query(async ({ctx}) => {
   return registeredUsers;
 });
 
+const getAllSignUps = adminProcedure.query(async ({ctx}) => {
+  const registeredUsers = await ctx.prisma.eventSignUp.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  return registeredUsers;
+});
+
 const getAllOrganizations = adminProcedure.query(async ({ctx}) => {
   return ctx.prisma.organization.findMany({
     include: {
@@ -55,14 +65,14 @@ const getAllEvents = adminProcedure.query(async ({ctx}) => {
 
 const getDailyUserRegistrations = adminProcedure.query(async ({ctx}) => {
   const dateRange = createDateRange();
-  const users = await ctx.prisma.user.findMany({
+  const items = await ctx.prisma.user.findMany({
     orderBy: {
       createdAt: 'desc',
     },
   });
 
-  users.forEach((signUp) => {
-    const date = format(new Date(signUp.createdAt), 'yyyy-MM-dd');
+  items.forEach((items) => {
+    const date = format(new Date(items.createdAt), 'yyyy-MM-dd');
 
     if (dateRange.hasOwnProperty(date)) {
       dateRange[date]++;
@@ -74,14 +84,14 @@ const getDailyUserRegistrations = adminProcedure.query(async ({ctx}) => {
 
 const getDailyEventSignUps = adminProcedure.query(async ({ctx}) => {
   const dateRange = createDateRange();
-  const signUps = await ctx.prisma.eventSignUp.findMany({
+  const items = await ctx.prisma.eventSignUp.findMany({
     orderBy: {
       createdAt: 'desc',
     },
   });
 
-  signUps.forEach((signUp) => {
-    const date = format(new Date(signUp.createdAt), 'yyyy-MM-dd');
+  items.forEach((item) => {
+    const date = format(new Date(item.createdAt), 'yyyy-MM-dd');
 
     if (dateRange.hasOwnProperty(date)) {
       dateRange[date]++;
@@ -93,10 +103,25 @@ const getDailyEventSignUps = adminProcedure.query(async ({ctx}) => {
 
 const getDailyCreatedEvents = adminProcedure.query(async ({ctx}) => {
   const dateRange = createDateRange();
-  const events = await ctx.prisma.event.findMany();
+  const items = await ctx.prisma.event.findMany();
 
-  events.forEach((event) => {
-    const date = format(new Date(event.createdAt), 'yyyy-MM-dd');
+  items.forEach((item) => {
+    const date = format(new Date(item.createdAt), 'yyyy-MM-dd');
+
+    if (dateRange.hasOwnProperty(date)) {
+      dateRange[date]++;
+    }
+  });
+
+  return dateRange;
+});
+
+const getDailyCreatedOrganizations = adminProcedure.query(async ({ctx}) => {
+  const dateRange = createDateRange();
+  const items = await ctx.prisma.organization.findMany();
+
+  items.forEach((item) => {
+    const date = format(new Date(item.createdAt), 'yyyy-MM-dd');
 
     if (dateRange.hasOwnProperty(date)) {
       dateRange[date]++;
@@ -126,6 +151,7 @@ export const adminRouter = createTRPCRouter({
   getAllUsers,
   getAllEvents,
   getAllOrganizations,
+  getAllSignUps,
   getUsersCount,
   getEventsCount,
   getOrganizationsCount,
@@ -133,4 +159,5 @@ export const adminRouter = createTRPCRouter({
   getDailyEventSignUps,
   getDailyUserRegistrations,
   getEventSignUpsCount,
+  getDailyCreatedOrganizations,
 });
