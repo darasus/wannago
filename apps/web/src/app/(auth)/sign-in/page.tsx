@@ -1,4 +1,5 @@
 import {SignIn} from 'auth-features';
+import {revalidatePath} from 'next/cache';
 import {Container} from 'ui';
 
 export const metadata = {
@@ -11,7 +12,13 @@ export const preferredRegion = 'iad1';
 export default function LoginPage() {
   return (
     <Container maxSize="xs">
-      <SignIn />
+      <SignIn
+        onDone={async () => {
+          'use server';
+
+          revalidatePath('/', 'layout');
+        }}
+      />
     </Container>
   );
 }

@@ -25,14 +25,16 @@ import {api} from '../../../../apps/web/src/trpc/client';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
 
-interface Props {}
+interface Props {
+  onDone?: () => Promise<void>;
+}
 
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 });
 
-export function SignIn({}: Props) {
+export function SignIn({onDone}: Props) {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,8 +43,9 @@ export function SignIn({}: Props) {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     await api.auth.signIn
       .mutate(data)
-      .then((res) => {
+      .then(async (res) => {
         if (res?.success) {
+          await onDone?.();
           router.refresh();
           router.push('/dashboard');
         }
