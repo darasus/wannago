@@ -19,9 +19,11 @@ import {
   organizerNotFoundError,
   userNotFoundError,
 } from 'error';
+import {slugify} from 'inngest';
 
 export const emailReminderScheduled = inngest.createFunction(
   {
+    id: slugify('Email Reminder Scheduled'),
     name: 'Email Reminder Scheduled',
     cancelOn: [
       {event: 'event.removed', match: 'data.eventId'},
@@ -68,7 +70,7 @@ export const emailReminderScheduled = inngest.createFunction(
       return null;
     }
 
-    await ctx.step.sleepUntil(reminderDate);
+    await ctx.step.sleepUntil('wait-before-reminder-date', reminderDate);
 
     await ctx.step.run('Send event reminder email to attendees', async () => {
       // if free event
@@ -83,7 +85,7 @@ export const emailReminderScheduled = inngest.createFunction(
             } as const;
           });
 
-        await ctx.step.sendEvent(events);
+        await ctx.step.sendEvent('send-event-reminder-email', events);
       }
 
       // if paid event
@@ -97,7 +99,7 @@ export const emailReminderScheduled = inngest.createFunction(
             } as const;
           });
 
-        await ctx.step.sendEvent(events);
+        await ctx.step.sendEvent('send-event-reminder-email', events);
       }
     });
   }
@@ -105,6 +107,7 @@ export const emailReminderScheduled = inngest.createFunction(
 
 export const emailReminderSent = inngest.createFunction(
   {
+    id: slugify('Email Reminder Sent'),
     name: 'Email Reminder Sent',
   },
   {event: 'email/reminder.sent'},
@@ -127,8 +130,8 @@ export const emailReminderSent = inngest.createFunction(
     const organizerName = isUser(organizer)
       ? `${organizer.firstName} ${organizer.lastName}`
       : isOrganization(organizer)
-      ? `${organizer.name}`
-      : '';
+        ? `${organizer.name}`
+        : '';
 
     return ctx.postmark.sendToTransactionalStream({
       replyTo: 'WannaGo Team <hello@wannago.app>',
@@ -150,6 +153,7 @@ export const emailReminderSent = inngest.createFunction(
 
 export const ticketPurchaseEmailSent = inngest.createFunction(
   {
+    id: slugify('Ticket Purchase Email Sent'),
     name: 'Ticket Purchase Email Sent',
   },
   {event: 'email/ticket-purchase-email.sent'},
@@ -177,8 +181,8 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
     const organizerName = isUser(organizer)
       ? `${organizer.firstName} ${organizer.lastName}`
       : isOrganization(organizer)
-      ? `${organizer.name}`
-      : '';
+        ? `${organizer.name}`
+        : '';
 
     await ctx.step.run(
       `Sent ticket purchase confirmation to user's email`,
@@ -212,6 +216,7 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
 
 export const eventSignUp = inngest.createFunction(
   {
+    id: slugify('Event Sign Up'),
     name: 'Event Sign Up',
   },
   {event: 'email/event.sign.up'},
@@ -260,6 +265,7 @@ export const eventSignUp = inngest.createFunction(
 
 export const eventInvite = inngest.createFunction(
   {
+    id: slugify('Event Invite'),
     name: 'Event Invite',
   },
   {event: 'email/event.invite'},
@@ -310,6 +316,7 @@ export const eventInvite = inngest.createFunction(
 
 export const messageToAllAttendees = inngest.createFunction(
   {
+    id: slugify('Message To All Attendees'),
     name: 'Message To All Attendees',
   },
   {event: 'email/message.to.all.attendees'},
@@ -370,11 +377,17 @@ export const messageToAllAttendees = inngest.createFunction(
 
 export const afterRegisterNoCreatedEventFollowUpEmail = inngest.createFunction(
   {
+    id: slugify('After Register No Created Event Follow Up Email'),
     name: 'After Register No Created Event Follow Up Email',
   },
   {event: 'email/after.register.no.created.event.follow.up.email'},
   async (ctx) => {
-    await ctx.step.sleep(1000 * 60 * 60 * 24 * 2);
+    await ctx.step.sleep(
+      `wait-before-sending-${slugify(
+        'After Register No Created Event Follow Up Email'
+      )}`,
+      1000 * 60 * 60 * 24 * 2
+    );
 
     const user = await ctx.prisma.user.findUnique({
       where: {id: ctx.event.data.userId},
@@ -413,6 +426,7 @@ export const afterRegisterNoCreatedEventFollowUpEmail = inngest.createFunction(
 
 export const eventCancelInvite = inngest.createFunction(
   {
+    id: slugify('Event Cancel Invite'),
     name: 'Event Cancel Invite',
   },
   {event: 'email/event.cancel.invite'},
@@ -462,6 +476,7 @@ export const eventCancelInvite = inngest.createFunction(
 
 export const eventCancelSignUp = inngest.createFunction(
   {
+    id: slugify('Event Cancel Sign Up'),
     name: 'Event Cancel Sign Up',
   },
   {event: 'email/event.cancel.sign.up'},
@@ -511,6 +526,7 @@ export const eventCancelSignUp = inngest.createFunction(
 
 export const organizerEventSignUpNotification = inngest.createFunction(
   {
+    id: slugify('Organizer Event Sign Up Notification'),
     name: 'Organizer Event Sign Up Notification',
   },
   {event: 'email/organizer.event.sign.up.notification'},
@@ -555,6 +571,7 @@ export const organizerEventSignUpNotification = inngest.createFunction(
 
 export const verifyEmailAddressEmail = inngest.createFunction(
   {
+    id: slugify('Verify Email Address Email'),
     name: 'Verify Email Address Email',
   },
   {event: 'email/verify.email.email'},

@@ -1,8 +1,10 @@
+import {slugify} from 'inngest';
 import {inngest} from '../client';
 import {addDays} from 'date-fns';
 
 export const stripePayoutScheduled = inngest.createFunction(
   {
+    id: slugify('Stripe Payout Scheduled'),
     name: 'Stripe Payout Scheduled',
     cancelOn: [
       {event: 'event.removed', match: 'data.eventId'},
@@ -11,7 +13,7 @@ export const stripePayoutScheduled = inngest.createFunction(
     ],
   },
   {event: 'stripe/payout.scheduled'},
-  async ctx => {
+  async (ctx) => {
     const event = await ctx.step.run('Fetch event', () =>
       ctx.prisma.event.findUnique({
         where: {id: ctx.event.data.eventId},
@@ -26,7 +28,7 @@ export const stripePayoutScheduled = inngest.createFunction(
     const endDate = new Date(event.endDate);
     const payoutDate = addDays(endDate, 7); // 7 days after event
 
-    await ctx.step.sleepUntil(payoutDate);
+    await ctx.step.sleepUntil('wait-before-payout', payoutDate);
 
     await ctx.step.run('Payout to linked account', async () => {
       const stripeLinkedAccountId =
@@ -46,12 +48,13 @@ export const stripePayoutScheduled = inngest.createFunction(
 
 export const stripeTicketsPurchased = inngest.createFunction(
   {
+    id: slugify('Stripe Tickets Purchased'),
     name: 'Stripe Tickets Purchased',
   },
   {event: 'stripe/tickets.purchased'},
-  async ctx => {
-    await ctx.step.sleep(1000);
-    await ctx.step.sendEvent({
+  async (ctx) => {
+    await ctx.step.sleep('wait-a-second', 1000);
+    await ctx.step.sendEvent('send-ticket-purchase-email', {
       name: 'email/ticket-purchase-email.sent',
       data: {
         eventId: ctx.event.data.eventId,

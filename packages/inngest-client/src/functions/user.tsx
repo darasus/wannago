@@ -1,12 +1,14 @@
+import {slugify} from 'inngest';
 import {inngest} from '../client';
 
 export const userAccountRegistered = inngest.createFunction(
   {
+    id: slugify('User Account Registered'),
     name: 'User Account Registered',
   },
   {event: 'user/account.registered'},
   async (ctx) => {
-    await ctx.step.sleep(5000);
+    await ctx.step.sleep('wait-five-seconds', 5000);
 
     const user = await ctx.step.run('Fetch user', () => {
       return ctx.prisma.user.findUnique({

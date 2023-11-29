@@ -1,4 +1,4 @@
-import {EventSchemas, Inngest, InngestMiddleware} from 'inngest';
+import {EventSchemas, Inngest, InngestMiddleware, slugify} from 'inngest';
 import {prisma} from 'database';
 import {Stripe} from 'lib/src/stripe';
 import {Postmark} from 'lib/src/postmark';
@@ -48,7 +48,7 @@ const middleware = new InngestMiddleware({
 });
 
 export const inngest = new Inngest({
-  name: 'WannaGo',
+  id: slugify('WannaGo'),
   schemas: new EventSchemas().fromRecord<EventsStoreType>(),
   middleware: [middleware],
 });

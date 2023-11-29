@@ -18,7 +18,7 @@ import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
 import {assertCanViewEvent} from './assertions/assertCanViewEvent';
 import {assertCanPublishEvent} from './assertions/assertCanPublishEvent';
-import {Inngest, EventSchemas} from 'inngest';
+import {Inngest, EventSchemas, slugify} from 'inngest';
 import {EventsStoreType} from 'inngest-client';
 import {getPageSession, auth as _auth} from 'auth';
 import {cookies, headers} from 'next/headers';
@@ -89,7 +89,7 @@ export type AssertionContext = CreateInnerContextOptions;
 export type Context = CreateContextOptions;
 
 const inngest = new Inngest({
-  name: 'WannaGo',
+  id: slugify('WannaGo'),
   schemas: new EventSchemas().fromRecord<EventsStoreType>(),
 });
 export type InngestType = typeof inngest;
