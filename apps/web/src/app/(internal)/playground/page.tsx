@@ -24,9 +24,6 @@ const items = [
   },
 ];
 
-export const runtime = 'edge';
-export const preferredRegion = 'iad1';
-
 export default function PlaygroundPage() {
   return (
     <Container maxSize="full" className="flex flex-col gap-4">
