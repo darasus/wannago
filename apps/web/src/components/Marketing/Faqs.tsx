@@ -16,8 +16,8 @@ const faqs = [
     answer: (
       <span>
         After creating account on wannago.app, simply go to{' '}
-        <Link className="underline" href="/dashboard">
-          wannago.app/dashboard
+        <Link className="underline" href="/events">
+          wannago.app/events
         </Link>{' '}
         {`and click on the "+ Create event" button. Then enter the details of your
         event, including the date, time, location, and any other relevant

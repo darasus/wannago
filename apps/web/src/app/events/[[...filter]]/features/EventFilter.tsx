@@ -17,11 +17,11 @@ export function EventFilter() {
   const pathname = usePathname();
 
   const options = [
-    ['All', '/dashboard/all'],
-    ['Attending', '/dashboard/attending'],
-    ['Following', '/dashboard/following'],
-    ['Organizing', '/dashboard/organizing'],
-    ['Past', '/dashboard/past'],
+    ['All', '/events/all'],
+    ['Attending', '/events/attending'],
+    ['Following', '/events/following'],
+    ['Organizing', '/events/organizing'],
+    ['Past', '/events/past'],
   ];
 
   const getLabel = () => {

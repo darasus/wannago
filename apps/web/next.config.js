@@ -77,8 +77,8 @@ const moduleExports = {
   async redirects() {
     return [
       {
-        source: '/dashboard',
-        destination: '/dashboard/all',
+        source: '/events',
+        destination: '/events/all',
         permanent: true,
       },
     ];

@@ -27,7 +27,7 @@ export default async function Dashboard(props: {
 
   return (
     <Container maxSize="sm" className="flex flex-col gap-y-4 md:px-4">
-      <PageHeader title="My events">
+      <PageHeader title="Events">
         <EventFilter />
       </PageHeader>
       <Suspense fallback={<LoadingBlock />}>

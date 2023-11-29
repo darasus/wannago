@@ -18,5 +18,5 @@ export async function GET(
     captureException(error);
   }
 
-  return new Response(null, {status: 302, headers: {Location: '/dashboard'}});
+  return new Response(null, {status: 302, headers: {Location: '/events'}});
 }

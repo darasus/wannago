@@ -23,7 +23,7 @@ export function useRemoveEvent({eventId}: Props) {
           .mutate({eventId})
           .then(() => {
             toast.success(`Event is successfully removed!`);
-            router.push('/dashboard');
+            router.push('/events');
             logEvent('event_deleted', {eventId});
           })
           .catch((error) => {
