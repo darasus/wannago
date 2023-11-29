@@ -6,9 +6,6 @@ import {MessageInput} from './features/MessageInput/MessageInput';
 import {api} from '../../../trpc/server-http';
 import {ChevronLeft} from 'lucide-react';
 
-export const runtime = 'edge';
-export const preferredRegion = 'iad1';
-
 export default async function ConversationPage({
   params: {conversationId},
 }: {

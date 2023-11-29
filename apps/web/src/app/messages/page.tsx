@@ -3,9 +3,6 @@ import {Conversations} from './features/Conversations/Conversations';
 import {Suspense} from 'react';
 import {api} from '../../trpc/server-http';
 
-export const runtime = 'edge';
-export const preferredRegion = 'iad1';
-
 export default async function MessagesPage() {
   return (
     <Container className="flex flex-col gap-4" maxSize="sm">

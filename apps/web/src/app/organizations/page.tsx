@@ -7,9 +7,6 @@ export const metadata = {
   title: 'Organizations | WannaGo',
 };
 
-export const runtime = 'edge';
-export const preferredRegion = 'iad1';
-
 export default async function SettingsPage() {
   const organizations = await api.organization.getMyOrganizations.query();
 
@@ -18,9 +15,7 @@ export default async function SettingsPage() {
       <Container maxSize="sm">
         <div className="flex flex-col gap-y-4">
           <PageHeader title={'Organizations'} />
-          {organizations?.map((o) => (
-            <OrganizationCard organization={o} />
-          ))}
+          {organizations?.map((o) => <OrganizationCard organization={o} />)}
           {organizations?.length === 0 && (
             <div className="text-center">
               <Text>

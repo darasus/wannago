@@ -67,9 +67,6 @@ const event: NonNullable<RouterOutputs['event']['getRandomExample']> = {
   listing: Listing.LISTED,
 };
 
-export const runtime = 'edge';
-export const preferredRegion = 'iad1';
-
 export default function CardsPage() {
   return (
     <Container maxSize="sm" className="flex flex-col gap-4">

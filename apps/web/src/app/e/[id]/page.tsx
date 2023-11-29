@@ -8,9 +8,6 @@ import {Metadata} from 'next';
 import {TRPCClientError} from '@trpc/client';
 import {EventVisibilityCodeForm} from './features/EventVisibilityCodeForm/EventVisibilityCodeForm';
 
-export const runtime = 'edge';
-export const preferredRegion = 'iad1';
-
 interface Params {
   params: {id: string};
   searchParams: {code?: string};

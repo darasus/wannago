@@ -4,9 +4,6 @@ import {LoadingBlock} from 'ui';
 import {PublicProfile} from '../../../../features/PublicProfile/PublicProfile';
 import {notFound} from 'next/navigation';
 
-export const runtime = 'edge';
-export const preferredRegion = 'iad1';
-
 export const generateMetadata = async ({
   params: {organizationId},
 }: {
