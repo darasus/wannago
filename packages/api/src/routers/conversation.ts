@@ -25,7 +25,10 @@ const createConversation = protectedProcedure
         users: {
           every: {
             id: {
-              in: [ctx.auth.user.id, ...(input.userId ? [input.userId] : [])],
+              in: [
+                ctx.auth.user.id,
+                ...(input.userId ? [input.userId] : []),
+              ].filter(Boolean),
             },
           },
         },
@@ -56,7 +59,9 @@ const createConversation = protectedProcedure
     const conversation = await ctx.prisma.conversation.create({
       data: {
         users: {
-          connect: [ctx.auth.user.id, input.userId].map((id) => ({id})),
+          connect: [ctx.auth.user.id, input.userId]
+            .filter(Boolean)
+            .map((id) => ({id})),
         },
         ...(input.organizationId
           ? {
