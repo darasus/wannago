@@ -8,7 +8,7 @@ export default async function TicketsPage() {
   return (
     <Container maxSize="sm">
       <div className="flex flex-col gap-4">
-        <PageHeader title={'My tickets'} />
+        <PageHeader title={'Tickets'} />
         <MyTickets myTicketSalesPromise={myTicketSalesPromise} />
       </div>
     </Container>

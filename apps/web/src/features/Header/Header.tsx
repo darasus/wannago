@@ -19,7 +19,7 @@ export async function Header() {
         <nav className="relative flex justify-between">
           <div className="flex items-center gap-x-4 md:gap-x-8">
             <div className="flex items-center h-[40px]">
-              <Logo href={!!me ? '/dashboard' : '/'} />
+              <Logo href={!!me ? '/events' : '/'} />
             </div>
             <DesktopMenu />
           </div>

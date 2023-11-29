@@ -47,7 +47,7 @@ export function SignIn({onDone}: Props) {
         if (res?.success) {
           await onDone?.();
           router.refresh();
-          router.push('/dashboard');
+          router.push('/events');
         }
       })
       .catch((err) => {

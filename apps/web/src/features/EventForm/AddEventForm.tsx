@@ -65,7 +65,7 @@ export function AddEventForm({me, myOrganizations}: Props) {
         me={me}
         myOrganizations={myOrganizations}
         onSubmit={onSubmit}
-        onCancelClick={() => router.push(`/dashboard`)}
+        onCancelClick={() => router.push(`/events`)}
       />
     </FormProvider>
   );

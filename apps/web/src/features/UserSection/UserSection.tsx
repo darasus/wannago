@@ -36,16 +36,16 @@ export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
   if (isPublicPage) {
     return (
       <div className="flex gap-2">
-        <Button onClick={() => router.push('/dashboard')}>Dashboard</Button>
+        <Button onClick={() => router.push('/events')}>My events</Button>
       </div>
     );
   }
 
   const options = [
     {
-      label: 'Dashboard',
+      label: 'Events',
       onClick: () => {
-        router.push('/dashboard');
+        router.push('/events');
       },
     },
     {
@@ -56,7 +56,7 @@ export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
       'data-testid': 'profile-button',
     },
     {
-      label: 'My tickets',
+      label: 'Tickets',
       onClick: () => {
         router.push(`/my-tickets`);
       },

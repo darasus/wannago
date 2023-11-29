@@ -7,7 +7,7 @@ describe('organization settings', () => {
 
   it('can update organization', () => {
     cy.login(users.user_1.email, users.user_1.password);
-    cy.visit(`/dashboard`);
+    cy.visit(`/events`);
     cy.wait(1000);
     cy.get('[data-testid="header-user-button"]').click();
     cy.get('[data-testid="organizations-button"]').click();

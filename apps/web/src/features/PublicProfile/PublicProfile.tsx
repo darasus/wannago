@@ -122,7 +122,7 @@ export async function PublicProfile({
         {isLoadingEvents && <LoadingBlock />}
         {events && (
           <div>
-            <PageHeader title="My events" />
+            <PageHeader title="Events" />
           </div>
         )}
         {events && events?.length > 0 && (

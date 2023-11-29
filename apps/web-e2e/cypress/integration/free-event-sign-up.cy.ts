@@ -103,7 +103,7 @@ describe('free event', () => {
     cy.wait(1000);
     cy.get('button').contains('Follow').click();
     cy.get('button').contains('Unfollow').should('be.visible');
-    cy.visit('/dashboard');
+    cy.visit('/events');
     cy.contains(eventTitle).should('not.exist');
   });
 
@@ -124,7 +124,7 @@ describe('free event', () => {
     cy.wait(1000);
     cy.get('button').contains('Follow').click();
     cy.get('button').contains('Unfollow').should('be.visible');
-    cy.visit('/dashboard');
+    cy.visit('/events');
     cy.contains(eventTitle).should('exist');
   });
 });

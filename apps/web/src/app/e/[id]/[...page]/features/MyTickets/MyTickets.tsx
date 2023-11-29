@@ -27,7 +27,7 @@ export function MyTickets({eventSignUpsPromise}: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <PageHeader title={<Text>My tickets</Text>} />
+      <PageHeader title={<Text>Tickets</Text>} />
       <CardBase>
         <TicketList eventSignUps={eventSignUps} />
       </CardBase>
