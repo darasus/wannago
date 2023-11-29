@@ -4,8 +4,6 @@ import {lambdaRouter} from 'api/src/lambda';
 import {createContext} from 'api/src/context';
 import {captureException} from '@sentry/nextjs';
 
-export const runtime = 'nodejs';
-
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
     endpoint: '/api/trpc/lambda',

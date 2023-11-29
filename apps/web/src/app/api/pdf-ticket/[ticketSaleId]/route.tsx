@@ -7,8 +7,6 @@ import {NextRequest} from 'next/server';
 import {invariant} from 'utils';
 import {TicketPDF} from '../../../../components/pdf/TicketPDF';
 
-export const runtime = 'nodejs';
-
 export async function GET(
   req: NextRequest,
   {params}: {params: {ticketSaleId: string | undefined}}

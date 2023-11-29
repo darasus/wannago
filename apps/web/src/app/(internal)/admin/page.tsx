@@ -3,9 +3,6 @@ import {api} from '../../../trpc/server-http';
 
 import {AdminDashboard} from './features/AdminDashboard/AdminDashboard';
 
-export const runtime = 'nodejs';
-export const preferredRegion = 'iad1';
-
 export default async function AdminPage() {
   const me = await api.user.me.query();
 
