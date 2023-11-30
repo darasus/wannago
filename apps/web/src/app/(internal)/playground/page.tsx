@@ -78,9 +78,9 @@ export default function PlaygroundPage() {
         })}
       </Section>
 
-      <Section>
-        {/* <Input label="Hello" placeholder="Placeholder..." isLoading /> */}
-      </Section>
+      {/* <Section> */}
+      {/* <Input label="Hello" placeholder="Placeholder..." isLoading /> */}
+      {/* </Section> */}
 
       <Section>
         {(['xs', 'sm', 'md', 'lg'] as const).map((size) => {
