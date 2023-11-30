@@ -137,7 +137,7 @@
     "react-stately": "3.28.0",
     "recharts": "^2.10.2",
     "server-only": "^0.0.1",
-    "sharp": "^0.33.0",
+    "sharp": "0.32.6",
     "sonner": "^1.2.4",
     "stripe": "^14.5.0",
     "superjson": "^2.2.1",
