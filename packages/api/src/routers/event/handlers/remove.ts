@@ -1,7 +1,6 @@
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
-import {canModifyEvent} from '../../../actions/canModifyEvent';
 
 export const remove = protectedProcedure
   .input(
@@ -10,7 +9,7 @@ export const remove = protectedProcedure
     })
   )
   .mutation(async ({input: {eventId}, ctx}) => {
-    await canModifyEvent(ctx)({eventId});
+    await ctx.assertions.assertCanModifyEvent({eventId});
 
     const ticketSales = await ctx.prisma.ticketSale.count({
       where: {

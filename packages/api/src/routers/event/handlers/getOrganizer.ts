@@ -2,12 +2,11 @@ import {organizerNotFoundError} from 'error';
 import {invariant, isOrganization, isUser} from 'utils';
 import {z} from 'zod';
 import {publicProcedure} from '../../../trpc';
-import {getOrganizerByEventId} from '../../../actions/getOrganizerByEventId';
 
 export const getOrganizer = publicProcedure
   .input(z.object({eventShortId: z.string()}))
   .query(async ({input, ctx}) => {
-    const organizer = await getOrganizerByEventId(ctx)({
+    const organizer = await ctx.actions.getOrganizerByEventId({
       id: input.eventShortId,
     });
 

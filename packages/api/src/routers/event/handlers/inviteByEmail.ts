@@ -4,7 +4,6 @@ import {eventNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
-import {canModifyEvent} from '../../../actions/canModifyEvent';
 
 export const inviteByEmail = protectedProcedure
   .input(
@@ -24,7 +23,7 @@ export const inviteByEmail = protectedProcedure
 
     invariant(event, eventNotFoundError);
 
-    await canModifyEvent(ctx)({eventId: event.id});
+    await ctx.assertions.assertCanModifyEvent({eventId: event.id});
 
     let user: User | null = null;
 

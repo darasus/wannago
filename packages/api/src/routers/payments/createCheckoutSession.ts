@@ -4,7 +4,6 @@ import {getBaseUrl, invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
 import {Stripe} from 'lib/src/stripe';
-import {assertCanPurchaseTickets} from '../../assertions/assertCanPurchaseTickets';
 import {feeAmount, feePercent} from 'const';
 
 export const createCheckoutSession = protectedProcedure
@@ -48,7 +47,7 @@ export const createCheckoutSession = protectedProcedure
 
     invariant(event, eventNotFoundError);
 
-    await assertCanPurchaseTickets(ctx)({
+    await ctx.assertions.assertCanPurchaseTickets({
       event,
       requestedTickets: input.tickets,
     });

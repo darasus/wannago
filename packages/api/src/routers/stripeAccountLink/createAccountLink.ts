@@ -3,13 +3,12 @@ import {getBaseUrl, invariant, isOrganization, isUser} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
 import {Stripe} from 'lib/src/stripe';
-import {getOrganizerById} from '../../actions/getOrganizerById';
 
 export const createAccountLink = protectedProcedure
   .input(z.object({organizerId: z.string().uuid()}))
   .mutation(async ({ctx, input}) => {
     const stripe = new Stripe().client;
-    const organizer = await getOrganizerById(ctx)({
+    const organizer = await ctx.actions.getOrganizerById({
       id: input.organizerId,
     });
     invariant(organizer, organizerNotFoundError);

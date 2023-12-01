@@ -1,6 +1,5 @@
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
-import {getEvents} from '../../../actions/getEvents';
 
 export const getMyEvents = protectedProcedure
   .input(
@@ -24,7 +23,7 @@ export const getMyEvents = protectedProcedure
       ...(user?.organizations.map((o) => o.id) || []),
     ].filter(Boolean) as string[];
 
-    return getEvents(ctx)({
+    return ctx.actions.getEvents({
       authorIds,
       eventType: input.eventType,
       onlyPast: input.onlyPast,

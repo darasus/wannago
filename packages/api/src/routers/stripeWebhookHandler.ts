@@ -6,7 +6,6 @@ import {userNotFoundError} from 'error';
 import {z} from 'zod';
 import {TicketSale} from '@prisma/client';
 import {Stripe} from 'lib/src/stripe';
-import {getUserById} from '../actions/getUserById';
 
 const checkoutCompleteMetadataSchema = z.array(
   z.object({
@@ -28,7 +27,7 @@ const handleCheckoutSessionCompleted = publicProcedure
 
     invariant(customer.email, 'Customer email is required');
 
-    const user = await getUserById(ctx)({
+    const user = await ctx.actions.getUserById({
       id: input.data.object.metadata.externalUserId,
     });
 

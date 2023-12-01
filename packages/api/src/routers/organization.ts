@@ -3,8 +3,6 @@ import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {createTRPCRouter, publicProcedure, protectedProcedure} from '../trpc';
-import {getUserByEmail} from '../actions/getUserByEmail';
-import {getOrganizationWithMembersByOrganizationId} from '../actions/getOrganizationWithMembersByOrganizationId';
 
 const create = protectedProcedure
   .input(
@@ -159,7 +157,7 @@ const addOrganizationMember = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const user = await getUserByEmail(ctx)({
+    const user = await ctx.actions.getUserByEmail({
       email: input.userEmail,
     });
 
@@ -187,9 +185,10 @@ const removeOrganizationMember = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const organization = await getOrganizationWithMembersByOrganizationId(ctx)({
-      id: input.organizationId,
-    });
+    const organization =
+      await ctx.actions.getOrganizationWithMembersByOrganizationId({
+        id: input.organizationId,
+      });
 
     invariant(organization, 'Organization not found');
 
