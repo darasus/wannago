@@ -13,7 +13,7 @@ const filterSchema = z.array(
 );
 
 export const metadata = {
-  title: 'Dashboard | WannaGo',
+  title: 'My events | WannaGo',
 };
 
 export default async function Dashboard(props: {
