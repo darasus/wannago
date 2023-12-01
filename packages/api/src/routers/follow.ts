@@ -3,7 +3,6 @@ import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {createTRPCRouter, protectedProcedure, publicProcedure} from '../trpc';
-import {getUserById} from '../actions/getUserById';
 
 const follow = protectedProcedure
   .input(
@@ -13,7 +12,7 @@ const follow = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const me = await getUserById(ctx)({
+    const me = await ctx.actions.getUserById({
       id: ctx.auth?.user?.id,
     });
 
@@ -63,7 +62,7 @@ const unfollow = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const me = await getUserById(ctx)({
+    const me = await ctx.actions.getUserById({
       id: ctx.auth?.user?.id,
     });
 
@@ -158,7 +157,7 @@ const amFollowing = publicProcedure
       return false;
     }
 
-    const me = await getUserById(ctx)({
+    const me = await ctx.actions.getUserById({
       id: ctx.auth?.user?.id,
     });
 

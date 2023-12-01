@@ -1,15 +1,13 @@
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
-import {canModifyEvent} from '../../../actions/canModifyEvent';
-import {assertCanPublishEvent} from '../../../assertions/assertCanPublishEvent';
 
 export const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
   .mutation(async ({input, ctx}) => {
-    await canModifyEvent(ctx)({eventId: input.eventId});
+    await ctx.assertions.assertCanModifyEvent({eventId: input.eventId});
 
     if (input.isPublished === true) {
-      await assertCanPublishEvent(ctx)({eventId: input.eventId});
+      await ctx.assertions.assertCanPublishEvent({eventId: input.eventId});
     }
 
     const result = await ctx.prisma.event.update({

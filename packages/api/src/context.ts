@@ -12,7 +12,7 @@ import {getOrganizationByUserId} from './actions/getOrganizationByUserId';
 import {getOrganizationByUserExternalId} from './actions/getOrganizationByUserExternalId';
 import {getUserByEmail} from './actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizationWithMembersByOrganizationId';
-import {canModifyEvent} from './actions/canModifyEvent';
+import {assertCanModifyEvent} from './assertions/assertCanModifyEvent';
 import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
 import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
@@ -23,6 +23,7 @@ import {EventsStoreType} from 'inngest-client';
 import {getPageSession, auth as _auth} from 'auth';
 import {cookies, headers} from 'next/headers';
 import {AuthRequest} from 'lucia';
+import {getOrganizerById} from './actions/getOrganizerById';
 
 const actions = {
   getEvents,
@@ -34,8 +35,8 @@ const actions = {
   getOrganizationByUserExternalId,
   getUserByEmail,
   getOrganizationWithMembersByOrganizationId,
-  canModifyEvent,
   getOrganizerByEmail,
+  getOrganizerById,
 } as const;
 
 const assertions = {
@@ -43,6 +44,7 @@ const assertions = {
   assertCanJoinEvent,
   assertCanViewEvent,
   assertCanPublishEvent,
+  assertCanModifyEvent,
 } as const;
 
 type Actions = {

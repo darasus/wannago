@@ -2,7 +2,6 @@ import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
 import {eventInput} from '../validation';
 import {geocode} from 'utils';
-import {canModifyEvent} from '../../../actions/canModifyEvent';
 import {TRPCError} from '@trpc/server';
 
 export const update = protectedProcedure
@@ -31,7 +30,7 @@ export const update = protectedProcedure
       },
       ctx,
     }) => {
-      await canModifyEvent(ctx)({eventId});
+      await ctx.assertions.assertCanModifyEvent({eventId});
 
       const geocodeResponse = await geocode(address);
 

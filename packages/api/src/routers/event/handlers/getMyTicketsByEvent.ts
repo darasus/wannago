@@ -2,7 +2,6 @@ import {eventNotFoundError, userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {publicProcedure} from '../../../trpc';
-import {getUserById} from '../../../actions/getUserById';
 
 export const getMyTicketsByEvent = publicProcedure
   .input(
@@ -15,7 +14,7 @@ export const getMyTicketsByEvent = publicProcedure
       return null;
     }
 
-    const user = await getUserById(ctx)({
+    const user = await ctx.actions.getUserById({
       id: ctx.auth?.user?.id,
     });
 

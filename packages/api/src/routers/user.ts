@@ -1,11 +1,10 @@
 import {z} from 'zod';
 import {createTRPCRouter, protectedProcedure, publicProcedure} from '../trpc';
-import {getUserById as _getUserById} from '../actions/getUserById';
 
 const getUserById = publicProcedure
   .input(z.object({userId: z.string().uuid()}))
   .query(async ({ctx, input}) => {
-    return _getUserById(ctx)({
+    return ctx.actions.getUserById({
       id: input.userId,
     });
   });
@@ -15,7 +14,7 @@ const me = publicProcedure.query(async ({ctx}) => {
     return null;
   }
 
-  return _getUserById(ctx)({
+  return ctx.actions.getUserById({
     id: ctx.auth?.user?.id,
   });
 });

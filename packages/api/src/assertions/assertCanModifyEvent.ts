@@ -7,7 +7,7 @@ const validation = z.object({
   eventId: z.string(),
 });
 
-export function canModifyEvent(ctx: ActionContext) {
+export function assertCanModifyEvent(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
     const {eventId} = validation.parse(input);
 

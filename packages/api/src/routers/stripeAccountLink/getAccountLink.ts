@@ -4,7 +4,6 @@ import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
 import {Stripe} from 'lib/src/stripe';
-import {getOrganizerById} from '../../actions/getOrganizerById';
 
 export const getAccountLink = protectedProcedure
   .input(
@@ -15,7 +14,7 @@ export const getAccountLink = protectedProcedure
   .mutation(async ({ctx, input}) => {
     const stripe = new Stripe().client;
 
-    const organizer = await getOrganizerById(ctx)({
+    const organizer = await ctx.actions.getOrganizerById({
       id: input.organizerId,
     });
 
