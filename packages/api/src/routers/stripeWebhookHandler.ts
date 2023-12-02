@@ -39,55 +39,58 @@ const handleCheckoutSessionCompleted = publicProcedure
 
     let ticketSales: TicketSale[] = [];
 
-    for (const ticket of tickets) {
-      const ticketSale = await ctx.prisma.ticketSale.create({
-        data: {
-          quantity: ticket.quantity,
-          ticketId: ticket.ticketId,
-          userId: user.id,
-          eventId: input.data.object.metadata.eventId,
-        },
-      });
-      ticketSales = [...ticketSales, ticketSale];
-    }
+    await ctx.prisma.$transaction(async (prisma) => {
+      for (const ticket of tickets) {
+        const ticketSale = await prisma.ticketSale.create({
+          data: {
+            quantity: ticket.quantity,
+            ticketId: ticket.ticketId,
+            userId: user.id,
+            eventId: input.data.object.metadata.eventId,
+          },
+        });
 
-    const eventSignUp = await ctx.prisma.eventSignUp.findFirst({
-      where: {
-        userId: user.id,
-        eventId: input.data.object.metadata.eventId,
-      },
-    });
+        ticketSales.push(ticketSale);
+      }
 
-    if (eventSignUp) {
-      await ctx.prisma.eventSignUp.update({
+      const eventSignUp = await prisma.eventSignUp.findFirst({
         where: {
-          id: eventSignUp?.id,
-        },
-        data: {
           userId: user.id,
           eventId: input.data.object.metadata.eventId,
-          status: 'REGISTERED',
-          ticketSales: {
-            connect: ticketSales.map((ticketSale) => ({
-              id: ticketSale.id,
-            })),
-          },
         },
       });
-    } else {
-      await ctx.prisma.eventSignUp.create({
-        data: {
-          userId: user.id,
-          eventId: input.data.object.metadata.eventId,
-          status: 'REGISTERED',
-          ticketSales: {
-            connect: ticketSales.map((ticketSale) => ({
-              id: ticketSale.id,
-            })),
+
+      if (eventSignUp) {
+        await prisma.eventSignUp.update({
+          where: {
+            id: eventSignUp.id,
           },
-        },
-      });
-    }
+          data: {
+            userId: user.id,
+            eventId: input.data.object.metadata.eventId,
+            status: 'REGISTERED',
+            ticketSales: {
+              connect: ticketSales.map((ticketSale) => ({
+                id: ticketSale.id,
+              })),
+            },
+          },
+        });
+      } else {
+        await prisma.eventSignUp.create({
+          data: {
+            userId: user.id,
+            eventId: input.data.object.metadata.eventId,
+            status: 'REGISTERED',
+            ticketSales: {
+              connect: ticketSales.map((ticketSale) => ({
+                id: ticketSale.id,
+              })),
+            },
+          },
+        });
+      }
+    });
 
     await ctx.inngest.send({
       name: 'stripe/tickets.purchased',
