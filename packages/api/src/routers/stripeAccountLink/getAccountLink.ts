@@ -3,7 +3,6 @@ import {organizerNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
-import {Stripe} from 'lib/src/stripe';
 
 export const getAccountLink = protectedProcedure
   .input(
@@ -12,8 +11,6 @@ export const getAccountLink = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const stripe = new Stripe().client;
-
     const organizer = await ctx.actions.getOrganizerById({
       id: input.organizerId,
     });
@@ -27,7 +24,7 @@ export const getAccountLink = protectedProcedure
       })
     );
 
-    const account = await stripe.accounts.createLoginLink(
+    const account = await ctx.stripe.accounts.createLoginLink(
       organizer.stripeLinkedAccountId
     );
 

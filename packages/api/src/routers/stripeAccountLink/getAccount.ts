@@ -2,7 +2,6 @@ import {organizerNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
-import {Stripe} from 'lib/src/stripe';
 
 export const getAccount = protectedProcedure
   .input(
@@ -11,8 +10,6 @@ export const getAccount = protectedProcedure
     })
   )
   .query(async ({ctx, input}) => {
-    const stripe = new Stripe().client;
-
     const organizer = await ctx.actions.getOrganizerById({
       id: input.organizerId,
     });
@@ -23,7 +20,7 @@ export const getAccount = protectedProcedure
       return null;
     }
 
-    const account = await stripe.accounts.retrieve(
+    const account = await ctx.stripe.accounts.retrieve(
       {
         expand: ['external_accounts'],
       },

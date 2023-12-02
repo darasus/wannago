@@ -3,7 +3,6 @@ import {organizerNotFoundError} from 'error';
 import {invariant, isOrganization, isUser} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
-import {Stripe} from 'lib/src/stripe';
 
 export const deleteAccountLink = protectedProcedure
   .input(
@@ -12,8 +11,6 @@ export const deleteAccountLink = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const stripe = new Stripe().client;
-
     const organizer = await ctx.actions.getOrganizerById({
       id: ctx.auth?.user?.id,
     });
@@ -27,7 +24,7 @@ export const deleteAccountLink = protectedProcedure
       })
     );
 
-    await stripe.accounts.del(organizer.stripeLinkedAccountId);
+    await ctx.stripe.accounts.del(organizer.stripeLinkedAccountId);
 
     if (isUser(organizer)) {
       await ctx.prisma.user.update({

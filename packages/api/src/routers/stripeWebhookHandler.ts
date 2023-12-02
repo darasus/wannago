@@ -5,7 +5,7 @@ import {invariant} from 'utils';
 import {userNotFoundError} from 'error';
 import {z} from 'zod';
 import {TicketSale} from '@prisma/client';
-import {Stripe} from 'lib/src/stripe';
+import {stripe} from 'lib/src/stripe';
 
 const checkoutCompleteMetadataSchema = z.array(
   z.object({
@@ -17,9 +17,9 @@ const checkoutCompleteMetadataSchema = z.array(
 const handleCheckoutSessionCompleted = publicProcedure
   .input(handleCheckoutSessionCompletedInputSchema)
   .query(async ({ctx, input}) => {
-    const stripe = new Stripe().client;
-
-    if (input.data.object.status !== 'complete') return {success: true};
+    if (input.data.object.status !== 'complete') {
+      return {success: true};
+    }
 
     const customer = (await stripe.customers.retrieve(
       input.data.object.customer

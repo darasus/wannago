@@ -24,6 +24,7 @@ import {getPageSession, auth as _auth} from 'auth';
 import {cookies, headers} from 'next/headers';
 import {AuthRequest} from 'lucia';
 import {getOrganizerById} from './actions/getOrganizerById';
+import {stripe} from 'lib/src/stripe';
 
 const actions = {
   getEvents,
@@ -64,6 +65,7 @@ interface CreateInnerContextOptions {
   postmark: Postmark;
   cache: CacheService;
   inngest: InngestType;
+  stripe: typeof stripe;
 }
 
 interface CreateContextOptions extends CreateInnerContextOptions {
@@ -83,6 +85,7 @@ export function createContextInner(
     postmark: _opts.postmark,
     cache: _opts.cache,
     inngest: _opts.inngest,
+    stripe: _opts.stripe,
   };
 }
 
@@ -114,6 +117,7 @@ export async function createContext(): Promise<Context> {
     inngest,
     postmark: new Postmark(),
     cache: new CacheService(),
+    stripe,
   });
 
   return Object.assign(innerContext, {

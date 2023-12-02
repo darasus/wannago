@@ -3,7 +3,6 @@ import {eventNotFoundError, userNotFoundError} from 'error';
 import {getBaseUrl, invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
-import {Stripe} from 'lib/src/stripe';
 import {feeAmount, feePercent} from 'const';
 
 export const createCheckoutSession = protectedProcedure
@@ -20,7 +19,6 @@ export const createCheckoutSession = protectedProcedure
     })
   )
   .mutation(async ({ctx, input}) => {
-    const stripe = new Stripe().client;
     const customer = await ctx.prisma.user.findFirst({
       where: {
         OR: [
@@ -68,7 +66,7 @@ export const createCheckoutSession = protectedProcedure
     let stripeCustomerId = customer.stripeCustomerId || undefined;
 
     if (!customer.stripeCustomerId) {
-      const stripeCustomer = await stripe.customers.create({
+      const stripeCustomer = await ctx.stripe.customers.create({
         email: customer.email,
       });
 
@@ -123,7 +121,7 @@ export const createCheckoutSession = protectedProcedure
     }/my-tickets?success=true`;
     const cancelCallbackUrl = `${getBaseUrl()}/e/${event.shortId}`;
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await ctx.stripe.checkout.sessions.create({
       customer: stripeCustomerId,
       customer_email: stripeCustomerId ? undefined : email,
       customer_update: stripeCustomerId
