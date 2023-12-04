@@ -1,14 +1,12 @@
-import {TRPCError} from '@trpc/server';
-import {eventNotFoundError, userNotFoundError} from 'error';
-import {getBaseUrl, invariant} from 'utils';
+import {userNotFoundError} from 'error';
+import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
-import {feeAmount, feePercent} from 'const';
+import {TRPCError} from '@trpc/server';
 
 export const createCheckoutSession = protectedProcedure
   .input(
     z.object({
-      userId: z.string().uuid(),
       eventId: z.string().uuid(),
       tickets: z.array(
         z.object({
@@ -18,50 +16,19 @@ export const createCheckoutSession = protectedProcedure
       ),
     })
   )
-  .mutation(async ({ctx, input}) => {
+  .mutation(async ({ctx, input: {eventId, tickets}}) => {
+    await ctx.assertions.assertCanPurchaseTickets({
+      eventId: eventId,
+      requestedTickets: tickets,
+    });
+
     const customer = await ctx.prisma.user.findFirst({
       where: {
-        OR: [
-          {
-            id: input.userId,
-          },
-          {
-            id: ctx.auth?.user?.id,
-          },
-        ],
+        id: ctx.auth?.user?.id,
       },
     });
-    const event = await ctx.prisma.event.findUnique({
-      where: {
-        id: input.eventId,
-      },
-      include: {
-        organization: true,
-        user: true,
-        tickets: true,
-        ticketSales: true,
-      },
-    });
-
-    invariant(event, eventNotFoundError);
-
-    await ctx.assertions.assertCanPurchaseTickets({
-      event,
-      requestedTickets: input.tickets,
-    });
-
-    const stripeLinkedAccountId =
-      event?.organization?.stripeLinkedAccountId ||
-      event?.user?.stripeLinkedAccountId;
 
     invariant(customer, userNotFoundError);
-    invariant(
-      stripeLinkedAccountId,
-      new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Stripe account id is required',
-      })
-    );
 
     let stripeCustomerId = customer.stripeCustomerId || undefined;
 
@@ -82,100 +49,41 @@ export const createCheckoutSession = protectedProcedure
       });
     }
 
-    invariant(
-      stripeCustomerId,
-      new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Stripe customer id is required',
-      })
-    );
+    const url = await ctx.prisma.$transaction(async (prisma) => {
+      invariant(
+        stripeCustomerId,
+        new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Stripe customer ID is required',
+        })
+      );
 
-    const email = customer.email;
+      const ticketSaleIds = [];
 
-    invariant(
-      email,
-      new TRPCError({code: 'BAD_REQUEST', message: 'Email is required'})
-    );
+      for (const ticket of tickets) {
+        const ticketSale = await ctx.prisma.ticketSale.create({
+          data: {
+            eventId,
+            ticketId: ticket.ticketId,
+            quantity: ticket.quantity,
+            userId: customer.id,
+          },
+        });
 
-    const selectedTickets = await ctx.prisma.ticket.findMany({
-      where: {
-        id: {
-          in: input.tickets.map((ticket) => ticket.ticketId),
-        },
-      },
-    });
-
-    const totalAmount = input.tickets.reduce((acc, ticket) => {
-      const {price} =
-        selectedTickets.find((t) => t.id === ticket.ticketId) || {};
-
-      if (!price) {
-        return acc;
+        ticketSaleIds.push(ticketSale.id);
       }
 
-      return acc + ticket.quantity * price;
-    }, 0);
+      const session = await ctx.actions.createCheckoutSession({
+        email: customer.email,
+        eventId,
+        stripeCustomerId,
+        tickets,
+        prisma,
+        ticketSaleIds,
+      });
 
-    const successCallbackUrl = `${getBaseUrl()}/e/${
-      event.shortId
-    }/my-tickets?success=true`;
-    const cancelCallbackUrl = `${getBaseUrl()}/e/${event.shortId}`;
-
-    const session = await ctx.stripe.checkout.sessions.create({
-      customer: stripeCustomerId,
-      customer_email: stripeCustomerId ? undefined : email,
-      customer_update: stripeCustomerId
-        ? {
-            name: 'auto',
-            address: 'auto',
-          }
-        : undefined,
-      billing_address_collection: 'auto',
-      line_items: selectedTickets.map((ticket) => {
-        return {
-          quantity: input.tickets.find((t) => t.ticketId === ticket.id)
-            ?.quantity,
-          price_data: {
-            product_data: {
-              name: ticket.title,
-            },
-            currency: event.preferredCurrency || 'USD',
-            unit_amount: ticket.price,
-          },
-        };
-      }),
-      mode: 'payment',
-      success_url: successCallbackUrl,
-      cancel_url: cancelCallbackUrl,
-      tax_id_collection: {
-        enabled: true,
-      },
-      allow_promotion_codes: false,
-      metadata: {
-        externalUserId: ctx.auth?.user?.id,
-        eventId: input.eventId,
-        tickets: JSON.stringify(
-          input.tickets.map((t) => {
-            return {
-              ticketId: t.ticketId,
-              quantity: t.quantity,
-            };
-          })
-        ),
-      },
-      payment_intent_data: {
-        application_fee_amount: calculateFee(totalAmount),
-        transfer_data: {
-          destination: stripeLinkedAccountId,
-        },
-      },
+      return session.url;
     });
 
-    return session.url;
+    return url;
   });
-
-function calculateFee(totalAmountInCents: number) {
-  const feeInCents = totalAmountInCents * feePercent + feeAmount;
-
-  return Math.round(feeInCents);
-}

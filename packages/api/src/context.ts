@@ -25,6 +25,7 @@ import {cookies, headers} from 'next/headers';
 import {AuthRequest} from 'lucia';
 import {getOrganizerById} from './actions/getOrganizerById';
 import {stripe} from 'lib/src/stripe';
+import {createCheckoutSession} from './actions/createCheckoutSession';
 
 const actions = {
   getEvents,
@@ -38,6 +39,7 @@ const actions = {
   getOrganizationWithMembersByOrganizationId,
   getOrganizerByEmail,
   getOrganizerById,
+  createCheckoutSession,
 } as const;
 
 const assertions = {

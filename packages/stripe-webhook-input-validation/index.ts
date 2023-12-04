@@ -75,7 +75,7 @@ export const handleCheckoutSessionCompletedInputSchema =
         metadata: z.object({
           eventId: z.string().uuid(),
           externalUserId: z.string(),
-          tickets: z.string(),
+          ticketSaleIds: z.string(),
         }),
       }),
     }),

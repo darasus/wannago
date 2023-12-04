@@ -7,16 +7,12 @@ import {z} from 'zod';
 import {TicketSale} from '@prisma/client';
 import {stripe} from 'lib/src/stripe';
 
-const checkoutCompleteMetadataSchema = z.array(
-  z.object({
-    ticketId: z.string().uuid(),
-    quantity: z.number().int(),
-  })
-);
+const checkoutCompleteMetadataSchema = z.array(z.string().uuid());
 
 const handleCheckoutSessionCompleted = publicProcedure
   .input(handleCheckoutSessionCompletedInputSchema)
   .query(async ({ctx, input}) => {
+    console.log('==>>>> here', input);
     if (input.data.object.status !== 'complete') {
       return {success: true};
     }
@@ -33,20 +29,20 @@ const handleCheckoutSessionCompleted = publicProcedure
 
     invariant(user, userNotFoundError);
 
-    const tickets = checkoutCompleteMetadataSchema.parse(
-      JSON.parse(input.data.object.metadata.tickets)
+    const ticketSaleIds = checkoutCompleteMetadataSchema.parse(
+      JSON.parse(input.data.object.metadata.ticketSaleIds)
     );
 
-    let ticketSales: TicketSale[] = [];
+    const result = await ctx.prisma.$transaction(async (prisma) => {
+      let ticketSales: TicketSale[] = [];
 
-    await ctx.prisma.$transaction(async (prisma) => {
-      for (const ticket of tickets) {
-        const ticketSale = await prisma.ticketSale.create({
+      for (const ticketSaleId of ticketSaleIds) {
+        const ticketSale = await prisma.ticketSale.update({
+          where: {
+            id: ticketSaleId,
+          },
           data: {
-            quantity: ticket.quantity,
-            ticketId: ticket.ticketId,
-            userId: user.id,
-            eventId: input.data.object.metadata.eventId,
+            status: 'COMPLETED',
           },
         });
 
@@ -90,18 +86,19 @@ const handleCheckoutSessionCompleted = publicProcedure
           },
         });
       }
+      await ctx.inngest.send({
+        name: 'stripe/tickets.purchased',
+        data: {
+          userId: user.id,
+          eventId: input.data.object.metadata.eventId,
+          ticketSaleIds: ticketSales.map((ticketSale) => ticketSale.id),
+        },
+      });
+
+      return {success: true};
     });
 
-    await ctx.inngest.send({
-      name: 'stripe/tickets.purchased',
-      data: {
-        userId: user.id,
-        eventId: input.data.object.metadata.eventId,
-        ticketSaleIds: ticketSales.map((ticketSale) => ticketSale.id),
-      },
-    });
-
-    return {success: true};
+    return result;
   });
 
 export const stripeWebhookHandlerRouter = createTRPCRouter({

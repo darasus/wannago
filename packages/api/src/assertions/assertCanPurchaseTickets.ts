@@ -1,53 +1,64 @@
-import {Event} from '@prisma/client';
 import {AssertionContext} from '../context';
-import {Ticket, TicketSale} from '@prisma/client';
 import {invariant} from 'utils';
 import {TRPCError} from '@trpc/server';
 
 export function assertCanPurchaseTickets(ctx: AssertionContext) {
-  return ({
-    event,
+  return async ({
     requestedTickets,
+    eventId,
   }: {
-    event: Event & {tickets: Ticket[]; ticketSales: TicketSale[]};
     requestedTickets: {ticketId: string; quantity: number}[];
+    eventId: string;
   }) => {
-    return requestedTickets.every(
-      ({ticketId: requestedTicketId, quantity: requestedQuantity}) => {
-        const ticket = event.tickets.find(t => t.id === requestedTicketId);
+    return ctx.prisma.$transaction(async (prisma) => {
+      const tickets = await prisma.ticket.findMany({
+        where: {
+          eventId,
+        },
+      });
+      const ticketSales = await prisma.ticketSale.findMany({
+        where: {
+          eventId,
+        },
+      });
 
-        invariant(
-          ticket,
-          new TRPCError({
-            code: 'BAD_REQUEST',
-            message: 'Ticket not found',
-          })
-        );
+      return requestedTickets.every(
+        ({ticketId: requestedTicketId, quantity: requestedQuantity}) => {
+          const ticket = tickets.find((t) => t.id === requestedTicketId);
 
-        const ticketSales = event.ticketSales.filter(
-          ts => ts.ticketId === requestedTicketId
-        );
-        const quantitySold = ticketSales.reduce(
-          (acc, ts) => acc + ts.quantity,
-          0
-        );
+          invariant(
+            ticket,
+            new TRPCError({
+              code: 'BAD_REQUEST',
+              message: 'Ticket not found',
+            })
+          );
 
-        if (quantitySold >= ticket.maxQuantity) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: 'Ticket is sold out.',
-          });
+          const ticketSale = ticketSales.filter(
+            (ts) => ts.ticketId === requestedTicketId
+          );
+          const quantitySold = ticketSale.reduce(
+            (acc, ts) => acc + ts.quantity,
+            0
+          );
+
+          if (quantitySold >= ticket.maxQuantity) {
+            throw new TRPCError({
+              code: 'BAD_REQUEST',
+              message: 'Ticket is sold out.',
+            });
+          }
+
+          if (requestedQuantity + quantitySold > ticket.maxQuantity) {
+            throw new TRPCError({
+              code: 'BAD_REQUEST',
+              message: 'Requested quantity exceeds available quantity.',
+            });
+          }
+
+          return true;
         }
-
-        if (requestedQuantity + quantitySold > ticket.maxQuantity) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: 'Requested quantity exceeds available quantity.',
-          });
-        }
-
-        return true;
-      }
-    );
+      );
+    });
   };
 }

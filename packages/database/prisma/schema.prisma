@@ -77,23 +77,29 @@ model Ticket {
 }
 
 model TicketSale {
-  id            String       @id @default(uuid())
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  id            String           @id @default(uuid())
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
   quantity      Int
-  ticket        Ticket       @relation(fields: [ticketId], references: [id])
+  ticket        Ticket           @relation(fields: [ticketId], references: [id])
   ticketId      String
-  user          User         @relation(fields: [userId], references: [id])
+  user          User             @relation(fields: [userId], references: [id])
   userId        String
-  event         Event        @relation(fields: [eventId], references: [id])
+  event         Event            @relation(fields: [eventId], references: [id])
   eventId       String
-  eventSignUp   EventSignUp? @relation(fields: [eventSignUpId], references: [id])
+  eventSignUp   EventSignUp?     @relation(fields: [eventSignUpId], references: [id])
   eventSignUpId String?
+  status        TicketSaleStatus @default(PENDING)
 
   @@index([eventSignUpId])
   @@index([eventId])
   @@index([ticketId])
   @@index([userId])
+}
+
+enum TicketSaleStatus {
+  PENDING
+  COMPLETED
 }
 
 model User {
