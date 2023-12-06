@@ -19,7 +19,7 @@ export const createAccountLink = protectedProcedure
 
     if (!stripeLinkedAccountId) {
       const account = await ctx.stripe.accounts.create({
-        type: 'express',
+        type: 'standard',
         default_currency: ctx.currency.toLowerCase(),
         settings: {
           payouts: {
