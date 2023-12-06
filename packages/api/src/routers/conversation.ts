@@ -288,8 +288,8 @@ const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
       }
 
       if (
-        message.organization?.id &&
-        user?.organizations.some((o) => o.id === message.organization?.id)
+        message.organizationId &&
+        user?.organizations.some((o) => o.id === message.organizationId)
       ) {
         return false;
       }

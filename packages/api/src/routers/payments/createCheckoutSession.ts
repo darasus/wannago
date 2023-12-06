@@ -1,4 +1,8 @@
-import {userNotFoundError} from 'error';
+import {
+  checkoutSessionNotFound,
+  stripeAccountLinkNotFound,
+  userNotFoundError,
+} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
@@ -29,7 +33,7 @@ export const createCheckoutSession = protectedProcedure
     });
 
     invariant(customer, userNotFoundError);
-    invariant(ctx.auth?.user.stripeLinkedAccountId);
+    invariant(ctx.auth?.user.stripeLinkedAccountId, stripeAccountLinkNotFound);
 
     const checkoutSession = await ctx.prisma.$transaction(async (prisma) => {
       const ticketSaleIds = [];
@@ -48,7 +52,7 @@ export const createCheckoutSession = protectedProcedure
         ticketSaleIds.push(ticketSale.id);
       }
 
-      const checkoutSession = ctx.prisma.checkoutSession.create({
+      const checkoutSession = await ctx.prisma.checkoutSession.create({
         data: {
           userId: customer.id,
           expires: add(new Date(), {minutes: 15}),
@@ -56,6 +60,17 @@ export const createCheckoutSession = protectedProcedure
             connect: ticketSaleIds.map((id) => ({id})),
           },
           eventId: eventId,
+        },
+      });
+
+      invariant(checkoutSession, checkoutSessionNotFound);
+
+      await ctx.inngest.send({
+        name: 'stripe/ticket.purchase-intent.created',
+        data: {
+          eventId: eventId,
+          userId: customer.id,
+          checkoutSessionId: checkoutSession.id,
         },
       });
 

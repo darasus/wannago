@@ -104,6 +104,13 @@ export type EventsStoreType = {
       ticketSaleIds: string[];
     };
   };
+  'stripe/ticket.purchase-intent.created': {
+    data: {
+      eventId: string;
+      userId: string;
+      checkoutSessionId: string;
+    };
+  };
   'email/ticket-purchase-email.sent': {
     data: {
       eventId: string;
