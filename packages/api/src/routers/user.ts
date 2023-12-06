@@ -51,6 +51,7 @@ const getMyTickets = protectedProcedure.query(async ({ctx, input}) => {
       user: {
         id: ctx.auth?.user?.id,
       },
+      status: 'COMPLETED',
     },
     include: {
       event: true,

@@ -19,6 +19,9 @@ export function assertCanPurchaseTickets(ctx: AssertionContext) {
       const ticketSales = await prisma.ticketSale.findMany({
         where: {
           eventId,
+          status: {
+            in: ['PENDING', 'COMPLETED'],
+          },
         },
       });
 
