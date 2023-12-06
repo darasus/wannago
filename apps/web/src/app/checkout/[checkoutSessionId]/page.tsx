@@ -9,9 +9,10 @@ import {
 } from 'ui';
 import {Checkout} from '../../../features/Checkout/Checkout';
 import {api} from '../../../trpc/server-http';
-import {notFound} from 'next/navigation';
+import {notFound, redirect} from 'next/navigation';
 import {formatCents} from 'utils';
 import {Countdown} from '../../../features/Countdown/Countdown';
+import Link from 'next/link';
 
 export default async function CheckoutPage(props: any) {
   const result = await api.payments.getCheckoutSession
@@ -35,12 +36,32 @@ export default async function CheckoutPage(props: any) {
       <Card>
         <CardHeader>
           <CardTitle>
-            Checkout (<Countdown expires={result.expires.getTime()} />)
+            Checkout
+            <Countdown
+              expires={result.expires.getTime()}
+              onDone={async () => {
+                'use server';
+                redirect(`/e/${result.event.shortId}`);
+              }}
+            />
           </CardTitle>
-          <CardDescription>{`${result.event.title} by ${
-            result.event.organization?.name ||
-            `${result.event.user?.firstName} ${result.event.user?.lastName}`
-          }`}</CardDescription>
+          <CardDescription>
+            <Link href={`/e/${result.event.shortId}`} className="underline">
+              {result.event.title}
+            </Link>
+            {` by `}
+            <Link
+              href={
+                result.event.organization?.name
+                  ? `/o/${result.event.organization?.id}`
+                  : `/u/${result.event.user?.id}`
+              }
+              className="underline"
+            >
+              {result.event.organization?.name ||
+                `${result.event.user?.firstName} ${result.event.user?.lastName}`}
+            </Link>
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {result.ticketSales.map((ticketSale) => {
