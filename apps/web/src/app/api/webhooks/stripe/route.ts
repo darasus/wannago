@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
   try {
     const input = baseEventHandlerSchema.parse(event);
 
-    if (input.type === 'checkout.session.completed') {
+    if (input.type === 'payment_intent.succeeded') {
       await caller.handleCheckoutSessionCompleted(
         handleCheckoutSessionCompletedInputSchema.parse(event)
       );

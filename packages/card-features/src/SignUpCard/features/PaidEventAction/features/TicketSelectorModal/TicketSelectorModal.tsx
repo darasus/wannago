@@ -81,7 +81,6 @@ export function TicketSelectorModal({
 
       const responseUrl = await api.payments.createCheckoutSession
         .mutate({
-          userId: me.id,
           tickets: Object.entries(data.tickets)
             .filter(([, quantity]) => Boolean(quantity))
             .map(([ticketId, quantity]) => ({
@@ -98,7 +97,7 @@ export function TicketSelectorModal({
         return;
       }
 
-      router.push(responseUrl);
+      router.push(`/checkout/${responseUrl.checkoutSessionId}`);
     } catch (error) {}
   });
 

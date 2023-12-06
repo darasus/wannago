@@ -2,7 +2,7 @@ import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
-import {TRPCError} from '@trpc/server';
+import {add} from 'date-fns';
 
 export const createCheckoutSession = protectedProcedure
   .input(
@@ -29,35 +29,9 @@ export const createCheckoutSession = protectedProcedure
     });
 
     invariant(customer, userNotFoundError);
+    invariant(ctx.auth?.user.stripeLinkedAccountId);
 
-    let stripeCustomerId = customer.stripeCustomerId || undefined;
-
-    if (!customer.stripeCustomerId) {
-      const stripeCustomer = await ctx.stripe.customers.create({
-        email: customer.email,
-      });
-
-      stripeCustomerId = stripeCustomer.id;
-
-      await ctx.prisma.user.update({
-        where: {
-          id: customer.id,
-        },
-        data: {
-          stripeCustomerId,
-        },
-      });
-    }
-
-    const url = await ctx.prisma.$transaction(async (prisma) => {
-      invariant(
-        stripeCustomerId,
-        new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Stripe customer ID is required',
-        })
-      );
-
+    const checkoutSession = await ctx.prisma.$transaction(async (prisma) => {
       const ticketSaleIds = [];
 
       for (const ticket of tickets) {
@@ -67,23 +41,26 @@ export const createCheckoutSession = protectedProcedure
             ticketId: ticket.ticketId,
             quantity: ticket.quantity,
             userId: customer.id,
+            status: 'PENDING',
           },
         });
 
         ticketSaleIds.push(ticketSale.id);
       }
 
-      const session = await ctx.actions.createCheckoutSession({
-        email: customer.email,
-        eventId,
-        stripeCustomerId,
-        tickets,
-        prisma,
-        ticketSaleIds,
+      const checkoutSession = ctx.prisma.checkoutSession.create({
+        data: {
+          userId: customer.id,
+          expires: add(new Date(), {minutes: 15}),
+          ticketSales: {
+            connect: ticketSaleIds.map((id) => ({id})),
+          },
+          eventId: eventId,
+        },
       });
 
-      return session.url;
+      return checkoutSession;
     });
 
-    return url;
+    return {checkoutSessionId: checkoutSession.id};
   });

@@ -1,27 +1,18 @@
 import {createTRPCRouter, publicProcedure} from '../trpc';
 import {handleCheckoutSessionCompletedInputSchema} from 'stripe-webhook-input-validation';
-import * as s from 'stripe';
 import {invariant} from 'utils';
 import {userNotFoundError} from 'error';
 import {z} from 'zod';
 import {TicketSale} from '@prisma/client';
-import {stripe} from 'lib/src/stripe';
 
 const checkoutCompleteMetadataSchema = z.array(z.string().uuid());
 
 const handleCheckoutSessionCompleted = publicProcedure
   .input(handleCheckoutSessionCompletedInputSchema)
   .query(async ({ctx, input}) => {
-    console.log('==>>>> here', input);
-    if (input.data.object.status !== 'complete') {
-      return {success: true};
+    if (input.data.object.status !== 'succeeded') {
+      return {success: false};
     }
-
-    const customer = (await stripe.customers.retrieve(
-      input.data.object.customer
-    )) as s.Stripe.Customer;
-
-    invariant(customer.email, 'Customer email is required');
 
     const user = await ctx.actions.getUserById({
       id: input.data.object.metadata.externalUserId,

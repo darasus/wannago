@@ -34,3 +34,8 @@ export const stripeAccountLinkNotFound = new TRPCError({
   code: 'BAD_REQUEST',
   message: 'You need to link Stripe account first',
 });
+
+export const checkoutSessionNotFound = new TRPCError({
+  code: 'BAD_REQUEST',
+  message: 'Checkout session not found',
+});

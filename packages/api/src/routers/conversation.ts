@@ -259,7 +259,6 @@ const getUserHasUnseenConversation = protectedProcedure.query(async ({ctx}) => {
         take: 1,
         include: {
           user: true,
-          organization: true,
         },
       },
     },

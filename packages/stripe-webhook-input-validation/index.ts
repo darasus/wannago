@@ -42,6 +42,7 @@ const statusSchema = z.enum([
   'canceled',
   'unpaid',
   'complete',
+  'succeeded',
 ]);
 
 const planSchema = z.object({
@@ -69,7 +70,6 @@ export const handleCheckoutSessionCompletedInputSchema =
   baseEventHandlerSchema.extend({
     data: z.object({
       object: z.object({
-        mode: z.enum(['subscription', 'payment']),
         customer: z.string(),
         status: statusSchema,
         metadata: z.object({
