@@ -30,18 +30,7 @@ export function StripeAccountLinkSettings({
     <CardBase
       title="Connect Stripe"
       titleChildren={
-        account ? (
-          <Button
-            onClick={redirectToStripeAccount}
-            disabled={isRedirecting}
-            isLoading={isRedirecting}
-            size="sm"
-            variant={'link'}
-            className="p-0"
-          >
-            View Stripe account
-          </Button>
-        ) : (
+        account ? null : (
           <Button
             onClick={createAccountLink}
             disabled={isCreating}
