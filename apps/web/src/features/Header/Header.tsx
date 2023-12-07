@@ -1,6 +1,5 @@
-import {Button, CardBase, LoadingBlock, Logo} from 'ui';
+import {Button, CardBase, Logo} from 'ui';
 import {UserSection} from '../UserSection/UserSection';
-import {Suspense} from 'react';
 import {DesktopMenu} from '../../components/DesktopMenu';
 import {MobileMenu} from '../../components/MobileMenu';
 import Link from 'next/link';
@@ -26,12 +25,10 @@ export async function Header() {
           <div className="flex items-center gap-x-4 md:gap-x-4">
             <MobileMenu />
             {showUserProfile && (
-              <Suspense fallback={<LoadingBlock />}>
-                <UserSection
-                  mePromise={api.user.me.query()}
-                  hasUnseenConversationPromise={api.conversation.getUserHasUnseenConversation.query()}
-                />
-              </Suspense>
+              <UserSection
+                me={me}
+                hasUnseenConversationPromise={api.conversation.getUserHasUnseenConversation.query()}
+              />
             )}
             {showAuthButtons && (
               <Button

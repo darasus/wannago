@@ -13,19 +13,18 @@ import {
 import {usePathname} from 'next/navigation';
 import {getIsPublic} from 'const';
 import {useRouter} from 'next/navigation';
-import {User} from '@prisma/client';
 import {ChevronDown, Plus} from 'lucide-react';
 import {cn} from 'utils';
+import {RouterOutputs} from 'api';
 
 interface Props {
-  mePromise: Promise<User | null>;
+  me: RouterOutputs['user']['me'];
   hasUnseenConversationPromise: Promise<boolean>;
 }
 
-export function UserSection({hasUnseenConversationPromise, mePromise}: Props) {
+export function UserSection({hasUnseenConversationPromise, me}: Props) {
   const router = useRouter();
   const pathname = usePathname();
-  const me = use(mePromise);
   const hasUnseenConversation = use(hasUnseenConversationPromise);
   const isPublicPage = getIsPublic(pathname ?? '/');
 
