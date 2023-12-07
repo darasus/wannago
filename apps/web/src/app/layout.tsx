@@ -8,6 +8,7 @@ import {ToastProvider} from '../features/ToastProvider';
 import {Scripts} from '../features/Scripts';
 import {ClientProvider} from './ClientProvider';
 import {ClientRefresher} from '../features/ClientRefresher/ClientRefresher';
+import {SpeedInsights} from '@vercel/speed-insights/next';
 
 export const metadata = {
   title: 'WannaGo',
@@ -40,6 +41,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         </ClientProvider>
       </body>
       <Scripts />
+      <SpeedInsights />
     </html>
   );
 }
