@@ -39,9 +39,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <ToastProvider />
           <ClientRefresher />
         </ClientProvider>
+        <SpeedInsights />
       </body>
       <Scripts />
-      <SpeedInsights />
     </html>
   );
 }
