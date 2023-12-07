@@ -37,6 +37,7 @@ export async function MyTickets({myTicketSalesPromise}: Props) {
                   href={`/api/pdf-ticket/${ticketSale.id}`}
                   target="_blank"
                   className="flex items-center gap-1"
+                  prefetch={false}
                 >
                   <FileDown className="w-4 h-4 mr-1" />
                   Download

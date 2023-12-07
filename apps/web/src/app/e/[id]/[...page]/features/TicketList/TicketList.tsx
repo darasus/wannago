@@ -28,7 +28,11 @@ export function TicketList({eventSignUps}: Props) {
               </div>
             )}
             <Button size="sm" variant="outline" asChild>
-              <Link href={`/api/pdf-ticket/${ticketSale.id}`} target="_blank">
+              <Link
+                href={`/api/pdf-ticket/${ticketSale.id}`}
+                target="_blank"
+                prefetch={false}
+              >
                 <FileDown className="w-4 h-4 mr-1" />
                 Download
               </Link>
