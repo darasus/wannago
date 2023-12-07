@@ -39,5 +39,7 @@ export const getAccount = protectedProcedure
 
     return {
       id: account.id,
+      name: account.settings?.dashboard.display_name,
+      email: account.email,
     };
   });

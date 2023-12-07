@@ -2,7 +2,6 @@
 
 import {Badge, Button, CardBase} from 'ui';
 import {use} from 'react';
-import {useRedirectToStripeAccount} from './hooks/useRedirectToStripeAccount';
 import {useCreateStripeAccount} from './hooks/useCreateStripeAccount';
 import {RouterOutputs} from 'api';
 
@@ -17,10 +16,6 @@ export function StripeAccountLinkSettings({
   organizerId,
   stripeAccountPromise,
 }: Props) {
-  const {isLoading: isRedirecting, redirectToStripeAccount} =
-    useRedirectToStripeAccount({
-      organizerId,
-    });
   const {createAccountLink, isLoading: isCreating} = useCreateStripeAccount({
     organizerId,
   });
@@ -47,7 +42,9 @@ export function StripeAccountLinkSettings({
       {account && (
         <div className="flex items-center gap-2">
           <div>
-            <div>Account ID: {account.id}</div>
+            <div>{`ID: ${account.id}`}</div>
+            <div>{`Name: ${account.name}`}</div>
+            <div>{`Email: ${account.email}`}</div>
           </div>
           <div className="grow" />
           <Badge className="bg-green-500 hover:bg-green-600">Linked</Badge>
