@@ -2,7 +2,7 @@ import type {Stripe as IStripe} from 'stripe';
 
 import {NextRequest, NextResponse} from 'next/server';
 
-import {Stripe} from 'lib/src/stripe';
+import {stripe} from 'lib/src/stripe';
 import {captureException} from '@sentry/nextjs';
 import {createContext} from 'api/src/context';
 import {stripeWebhookHandlerRouter} from 'api/src/routers/stripeWebhookHandler';
@@ -11,8 +11,6 @@ import {
   handleCheckoutSessionCompletedInputSchema,
 } from 'stripe-webhook-input-validation';
 import {env} from 'server-env';
-
-const stripe = new Stripe().client;
 
 export async function POST(req: NextRequest) {
   let event: IStripe.Event;
@@ -39,7 +37,7 @@ export async function POST(req: NextRequest) {
   try {
     const input = baseEventHandlerSchema.parse(event);
 
-    if (input.type === 'checkout.session.completed') {
+    if (input.type === 'payment_intent.succeeded') {
       await caller.handleCheckoutSessionCompleted(
         handleCheckoutSessionCompletedInputSchema.parse(event)
       );

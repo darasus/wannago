@@ -7,6 +7,7 @@ export function getNumberOfPurchasedTickets({ctx}: ActionParams) {
         id: {
           in: ticketSaleIds,
         },
+        status: 'COMPLETED',
       },
     });
 

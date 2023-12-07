@@ -1,4 +1,4 @@
-import {Stripe} from 'lib/src/stripe';
+import {stripe} from 'lib/src/stripe';
 import {prisma} from 'database';
 
 export interface ActionParams {
@@ -6,7 +6,7 @@ export interface ActionParams {
 }
 
 export interface ActionContext {
-  stripe: Stripe['client'];
+  stripe: typeof stripe;
   prisma: typeof prisma;
 }
 
@@ -102,6 +102,13 @@ export type EventsStoreType = {
       eventId: string;
       userId: string;
       ticketSaleIds: string[];
+    };
+  };
+  'stripe/ticket.purchase-intent.created': {
+    data: {
+      eventId: string;
+      userId: string;
+      checkoutSessionId: string;
     };
   };
   'email/ticket-purchase-email.sent': {
