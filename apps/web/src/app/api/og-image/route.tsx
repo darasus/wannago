@@ -111,7 +111,11 @@ export async function GET(req: NextRequest) {
       }
     );
   } catch (error) {
-    captureException(error);
+    captureException(error, {
+      extra: {
+        searchParams: req.nextUrl.searchParams.entries(),
+      },
+    });
     return NextResponse.json({error: 'Internal Server Error'}, {status: 500});
   }
 }
