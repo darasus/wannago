@@ -3,6 +3,13 @@ generator client {
   previewFeatures = ["driverAdapters"]
 }
 
+generator kysely {
+  provider     = "prisma-kysely"
+  output       = "../src/db"
+  fileName     = "types.ts"
+  enumFileName = "enums.ts"
+}
+
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")

@@ -1,5 +1,5 @@
 import {Currency} from '@prisma/client';
-import {prisma} from 'database';
+import {prisma, db} from 'database';
 import {Postmark} from 'lib/src/postmark';
 import {CacheService} from 'lib/src/cache';
 import {getCurrencyFromHeaders} from 'utils';
@@ -69,6 +69,7 @@ interface CreateInnerContextOptions {
   inngest: InngestType;
   stripe: typeof stripe;
   createStripeClient: typeof createStripeClient;
+  db: typeof db;
 }
 
 interface CreateContextOptions extends CreateInnerContextOptions {
@@ -90,6 +91,7 @@ export function createContextInner(
     inngest: _opts.inngest,
     stripe: _opts.stripe,
     createStripeClient: _opts.createStripeClient,
+    db: _opts.db,
   };
 }
 
@@ -123,6 +125,7 @@ export async function createContext(): Promise<Context> {
     cache: new CacheService(),
     stripe,
     createStripeClient,
+    db,
   });
 
   return Object.assign(innerContext, {
