@@ -7,12 +7,16 @@ const validation = z.object({
 
 export function getUserById(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
-    const user = await ctx.prisma.user.findUnique({
-      where: {
-        id: input.id,
-      },
-    });
+    if (!ctx.auth?.user.id) {
+      return null;
+    }
 
-    return user;
+    const users = await ctx.db
+      .selectFrom('User')
+      .where('User.id', '=', ctx.auth.user.id)
+      .selectAll()
+      .execute();
+
+    return users[0];
   };
 }
