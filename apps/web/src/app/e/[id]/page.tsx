@@ -1,5 +1,5 @@
 import {Container} from 'ui';
-import {api} from '../../../trpc/server-http';
+import {api} from '../../../trpc/server-invoker';
 import {ManageEventButton} from './features/ManageEventButton/ManageEventButton';
 import {EventView} from '../../../features/EventView/EventView';
 import {getBaseUrl} from 'utils';

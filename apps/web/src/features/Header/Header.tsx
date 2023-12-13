@@ -3,7 +3,7 @@ import {UserSection} from '../UserSection/UserSection';
 import {DesktopMenu} from '../../components/DesktopMenu';
 import {MobileMenu} from '../../components/MobileMenu';
 import Link from 'next/link';
-import {api} from '../../trpc/server-http';
+import {api} from '../../trpc/server-invoker';
 import {VerifyEmailBar} from '../VerifyEmailBar/VerifyEmailBar';
 
 export async function Header() {
