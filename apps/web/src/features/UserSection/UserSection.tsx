@@ -20,7 +20,7 @@ import {api} from '../../trpc/client';
 export function UserSection() {
   const me = use(api.user.me.query());
   const hasUnseenConversation = use(
-    api.conversation.getUserHasUnseenConversation.query()
+    api.conversation.getUserHasUnseenConversation.query().catch(() => null)
   );
   const router = useRouter();
   const pathname = usePathname();

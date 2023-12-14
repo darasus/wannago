@@ -3,7 +3,7 @@ import {Button} from 'ui';
 import {api} from '../../trpc/server-http';
 
 export async function MyEventsButton() {
-  const me = await api.user.me.query();
+  const me = await api.user.me.query().catch(() => null);
 
   if (me) {
     return null;
