@@ -15,22 +15,24 @@ import {getIsPublic} from 'const';
 import {useRouter} from 'next/navigation';
 import {ChevronDown, Plus} from 'lucide-react';
 import {cn} from 'utils';
-import {RouterOutputs} from 'api';
+import {api} from '../../trpc/client';
 
-interface Props {
-  me: RouterOutputs['user']['me'];
-  hasUnseenConversationPromise: Promise<boolean>;
-}
-
-export function UserSection({hasUnseenConversationPromise, me}: Props) {
+export function UserSection() {
+  const me = use(api.user.me.query());
+  const hasUnseenConversation = use(
+    api.conversation.getUserHasUnseenConversation.query().catch(() => null)
+  );
   const router = useRouter();
   const pathname = usePathname();
-  const hasUnseenConversation = use(hasUnseenConversationPromise);
   const isPublicPage = getIsPublic(pathname ?? '/');
 
   const onSignOutClick = async () => {
     router.push('/logout');
   };
+
+  if (!me) {
+    return null;
+  }
 
   if (isPublicPage) {
     return (

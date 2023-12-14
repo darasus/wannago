@@ -9,6 +9,7 @@ import {Scripts} from '../features/Scripts';
 import {ClientProvider} from './ClientProvider';
 import {ClientRefresher} from '../features/ClientRefresher/ClientRefresher';
 import {SpeedInsights} from '@vercel/speed-insights/next';
+import {Suspense} from 'react';
 
 export const metadata = {
   title: 'WannaGo',
@@ -33,7 +34,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             </Container>
           </div>
           <div>
-            <div>{children}</div>
+            <div>
+              <Suspense>{children}</Suspense>
+            </div>
           </div>
           <Tools />
           <ToastProvider />
