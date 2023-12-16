@@ -114,7 +114,6 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
           <Text className="text-2xl font-bold line-clamp-2 leading-none">
             {event.title}
           </Text>
-          <br />
           <Text className="">{event.address}</Text>
         </div>
       </div>
