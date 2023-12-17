@@ -1,5 +1,6 @@
 import {slugify} from 'inngest';
 import {inngest} from '../client';
+import {Emails} from 'lib/src/Resend';
 
 export const userAccountRegistered = inngest.createFunction(
   {
@@ -23,10 +24,11 @@ export const userAccountRegistered = inngest.createFunction(
     }
 
     await ctx.step.run('Notify admins about created user', async () => {
-      await ctx.postmark.sendToTransactionalStream({
+      await ctx.resend.emails.send({
         subject: 'New user registered',
         to: 'hello@wannago.app',
-        htmlString: `
+        from: Emails.Hi,
+        html: `
           <div>
             <p>New user registered!</p>
             <p>Name: ${user.firstName} ${user.lastName}</p>

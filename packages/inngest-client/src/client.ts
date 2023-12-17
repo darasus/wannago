@@ -1,7 +1,7 @@
 import {EventSchemas, Inngest, InngestMiddleware, slugify} from 'inngest';
 import {prisma} from 'database';
 import {stripe} from 'lib/src/stripe';
-import {Postmark} from 'lib/src/postmark';
+import {resend} from 'lib/src/Resend';
 import {EventsStoreType} from './types';
 import {payoutAvailableBalanceToConnectedAccount} from './actions/payoutAvailableBalanceToConnectedAccount';
 import {getNumberOfPurchasedTickets} from './actions/getNumberOfPurchasedTickets';
@@ -9,8 +9,6 @@ import {getNumberOfPurchasedTickets} from './actions/getNumberOfPurchasedTickets
 const middleware = new InngestMiddleware({
   name: 'Prisma Middleware',
   init() {
-    const postmark = new Postmark();
-
     const actions = {
       payoutAvailableBalanceToConnectedAccount:
         payoutAvailableBalanceToConnectedAccount({
@@ -36,7 +34,7 @@ const middleware = new InngestMiddleware({
                 prisma,
                 stripe,
                 actions,
-                postmark,
+                resend,
               },
             };
           },

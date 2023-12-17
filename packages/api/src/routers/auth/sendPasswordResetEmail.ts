@@ -3,6 +3,7 @@ import {generatePasswordResetToken} from './utils';
 import {getBaseUrl} from 'utils';
 import {TRPCError} from '@trpc/server';
 import {z} from 'zod';
+import {Emails} from 'lib/src/Resend';
 
 export const sendPasswordResetEmail = publicProcedure
   .input(z.object({email: z.string().email()}))
@@ -23,10 +24,11 @@ export const sendPasswordResetEmail = publicProcedure
 
       const token = await generatePasswordResetToken(user.id);
 
-      await ctx.postmark.sendToTransactionalStream({
+      await ctx.resend.emails.send({
         to: user.email,
+        from: Emails.Hi,
         subject: 'Password reset',
-        htmlString: `<p><a href="${getBaseUrl()}/password-reset/${token}">link</a></p>`,
+        html: `<p><a href="${getBaseUrl()}/password-reset/${token}">link</a></p>`,
       });
 
       return {success: true};
