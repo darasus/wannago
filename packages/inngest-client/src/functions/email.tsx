@@ -20,6 +20,7 @@ import {
   userNotFoundError,
 } from 'error';
 import {slugify} from 'inngest';
+import {Emails} from 'lib/src/Resend';
 
 export const emailReminderScheduled = inngest.createFunction(
   {
@@ -133,11 +134,12 @@ export const emailReminderSent = inngest.createFunction(
         ? `${organizer.name}`
         : '';
 
-    return ctx.postmark.sendToTransactionalStream({
-      replyTo: 'WannaGo Team <hello@wannago.app>',
+    return ctx.resend.emails.send({
+      reply_to: 'WannaGo Team <hello@wannago.app>',
+      from: Emails.Hi,
       to: user.email,
       subject: `Your event is coming up "${event.title}"!`,
-      htmlString: render(
+      html: render(
         <EventReminder
           title={event.title}
           address={event.address || 'none'}
@@ -192,11 +194,12 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
             ticketSaleIds: ctx.event.data.ticketSaleIds,
           });
 
-        return ctx.postmark.sendToTransactionalStream({
-          replyTo: 'WannaGo Team <hello@wannago.app>',
+        return ctx.resend.emails.send({
+          reply_to: 'WannaGo Team <hello@wannago.app>',
+          from: Emails.Hi,
           to: user.email,
           subject: `Order confirmation`,
-          htmlString: render(
+          html: render(
             <TicketPurchaseSuccess
               title={event.title}
               address={event.address || 'none'}
@@ -245,11 +248,12 @@ export const eventSignUp = inngest.createFunction(
       ? `${organizer.firstName} ${organizer.lastName}`
       : `${organizer.name}`;
 
-    await ctx.postmark.sendToTransactionalStream({
-      replyTo: 'WannaGo Team <hello@wannago.app>',
+    await ctx.resend.emails.send({
+      reply_to: 'WannaGo Team <hello@wannago.app>',
+      from: Emails.Hi,
       to: user.email,
       subject: `Thanks for signing up for "${event.title}"!`,
-      htmlString: render(
+      html: render(
         <EventSignUp
           title={event.title}
           address={event.address || 'none'}
@@ -296,11 +300,12 @@ export const eventInvite = inngest.createFunction(
       ? `${organizer.firstName} ${organizer.lastName}`
       : `${organizer.name}`;
 
-    await ctx.postmark.sendToTransactionalStream({
-      replyTo: 'WannaGo Team <hello@wannago.app>',
+    await ctx.resend.emails.send({
+      reply_to: 'WannaGo Team <hello@wannago.app>',
+      from: Emails.Hi,
       to: user.email,
       subject: `You're invited to: "${event.title}"!`,
-      htmlString: render(
+      html: render(
         <EventInvite
           title={event.title}
           address={event.address || 'none'}
@@ -355,11 +360,12 @@ export const messageToAllAttendees = inngest.createFunction(
       signUps
         .map((signUp) => signUp.user)
         .map(async (user) => {
-          const messageData = {
-            replyTo: `${name} <${organizer.email}>`,
+          await ctx.resend.emails.send({
+            reply_to: `${name} <${organizer.email}>`,
+            from: Emails.Hi,
             to: user.email,
             subject: `Message from event organizer: "${event.title}"`,
-            htmlString: render(
+            html: render(
               <MessageToAttendees
                 eventUrl={`${getBaseUrl()}/e/${event?.shortId}`}
                 message={ctx.event.data.message}
@@ -367,9 +373,7 @@ export const messageToAllAttendees = inngest.createFunction(
                 subject={ctx.event.data.subject}
               />
             ),
-          };
-
-          await ctx.postmark.sendToTransactionalStream(messageData);
+          });
         })
     );
   }
@@ -410,11 +414,12 @@ export const afterRegisterNoCreatedEventFollowUpEmail = inngest.createFunction(
     const hasNoEvents = eventCount === 0;
 
     if (hasNoEvents && user?.firstName) {
-      await ctx.postmark.sendToBroadcastStream({
-        replyTo: 'WannaGo Team <hello@wannago.app>',
+      await ctx.resend.emails.send({
+        from: Emails.Hi,
+        reply_to: 'WannaGo Team <hello@wannago.app>',
         to: user.email,
         subject: 'We would love to hear your feedback',
-        htmlString: render(
+        html: render(
           <AfterRegisterNoCreatedEventFollowUpEmail
             firstName={user?.firstName}
           />
@@ -456,11 +461,12 @@ export const eventCancelInvite = inngest.createFunction(
       ? `${organizer.firstName} ${organizer.lastName}`
       : `${organizer.name}`;
 
-    await ctx.postmark.sendToTransactionalStream({
-      replyTo: 'WannaGo Team <hello@wannago.app>',
+    await ctx.resend.emails.send({
+      reply_to: 'WannaGo Team <hello@wannago.app>',
+      from: Emails.Hi,
       to: user.email,
       subject: `Your invite has been cancelled...`,
-      htmlString: render(
+      html: render(
         <EventCancelInvite
           title={event.title}
           address={event.address || 'none'}
@@ -506,11 +512,12 @@ export const eventCancelSignUp = inngest.createFunction(
       ? `${organizer.firstName} ${organizer.lastName}`
       : `${organizer.name}`;
 
-    await ctx.postmark.sendToTransactionalStream({
-      replyTo: 'WannaGo Team <hello@wannago.app>',
+    await ctx.resend.emails.send({
+      reply_to: 'WannaGo Team <hello@wannago.app>',
+      from: Emails.Hi,
       to: user.email,
       subject: `Your sign up has been cancelled...`,
-      htmlString: render(
+      html: render(
         <EventCancelSignUp
           title={event.title}
           address={event.address || 'none'}
@@ -553,12 +560,13 @@ export const organizerEventSignUpNotification = inngest.createFunction(
 
     invariant(organizer, organizerNotFoundError);
 
-    await ctx.postmark.sendToOrganizerEventSignUpNotificationStream({
-      replyTo: 'WannaGo Team <hello@wannago.app>',
+    await ctx.resend.emails.send({
+      reply_to: 'WannaGo Team <hello@wannago.app>',
+      from: Emails.Hi,
       //TODO: '' should not be allowed
       to: organizer?.email || '',
       subject: 'Your event has new sign up!',
-      htmlString: render(
+      html: render(
         <OrganizerEventSignUpNotification
           eventTitle={event.title}
           eventAttendeesUrl={`${getBaseUrl()}/e/${event.shortId}/attendees`}
@@ -583,11 +591,12 @@ export const verifyEmailAddressEmail = inngest.createFunction(
     invariant(user, userNotFoundError);
 
     if (!user.email_verified) {
-      await ctx.postmark.sendToTransactionalStream({
-        replyTo: 'WannaGo Team <hello@wannago.app>',
+      await ctx.resend.emails.send({
+        reply_to: 'WannaGo Team <hello@wannago.app>',
+        from: Emails.Hi,
         to: user.email,
         subject: 'Please verify your email',
-        htmlString: render(
+        html: render(
           <VerifyEmail
             verifyUrl={`${getBaseUrl()}/api/verify-email/${
               ctx.event.data.code

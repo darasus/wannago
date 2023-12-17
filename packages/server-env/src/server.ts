@@ -18,12 +18,12 @@ const _serverEnv = serverSchema.safeParse({
   UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
   CLOUDFLARE_API_KEY: process.env.CLOUDFLARE_API_KEY,
   QSTASH_TOKEN: process.env.QSTASH_TOKEN,
-  POSTMARK_API_KEY: process.env.POSTMARK_API_KEY,
   VERCEL_ENV: process.env.VERCEL_ENV,
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   STRIPE_API_SECRET: process.env.STRIPE_API_SECRET,
   STRIPE_ENDPOINT_SECRET: process.env.STRIPE_ENDPOINT_SECRET,
   STABILITY_AI_API_KEY: process.env.STABILITY_AI_API_KEY,
+  RESEND_API_KEY: process.env.RESEND_API_KEY,
 });
 
 if (!_serverEnv.success) {
