@@ -9,6 +9,8 @@ import {Scripts} from '../features/Scripts';
 import {ClientProvider} from './ClientProvider';
 import {ClientRefresher} from '../features/ClientRefresher/ClientRefresher';
 import {SpeedInsights} from '@vercel/speed-insights/next';
+import {PHProvider, PostHogPageview} from '../features/Posthog/Posthog';
+import {Suspense} from 'react';
 
 export const metadata = {
   title: 'WannaGo',
@@ -27,17 +29,22 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       </head>
       <body>
         <ClientProvider>
-          <div>
-            <Container maxSize={'full'}>
-              <Header />
-            </Container>
-          </div>
-          <div>
-            <div>{children}</div>
-          </div>
-          <Tools />
-          <ToastProvider />
-          <ClientRefresher />
+          <Suspense>
+            <PostHogPageview />
+          </Suspense>
+          <PHProvider>
+            <div>
+              <Container maxSize={'full'}>
+                <Header />
+              </Container>
+            </div>
+            <div>
+              <div>{children}</div>
+            </div>
+            <Tools />
+            <ToastProvider />
+            <ClientRefresher />
+          </PHProvider>
         </ClientProvider>
         <SpeedInsights />
       </body>

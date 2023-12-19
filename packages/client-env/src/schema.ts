@@ -6,6 +6,8 @@ export const clientSchema = z.object({
   NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string(),
   NEXT_PUBLIC_VERCEL_ENV: z.string(),
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string(),
+  NEXT_PUBLIC_POSTHOG_HOST: z.string(),
+  NEXT_PUBLIC_POSTHOG_KEY: z.string(),
 });
 
 export const clientEnv: {
@@ -19,4 +21,6 @@ export const clientEnv: {
   NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+  NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
+  NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
 };

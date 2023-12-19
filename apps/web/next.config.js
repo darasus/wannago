@@ -83,6 +83,14 @@ const moduleExports = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/ingest/:path*',
+        destination: 'https://app.posthog.com/:path*',
+      },
+    ];
+  },
 };
 
 // Make sure adding Sentry options is the last code to run before exporting, to
