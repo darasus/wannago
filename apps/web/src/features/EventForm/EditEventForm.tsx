@@ -6,7 +6,6 @@ import {useEventForm} from './hooks/useEventForm';
 import {FormProvider} from 'react-hook-form';
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {useTracker} from 'hooks';
-import {PageHeader} from 'ui';
 import {Event, Organization, Ticket, User} from '@prisma/client';
 import {toast} from 'sonner';
 import {api} from '../../trpc/client';
@@ -70,7 +69,6 @@ export function EditEventForm({event, me, myOrganizations}: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <PageHeader title="Edit event" />
       <FormProvider {...form}>
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-12">

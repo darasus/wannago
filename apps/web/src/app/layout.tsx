@@ -1,8 +1,6 @@
 import './globals.css';
 
-import {Container} from 'ui';
 import {getBaseUrl} from 'utils';
-import {Header} from '../features/Header/Header';
 import {Tools} from '../features/Tools';
 import {ToastProvider} from '../features/ToastProvider';
 import {Scripts} from '../features/Scripts';
@@ -33,14 +31,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             <PostHogPageview />
           </Suspense>
           <PHProvider>
-            <div>
-              <Container maxSize={'full'}>
-                <Header />
-              </Container>
-            </div>
-            <div>
-              <div>{children}</div>
-            </div>
+            {children}
             <Tools />
             <ToastProvider />
             <ClientRefresher />

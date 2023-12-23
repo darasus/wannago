@@ -1,4 +1,5 @@
 import Link, {LinkProps} from 'next/link';
+import {cn} from 'utils';
 
 interface Props extends LinkProps {
   className?: string;
@@ -15,7 +16,7 @@ export function Logo({className, ...props}: Props) {
 export function LogoView({className}: {className?: string}) {
   return (
     <svg
-      className="h-[30px]"
+      className={cn('h-[30px]', className)}
       viewBox="0 0 78 36"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
