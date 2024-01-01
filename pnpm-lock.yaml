@@ -483,9 +483,6 @@ importers:
       auth:
         specifier: workspace:*
         version: link:../../packages/auth
-      client-env:
-        specifier: workspace:*
-        version: link:../../packages/client-env
       const:
         specifier: workspace:*
         version: link:../../packages/const
@@ -495,6 +492,9 @@ importers:
       email:
         specifier: workspace:*
         version: link:../../packages/email
+      env:
+        specifier: workspace:*
+        version: link:../../packages/server-env
       eslint-config-custom:
         specifier: workspace:*
         version: link:../../packages/eslint-config-custom
@@ -510,9 +510,6 @@ importers:
       lib:
         specifier: workspace:*
         version: link:../../packages/lib
-      server-env:
-        specifier: workspace:*
-        version: link:../../packages/server-env
       stripe-webhook-input-validation:
         specifier: workspace:*
         version: link:../../packages/stripe-webhook-input-validation
@@ -544,9 +541,6 @@ importers:
       auth:
         specifier: workspace:*
         version: link:../auth
-      client-env:
-        specifier: workspace:*
-        version: link:../client-env
       const:
         specifier: workspace:*
         version: link:../const
@@ -556,6 +550,9 @@ importers:
       email:
         specifier: workspace:*
         version: link:../email
+      env:
+        specifier: workspace:*
+        version: link:../server-env
       error:
         specifier: workspace:*
         version: link:../error
@@ -565,9 +562,6 @@ importers:
       lib:
         specifier: workspace:*
         version: link:../lib
-      server-env:
-        specifier: workspace:*
-        version: link:../server-env
       stripe-webhook-input-validation:
         specifier: workspace:*
         version: link:../stripe-webhook-input-validation
@@ -584,27 +578,15 @@ importers:
 
   packages/auth:
     dependencies:
-      client-env:
-        specifier: workspace:*
-        version: link:../client-env
       database:
         specifier: workspace:*
         version: link:../database
-      server-env:
+      env:
         specifier: workspace:*
         version: link:../server-env
       utils:
         specifier: workspace:*
         version: link:../utils
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-
-  packages/client-env:
     devDependencies:
       eslint-config-custom:
         specifier: workspace:*
@@ -681,12 +663,12 @@ importers:
       api:
         specifier: workspace:*
         version: link:../api
-      client-env:
-        specifier: workspace:*
-        version: link:../client-env
       const:
         specifier: workspace:*
         version: link:../const
+      env:
+        specifier: workspace:*
+        version: link:../server-env
       hooks:
         specifier: workspace:*
         version: link:../hooks
@@ -706,9 +688,9 @@ importers:
 
   packages/hooks:
     dependencies:
-      client-env:
+      env:
         specifier: workspace:*
-        version: link:../client-env
+        version: link:../server-env
       lib:
         specifier: workspace:*
         version: link:../lib
@@ -753,13 +735,10 @@ importers:
 
   packages/lib:
     dependencies:
-      client-env:
-        specifier: workspace:*
-        version: link:../client-env
       database:
         specifier: workspace:*
         version: link:../database
-      server-env:
+      env:
         specifier: workspace:*
         version: link:../server-env
       utils:
@@ -774,10 +753,6 @@ importers:
         version: link:../tsconfig
 
   packages/server-env:
-    dependencies:
-      client-env:
-        specifier: workspace:*
-        version: link:../client-env
     devDependencies:
       eslint-config-custom:
         specifier: workspace:*
@@ -794,15 +769,15 @@ importers:
       email:
         specifier: workspace:*
         version: link:../email
+      env:
+        specifier: workspace:*
+        version: link:../server-env
       error:
         specifier: workspace:*
         version: link:../error
       lib:
         specifier: workspace:*
         version: link:../lib
-      server-env:
-        specifier: workspace:*
-        version: link:../server-env
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -834,12 +809,12 @@ importers:
 
   packages/utils:
     dependencies:
-      client-env:
-        specifier: workspace:*
-        version: link:../client-env
       const:
         specifier: workspace:*
         version: link:../const
+      env:
+        specifier: workspace:*
+        version: link:../server-env
     devDependencies:
       eslint-config-custom:
         specifier: workspace:*

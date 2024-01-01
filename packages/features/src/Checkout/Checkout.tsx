@@ -6,7 +6,7 @@ import {Elements} from '@stripe/react-stripe-js';
 import {Appearance, loadStripe, Stripe} from '@stripe/stripe-js';
 import {useTheme} from 'next-themes';
 import {Spinner} from 'ui';
-import {env} from 'client-env';
+import {env} from 'env/client';
 
 interface Props {
   stripeAccountId: string;

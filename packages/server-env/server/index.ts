@@ -1,5 +1,7 @@
+import 'server-only';
+
 import {ZodFormattedError} from 'zod';
-import {env as clientEnv} from 'client-env';
+import {env as clientEnv} from '../client';
 import {serverSchema} from './schema';
 
 export const formatErrors = (

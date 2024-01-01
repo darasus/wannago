@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "database": "workspace:*",
-    "server-env": "workspace:*",
+    "env": "workspace:*",
     "email": "workspace:*",
     "utils": "workspace:*",
     "error": "workspace:*",

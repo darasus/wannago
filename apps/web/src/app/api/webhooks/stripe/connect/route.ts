@@ -9,7 +9,7 @@ import {
   baseEventHandlerSchema,
   handleCheckoutSessionCompletedInputSchema,
 } from 'stripe-webhook-input-validation';
-import {env} from 'server-env';
+import {env} from 'env/server';
 
 export async function POST(req: NextRequest) {
   let event: IStripe.Event;

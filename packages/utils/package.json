@@ -7,7 +7,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "client-env": "workspace:*",
+    "env": "workspace:*",
     "const": "workspace:*"
   },
   "devDependencies": {

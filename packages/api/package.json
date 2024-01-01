@@ -7,8 +7,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "server-env": "workspace:*",
-    "client-env": "workspace:*",
+    "env": "workspace:*",
     "stripe-webhook-input-validation": "workspace:*",
     "utils": "workspace:*",
     "auth": "workspace:*",

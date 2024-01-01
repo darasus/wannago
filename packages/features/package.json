@@ -10,7 +10,7 @@
     "utils": "workspace:*",
     "hooks": "workspace:*",
     "const": "workspace:*",
-    "client-env": "workspace:*",
+    "env": "workspace:*",
     "api": "workspace:*",
     "ui": "workspace:*"
   },

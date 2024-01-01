@@ -4,7 +4,7 @@ import {useTracker} from 'hooks';
 import {Button, CardBase} from 'ui';
 import {LocationImage} from 'ui';
 import {Text} from 'ui';
-import {env} from 'client-env';
+import {env} from 'env/client';
 
 interface Props {
   address: string;

@@ -1,6 +1,7 @@
 import {Resend} from 'resend';
-import {env} from 'server-env';
+import {env} from 'env/server';
 
+// TODO: set this as config
 export enum Emails {
   Hi = 'hi@wannago.app',
 }

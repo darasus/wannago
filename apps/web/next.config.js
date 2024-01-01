@@ -29,7 +29,7 @@ const moduleExports = {
   transpilePackages: [
     'api',
     'features',
-    'client-env',
+    'env',
     'config',
     'database',
     'email',
@@ -37,7 +37,6 @@ const moduleExports = {
     'hooks',
     'inngest-client',
     'lib',
-    'server-env',
     'stripe-webhook-input-validation',
     'ui',
     'utils',

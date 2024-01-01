@@ -1,13 +1,13 @@
 {
-  "name": "server-env",
+  "name": "env",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "./index.ts",
+  "exports": {
+    "./server": "./server/index.ts",
+    "./client": "./client/index.ts"
+  },
   "scripts": {
     "lint": "eslint"
-  },
-  "dependencies": {
-    "client-env": "workspace:*"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",

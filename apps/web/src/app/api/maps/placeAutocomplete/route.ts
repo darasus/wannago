@@ -1,5 +1,5 @@
 import {Client as GoogleMapsClient} from '@googlemaps/google-maps-services-js';
-import {env} from 'server-env';
+import {env} from 'env/server';
 import {invariant} from 'utils';
 
 export async function POST(req: Request) {

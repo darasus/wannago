@@ -8,7 +8,7 @@ import {ClientProvider} from './ClientProvider';
 import {ClientRefresher} from 'features/src/ClientRefresher/ClientRefresher';
 import {SpeedInsights} from '@vercel/speed-insights/next';
 import {Analytics} from '@vercel/analytics/react';
-import {env} from 'server-env';
+import {env} from 'env/server';
 
 export const metadata = {
   title: 'WannaGo',
