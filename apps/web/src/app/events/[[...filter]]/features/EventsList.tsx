@@ -1,5 +1,5 @@
 import {RouterOutputs} from 'api';
-import {EventCard} from 'cards';
+import {EventCard} from 'features';
 import Link from 'next/link';
 
 interface Props {

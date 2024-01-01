@@ -5,7 +5,7 @@ import {
   SignUpCard,
   UrlCard,
 } from 'features';
-import {InfoCard} from 'cards';
+import {InfoCard} from 'features';
 import {getBaseUrl} from 'utils';
 import {api} from '../../trpc/server-http';
 import {RouterOutputs} from 'api';

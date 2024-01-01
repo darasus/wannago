@@ -1,6 +1,6 @@
 'use client';
 
-import {LocationCard as LocationCardView} from 'cards';
+import {LocationCardView} from './LocationCardView';
 import {useTracker} from 'hooks';
 
 interface Props {

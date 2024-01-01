@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import {EventCard} from 'cards';
+import {EventCard} from 'features';
 import {Container, PageHeader} from 'ui';
 import {api} from '../../trpc/server-http';
 

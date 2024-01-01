@@ -8,7 +8,7 @@ interface Props {
   publicEventUrl: string;
 }
 
-export function UrlCard({action, url, publicEventUrl}: Props) {
+export function UrlCardView({action, url, publicEventUrl}: Props) {
   return (
     <CardBase className="h-full" title={'Invite'} titleChildren={action}>
       <div className="flex items-center gap-x-2">

@@ -10,7 +10,11 @@ interface Props {
   endDate: Date;
 }
 
-export function DateCard({endDate, startDate, onAddToCalendarClick}: Props) {
+export function DateCardView({
+  endDate,
+  startDate,
+  onAddToCalendarClick,
+}: Props) {
   const [isShow, setShow] = useState(false);
   const relativeTime = useMemo(
     () => getRelativeTime(startDate, endDate),

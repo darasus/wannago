@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { CardBase, Button, Avatar } from "ui";
+import Link from 'next/link';
+import {CardBase, Button, Avatar} from 'ui';
 
 interface Props {
   name: string;
@@ -8,14 +8,14 @@ interface Props {
   action?: React.ReactNode;
 }
 
-export function OrganizerCard({
+export function OrganizerCardView({
   name,
   profileImageSrc,
   profilePath,
   action,
 }: Props) {
   return (
-    <CardBase title={"Who"} titleChildren={action}>
+    <CardBase title={'Who'} titleChildren={action}>
       <div>
         <div className="flex items-center gap-x-2">
           <div className="flex shrink-0  items-center overflow-hidden relative justify-center rounded-full safari-rounded-border-fix">

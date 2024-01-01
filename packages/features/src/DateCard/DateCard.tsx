@@ -5,9 +5,9 @@ import {createEvent} from 'ics';
 import {Event} from '@prisma/client';
 import {prepareIcsData} from 'utils';
 import {iOS} from 'utils';
-import {DateCard as DataCardView} from 'cards';
 import {Android} from 'utils';
 import {useTracker} from 'hooks';
+import {DateCardView} from './DateCardView';
 
 interface Props {
   event: Event;
@@ -28,7 +28,7 @@ export function DateCard({event}: Props) {
   };
 
   return (
-    <DataCardView
+    <DateCardView
       startDate={event.startDate}
       endDate={event.endDate}
       onAddToCalendarClick={handleCalendarClick}

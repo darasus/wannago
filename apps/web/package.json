@@ -25,7 +25,6 @@
     "utils": "workspace:*",
     "hooks": "workspace:*",
     "lib": "workspace:*",
-    "cards": "workspace:*",
     "ui": "workspace:*"
   }
 }

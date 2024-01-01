@@ -10,7 +10,7 @@ interface Props {
   onGetDirectionsClick?: () => void;
 }
 
-export function LocationCard({
+export function LocationCardView({
   address,
   latitude,
   longitude,

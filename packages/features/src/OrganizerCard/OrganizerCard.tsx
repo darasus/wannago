@@ -1,7 +1,7 @@
 'use client';
 
 import {Event, Organization, User} from '@prisma/client';
-import {OrganizerCard as OrganizerCardView} from 'cards';
+import {OrganizerCardView} from './OrganizerCardView';
 import {useRouter} from 'next/navigation';
 import {Button} from 'ui';
 import {api} from '../../../../apps/web/src/trpc/client';

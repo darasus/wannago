@@ -8,4 +8,6 @@ export * from './src/DateCard/DateCard';
 export * from './src/LocationCard/LocationCard';
 export * from './src/OrganizerCard/OrganizerCard';
 export * from './src/UrlCard/UrlCard';
+export * from './src/EventCard/EventCard';
 export * from './src/SignUpCard/SignUpCard';
+export * from './src/InfoCard/InfoCard';

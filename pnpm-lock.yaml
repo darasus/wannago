@@ -507,9 +507,6 @@ importers:
       auth:
         specifier: workspace:*
         version: link:../../packages/auth
-      cards:
-        specifier: workspace:*
-        version: link:../../packages/cards
       client-env:
         specifier: workspace:*
         version: link:../../packages/client-env
@@ -631,31 +628,6 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
 
-  packages/cards:
-    dependencies:
-      api:
-        specifier: workspace:*
-        version: link:../api
-      const:
-        specifier: workspace:*
-        version: link:../const
-      ui:
-        specifier: workspace:*
-        version: link:../ui
-      utils:
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      client-env:
-        specifier: workspace:*
-        version: link:../client-env
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-
   packages/client-env:
     devDependencies:
       eslint-config-custom:
@@ -733,9 +705,12 @@ importers:
       api:
         specifier: workspace:*
         version: link:../api
-      cards:
+      client-env:
         specifier: workspace:*
-        version: link:../cards
+        version: link:../client-env
+      const:
+        specifier: workspace:*
+        version: link:../const
       hooks:
         specifier: workspace:*
         version: link:../hooks

@@ -9,7 +9,6 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx}',
     '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/editor/src/**/*.{js,ts,jsx,tsx}',
-    '../../packages/cards/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/features/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/const/**/*.{js,ts,jsx,tsx}',
   ],

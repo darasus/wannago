@@ -29,7 +29,6 @@ const moduleExports = {
   transpilePackages: [
     'api',
     'features',
-    'cards',
     'client-env',
     'config',
     'database',

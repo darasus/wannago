@@ -1,6 +1,6 @@
 'use client';
 
-import {UrlCard as UrlCardView} from 'cards';
+import {UrlCardView} from './UrlCardView';
 import {useCopyClipboard, useTracker} from 'hooks';
 import {Button} from 'ui';
 
