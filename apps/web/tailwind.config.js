@@ -10,8 +10,7 @@ module.exports = {
     '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/editor/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/cards/src/**/*.{js,ts,jsx,tsx}',
-    '../../packages/card-features/src/**/*.{js,ts,jsx,tsx}',
-    '../../packages/auth-features/src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/features/src/**/*.{js,ts,jsx,tsx}',
     '../../packages/const/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {

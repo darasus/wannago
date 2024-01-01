@@ -1,4 +1,4 @@
-import {PasswordResetForm} from 'auth-features';
+import {PasswordResetForm} from 'features';
 import {Container} from 'ui';
 
 export default function PasswordResetPage() {

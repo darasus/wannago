@@ -1,4 +1,4 @@
-import {SignIn} from 'auth-features';
+import {SignIn} from 'features';
 import {revalidatePath} from 'next/cache';
 import {Container} from 'ui';
 

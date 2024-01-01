@@ -1,4 +1,4 @@
-import {SignUp} from 'auth-features';
+import {SignUp} from 'features';
 import {Container} from 'ui';
 
 export const metadata = {

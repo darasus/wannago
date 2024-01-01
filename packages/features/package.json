@@ -1,5 +1,5 @@
 {
-  "name": "card-features",
+  "name": "features",
   "version": "1.0.0",
   "license": "MIT",
   "main": "./index.ts",
@@ -7,12 +7,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "cards": "workspace:*",
-    "auth-features": "workspace:*",
-    "api": "workspace:*",
     "utils": "workspace:*",
-    "ui": "workspace:*",
-    "hooks": "workspace:*"
+    "hooks": "workspace:*",
+    "cards": "workspace:*",
+    "api": "workspace:*",
+    "ui": "workspace:*"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",

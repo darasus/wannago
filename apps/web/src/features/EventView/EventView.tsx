@@ -4,7 +4,7 @@ import {
   OrganizerCard,
   SignUpCard,
   UrlCard,
-} from 'card-features';
+} from 'features';
 import {InfoCard} from 'cards';
 import {getBaseUrl} from 'utils';
 import {api} from '../../trpc/server-http';

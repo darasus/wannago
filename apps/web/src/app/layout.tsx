@@ -3,13 +3,13 @@ import './globals.css';
 import {Container} from 'ui';
 import {getBaseUrl} from 'utils';
 import {Header} from '../features/Header/Header';
-import {Tools} from '../features/Tools';
 import {ToastProvider} from '../features/ToastProvider';
 import {Scripts} from '../features/Scripts';
 import {ClientProvider} from './ClientProvider';
 import {ClientRefresher} from '../features/ClientRefresher/ClientRefresher';
 import {SpeedInsights} from '@vercel/speed-insights/next';
 import {Analytics} from '@vercel/analytics/react';
+import {env} from 'server-env';
 
 export const metadata = {
   title: 'WannaGo',
