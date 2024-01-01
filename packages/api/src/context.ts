@@ -1,7 +1,6 @@
 import {Currency} from '@prisma/client';
 import {prisma} from 'database';
 import {resend} from 'lib/src/Resend';
-import {CacheService} from 'lib/src/cache';
 import {getCurrencyFromHeaders} from 'utils';
 import {getEvents} from './actions/getEvents';
 import {getUserById} from './actions/getUserById';
@@ -64,7 +63,6 @@ interface CreateInnerContextOptions {
   prisma: typeof prisma;
   timezone: string | undefined;
   currency: Currency;
-  cache: CacheService;
   inngest: InngestType;
   stripe: typeof stripe;
   createStripeClient: typeof createStripeClient;
@@ -85,7 +83,6 @@ export function createContextInner(
     prisma: _opts.prisma,
     timezone: _opts.timezone,
     currency: _opts.currency,
-    cache: _opts.cache,
     inngest: _opts.inngest,
     stripe: _opts.stripe,
     createStripeClient: _opts.createStripeClient,
@@ -119,7 +116,6 @@ export async function createContext(): Promise<Context> {
     timezone,
     currency,
     inngest,
-    cache: new CacheService(),
     stripe,
     createStripeClient,
     resend,

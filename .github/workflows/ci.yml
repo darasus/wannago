@@ -68,7 +68,6 @@ jobs:
             NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
             PRISMA_GENERATE_DATAPROXY: ${{ secrets.PRISMA_GENERATE_DATAPROXY }}
-            UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
             CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
             QSTASH_URL: ${{ secrets.QSTASH_URL }}
             QSTASH_TOKEN: ${{ secrets.QSTASH_TOKEN }}
