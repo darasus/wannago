@@ -3,12 +3,11 @@
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {useRouter} from 'next/navigation';
 import {FormProvider} from 'react-hook-form';
-import {trackEventCreateConversion} from 'lib/src/gtag';
 import {EventForm} from './EventForm';
 import {useEventForm} from './hooks/useEventForm';
 import {toast} from 'sonner';
 import {useTracker} from 'hooks';
-import {api} from '../../trpc/client';
+import {api} from '../../../../apps/web/src/trpc/client';
 import {Organization, User} from '@prisma/client';
 
 interface Props {
@@ -24,7 +23,6 @@ export function AddEventForm({me, myOrganizations}: Props) {
 
   const onSubmit = handleSubmit(async (data) => {
     logEvent('event_create_submitted');
-    trackEventCreateConversion();
 
     await api.event.create
       .mutate({

@@ -5,7 +5,7 @@ import {useParams} from 'next/dist/client/components/navigation';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
 import {useState} from 'react';
-import {api} from '../../../../trpc/client';
+import {api} from '../../../../../../apps/web/src/trpc/client';
 
 export function MessageButton() {
   const router = useRouter();

@@ -5,7 +5,7 @@ import {getBaseUrl} from 'utils';
 import {Header} from './Header';
 import {ToastProvider} from './ToastProvider';
 import {ClientProvider} from './ClientProvider';
-import {ClientRefresher} from '../features/ClientRefresher/ClientRefresher';
+import {ClientRefresher} from 'features/src/ClientRefresher/ClientRefresher';
 import {SpeedInsights} from '@vercel/speed-insights/next';
 import {Analytics} from '@vercel/analytics/react';
 import {env} from 'server-env';

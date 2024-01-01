@@ -9,7 +9,7 @@ import {useTracker} from 'hooks';
 import {PageHeader} from 'ui';
 import {Event, Organization, Ticket, User} from '@prisma/client';
 import {toast} from 'sonner';
-import {api} from '../../trpc/client';
+import {api} from '../../../../apps/web/src/trpc/client';
 
 interface Props {
   event: Event & {tickets: Ticket[]};

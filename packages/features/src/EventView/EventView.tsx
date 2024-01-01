@@ -1,14 +1,12 @@
-import {
-  DateCard,
-  LocationCard,
-  OrganizerCard,
-  SignUpCard,
-  UrlCard,
-} from 'features';
-import {InfoCard} from 'features';
+import {InfoCard} from '../InfoCard/InfoCard';
 import {getBaseUrl} from 'utils';
-import {api} from '../../trpc/server-http';
+import {api} from '../../../../apps/web/src/trpc/server-http';
 import {RouterOutputs} from 'api';
+import {SignUpCard} from '../SignUpCard/SignUpCard';
+import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
+import {UrlCard} from '../UrlCard/UrlCard';
+import {LocationCard} from '../LocationCard/LocationCard';
+import {DateCard} from '../DateCard/DateCard';
 
 interface Props {
   event:

@@ -1,4 +1,4 @@
-import {AddEventForm} from '../../../features/EventForm/AddEventForm';
+import {AddEventForm} from 'features/src/EventForm/AddEventForm';
 import {Container, PageHeader} from 'ui';
 import {api} from '../../../trpc/server-http';
 

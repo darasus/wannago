@@ -1,7 +1,7 @@
 import {RouterOutputs} from 'api';
 import {notFound} from 'next/navigation';
 import {api} from '../../../../trpc/server-http';
-import {StripeAccountLinkSettings} from '../../../../features/StripeAccountLinkSettings/StripeAccountLinkSettings';
+import {StripeAccountLinkSettings} from 'features/src/StripeAccountLinkSettings/StripeAccountLinkSettings';
 
 interface Props {
   userPromise: Promise<RouterOutputs['user']['me']>;

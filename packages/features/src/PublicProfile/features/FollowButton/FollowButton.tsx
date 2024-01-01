@@ -5,8 +5,8 @@ import {use, useCallback, useState} from 'react';
 import {Button} from 'ui';
 import {toast} from 'sonner';
 import {type RouterOutputs} from 'api';
-import {api} from '../../../../trpc/client';
-import {revalidateFollow} from '../../../../actions';
+import {api} from '../../../../../../apps/web/src/trpc/client';
+import {revalidateFollow} from '../../../../../../apps/web/src/actions';
 
 interface Props {
   amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;

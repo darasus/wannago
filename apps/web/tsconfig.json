@@ -11,5 +11,18 @@
       }
     ]
   },
-  "include": ["src", "next-env.d.ts", ".next/types/**/*.ts"]
+  "include": [
+    "src",
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "../../packages/features/src/Checkout",
+    "../../packages/features/src/ClientRefresher",
+    "../../packages/features/src/Countdown",
+    "../../packages/features/src/EventForm",
+    "../../packages/features/src/EventView",
+    "../../packages/features/src/PublicProfile",
+    "../../packages/features/src/StripeAccountLinkSettings",
+    "../../packages/features/src/UserSection",
+    "../../packages/features/src/VerifyEmailBar"
+  ]
 }

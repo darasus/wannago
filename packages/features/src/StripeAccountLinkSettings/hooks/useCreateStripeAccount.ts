@@ -1,44 +1,43 @@
 'use client';
 
 import {useTransition} from 'react';
-import {api} from '../../../trpc/client';
+import {api} from '../../../../../apps/web/src/trpc/client';
 import {toast} from 'sonner';
+import {useRouter} from 'next/navigation';
 import {useTracker} from 'hooks';
 
-export function useRedirectToStripeAccount({
-  organizerId,
-}: {
-  organizerId: string;
-}) {
+export function useCreateStripeAccount({organizerId}: {organizerId: string}) {
   const {logEvent} = useTracker();
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const redirectToStripeAccount = async () => {
-    logEvent('view_stripe_account_button_clicked', {
+  const createAccountLink = async () => {
+    logEvent('link_stripe_account_button_clicked', {
       organizerId,
     });
     try {
       startTransition(async () => {
-        const url = await api.stripeAccountLink.getAccountLink
+        const url = await api.stripeAccountLink.createAccountLink
           .mutate({
             organizerId,
           })
           .catch((error) => {
             toast.error(error.message);
           });
+
         if (url) {
-          window.open(url, '_blank');
+          router.push(url);
         }
       });
     } catch (error) {
       console.error(error, {
         extra: {
           organizerId,
-          function: 'getAccountLink',
+          function: 'createAccountLink',
         },
       });
     }
   };
 
-  return {redirectToStripeAccount, isLoading: isPending};
+  return {createAccountLink, isLoading: isPending};
 }

@@ -1,5 +1,5 @@
 import {type RouterOutputs} from 'api';
-import {EventCard} from 'features';
+import {EventCard} from '../EventCard/EventCard';
 import Link from 'next/link';
 import {Suspense} from 'react';
 import {

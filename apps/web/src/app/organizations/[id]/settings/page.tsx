@@ -5,7 +5,7 @@ import {TeamMembersSettings} from './features/TeamMemberSettings/TeamMembersSett
 import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
 import {Suspense} from 'react';
-import {StripeAccountLinkSettings} from '../../../../features/StripeAccountLinkSettings/StripeAccountLinkSettings';
+import {StripeAccountLinkSettings} from 'features/src/StripeAccountLinkSettings/StripeAccountLinkSettings';
 
 // TODO: create description text explaining why you need to create a organization
 

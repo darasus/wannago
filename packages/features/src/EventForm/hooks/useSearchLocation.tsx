@@ -1,7 +1,7 @@
 'use client';
 
 import {useDebounce} from 'hooks';
-import {api} from '../../../trpc/client';
+import {api} from '../../../../../apps/web/src/trpc/client';
 import {useEffect, useState, useTransition} from 'react';
 import type {PlaceAutocompleteResponseData} from '@googlemaps/google-maps-services-js';
 

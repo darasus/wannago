@@ -1,7 +1,7 @@
 import {Suspense} from 'react';
 import {api} from '../../../../trpc/server-http';
 import {LoadingBlock} from 'ui';
-import {PublicProfile} from '../../../../features/PublicProfile/PublicProfile';
+import {PublicProfile} from 'features/src/PublicProfile/PublicProfile';
 import {notFound} from 'next/navigation';
 
 export const generateMetadata = async ({

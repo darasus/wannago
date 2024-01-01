@@ -1,10 +1,10 @@
 import {Button, CardBase, Logo} from 'ui';
-import {UserSection} from '../features/UserSection/UserSection';
+import {UserSection} from 'features/src/UserSection/UserSection';
 import {DesktopMenu} from '../components/DesktopMenu';
 import {MobileMenu} from '../components/MobileMenu';
 import Link from 'next/link';
 import {api} from '../trpc/server-http';
-import {VerifyEmailBar} from '../features/VerifyEmailBar/VerifyEmailBar';
+import {VerifyEmailBar} from 'features/src/VerifyEmailBar/VerifyEmailBar';
 
 export async function Header() {
   const me = await api.user.me.query();

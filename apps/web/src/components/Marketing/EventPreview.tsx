@@ -1,6 +1,6 @@
 import {AnimateRender} from './AnimateRender';
 
-import {EventView} from '../../features/EventView/EventView';
+import {EventView} from 'features/src/EventView/EventView';
 import {RouterOutputs} from 'api';
 
 interface Props {

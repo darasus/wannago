@@ -1,7 +1,7 @@
 'use client';
 
 import {useTransition} from 'react';
-import {api} from '../../trpc/client';
+import {api} from '../../../../apps/web/src/trpc/client';
 import {toast} from 'sonner';
 import {Button} from 'ui';
 

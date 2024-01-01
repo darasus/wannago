@@ -7,11 +7,11 @@ import {
   Container,
   Text,
 } from 'ui';
-import {Checkout} from '../../../features/Checkout/Checkout';
+import {Checkout} from 'features/src/Checkout/Checkout';
 import {api} from '../../../trpc/server-http';
 import {notFound, redirect} from 'next/navigation';
 import {formatCents} from 'utils';
-import {Countdown} from '../../../features/Countdown/Countdown';
+import {Countdown} from 'features/src/Countdown/Countdown';
 import Link from 'next/link';
 
 export default async function CheckoutPage(props: any) {

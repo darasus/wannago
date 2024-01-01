@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
-import {CheckoutForm} from '../Checkout/CheckoutForm';
+import {CheckoutForm} from './CheckoutForm';
 import {Elements} from '@stripe/react-stripe-js';
 import {Appearance, loadStripe, Stripe} from '@stripe/stripe-js';
 import {useTheme} from 'next-themes';

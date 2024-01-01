@@ -1,5 +1,5 @@
 import {Banner} from 'ui';
-import {api} from '../../trpc/server-http';
+import {api} from '../../../../apps/web/src/trpc/server-http';
 import {VerifyEmailButton} from './VerifyEmailButton';
 
 export async function VerifyEmailBar() {
