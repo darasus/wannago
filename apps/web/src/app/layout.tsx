@@ -2,7 +2,7 @@ import './globals.css';
 
 import {Container} from 'ui';
 import {getBaseUrl} from 'utils';
-import {Header} from '../features/Header/Header';
+import {Header} from './Header';
 import {ToastProvider} from '../features/ToastProvider';
 import {Scripts} from '../features/Scripts';
 import {ClientProvider} from './ClientProvider';
