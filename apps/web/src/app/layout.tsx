@@ -3,8 +3,7 @@ import './globals.css';
 import {Container} from 'ui';
 import {getBaseUrl} from 'utils';
 import {Header} from './Header';
-import {ToastProvider} from '../features/ToastProvider';
-import {Scripts} from '../features/Scripts';
+import {ToastProvider} from './ToastProvider';
 import {ClientProvider} from './ClientProvider';
 import {ClientRefresher} from '../features/ClientRefresher/ClientRefresher';
 import {SpeedInsights} from '@vercel/speed-insights/next';
@@ -42,7 +41,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         </ClientProvider>
         <SpeedInsights />
       </body>
-      <Scripts />
     </html>
   );
 }
