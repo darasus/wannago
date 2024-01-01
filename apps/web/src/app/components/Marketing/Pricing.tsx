@@ -1,9 +1,9 @@
 import {CardBase, Container, Text} from 'ui';
 import {SectionContainer} from './SectionContainer';
 import {SectionHeader} from './SectionHeader';
-import {api} from '../../trpc/server-http';
+import {api} from '../../../trpc/server-http';
 import {cn, formatCents, formatPercent} from 'utils';
-import {titleFont} from '../../fonts';
+import {titleFont} from '../../../fonts';
 import {CheckCircle} from 'lucide-react';
 import {feeAmount, feePercent} from 'const';
 import {GetStartedButton} from './GetStartedButton';

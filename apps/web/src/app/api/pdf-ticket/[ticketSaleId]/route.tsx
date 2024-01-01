@@ -4,7 +4,7 @@ import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
 import {NextRequest} from 'next/server';
 import {invariant} from 'utils';
-import {TicketPDF} from '../../../../components/pdf/TicketPDF';
+import {TicketPDF} from './components/TicketPDF';
 
 export async function GET(
   req: NextRequest,

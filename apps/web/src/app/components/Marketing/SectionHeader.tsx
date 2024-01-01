@@ -1,4 +1,4 @@
-import {titleFontClassName} from '../../fonts';
+import {titleFontClassName} from '../../../fonts';
 import {cn} from 'utils';
 
 interface Props {
