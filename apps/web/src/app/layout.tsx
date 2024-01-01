@@ -9,6 +9,7 @@ import {Scripts} from '../features/Scripts';
 import {ClientProvider} from './ClientProvider';
 import {ClientRefresher} from '../features/ClientRefresher/ClientRefresher';
 import {SpeedInsights} from '@vercel/speed-insights/next';
+import {Analytics} from '@vercel/analytics/react';
 
 export const metadata = {
   title: 'WannaGo',
@@ -35,7 +36,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <div>
             <div>{children}</div>
           </div>
-          <Tools />
+          {env.NEXT_PUBLIC_VERCEL_ENV === 'production' && <Analytics />}
           <ToastProvider />
           <ClientRefresher />
         </ClientProvider>
