@@ -1,8 +1,9 @@
 'use client';
 
-import {UrlCardView} from './UrlCardView';
 import {useCopyClipboard, useTracker} from 'hooks';
-import {Button} from 'ui';
+import {Link as LinkIcon} from 'lucide-react';
+import Link from 'next/link';
+import {Button, CardBase} from 'ui';
 
 interface Props {
   url: string;
@@ -36,6 +37,17 @@ export function UrlCard({url, eventId}: Props) {
   );
 
   return (
-    <UrlCardView url={url} publicEventUrl={publicEventUrl} action={action} />
+    <CardBase className="h-full" title={'Invite'} titleChildren={action}>
+      <div className="flex items-center gap-x-2">
+        <Link href={url}>
+          <div className="flex justify-center items-center rounded-full h-10 w-10 bg-muted dark:bg-white/[.04] border">
+            <LinkIcon className="h-5 w-5" />
+          </div>
+        </Link>
+        <Button variant="link" asChild className="p-0 h-auto">
+          <Link href={url}>{publicEventUrl}</Link>
+        </Button>
+      </div>
+    </CardBase>
   );
 }

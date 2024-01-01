@@ -5,7 +5,10 @@ import {api} from '../../../../apps/web/src/trpc/server-http';
 import {RouterOutputs} from 'api';
 import {Suspense} from 'react';
 import {UserCount} from './features/UserCount/UserCount';
-import {SignUpStatus, SignUpStatusCard} from './SignUpStatus/SignUpStatus';
+import {
+  SignUpStatus,
+  SignUpStatusCard,
+} from './features/SignUpStatus/SignUpStatus';
 
 interface Props {
   event:

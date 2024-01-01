@@ -1,3 +1,5 @@
+'use client';
+
 import {isFuture} from 'date-fns';
 import {RouterOutputs} from 'api';
 import Image from 'next/image';
