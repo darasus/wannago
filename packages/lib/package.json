@@ -10,7 +10,6 @@
     "server-env": "workspace:*",
     "client-env": "workspace:*",
     "database": "workspace:*",
-    "types": "workspace:*",
     "utils": "workspace:*"
   },
   "devDependencies": {

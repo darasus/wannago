@@ -546,9 +546,6 @@ importers:
       tsconfig:
         specifier: workspace:*
         version: link:../../packages/tsconfig
-      types:
-        specifier: workspace:*
-        version: link:../../packages/types
       ui:
         specifier: workspace:*
         version: link:../../packages/ui
@@ -601,9 +598,6 @@ importers:
       stripe-webhook-input-validation:
         specifier: workspace:*
         version: link:../stripe-webhook-input-validation
-      types:
-        specifier: workspace:*
-        version: link:../types
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -626,9 +620,6 @@ importers:
       server-env:
         specifier: workspace:*
         version: link:../server-env
-      types:
-        specifier: workspace:*
-        version: link:../types
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -820,9 +811,6 @@ importers:
       server-env:
         specifier: workspace:*
         version: link:../server-env
-      types:
-        specifier: workspace:*
-        version: link:../types
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -864,9 +852,6 @@ importers:
       server-env:
         specifier: workspace:*
         version: link:../server-env
-      types:
-        specifier: workspace:*
-        version: link:../types
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -881,15 +866,6 @@ importers:
   packages/tokens: {}
 
   packages/tsconfig: {}
-
-  packages/types:
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
 
   packages/ui:
     dependencies:
@@ -922,9 +898,6 @@ importers:
       tsconfig:
         specifier: workspace:*
         version: link:../tsconfig
-      types:
-        specifier: workspace:*
-        version: link:../types
 
 packages:
 

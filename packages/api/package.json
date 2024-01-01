@@ -14,7 +14,6 @@
     "auth": "workspace:*",
     "inngest-client": "workspace:*",
     "error": "workspace:*",
-    "types": "workspace:*",
     "const": "workspace:*",
     "email": "workspace:*",
     "lib": "workspace:*",

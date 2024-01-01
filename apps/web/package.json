@@ -19,7 +19,6 @@
     "api": "workspace:*",
     "client-env": "workspace:*",
     "server-env": "workspace:*",
-    "types": "workspace:*",
     "stripe-webhook-input-validation": "workspace:*",
     "email": "workspace:*",
     "features": "workspace:*",
