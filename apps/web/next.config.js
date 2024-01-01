@@ -40,7 +40,6 @@ const moduleExports = {
     'lib',
     'server-env',
     'stripe-webhook-input-validation',
-    'tokens',
     'ui',
     'utils',
   ],

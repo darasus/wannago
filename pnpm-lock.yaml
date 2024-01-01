@@ -863,8 +863,6 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
 
-  packages/tokens: {}
-
   packages/tsconfig: {}
 
   packages/ui:
