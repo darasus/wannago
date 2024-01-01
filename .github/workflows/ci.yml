@@ -68,17 +68,12 @@ jobs:
             NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}
             DATABASE_URL: ${{ secrets.DATABASE_URL }}
             PRISMA_GENERATE_DATAPROXY: ${{ secrets.PRISMA_GENERATE_DATAPROXY }}
-            UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
             UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
             CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
             QSTASH_URL: ${{ secrets.QSTASH_URL }}
             QSTASH_TOKEN: ${{ secrets.QSTASH_TOKEN }}
             QSTASH_CURRENT_SIGNING_KEY: ${{ secrets.QSTASH_CURRENT_SIGNING_KEY }}
             QSTASH_NEXT_SIGNING_KEY: ${{ secrets.QSTASH_NEXT_SIGNING_KEY }}
-            SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-            SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-            NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
-            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
             NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
             OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
             NEXT_PUBLIC_VERCEL_ENV: ${{ secrets.NEXT_PUBLIC_VERCEL_ENV }}

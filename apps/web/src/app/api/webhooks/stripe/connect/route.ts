@@ -3,7 +3,6 @@ import type {Stripe as IStripe} from 'stripe';
 import {NextRequest, NextResponse} from 'next/server';
 
 import {stripe} from 'lib/src/stripe';
-import {captureException} from '@sentry/nextjs';
 import {createContext} from 'api/src/context';
 import {stripeWebhookHandlerRouter} from 'api/src/routers/stripeWebhookHandler';
 import {
@@ -22,7 +21,7 @@ export async function POST(req: NextRequest) {
       env.STRIPE_ENDPOINT_SECRET
     );
   } catch (err) {
-    captureException(err);
+    console.error(err);
 
     const errorMessage = err instanceof Error ? err.message : 'Unknown error';
     return NextResponse.json(
@@ -45,7 +44,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({success: true}, {status: 200});
   } catch (err: any) {
-    captureException(err);
+    console.error(err);
 
     return NextResponse.json(
       {message: `Webhook Error: ${err.message}`},

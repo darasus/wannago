@@ -5,7 +5,6 @@ import {env} from 'server-env';
 import {z} from 'zod';
 import sizeOf from 'image-size';
 import sharp from 'sharp';
-import {captureException} from '@sentry/nextjs';
 
 export class ImageUpload {
   async uploadImage(imageBuffer: Buffer) {
@@ -52,7 +51,7 @@ export class ImageUpload {
       });
       return imageSchema.parse(data);
     } catch (error) {
-      captureException(error);
+      console.error(error);
       return null;
     }
   }

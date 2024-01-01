@@ -1,6 +1,5 @@
 // issue: https://github.com/diegomura/react-pdf/issues/2350
 import {renderToBuffer} from '@joshuajaco/react-pdf-renderer-bundled';
-import {captureException} from '@sentry/nextjs';
 import {TRPCError} from '@trpc/server';
 import {prisma} from 'database';
 import {NextRequest} from 'next/server';
@@ -44,7 +43,7 @@ export async function GET(
       headers: {'Content-Type': 'application/pdf'},
     });
   } catch (error) {
-    captureException(error);
+    console.error(error);
     return new Response('Something went wrong', {
       status: 400,
     });

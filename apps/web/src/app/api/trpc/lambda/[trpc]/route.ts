@@ -2,7 +2,6 @@ import type {NextRequest} from 'next/server';
 import {fetchRequestHandler} from '@trpc/server/adapters/fetch';
 import {lambdaRouter} from 'api/src/lambda';
 import {createContext} from 'api/src/context';
-import {captureException} from '@sentry/nextjs';
 
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
@@ -11,7 +10,7 @@ const handler = (req: NextRequest) =>
     req: req,
     createContext,
     onError: ({error, path, req, input, type}) => {
-      captureException(error, {
+      console.error(error, {
         extra: {
           path,
           req,

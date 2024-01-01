@@ -1,4 +1,3 @@
-import {captureException} from '@sentry/nextjs';
 import {createContext} from 'api/src/context';
 import {authRouter} from 'api/src/routers/auth';
 import {NextRequest} from 'next/server';
@@ -15,7 +14,7 @@ export async function GET(
       code: params.code,
     });
   } catch (error) {
-    captureException(error);
+    console.error(error);
   }
 
   return new Response(null, {status: 302, headers: {Location: '/events'}});

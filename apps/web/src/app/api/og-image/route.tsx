@@ -2,7 +2,6 @@ import {NextRequest, NextResponse} from 'next/server';
 import {ImageResponse} from '@vercel/og';
 import {ONE_WEEK_IN_SECONDS} from 'const';
 import {getBaseUrl, invariant} from 'utils';
-import {captureException} from '@sentry/nextjs';
 import clip from 'text-clipper';
 
 export const runtime = 'edge';
@@ -111,7 +110,7 @@ export async function GET(req: NextRequest) {
       }
     );
   } catch (error) {
-    captureException(error, {
+    console.error(error, {
       extra: {
         searchParams: req.nextUrl.searchParams.entries(),
       },

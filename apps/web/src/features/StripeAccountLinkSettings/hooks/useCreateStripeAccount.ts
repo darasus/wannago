@@ -3,7 +3,6 @@
 import {useTransition} from 'react';
 import {api} from '../../../trpc/client';
 import {toast} from 'sonner';
-import {captureException} from '@sentry/nextjs';
 import {useRouter} from 'next/navigation';
 import {useTracker} from 'hooks';
 
@@ -31,7 +30,7 @@ export function useCreateStripeAccount({organizerId}: {organizerId: string}) {
         }
       });
     } catch (error) {
-      captureException(error, {
+      console.error(error, {
         extra: {
           organizerId,
           function: 'createAccountLink',

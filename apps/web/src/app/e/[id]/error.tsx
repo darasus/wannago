@@ -1,6 +1,5 @@
 'use client';
 
-import {captureException} from '@sentry/nextjs';
 import {TRPCClientError} from '@trpc/client';
 import {AppRouter} from 'api';
 import {useEffect} from 'react';
@@ -14,7 +13,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    captureException(error);
+    console.error(error);
   }, [error]);
 
   return <ErrorComponent error={error} />;

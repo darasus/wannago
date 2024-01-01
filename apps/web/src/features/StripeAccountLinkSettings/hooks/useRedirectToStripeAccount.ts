@@ -3,7 +3,6 @@
 import {useTransition} from 'react';
 import {api} from '../../../trpc/client';
 import {toast} from 'sonner';
-import {captureException} from '@sentry/nextjs';
 import {useTracker} from 'hooks';
 
 export function useRedirectToStripeAccount({
@@ -32,7 +31,7 @@ export function useRedirectToStripeAccount({
         }
       });
     } catch (error) {
-      captureException(error, {
+      console.error(error, {
         extra: {
           organizerId,
           function: 'getAccountLink',

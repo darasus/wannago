@@ -3,7 +3,6 @@ import type {
   PlaceAutocompleteResponse,
 } from '@googlemaps/google-maps-services-js';
 import {getBaseUrl} from './getBaseUrl';
-import {captureException} from '@sentry/nextjs';
 
 export async function geocode(address: string) {
   const response = await fetch(`${getBaseUrl()}/api/maps/decode`, {
@@ -12,7 +11,7 @@ export async function geocode(address: string) {
   })
     .then((res) => res.json())
     .catch((error) => {
-      captureException(error);
+      console.error(error);
       return null;
     });
 
@@ -26,7 +25,7 @@ export async function placeAutocomplete(query: string) {
   })
     .then((res) => res.json())
     .catch((error) => {
-      captureException(error);
+      console.error(error);
       return null;
     });
 
