@@ -17,12 +17,12 @@ export const formatErrors = (
 const _serverEnv = serverSchema.safeParse({
   NODE_ENV: process.env.NODE_ENV,
   CLOUDFLARE_API_KEY: process.env.CLOUDFLARE_API_KEY,
-  QSTASH_TOKEN: process.env.QSTASH_TOKEN,
   VERCEL_ENV: process.env.VERCEL_ENV,
   STRIPE_API_SECRET: process.env.STRIPE_API_SECRET,
   STRIPE_ENDPOINT_SECRET: process.env.STRIPE_ENDPOINT_SECRET,
-  STABILITY_AI_API_KEY: process.env.STABILITY_AI_API_KEY,
   RESEND_API_KEY: process.env.RESEND_API_KEY,
+  OAUTH_GOOGLE_CLIENT_ID: process.env.OAUTH_GOOGLE_CLIENT_ID,
+  OAUTH_GOOGLE_CLIENT_SECRET: process.env.OAUTH_GOOGLE_CLIENT_SECRET,
 });
 
 if (!_serverEnv.success) {

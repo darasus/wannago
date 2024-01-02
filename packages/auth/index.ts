@@ -1,3 +1,5 @@
+import 'server-only';
+
 import {lucia} from 'lucia';
 import {nextjs_future} from 'lucia/middleware';
 import {google} from '@lucia-auth/oauth/providers';
@@ -7,6 +9,7 @@ import {cookies, headers} from 'next/headers';
 import {prisma as prismaClient} from 'database';
 import {getBaseUrl} from 'utils';
 import {User} from '@prisma/client';
+import {env} from 'env/server';
 
 export const auth = lucia({
   adapter: prisma(prismaClient, {
@@ -23,8 +26,8 @@ export const auth = lucia({
 });
 
 export const googleAuth = google(auth, {
-  clientId: process.env.OAUTH_GOOGLE_CLIENT_ID!,
-  clientSecret: process.env.OAUTH_GOOGLE_CLIENT_SECRET!,
+  clientId: env.OAUTH_GOOGLE_CLIENT_ID,
+  clientSecret: env.OAUTH_GOOGLE_CLIENT_SECRET,
   redirectUri: `${getBaseUrl()}/sign-in/google/callback`,
   scope: ['profile', 'email'],
 });
