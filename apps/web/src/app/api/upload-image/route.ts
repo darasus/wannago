@@ -10,12 +10,11 @@ export async function POST(req: Request) {
     const data = await req.formData();
 
     for (const entry of Array.from(data.entries())) {
-      const [key, value] = entry;
+      const [, value] = entry;
       const isFile = typeof value == 'object';
 
       if (isFile) {
         const blob = value as Blob;
-        // const filename = blob.name;
         const buffer = Buffer.from(await blob.arrayBuffer());
         const uploadedImage = await uploadImage(buffer);
 

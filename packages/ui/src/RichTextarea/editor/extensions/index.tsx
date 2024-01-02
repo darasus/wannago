@@ -1,7 +1,6 @@
 import StarterKit from '@tiptap/starter-kit';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
 import TiptapLink from '@tiptap/extension-link';
-import TiptapImage from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import TiptapUnderline from '@tiptap/extension-underline';
 import TextStyle from '@tiptap/extension-text-style';
@@ -10,16 +9,7 @@ import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import {Markdown} from 'tiptap-markdown';
 import Highlight from '@tiptap/extension-highlight';
-
-import {SlashCommand} from './SlashCommand';
 import {InputRule} from '@tiptap/core';
-import UploadImagesPlugin from '../plugins/upload-images';
-
-const CustomImage = TiptapImage.extend({
-  addProseMirrorPlugins() {
-    return [UploadImagesPlugin()];
-  },
-});
 
 export const TiptapExtensions = [
   StarterKit.configure({
@@ -95,12 +85,6 @@ export const TiptapExtensions = [
         'text-stone-400 underline underline-offset-[3px] hover:text-stone-600 transition-colors cursor-pointer',
     },
   }),
-  CustomImage.configure({
-    allowBase64: true,
-    HTMLAttributes: {
-      class: 'rounded-lg border border-stone-200',
-    },
-  }),
   Placeholder.configure({
     placeholder: ({node}) => {
       if (node.type.name === 'heading') {
@@ -110,7 +94,6 @@ export const TiptapExtensions = [
     },
     includeChildren: true,
   }),
-  SlashCommand,
   TiptapUnderline,
   TextStyle,
   Color,
