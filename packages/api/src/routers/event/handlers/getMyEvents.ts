@@ -5,7 +5,7 @@ export const getMyEvents = protectedProcedure
   .input(
     z.object({
       onlyPast: z.boolean().optional(),
-      eventType: z.enum(['attending', 'organizing', 'following', 'all']),
+      eventType: z.enum(['attending', 'organizing', 'all']),
     })
   )
   .query(async ({ctx, input}) => {

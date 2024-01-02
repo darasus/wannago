@@ -1,19 +1,9 @@
 import {type RouterOutputs} from 'api';
 import {EventCard} from '../EventCard/EventCard';
 import Link from 'next/link';
-import {Suspense} from 'react';
-import {
-  Avatar,
-  Button,
-  CardBase,
-  Container,
-  LoadingBlock,
-  PageHeader,
-  Text,
-} from 'ui';
-import {MessageButton} from './features/MessageButton/MessageButton';
-import {FollowButton} from './features/FollowButton/FollowButton';
+import {Avatar, CardBase, Container, LoadingBlock, PageHeader, Text} from 'ui';
 import {notFound} from 'next/navigation';
+import {MessageButton} from './features/MessageButton/MessageButton';
 
 interface Props {
   isLoadingEvents?: boolean;
@@ -22,16 +12,12 @@ interface Props {
   organizationPromise?: Promise<
     RouterOutputs['organization']['getOrganizationById']
   >;
-  followCountsPromise: Promise<RouterOutputs['follow']['getFollowCounts']>;
-  amFollowingPromise: Promise<RouterOutputs['follow']['amFollowing']>;
 }
 
 export async function PublicProfile({
   isLoadingEvents,
   eventsPromise,
   userPromise,
-  followCountsPromise,
-  amFollowingPromise,
   organizationPromise,
 }: Props) {
   const [events, user, organization] = await Promise.all([
@@ -86,34 +72,7 @@ export async function PublicProfile({
               >
                 {name}
               </Text>
-              <div className="flex md:justify-start justify-center gap-2">
-                <div>
-                  <Text className="font-bold" data-testid="follower-count">
-                    <Suspense fallback="Loading...">
-                      {(await followCountsPromise)?.followerCount || 0}
-                    </Suspense>
-                  </Text>
-                  <Text className=""> followers</Text>
-                </div>
-                <div>
-                  <Text className="font-bold">
-                    <Suspense fallback="Loading...">
-                      {(await followCountsPromise)?.followingCount || 0}
-                    </Suspense>
-                  </Text>
-                  <Text> following</Text>
-                </div>
-              </div>
               <div className="flex md:justify-start justify-center gap-2 mt-4">
-                <Suspense
-                  fallback={
-                    <Button disabled size={'sm'} variant={'outline'}>
-                      Loading...
-                    </Button>
-                  }
-                >
-                  <FollowButton amFollowingPromise={amFollowingPromise} />
-                </Suspense>
                 <MessageButton />
               </div>
             </div>

@@ -29,23 +29,12 @@ export default async function ProfilePage({
 }: {
   params: {organizationId: string};
 }) {
-  const [
-    organizationPromise,
-    eventsPromise,
-    followCountsPromise,
-    amFollowingPromise,
-  ] = [
+  const [organizationPromise, eventsPromise] = [
     api.organization.getOrganizationById.query({
       organizationId,
     }),
     api.event.getPublicEvents.query({
       id: organizationId,
-    }),
-    api.follow.getFollowCounts.query({
-      organizationId,
-    }),
-    api.follow.amFollowing.query({
-      organizationId,
     }),
   ];
 
@@ -54,8 +43,6 @@ export default async function ProfilePage({
       <PublicProfile
         eventsPromise={eventsPromise}
         organizationPromise={organizationPromise}
-        followCountsPromise={followCountsPromise}
-        amFollowingPromise={amFollowingPromise}
       />
     </Suspense>
   );

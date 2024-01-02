@@ -6,10 +6,7 @@ import {Suspense} from 'react';
 import {EventsList} from './features/EventsList';
 
 const filterSchema = z.array(
-  z
-    .enum(['attending', 'organizing', 'all', 'following', 'past'])
-    .optional()
-    .default('all')
+  z.enum(['attending', 'organizing', 'all', 'past']).optional().default('all')
 );
 
 export const metadata = {

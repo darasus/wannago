@@ -4,7 +4,7 @@ import {ActionContext} from '../context';
 
 const validation = z.object({
   authorIds: z.array(z.string().uuid()),
-  eventType: z.enum(['attending', 'organizing', 'all', 'following']),
+  eventType: z.enum(['attending', 'organizing', 'all']),
   isPublished: z.boolean().optional(),
   onlyPast: z.boolean().optional(),
   orderByStartDate: z.enum(['desc', 'asc']).optional(),
@@ -50,21 +50,6 @@ export function getEvents(ctx: ActionContext) {
         },
       },
     ];
-    const followingQuery: Prisma.EventWhereInput['OR'] = [
-      {
-        isPublished: true,
-        listing: 'LISTED',
-        user: {
-          followers: {
-            some: {
-              followerUserId: {
-                in: authorIds,
-              },
-            },
-          },
-        },
-      },
-    ];
     const events = await ctx.prisma.event.findMany({
       orderBy: {
         startDate:
@@ -89,9 +74,8 @@ export function getEvents(ctx: ActionContext) {
         OR: [
           ...(eventType === 'organizing' ? organizingQuery : []),
           ...(eventType === 'attending' ? attendingQuery : []),
-          ...(eventType === 'following' ? followingQuery : []),
           ...(eventType === 'all'
-            ? [...organizingQuery, ...attendingQuery, ...followingQuery]
+            ? [...organizingQuery, ...attendingQuery]
             : []),
         ],
       },

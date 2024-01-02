@@ -35,30 +35,6 @@ export async function resetDB() {
     return;
   }
 
-  await prisma.follow.deleteMany({
-    where: {
-      OR: [
-        {
-          followerUserId: user_1.id,
-        },
-        {
-          followerUserId: user_2.id,
-        },
-        {
-          followingUserId: user_1.id,
-        },
-        {
-          followingUserId: user_2.id,
-        },
-        {
-          followingOrganizationId: organization_1.id,
-        },
-        {
-          followingOrganizationId: organization_2.id,
-        },
-      ],
-    },
-  });
   await prisma.eventSignUp.deleteMany({
     where: {
       OR: [
