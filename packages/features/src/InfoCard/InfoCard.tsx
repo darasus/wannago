@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import {Button, CardBase, LoadingBlock} from 'ui';
 import {cn} from 'utils';
-import {cloudflareImageLoader} from 'utils';
+import {imageLoader} from 'utils';
 import {Event} from '@prisma/client';
 import clip from 'text-clipper';
 import {useState} from 'react';
@@ -89,7 +89,7 @@ export function InfoCard({event, isLoadingImage, isMyEvent}: Props) {
               priority
               src={featuredImageSrc}
               alt={title}
-              loader={cloudflareImageLoader}
+              loader={imageLoader}
               width={featuredImageWidth}
               height={featuredImageHeight}
               blurDataURL={featuredImagePreviewSrc}

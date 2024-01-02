@@ -25,11 +25,11 @@ const uploadFile = (file: File) => {
   payload.append('file', file);
 
   return ky
-    .post(`${getBaseUrl()}/api/upload-image`, {
+    .post(`${getBaseUrl()}/api/image/upload`, {
       body: payload,
     })
     .json()
-    .then(res => schema.parse(res));
+    .then((res) => schema.parse(res));
 };
 
 export function useUploadImage(props?: Props) {

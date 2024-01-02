@@ -16,7 +16,6 @@ export const formatErrors = (
 
 const _serverEnv = serverSchema.safeParse({
   NODE_ENV: process.env.NODE_ENV,
-  CLOUDFLARE_API_KEY: process.env.CLOUDFLARE_API_KEY,
   VERCEL_ENV: process.env.VERCEL_ENV,
   STRIPE_API_SECRET: process.env.STRIPE_API_SECRET,
   STRIPE_ENDPOINT_SECRET: process.env.STRIPE_ENDPOINT_SECRET,

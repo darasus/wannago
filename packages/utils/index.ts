@@ -5,7 +5,7 @@ export {iOS} from './src/iOS';
 export {prepareIcsData} from './src/prepareIcsData';
 export {getBaseUrl} from './src/getBaseUrl';
 export {stripHTML} from './src/stripHTML';
-export {cloudflareImageLoader} from './src/cloudflareImageLoader';
+export {imageLoader} from './src/imageLoader';
 export {
   formatDate,
   isPast,

@@ -21,6 +21,7 @@ const moduleExports = {
       'images.clerk.dev',
       'gravatar.com',
       'www.wannago.app',
+      '*.public.blob.vercel-storage.com',
       'wannago.app',
       'wannago-*-darasus-team.vercel.app',
       'localhost',

@@ -3,7 +3,6 @@
   "globalEnv": [
     "NODE_ENV",
     "RESEND_API_KEY",
-    "CLOUDFLARE_API_KEY",
     "CI",
     "VERCEL_ENV",
     "VERCEL_BRANCH_URL",

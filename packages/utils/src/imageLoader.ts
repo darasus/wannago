@@ -4,11 +4,7 @@ interface Props {
   quality?: number;
 }
 
-export function cloudflareImageLoader({
-  src,
-  width: _width,
-  quality = 70,
-}: Props) {
+export function imageLoader({src, width: _width, quality = 70}: Props) {
   const maxWidth = 1240;
   const width = _width > maxWidth ? maxWidth : _width;
   const url = new URL(src);

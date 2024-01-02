@@ -3,7 +3,7 @@
 import {isFuture} from 'date-fns';
 import {RouterOutputs} from 'api';
 import Image from 'next/image';
-import {cloudflareImageLoader, formatCents, getRelativeTime} from 'utils';
+import {imageLoader, formatCents, getRelativeTime} from 'utils';
 import {Avatar, CardBase, ColoredBadge, Text} from 'ui';
 import {forwardRef} from 'react';
 
@@ -96,7 +96,7 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
                 className="bg-cover bg-center"
                 src={featuredImageSrc}
                 alt={title}
-                loader={cloudflareImageLoader}
+                loader={imageLoader}
                 blurDataURL={featuredImagePreviewSrc}
                 placeholder={'blur'}
                 sizes="320 640 750 1000"
