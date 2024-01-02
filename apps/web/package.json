@@ -18,7 +18,6 @@
     "eslint-config-custom": "workspace:*",
     "api": "workspace:*",
     "env": "workspace:*",
-    "stripe-webhook-input-validation": "workspace:*",
     "email": "workspace:*",
     "features": "workspace:*",
     "utils": "workspace:*",

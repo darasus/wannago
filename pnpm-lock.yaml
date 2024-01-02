@@ -510,9 +510,6 @@ importers:
       lib:
         specifier: workspace:*
         version: link:../../packages/lib
-      stripe-webhook-input-validation:
-        specifier: workspace:*
-        version: link:../../packages/stripe-webhook-input-validation
       tsconfig:
         specifier: workspace:*
         version: link:../../packages/tsconfig
@@ -562,9 +559,6 @@ importers:
       lib:
         specifier: workspace:*
         version: link:../lib
-      stripe-webhook-input-validation:
-        specifier: workspace:*
-        version: link:../stripe-webhook-input-validation
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -750,34 +744,6 @@ importers:
       env:
         specifier: workspace:*
         version: link:../env
-      utils:
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-
-  packages/stripe-webhook-input-validation:
-    dependencies:
-      database:
-        specifier: workspace:*
-        version: link:../database
-      email:
-        specifier: workspace:*
-        version: link:../email
-      env:
-        specifier: workspace:*
-        version: link:../env
-      error:
-        specifier: workspace:*
-        version: link:../error
-      lib:
-        specifier: workspace:*
-        version: link:../lib
       utils:
         specifier: workspace:*
         version: link:../utils

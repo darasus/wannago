@@ -1,9 +1,29 @@
 import {createTRPCRouter, publicProcedure} from '../trpc';
-import {handleCheckoutSessionCompletedInputSchema} from 'stripe-webhook-input-validation';
 import {invariant} from 'utils';
 import {userNotFoundError} from 'error';
 import {z} from 'zod';
 import {TicketSale} from '@prisma/client';
+
+export const baseEventHandlerSchema = z
+  .object({
+    type: z.string(),
+  })
+  .passthrough();
+
+export const handleCheckoutSessionCompletedInputSchema =
+  baseEventHandlerSchema.extend({
+    data: z.object({
+      object: z.object({
+        customer: z.string(),
+        status: z.string(),
+        metadata: z.object({
+          eventId: z.string().uuid(),
+          externalUserId: z.string(),
+          ticketSaleIds: z.string(),
+        }),
+      }),
+    }),
+  });
 
 const checkoutCompleteMetadataSchema = z.array(z.string().uuid());
 

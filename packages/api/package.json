@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "env": "workspace:*",
-    "stripe-webhook-input-validation": "workspace:*",
     "utils": "workspace:*",
     "auth": "workspace:*",
     "inngest-client": "workspace:*",

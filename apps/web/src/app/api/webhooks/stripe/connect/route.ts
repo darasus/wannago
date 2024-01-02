@@ -4,11 +4,11 @@ import {NextRequest, NextResponse} from 'next/server';
 
 import {stripe} from 'lib/src/stripe';
 import {createContext} from 'api/src/context';
-import {stripeWebhookHandlerRouter} from 'api/src/routers/stripeWebhookHandler';
 import {
+  stripeWebhookHandlerRouter,
   baseEventHandlerSchema,
   handleCheckoutSessionCompletedInputSchema,
-} from 'stripe-webhook-input-validation';
+} from 'api/src/routers/stripeWebhookHandler';
 import {env} from 'env/server';
 
 export async function POST(req: NextRequest) {

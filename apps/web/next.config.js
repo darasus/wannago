@@ -37,7 +37,6 @@ const moduleExports = {
     'hooks',
     'inngest-client',
     'lib',
-    'stripe-webhook-input-validation',
     'ui',
     'utils',
   ],
