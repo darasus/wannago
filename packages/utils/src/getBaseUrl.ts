@@ -11,5 +11,5 @@ export const getBaseUrl = () => {
     return 'http://localhost:3000';
   }
 
-  return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  return `https://localhost:3000`;
 };

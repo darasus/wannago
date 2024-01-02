@@ -44,7 +44,6 @@ const moduleExports = {
   ],
   env: {
     NEXT_PUBLIC_VERCEL_BRANCH_URL: process.env.VERCEL_BRANCH_URL,
-    NEXT_PUBLIC_VERCEL_URL: process.env.VERCEL_URL,
     NEXT_PUBLIC_GOOGLE_OAUTH_SET_UP:
       Boolean(process.env.OAUTH_GOOGLE_CLIENT_ID) &&
       Boolean(process.env.OAUTH_GOOGLE_CLIENT_SECRET)
