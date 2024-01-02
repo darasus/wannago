@@ -25,12 +25,20 @@ export const auth = lucia({
   getUserAttributes: (data) => data,
 });
 
-export const googleAuth = google(auth, {
-  clientId: env.OAUTH_GOOGLE_CLIENT_ID,
-  clientSecret: env.OAUTH_GOOGLE_CLIENT_SECRET,
-  redirectUri: `${getBaseUrl()}/sign-in/google/callback`,
-  scope: ['profile', 'email'],
-});
+function getGoogleAuth() {
+  if (!env.OAUTH_GOOGLE_CLIENT_ID || !env.OAUTH_GOOGLE_CLIENT_SECRET) {
+    return null;
+  }
+
+  return google(auth, {
+    clientId: env.OAUTH_GOOGLE_CLIENT_ID,
+    clientSecret: env.OAUTH_GOOGLE_CLIENT_SECRET,
+    redirectUri: `${getBaseUrl()}/sign-in/google/callback`,
+    scope: ['profile', 'email'],
+  });
+}
+
+export const googleAuth = getGoogleAuth();
 
 export type Auth = typeof auth;
 

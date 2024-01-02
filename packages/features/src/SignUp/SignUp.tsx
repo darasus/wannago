@@ -23,6 +23,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {api} from '../../../../apps/web/src/trpc/client';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
+import {env} from 'env/client';
 
 interface Props {}
 
@@ -148,15 +149,21 @@ export function SignUp({}: Props) {
           </Form>
         </CardContent>
       </Card>
-      <div className="relative w-full">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-sm uppercase">
-          <span className="bg-background px-2 text-muted-foreground">Or</span>
-        </div>
-      </div>
-      <ContinueWithGoogleButton />
+      {env.NEXT_PUBLIC_GOOGLE_OAUTH_SET_UP && (
+        <>
+          <div className="relative w-full">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-sm uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                Or
+              </span>
+            </div>
+          </div>
+          <ContinueWithGoogleButton />
+        </>
+      )}
       <div>
         <span className="text-sm text-muted-foreground">
           {`If you have account, please`}{' '}
