@@ -494,7 +494,7 @@ importers:
         version: link:../../packages/email
       env:
         specifier: workspace:*
-        version: link:../../packages/server-env
+        version: link:../../packages/env
       eslint-config-custom:
         specifier: workspace:*
         version: link:../../packages/eslint-config-custom
@@ -552,7 +552,7 @@ importers:
         version: link:../email
       env:
         specifier: workspace:*
-        version: link:../server-env
+        version: link:../env
       error:
         specifier: workspace:*
         version: link:../error
@@ -583,7 +583,7 @@ importers:
         version: link:../database
       env:
         specifier: workspace:*
-        version: link:../server-env
+        version: link:../env
       utils:
         specifier: workspace:*
         version: link:../utils
@@ -631,6 +631,15 @@ importers:
         specifier: workspace:*
         version: link:../utils
 
+  packages/env:
+    devDependencies:
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+
   packages/error:
     devDependencies:
       eslint-config-custom:
@@ -668,7 +677,7 @@ importers:
         version: link:../const
       env:
         specifier: workspace:*
-        version: link:../server-env
+        version: link:../env
       hooks:
         specifier: workspace:*
         version: link:../hooks
@@ -690,7 +699,7 @@ importers:
     dependencies:
       env:
         specifier: workspace:*
-        version: link:../server-env
+        version: link:../env
       lib:
         specifier: workspace:*
         version: link:../lib
@@ -740,19 +749,10 @@ importers:
         version: link:../database
       env:
         specifier: workspace:*
-        version: link:../server-env
+        version: link:../env
       utils:
         specifier: workspace:*
         version: link:../utils
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-
-  packages/server-env:
     devDependencies:
       eslint-config-custom:
         specifier: workspace:*
@@ -771,7 +771,7 @@ importers:
         version: link:../email
       env:
         specifier: workspace:*
-        version: link:../server-env
+        version: link:../env
       error:
         specifier: workspace:*
         version: link:../error
@@ -814,7 +814,7 @@ importers:
         version: link:../const
       env:
         specifier: workspace:*
-        version: link:../server-env
+        version: link:../env
     devDependencies:
       eslint-config-custom:
         specifier: workspace:*
