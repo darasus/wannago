@@ -13,18 +13,19 @@ const moduleExports = {
     mdxRs: true,
   },
   images: {
-    domains: [
-      'maps.googleapis.com',
-      'source.unsplash.com',
-      'www.gravatar.com',
-      'imagedelivery.net',
-      'images.clerk.dev',
-      'gravatar.com',
-      'www.wannago.app',
-      '*.public.blob.vercel-storage.com',
-      'wannago.app',
-      'wannago-*-darasus-team.vercel.app',
-      'localhost',
+    remotePatterns: [
+      {
+        hostname: '*.public.blob.vercel-storage.com',
+      },
+      {
+        hostname: 'maps.googleapis.com',
+      },
+      {
+        hostname: 'wannago-*-darasus-team.vercel.app',
+      },
+      {
+        hostname: 'localhost',
+      },
     ],
   },
   transpilePackages: [
