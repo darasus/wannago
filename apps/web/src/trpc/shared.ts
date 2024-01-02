@@ -4,8 +4,6 @@ import {experimental_nextHttpLink} from '@trpc/next/app-dir/links/nextHttp';
 import type {AppRouter} from 'api';
 import {getBaseUrl} from 'utils';
 
-const lambdas = ['payments', 'stripeAccountLink'];
-
 export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
   ((runtime) => {
     const sharedOpts = {
@@ -19,24 +17,18 @@ export const endingLink = (opts?: {headers?: HTTPHeaders}) =>
       }
     >;
 
-    const edgeLink = experimental_nextHttpLink({
+    const link = experimental_nextHttpLink({
       ...sharedOpts,
-      url: `${getBaseUrl()}/api/trpc/edge`,
-    })(runtime);
-
-    const lambdaLink = experimental_nextHttpLink({
-      ...sharedOpts,
-      url: `${getBaseUrl()}/api/trpc/lambda`,
+      url: `${getBaseUrl()}/api/trpc`,
     })(runtime);
 
     return (ctx) => {
       const path = ctx.op.path.split('.') as [string, ...string[]];
-      const endpoint = lambdas.includes(path[0]) ? 'lambda' : 'edge';
 
       const newCtx = {
         ...ctx,
         op: {...ctx.op, path: path.join('.')},
       };
-      return endpoint === 'edge' ? edgeLink(newCtx) : lambdaLink(newCtx);
+      return link(newCtx);
     };
   }) satisfies TRPCLink<AppRouter>;

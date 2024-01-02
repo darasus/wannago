@@ -8,8 +8,10 @@ import {mapsRouter} from './routers/maps';
 import {eventRouter} from './routers/event';
 import {userRouter} from './routers/user';
 import {authRouter} from './routers/auth';
+import {paymentsRouter} from './routers/payments';
+import {stripeAccountLinkRouter} from './routers/stripeAccountLink';
 
-export const edgeRouter = createTRPCRouter({
+export const router = createTRPCRouter({
   maps: mapsRouter,
   mail: mailRouter,
   admin: adminRouter,
@@ -19,4 +21,6 @@ export const edgeRouter = createTRPCRouter({
   event: eventRouter,
   user: userRouter,
   auth: authRouter,
+  payments: paymentsRouter,
+  stripeAccountLink: stripeAccountLinkRouter,
 });

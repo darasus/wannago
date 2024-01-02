@@ -1,12 +1,12 @@
 import type {NextRequest} from 'next/server';
 import {fetchRequestHandler} from '@trpc/server/adapters/fetch';
-import {edgeRouter} from 'api/src/edge';
+import {router} from 'api/src/router';
 import {createContext} from 'api/src/context';
 
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
-    endpoint: '/api/trpc/edge',
-    router: edgeRouter,
+    endpoint: '/api/trpc',
+    router,
     req: req,
     createContext,
     onError: ({error, path, req, input, type}) => {

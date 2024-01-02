@@ -1,6 +1,4 @@
-import {edgeRouter} from './edge';
-import {lambdaRouter} from './lambda';
-import {mergeRouters} from './trpc';
+import {router} from './router';
 
-const appRouter = mergeRouters(edgeRouter, lambdaRouter);
+const appRouter = router;
 export type AppRouter = typeof appRouter;
