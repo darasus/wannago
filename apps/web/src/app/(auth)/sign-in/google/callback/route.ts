@@ -1,7 +1,7 @@
 import {OAuthRequestError} from '@lucia-auth/oauth';
 import {cookies, headers} from 'next/headers';
 import {v4 as uuid} from 'uuid';
-import type {NextRequest} from 'next/server';
+import {NextResponse, type NextRequest} from 'next/server';
 import {auth, googleAuth} from 'auth';
 import {prisma} from 'database';
 
@@ -35,7 +35,10 @@ export const GET = async (request: NextRequest) => {
     const googleAuthResult = await googleAuth?.validateCallback(code);
 
     if (!googleAuthResult) {
-      return null;
+      return NextResponse.json(
+        {error: 'Google OAUTH is not set up'},
+        {status: 400}
+      );
     }
 
     const {createUser, googleUser, getExistingUser} = googleAuthResult;
