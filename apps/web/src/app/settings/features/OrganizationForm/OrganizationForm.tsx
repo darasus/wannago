@@ -21,6 +21,7 @@ import {Currency, Organization} from '@prisma/client';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {api} from '../../../../trpc/client';
+import {use} from 'react';
 
 const organizationSettingsFormScheme = z.object({
   name: z.string(),
@@ -30,10 +31,11 @@ const organizationSettingsFormScheme = z.object({
 });
 
 interface Props {
-  organization?: Organization;
+  organizationPromise: Promise<Organization | null>;
 }
 
-export function OrganizationForm({organization}: Props) {
+export function OrganizationForm({organizationPromise}: Props) {
+  const organization = use(organizationPromise);
   const isCreating = !organization;
   const router = useRouter();
   const form = useForm<z.infer<typeof organizationSettingsFormScheme>>({

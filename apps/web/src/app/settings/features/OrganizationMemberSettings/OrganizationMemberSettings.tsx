@@ -18,18 +18,18 @@ import {
   FormMessage,
   Input,
 } from 'ui';
-import {TeamMember} from '../TeamMember/TeamMember';
+import {OrganizationMember} from './features/OrganizationMember/OrganizationMember';
 import {Organization} from '@prisma/client';
 import {RouterOutputs} from 'api';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {api} from '../../../../../../trpc/client';
+import {api} from '../../../../trpc/client';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
 
 interface Props {
-  organization: Organization;
+  organizationPromise: Promise<Organization | null>;
   membersPromise: Promise<
     RouterOutputs['organization']['getMyOrganizationMembers']
   >;
@@ -39,7 +39,11 @@ const formScheme = z.object({
   email: z.string().email(),
 });
 
-export function TeamMembersSettings({organization, membersPromise}: Props) {
+export function OrganizationMemberSettings({
+  organizationPromise,
+  membersPromise,
+}: Props) {
+  const organization = use(organizationPromise);
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const members = use(membersPromise);
@@ -55,7 +59,7 @@ export function TeamMembersSettings({organization, membersPromise}: Props) {
     await api.organization.addOrganizationMember
       .mutate({
         userEmail: data.email,
-        organizationId: organization.id,
+        organizationId: organization?.id!,
       })
       .then(() => {
         router.refresh();
@@ -126,15 +130,17 @@ export function TeamMembersSettings({organization, membersPromise}: Props) {
           }
         >
           <div className="flex flex-col gap-y-2">
-            {members.map((member) => {
-              return (
-                <TeamMember
-                  key={member.id}
-                  member={member}
-                  organization={organization}
-                />
-              );
-            })}
+            {organization
+              ? members.map((member) => {
+                  return (
+                    <OrganizationMember
+                      key={member.id}
+                      member={member}
+                      organization={organization}
+                    />
+                  );
+                })
+              : null}
           </div>
         </CardBase>
       </div>

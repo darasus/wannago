@@ -3,11 +3,7 @@ import {protectedProcedure} from '../../trpc';
 import {TRPCError} from '@trpc/server';
 import {getBaseUrl, invariant} from 'utils';
 import {Currency} from '@prisma/client';
-import {
-  checkoutSessionNotFound,
-  eventNotFoundError,
-  stripeAccountLinkNotFound,
-} from 'error';
+import {checkoutSessionNotFound, eventNotFoundError} from 'error';
 import {isPast} from 'date-fns';
 
 export const getCheckoutSession = protectedProcedure
@@ -26,12 +22,7 @@ export const getCheckoutSession = protectedProcedure
         ticketSales: {
           include: {
             ticket: true,
-            event: {
-              include: {
-                organization: true,
-                user: true,
-              },
-            },
+            event: true,
           },
         },
       },
@@ -54,35 +45,25 @@ export const getCheckoutSession = protectedProcedure
 
     invariant(event, eventNotFoundError);
 
-    const stripeLinkedAccountId =
-      event?.organization?.stripeLinkedAccountId ||
-      event?.user?.stripeLinkedAccountId;
-
-    invariant(stripeLinkedAccountId, stripeAccountLinkNotFound);
-
     const amount = checkoutSession.ticketSales.reduce((acc, ticketSale) => {
       return acc + ticketSale.quantity * ticketSale.ticket.price;
     }, 0);
 
-    let stripeCustomer = await ctx
-      .createStripeClient(stripeLinkedAccountId)
-      .customers.search({
-        query: `email: "${checkoutSession?.user.email}"`,
+    let stripeCustomer = await ctx.stripe.customers
+      .search({
+        query: `email: "${checkoutSession.user.email}"`,
       })
       .then((res) => res.data[0]);
 
     if (!stripeCustomer) {
-      stripeCustomer = await ctx
-        .createStripeClient(stripeLinkedAccountId)
-        .customers.create({
-          email: checkoutSession?.user.email,
-        });
+      stripeCustomer = await ctx.stripe.customers.create({
+        email: checkoutSession.user.email,
+      });
     }
 
     const paymentIntent = await ctx.actions.createPaymentIntent({
       eventId: checkoutSession.eventId,
       stripeCustomerId: stripeCustomer.id,
-      stripeLinkedAccountId,
       currency: event?.preferredCurrency || Currency.USD,
       amount,
       ticketSaleIds: checkoutSession.ticketSales.map((ts) => ts.id),
@@ -96,7 +77,6 @@ export const getCheckoutSession = protectedProcedure
       clientSecret: paymentIntent.client_secret,
       id: paymentIntent.id,
       returnUrl: `${getBaseUrl()}/e/${event?.shortId}/my-tickets?success=true`,
-      stripeAccountId: stripeLinkedAccountId,
       event: event,
       ticketSales: checkoutSession.ticketSales,
       expires: checkoutSession.expires,

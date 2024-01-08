@@ -1,5 +1,4 @@
 import {EventRegistrationStatus, User} from '@prisma/client';
-import {TRPCError} from '@trpc/server';
 import {eventNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
@@ -20,34 +19,9 @@ export const getAllEventsAttendees = protectedProcedure
 
     invariant(event, eventNotFoundError);
 
-    const user = await ctx.prisma.user.findFirst({
-      where: {
-        id: ctx.auth?.user?.id,
-      },
-      include: {
-        organizations: true,
-      },
-    });
-
-    invariant(
-      user,
-      new TRPCError({code: 'NOT_FOUND', message: 'User not found'})
-    );
-
     const eventSignUps = await ctx.prisma.eventSignUp.findMany({
       where: {
-        OR: [
-          {
-            event: {
-              userId: user.id,
-            },
-          },
-          ...user.organizations.map((organization) => ({
-            event: {
-              organizationId: organization.id,
-            },
-          })),
-        ],
+        userId: ctx.auth?.user?.id,
       },
       include: {
         user: true,

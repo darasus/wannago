@@ -12,7 +12,7 @@ interface Props {
   organization: Organization;
 }
 
-export function TeamMember({member, organization}: Props) {
+export function OrganizationMember({member, organization}: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 

@@ -8,7 +8,6 @@ import {getOrganizationById} from './actions/getOrganizationById';
 import {getEvent} from './actions/getEvent';
 import {getOrganizerByEventId} from './actions/getOrganizerByEventId';
 import {getOrganizationByUserId} from './actions/getOrganizationByUserId';
-import {getOrganizationByUserExternalId} from './actions/getOrganizationByUserExternalId';
 import {getUserByEmail} from './actions/getUserByEmail';
 import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizationWithMembersByOrganizationId';
 import {assertCanModifyEvent} from './assertions/assertCanModifyEvent';
@@ -33,7 +32,6 @@ const actions = {
   getEvent,
   getOrganizerByEventId,
   getOrganizationByUserId,
-  getOrganizationByUserExternalId,
   getUserByEmail,
   getOrganizationWithMembersByOrganizationId,
   getOrganizerByEmail,

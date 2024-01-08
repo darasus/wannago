@@ -40,7 +40,6 @@ const update = protectedProcedure
         lastName: input.lastName,
         email: input.email,
         profileImageSrc: input.profileImageSrc,
-        preferredCurrency: input.currency || 'USD',
       },
     });
   });

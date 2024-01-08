@@ -5,6 +5,7 @@ import {resend} from 'lib/src/Resend';
 import {EventsStoreType} from './types';
 import {payoutAvailableBalanceToConnectedAccount} from './actions/payoutAvailableBalanceToConnectedAccount';
 import {getNumberOfPurchasedTickets} from './actions/getNumberOfPurchasedTickets';
+import {getConfig} from 'utils';
 
 const middleware = new InngestMiddleware({
   name: 'Prisma Middleware',
@@ -23,6 +24,7 @@ const middleware = new InngestMiddleware({
           prisma,
         },
       }),
+      getConfig,
     };
 
     return {

@@ -13,15 +13,9 @@ export const getMyEvents = protectedProcedure
       where: {
         id: ctx.auth?.user?.id,
       },
-      include: {
-        organizations: true,
-      },
     });
 
-    const authorIds = [
-      user?.id,
-      ...(user?.organizations.map((o) => o.id) || []),
-    ].filter(Boolean) as string[];
+    const authorIds = [user?.id].filter(Boolean) as string[];
 
     return ctx.actions.getEvents({
       authorIds,

@@ -10,7 +10,6 @@ interface Props {
   ticketSaleIds: string[];
   amount: number;
   currency: Currency;
-  stripeLinkedAccountId: string;
 }
 
 export function createPaymentIntent(ctx: ActionContext) {
@@ -20,28 +19,20 @@ export function createPaymentIntent(ctx: ActionContext) {
     ticketSaleIds,
     amount,
     currency,
-    stripeLinkedAccountId,
   }: Props) => {
     invariant(ctx.auth?.user.id, userNotFoundError);
 
-    const session = await ctx
-      .createStripeClient(stripeLinkedAccountId)
-      .paymentIntents.create(
-        {
-          amount,
-          currency: currency.toLocaleLowerCase(),
-          customer: stripeCustomerId,
-          application_fee_amount: calculateFee(amount),
-          metadata: {
-            externalUserId: ctx.auth.user.id,
-            eventId: eventId,
-            ticketSaleIds: JSON.stringify(ticketSaleIds),
-          },
-        },
-        {
-          stripeAccount: stripeLinkedAccountId,
-        }
-      );
+    const session = await ctx.stripe.paymentIntents.create({
+      amount,
+      currency: currency.toLocaleLowerCase(),
+      customer: stripeCustomerId,
+      application_fee_amount: calculateFee(amount),
+      metadata: {
+        externalUserId: ctx.auth.user.id,
+        eventId: eventId,
+        ticketSaleIds: JSON.stringify(ticketSaleIds),
+      },
+    });
 
     return session;
   };

@@ -11,8 +11,6 @@ export const getExamples = publicProcedure.query(async ({ctx}) => {
       },
     },
     include: {
-      user: true,
-      organization: true,
       tickets: true,
       eventSignUps: true,
       ticketSales: true,

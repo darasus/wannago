@@ -10,8 +10,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from 'ui';
-import {usePathname} from 'next/navigation';
-import {getIsPublic} from 'const';
 import {useRouter} from 'next/navigation';
 import {ChevronDown, Plus} from 'lucide-react';
 import {cn} from 'utils';
@@ -24,21 +22,11 @@ interface Props {
 
 export function UserSection({hasUnseenConversationPromise, me}: Props) {
   const router = useRouter();
-  const pathname = usePathname();
   const hasUnseenConversation = use(hasUnseenConversationPromise);
-  const isPublicPage = getIsPublic(pathname ?? '/');
 
   const onSignOutClick = async () => {
     router.push('/logout');
   };
-
-  if (isPublicPage) {
-    return (
-      <div className="flex gap-2">
-        <Button onClick={() => router.push('/events')}>My events</Button>
-      </div>
-    );
-  }
 
   const options = [
     {
@@ -48,25 +36,11 @@ export function UserSection({hasUnseenConversationPromise, me}: Props) {
       },
     },
     {
-      label: 'Profile',
-      onClick: () => {
-        router.push(`/u/${me?.id}`);
-      },
-      'data-testid': 'profile-button',
-    },
-    {
       label: 'Tickets',
       onClick: () => {
         router.push(`/my-tickets`);
       },
       'data-testid': 'my-tickets-button',
-    },
-    {
-      label: 'Organizations',
-      onClick: () => {
-        router.push(`/organizations`);
-      },
-      'data-testid': 'organizations-button',
     },
     {
       label: 'Settings',

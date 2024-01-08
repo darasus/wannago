@@ -2,6 +2,7 @@ import {z} from 'zod';
 import {publicProcedure} from '../../../trpc';
 import {invariant, isPast} from 'utils';
 import {eventNotFoundError} from 'error';
+import {UserType} from '@prisma/client';
 
 export const getByShortId = publicProcedure
   .input(
@@ -16,12 +17,6 @@ export const getByShortId = publicProcedure
         shortId: input.id,
       },
       include: {
-        organization: {
-          include: {
-            users: true,
-          },
-        },
-        user: true,
         tickets: {
           orderBy: {
             price: 'asc',
@@ -37,9 +32,6 @@ export const getByShortId = publicProcedure
     return {
       ...event,
       isPast: isPast(event.endDate, ctx.timezone),
-      isMyEvent:
-        event.userId === ctx.auth?.user.id ||
-        event.organization?.users.some((u) => u.id === ctx.auth?.user.id) ||
-        false,
+      isMyEvent: ctx.auth?.user.type === UserType.ADMIN,
     };
   });

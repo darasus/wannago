@@ -1,6 +1,7 @@
 import {exampleEventIds} from 'const';
 import {isPast, random} from 'utils';
 import {publicProcedure} from '../../../trpc';
+import {UserType} from '@prisma/client';
 
 export const getRandomExample = publicProcedure.query(async ({ctx}) => {
   const events = await ctx.prisma.event.findMany({
@@ -11,12 +12,6 @@ export const getRandomExample = publicProcedure.query(async ({ctx}) => {
       },
     },
     include: {
-      user: true,
-      organization: {
-        include: {
-          users: true,
-        },
-      },
       tickets: true,
       eventSignUps: true,
       ticketSales: true,
@@ -28,9 +23,6 @@ export const getRandomExample = publicProcedure.query(async ({ctx}) => {
   return {
     ...event,
     isPast: isPast(event.endDate, ctx.timezone),
-    isMyEvent:
-      event.userId === ctx.auth?.user.id ||
-      event.organization?.users.some((u) => u.id === ctx.auth?.user.id) ||
-      false,
+    isMyEvent: ctx.auth?.user.type === UserType.ADMIN,
   };
 });

@@ -33,10 +33,6 @@ export const joinEvent = protectedProcedure
         where: {
           id: input.eventId,
         },
-        include: {
-          user: true,
-          organization: true,
-        },
       }),
       ctx.prisma.eventSignUp.count({
         where: {

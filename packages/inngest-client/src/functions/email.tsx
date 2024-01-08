@@ -1,8 +1,7 @@
-import {formatDate, getBaseUrl, invariant, isOrganization, isUser} from 'utils';
+import {formatDate, getBaseUrl, invariant} from 'utils';
 import {inngest} from '../client';
 import {subHours, isFuture} from 'date-fns';
 import {
-  AfterRegisterNoCreatedEventFollowUpEmail,
   EventCancelInvite,
   EventCancelSignUp,
   EventInvite,
@@ -14,11 +13,7 @@ import {
   render,
 } from 'email';
 import {EventReminder} from 'email';
-import {
-  eventNotFoundError,
-  organizerNotFoundError,
-  userNotFoundError,
-} from 'error';
+import {eventNotFoundError, userNotFoundError} from 'error';
 import {slugify} from 'inngest';
 import {Emails} from 'lib/src/Resend';
 
@@ -40,8 +35,6 @@ export const emailReminderScheduled = inngest.createFunction(
           id: ctx.event.data.eventId,
         },
         include: {
-          user: true,
-          organization: true,
           eventSignUps: {
             where: {
               status: 'REGISTERED',
@@ -116,23 +109,14 @@ export const emailReminderSent = inngest.createFunction(
     const event = await ctx.step.run('Fetch event', () => {
       return ctx.prisma.event.findUnique({
         where: {id: ctx.event.data.eventId},
-        include: {user: true, organization: true},
       });
     });
     const user = await ctx.step.run('Fetch user', () => {
       return ctx.prisma.user.findUnique({where: {id: ctx.event.data.userId}});
     });
-    const organizer = event?.organization || event?.user;
 
     invariant(event);
     invariant(user);
-    invariant(organizer);
-
-    const organizerName = isUser(organizer)
-      ? `${organizer.firstName} ${organizer.lastName}`
-      : isOrganization(organizer)
-        ? `${organizer.name}`
-        : '';
 
     return ctx.resend.emails.send({
       reply_to: 'WannaGo Team <hello@wannago.app>',
@@ -146,7 +130,7 @@ export const emailReminderSent = inngest.createFunction(
           eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
           startDate={formatDate(new Date(event.startDate), 'MMMM d, yyyy')}
           endDate={formatDate(new Date(event.endDate), 'MMMM d, yyyy')}
-          organizerName={organizerName}
+          organizerName={ctx.actions.getConfig().name}
         />
       ),
     });
@@ -163,10 +147,6 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
     const event = await ctx.step.run('Fetch event', () =>
       ctx.prisma.event.findUnique({
         where: {id: ctx.event.data.eventId},
-        include: {
-          user: true,
-          organization: true,
-        },
       })
     );
     const user = await ctx.step.run('Fetch event', () =>
@@ -177,14 +157,6 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
 
     invariant(event, eventNotFoundError);
     invariant(user, userNotFoundError);
-
-    const organizer = event?.organization || event?.user;
-
-    const organizerName = isUser(organizer)
-      ? `${organizer.firstName} ${organizer.lastName}`
-      : isOrganization(organizer)
-        ? `${organizer.name}`
-        : '';
 
     await ctx.step.run(
       `Sent ticket purchase confirmation to user's email`,
@@ -207,7 +179,7 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
               ticketUrl={`${getBaseUrl()}/e/${event.shortId}/my-tickets`}
               startDate={formatDate(new Date(event.startDate), 'MMMM d, yyyy')}
               endDate={formatDate(new Date(event.endDate), 'MMMM d, yyyy')}
-              organizerName={organizerName}
+              organizerName={ctx.actions.getConfig().name}
               numberOfTickets={numberOfPurchasedTickets}
             />
           ),
@@ -226,27 +198,15 @@ export const eventSignUp = inngest.createFunction(
   async (ctx) => {
     const event = await ctx.prisma.event.findUnique({
       where: {id: ctx.event.data.eventId},
-      include: {
-        user: true,
-        organization: true,
-      },
     });
 
     invariant(event, eventNotFoundError);
-
-    const organizer = event.user || event.organization;
-
-    invariant(organizer, organizerNotFoundError);
 
     const user = await ctx.prisma.user.findUnique({
       where: {id: ctx.event.data.userId},
     });
 
     invariant(user, userNotFoundError);
-
-    const organizerName = isUser(organizer)
-      ? `${organizer.firstName} ${organizer.lastName}`
-      : `${organizer.name}`;
 
     await ctx.resend.emails.send({
       reply_to: 'WannaGo Team <hello@wannago.app>',
@@ -260,7 +220,7 @@ export const eventSignUp = inngest.createFunction(
           eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-          organizerName={organizerName}
+          organizerName={ctx.actions.getConfig().name}
         />
       ),
     });
@@ -276,10 +236,6 @@ export const eventInvite = inngest.createFunction(
   async (ctx) => {
     const event = await ctx.prisma.event.findUnique({
       where: {id: ctx.event.data.eventId},
-      include: {
-        user: true,
-        organization: true,
-      },
     });
 
     invariant(event, eventNotFoundError);
@@ -290,15 +246,7 @@ export const eventInvite = inngest.createFunction(
 
     invariant(user, userNotFoundError);
 
-    const organizer = event.user || event.organization;
-
-    invariant(organizer, organizerNotFoundError);
-
     const eventUrl = new URL(`${getBaseUrl()}/e/${event.shortId}`);
-
-    const organizerName = isUser(organizer)
-      ? `${organizer.firstName} ${organizer.lastName}`
-      : `${organizer.name}`;
 
     await ctx.resend.emails.send({
       reply_to: 'WannaGo Team <hello@wannago.app>',
@@ -312,7 +260,7 @@ export const eventInvite = inngest.createFunction(
           eventUrl={eventUrl.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-          organizerName={organizerName}
+          organizerName={ctx.actions.getConfig().name}
         />
       ),
     });
@@ -330,17 +278,9 @@ export const messageToAllAttendees = inngest.createFunction(
       where: {
         id: ctx.event.data.eventId,
       },
-      include: {
-        user: true,
-        organization: true,
-      },
     });
 
     invariant(event, eventNotFoundError);
-
-    const organizer = event.user || event.organization;
-
-    invariant(organizer, organizerNotFoundError);
 
     const signUps = await ctx.prisma.eventSignUp.findMany({
       where: {
@@ -352,16 +292,12 @@ export const messageToAllAttendees = inngest.createFunction(
       },
     });
 
-    const name = isUser(organizer)
-      ? `${organizer.firstName} ${organizer.lastName}`
-      : organizer.name;
-
     await Promise.all(
       signUps
         .map((signUp) => signUp.user)
         .map(async (user) => {
           await ctx.resend.emails.send({
-            reply_to: `${name} <${organizer.email}>`,
+            reply_to: `${name} <${ctx.actions.getConfig().email}>`,
             from: Emails.Hi,
             to: user.email,
             subject: `Message from event organizer: "${event.title}"`,
@@ -379,56 +315,6 @@ export const messageToAllAttendees = inngest.createFunction(
   }
 );
 
-export const afterRegisterNoCreatedEventFollowUpEmail = inngest.createFunction(
-  {
-    id: slugify('After Register No Created Event Follow Up Email'),
-    name: 'After Register No Created Event Follow Up Email',
-  },
-  {event: 'email/after.register.no.created.event.follow.up.email'},
-  async (ctx) => {
-    await ctx.step.sleep(
-      `wait-before-sending-${slugify(
-        'After Register No Created Event Follow Up Email'
-      )}`,
-      1000 * 60 * 60 * 24 * 2
-    );
-
-    const user = await ctx.prisma.user.findUnique({
-      where: {id: ctx.event.data.userId},
-      include: {
-        events: true,
-        organizations: {
-          include: {events: true},
-        },
-      },
-    });
-
-    invariant(user, userNotFoundError);
-
-    const eventCount =
-      user.events.length +
-      user.organizations.reduce((prev, next) => {
-        return prev + next.events.length;
-      }, 0);
-
-    const hasNoEvents = eventCount === 0;
-
-    if (hasNoEvents && user?.firstName) {
-      await ctx.resend.emails.send({
-        from: Emails.Hi,
-        reply_to: 'WannaGo Team <hello@wannago.app>',
-        to: user.email,
-        subject: 'We would love to hear your feedback',
-        html: render(
-          <AfterRegisterNoCreatedEventFollowUpEmail
-            firstName={user?.firstName}
-          />
-        ),
-      });
-    }
-  }
-);
-
 export const eventCancelInvite = inngest.createFunction(
   {
     id: slugify('Event Cancel Invite'),
@@ -438,17 +324,9 @@ export const eventCancelInvite = inngest.createFunction(
   async (ctx) => {
     const event = await ctx.prisma.event.findUnique({
       where: {id: ctx.event.data.eventId},
-      include: {
-        user: true,
-        organization: true,
-      },
     });
 
     invariant(event, eventNotFoundError);
-
-    const organizer = event.user || event.organization;
-
-    invariant(organizer, organizerNotFoundError);
 
     const user = await ctx.prisma.user.findUnique({
       where: {id: ctx.event.data.userId},
@@ -457,9 +335,6 @@ export const eventCancelInvite = inngest.createFunction(
     invariant(user, userNotFoundError);
 
     const url = new URL(`${getBaseUrl()}/e/${event.shortId}`);
-    const organizerName = isUser(organizer)
-      ? `${organizer.firstName} ${organizer.lastName}`
-      : `${organizer.name}`;
 
     await ctx.resend.emails.send({
       reply_to: 'WannaGo Team <hello@wannago.app>',
@@ -473,7 +348,7 @@ export const eventCancelInvite = inngest.createFunction(
           eventUrl={url.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-          organizerName={organizerName || ''}
+          organizerName={ctx.actions.getConfig().name}
         />
       ),
     });
@@ -489,17 +364,9 @@ export const eventCancelSignUp = inngest.createFunction(
   async (ctx) => {
     const event = await ctx.prisma.event.findUnique({
       where: {id: ctx.event.data.eventId},
-      include: {
-        user: true,
-        organization: true,
-      },
     });
 
     invariant(event, eventNotFoundError);
-
-    const organizer = event.user || event.organization;
-
-    invariant(organizer, organizerNotFoundError);
 
     const user = await ctx.prisma.user.findUnique({
       where: {id: ctx.event.data.userId},
@@ -508,9 +375,6 @@ export const eventCancelSignUp = inngest.createFunction(
     invariant(user, userNotFoundError);
 
     const url = new URL(`${getBaseUrl()}/e/${event.shortId}}`);
-    const organizerName = isUser(organizer)
-      ? `${organizer.firstName} ${organizer.lastName}`
-      : `${organizer.name}`;
 
     await ctx.resend.emails.send({
       reply_to: 'WannaGo Team <hello@wannago.app>',
@@ -524,7 +388,7 @@ export const eventCancelSignUp = inngest.createFunction(
           eventUrl={url.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-          organizerName={organizerName}
+          organizerName={ctx.actions.getConfig().name}
         />
       ),
     });
@@ -548,23 +412,14 @@ export const organizerEventSignUpNotification = inngest.createFunction(
       where: {
         id: ctx.event.data.eventId,
       },
-      include: {
-        user: true,
-        organization: true,
-      },
     });
 
     invariant(event, eventNotFoundError);
 
-    const organizer = event.user || event.organization;
-
-    invariant(organizer, organizerNotFoundError);
-
     await ctx.resend.emails.send({
       reply_to: 'WannaGo Team <hello@wannago.app>',
       from: Emails.Hi,
-      //TODO: '' should not be allowed
-      to: organizer?.email || '',
+      to: ctx.actions.getConfig().email,
       subject: 'Your event has new sign up!',
       html: render(
         <OrganizerEventSignUpNotification

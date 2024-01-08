@@ -26,6 +26,9 @@ const moduleExports = {
       {
         hostname: 'localhost',
       },
+      {
+        hostname: 'imagedelivery.net',
+      },
     ],
   },
   transpilePackages: [

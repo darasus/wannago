@@ -27,10 +27,6 @@ model Event {
   address                 String?
   longitude               Float?
   latitude                Float?
-  organization            Organization?     @relation(name: "EventOrganization", fields: [organizationId], references: [id])
-  organizationId          String?
-  user                    User?             @relation(name: "EventUser", fields: [userId], references: [id])
-  userId                  String?
   messageId               String?
   eventSignUps            EventSignUp[]     @relation(name: "EventSignUps")
   tickets                 Ticket[]
@@ -42,9 +38,6 @@ model Event {
   signUpProtectionCode    String?
   listing                 Listing           @default(LISTED)
   checkoutSession         CheckoutSession[]
-
-  @@index([organizationId])
-  @@index([userId])
 }
 
 enum Listing {
@@ -125,51 +118,24 @@ model CheckoutSession {
 model User {
   id                      String                   @id @default(uuid())
   email                   String                   @unique
-  email_verified          Boolean                  @default(false)
+  email_verified          Boolean?                 @default(false)
   createdAt               DateTime                 @default(now())
   updatedAt               DateTime                 @default(now()) @updatedAt
-  externalId              String?                  @unique
   firstName               String
   lastName                String
   profileImageSrc         String?
-  organizations           Organization[]           @relation(name: "UserOrganizations")
   eventSignUps            EventSignUp[]            @relation(name: "EventSignUpUser")
   type                    UserType                 @default(USER)
-  events                  Event[]                  @relation(name: "EventUser")
   disabled                Boolean                  @default(false)
   stripeCustomerId        String?
-  stripeLinkedAccountId   String?
-  messages                Message[]                @relation(name: "UserMessage")
-  conversation            Conversation[]           @relation(name: "UserConversation")
-  lastSeens               ConversationLastSeen[]   @relation(name: "UserConversationLastSeen")
   ticketSale              TicketSale[]
-  preferredCurrency       Currency?                @default(USD)
   auth_session            Session[]
   key                     Key[]
   emailVerificationTokens EmailVerificationToken[]
   passwordResetTokens     PasswordResetToken[]
   checkoutSessions        CheckoutSession[]
 
-  @@index([externalId])
   @@index([email])
-}
-
-model Organization {
-  id                    String                 @id @default(uuid())
-  users                 User[]                 @relation(name: "UserOrganizations")
-  events                Event[]                @relation(name: "EventOrganization")
-  name                  String                 @db.VarChar(255)
-  email                 String                 @unique
-  logoSrc               String
-  disabled              Boolean                @default(false)
-  stripeCustomerId      String?                @unique
-  stripeLinkedAccountId String?                @unique
-  messages              Message[]              @relation(name: "OrganizationMessage")
-  conversation          Conversation[]         @relation(name: "OrganizationConversation")
-  lastSeens             ConversationLastSeen[] @relation(name: "OrganizationConversationLastSeen")
-  preferredCurrency     Currency?              @default(USD)
-  createdAt             DateTime               @default(now())
-  updatedAt             DateTime               @default(now()) @updatedAt
 }
 
 model EventSignUp {
@@ -197,48 +163,6 @@ enum EventRegistrationStatus {
 enum UserType {
   ADMIN
   USER
-}
-
-model Conversation {
-  id            String                 @id @default(uuid())
-  createdAt     DateTime               @default(now())
-  updatedAt     DateTime               @default(now()) @updatedAt
-  messages      Message[]
-  organizations Organization[]         @relation(name: "OrganizationConversation")
-  users         User[]                 @relation(name: "UserConversation")
-  lastSeen      ConversationLastSeen[]
-}
-
-model Message {
-  id             String        @id @default(uuid())
-  text           String        @db.LongText()
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @default(now()) @updatedAt
-  conversation   Conversation  @relation(fields: [conversationId], references: [id])
-  conversationId String
-  user           User?         @relation(name: "UserMessage", fields: [userId], references: [id])
-  userId         String?
-  organization   Organization? @relation(name: "OrganizationMessage", fields: [organizationId], references: [id])
-  organizationId String?
-
-  @@index([conversationId])
-  @@index([userId])
-  @@index([organizationId])
-}
-
-model ConversationLastSeen {
-  id             String        @id @default(uuid())
-  lastSeen       DateTime
-  conversation   Conversation  @relation(fields: [conversationId], references: [id])
-  conversationId String
-  user           User?         @relation(name: "UserConversationLastSeen", fields: [userId], references: [id])
-  userId         String?
-  organization   Organization? @relation(name: "OrganizationConversationLastSeen", fields: [organizationId], references: [id])
-  organizationId String?
-
-  @@index([conversationId])
-  @@index([userId])
-  @@index([organizationId])
 }
 
 enum Currency {

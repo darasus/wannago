@@ -1,5 +1,6 @@
 import {z} from 'zod';
 import {publicProcedure} from '../../../trpc';
+import {UserType} from '@prisma/client';
 
 export const getIsMyEvent = publicProcedure
   .input(
@@ -8,31 +9,5 @@ export const getIsMyEvent = publicProcedure
     })
   )
   .query(async ({input, ctx}) => {
-    if (!ctx.auth?.user?.id) {
-      return false;
-    }
-
-    const event = await ctx.prisma.event.findFirst({
-      where: {
-        shortId: input.eventShortId,
-        OR: [
-          {
-            user: {
-              id: ctx.auth?.user?.id,
-            },
-          },
-          {
-            organization: {
-              users: {
-                some: {
-                  id: ctx.auth?.user?.id,
-                },
-              },
-            },
-          },
-        ],
-      },
-    });
-
-    return !!event;
+    return ctx.auth?.user?.type === UserType.ADMIN;
   });

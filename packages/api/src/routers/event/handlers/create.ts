@@ -2,6 +2,7 @@ import {generateShortId, geocode, invariant} from 'utils';
 import {protectedProcedure} from '../../../trpc';
 import {eventInput} from '../validation';
 import {TRPCError} from '@trpc/server';
+import {Currency} from '@prisma/client';
 
 export const create = protectedProcedure
   .input(eventInput)
@@ -30,16 +31,13 @@ export const create = protectedProcedure
     }) => {
       const geocodeResponse = await geocode(address);
 
-      const [user, organization] = await Promise.all([
+      const [user] = await Promise.all([
         ctx.prisma.user.findUnique({
           where: {id: createdById},
         }),
-        ctx.prisma.organization.findUnique({where: {id: createdById}}),
       ]);
 
-      const preferredCurrency =
-        (user?.id ? user.preferredCurrency : organization?.preferredCurrency) ||
-        'USD';
+      const preferredCurrency = Currency.USD;
 
       invariant(
         preferredCurrency,
@@ -70,16 +68,6 @@ export const create = protectedProcedure
           eventVisibilityCode,
           signUpProtection,
           signUpProtectionCode,
-          ...(organization?.id
-            ? {
-                organization: {connect: {id: organization.id}},
-              }
-            : {}),
-          ...(user?.id
-            ? {
-                user: {connect: {id: user.id}},
-              }
-            : {}),
         },
       });
 

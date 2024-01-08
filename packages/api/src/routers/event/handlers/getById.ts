@@ -14,8 +14,5 @@ export const getById = protectedProcedure
       where: {
         id: eventId,
       },
-      include: {
-        user: true,
-      },
     });
   });

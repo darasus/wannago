@@ -1,8 +1,4 @@
-import {
-  checkoutSessionNotFound,
-  stripeAccountLinkNotFound,
-  userNotFoundError,
-} from 'error';
+import {checkoutSessionNotFound, userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../trpc';
@@ -33,7 +29,6 @@ export const createCheckoutSession = protectedProcedure
     });
 
     invariant(customer, userNotFoundError);
-    invariant(ctx.auth?.user.stripeLinkedAccountId, stripeAccountLinkNotFound);
 
     const checkoutSession = await ctx.prisma.$transaction(async (prisma) => {
       const ticketSaleIds = [];
