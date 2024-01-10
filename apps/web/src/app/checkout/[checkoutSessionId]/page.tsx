@@ -10,7 +10,7 @@ import {
 import {Checkout} from 'features/src/Checkout/Checkout';
 import {api} from '../../../trpc/server-http';
 import {notFound, redirect} from 'next/navigation';
-import {formatCents} from 'utils';
+import {formatCents, getConfig} from 'utils';
 import {Countdown} from 'features/src/Countdown/Countdown';
 import Link from 'next/link';
 
@@ -50,16 +50,8 @@ export default async function CheckoutPage(props: any) {
               {result.event.title}
             </Link>
             {` by `}
-            <Link
-              href={
-                result.event.organization?.name
-                  ? `/o/${result.event.organization?.id}`
-                  : `/u/${result.event.user?.id}`
-              }
-              className="underline"
-            >
-              {result.event.organization?.name ||
-                `${result.event.user?.firstName} ${result.event.user?.lastName}`}
+            <Link href={'/'} className="underline">
+              {getConfig().name}
             </Link>
           </CardDescription>
         </CardHeader>
@@ -96,7 +88,6 @@ export default async function CheckoutPage(props: any) {
             returnUrl={result.returnUrl}
             clientSecret={result.clientSecret}
             paymentIntentId={result.id}
-            stripeAccountId={result.stripeAccountId}
           />
         </CardContent>
       </Card>

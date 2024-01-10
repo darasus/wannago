@@ -1,6 +1,6 @@
+import {env} from '../../../env/server';
 import {AssertionContext} from '../context';
 import {invariant} from 'utils';
-import {stripeAccountLinkNotFound} from 'error';
 
 export function assertCanPublishEvent(ctx: AssertionContext) {
   return async ({eventId}: {eventId: string}) => {
@@ -9,22 +9,15 @@ export function assertCanPublishEvent(ctx: AssertionContext) {
         id: eventId,
       },
       include: {
-        organization: true,
-        user: true,
         tickets: true,
       },
     });
 
     if (event?.tickets && event.tickets?.length > 0) {
-      if (event.organization) {
-        invariant(
-          event.organization.stripeLinkedAccountId,
-          stripeAccountLinkNotFound
-        );
-      }
-      if (event.user) {
-        invariant(event.user.stripeLinkedAccountId, stripeAccountLinkNotFound);
-      }
+      invariant(
+        env.STRIPE_API_SECRET || env.STRIPE_ENDPOINT_SECRET,
+        'Missing Stripe API keys'
+      );
     }
   };
 }

@@ -20,12 +20,7 @@ export async function Header() {
             </div>
           </div>
           <div className="flex items-center gap-x-4 md:gap-x-4">
-            {showUserProfile && (
-              <UserSection
-                me={me}
-                hasUnseenConversationPromise={api.conversation.getUserHasUnseenConversation.query()}
-              />
-            )}
+            {showUserProfile && <UserSection me={me} />}
             {showAuthButtons && (
               <Button
                 asChild

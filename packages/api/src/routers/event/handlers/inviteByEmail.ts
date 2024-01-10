@@ -23,8 +23,6 @@ export const inviteByEmail = protectedProcedure
 
     invariant(event, eventNotFoundError);
 
-    await ctx.assertions.assertCanModifyEvent({eventId: event.id});
-
     let user: User | null = null;
 
     user = await ctx.prisma.user.findUnique({

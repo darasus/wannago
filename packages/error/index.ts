@@ -5,11 +5,6 @@ export const userNotFoundError = new TRPCError({
   message: 'User not found',
 });
 
-export const organizationNotFoundError = new TRPCError({
-  code: 'NOT_FOUND',
-  message: 'Organization not found',
-});
-
 export const organizerNotFoundError = new TRPCError({
   code: 'NOT_FOUND',
   message: 'Organizer not found',

@@ -14,13 +14,12 @@ export default async function EventPages({
 }: {
   params: {id: string; page: string[]};
 }) {
-  const [me, event, isMyEvent, myOrganizations] = await Promise.all([
+  const [me, event, isMyEvent] = await Promise.all([
     api.user.me.query(),
     api.event.getByShortId.query({id: id}),
     api.event.getIsMyEvent.query({
       eventShortId: id,
     }),
-    api.organization.getMyOrganizations.query(),
   ]);
 
   const myEventSignUpsPromise = api.event.getMyTicketsByEvent.query({
@@ -53,13 +52,7 @@ export default async function EventPages({
                     <EventInfo event={event} />
                   </Suspense>
                 )}
-                {page[0] === 'edit' && (
-                  <EditEventForm
-                    event={event}
-                    me={me}
-                    myOrganizations={myOrganizations || []}
-                  />
-                )}
+                {page[0] === 'edit' && <EditEventForm event={event} me={me} />}
                 {page[0] === 'attendees' && (
                   <Suspense fallback={<LoadingBlock />}>
                     <EventAttendees event={event} />

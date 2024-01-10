@@ -1,6 +1,5 @@
 'use client';
 
-import {use} from 'react';
 import {
   Avatar,
   Button,
@@ -17,12 +16,10 @@ import {RouterOutputs} from 'api';
 
 interface Props {
   me: RouterOutputs['user']['me'];
-  hasUnseenConversationPromise: Promise<boolean>;
 }
 
-export function UserSection({hasUnseenConversationPromise, me}: Props) {
+export function UserSection({me}: Props) {
   const router = useRouter();
-  const hasUnseenConversation = use(hasUnseenConversationPromise);
 
   const onSignOutClick = async () => {
     router.push('/logout');
@@ -46,19 +43,6 @@ export function UserSection({hasUnseenConversationPromise, me}: Props) {
       label: 'Settings',
       onClick: () => {
         router.push(`/settings`);
-      },
-    },
-    {
-      label: (
-        <span className="relative">
-          Messages{' '}
-          {hasUnseenConversation && (
-            <span className="text-red-400">{`(new)`}</span>
-          )}
-        </span>
-      ),
-      onClick: () => {
-        router.push(`/messages`);
       },
     },
     {
@@ -101,9 +85,6 @@ export function UserSection({hasUnseenConversationPromise, me}: Props) {
                 src={me.profileImageSrc}
                 alt={'avatar'}
               />
-              {hasUnseenConversation && (
-                <div className="h-4 w-4 bg-red-400 rounded-full absolute -top-1 -right-1" />
-              )}
               {me.firstName}
               <ChevronDown className="ml-1 w-4 h-4" />
             </Button>

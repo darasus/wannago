@@ -2,9 +2,6 @@ import {Container, LoadingCard, PageHeader} from 'ui';
 import {api} from '../../trpc/server-http';
 import {UserSettingsForm} from './features/UserSettingsForm/UserSettingsForm';
 import {Suspense} from 'react';
-import {StripeSettings} from './features/StripeSettings/StripeSettings';
-import {OrganizationForm} from './features/OrganizationForm/OrganizationForm';
-import {OrganizationMemberSettings} from './features/OrganizationMemberSettings/OrganizationMemberSettings';
 
 export const generateMetadata = async () => {
   return {
@@ -21,20 +18,9 @@ export default async function SettingsPage() {
           <Suspense fallback={<LoadingCard />}>
             <UserSettingsForm userPromise={api.user.me.query()} />
           </Suspense>
-          <Suspense fallback={<LoadingCard />}>
-            <OrganizationForm
-              organizationPromise={api.organization.getMyOrganization.query()}
-            />
-          </Suspense>
-          <Suspense fallback={<LoadingCard />}>
-            <OrganizationMemberSettings
-              organizationPromise={api.organization.getMyOrganization.query()}
-              membersPromise={api.organization.getMyOrganizationMembers.query()}
-            />
-          </Suspense>
-          <Suspense fallback={<LoadingCard />}>
+          {/* <Suspense fallback={<LoadingCard />}>
             <StripeSettings userPromise={api.user.me.query()} />
-          </Suspense>
+          </Suspense> */}
         </div>
       </div>
     </Container>

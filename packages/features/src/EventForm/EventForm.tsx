@@ -3,7 +3,7 @@
 import {FormEventHandler} from 'react';
 import {FormProvider, useFormContext} from 'react-hook-form';
 import {Badge, Button, CardBase, Form} from 'ui';
-import {Organization, User} from '@prisma/client';
+import {User} from '@prisma/client';
 import {z} from 'zod';
 import {eventFormSchema} from './hooks/useEventForm';
 import {Who} from './features/Who';
@@ -18,21 +18,15 @@ interface Props {
   isLoading?: boolean;
   onCancelClick: () => void;
   me: User;
-  myOrganizations: Organization[];
 }
 
-export function EventForm({
-  onSubmit,
-  onCancelClick,
-  me,
-  myOrganizations,
-}: Props) {
+export function EventForm({onSubmit, onCancelClick, me}: Props) {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
 
   const items = [
     {
       label: 'Who',
-      content: <Who me={me} myOrganizations={myOrganizations} />,
+      content: <Who me={me} />,
     },
     {
       label: 'What',

@@ -4,14 +4,8 @@ import {resend} from 'lib/src/Resend';
 import {getCurrencyFromHeaders} from 'utils';
 import {getEvents} from './actions/getEvents';
 import {getUserById} from './actions/getUserById';
-import {getOrganizationById} from './actions/getOrganizationById';
 import {getEvent} from './actions/getEvent';
-import {getOrganizerByEventId} from './actions/getOrganizerByEventId';
-import {getOrganizationByUserId} from './actions/getOrganizationByUserId';
 import {getUserByEmail} from './actions/getUserByEmail';
-import {getOrganizationWithMembersByOrganizationId} from './actions/getOrganizationWithMembersByOrganizationId';
-import {assertCanModifyEvent} from './assertions/assertCanModifyEvent';
-import {getOrganizerByEmail} from './actions/getOrganizerByEmail';
 import {assertCanPurchaseTickets} from './assertions/assertCanPurchaseTickets';
 import {assertCanJoinEvent} from './assertions/assertCanJoinEvent';
 import {assertCanViewEvent} from './assertions/assertCanViewEvent';
@@ -21,21 +15,14 @@ import {EventsStoreType} from 'inngest-client';
 import {getPageSession, auth as _auth} from 'auth';
 import {cookies, headers} from 'next/headers';
 import {AuthRequest} from 'lucia';
-import {getOrganizerById} from './actions/getOrganizerById';
 import {createStripeClient, stripe} from 'lib/src/stripe';
 import {createPaymentIntent} from './actions/createPaymentIntent';
 
 const actions = {
   getEvents,
   getUserById,
-  getOrganizationById,
   getEvent,
-  getOrganizerByEventId,
-  getOrganizationByUserId,
   getUserByEmail,
-  getOrganizationWithMembersByOrganizationId,
-  getOrganizerByEmail,
-  getOrganizerById,
   createPaymentIntent,
 } as const;
 
@@ -44,7 +31,6 @@ const assertions = {
   assertCanJoinEvent,
   assertCanViewEvent,
   assertCanPublishEvent,
-  assertCanModifyEvent,
 } as const;
 
 type Actions = {

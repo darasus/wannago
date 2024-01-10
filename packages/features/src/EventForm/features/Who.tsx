@@ -15,14 +15,13 @@ import {
 } from 'ui';
 import {z} from 'zod';
 import {eventFormSchema} from '../hooks/useEventForm';
-import {Organization, User} from '@prisma/client';
+import {User} from '@prisma/client';
 
 interface Props {
   me: User;
-  myOrganizations: Organization[];
 }
 
-export function Who({me, myOrganizations}: Props) {
+export function Who({me}: Props) {
   const form = useFormContext<z.infer<typeof eventFormSchema>>();
 
   const options = [
@@ -30,12 +29,6 @@ export function Who({me, myOrganizations}: Props) {
       label: `${me?.firstName} ${me?.lastName}`,
       value: `${me?.id}`,
     },
-    ...myOrganizations.map((o) => {
-      return {
-        label: `${o.name}`,
-        value: `${o.id}`,
-      };
-    }),
   ];
 
   return (

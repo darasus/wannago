@@ -24,12 +24,7 @@ export async function GET(
         id: params.ticketSaleId,
       },
       include: {
-        event: {
-          include: {
-            organization: true,
-            user: true,
-          },
-        },
+        event: true,
         ticket: true,
         user: true,
       },

@@ -3,8 +3,6 @@ import {Listing, Prisma} from '@prisma/client';
 import {ActionContext} from '../context';
 
 const validation = z.object({
-  authorIds: z.array(z.string().uuid()),
-  eventType: z.enum(['attending', 'organizing', 'all']),
   isPublished: z.boolean().optional(),
   onlyPast: z.boolean().optional(),
   orderByStartDate: z.enum(['desc', 'asc']).optional(),
@@ -13,24 +11,11 @@ const validation = z.object({
 
 export function getEvents(ctx: ActionContext) {
   return async (input: z.infer<typeof validation>) => {
-    const {authorIds, isPublished, eventType, listing} =
-      validation.parse(input);
+    const {isPublished, listing} = validation.parse(input);
 
     const organizingQuery: Prisma.EventWhereInput['OR'] = [
       {
         isPublished,
-        user: {
-          id: {
-            in: authorIds,
-          },
-        },
-      },
-      {
-        organization: {
-          id: {
-            in: authorIds,
-          },
-        },
       },
     ];
     const attendingQuery: Prisma.EventWhereInput['OR'] = [
@@ -40,11 +25,6 @@ export function getEvents(ctx: ActionContext) {
           some: {
             status: {
               in: ['REGISTERED', 'INVITED'],
-            },
-            user: {
-              id: {
-                in: authorIds,
-              },
             },
           },
         },
@@ -71,17 +51,8 @@ export function getEvents(ctx: ActionContext) {
               },
             }
           : {}),
-        OR: [
-          ...(eventType === 'organizing' ? organizingQuery : []),
-          ...(eventType === 'attending' ? attendingQuery : []),
-          ...(eventType === 'all'
-            ? [...organizingQuery, ...attendingQuery]
-            : []),
-        ],
       },
       include: {
-        user: true,
-        organization: true,
         tickets: true,
       },
     });

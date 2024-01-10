@@ -3,7 +3,7 @@
 import {isFuture} from 'date-fns';
 import {RouterOutputs} from 'api';
 import Image from 'next/image';
-import {imageLoader, formatCents, getRelativeTime} from 'utils';
+import {formatCents, getRelativeTime, getConfig} from 'utils';
 import {Avatar, CardBase, ColoredBadge, Text} from 'ui';
 import {forwardRef} from 'react';
 
@@ -45,16 +45,11 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
         <div className="flex items-center gap-2">
           <Avatar
             className="w-6 h-6 shrink-0"
-            src={event.user?.profileImageSrc || event.organization?.logoSrc}
-            alt={
-              event.user?.firstName ||
-              event.organization?.name ||
-              'User profile'
-            }
+            src={`/logo.png`}
+            alt={getConfig().name}
           />
           <Text className="text-sm truncate break-keep">
-            {event.organization?.name ||
-              `${event.user?.firstName} ${event.user?.lastName}`}
+            {getConfig().name}
           </Text>
         </div>
       }
@@ -96,7 +91,7 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
                 className="bg-cover bg-center"
                 src={featuredImageSrc}
                 alt={title}
-                loader={imageLoader}
+                // loader={imageLoader}
                 blurDataURL={featuredImagePreviewSrc}
                 placeholder={'blur'}
                 sizes="320 640 750 1000"

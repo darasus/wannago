@@ -30,8 +30,6 @@ export const update = protectedProcedure
       },
       ctx,
     }) => {
-      await ctx.assertions.assertCanModifyEvent({eventId});
-
       const geocodeResponse = await geocode(address);
 
       const [user] = await Promise.all([

@@ -2,7 +2,7 @@ import {Container} from 'ui';
 import {api} from '../../../trpc/server-http';
 import {ManageEventButton} from './features/ManageEventButton/ManageEventButton';
 import {EventView} from 'features/src/EventView/EventView';
-import {getBaseUrl} from 'utils';
+import {getBaseUrl, getConfig} from 'utils';
 import {notFound} from 'next/navigation';
 import {Metadata} from 'next';
 import {TRPCClientError} from '@trpc/client';
@@ -31,11 +31,7 @@ export async function generateMetadata({
     url.searchParams.append('title', event?.title);
   }
 
-  url.searchParams.append(
-    'organizerName',
-    event?.organization?.name ||
-      `${event?.user?.firstName} ${event?.user?.lastName}`
-  );
+  url.searchParams.append('organizerName', getConfig().name);
 
   if (event?.featuredImageSrc) {
     url.searchParams.append(
@@ -44,8 +40,7 @@ export async function generateMetadata({
     );
   }
 
-  const profileImageSrc =
-    event?.organization?.logoSrc || event?.user?.profileImageSrc;
+  const profileImageSrc = null;
 
   if (profileImageSrc) {
     url.searchParams.append(

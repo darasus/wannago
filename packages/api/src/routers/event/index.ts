@@ -6,7 +6,6 @@ import {update} from './handlers/update';
 import {publish} from './handlers/publish';
 import {getById} from './handlers/getById';
 import {getByShortId} from './handlers/getByShortId';
-import {getOrganizer} from './handlers/getOrganizer';
 import {joinEvent} from './handlers/joinEvent';
 import {cancelEvent} from './handlers/cancelEvent';
 import {cancelEventByUserId} from './handlers/cancelEventByUserId';
@@ -32,7 +31,6 @@ export const eventRouter = createTRPCRouter({
   publish,
   getById,
   getByShortId,
-  getOrganizer,
   joinEvent,
   cancelEvent,
   cancelEventByUserId,

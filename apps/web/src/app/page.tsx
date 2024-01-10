@@ -6,11 +6,5 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  return (
-    <PublicProfile
-      id={organization.id}
-      name={organization.name}
-      imageSrc={organization.logoSrc}
-    />
-  );
+  return <PublicProfile />;
 }

@@ -4,8 +4,6 @@ import {protectedProcedure} from '../../../trpc';
 export const publish = protectedProcedure
   .input(z.object({isPublished: z.boolean(), eventId: z.string()}))
   .mutation(async ({input, ctx}) => {
-    await ctx.assertions.assertCanModifyEvent({eventId: input.eventId});
-
     if (input.isPublished === true) {
       await ctx.assertions.assertCanPublishEvent({eventId: input.eventId});
     }

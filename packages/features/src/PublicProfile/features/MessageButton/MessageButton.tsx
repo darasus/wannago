@@ -3,9 +3,7 @@
 import {Button} from 'ui';
 import {useParams} from 'next/dist/client/components/navigation';
 import {useRouter} from 'next/navigation';
-import {toast} from 'sonner';
 import {useState} from 'react';
-import {api} from '../../../../../../apps/web/src/trpc/client';
 
 export function MessageButton() {
   const router = useRouter();
@@ -22,18 +20,6 @@ export function MessageButton() {
       isLoading={isLoading}
       onClick={async () => {
         setIsLoading(true);
-        const conversation = await api.conversation.createConversation
-          .mutate({userId, organizationId})
-          .catch((error) => {
-            toast.error(error.message);
-          })
-          .finally(() => {
-            setIsLoading(false);
-          });
-
-        if (conversation?.id) {
-          router.push(`/messages/${conversation.id}`);
-        }
       }}
       data-testid="message-button"
     >

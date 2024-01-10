@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 interface Props {
   events: Promise<RouterOutputs['event']['getMyEvents']>;
-  eventType: any;
+  eventType: string;
 }
 
 export async function EventsList({events, eventType}: Props) {
