@@ -1,19 +1,6 @@
 import {Event} from '@prisma/client';
 import {AssertionContext} from '../context';
 import {TRPCError} from '@trpc/server';
-import {TRPC_ERROR_CODE_KEY} from '@trpc/server/rpc';
-
-class ViewEventError extends TRPCError {
-  name: string = 'ViewEventError';
-
-  constructor(opts: {
-    message?: string;
-    code: TRPC_ERROR_CODE_KEY;
-    cause?: unknown;
-  }) {
-    super(opts);
-  }
-}
 
 export function assertCanViewEvent(ctx: AssertionContext) {
   return async ({event, code}: {event: Event; code?: string}) => {
@@ -22,8 +9,9 @@ export function assertCanViewEvent(ctx: AssertionContext) {
     }
 
     if (!event.isPublished) {
-      throw new ViewEventError({
+      throw new TRPCError({
         code: 'NOT_FOUND',
+        message: 'Event is not published.',
       });
     }
 
@@ -43,7 +31,7 @@ export function assertCanViewEvent(ctx: AssertionContext) {
       event.eventVisibilityCode?.toLocaleLowerCase() !==
         code.toLocaleLowerCase()
     ) {
-      throw new ViewEventError({
+      throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'Provided code is not valid.',
       });

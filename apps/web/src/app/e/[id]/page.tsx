@@ -27,10 +27,7 @@ export async function generateMetadata({
 
   const url = new URL(`${getBaseUrl()}/api/og-image`);
 
-  if (event?.title) {
-    url.searchParams.append('title', event?.title);
-  }
-
+  url.searchParams.append('title', event.title);
   url.searchParams.append('organizerName', getConfig().name);
 
   if (event?.featuredImageSrc) {
@@ -60,28 +57,28 @@ export async function generateMetadata({
 async function getData(id: string, code?: string) {
   'use server';
   try {
-    const [me, isMyEvent, event] = await Promise.all([
+    const [me, event] = await Promise.all([
       api.user.me.query(),
-      api.event.getIsMyEvent.query({
-        eventShortId: id,
-      }),
       api.event.getByShortId.query({id, code}),
     ]);
 
-    return {me, isMyEvent, event, notAllowed: false};
+    console.log('>>>', event.id);
+
+    return {me, event, notAllowed: false};
   } catch (error) {
+    console.log('>>> error', error);
     if (
       error instanceof TRPCClientError &&
       error.shape.data.code === 'FORBIDDEN'
     ) {
-      return {me: null, isMyEvent: false, event: null, notAllowed: true};
+      return {me: null, event: null, notAllowed: true};
     }
-    return {me: null, isMyEvent: false, event: null, notAllowed: false};
+    return {me: null, event: null, notAllowed: false};
   }
 }
 
 export default async function EventPage(props: Params) {
-  const {me, isMyEvent, event, notAllowed} = await getData(
+  const {me, event, notAllowed} = await getData(
     props.params.id,
     props.searchParams.code
   );
@@ -96,8 +93,8 @@ export default async function EventPage(props: Params) {
 
   return (
     <Container className="flex flex-col gap-4" maxSize="sm">
-      {isMyEvent && <ManageEventButton event={event} />}
-      <EventView event={event} isMyEvent={isMyEvent} me={me} />
+      {event.isMyEvent && <ManageEventButton event={event} />}
+      <EventView event={event} isMyEvent={event.isMyEvent} me={me} />
     </Container>
   );
 }
