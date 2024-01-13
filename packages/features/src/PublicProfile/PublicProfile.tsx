@@ -5,7 +5,7 @@ import {PublicEvents} from './features/PublicEvents/PublicEvents';
 import {getConfig} from 'utils';
 
 export async function PublicProfile() {
-  const {name} = getConfig();
+  const {name, logoSrc} = getConfig();
 
   return (
     <>
@@ -14,7 +14,7 @@ export async function PublicProfile() {
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <Avatar
               className="shrink-0 h-40 w-40"
-              src={'/assets/logo-dark.png'}
+              src={logoSrc}
               alt={`avatar`}
               height={700}
               width={700}

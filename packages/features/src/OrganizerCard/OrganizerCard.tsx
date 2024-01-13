@@ -38,7 +38,11 @@ export function OrganizerCard({event}: Props) {
       <div>
         <div className="flex items-center gap-x-2">
           <div className="flex shrink-0  items-center overflow-hidden relative justify-center rounded-full safari-rounded-border-fix">
-            <Avatar className="h-10 w-10" src={`/favicon.png`} alt="avatar" />
+            <Avatar
+              className="h-10 w-10"
+              src={getConfig().logoSrc}
+              alt="avatar"
+            />
           </div>
           <Button
             asChild

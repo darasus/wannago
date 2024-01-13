@@ -62,11 +62,8 @@ async function getData(id: string, code?: string) {
       api.event.getByShortId.query({id, code}),
     ]);
 
-    console.log('>>>', event.id);
-
     return {me, event, notAllowed: false};
   } catch (error) {
-    console.log('>>> error', error);
     if (
       error instanceof TRPCClientError &&
       error.shape.data.code === 'FORBIDDEN'
