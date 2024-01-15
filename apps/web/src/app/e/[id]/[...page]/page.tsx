@@ -4,7 +4,6 @@ import {api} from '../../../../trpc/server-http';
 import {notFound} from 'next/navigation';
 import {EditEventForm} from 'features/src/EventForm/EditEventForm';
 import {EventAttendees} from './features/EventAttendees/EventAttendees';
-import {MyTickets} from './features/MyTickets/MyTickets';
 import Link from 'next/link';
 import {ChevronLeft} from 'lucide-react';
 import {Suspense} from 'react';
@@ -14,17 +13,10 @@ export default async function EventPages({
 }: {
   params: {id: string; page: string[]};
 }) {
-  const [me, event, isMyEvent] = await Promise.all([
+  const [me, event] = await Promise.all([
     api.user.me.query(),
     api.event.getByShortId.query({id: id}),
-    api.event.getIsMyEvent.query({
-      eventShortId: id,
-    }),
   ]);
-
-  const myEventSignUpsPromise = api.event.getMyTicketsByEvent.query({
-    eventShortId: id,
-  });
 
   if (!me) {
     return null;
@@ -45,7 +37,7 @@ export default async function EventPages({
         </Button>
         <Suspense>
           <div>
-            {isMyEvent && (
+            {event.isMyEvent && (
               <>
                 {page[0] === 'info' && (
                   <Suspense fallback={<LoadingBlock />}>
@@ -59,11 +51,6 @@ export default async function EventPages({
                   </Suspense>
                 )}
               </>
-            )}
-            {page[0] === 'my-tickets' && (
-              <Suspense fallback={<LoadingBlock />}>
-                <MyTickets eventSignUpsPromise={myEventSignUpsPromise} />
-              </Suspense>
             )}
           </div>
         </Suspense>

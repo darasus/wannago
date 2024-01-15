@@ -3,7 +3,6 @@ import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
-import {api} from '../../../../../../apps/web/src/trpc/server-http';
 
 export const joinEvent = protectedProcedure
   .input(
@@ -114,8 +113,6 @@ export const joinEvent = protectedProcedure
         },
       }),
     ]);
-
-    await api.event.getIsMyEvent.revalidate();
 
     return {success: true};
   });

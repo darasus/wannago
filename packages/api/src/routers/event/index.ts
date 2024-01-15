@@ -19,8 +19,6 @@ import {inviteByEmail} from './handlers/inviteByEmail';
 import {getMySignUp} from './handlers/getMySignUp';
 import {getPublicEvents} from './handlers/getPublicEvents';
 import {getMyEvents} from './handlers/getMyEvents';
-import {getIsMyEvent} from './handlers/getIsMyEvent';
-import {getMyTicketsByEvent} from './handlers/getMyTicketsByEvent';
 import {generateEventCsvData} from './handlers/generateEventCsvData';
 import {createTRPCRouter} from '../../trpc';
 
@@ -44,8 +42,6 @@ export const eventRouter = createTRPCRouter({
   getMySignUp,
   getPublicEvents,
   getMyEvents,
-  getIsMyEvent,
-  getMyTicketsByEvent,
   generateEventCsvData,
   validateEventVisibilityCode,
   validateSignUpProtectionCode,
