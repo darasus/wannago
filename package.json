@@ -5,7 +5,8 @@
   },
   "scripts": {
     "lint": "turbo run lint",
-    "generate": "turbo run generate",
+    "db:generate": "turbo run generate",
+    "db:push": "turbo run push",
     "web:build": "turbo run build --filter web",
     "web:dev": "turbo run dev dev:inngest --filter web",
     "web:start": "turbo run start --filter web",

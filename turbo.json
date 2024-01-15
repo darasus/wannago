@@ -29,7 +29,7 @@
       "dependsOn": ["^generate"],
       "cache": false
     },
-    "db:push": {
+    "push": {
       "outputs": []
     },
     "test:e2e": {
