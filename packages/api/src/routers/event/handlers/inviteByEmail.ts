@@ -1,4 +1,4 @@
-import {User} from '@prisma/client';
+import {User, UserType} from '@prisma/client';
 import {TRPCError} from '@trpc/server';
 import {eventNotFoundError} from 'error';
 import {invariant} from 'utils';
@@ -37,6 +37,7 @@ export const inviteByEmail = protectedProcedure
           email: input.email,
           firstName: input.firstName,
           lastName: input.lastName,
+          type: UserType.ADMIN,
         },
       });
     }

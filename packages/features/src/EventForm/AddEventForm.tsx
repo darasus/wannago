@@ -59,7 +59,6 @@ export function AddEventForm({me}: Props) {
   return (
     <FormProvider {...form}>
       <EventForm
-        me={me}
         onSubmit={onSubmit}
         onCancelClick={() => router.push(`/events`)}
       />

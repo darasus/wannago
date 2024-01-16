@@ -11,6 +11,11 @@ export function getConfig() {
       logoSrc: z.string({
         required_error: `"logoSrc" is missing in wannago.config.json`,
       }),
+      twitterLink: z
+        .string({
+          required_error: `"twitterLink" is missing in wannago.config.json`,
+        })
+        .url(`"twitterLink" is not a valid URL`),
     })
     .parse(data);
 }

@@ -125,7 +125,7 @@ model User {
   lastName                String
   profileImageSrc         String?
   eventSignUps            EventSignUp[]            @relation(name: "EventSignUpUser")
-  type                    UserType                 @default(USER)
+  type                    UserType
   disabled                Boolean                  @default(false)
   stripeCustomerId        String?
   ticketSale              TicketSale[]
@@ -143,7 +143,7 @@ model EventSignUp {
   createdAt   DateTime                @default(now())
   updatedAt   DateTime                @updatedAt
   hasPlusOne  Boolean?                @default(false)
-  status      EventRegistrationStatus @default(REGISTERED) // TODO: remove default once production migration is done
+  status      EventRegistrationStatus
   event       Event                   @relation(name: "EventSignUps", fields: [eventId], references: [id])
   eventId     String
   user        User                    @relation(name: "EventSignUpUser", fields: [userId], references: [id])

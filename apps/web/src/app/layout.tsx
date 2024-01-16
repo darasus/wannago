@@ -8,6 +8,7 @@ import {ClientProvider} from './ClientProvider';
 import {ClientRefresher} from 'features/src/ClientRefresher/ClientRefresher';
 import {SpeedInsights} from '@vercel/speed-insights/next';
 import {Analytics} from '@vercel/analytics/react';
+import {Footer} from './components/Footer';
 
 export const metadata = {
   title: 'WannaGo',
@@ -34,6 +35,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <div>
             <div>{children}</div>
           </div>
+          <Footer />
           <Analytics />
           <ToastProvider />
           <ClientRefresher />

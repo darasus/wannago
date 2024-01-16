@@ -27,14 +27,6 @@ export function getIsPublic(pathname: string) {
   ].some((publicPathname) => pathname.startsWith(publicPathname));
 }
 
-export const navItems = [
-  {label: 'How does it work?', href: '/#how-does-it-work'},
-  {label: 'Features', href: '/#features'},
-  {label: 'FAQ', href: '/#faq'},
-  // {label: 'Examples', href: '/examples'},
-  {label: 'Pricing', href: '/#pricing'},
-];
-
 export const legalNavItems = [
   {label: 'Terms of Service', href: '/terms-of-service'},
   {label: 'Privacy Policy', href: '/privacy-policy'},
