@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Text, View, StyleSheet} from '@react-pdf/renderer';
 import {PDFProps} from './type';
-import {getConfig} from 'utils';
+import {config} from 'config';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,7 +33,7 @@ export function HeaderPDF({ticketSale}: PDFProps) {
     <View style={styles.container}>
       <View style={styles.detailColumn}>
         <Text style={styles.title}>{ticketSale.event.title}</Text>
-        <Text style={styles.organizerName}>{`By ${getConfig().name}`}</Text>
+        <Text style={styles.organizerName}>{`By ${config.name}`}</Text>
       </View>
     </View>
   );

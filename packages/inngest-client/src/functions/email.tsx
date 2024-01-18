@@ -132,7 +132,7 @@ export const emailReminderSent = inngest.createFunction(
           eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
           startDate={formatDate(new Date(event.startDate), 'MMMM d, yyyy')}
           endDate={formatDate(new Date(event.endDate), 'MMMM d, yyyy')}
-          organizerName={ctx.actions.getConfig().name}
+          organizerName={ctx.actions.config.name}
         />
       ),
     });
@@ -181,7 +181,7 @@ export const ticketPurchaseEmailSent = inngest.createFunction(
               ticketUrl={`${getBaseUrl()}/e/${event.shortId}/my-tickets`}
               startDate={formatDate(new Date(event.startDate), 'MMMM d, yyyy')}
               endDate={formatDate(new Date(event.endDate), 'MMMM d, yyyy')}
-              organizerName={ctx.actions.getConfig().name}
+              organizerName={ctx.actions.config.name}
               numberOfTickets={numberOfPurchasedTickets}
             />
           ),
@@ -222,7 +222,7 @@ export const eventSignUp = inngest.createFunction(
           eventUrl={`${getBaseUrl()}/e/${event.shortId}`}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-          organizerName={ctx.actions.getConfig().name}
+          organizerName={ctx.actions.config.name}
         />
       ),
     });
@@ -262,7 +262,7 @@ export const eventInvite = inngest.createFunction(
           eventUrl={eventUrl.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-          organizerName={ctx.actions.getConfig().name}
+          organizerName={ctx.actions.config.name}
         />
       ),
     });
@@ -299,7 +299,7 @@ export const messageToAllAttendees = inngest.createFunction(
         .map((signUp) => signUp.user)
         .map(async (user) => {
           await ctx.resend.emails.send({
-            reply_to: `${name} <${ctx.actions.getConfig().email}>`,
+            reply_to: `${name} <${ctx.actions.config.email}>`,
             from: Emails.Hi,
             to: user.email,
             subject: `Message from event organizer: "${event.title}"`,
@@ -350,7 +350,7 @@ export const eventCancelInvite = inngest.createFunction(
           eventUrl={url.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-          organizerName={ctx.actions.getConfig().name}
+          organizerName={ctx.actions.config.name}
         />
       ),
     });
@@ -390,7 +390,7 @@ export const eventCancelSignUp = inngest.createFunction(
           eventUrl={url.toString()}
           startDate={formatDate(event.startDate, 'MMMM d, yyyy')}
           endDate={formatDate(event.endDate, 'MMMM d, yyyy')}
-          organizerName={ctx.actions.getConfig().name}
+          organizerName={ctx.actions.config.name}
         />
       ),
     });
@@ -421,7 +421,7 @@ export const organizerEventSignUpNotification = inngest.createFunction(
     await ctx.resend.emails.send({
       reply_to: 'WannaGo Team <hello@wannago.app>',
       from: Emails.Hi,
-      to: ctx.actions.getConfig().email,
+      to: ctx.actions.config.email,
       subject: 'Your event has new sign up!',
       html: render(
         <OrganizerEventSignUpNotification

@@ -5,7 +5,7 @@ import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 import Link from 'next/link';
 import {CardBase, Button, Avatar} from 'ui';
-import {getConfig} from 'utils';
+import {config} from 'config';
 
 interface Props {
   event: Event;
@@ -38,19 +38,15 @@ export function OrganizerCard({event}: Props) {
       <div>
         <div className="flex items-center gap-x-2">
           <div className="flex shrink-0  items-center overflow-hidden relative justify-center rounded-full safari-rounded-border-fix">
-            <Avatar
-              className="h-10 w-10"
-              src={getConfig().logoSrc}
-              alt="avatar"
-            />
+            <Avatar className="h-10 w-10" src={config.logoSrc} alt="avatar" />
           </div>
           <Button
             asChild
-            title={getConfig().name}
+            title={config.name}
             variant="link"
             className="p-0 h-auto"
           >
-            <Link href={'/'}>{getConfig().name}</Link>
+            <Link href={'/'}>{config.name}</Link>
           </Button>
         </div>
       </div>

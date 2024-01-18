@@ -20,4 +20,3 @@ export * from './src/formatPercent';
 export * from './src/getCurrencyFromHeaders';
 export * from './src/maps';
 export * from './src/getCurrencySymbol';
-export * from './src/getConfig';

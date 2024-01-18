@@ -10,7 +10,8 @@ import {
 import {Checkout} from 'features/src/Checkout/Checkout';
 import {api} from '../../../trpc/server-http';
 import {notFound, redirect} from 'next/navigation';
-import {formatCents, getConfig} from 'utils';
+import {formatCents} from 'utils';
+import {config} from 'config';
 import {Countdown} from 'features/src/Countdown/Countdown';
 import Link from 'next/link';
 
@@ -51,7 +52,7 @@ export default async function CheckoutPage(props: any) {
             </Link>
             {` by `}
             <Link href={'/'} className="underline">
-              {getConfig().name}
+              {config.name}
             </Link>
           </CardDescription>
         </CardHeader>

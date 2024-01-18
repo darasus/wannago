@@ -2,6 +2,7 @@ import './globals.css';
 
 import {Container} from 'ui';
 import {getBaseUrl} from 'utils';
+import {config} from 'config';
 import {Header} from './Header';
 import {ToastProvider} from './ToastProvider';
 import {ClientProvider} from './ClientProvider';
@@ -9,13 +10,20 @@ import {ClientRefresher} from 'features/src/ClientRefresher/ClientRefresher';
 import {SpeedInsights} from '@vercel/speed-insights/next';
 import {Analytics} from '@vercel/analytics/react';
 import {Footer} from './components/Footer';
+import {api} from '../trpc/server-http';
 
 export const metadata = {
-  title: 'WannaGo',
+  title: config.name,
   metadataBase: new URL(getBaseUrl()),
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const me = await api.user.me.query();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -27,19 +35,23 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       </head>
       <body>
         <ClientProvider>
-          <div>
-            <Container maxSize={'full'}>
-              <Header />
-            </Container>
+          <div className="flex flex-col min-h-screen">
+            {me && (
+              <div>
+                <Container maxSize={'full'}>
+                  <Header />
+                </Container>
+              </div>
+            )}
+            <div className="grow">
+              <div>{children}</div>
+            </div>
+            <Footer />
           </div>
-          <div>
-            <div>{children}</div>
-          </div>
-          <Footer />
-          <Analytics />
           <ToastProvider />
           <ClientRefresher />
         </ClientProvider>
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>

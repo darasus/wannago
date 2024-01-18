@@ -1,19 +1,19 @@
 import {Text, Container} from 'ui';
 import {legalNavItems} from 'const';
 import Link from 'next/link';
-import {getConfig} from 'utils';
+import {config} from 'config';
 
 export function Footer() {
   return (
-    <footer>
+    <footer className="p-2">
       <Container className="my-0 m-auto">
         <div className="flex justify-center flex-wrap gap-4 text-xs text-muted-foreground">
           <Text>
-            {getConfig().name} {new Date().getFullYear()}
+            {config.name} {new Date().getFullYear()}
           </Text>
           {[
             ...legalNavItems,
-            getConfig().twitterLink
+            config.twitterLink
               ? {label: 'Twitter', href: 'https://twitter.com/wannagohq'}
               : undefined,
           ]

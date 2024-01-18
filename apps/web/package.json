@@ -13,6 +13,7 @@
     "database": "workspace:*",
     "auth": "workspace:*",
     "const": "workspace:*",
+    "config": "workspace:*",
     "tsconfig": "workspace:*",
     "inngest-client": "workspace:*",
     "eslint-config-custom": "workspace:*",

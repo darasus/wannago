@@ -2,11 +2,12 @@ import {Container} from 'ui';
 import {api} from '../../../trpc/server-http';
 import {ManageEventButton} from './features/ManageEventButton/ManageEventButton';
 import {EventView} from 'features/src/EventView/EventView';
-import {getBaseUrl, getConfig} from 'utils';
+import {getBaseUrl} from 'utils';
 import {notFound} from 'next/navigation';
 import {Metadata} from 'next';
 import {TRPCClientError} from '@trpc/client';
 import {EventVisibilityCodeForm} from './features/EventVisibilityCodeForm/EventVisibilityCodeForm';
+import {config} from 'config';
 
 interface Params {
   params: {id: string};
@@ -28,7 +29,7 @@ export async function generateMetadata({
   const url = new URL(`${getBaseUrl()}/api/og-image`);
 
   url.searchParams.append('title', event.title);
-  url.searchParams.append('organizerName', getConfig().name);
+  url.searchParams.append('organizerName', config.name);
 
   if (event?.featuredImageSrc) {
     url.searchParams.append(

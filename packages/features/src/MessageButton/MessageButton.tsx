@@ -8,12 +8,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from 'ui';
-import {getConfig} from 'utils';
+import {config} from 'config';
 import {ContactForm} from '../ContactForm/ContactForm';
 
 export function MessageButton() {
-  const {name} = getConfig();
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -23,7 +21,7 @@ export function MessageButton() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Contact {name}</DialogTitle>
+          <DialogTitle>Contact {config.name}</DialogTitle>
         </DialogHeader>
         <ContactForm />
       </DialogContent>

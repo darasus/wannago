@@ -480,6 +480,9 @@ importers:
       auth:
         specifier: workspace:*
         version: link:../../packages/auth
+      config:
+        specifier: workspace:*
+        version: link:../../packages/config
       const:
         specifier: workspace:*
         version: link:../../packages/const
@@ -586,6 +589,15 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
 
+  packages/config:
+    devDependencies:
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../eslint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+
   packages/const:
     devDependencies:
       eslint-config-custom:
@@ -606,6 +618,9 @@ importers:
 
   packages/email:
     devDependencies:
+      config:
+        specifier: workspace:*
+        version: link:../config
       database:
         specifier: workspace:*
         version: link:../database
@@ -663,6 +678,9 @@ importers:
       api:
         specifier: workspace:*
         version: link:../api
+      config:
+        specifier: workspace:*
+        version: link:../config
       const:
         specifier: workspace:*
         version: link:../const
@@ -710,6 +728,9 @@ importers:
 
   packages/inngest-client:
     dependencies:
+      config:
+        specifier: workspace:*
+        version: link:../config
       database:
         specifier: workspace:*
         version: link:../database

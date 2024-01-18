@@ -40,7 +40,7 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function CardBase(
             <div
               className={cn(
                 {'border-r': !!titleChildren},
-                'p-2 pl-4 text-sm font-bold shrink overflow-hidden'
+                'p-2 px-4 text-sm font-bold shrink overflow-hidden text-muted-foreground'
               )}
             >
               {title}

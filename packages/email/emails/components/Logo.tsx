@@ -1,5 +1,5 @@
 import {Img} from '@react-email/components';
-import {getConfig} from 'utils';
+import {config} from 'config';
 
 export function Logo() {
   const height = 70;
@@ -8,8 +8,8 @@ export function Logo() {
 
   return (
     <Img
-      src={getConfig().logoSrc}
-      alt={`${getConfig().name} logo`}
+      src={config.logoSrc}
+      alt={`${config.name} logo`}
       width={width * ratio}
       height={height * ratio}
     />
