@@ -8,16 +8,12 @@ import {Footer} from './components/Footer';
 import {Title} from './components/Title';
 
 interface Props {
-  eventTitle: string;
-  eventUrl: string;
   name: string;
   email: string;
   message: string;
 }
 
 export default function MessageToOrganizer({
-  eventUrl = 'https://www.wannago.app',
-  eventTitle = 'Event name',
   name = 'Ilia Daraselia',
   email = 'example@email.com',
   message = 'Test message',

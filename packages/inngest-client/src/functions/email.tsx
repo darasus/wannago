@@ -7,6 +7,7 @@ import {
   EventInvite,
   EventSignUp,
   MessageToAttendees,
+  MessageToOrganizer,
   OrganizerEventSignUpNotification,
   TicketPurchaseSuccess,
   VerifyEmail,
@@ -16,6 +17,7 @@ import {EventReminder} from 'email';
 import {eventNotFoundError, userNotFoundError} from 'error';
 import {slugify} from 'inngest';
 import {Emails} from 'lib/src/Resend';
+import {UserType} from '@prisma/client';
 
 export const emailReminderScheduled = inngest.createFunction(
   {
@@ -470,19 +472,23 @@ export const messageOrganizer = inngest.createFunction(
   },
   {event: 'email/message.to.organizer'},
   async (ctx) => {
-    invariant(user, userNotFoundError);
+    const users = await ctx.prisma.user.findMany({
+      where: {
+        type: UserType.ADMIN,
+      },
+    });
 
-    if (!user.email_verified) {
+    for (const user of users) {
       await ctx.resend.emails.send({
         reply_to: 'WannaGo Team <hello@wannago.app>',
         from: Emails.Hi,
         to: user.email,
         subject: 'Please verify your email',
         html: render(
-          <VerifyEmail
-            verifyUrl={`${getBaseUrl()}/api/verify-email/${
-              ctx.event.data.code
-            }`}
+          <MessageToOrganizer
+            email={ctx.event.data.email}
+            name={ctx.event.data.name}
+            message={ctx.event.data.message}
           />
         ),
       });

@@ -4,6 +4,7 @@ import EventSignUp from './emails/EventSignUp';
 import EventCancelSignUp from './emails/EventCancelSignUp';
 import EventReminder from './emails/EventReminder';
 import MessageToAttendees from './emails/MessageToAttendees';
+import MessageToOrganizer from './emails/MessageToOrganizer';
 import LoginCode from './emails/LoginCode';
 import OrganizerEventSignUpNotification from './emails/OrganizerEventSignUpNotification';
 import TicketPurchaseSuccess from './emails/TicketPurchaseSuccess';
@@ -16,6 +17,7 @@ export {
   EventSignUp,
   EventReminder,
   MessageToAttendees,
+  MessageToOrganizer,
   LoginCode,
   EventCancelInvite,
   EventCancelSignUp,

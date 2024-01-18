@@ -18,6 +18,7 @@ import {
   messageToAllAttendees,
   organizerEventSignUpNotification,
   verifyEmailAddressEmail,
+  messageOrganizer,
 } from 'inngest-client';
 
 export const {GET, POST, PUT} = serve({
@@ -40,5 +41,6 @@ export const {GET, POST, PUT} = serve({
     messageToAllAttendees,
     organizerEventSignUpNotification,
     verifyEmailAddressEmail,
+    messageOrganizer,
   ],
 });
