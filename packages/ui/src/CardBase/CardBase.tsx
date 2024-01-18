@@ -34,19 +34,23 @@ export const CardBase = forwardRef<HTMLDivElement, Props>(function CardBase(
 ) {
   return (
     <Card ref={ref} {...props} className={cn('relative', className)}>
-      {title && (
+      {(title || titleChildren) && (
         <div className="flex items-center gap-2 bg-muted dark:bg-white/[.04] rounded-t-lg border-b">
-          <div
-            className={cn(
-              {'border-r': !!titleChildren},
-              'p-2 pl-4 text-sm font-bold shrink overflow-hidden'
-            )}
-          >
-            {title}
-          </div>
-          <div className="flex items-center grow shrink-0 mr-4">
-            {titleChildren}
-          </div>
+          {title && (
+            <div
+              className={cn(
+                {'border-r': !!titleChildren},
+                'p-2 pl-4 text-sm font-bold shrink overflow-hidden'
+              )}
+            >
+              {title}
+            </div>
+          )}
+          {titleChildren && (
+            <div className="flex items-center grow shrink-0 mr-4 p-2">
+              {titleChildren}
+            </div>
+          )}
         </div>
       )}
       {badge && (

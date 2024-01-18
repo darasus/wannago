@@ -1,4 +1,5 @@
 import {Img} from '@react-email/components';
+import {getConfig} from 'utils';
 
 export function Logo() {
   const height = 70;
@@ -7,8 +8,8 @@ export function Logo() {
 
   return (
     <Img
-      src="https://www.wannago.app/logo-dark.png"
-      alt="WannaGo logo"
+      src={getConfig().logoSrc}
+      alt={`${getConfig().name} logo`}
       width={width * ratio}
       height={height * ratio}
     />

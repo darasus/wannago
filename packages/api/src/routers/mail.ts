@@ -30,6 +30,26 @@ const messageEventParticipants = protectedProcedure
     });
   });
 
+const messageOrganizer = protectedProcedure
+  .input(
+    z.object({
+      name: z.string().min(1, {
+        message: 'Name is required',
+      }),
+      email: z.string().email(),
+      message: z.string().min(1, {
+        message: 'Message is required',
+      }),
+    })
+  )
+  .mutation(async ({input, ctx}) => {
+    await ctx.inngest.send({
+      name: 'email/message.to.organizer',
+      data: input,
+    });
+  });
+
 export const mailRouter = createTRPCRouter({
   messageEventParticipants,
+  messageOrganizer,
 });

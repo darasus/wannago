@@ -91,6 +91,13 @@ export type EventsStoreType = {
       eventId: string;
     };
   };
+  'email/message.to.organizer': {
+    data: {
+      name: string;
+      email: string;
+      message: string;
+    };
+  };
   'stripe/tickets.purchased': {
     data: {
       eventId: string;

@@ -11,3 +11,5 @@ export * from './src/UrlCard/UrlCard';
 export * from './src/EventCard/EventCard';
 export * from './src/SignUpCard/SignUpCard';
 export * from './src/InfoCard/InfoCard';
+export * from './src/MessageButton/MessageButton';
+export * from './src/PublicEvents/PublicEvents';

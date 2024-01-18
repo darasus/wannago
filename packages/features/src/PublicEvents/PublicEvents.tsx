@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import {api} from '../../../../../../apps/web/src/trpc/server-http';
+import {api} from '../../../../apps/web/src/trpc/server-http';
 import {Text} from 'ui';
-import {EventCard} from '../../../EventCard/EventCard';
+import {EventCard} from '../EventCard/EventCard';
 
 export async function PublicEvents() {
   const events = await api.event.getPublicEvents.query();

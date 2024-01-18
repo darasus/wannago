@@ -462,3 +462,30 @@ export const verifyEmailAddressEmail = inngest.createFunction(
     }
   }
 );
+
+export const messageOrganizer = inngest.createFunction(
+  {
+    id: slugify('Message To Organizer'),
+    name: 'Message To Organizer',
+  },
+  {event: 'email/message.to.organizer'},
+  async (ctx) => {
+    invariant(user, userNotFoundError);
+
+    if (!user.email_verified) {
+      await ctx.resend.emails.send({
+        reply_to: 'WannaGo Team <hello@wannago.app>',
+        from: Emails.Hi,
+        to: user.email,
+        subject: 'Please verify your email',
+        html: render(
+          <VerifyEmail
+            verifyUrl={`${getBaseUrl()}/api/verify-email/${
+              ctx.event.data.code
+            }`}
+          />
+        ),
+      });
+    }
+  }
+);

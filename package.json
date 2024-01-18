@@ -161,6 +161,7 @@
     "@types/react-dom": "^18.2.17",
     "@types/uuid": "^9.0.7",
     "autoprefixer": "^10.4.16",
+    "classnames": "^2.5.1",
     "dotenv-cli": "^7.3.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "eslint-plugin-unused-imports": "^3.0.0",

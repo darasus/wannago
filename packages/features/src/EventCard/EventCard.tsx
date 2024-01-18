@@ -3,8 +3,8 @@
 import {isFuture} from 'date-fns';
 import {RouterOutputs} from 'api';
 import Image from 'next/image';
-import {formatCents, getRelativeTime, getConfig} from 'utils';
-import {Avatar, CardBase, ColoredBadge, Text} from 'ui';
+import {formatCents, getRelativeTime} from 'utils';
+import {CardBase, ColoredBadge, Text} from 'ui';
 import {forwardRef} from 'react';
 
 interface Props {
@@ -41,18 +41,6 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
     <CardBase
       ref={ref}
       data-testid="event-card"
-      title={
-        <div className="flex items-center gap-2">
-          <Avatar
-            className="w-6 h-6 shrink-0"
-            src={`/logo.png`}
-            alt={getConfig().name}
-          />
-          <Text className="text-sm truncate break-keep">
-            {getConfig().name}
-          </Text>
-        </div>
-      }
       titleChildren={
         <div className="flex items-center gap-1">
           <ColoredBadge
