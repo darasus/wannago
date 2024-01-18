@@ -11,8 +11,6 @@ import {cancelEvent} from './handlers/cancelEvent';
 import {cancelEventByUserId} from './handlers/cancelEventByUserId';
 import {getNumberOfAttendees} from './handlers/getNumberOfAttendees';
 import {getAttendees} from './handlers/getAttendees';
-import {getExamples} from './handlers/getExamples';
-import {getRandomExample} from './handlers/getRandomExample';
 import {getAllEventsAttendees} from './handlers/getAllEventsAttendees';
 import {invitePastAttendee} from './handlers/invitePastAttendee';
 import {inviteByEmail} from './handlers/inviteByEmail';
@@ -34,8 +32,6 @@ export const eventRouter = createTRPCRouter({
   cancelEventByUserId,
   getNumberOfAttendees,
   getAttendees,
-  getExamples,
-  getRandomExample,
   getAllEventsAttendees,
   invitePastAttendee,
   inviteByEmail,
