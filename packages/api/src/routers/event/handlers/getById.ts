@@ -8,14 +8,9 @@ export const getById = protectedProcedure
     })
   )
   .query(async ({input: {eventId}, ctx}) => {
-    await ctx.assertions.assertCanModifyEvent({eventId});
-
     return ctx.prisma.event.findFirst({
       where: {
         id: eventId,
-      },
-      include: {
-        user: true,
       },
     });
   });

@@ -1,6 +1,5 @@
 'use client';
 
-import {use} from 'react';
 import {
   Avatar,
   Button,
@@ -10,8 +9,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from 'ui';
-import {usePathname} from 'next/navigation';
-import {getIsPublic} from 'const';
 import {useRouter} from 'next/navigation';
 import {ChevronDown, Plus} from 'lucide-react';
 import {cn} from 'utils';
@@ -19,26 +16,14 @@ import {RouterOutputs} from 'api';
 
 interface Props {
   me: RouterOutputs['user']['me'];
-  hasUnseenConversationPromise: Promise<boolean>;
 }
 
-export function UserSection({hasUnseenConversationPromise, me}: Props) {
+export function UserSection({me}: Props) {
   const router = useRouter();
-  const pathname = usePathname();
-  const hasUnseenConversation = use(hasUnseenConversationPromise);
-  const isPublicPage = getIsPublic(pathname ?? '/');
 
   const onSignOutClick = async () => {
     router.push('/logout');
   };
-
-  if (isPublicPage) {
-    return (
-      <div className="flex gap-2">
-        <Button onClick={() => router.push('/events')}>My events</Button>
-      </div>
-    );
-  }
 
   const options = [
     {
@@ -48,43 +33,9 @@ export function UserSection({hasUnseenConversationPromise, me}: Props) {
       },
     },
     {
-      label: 'Profile',
-      onClick: () => {
-        router.push(`/u/${me?.id}`);
-      },
-      'data-testid': 'profile-button',
-    },
-    {
-      label: 'Tickets',
-      onClick: () => {
-        router.push(`/my-tickets`);
-      },
-      'data-testid': 'my-tickets-button',
-    },
-    {
-      label: 'Organizations',
-      onClick: () => {
-        router.push(`/organizations`);
-      },
-      'data-testid': 'organizations-button',
-    },
-    {
       label: 'Settings',
       onClick: () => {
         router.push(`/settings`);
-      },
-    },
-    {
-      label: (
-        <span className="relative">
-          Messages{' '}
-          {hasUnseenConversation && (
-            <span className="text-red-400">{`(new)`}</span>
-          )}
-        </span>
-      ),
-      onClick: () => {
-        router.push(`/messages`);
       },
     },
     {
@@ -127,9 +78,6 @@ export function UserSection({hasUnseenConversationPromise, me}: Props) {
                 src={me.profileImageSrc}
                 alt={'avatar'}
               />
-              {hasUnseenConversation && (
-                <div className="h-4 w-4 bg-red-400 rounded-full absolute -top-1 -right-1" />
-              )}
               {me.firstName}
               <ChevronDown className="ml-1 w-4 h-4" />
             </Button>

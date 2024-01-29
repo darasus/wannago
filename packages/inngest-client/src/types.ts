@@ -69,14 +69,8 @@ export type EventsStoreType = {
   'email/message.to.all.attendees': {
     data: {
       eventId: string;
-      organizerId: string;
       message: string;
       subject: string;
-    };
-  };
-  'email/after.register.no.created.event.follow.up.email': {
-    data: {
-      userId: string;
     };
   };
   'email/event.cancel.invite': {
@@ -95,6 +89,13 @@ export type EventsStoreType = {
     data: {
       userId: string;
       eventId: string;
+    };
+  };
+  'email/message.to.organizer': {
+    data: {
+      name: string;
+      email: string;
+      message: string;
     };
   };
   'stripe/tickets.purchased': {

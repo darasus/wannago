@@ -10,24 +10,17 @@ export default async function AdminPage() {
     notFound();
   }
 
-  const [usersCount, eventSignUpsCount, eventsCount, organizationsCount] =
-    await Promise.all([
-      api.admin.getUsersCount.query(),
-      api.admin.getEventSignUpsCount.query(),
-      api.admin.getEventsCount.query(),
-      api.admin.getOrganizationsCount.query(),
-    ]);
-  const [
-    dailyUserRegistrations,
-    dailyEventSignUps,
-    dailyCreatedEvents,
-    dailyCreatedOrganizations,
-  ] = await Promise.all([
-    api.admin.getDailyUserRegistrations.query(),
-    api.admin.getDailyEventSignUps.query(),
-    api.admin.getDailyCreatedEvents.query(),
-    api.admin.getDailyCreatedOrganizations.query(),
+  const [usersCount, eventSignUpsCount, eventsCount] = await Promise.all([
+    api.admin.getUsersCount.query(),
+    api.admin.getEventSignUpsCount.query(),
+    api.admin.getEventsCount.query(),
   ]);
+  const [dailyUserRegistrations, dailyEventSignUps, dailyCreatedEvents] =
+    await Promise.all([
+      api.admin.getDailyUserRegistrations.query(),
+      api.admin.getDailyEventSignUps.query(),
+      api.admin.getDailyCreatedEvents.query(),
+    ]);
 
   const dailyUserRegistrationsData = Object.entries(
     dailyUserRegistrations || {}
@@ -56,25 +49,14 @@ export default async function AdminPage() {
     }
   );
 
-  const dailyCreatedOrganizationsData = Object.entries(
-    dailyCreatedOrganizations || {}
-  ).map((item) => {
-    return {
-      date: item[0],
-      count: item[1],
-    };
-  });
-
   return (
     <AdminDashboard
       eventsCount={eventsCount}
-      organizationsCount={organizationsCount}
       usersCount={usersCount}
       eventSignUpsCount={eventSignUpsCount}
       dailyCreatedEventSignUpsData={dailyEventSignUpsData}
       dailyCreatedEventsData={dailyEventsCreatedData}
       dailyCreatedUsersData={dailyUserRegistrationsData}
-      dailyCreatedOrganizationsData={dailyCreatedOrganizationsData}
     />
   );
 }

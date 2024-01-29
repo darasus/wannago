@@ -8,14 +8,13 @@ import {useEventForm} from './hooks/useEventForm';
 import {toast} from 'sonner';
 import {useTracker} from 'hooks';
 import {api} from '../../../../apps/web/src/trpc/client';
-import {Organization, User} from '@prisma/client';
+import {User} from '@prisma/client';
 
 interface Props {
   me: User;
-  myOrganizations: Organization[];
 }
 
-export function AddEventForm({me, myOrganizations}: Props) {
+export function AddEventForm({me}: Props) {
   const {logEvent} = useTracker();
   const router = useRouter();
   const form = useEventForm({me});
@@ -60,8 +59,6 @@ export function AddEventForm({me, myOrganizations}: Props) {
   return (
     <FormProvider {...form}>
       <EventForm
-        me={me}
-        myOrganizations={myOrganizations}
         onSubmit={onSubmit}
         onCancelClick={() => router.push(`/events`)}
       />

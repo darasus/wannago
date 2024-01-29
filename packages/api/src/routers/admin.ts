@@ -20,11 +20,7 @@ const getAllUsers = adminProcedure.query(async ({ctx}) => {
       createdAt: 'desc',
     },
     include: {
-      events: {
-        include: {
-          eventSignUps: true,
-        },
-      },
+      eventSignUps: true,
     },
   });
 
@@ -42,18 +38,6 @@ const getAllSignUps = adminProcedure.query(async ({ctx}) => {
   });
 
   return registeredUsers;
-});
-
-const getAllOrganizations = adminProcedure.query(async ({ctx}) => {
-  return ctx.prisma.organization.findMany({
-    include: {
-      events: {
-        include: {
-          eventSignUps: true,
-        },
-      },
-    },
-  });
 });
 
 const getAllEvents = adminProcedure.query(async ({ctx}) => {
@@ -119,31 +103,12 @@ const getDailyCreatedEvents = adminProcedure.query(async ({ctx}) => {
   return dateRange;
 });
 
-const getDailyCreatedOrganizations = adminProcedure.query(async ({ctx}) => {
-  const dateRange = createDateRange();
-  const items = await ctx.prisma.organization.findMany();
-
-  items.forEach((item) => {
-    const date = format(new Date(item.createdAt), 'yyyy-MM-dd');
-
-    if (dateRange.hasOwnProperty(date)) {
-      dateRange[date]++;
-    }
-  });
-
-  return dateRange;
-});
-
 const getUsersCount = adminProcedure.query(async ({ctx}) => {
   return ctx.prisma.user.count();
 });
 
 const getEventsCount = adminProcedure.query(async ({ctx}) => {
   return ctx.prisma.event.count();
-});
-
-const getOrganizationsCount = adminProcedure.query(async ({ctx}) => {
-  return ctx.prisma.organization.count();
 });
 
 const getEventSignUpsCount = adminProcedure.query(async ({ctx}) => {
@@ -153,14 +118,11 @@ const getEventSignUpsCount = adminProcedure.query(async ({ctx}) => {
 export const adminRouter = createTRPCRouter({
   getAllUsers,
   getAllEvents,
-  getAllOrganizations,
   getAllSignUps,
   getUsersCount,
   getEventsCount,
-  getOrganizationsCount,
   getDailyCreatedEvents,
   getDailyEventSignUps,
   getDailyUserRegistrations,
   getEventSignUpsCount,
-  getDailyCreatedOrganizations,
 });

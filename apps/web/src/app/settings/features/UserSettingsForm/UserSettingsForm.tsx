@@ -43,7 +43,6 @@ export function UserSettingsForm({userPromise}: Props) {
       lastName: user?.lastName || '',
       email: user?.email || '',
       profileImageSrc: user?.profileImageSrc || '',
-      currency: user?.preferredCurrency || 'USD',
     },
   });
 

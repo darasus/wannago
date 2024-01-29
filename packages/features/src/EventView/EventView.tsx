@@ -1,35 +1,25 @@
-import {InfoCard} from '../InfoCard/InfoCard';
-import {getBaseUrl} from 'utils';
-import {api} from '../../../../apps/web/src/trpc/server-http';
 import {RouterOutputs} from 'api';
-import {SignUpCard} from '../SignUpCard/SignUpCard';
-import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
-import {UrlCard} from '../UrlCard/UrlCard';
-import {LocationCard} from '../LocationCard/LocationCard';
+import {getBaseUrl} from 'utils';
+
 import {DateCard} from '../DateCard/DateCard';
+import {InfoCard} from '../InfoCard/InfoCard';
+import {LocationCard} from '../LocationCard/LocationCard';
+import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
+import {SignUpCard} from '../SignUpCard/SignUpCard';
+import {UrlCard} from '../UrlCard/UrlCard';
 
 interface Props {
-  event:
-    | RouterOutputs['event']['getByShortId']
-    | RouterOutputs['event']['getRandomExample'];
+  event: RouterOutputs['event']['getByShortId'];
   isLoadingImage?: boolean;
   isMyEvent?: boolean;
   me: RouterOutputs['user']['me'];
 }
 
 export async function EventView({event, isLoadingImage, isMyEvent, me}: Props) {
-  const myTicketPromise = api.event.getMyTicketsByEvent.query({
-    eventShortId: event.shortId,
-  });
-
   return (
     <div className="flex flex-col gap-4">
       <div className="sticky top-4 z-20">
-        <SignUpCard
-          event={event}
-          myTicketPromise={myTicketPromise}
-          mePromise={Promise.resolve(me)}
-        />
+        <SignUpCard event={event} mePromise={Promise.resolve(me)} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="items-stretch">

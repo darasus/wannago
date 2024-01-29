@@ -87,8 +87,7 @@ export function useEventForm(props: {
   me: User;
 }) {
   const {event, me} = props || {};
-  const createdByIdDefault =
-    event?.userId || event?.organizationId || props.me.id;
+  const createdByIdDefault = props.me.id;
 
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
@@ -122,7 +121,7 @@ export function useEventForm(props: {
           };
         }) || [],
       createdById: createdByIdDefault,
-      currency: (event?.preferredCurrency ?? me.preferredCurrency) || 'USD',
+      currency: event?.preferredCurrency || 'USD',
       eventVisibility: event?.eventVisibility || EventVisibility.PUBLIC,
       signUpProtection: event?.signUpProtection || SignUpProtection.PUBLIC,
       eventVisibilityCode: event?.eventVisibilityCode || generateEventCode(),

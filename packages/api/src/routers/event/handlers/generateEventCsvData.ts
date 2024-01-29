@@ -70,7 +70,9 @@ export const generateEventCsvData = protectedProcedure
     return generateCsvFromData(data);
   });
 
-function generateCsvFromData(data: Array<Record<string, string | number>>) {
+function generateCsvFromData(
+  data: Array<Record<string, string | number | null>>
+) {
   const header =
     Object.keys(data[0])
       .map((key) => {

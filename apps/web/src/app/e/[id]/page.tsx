@@ -1,12 +1,15 @@
-import {Container} from 'ui';
-import {api} from '../../../trpc/server-http';
-import {ManageEventButton} from './features/ManageEventButton/ManageEventButton';
-import {EventView} from 'features/src/EventView/EventView';
-import {getBaseUrl} from 'utils';
-import {notFound} from 'next/navigation';
-import {Metadata} from 'next';
 import {TRPCClientError} from '@trpc/client';
+import {config} from 'config';
+import {EventView} from 'features/src/EventView/EventView';
+import {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {Container} from 'ui';
+import {getBaseUrl} from 'utils';
+
+import {api} from '../../../trpc/server-http';
+
 import {EventVisibilityCodeForm} from './features/EventVisibilityCodeForm/EventVisibilityCodeForm';
+import {ManageEventButton} from './features/ManageEventButton/ManageEventButton';
 
 interface Params {
   params: {id: string};
@@ -27,15 +30,8 @@ export async function generateMetadata({
 
   const url = new URL(`${getBaseUrl()}/api/og-image`);
 
-  if (event?.title) {
-    url.searchParams.append('title', event?.title);
-  }
-
-  url.searchParams.append(
-    'organizerName',
-    event?.organization?.name ||
-      `${event?.user?.firstName} ${event?.user?.lastName}`
-  );
+  url.searchParams.append('title', event.title);
+  url.searchParams.append('organizerName', config.name);
 
   if (event?.featuredImageSrc) {
     url.searchParams.append(
@@ -44,8 +40,7 @@ export async function generateMetadata({
     );
   }
 
-  const profileImageSrc =
-    event?.organization?.logoSrc || event?.user?.profileImageSrc;
+  const profileImageSrc = null;
 
   if (profileImageSrc) {
     url.searchParams.append(
@@ -65,28 +60,25 @@ export async function generateMetadata({
 async function getData(id: string, code?: string) {
   'use server';
   try {
-    const [me, isMyEvent, event] = await Promise.all([
+    const [me, event] = await Promise.all([
       api.user.me.query(),
-      api.event.getIsMyEvent.query({
-        eventShortId: id,
-      }),
       api.event.getByShortId.query({id, code}),
     ]);
 
-    return {me, isMyEvent, event, notAllowed: false};
+    return {me, event, notAllowed: false};
   } catch (error) {
     if (
       error instanceof TRPCClientError &&
       error.shape.data.code === 'FORBIDDEN'
     ) {
-      return {me: null, isMyEvent: false, event: null, notAllowed: true};
+      return {me: null, event: null, notAllowed: true};
     }
-    return {me: null, isMyEvent: false, event: null, notAllowed: false};
+    return {me: null, event: null, notAllowed: false};
   }
 }
 
 export default async function EventPage(props: Params) {
-  const {me, isMyEvent, event, notAllowed} = await getData(
+  const {me, event, notAllowed} = await getData(
     props.params.id,
     props.searchParams.code
   );
@@ -101,8 +93,8 @@ export default async function EventPage(props: Params) {
 
   return (
     <Container className="flex flex-col gap-4" maxSize="sm">
-      {isMyEvent && <ManageEventButton event={event} />}
-      <EventView event={event} isMyEvent={isMyEvent} me={me} />
+      {event.isMyEvent && <ManageEventButton event={event} />}
+      <EventView event={event} isMyEvent={event.isMyEvent} me={me} />
     </Container>
   );
 }

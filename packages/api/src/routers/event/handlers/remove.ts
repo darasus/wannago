@@ -9,8 +9,6 @@ export const remove = protectedProcedure
     })
   )
   .mutation(async ({input: {eventId}, ctx}) => {
-    await ctx.assertions.assertCanModifyEvent({eventId});
-
     const ticketSales = await ctx.prisma.ticketSale.count({
       where: {
         eventId,

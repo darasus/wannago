@@ -1,7 +1,7 @@
 import {createTRPCRouter, protectedProcedure} from '../trpc';
 import {z} from 'zod';
 import {invariant} from 'utils';
-import {eventNotFoundError, organizerNotFoundError} from 'error';
+import {eventNotFoundError} from 'error';
 
 const messageEventParticipants = protectedProcedure
   .input(
@@ -16,17 +16,9 @@ const messageEventParticipants = protectedProcedure
       where: {
         shortId: input.eventShortId,
       },
-      include: {
-        user: true,
-        organization: true,
-      },
     });
 
     invariant(event, eventNotFoundError);
-
-    const organizer = event.user || event.organization;
-
-    invariant(organizer, organizerNotFoundError);
 
     await ctx.inngest.send({
       name: 'email/message.to.all.attendees',
@@ -34,11 +26,30 @@ const messageEventParticipants = protectedProcedure
         eventId: event.id,
         subject: input.subject,
         message: input.message,
-        organizerId: organizer.id,
       },
+    });
+  });
+
+const messageOrganizer = protectedProcedure
+  .input(
+    z.object({
+      name: z.string().min(1, {
+        message: 'Name is required',
+      }),
+      email: z.string().email(),
+      message: z.string().min(1, {
+        message: 'Message is required',
+      }),
+    })
+  )
+  .mutation(async ({input, ctx}) => {
+    await ctx.inngest.send({
+      name: 'email/message.to.organizer',
+      data: input,
     });
   });
 
 export const mailRouter = createTRPCRouter({
   messageEventParticipants,
+  messageOrganizer,
 });

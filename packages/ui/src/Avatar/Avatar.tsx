@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import {ComponentProps} from 'react';
-import {imageLoader, cn} from 'utils';
+import {cn} from 'utils';
 import {User} from 'lucide-react';
 
 interface Props extends Omit<ComponentProps<typeof Image>, 'src'> {
@@ -32,7 +32,7 @@ export function Avatar({
       {canRenderImage && src ? (
         <Image
           {...props}
-          loader={imageLoader}
+          // loader={imageLoader}
           className={cn(
             'block h-full w-full rounded-full border',
             imageClassName

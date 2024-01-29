@@ -30,15 +30,10 @@ export const update = protectedProcedure
       },
       ctx,
     }) => {
-      await ctx.assertions.assertCanModifyEvent({eventId});
-
       const geocodeResponse = await geocode(address);
 
-      const [user, organization] = await Promise.all([
+      const [user] = await Promise.all([
         await ctx.prisma.user.findUnique({
-          where: {id: createdById},
-        }),
-        await ctx.prisma.organization.findUnique({
           where: {id: createdById},
         }),
       ]);
@@ -65,26 +60,6 @@ export const update = protectedProcedure
           signUpProtection,
           signUpProtectionCode,
           listing,
-          ...(user && {
-            user: {
-              connect: {
-                id: user.id,
-              },
-            },
-            organization: {
-              disconnect: true,
-            },
-          }),
-          ...(organization && {
-            organization: {
-              connect: {
-                id: organization.id,
-              },
-            },
-            user: {
-              disconnect: true,
-            },
-          }),
         },
         include: {tickets: true},
       });

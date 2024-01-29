@@ -6,16 +6,6 @@ export async function revalidateGetMySignUp({eventId}: {eventId: string}) {
   await api.event.getMySignUp.revalidate({eventId});
 }
 
-export async function revalidateGetConversationById({
-  conversationId,
-}: {
-  conversationId: string;
-}) {
-  await api.conversation.getConversationById.revalidate({
-    conversationId,
-  });
-}
-
 export async function revalidateGetAttendees({
   eventShortId,
 }: {

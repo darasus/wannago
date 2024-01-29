@@ -9,18 +9,12 @@ import {Spinner} from 'ui';
 import {env} from 'env/client';
 
 interface Props {
-  stripeAccountId: string;
   clientSecret: string;
   paymentIntentId: string;
   returnUrl: string;
 }
 
-export function Checkout({
-  stripeAccountId,
-  clientSecret,
-  paymentIntentId,
-  returnUrl,
-}: Props) {
+export function Checkout({clientSecret, paymentIntentId, returnUrl}: Props) {
   const {resolvedTheme} = useTheme();
   const root = useRef(
     typeof document !== 'undefined' ? document.documentElement : null
@@ -31,14 +25,12 @@ export function Checkout({
   const isLoading = !stripe || !clientSecret || !paymentIntentId;
 
   useEffect(() => {
-    loadStripe(env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY, {
-      stripeAccount: stripeAccountId,
-    }).then((stripe) => {
+    loadStripe(env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY).then((stripe) => {
       if (stripe) {
         setStripe(stripe);
       }
     });
-  }, [stripeAccountId]);
+  }, []);
 
   useLayoutEffect(() => {
     if (root.current) {

@@ -1,4 +1,5 @@
 import {z} from 'zod';
+
 import {createTRPCRouter, protectedProcedure, publicProcedure} from '../trpc';
 
 const getUserById = publicProcedure
@@ -40,7 +41,6 @@ const update = protectedProcedure
         lastName: input.lastName,
         email: input.email,
         profileImageSrc: input.profileImageSrc,
-        preferredCurrency: input.currency || 'USD',
       },
     });
   });

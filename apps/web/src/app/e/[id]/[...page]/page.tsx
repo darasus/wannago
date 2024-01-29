@@ -1,31 +1,24 @@
-import {Button, Container, LoadingBlock, Text} from 'ui';
-import {EventInfo} from './features/EventInfo/EventInfo';
-import {api} from '../../../../trpc/server-http';
-import {notFound} from 'next/navigation';
-import {EditEventForm} from 'features/src/EventForm/EditEventForm';
-import {EventAttendees} from './features/EventAttendees/EventAttendees';
-import {MyTickets} from './features/MyTickets/MyTickets';
-import Link from 'next/link';
-import {ChevronLeft} from 'lucide-react';
 import {Suspense} from 'react';
+import {EditEventForm} from 'features/src/EventForm/EditEventForm';
+import {ChevronLeft} from 'lucide-react';
+import Link from 'next/link';
+import {notFound} from 'next/navigation';
+import {Button, Container, LoadingBlock, Text} from 'ui';
+
+import {api} from '../../../../trpc/server-http';
+
+import {EventAttendees} from './features/EventAttendees/EventAttendees';
+import {EventInfo} from './features/EventInfo/EventInfo';
 
 export default async function EventPages({
   params: {id, page},
 }: {
   params: {id: string; page: string[]};
 }) {
-  const [me, event, isMyEvent, myOrganizations] = await Promise.all([
+  const [me, event] = await Promise.all([
     api.user.me.query(),
     api.event.getByShortId.query({id: id}),
-    api.event.getIsMyEvent.query({
-      eventShortId: id,
-    }),
-    api.organization.getMyOrganizations.query(),
   ]);
-
-  const myEventSignUpsPromise = api.event.getMyTicketsByEvent.query({
-    eventShortId: id,
-  });
 
   if (!me) {
     return null;
@@ -46,31 +39,20 @@ export default async function EventPages({
         </Button>
         <Suspense>
           <div>
-            {isMyEvent && (
+            {event.isMyEvent && (
               <>
                 {page[0] === 'info' && (
                   <Suspense fallback={<LoadingBlock />}>
                     <EventInfo event={event} />
                   </Suspense>
                 )}
-                {page[0] === 'edit' && (
-                  <EditEventForm
-                    event={event}
-                    me={me}
-                    myOrganizations={myOrganizations || []}
-                  />
-                )}
+                {page[0] === 'edit' && <EditEventForm event={event} me={me} />}
                 {page[0] === 'attendees' && (
                   <Suspense fallback={<LoadingBlock />}>
                     <EventAttendees event={event} />
                   </Suspense>
                 )}
               </>
-            )}
-            {page[0] === 'my-tickets' && (
-              <Suspense fallback={<LoadingBlock />}>
-                <MyTickets eventSignUpsPromise={myEventSignUpsPromise} />
-              </Suspense>
             )}
           </div>
         </Suspense>

@@ -3,7 +3,7 @@ import {userNotFoundError} from 'error';
 import {invariant} from 'utils';
 import {z} from 'zod';
 import {protectedProcedure} from '../../../trpc';
-import {api} from '../../../../../../apps/web/src/trpc/server-http';
+import {EventRegistrationStatus} from '@prisma/client';
 
 export const joinEvent = protectedProcedure
   .input(
@@ -32,10 +32,6 @@ export const joinEvent = protectedProcedure
       ctx.prisma.event.findFirst({
         where: {
           id: input.eventId,
-        },
-        include: {
-          user: true,
-          organization: true,
         },
       }),
       ctx.prisma.eventSignUp.count({
@@ -71,6 +67,7 @@ export const joinEvent = protectedProcedure
     if (!existingSignUp) {
       await ctx.prisma.eventSignUp.create({
         data: {
+          status: EventRegistrationStatus.REGISTERED,
           hasPlusOne: input.hasPlusOne,
           event: {
             connect: {
@@ -118,8 +115,6 @@ export const joinEvent = protectedProcedure
         },
       }),
     ]);
-
-    await api.event.getIsMyEvent.revalidate();
 
     return {success: true};
   });

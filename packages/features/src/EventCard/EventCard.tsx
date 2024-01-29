@@ -3,8 +3,8 @@
 import {isFuture} from 'date-fns';
 import {RouterOutputs} from 'api';
 import Image from 'next/image';
-import {imageLoader, formatCents, getRelativeTime} from 'utils';
-import {Avatar, CardBase, ColoredBadge, Text} from 'ui';
+import {formatCents, getRelativeTime} from 'utils';
+import {CardBase, ColoredBadge, Text} from 'ui';
 import {forwardRef} from 'react';
 
 interface Props {
@@ -41,23 +41,6 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
     <CardBase
       ref={ref}
       data-testid="event-card"
-      title={
-        <div className="flex items-center gap-2">
-          <Avatar
-            className="w-6 h-6 shrink-0"
-            src={event.user?.profileImageSrc || event.organization?.logoSrc}
-            alt={
-              event.user?.firstName ||
-              event.organization?.name ||
-              'User profile'
-            }
-          />
-          <Text className="text-sm truncate break-keep">
-            {event.organization?.name ||
-              `${event.user?.firstName} ${event.user?.lastName}`}
-          </Text>
-        </div>
-      }
       titleChildren={
         <div className="flex items-center gap-1">
           <ColoredBadge
@@ -96,7 +79,7 @@ export const EventCard = forwardRef<HTMLDivElement, Props>(function EventCard(
                 className="bg-cover bg-center"
                 src={featuredImageSrc}
                 alt={title}
-                loader={imageLoader}
+                // loader={imageLoader}
                 blurDataURL={featuredImagePreviewSrc}
                 placeholder={'blur'}
                 sizes="320 640 750 1000"

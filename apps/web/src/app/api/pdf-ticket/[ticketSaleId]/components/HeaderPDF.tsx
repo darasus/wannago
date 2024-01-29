@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Text, View, StyleSheet} from '@react-pdf/renderer';
 import {PDFProps} from './type';
+import {config} from 'config';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,15 +29,11 @@ const styles = StyleSheet.create({
 });
 
 export function HeaderPDF({ticketSale}: PDFProps) {
-  const organizerName = ticketSale.event.organization
-    ? ticketSale.event.organization.name
-    : `${ticketSale.event.user?.firstName} ${ticketSale.event.user?.lastName}`;
-
   return (
     <View style={styles.container}>
       <View style={styles.detailColumn}>
         <Text style={styles.title}>{ticketSale.event.title}</Text>
-        <Text style={styles.organizerName}>{`By ${organizerName}`}</Text>
+        <Text style={styles.organizerName}>{`By ${config.name}`}</Text>
       </View>
     </View>
   );

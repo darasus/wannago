@@ -18,7 +18,6 @@ export default async function Dashboard(props: {
 }) {
   const eventType = filterSchema.parse(props.params.filter)[0];
   const events = api.event.getMyEvents.query({
-    eventType: eventType === 'past' ? 'all' : eventType,
     onlyPast: eventType === 'past',
   });
 

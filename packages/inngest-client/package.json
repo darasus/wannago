@@ -10,6 +10,7 @@
     "lib": "workspace:*",
     "error": "workspace:*",
     "email": "workspace:*",
+    "config": "workspace:*",
     "utils": "workspace:*",
     "database": "workspace:*"
   },

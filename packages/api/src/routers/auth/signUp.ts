@@ -3,7 +3,7 @@ import {publicProcedure} from '../../trpc';
 import {auth} from 'auth';
 import {TRPCError} from '@trpc/server';
 import {generateEmailVerificationToken} from './utils';
-import {Prisma} from '@prisma/client';
+import {Prisma, UserType} from '@prisma/client';
 import {v4 as uuid} from 'uuid';
 import {DatabaseError} from '@planetscale/database';
 
@@ -30,6 +30,7 @@ export const signUp = publicProcedure
           email_verified: false,
           firstName: input.firstName,
           lastName: input.lastName,
+          type: UserType.ADMIN,
         } satisfies Prisma.UserCreateInput,
       });
 

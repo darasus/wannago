@@ -1,4 +1,4 @@
-import {User} from '@prisma/client';
+import {User, UserType} from '@prisma/client';
 import {TRPCError} from '@trpc/server';
 import {eventNotFoundError} from 'error';
 import {invariant} from 'utils';
@@ -23,8 +23,6 @@ export const inviteByEmail = protectedProcedure
 
     invariant(event, eventNotFoundError);
 
-    await ctx.assertions.assertCanModifyEvent({eventId: event.id});
-
     let user: User | null = null;
 
     user = await ctx.prisma.user.findUnique({
@@ -39,7 +37,7 @@ export const inviteByEmail = protectedProcedure
           email: input.email,
           firstName: input.firstName,
           lastName: input.lastName,
-          preferredCurrency: 'USD',
+          type: UserType.ADMIN,
         },
       });
     }

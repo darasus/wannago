@@ -1,23 +1,24 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
-import {EventForm} from './EventForm';
-import {useEventForm} from './hooks/useEventForm';
 import {FormProvider} from 'react-hook-form';
+import {Event, Ticket, User} from '@prisma/client';
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {useTracker} from 'hooks';
-import {PageHeader} from 'ui';
-import {Event, Organization, Ticket, User} from '@prisma/client';
+import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
+import {PageHeader} from 'ui';
+
 import {api} from '../../../../apps/web/src/trpc/client';
+
+import {useEventForm} from './hooks/useEventForm';
+import {EventForm} from './EventForm';
 
 interface Props {
   event: Event & {tickets: Ticket[]};
   me: User;
-  myOrganizations: Organization[];
 }
 
-export function EditEventForm({event, me, myOrganizations}: Props) {
+export function EditEventForm({event, me}: Props) {
   const {logEvent} = useTracker();
   const router = useRouter();
   const form = useEventForm({
@@ -75,8 +76,6 @@ export function EditEventForm({event, me, myOrganizations}: Props) {
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-12">
             <EventForm
-              me={me}
-              myOrganizations={myOrganizations}
               onSubmit={onSubmit}
               onCancelClick={() => router.push(`/e/${event?.shortId}`)}
             />

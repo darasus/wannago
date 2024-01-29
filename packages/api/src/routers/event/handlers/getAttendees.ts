@@ -14,8 +14,6 @@ export const getAttendees = protectedProcedure
 
     invariant(event, eventNotFoundError);
 
-    await ctx.assertions.assertCanModifyEvent({eventId: event.id});
-
     return ctx.prisma.eventSignUp.findMany({
       where: {
         eventId: event.id,

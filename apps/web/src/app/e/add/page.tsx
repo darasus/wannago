@@ -9,10 +9,7 @@ export const metadata = {
 export const preferredRegion = 'iad1';
 
 export default async function EventAddPage() {
-  const [me, myOrganizations] = await Promise.all([
-    api.user.me.query(),
-    api.organization.getMyOrganizations.query(),
-  ]);
+  const [me] = await Promise.all([api.user.me.query()]);
 
   if (!me) {
     return null;
@@ -22,7 +19,7 @@ export default async function EventAddPage() {
     <>
       <Container maxSize="sm" className="md:px-4">
         <PageHeader title="Create new event" className="mb-4" />
-        <AddEventForm me={me} myOrganizations={myOrganizations || []} />
+        <AddEventForm me={me} />
       </Container>
     </>
   );
