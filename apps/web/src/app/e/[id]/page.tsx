@@ -1,13 +1,15 @@
-import {Container} from 'ui';
-import {api} from '../../../trpc/server-http';
-import {ManageEventButton} from './features/ManageEventButton/ManageEventButton';
-import {EventView} from 'features/src/EventView/EventView';
-import {getBaseUrl} from 'utils';
-import {notFound} from 'next/navigation';
-import {Metadata} from 'next';
 import {TRPCClientError} from '@trpc/client';
-import {EventVisibilityCodeForm} from './features/EventVisibilityCodeForm/EventVisibilityCodeForm';
 import {config} from 'config';
+import {EventView} from 'features/src/EventView/EventView';
+import {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import {Container} from 'ui';
+import {getBaseUrl} from 'utils';
+
+import {api} from '../../../trpc/server-http';
+
+import {EventVisibilityCodeForm} from './features/EventVisibilityCodeForm/EventVisibilityCodeForm';
+import {ManageEventButton} from './features/ManageEventButton/ManageEventButton';
 
 interface Params {
   params: {id: string};

@@ -163,6 +163,7 @@
     "autoprefixer": "^10.4.17",
     "classnames": "^2.5.1",
     "dotenv-cli": "^7.3.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-tailwindcss": "^3.14.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "inngest-cli": "^0.24.2",

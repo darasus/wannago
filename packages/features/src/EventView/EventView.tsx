@@ -1,16 +1,15 @@
-import {InfoCard} from '../InfoCard/InfoCard';
-import {getBaseUrl} from 'utils';
 import {RouterOutputs} from 'api';
-import {SignUpCard} from '../SignUpCard/SignUpCard';
-import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
-import {UrlCard} from '../UrlCard/UrlCard';
-import {LocationCard} from '../LocationCard/LocationCard';
+import {getBaseUrl} from 'utils';
+
 import {DateCard} from '../DateCard/DateCard';
+import {InfoCard} from '../InfoCard/InfoCard';
+import {LocationCard} from '../LocationCard/LocationCard';
+import {OrganizerCard} from '../OrganizerCard/OrganizerCard';
+import {SignUpCard} from '../SignUpCard/SignUpCard';
+import {UrlCard} from '../UrlCard/UrlCard';
 
 interface Props {
-  event:
-    | RouterOutputs['event']['getByShortId']
-    | RouterOutputs['event']['getRandomExample'];
+  event: RouterOutputs['event']['getByShortId'];
   isLoadingImage?: boolean;
   isMyEvent?: boolean;
   me: RouterOutputs['user']['me'];

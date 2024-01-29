@@ -1,8 +1,9 @@
-import {z} from 'zod';
-import {publicProcedure} from '../../../trpc';
-import {invariant, isPast} from 'utils';
-import {eventNotFoundError} from 'error';
 import {UserType} from '@prisma/client';
+import {eventNotFoundError} from 'error';
+import {invariant, isPast} from 'utils';
+import {z} from 'zod';
+
+import {publicProcedure} from '../../../trpc';
 
 export const getByShortId = publicProcedure
   .input(
@@ -12,7 +13,7 @@ export const getByShortId = publicProcedure
     })
   )
   .query(async ({input, ctx}) => {
-    const event = await ctx.prisma.event.findFirst({
+    const event = await ctx.prisma.event.findUnique({
       where: {
         shortId: input.id,
       },

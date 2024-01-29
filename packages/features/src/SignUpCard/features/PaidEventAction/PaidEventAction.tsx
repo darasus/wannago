@@ -1,19 +1,21 @@
 'use client';
 
-import {Event, SignUpProtection, Ticket} from '@prisma/client';
 import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {Event, SignUpProtection, Ticket} from '@prisma/client';
+import {useMe} from 'hooks';
+import {LockIcon} from 'lucide-react';
+import {useRouter} from 'next/navigation';
 import {Badge, Button} from 'ui';
 import {formatCents} from 'utils';
-import {TicketSelectorModal} from './features/TicketSelectorModal/TicketSelectorModal';
-import {api} from '../../../../../../apps/web/src/trpc/client';
-import {useMe} from 'hooks';
-import {useRouter} from 'next/navigation';
-import {SignUpCodeModal} from './features/SignUpCodeModal/SignUpCodeModal';
 import {z} from 'zod';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {formScheme} from './validation';
+
+import {api} from '../../../../../../apps/web/src/trpc/client';
+
+import {SignUpCodeModal} from './features/SignUpCodeModal/SignUpCodeModal';
+import {TicketSelectorModal} from './features/TicketSelectorModal/TicketSelectorModal';
 import {useModalState} from './hooks/useModalState';
-import {LockIcon} from 'lucide-react';
+import {formScheme} from './validation';
 
 interface Props {
   event: Event & {tickets: Ticket[]} & {isPast: boolean; isMyEvent: boolean};
@@ -40,8 +42,6 @@ export function PaidEventAction({event, mePromise}: Props) {
     },
   });
 
-  const isEventSignUpPublic =
-    event.signUpProtection === SignUpProtection.PUBLIC;
   const isEventSignUpProtected =
     event.signUpProtection === SignUpProtection.PROTECTED;
 

@@ -33,13 +33,6 @@ export function UserSection({me}: Props) {
       },
     },
     {
-      label: 'Tickets',
-      onClick: () => {
-        router.push(`/my-tickets`);
-      },
-      'data-testid': 'my-tickets-button',
-    },
-    {
       label: 'Settings',
       onClick: () => {
         router.push(`/settings`);

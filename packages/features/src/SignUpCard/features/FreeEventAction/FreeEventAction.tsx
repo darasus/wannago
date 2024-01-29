@@ -1,50 +1,87 @@
 'use client';
 
-import {Event} from '@prisma/client';
-import {use} from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {Event, SignUpProtection} from '@prisma/client';
+import {Button, Form} from 'ui';
 
-import {RouterOutputs} from 'api';
-import {EventSignUpForm} from './types';
-import {AcceptInviteButton} from './features/AcceptInviteButton/AcceptInviteButton';
-import {CancelSignUpButton} from './features/CancelSignUpButton/CancelSignUpButton';
-import {SignUpButton} from './features/SignUpButton/SignUpButton';
+import {CodeModal} from './features/CodeModal/CodeModal';
+import {SignUpModal} from './features/SignUpModal/SignUpModal';
+import {useAttendEvent} from './hooks/useAttendEvent';
+import {useCodeModalState} from './hooks/useCodeModalState';
+import {useSignUpModalState} from './hooks/useSignUpModalState';
+import {
+  EventSignUpForm,
+  EventSignUpWithCodeForm,
+  validation,
+  validationWithCode,
+} from './validation';
 
 interface Props {
   event: Event & {isPast: boolean};
-  mySignUpPromise: Promise<RouterOutputs['event']['getMySignUp']>;
 }
 
-export function FreeEventAction({event, mySignUpPromise}: Props) {
-  const signUp = use(mySignUpPromise);
-  const form = useForm<EventSignUpForm>({
+export function FreeEventAction({event}: Props) {
+  const codeModal = useCodeModalState();
+  const signUpModal = useSignUpModalState();
+  const form = useForm<EventSignUpForm | EventSignUpWithCodeForm>({
     defaultValues: {
       hasPlusOne: false,
     },
+    resolver: zodResolver(
+      event.signUpProtectionCode === SignUpProtection.PROTECTED
+        ? validationWithCode
+        : validation
+    ),
+  });
+  const {attendEvent} = useAttendEvent({event});
+  const isEventSignUpPublic =
+    event.signUpProtection === SignUpProtection.PUBLIC;
+  const isEventSignUpProtected =
+    event.signUpProtection === SignUpProtection.PROTECTED;
+  const onJoinSubmit = form.handleSubmit(async (data) => {
+    if (isEventSignUpProtected) {
+    }
+
+    await attendEvent(data);
   });
 
-  const amSignedUp = Boolean(signUp && signUp?.status === 'REGISTERED');
-  const amInvited = Boolean(signUp && signUp?.status === 'INVITED');
-
-  if (amSignedUp) {
-    return (
-      <FormProvider {...form}>
-        <CancelSignUpButton event={event} />
-      </FormProvider>
-    );
-  }
-
-  if (amInvited) {
-    return (
-      <FormProvider {...form}>
-        <AcceptInviteButton event={event} />
-      </FormProvider>
-    );
-  }
-
   return (
-    <FormProvider {...form}>
-      <SignUpButton event={event} />
-    </FormProvider>
+    <>
+      <CodeModal
+        onComplete={() => {
+          signUpModal.open();
+        }}
+      />
+      <SignUpModal
+        event={event}
+        onComplete={() => {
+          signUpModal.open();
+        }}
+      />
+      <Form {...form}>
+        <form
+          className="flex items-center gap-x-4 w-full"
+          onSubmit={onJoinSubmit}
+        >
+          <Button
+            disabled={form.formState.isSubmitting || event.isPast}
+            isLoading={form.formState.isSubmitting}
+            size="sm"
+            data-testid="attend-button"
+            onClick={() => {
+              if (isEventSignUpProtected) {
+                codeModal.open();
+              }
+              if (isEventSignUpPublic) {
+                signUpModal.open();
+              }
+            }}
+          >
+            Join
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 }

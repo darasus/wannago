@@ -1,15 +1,17 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
-import {EventForm} from './EventForm';
-import {useEventForm} from './hooks/useEventForm';
 import {FormProvider} from 'react-hook-form';
+import {Event, Ticket, User} from '@prisma/client';
 import {zonedTimeToUtc} from 'date-fns-tz';
 import {useTracker} from 'hooks';
-import {PageHeader} from 'ui';
-import {Event, Ticket, User} from '@prisma/client';
+import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
+import {PageHeader} from 'ui';
+
 import {api} from '../../../../apps/web/src/trpc/client';
+
+import {useEventForm} from './hooks/useEventForm';
+import {EventForm} from './EventForm';
 
 interface Props {
   event: Event & {tickets: Ticket[]};

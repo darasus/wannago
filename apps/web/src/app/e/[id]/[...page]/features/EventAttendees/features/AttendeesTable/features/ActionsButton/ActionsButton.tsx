@@ -1,5 +1,8 @@
-import {DotsHorizontalIcon} from '@radix-ui/react-icons';
 import {useCallback} from 'react';
+import {EventRegistrationStatus} from '@prisma/client';
+import {DotsHorizontalIcon} from '@radix-ui/react-icons';
+import {useConfirmDialog} from 'hooks';
+import {toast} from 'sonner';
 import {
   Button,
   DropdownMenu,
@@ -7,11 +10,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from 'ui';
-import {api} from '../../../../../../../../../../trpc/client';
-import {toast} from 'sonner';
-import {useConfirmDialog} from 'hooks';
-import {EventRegistrationStatus} from '@prisma/client';
+
 import {revalidateGetAttendees} from '../../../../../../../../../../actions';
+import {api} from '../../../../../../../../../../trpc/client';
 
 interface Props {
   userId: string;

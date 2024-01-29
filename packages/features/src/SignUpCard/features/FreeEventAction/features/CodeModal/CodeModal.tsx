@@ -1,7 +1,7 @@
 'use client';
 
 import {useForm} from 'react-hook-form';
-import {toast} from 'sonner';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {
   Button,
   Dialog,
@@ -18,41 +18,29 @@ import {
   FormMessage,
   Input,
 } from 'ui';
+import {z} from 'zod';
 
-import {api} from '../../../../../../../../apps/web/src/trpc/client';
-import {useModalState} from '../../hooks/useModalState';
+import {useCodeModalState} from '../../hooks/useCodeModalState';
+
+const validation = z.object({
+  code: z.string().min(1),
+});
 
 interface Props {
-  isOpen: boolean;
-  onOpenChange: (boolean: boolean) => void;
-  eventShortId: string;
+  onComplete: () => void;
 }
 
-export function SignUpCodeModal({isOpen, onOpenChange, eventShortId}: Props) {
-  const {closeSignUpCodeModal, openTicketSelectorUpModal} = useModalState();
+export function CodeModal({onComplete}: Props) {
   const form = useForm({
     defaultValues: {
       code: '',
     },
+    resolver: zodResolver(validation),
   });
-
+  const {isOpen, onOpenChange} = useCodeModalState();
   const onSubmit = form.handleSubmit(async (data) => {
-    await api.event.validateSignUpProtectionCode
-      .query({
-        code: data.code,
-        id: eventShortId,
-      })
-      .then((result) => {
-        if (result) {
-          closeSignUpCodeModal();
-          openTicketSelectorUpModal();
-        } else {
-          toast.error('Code is not valid');
-        }
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
+    // validate code
+    // onComplete();
   });
 
   return (
@@ -90,7 +78,7 @@ export function SignUpCodeModal({isOpen, onOpenChange, eventShortId}: Props) {
                 disabled={form.formState.isSubmitting}
                 data-testid="event-code-form-submit"
               >
-                Attend
+                Submit
               </Button>
             </DialogFooter>
           </DialogContent>

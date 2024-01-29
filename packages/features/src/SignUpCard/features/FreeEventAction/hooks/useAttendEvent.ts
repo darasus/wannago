@@ -1,10 +1,11 @@
-import {useConfetti, useMe, useTracker} from 'hooks';
-import {EventSignUpForm} from '../../../types';
-import {useRouter} from 'next/navigation';
-import {api} from '../../../../../../../../../apps/web/src/trpc/client';
 import {Event} from '@prisma/client';
-import {revalidateGetMySignUp} from '../../../../../../../../../apps/web/src/actions';
+import {useConfetti, useTracker} from 'hooks';
+import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
+
+import {api} from '../../../../../../../apps/web/src/trpc/server-http';
+import {EventSignUpForm} from '../validation';
+
 import {useCodeModalState} from './useCodeModalState';
 
 interface Props {
@@ -12,17 +13,12 @@ interface Props {
 }
 
 export function useAttendEvent({event}: Props) {
-  const me = useMe();
   const router = useRouter();
   const {confetti} = useConfetti();
   const {logEvent} = useTracker();
   const {close: closeCodeModal} = useCodeModalState();
 
   const attendEvent = async (data: EventSignUpForm) => {
-    if (!me) {
-      router.push('/sign-in');
-    }
-
     const promise = api.event.joinEvent
       .mutate({
         eventId: event.id,
@@ -30,7 +26,6 @@ export function useAttendEvent({event}: Props) {
         code: data.code,
       })
       .then(async () => {
-        await revalidateGetMySignUp({eventId: event.id});
         router.refresh();
         confetti();
         logEvent('event_sign_up_submitted', {

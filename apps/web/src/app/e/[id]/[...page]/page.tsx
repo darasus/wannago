@@ -1,12 +1,14 @@
-import {Button, Container, LoadingBlock, Text} from 'ui';
-import {EventInfo} from './features/EventInfo/EventInfo';
-import {api} from '../../../../trpc/server-http';
-import {notFound} from 'next/navigation';
-import {EditEventForm} from 'features/src/EventForm/EditEventForm';
-import {EventAttendees} from './features/EventAttendees/EventAttendees';
-import Link from 'next/link';
-import {ChevronLeft} from 'lucide-react';
 import {Suspense} from 'react';
+import {EditEventForm} from 'features/src/EventForm/EditEventForm';
+import {ChevronLeft} from 'lucide-react';
+import Link from 'next/link';
+import {notFound} from 'next/navigation';
+import {Button, Container, LoadingBlock, Text} from 'ui';
+
+import {api} from '../../../../trpc/server-http';
+
+import {EventAttendees} from './features/EventAttendees/EventAttendees';
+import {EventInfo} from './features/EventInfo/EventInfo';
 
 export default async function EventPages({
   params: {id, page},

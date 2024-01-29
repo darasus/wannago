@@ -20,8 +20,8 @@ export function EventInfo({event}: Props) {
     })
   );
 
-  const publicEventUrl = event?.isPublished
-    ? `${getBaseUrl()}/e/${event?.shortId}`
+  const publicEventUrl = event.isPublished
+    ? `${getBaseUrl()}/e/${event.shortId}`
         .replace('https://www.', '')
         .replace('http://', '')
     : `${getBaseUrl()}/e/abcdef`
