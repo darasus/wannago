@@ -1,9 +1,10 @@
 import {OAuthRequestError} from '@lucia-auth/oauth';
-import {cookies, headers} from 'next/headers';
-import {v4 as uuid} from 'uuid';
-import {NextResponse, type NextRequest} from 'next/server';
+import {UserType} from '@prisma/client';
 import {auth, googleAuth} from 'auth';
 import {prisma} from 'database';
+import {cookies, headers} from 'next/headers';
+import {type NextRequest, NextResponse} from 'next/server';
+import {v4 as uuid} from 'uuid';
 
 export const GET = async (request: NextRequest) => {
   const authRequest = auth.handleRequest('GET', {headers, cookies});
@@ -62,7 +63,7 @@ export const GET = async (request: NextRequest) => {
       }
 
       if (!existingUser) {
-        const databaseUser = await prisma.user.findFirst({
+        const databaseUser = await prisma.user.findUnique({
           where: {
             email: googleUser.email,
           },
@@ -102,6 +103,7 @@ export const GET = async (request: NextRequest) => {
           firstName: googleUser.given_name,
           lastName: googleUser.family_name,
           email_verified: true,
+          type: UserType.ADMIN,
         },
       });
 
@@ -109,6 +111,7 @@ export const GET = async (request: NextRequest) => {
     };
 
     const user = await getUser();
+
     const session = await auth.createSession({
       userId: user.userId,
       attributes: {},
@@ -129,6 +132,7 @@ export const GET = async (request: NextRequest) => {
         status: 400,
       });
     }
+
     return new Response(null, {
       status: 500,
     });
