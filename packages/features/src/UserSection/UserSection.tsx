@@ -1,5 +1,8 @@
 'use client';
 
+import {RouterOutputs} from 'api';
+import {ChevronDown, Plus} from 'lucide-react';
+import {useRouter} from 'next/navigation';
 import {
   Avatar,
   Button,
@@ -9,10 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from 'ui';
-import {useRouter} from 'next/navigation';
-import {ChevronDown, Plus} from 'lucide-react';
 import {cn} from 'utils';
-import {RouterOutputs} from 'api';
 
 interface Props {
   me: RouterOutputs['user']['me'];
@@ -26,12 +26,6 @@ export function UserSection({me}: Props) {
   };
 
   const options = [
-    {
-      label: 'Events',
-      onClick: () => {
-        router.push('/events');
-      },
-    },
     {
       label: 'Settings',
       onClick: () => {
