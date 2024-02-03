@@ -1,12 +1,13 @@
 'use client';
 
 import {Event, EventSignUp} from '@prisma/client';
-import {useReactTable, getCoreRowModel, ColumnDef} from '@tanstack/react-table';
+import {ColumnDef, getCoreRowModel, useReactTable} from '@tanstack/react-table';
 import {ChevronLeft} from 'lucide-react';
 import Link from 'next/link';
-import {Container, Button, PageHeader} from 'ui';
-import {AdminTable} from '../../../features/AdminTable/AdminTable';
+import {Button, Container, PageHeader} from 'ui';
 import {formatDate} from 'utils';
+
+import {AdminTable} from '../../../features/AdminTable/AdminTable';
 
 type Item = EventSignUp & {event: Event};
 

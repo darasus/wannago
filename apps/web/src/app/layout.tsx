@@ -1,16 +1,14 @@
-import './globals.css';
-
-import {Container} from 'ui';
-import {getBaseUrl} from 'utils';
-import {config} from 'config';
-import {Header} from './Header';
-import {ToastProvider} from './ToastProvider';
-import {ClientProvider} from './ClientProvider';
-import {ClientRefresher} from 'features/src/ClientRefresher/ClientRefresher';
-import {SpeedInsights} from '@vercel/speed-insights/next';
 import {Analytics} from '@vercel/analytics/react';
-import {Footer} from './components/Footer';
-import {api} from '../trpc/server-http';
+import {SpeedInsights} from '@vercel/speed-insights/next';
+import {config} from 'config';
+import {ClientRefresher} from 'features/src/ClientRefresher/ClientRefresher';
+import {Footer} from 'ui/src/Footer/Footer';
+import {getBaseUrl} from 'utils';
+
+import {ClientProvider} from './ClientProvider';
+import {ToastProvider} from './ToastProvider';
+
+import './globals.css';
 
 export const metadata = {
   title: config.name,
@@ -22,8 +20,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const me = await api.user.me.query();
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -36,13 +32,6 @@ export default async function RootLayout({
       <body>
         <ClientProvider>
           <div className="flex flex-col min-h-screen">
-            {me && (
-              <div>
-                <Container maxSize={'full'}>
-                  <Header />
-                </Container>
-              </div>
-            )}
             <div className="grow">
               <div>{children}</div>
             </div>

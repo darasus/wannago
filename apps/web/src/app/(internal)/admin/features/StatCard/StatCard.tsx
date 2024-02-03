@@ -1,3 +1,5 @@
+'use client';
+
 import {ReactNode} from 'react';
 import {Line, LineChart, ResponsiveContainer} from 'recharts';
 import {Card, CardContent, CardHeader, CardTitle} from 'ui';
@@ -14,7 +16,7 @@ interface Props {
 
 export function StatCard({items, value, label, secondaryLabel}: Props) {
   return (
-    <Card className="lg:col-span-6">
+    <Card className="lg:col-span-4">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-base font-normal">{label}</CardTitle>
       </CardHeader>

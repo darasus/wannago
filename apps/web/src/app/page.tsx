@@ -1,7 +1,7 @@
-import {Avatar, CardBase, Container, LoadingBlock, Text} from 'ui';
 import {Suspense} from 'react';
-import {PublicEvents, MessageButton} from 'features';
 import {config} from 'config';
+import {MessageButton, PublicEvents} from 'features';
+import {Avatar, CardBase, Container, LoadingBlock, Text} from 'ui';
 
 export const metadata = {
   title: config.name,

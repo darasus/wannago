@@ -1,6 +1,6 @@
+import {Ban} from 'lucide-react';
 import Link from 'next/link';
 import {Button, Container} from 'ui';
-import {Ban} from 'lucide-react';
 
 export default function NotFound() {
   return (
