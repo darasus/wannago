@@ -18,8 +18,6 @@ export function EventFilter() {
 
   const options = [
     ['All', '/events/all'],
-    ['Attending', '/events/attending'],
-    ['Organizing', '/events/organizing'],
     ['Past', '/events/past'],
   ];
 

@@ -1,7 +1,7 @@
 import {AddEventForm} from 'features/src/EventForm/AddEventForm';
 import {Container, PageHeader} from 'ui';
 
-import {api} from '../../../../trpc/server-http';
+import {api} from '../../../../../trpc/server-http';
 
 export const metadata = {
   title: 'Add event | WannaGo',

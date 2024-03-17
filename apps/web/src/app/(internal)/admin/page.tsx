@@ -1,5 +1,6 @@
 import {Suspense} from 'react';
-import {notFound} from 'next/navigation';
+import {UserType} from '@prisma/client';
+import {notFound, redirect} from 'next/navigation';
 import {Container, LoadingBlock, PageHeader} from 'ui';
 
 import {api} from '../../../trpc/server-http';
@@ -11,7 +12,11 @@ import {EventsList} from './features/EventsList';
 export default async function AdminPage() {
   const me = await api.user.me.query();
 
-  if (me?.type !== 'ADMIN') {
+  if (!me) {
+    redirect('/sign-in');
+  }
+
+  if (me?.type !== UserType.ADMIN) {
     notFound();
   }
 

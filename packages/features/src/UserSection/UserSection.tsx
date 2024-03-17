@@ -29,7 +29,7 @@ export function UserSection({me}: Props) {
     {
       label: 'Settings',
       onClick: () => {
-        router.push(`/settings`);
+        router.push(`/admin/settings`);
       },
     },
     {
@@ -45,7 +45,7 @@ export function UserSection({me}: Props) {
     <div className="flex gap-2">
       <Button
         className="flex md:hidden"
-        onClick={() => router.push('/e/add')}
+        onClick={() => router.push('/admin/event/add')}
         data-testid="add-event-button-mini"
         size="icon"
       >
@@ -53,7 +53,7 @@ export function UserSection({me}: Props) {
       </Button>
       <Button
         className="hidden md:flex"
-        onClick={() => router.push('/e/add')}
+        onClick={() => router.push('/admin/event/add')}
         data-testid="add-event-button"
       >
         <Plus className="mr-2 w-4 h-4" />
@@ -80,6 +80,7 @@ export function UserSection({me}: Props) {
             <DropdownMenuGroup>
               {options.map(({label, ...rest}, i) => {
                 const isRed = label === 'Logout';
+
                 return (
                   <DropdownMenuItem key={i} {...rest}>
                     <span className={cn({'text-red-500': isRed})}>{label}</span>

@@ -1,7 +1,7 @@
 import {
+  differenceInSeconds as _differenceInSeconds,
   format as _format,
   isSameDay as _isSameDay,
-  differenceInSeconds as _differenceInSeconds,
 } from 'date-fns';
 import {utcToZonedTime} from 'date-fns-tz';
 import {format as timeagoFormat} from 'timeago.js';

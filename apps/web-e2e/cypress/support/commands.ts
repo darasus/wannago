@@ -26,7 +26,7 @@ Cypress.Commands.addAll({
       type = 'free';
     }
 
-    cy.visit('/e/add');
+    cy.visit('/event/add');
     cy.wait(3000);
     if (authorId) {
       cy.get('[data-testid="event-form-created-by-input"]').click();

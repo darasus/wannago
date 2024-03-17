@@ -1,6 +1,5 @@
 import {config} from 'config';
-import {notFound} from 'next/navigation';
-import {Container, Footer} from 'ui';
+import {Container} from 'ui';
 import {getBaseUrl} from 'utils';
 
 import {api} from '../../../trpc/server-http';
@@ -19,10 +18,6 @@ export default async function RootLayout({
 }) {
   const me = await api.user.me.query();
 
-  if (me?.type !== 'ADMIN') {
-    notFound();
-  }
-
   return (
     <div className="flex flex-col min-h-screen">
       {me && (
@@ -35,7 +30,6 @@ export default async function RootLayout({
       <div className="grow">
         <div>{children}</div>
       </div>
-      <Footer />
     </div>
   );
 }
