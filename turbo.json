@@ -30,7 +30,8 @@
       "cache": false
     },
     "push": {
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "test:e2e": {
       "outputs": [],

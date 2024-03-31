@@ -4,16 +4,16 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model Event {
   id                      String            @id @default(uuid())
   shortId                 String            @unique
   title                   String            @db.VarChar(255)
-  description             String?           @db.LongText()
+  description             String?
   startDate               DateTime
   endDate                 DateTime
   isPublished             Boolean           @default(false)
@@ -23,7 +23,7 @@ model Event {
   featuredImageSrc        String?
   featuredImageWidth      Int?
   featuredImageHeight     Int?
-  featuredImagePreviewSrc String?           @db.LongText()
+  featuredImagePreviewSrc String?
   address                 String?
   longitude               Float?
   latitude                Float?
