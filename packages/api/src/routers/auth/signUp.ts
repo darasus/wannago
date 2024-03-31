@@ -1,11 +1,12 @@
-import {z} from 'zod';
-import {publicProcedure} from '../../trpc';
-import {auth} from 'auth';
-import {TRPCError} from '@trpc/server';
-import {generateEmailVerificationToken} from './utils';
 import {Prisma, UserType} from '@prisma/client';
+import {TRPCError} from '@trpc/server';
+import {auth} from 'auth';
 import {v4 as uuid} from 'uuid';
-import {DatabaseError} from '@planetscale/database';
+import {z} from 'zod';
+
+import {publicProcedure} from '../../trpc';
+
+import {generateEmailVerificationToken} from './utils';
 
 export const signUp = publicProcedure
   .input(
@@ -54,7 +55,7 @@ export const signUp = publicProcedure
       return {
         success: true,
       };
-    } catch (e) {
+    } catch (e: any) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === 'P2002') {
           throw new TRPCError({
@@ -64,13 +65,11 @@ export const signUp = publicProcedure
         }
       }
 
-      if (e instanceof DatabaseError) {
-        if (e.body.message.includes('Duplicate entry')) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: 'Email already exists',
-          });
-        }
+      if (e?.body?.message.includes('Duplicate entry')) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Email already exists',
+        });
       }
 
       throw new TRPCError({
